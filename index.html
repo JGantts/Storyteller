@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <script>
+
+
+
+      window.onload = function (){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var myArr = JSON.parse(this.responseText);
+            document.getElementById("testId").innerHTML = myArr[0].moniker;
+          }
+        };
+        xhttp.open("GET", "https://lemurware.tech/api/v1/creatures/", true);
+        xhttp.send();
+      }
+    </script>
+  </head>
+  <body>
+    <p id="testId">Loading</p>
+  </body>
+</html>
