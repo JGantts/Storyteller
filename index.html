@@ -16,8 +16,55 @@
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        var myArr = JSON.parse(this.responseText);
-        document.getElementById("testId").innerHTML = myArr[0].moniker;
+        var data = JSON.parse(this.responseText);
+
+        function addDataToTbody(creatureTable, data) {
+          data.forEach((rowData, rowDataIndex) => {
+            var row = creatureTable.insertRow(rowDataIndex);
+            var leftCell = row.insertCell();
+            var rightCell = row.insertCell();
+
+            leftCell.innerHTML =
+              "<a href='#'>\
+                <h2>"+ rowData.name +"</h2>\
+                <img width='119' height='139' src='https://lemurware.tech/api/v1/creatures/"+ rowData.moniker +"/image' />\
+              </a>"
+
+            rightCellHtml = ""
+            switch(rowData.genus) {
+              case 1:
+                rightCellHtml += "Norn"
+                break;
+              case 2:
+                rightCellHtml += "Grendel"
+                break;
+              case 3:
+                rightCellHtml += "Ettin"
+                break;
+              default:
+                rightCellHtml += "Geat"
+                break;
+            }
+            rightCellHtml += "<br/>"
+            switch(rowData.gender) {
+              case 1:
+                rightCellHtml += "Male"
+                break;
+              default:
+                rightCellHtml += "Female"
+                break;
+            }
+
+            rightCell.innerHTML = rightCellHtml
+
+            creatureTable.appendChild(row);
+          })
+        }
+
+        var creatureTable = document.querySelector("#creatureTable tbody");
+
+        addDataToTbody(creatureTable, data);
+
       }
     };
     xhttp.open("GET", "https://lemurware.tech/api/v1/creatures/", true);
@@ -26,6 +73,10 @@
 </script>
 </head>
 <body>
-<p id="testId">Loading</p>
+<h1>12 Random Creatures:</h1>
+<table id="creatureTable" class="table table-striped">
+  <tbody>
+  </tbody>
+</table>
 </body>
 </html>
