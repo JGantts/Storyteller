@@ -7,6 +7,8 @@ function createWindow () {
   let win = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: false,
+    resizable: false,
     webPreferences: {
       nodeIntegration: true
     }
@@ -14,7 +16,7 @@ function createWindow () {
 
   win.setMenu(null)
 
-  win.on('closed', () => {
+  win.on('close', () => {
     if(!devtools.isDestroyed()){
       devtools.close()
     }
