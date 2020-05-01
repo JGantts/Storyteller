@@ -48,18 +48,6 @@
   }
 </script>
 <style>
-  #title{
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 0px;;
-    font-size: 64px;
-    height: 64px;
-    width: 50%;
-    user-select: none;
-    -webkit-app-region: drag;
-    line-height: 1;
-  }
 
   body{
     background-color: rgb(44,62,80);
@@ -95,9 +83,9 @@
   }
 
   #main {
-    height: calc(100% - 32px);
-    margin-top: 32px;
-    padding: 20px;
+    height: calc(100% - 174px);
+    margin-top: 174px;
+    padding-left, padding-right: : 20px;
     overflow-y: auto;
   }
 
@@ -204,24 +192,43 @@
           <div class="button" id="close-button">
             <img class="icon" srcset="icons/close-w-10.png 1x, icons/close-w-12.png 1.25x, icons/close-w-15.png 1.5x, icons/close-w-15.png 1.75x, icons/close-w-20.png 2x, icons/close-w-20.png 2.25x, icons/close-w-24.png 2.5x, icons/close-w-30.png 3x, icons/close-w-30.png 3.5x" draggable="false" />
           </div>
-
         </div>
   </div>
+
+  <table style='position: absolute; padding-top: 16px; padding-left:32.5px; top:-10px; left:-10px; border-spacing: 10px; border-collapse: separate;'>
+    <tr>
+      <td class='col' style='background-color: rgb(34,49,63); width: 210px; -webkit-app-region: no-drag;'>
+        <span>
+          <img src="icons/folder.svg" width='28.57rem' height='21.135rem' style='vertical-align: middle;'/>
+        </span>
+        <span style='float: right; vertical-align:center;'>
+          <h6 style='margin:4px;'>Display Local Data</h6>
+        </span>
+      </td>
+      <td class='col' style='background-color: rgb(34,49,63); width: 210px; -webkit-app-region: no-drag;'>
+        <span>
+          <img src="icons/cloud.svg" width='26.43rem' height='13.025rem' style='vertical-align: middle;'/>
+        </span>
+        <span style='float: right; vertical-align:center;'>
+          <h6 style='margin:4px;'>Display Server Data</h6>
+        </span>
+      </td>
+    </tr>
+  </table>
 </header>
-<div id='title'>
-  Story Teller
-</div>
+
+
 
 <div id='main'>
-  <div id='creatureGrid' class='row mx-auto' style='padding: 0; width: 755px; margin: 22.5px;'>
+  <div id='creatureGrid' class='row' style='padding: 0; margin-left: 22.5px; margin-right: 22.5px; width: 755px;'>
   </div>
 </div>
 
 <template id='mytemplate'>
-  <div class='col' style='width: 119px; margin: 10px; padding:0; background-color: rgb(34,49,63);'>
+  <div class='col' style='width: 119px; margin: 16px; padding:0; background-color: rgb(34,49,63);'>
     <a href='#'>
       <img id='creatureImage' width='119px' height='139px' src='' />
-      <h3 id='creatureName' style='text-align: center; width: 119px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; color: white; font-size:1rem'></h3>
+      <h6 id='creatureName' style='text-align: left; padding:6px; width: 119px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; color: white;'></h6>
     </a>
   </div>
 </template>
