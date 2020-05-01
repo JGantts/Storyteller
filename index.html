@@ -54,14 +54,15 @@
     left: 0;
     padding: 0px;;
     font-size: 64px;
-    height: 64px
+    height: 64px;
     width: 50%;
     user-select: none;
     -webkit-app-region: drag;
+    line-height: 1;
   }
 
   body{
-    background-color: #254053;
+    background-color: rgb(44,62,80);
     color: #EEE;
     height: 100%;
     width: 100%;
@@ -208,7 +209,7 @@
   </div>
 </header>
 <div id='title'>
-  CH Client
+  Story Teller
 </div>
 
 <div id='main'>
@@ -217,10 +218,10 @@
 </div>
 
 <template id='mytemplate'>
-  <div class='col' style='padding: 0;'>
-    <a href='#' class='list-group-item' style='width: 141px; padding: 10px; margin: 5px;'>
-      <img id='creatureImage' width='119' height='139' style='display: block; margin: 0;' src='' />
-      <h3 id='creatureName' style='text-align: center; width: 119px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0;'></h3>
+  <div class='col' style='width: 119px; margin: 10px; padding:0; background-color: rgb(34,49,63);'>
+    <a href='#'>
+      <img id='creatureImage' width='119px' height='139px' src='' />
+      <h3 id='creatureName' style='text-align: center; width: 119px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; color: white; font-size:1rem'></h3>
     </a>
   </div>
 </template>
