@@ -1,0 +1,40 @@
+#menu-table {
+  position: absolute;
+  padding-top: 16px;
+  padding-left:42.5px;
+  top:-10px;
+  left:-10px;
+  border-spacing: 10px;
+  border-collapse: separate;
+}
+
+#menu-table td {
+  background-color: rgb(34,49,63);
+  width: 150px;
+  padding-left: 10px;
+  -webkit-app-region: no-drag;
+}
+
+#menu-table a{
+  color: white;
+}
+
+#menu-table span.icon{
+  float: left;
+}
+
+#menu-table image.icon{
+  vertical-align: middle;
+}
+
+#menu-table span.label{
+  float: left;
+  padding-top:3px;
+  padding-bottom: 3px;
+}
+
+
+#menu-table p{
+  margin:4px;
+  font-size: 0.7rem;
+}

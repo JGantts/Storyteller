@@ -11,6 +11,7 @@
 <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="window-frame.css">
+<link rel="stylesheet" type="text/css" href="menu.css">
 </head>
 
 <body>
@@ -32,25 +33,25 @@
         </div>
   </div>
 
-  <table style='position: absolute; padding-top: 16px; padding-left:42.5px; top:-10px; left:-10px; border-spacing: 10px; border-collapse: separate;'>
+  <table id='menu-table'>
     <tr>
-      <td style='background-color: rgb(34,49,63); width: 150px; padding-left: 10px; -webkit-app-region: no-drag;'>
-        <a href='#' onclick='loadLocalPage();' style='color: white;'>
-          <span style='float: left;'>
-            <img src="icons/folder.svg" height='14rem' style='vertical-align: middle;' draggable="false"/>
+      <td>
+        <a href='#' onclick='loadLocalPage();'>
+          <span class='icon' style=''>
+            <img src="icons/folder.svg" height='14rem' draggable="false"/>
           </span>
-          <span style='float: left; padding-top:3px; padding-bottom: 3px;'>
-            <h6 style='margin:4.5px; font-size: 0.7rem;'>Display Local Data</h6>
+          <span class='label'>
+            <p>Display Local Data</p>
           </span>
         </a>
       </td>
-      <td style='background-color: rgb(34,49,63); width: 150px; padding-left: 10px; -webkit-app-region: no-drag;'>
-        <a href='#' onclick='loadServerPage();' style='color: white;'>
-          <span style='float: left;'>
-            <img src="icons/cloud.svg" height='14rem' style='vertical-align: middle;' draggable="false"/>
+      <td>
+        <a href='#' onclick='loadServerPage();'>
+          <span class='icon'>
+            <img src="icons/cloud.svg" height='14rem' draggable="false"/>
           </span>
-          <span style='float: left; padding-top:3px; padding-bottom: 3px;'>
-            <h6 style='margin:4.5px; font-size: 0.7rem;'>Display Server Data</h6>
+          <span class='label'>
+            <p>Display Server Data</p>
           </span>
         </a>
       </td>
@@ -65,18 +66,7 @@
 </div>
 
 <script src="window-frame.js"></script>
-<script>
-function loadServerPage(){
-  $("#main").load("server-page/server-page.html");
-}
+<script src="menu.js"></script>
 
-function loadLocalPage(){
-  $("#main").load("local-page/local-page.html");
-}
-
-$(function(){
-  loadServerPage();
-});
-</script>
 </body>
 </html>
