@@ -1,4 +1,4 @@
-#menu-table {
+#menu-bar-left {
   position: absolute;
   padding-top: 16px;
   padding-left:42.5px;
@@ -8,33 +8,33 @@
   border-collapse: separate;
 }
 
-#menu-table td {
+#menu-bar-left td {
   background-color: rgb(34,49,63);
   width: 150px;
   padding-left: 10px;
   -webkit-app-region: no-drag;
 }
 
-#menu-table a{
+#menu-bar-left a{
   color: white;
 }
 
-#menu-table span.icon{
+#menu-bar-left span.icon{
   float: left;
 }
 
-#menu-table image.icon{
+#menu-bar-left image.icon{
   vertical-align: middle;
 }
 
-#menu-table span.label{
+#menu-bar-left span.label{
   float: left;
   padding-top:3px;
   padding-bottom: 3px;
 }
 
 
-#menu-table p{
+#menu-bar-left p{
   margin:4px;
   font-size: 0.7rem;
 }
