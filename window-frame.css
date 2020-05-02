@@ -1,9 +1,9 @@
 body{
   background-color: rgb(44,62,80);
   background-image: url(https://media.istockphoto.com/photos/shiny-yellow-gold-wall-texture-background-picture-id881512012);
-  background-position: 0 32px;
+  background-position: 0 33px;
   background-repeat: repeat-x;
-  background-size: 50%;
+  background-size: 35%;
   color: #EEE;
   height: 100%;
   width: 100%;
@@ -17,7 +17,7 @@ h1 {
 
 p {
   margin-top: 10px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,1);
 }
 
 body {
