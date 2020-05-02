@@ -35,20 +35,24 @@
   <table style='position: absolute; padding-top: 16px; padding-left:42.5px; top:-10px; left:-10px; border-spacing: 10px; border-collapse: separate;'>
     <tr>
       <td class='col' style='background-color: rgb(34,49,63); width: 210px; -webkit-app-region: no-drag;'>
-        <span>
-          <img src="icons/folder.svg" width='28.57rem' height='21.135rem' style='vertical-align: middle;' draggable="false"/>
-        </span>
-        <span style='float: right; vertical-align:center;'>
-          <h6 style='margin:4px;'>Display Local Data</h6>
-        </span>
+        <a href='#' onclick='loadLocalPage();' style='color: white;'>
+          <span>
+            <img src="icons/folder.svg" width='28.57rem' height='21.135rem' style='vertical-align: middle;' draggable="false"/>
+          </span>
+          <span style='float: right; vertical-align:center;'>
+            <h6 style='margin:4px;'>Display Local Data</h6>
+          </span>
+        </a>
       </td>
       <td class='col' style='background-color: rgb(34,49,63); width: 210px; -webkit-app-region: no-drag;'>
-        <span>
-          <img src="icons/cloud.svg" width='26.43rem' height='13.025rem' style='vertical-align: middle;' draggable="false"/>
-        </span>
-        <span style='float: right; vertical-align:center;'>
-          <h6 style='margin:4px;'>Display Server Data</h6>
-        </span>
+        <a href='#' onclick='loadServerPage();' style='color: white;'>
+          <span>
+            <img src="icons/cloud.svg" width='26.43rem' height='13.025rem' style='vertical-align: middle;' draggable="false"/>
+          </span>
+          <span style='float: right; vertical-align:center;'>
+            <h6 style='margin:4px;'>Display Server Data</h6>
+          </span>
+        </a>
       </td>
     </tr>
   </table>
@@ -62,8 +66,16 @@
 
 <script src="window-frame.js"></script>
 <script>
-$(function(){
+function loadServerPage(){
   $("#main").load("server-page/server-page.html");
+}
+
+function loadLocalPage(){
+  $("#main").load("local-page/local-page.html");
+}
+
+$(function(){
+  loadServerPage();
 });
 </script>
 </body>
