@@ -87,8 +87,8 @@
   }
 
   #main {
-    height: calc(100% - 174px);
-    margin-top: 174px;
+    height: calc(100% - 132px);
+    margin-top: 132px;
     padding-left, padding-right: : 20px;
     overflow-y: auto;
   }
@@ -203,7 +203,7 @@
     <tr>
       <td class='col' style='background-color: rgb(34,49,63); width: 210px; -webkit-app-region: no-drag;'>
         <span>
-          <img src="icons/folder.svg" width='28.57rem' height='21.135rem' style='vertical-align: middle;'/>
+          <img src="icons/folder.svg" width='28.57rem' height='21.135rem' style='vertical-align: middle;' draggable="false"/>
         </span>
         <span style='float: right; vertical-align:center;'>
           <h6 style='margin:4px;'>Display Local Data</h6>
@@ -211,7 +211,7 @@
       </td>
       <td class='col' style='background-color: rgb(34,49,63); width: 210px; -webkit-app-region: no-drag;'>
         <span>
-          <img src="icons/cloud.svg" width='26.43rem' height='13.025rem' style='vertical-align: middle;'/>
+          <img src="icons/cloud.svg" width='26.43rem' height='13.025rem' style='vertical-align: middle;' draggable="false"/>
         </span>
         <span style='float: right; vertical-align:center;'>
           <h6 style='margin:4px;'>Display Server Data</h6>
@@ -224,6 +224,17 @@
 
 
 <div id='main'>
+  <div style='background-color: rgb(34,49,63); width: 420px; margin-left:42.5px;'>
+    <span>
+      <img src='icons/search.svg' width='42rem' height='42rem' style='vertical-align: middle; padding: 8px;' draggable="false"/>
+    </span>
+    <span style='float: right; vertical-align:center; width:calc(100% - 42px);'>
+      <form style='width:100%;'>
+        <input placeholder="Search" autofocus=true style='width:calc(100% - 12px); margin:6px; background-color: rgb(34,49,63); border:0; outline:none; color:white;'>
+      <form>
+    </span>
+  </div>
+
   <div id='creatureGrid' class='row' style='padding: 0; margin-left: 32.5px; margin-right: 32.5px; width: 755px;'>
   </div>
 </div>
