@@ -1,9 +1,11 @@
 body{
+  background-image:
+    linear-gradient(rgba(44,62,80,0.25), rgb(44,62,80)),
+    url('https://media.istockphoto.com/photos/snowmass-wide-mountains-snow-pack-cliffs-lake-colorado-rugged-summits-picture-id472232442?k=6&m=472232442&s=612x612&w=0&h=4R2Fmmqiuocsk6xeNbgFeXq0jDPKwe6Ax-C_LjjbVpY=');
   background-color: rgb(44,62,80);
-  background-image: url(https://media.istockphoto.com/photos/shiny-yellow-gold-wall-texture-background-picture-id881512012);
   background-position: 0 33px;
   background-repeat: repeat-x;
-  background-size: 35%;
+  background-size: 100% 35%, auto 35%;
   color: #EEE;
   height: 100%;
   width: 100%;
