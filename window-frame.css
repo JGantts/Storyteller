@@ -1,0 +1,125 @@
+body{
+  background-color: rgb(44,62,80);
+  background-image: url(https://media.istockphoto.com/photos/shiny-yellow-gold-wall-texture-background-picture-id881512012);
+  background-position: 0 32px;
+  background-repeat: repeat-x;
+  background-size: 50%;
+  color: #EEE;
+  height: 100%;
+  width: 100%;
+}
+
+h1 {
+  margin: 0 0 10px 0;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+p {
+  margin-top: 10px;
+  color: rgba(255,255,255,0.4);
+}
+
+body {
+  border: 1px solid #48545c;
+  overflow-y: hidden;
+}
+
+html, body {height: 100%; margin: 0;}
+
+#titlebar {
+  display: block;
+  position: fixed;
+  height: 32px;
+  width: calc(100% - 2px);
+}
+
+#main {
+  height: calc(100% - 132px);
+  margin-top: 132px;
+  padding-left, padding-right: : 20px;
+  overflow-y: auto;
+}
+
+#titlebar {
+  padding: 4px;
+}
+
+#titlebar #drag-region {
+  width: 100%;
+  height: 100%;
+  -webkit-app-region: drag;
+}
+
+#titlebar {
+  color: #FFF;
+}
+
+#titlebar #drag-region {
+  display: grid;
+  grid-template-columns: auto 138px;
+}
+
+#window-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 46px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+}
+
+#window-controls .button {
+  grid-row: 1 / span 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+#min-button {
+  grid-column: 1;
+}
+#max-button, #restore-button {
+  grid-column: 2;
+}
+#close-button {
+  grid-column: 3;
+}
+
+@media (-webkit-device-pixel-ratio: 1.5), (device-pixel-ratio: 1.5),
+(-webkit-device-pixel-ratio: 2), (device-pixel-ratio: 2),
+(-webkit-device-pixel-ratio: 3), (device-pixel-ratio: 3) {
+  #window-controls .icon {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+#window-controls {
+  -webkit-app-region: no-drag;
+}
+
+#window-controls .button {
+  user-select: none;
+}
+#min-button:hover {
+  background: rgba(255,255,255,0.1);
+}
+#min-button:active {
+  background: rgba(255,255,255,0.2);
+}
+
+#max-button {
+  opacity: 0.5;
+}
+
+#close-button:hover {
+  background: #E81123
+}
+#close-button:active {
+  background: #F1707A
+}
+#close-button:active .icon {
+  filter: invert(1);
+}
