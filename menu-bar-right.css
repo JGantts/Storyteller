@@ -1,47 +1,8 @@
-body{
-  background-color: rgb(44,62,80);
-  background-image: url(https://media.istockphoto.com/photos/shiny-yellow-gold-wall-texture-background-picture-id881512012);
-  background-position: 0 33px;
-  background-repeat: repeat-x;
-  background-size: 35%;
-  color: #EEE;
-  height: 100%;
-  width: 100%;
-}
-
-h1 {
-  margin: 0 0 10px 0;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-p {
-  margin-top: 10px;
-  color: rgba(255,255,255,1);
-}
-
-body {
-  border: 1px solid #48545c;
-  overflow-y: hidden;
-}
-
-html, body {height: 100%; margin: 0;}
-
 #titlebar {
   display: block;
   position: fixed;
   height: 32px;
   width: calc(100% - 2px);
-}
-
-#main {
-  height: calc(100% - 64px);
-  margin-top: 64px;
-  padding-left, padding-right: : 20px;
-  overflow-y: auto;
-}
-
-#titlebar {
   padding: 4px;
 }
 
