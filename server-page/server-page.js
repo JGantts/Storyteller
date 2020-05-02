@@ -18,6 +18,9 @@ $(function(){
             'https://lemurware.tech/api/v1/creatures/' + rowData.moniker +'/image'
           nameImagePlacement.querySelector('#creatureName').textContent =
             rowData.name
+          nameImagePlacement.querySelector('#creatureLink').addEventListener("click", function(){
+            $("#main").load("creature-page/creature-page.html");
+          });
 
           creatureGrid.appendChild(nameImagePlacement)
         })
