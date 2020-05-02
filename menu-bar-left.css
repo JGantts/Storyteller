@@ -11,7 +11,6 @@
 #menu-bar-left td {
   background-color: rgb(34,49,63);
   width: 150px;
-  padding-left: 10px;
   -webkit-app-region: no-drag;
 }
 
@@ -21,9 +20,10 @@
 
 #menu-bar-left span.icon{
   float: left;
+  margin: 0 10px;
 }
 
-#menu-bar-left image.icon{
+#menu-bar-left img.icon{
   vertical-align: middle;
 }
 
@@ -35,6 +35,6 @@
 
 
 #menu-bar-left p{
-  margin:4px;
+  margin: 4px 0;
   font-size: 0.7rem;
 }
