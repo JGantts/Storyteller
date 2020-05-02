@@ -35,8 +35,8 @@ html, body {height: 100%; margin: 0;}
 }
 
 #main {
-  height: calc(100% - 132px);
-  margin-top: 132px;
+  height: calc(100% - 64px);
+  margin-top: 64px;
   padding-left, padding-right: : 20px;
   overflow-y: auto;
 }

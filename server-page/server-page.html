@@ -1,0 +1,26 @@
+<div style='margin-top: 68px;'>
+  <div style='background-color: rgb(34,49,63); width: 420px; margin-left:42.5px;'>
+    <span>
+      <img src='icons/search.svg' width='42rem' height='42rem' style='vertical-align: middle; padding: 8px;' draggable="false"/>
+    </span>
+    <span style='float: right; vertical-align:center; width:calc(100% - 42px);'>
+      <form style='width:100%;'>
+        <input placeholder="Search" autofocus=true style='width:calc(100% - 12px); margin:6px; background-color: rgb(34,49,63); border:0; outline:none; color:white;'>
+      <form>
+    </span>
+  </div>
+
+  <div id='creatureGrid' class='row' style='padding: 0; margin-left: 32.5px; margin-right: 32.5px; width: 755px;'>
+  </div>
+</div>
+
+<template id='mytemplate'>
+  <div class='col' style='width: 119px; margin: 14px; padding:0; background-color: rgb(34,49,63);'>
+    <a href='#'>
+      <img id='creatureImage' width='119px' height='139px' src='' />
+      <h6 id='creatureName' style='text-align: left; padding:6px; width: 119px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; color: white;'></h6>
+    </a>
+  </div>
+</template>
+
+<script src="server-page/server-page.js"></script>
