@@ -14,9 +14,11 @@
 
 <template id='mytemplate'>
   <div style='width: 119px; padding: 0; margin: 0; background-color: rgb(34,49,63);'>
-    <a id='creatureLink' href='#'>
+    <a id='creatureLink' href='#' style='text-decoration: none;'>
+      <div>
       <img id='creatureImage' width='119px' height='139px' src='' />
-      <h6 id='creatureName' style='text-align: left; font-size: 0.8rem; padding:6px; width: 119px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; color: white;'></h6>
+      <h6 id='creatureName' style='display: inline-block; text-align: left; font-size: 0.8rem; font-weight: 300; padding: 0 6px; width: calc(119px - 12px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; color: white;'></h6>
+      </div>
     </a>
   </div>
 </template>
