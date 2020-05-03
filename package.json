@@ -10,7 +10,7 @@
   "author": "Jacob Gantt",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^8.2.3"
+    "electron": "^8.2.5"
   },
   "dependencies": {
     "jquery": "^3.5.0",
