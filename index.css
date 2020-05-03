@@ -8,7 +8,7 @@ body{
   background-size: 100% 35%, auto 35%;
   color: #EEE;
   height: 100%;
-  width: 100%;
+  width: 798px;
 }
 
 h1 {
@@ -18,7 +18,7 @@ h1 {
 }
 
 p {
-  margin-top: 10px;
+  margin: 0;
   color: rgba(255,255,255,1);
 }
 

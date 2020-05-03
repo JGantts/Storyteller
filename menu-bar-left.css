@@ -1,46 +1,44 @@
 #menu-bar-left{
   position: absolute;
-  padding-top: 16px;
-  padding-left:42.5px;
-  top:-10px;
-  left:-10px;
-  border-spacing: 10px;
-  border-collapse: separate;
-}
-
-#menu-bar-left td{
-  width: 150px;
-  padding: 0;
-  overflow: hidden;
-  -webkit-app-region: no-drag;
+  top: 0;
+  left: 0;
+  padding-left: 41.5px;
+  padding-top: 17px;
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  grid-gap: 20px;
 }
 
 #menu-bar-left a{
   background-color: rgb(34,49,63);
   display: inline-block;
   color: white;
-  width: 100%;
+  width: 150px;
   height: 30px;
+  padding: 0;
   overflow: hidden;
+  user-select: none;
+  overflow: hidden;
+  -webkit-app-region: no-drag;
 }
 
 #menu-bar-left span.icon{
   float: left;
-  margin: 0 10px;
+  margin: 0;
+  height: 30px;
 }
 
 #menu-bar-left img.icon{
   vertical-align: middle;
+  margin: 10px;
 }
 
 #menu-bar-left span.label{
   float: left;
-  padding-top:3px;
-  padding-bottom: 3px;
+  line-height: 30px;
 }
 
 
 #menu-bar-left p{
-  margin: 4px 0;
   font-size: 0.7rem;
 }

@@ -9,9 +9,7 @@ $(function(){
 
           var nameImageTemplate = document.querySelector('#mytemplate')
 
-          var nameImagePlacement = document.createElement("div")
-
-          nameImagePlacement.innerHTML = nameImageTemplate.innerHTML
+          var nameImagePlacement = document.importNode(nameImageTemplate.content, true);
 
           // set
           nameImagePlacement.querySelector('#creatureImage').src =

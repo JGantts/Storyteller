@@ -1,21 +1,19 @@
-<div>
-  <div style='background-color: rgb(34,49,63); width: 420px; overflow: hidden;'>
-    <span style='float: left;'>
-      <img src='icons/search.svg' width='30.24px' height='30.24px' style='vertical-align: middle; padding: 8px;' draggable="false"/>
-    </span>
-    <span style='float: left; vertical-align:center; width:calc(100% - 42px);'>
-      <form style='width:100%;'>
-        <input placeholder="Search" autofocus=true style='width:calc(100% - 12px); margin:3px; background-color: rgb(34,49,63); border:0; outline:none; color:white;'>
-      <form>
-    </span>
-  </div>
+<div style='background-color: rgb(34,49,63); display: inline-block; overflow: hidden;'>
+  <span style='float: left;'>
+    <img src='icons/search.svg' height='15px' style='vertical-align: middle; padding: 8px;' draggable="false"/>
+  </span>
+  <span style='float: left; vertical-align:center; width: 400px;'>
+    <form style='width:100%;'>
+      <input placeholder="Search" autofocus=true style='width: 100%; margin: 5.5px; background-color: rgb(34,49,63); border:0; outline:none; color:white; font-size: 1rem;'>
+    <form>
+  </span>
+</div>
 
-  <div id='creatureGrid' class='row' style='padding: 0;'>
-  </div>
+<div id='creatureGrid' style='margin-top: 16px; display: grid; grid-column-gap: 30px; grid-row-gap: 30px; grid-template-columns: auto auto auto auto auto;'>
 </div>
 
 <template id='mytemplate'>
-  <div class='col' style='width: 119px; margin: 14px; padding:0; background-color: rgb(34,49,63);'>
+  <div style='width: 119px; padding: 0; margin: 0; background-color: rgb(34,49,63);'>
     <a id='creatureLink' href='#'>
       <img id='creatureImage' width='119px' height='139px' src='' />
       <h6 id='creatureName' style='text-align: left; font-size: 0.7rem; padding:6px; width: 119px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; color: white;'></h6>

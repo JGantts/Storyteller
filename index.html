@@ -4,12 +4,9 @@
 <meta charset="UTF-8">
 <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
 <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 <script>
   window.jQuery = window.$ = require('jquery');
 </script>
-<script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="index.css">
 <link rel="stylesheet" type="text/css" href="menu-bar-left.css">
 <link rel="stylesheet" type="text/css" href="menu-bar-right.css">
@@ -34,30 +31,24 @@
         </div>
   </div>
 
-  <table id='menu-bar-left'>
-    <tr>
-      <td>
-        <a href='#' onclick='loadLocalPage();' draggable='false'>
-          <span class='icon'>
-            <img src="icons/folder.svg" height='10px' draggable="false"/>
-          </span>
-          <span class='label'>
-            <p>Display Local Data</p>
-          </span>
-        </a>
-      </td>
-      <td>
-        <a href='#' onclick='loadServerPage();' draggable='false'>
-          <span class='icon'>
-            <img src="icons/cloud.svg" height='10px' draggable="false"/>
-          </span>
-          <span class='label'>
-            <p>Display Server Data</p>
-          </span>
-        </a>
-      </td>
-    </tr>
-  </table>
+  <div id='menu-bar-left'>
+    <a href='#' onclick='loadLocalPage();' draggable='false'>
+      <span class='icon'>
+        <img class='icon' src="icons/folder.svg" height='10px' draggable="false"/>
+      </span>
+      <span class='label'>
+        <p>Display Local Data</p>
+      </span>
+    </a>
+    <a href='#' onclick='loadServerPage();' draggable='false'>
+      <span class='icon'>
+        <img class='icon' src="icons/cloud.svg" height='10px' draggable="false"/>
+      </span>
+      <span class='label'>
+        <p>Display Server Data</p>
+      </span>
+    </a>
+  </div>
 </header>
 
 <div id='main'>
