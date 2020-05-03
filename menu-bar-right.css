@@ -3,6 +3,7 @@
   position: fixed;
   height: 32px;
   width: calc(100% - 2px);
+  background-color: rgb(71,59,99);
 }
 
 #titlebar #drag-region {

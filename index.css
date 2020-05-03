@@ -1,8 +1,8 @@
 body{
   background-image:
-    linear-gradient(rgba(44,62,80,0.25), rgb(44,62,80)),
+    linear-gradient(rgba(51,45,83,0.25), rgb(51,45,83)),
     url('images/background.png');
-  background-color: rgb(44,62,80);
+  background-color: rgb(51,45,83);
   background-position: 0 33px;
   background-repeat: repeat-x;
   background-size: auto 35%, auto 35%;
