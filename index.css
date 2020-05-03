@@ -31,8 +31,9 @@ body {
 html, body {margin: 0;}
 
 #main {
-  height: calc(100% - 64px);
-  margin-top: 132px;
+  height: calc(100% - 132px - 41.4px);
+  margin-top: 32px;
+  padding-top: 100px;
   padding-left: 41.5px;
   padding-right: 41.5px;
   padding-bottom: 41.5px;
