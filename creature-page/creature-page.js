@@ -11,14 +11,3 @@ xhttpName.onreadystatechange = function() {
 };
 xhttpName.open('GET', 'https://lemurware.tech/api/v1/creatures/' + window.creatureMoniker + '/name', true);
 xhttpName.send();
-
-
-var xhttpConception = new XMLHttpRequest();
-xhttpConception.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    var conceptionData = JSON.parse(this.responseText);
-    document.querySelector('#creatureName').innerHTML = nameData.name;
-  }
-};
-xhttpConception.open('GET', 'https://lemurware.tech/api/v1/creatures/' + window.creatureMoniker + '/events/0/', true);
-xhttpConception.send();

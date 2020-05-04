@@ -6,8 +6,9 @@
         <p id='creatureName' style='padding: 0; margin: 0; width: 100%; text-align: center; font-weight: 600;'>Loading...</p>
         <p id="creatureMoniker" style='padding: 0; width: 100%; text-align: center; font-size: 0.85rem; font-weight: 300;'>006-dusk-tejxm-56gq7-k7vfy-46asb</p>
       </div>
-      <div style='margin-top: 10px; background-color: rgb(71,59,99); '>
-        <p>Kin</p>
+      <div style='margin-top: 10px; background-color: rgb(71,59,99); padding: 10px'>
+        <div id='creatureKinParent'></div>
+        <div id='creatureKinChildren'></div>
       </div>
     </div>
   </div>
@@ -89,6 +90,47 @@
     <div style=''>Details</div>
   </div>
 </div>
+
+<template id='kin-parents-conceived'>
+  <h6>Natural Conception</h6>
+  Mother: <a id='parent1Link' href='#'>
+    <span id='parent1Name'></span>
+  </a>
+  Father: <a id='parent2Link' href='#'>
+    <span id='parent2Name'></span>
+  </a>
+</template>
+
+<template id='kin-parents-spliced'>
+  <h6>Spliced</h6>
+  Parent 1: <a id='parent1Link' href='#'>
+    <span id='parent1Name'></span>
+  </a>
+  Parent 2: <a id='parent2Link' href='#'>
+    <span id='parent2Name'></span>
+  </a>
+</template>
+
+<template id='kin-parents-engineered'>
+  <h6>Engineered</h6>
+  Genetic File: <span id='parent2Name'></span>
+</template>
+
+<template id='kin-parents-cloned'>
+  <h6>Cloned</h6>
+  From: <a id='parent1Link' href='#'>
+    <span id='parent1Name'></span>
+  </a>
+</template>
+
+<template id='kin-parents-spliced'>
+  Parent 1: <a id='parent1Link' href='#'>
+    <span id='parent1Name'></span>
+  </a>
+  Parent 2: <a id='parent2Link' href='#'>
+    <span id='parent2Name'></span>
+  </a>
+</template>
 
 <template id='event-conceived'>
   <div style='width: 119px; margin: 14px; padding:0; background-color: rgb(34,49,63);'>
