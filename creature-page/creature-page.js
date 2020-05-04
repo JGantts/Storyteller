@@ -63,7 +63,7 @@ $(async function(){
     if(kinData.children.length > 0){
       document.querySelector("#creatureKinChildrenLabel").style.display="block";
       let childrenContainer = document.querySelector("#creatureKinChildrenContainer")
-      kinData.children.slice(0, 10).forEach((childData, rowDataIndex) => {
+      kinData.children.slice(0, 10).forEach((childData, childDataIndex) => {
         var childTemplate = document.querySelector('#kin-child');
 
         let childPlacement = document.importNode(childTemplate.content, true);
@@ -78,6 +78,9 @@ $(async function(){
           if (nameResponse.ok){
             let nameData = await nameResponse.json();
             childNamePlacement.textContent = nameData.name;
+            if(childDataIndex < kinData.children.length - 1){
+              childNamePlacement.textContent += ", ";
+            }
           }else{
             alert("HTTP-Error: " + response.status);
           }

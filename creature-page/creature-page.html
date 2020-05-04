@@ -6,10 +6,15 @@
         <p id='creatureName' style='padding: 0; margin: 0; width: 100%; text-align: center; font-weight: 600;'>Loading...</p>
         <p id="creatureMoniker" style='padding: 0; width: 100%; text-align: center; font-size: 0.85rem; font-weight: 300;'>006-dusk-tejxm-56gq7-k7vfy-46asb</p>
       </div>
-      <div style='margin-top: 10px; background-color: rgb(71,59,99); padding: 10px'>
+      <div style='margin-top: 10px; background-color: rgb(71,59,99); padding: 20px'>
         <div id='creatureKinParent'></div>
-        <div id='creatureKinChildrenLabel' style='display: none;'>Children:</div>
-        <div id='creatureKinChildrenContainer' style='display: grid;'></div>
+        <div id='creatureKinChildrenLabel' style='display: none;'>
+          <hr />
+          <div style='display: grid; grid-template-columns: auto auto;'>
+            <div style='color: rgb(85,255,82); padding-right: 10px'>Children</div>
+            <div id='creatureKinChildrenContainer' style='width: 100%; text-align: right;'></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -93,11 +98,14 @@
 </div>
 
 <template id='kin-parents-conceived'>
-  <p>Natural Conception</p>
-  Mother: <a id='parent1Link' href='#'>
+  <p style='font-size: 0.8rem;'>Natural Conception</p>
+  <span style='color: rgb(85,255,82)'>Mother</span>
+  <a id='parent1Link' href='#' style='float: right;'>
     <span id='parent1Name'>Loading...</span>
-  </a><br />
-  Father: <a id='parent2Link' href='#'>
+  </a>
+  <hr />
+  <span style='color: rgb(85,255,82)'>Father</span>
+  <a id='parent2Link' href='#' style='float: right;'>
     <span id='parent2Name'>Loading...</span>
   </a>
 </template>
@@ -134,7 +142,7 @@
 </template>
 
 <template id='kin-child'>
-  <a id='childLink' href='#'>
+  <a id='childLink' href='#' style='width: 100%; text-align: right;'>
     <span id='childName'>Loading...</span>
   </a>
 </template>
