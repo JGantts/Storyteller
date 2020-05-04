@@ -3,22 +3,24 @@ $(async function(){
   if (creaturesResponse.ok){
     let creaturesData = await creaturesResponse.json();
     let creatureGrid = document.querySelector("#creatureGrid")
-    creaturesData.slice(0, 10).forEach(async (rowData, rowDataIndex) => {
+    creaturesData.slice(0, 10).forEach((rowData, rowDataIndex) => {
 
       var nameImageTemplate = document.querySelector('#mytemplate')
 
-      var nameImagePlacement = document.importNode(nameImageTemplate.content, true);
+      let nameImagePlacement = document.importNode(nameImageTemplate.content, true);
 
       nameImagePlacement.querySelector('#creatureImage').src =
-        'https://lemurware.tech/api/v1/creatures/' + rowData.moniker +'/image'
+        'https://lemurware.tech/api/v1/creatures/' + rowData.moniker + '/image';
 
-      let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + rowData.moniker +'/name')
-      if (nameResponse.ok){
-        let nameData = await nameResponse.json();
-        nameImagePlacement.querySelector('#creatureName').textContent = nameData.name;
-      }else {
-        alert("HTTP-Error: " + response.status);
-      }
+      (async function(creatureNamePlacement){
+        let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + rowData.moniker +'/name')
+        if (nameResponse.ok){
+          let nameData = await nameResponse.json();
+          creatureNamePlacement.textContent = nameData.name;
+        }else {
+          alert("HTTP-Error: " + response.status);
+        }
+      }(nameImagePlacement.querySelector('#creatureName')));
 
       nameImagePlacement.querySelector('#creatureLink').addEventListener("click", function(){
         window.creatureMoniker = rowData.moniker;
