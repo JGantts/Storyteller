@@ -17,6 +17,7 @@ $(function(){
           nameImagePlacement.querySelector('#creatureName').textContent =
             rowData.name
           nameImagePlacement.querySelector('#creatureLink').addEventListener("click", function(){
+            window.creatureMoniker = rowData.moniker;
             $("#main").load("creature-page/creature-page.html");
           });
 

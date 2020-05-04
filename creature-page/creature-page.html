@@ -1,11 +1,11 @@
 <div style=''>
   <div style='position: sticky; top: calc(-100px - 278px); float: left; z-index: -1; width: 238px; height: 1000px;'>
-    <img style='position: sticky; top: calc(-100px - 278px); margin-bottom: -5px;' src='https://lemurware.tech/api/v1/creatures/006-dusk-tejxm-56gq7-k7vfy-46asb/image' width='238' height='278' />
-    <div style='position: sticky; top: calc(-100px + 16px + 20px); padding: 10px; background-color: rgb(71,59,99);'>
-      <p style='padding: 0; margin: 0; width: 100%; text-align: center; font-weight: 600;'>GappyaTest</p>
-      <p style='padding: 0; width: 100%; text-align: center; font-size: 0.85rem; font-weight: 300;'>006-dusk-tejxm-56gq7-k7vfy-46asb</p>
+    <img id='creatureImage' style='position: sticky; top: calc(-100px - 278px); margin-bottom: -5px;' src='' width='238' height='278' />
+    <div style='position: sticky; top: calc(-100px + 16px + 20px); padding: 10px 0; background-color: rgb(71,59,99);'>
+      <p id='creatureName' style='padding: 0; margin: 0; width: 100%; text-align: center; font-weight: 600;'>Loading...</p>
+      <p id="creatureMoniker" style='padding: 0; width: 100%; text-align: center; font-size: 0.85rem; font-weight: 300;'>006-dusk-tejxm-56gq7-k7vfy-46asb</p>
     </div>
-    <div style='position: sticky; top: calc(-100px + 16px + 20px + 61px); background-color: rgb(71,59,99); margin-top: 10px; padding: 10px;'>
+    <div id='creatureDetails' style='position: sticky; top: calc(-100px + 16px + 20px + 61px); background-color: rgb(71,59,99); margin-top: 10px; padding: 10px;'>
       <p>Home World: Norn Paradise</p>
       <p>Home World: Norn Paradise</p>
       <p>Home World: Norn Paradise</p>
@@ -91,9 +91,6 @@
     <div style=''>Details</div>
   </div>
 </div>
-
-
-
 
 <template id='event-conceived'>
   <div style='width: 119px; margin: 14px; padding:0; background-color: rgb(34,49,63);'>
