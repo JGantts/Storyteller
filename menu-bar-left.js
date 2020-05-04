@@ -1,11 +1,17 @@
-function loadServerPage(){
+function loadServerPage(clicked){
   $("#main").load("server-page/server-page.html");
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(' active', '');
+  document.getElementById(clicked).className += ' active';
 }
 
-function loadLocalPage(){
+function loadLocalPage(clicked){
   $("#main").load("local-page/local-page.html");
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(' active', '');
+  document.getElementById(clicked).className += ' active';
 }
 
 $(function(){
-  loadServerPage();
+  loadServerPage('nav-btn-server');
 });

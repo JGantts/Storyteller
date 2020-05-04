@@ -9,28 +9,40 @@
   grid-gap: 20px;
 }
 
-#menu-bar-left a{
+#menu-bar-left .nav-btn{
   background-color: rgb(51,45,83);
   color: white;
   display: inline-block;
   width: 150px;
   height: 30px;
+  border: 0;
+  outline: none;
   padding: 0;
   overflow: hidden;
   user-select: none;
   overflow: hidden;
+  cursor: pointer;
   -webkit-app-region: no-drag;
 }
 
-#menu-bar-left a:hover{
+#menu-bar-left .nav-btn:hover{
+  background-color: rgb(85,255,82);
+}
+#menu-bar-left .active{
   background-color: rgb(85,255,82);
 }
 
-#menu-bar-left a:hover .label{
+#menu-bar-left .nav-btn:hover .label{
+  color: rgb(51,45,83);
+}
+#menu-bar-left .active .label{
   color: rgb(51,45,83);
 }
 
-#menu-bar-left a:hover .icon{
+#menu-bar-left .nav-btn:hover .icon{
+  filter: invert(15%) sepia(13%) saturate(2713%) hue-rotate(209deg) brightness(92%) contrast(87%);
+}
+#menu-bar-left .active .icon{
   filter: invert(15%) sepia(13%) saturate(2713%) hue-rotate(209deg) brightness(92%) contrast(87%);
 }
 
@@ -53,8 +65,4 @@
   font-weight: 300;
   font-size: 0.7rem;
   color: inherit;
-}
-
-#menu-bar-left p{
-  font-size: 0.7rem;
 }

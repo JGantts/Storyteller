@@ -34,22 +34,22 @@
   </div>
 
   <div id='menu-bar-left'>
-    <a href='#' onclick='loadLocalPage();' draggable='false'>
+    <button id='nav-btn-local' href='#' class='nav-btn' onclick='loadLocalPage(this.id);' draggable='false'>
       <span class='icon'>
         <img class='icon' src="icons/folder.svg" height='10px' draggable="false"/>
       </span>
       <span class='label'>
         Display Local Data
       </span>
-    </a>
-    <a href='#' onclick='loadServerPage();' draggable='false'>
+    </button>
+    <button id='nav-btn-server' href='#' class='nav-btn active' onclick='loadServerPage(this.id);' draggable='false'>
       <span class='icon'>
         <img class='icon' src="icons/cloud.svg" height='10px' draggable="false"/>
       </span>
       <span class='label'>
         Display Server Data
       </span>
-    </a>
+    </button>
   </div>
 </header>
 

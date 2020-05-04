@@ -30,6 +30,11 @@ body {
 
 html, body {margin: 0;}
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
 #main {
   height: calc(100% - 132px - 41.4px);
   margin-top: 32px;
