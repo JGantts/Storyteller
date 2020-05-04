@@ -5,7 +5,7 @@
   padding-left: 41.5px;
   padding-top: 17px;
   display: inline-grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto auto;
   grid-gap: 20px;
 }
 
@@ -23,6 +23,11 @@
   overflow: hidden;
   cursor: pointer;
   -webkit-app-region: no-drag;
+}
+
+#menu-bar-left .nav-btn.icon {
+  width: 30px;
+  height: 30px;
 }
 
 #menu-bar-left .nav-btn:hover{
