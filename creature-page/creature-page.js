@@ -3,6 +3,16 @@ $(async function(){
 
   document.querySelector('#creatureImage').src = 'https://lemurware.tech/api/v1/creatures/' + window.creatureMoniker + '/image';
 
+  (async function(creatureNamePlacement){
+    let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + window.creatureMoniker +'/name')
+    if (nameResponse.ok){
+      let nameData = await nameResponse.json();
+      creatureNamePlacement.textContent = nameData.name;
+    }else{
+      alert("HTTP-Error: " + response.status);
+    }
+  }(document.querySelector('#creatureName')));
+
   let kinResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + window.creatureMoniker + '/kin');
   if (kinResponse.ok){
     let kinData = await kinResponse.json();
