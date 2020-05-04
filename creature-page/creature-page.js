@@ -60,6 +60,34 @@ $(async function(){
 
     }
 
+    if(kinData.children.length > 0){
+      document.querySelector("#creatureKinChildrenLabel").style.display="block";
+      let childrenContainer = document.querySelector("#creatureKinChildrenContainer")
+      kinData.children.slice(0, 10).forEach((childData, rowDataIndex) => {
+        var childTemplate = document.querySelector('#kin-child');
+
+        let childPlacement = document.importNode(childTemplate.content, true);
+
+        childPlacement.querySelector('#childLink').addEventListener("click", function(){
+          window.creatureMoniker = childData.moniker;
+          $("#main").load("creature-page/creature-page.html");
+        });
+
+        (async function(childNamePlacement){
+          let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + childData.moniker +'/name');
+          if (nameResponse.ok){
+            let nameData = await nameResponse.json();
+            childNamePlacement.textContent = nameData.name;
+          }else{
+            alert("HTTP-Error: " + response.status);
+          }
+        }(childPlacement.querySelector('#childName')));
+
+        childrenContainer.appendChild(childPlacement)
+      });
+
+    }
+
   }else{
     alert("HTTP-Error: " + response.status);
   }

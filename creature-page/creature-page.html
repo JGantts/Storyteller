@@ -8,7 +8,8 @@
       </div>
       <div style='margin-top: 10px; background-color: rgb(71,59,99); padding: 10px'>
         <div id='creatureKinParent'></div>
-        <div id='creatureKinChildren'></div>
+        <div id='creatureKinChildrenLabel' style='display: none;'>Children:</div>
+        <div id='creatureKinChildrenContainer' style='display: grid;'></div>
       </div>
     </div>
   </div>
@@ -92,7 +93,7 @@
 </div>
 
 <template id='kin-parents-conceived'>
-  <h5>Natural Conception</h5>
+  <p>Natural Conception</p>
   Mother: <a id='parent1Link' href='#'>
     <span id='parent1Name'>Loading...</span>
   </a><br />
@@ -131,6 +132,13 @@
     <span id='parent2Name'></span>
   </a>
 </template>
+
+<template id='kin-child'>
+  <a id='childLink' href='#'>
+    <span id='childName'>Loading...</span>
+  </a>
+</template>
+
 
 <template id='event-conceived'>
   <div style='width: 119px; margin: 14px; padding:0; background-color: rgb(34,49,63);'>
