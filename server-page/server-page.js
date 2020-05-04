@@ -1,4 +1,4 @@
-async function asyncCall() {
+$(async function(){
   let creaturesResponse = await fetch('https://lemurware.tech/api/v1/creatures/')
   if (creaturesResponse.ok){
     let creaturesData = await creaturesResponse.json();
@@ -32,5 +32,4 @@ async function asyncCall() {
   }else{
     alert("HTTP-Error: " + creaturesResponse.status);
   }
-}
-asyncCall()
+});
