@@ -17,7 +17,7 @@ $(async function(){
         if (nameResponse.ok){
           let nameData = await nameResponse.json();
           creatureNamePlacement.textContent = nameData.name;
-        }else {
+        }else{
           alert("HTTP-Error: " + response.status);
         }
       }(nameImagePlacement.querySelector('#creatureName')));
