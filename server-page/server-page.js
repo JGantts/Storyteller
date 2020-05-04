@@ -29,8 +29,6 @@ $(async function(){
 
       creatureGrid.appendChild(nameImagePlacement)
     })
-
-    nameImagePlacement.querySelector('#creatureName').textContent = nameData.name;
   }else{
     alert("HTTP-Error: " + creaturesResponse.status);
   }
