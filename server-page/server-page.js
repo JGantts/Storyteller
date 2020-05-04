@@ -9,7 +9,6 @@ async function asyncCall() {
 
       var nameImagePlacement = document.importNode(nameImageTemplate.content, true);
 
-      // set
       nameImagePlacement.querySelector('#creatureImage').src =
         'https://lemurware.tech/api/v1/creatures/' + rowData.moniker +'/image'
 
