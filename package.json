@@ -13,7 +13,8 @@
     "electron": "^8.2.5"
   },
   "dependencies": {
-    "jquery": "^3.5.0",
+    "electron-edge-js": "^12.13.0",
+    "jquery": "^3.5.1",
     "remote": "^0.2.6"
   }
 }
