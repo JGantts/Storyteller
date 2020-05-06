@@ -1,4 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+const devEnv = false;
+
 
 function launchApp(){
   ipcMain.on('launchCaosTool', (event, args) => {
@@ -21,7 +23,7 @@ function createLauncherWindow () {
 
   win.setMenu(null)
 
-  loadWindowWithDevTools(win, 'launcher-window/index.html')
+  loadWindow(win, 'launcher-window/index.html')
 }
 
 function createCaosToolWindow() {
@@ -34,11 +36,15 @@ function createCaosToolWindow() {
     }
   })
 
-  loadWindowWithDevTools(win, 'caos-tool-window/index.html')
+  loadWindow(win, 'caos-tool-window/index.html')
 }
 
 function loadWindow(browserWindow, loadFile){
-  browserWindow.loadFile(loadFile);
+  if(!devEnv){
+    browserWindow.loadFile(loadFile);
+  }else{
+    loadWindowWithDevTools(browserWindow, loadFile);
+  }
 }
 
 function loadWindowWithDevTools(browserWindow, loadFile){
