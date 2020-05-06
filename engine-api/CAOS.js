@@ -3,7 +3,6 @@ var path = require('path');
 
 var helloWorld = edge.func(`
 #r "resources/app/engine-api/CAOS.dll"
-
 using CAOS;
 
 async (input) => {
@@ -12,21 +11,41 @@ async (input) => {
 
   if (injector.CanConnectToGame())
   {
-    return "Connected to game.";
+    try
+    {
+        CaosResult result = injector.ExecuteCaos("outs \\"hi\\"");
+        if (result.Success)
+        {
+            return result.Content;
+        }
+        else
+        {
+           return "Error Code: " + result.ResultCode;
+        }
+    }
+    catch (NoGameCaosException e)
+    {
+        return "Game exited unexpectedly. Error message: " + e.Message;
+    }
+    return "Connected to game. ";// +
+      //injector.ProcessID().ToString();
   }
   else
   {
     return "Couldn't connect to game.";
   }
 
-  return ".NET Welcomes " + input.ToString();
 }
 `);
 
-helloWorld('JavaScript', function (error, result) {
-    if (error) throw error;
-    console.log(result);
-});
+(async function(){
+  await helloWorld('JavaScript', function (error, result) {
+      if (error) throw error;
+      console.log(result);
+  });
+}());
+
+
 
 
 /*var child = require('child_process').execFile;
