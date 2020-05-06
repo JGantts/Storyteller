@@ -1,9 +1,9 @@
 function launchDockingStation(){
   var exec = require('child_process').execFile;
-  var executablePath = "C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station/engine.exe";
+  var executablePath = "C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station/";
 
-  exec(executablePath,{
-    cwd: 'C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station'
+  exec(executablePath + 'engine.exe',{
+    cwd: executablePath
   }, function(err, data) {
       if(err){
          console.error(err);
