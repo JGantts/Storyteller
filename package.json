@@ -1,5 +1,5 @@
 {
-  "name": "Story&nbsp;Teller",
+  "name": "StoryTeller",
   "version": "1.0.0",
   "description": "Displays and uploads world histories.",
   "main": "index.js",

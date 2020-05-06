@@ -1,12 +1,36 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const devEnv = false;
+const storage = require('electron-json-storage');
 
+let javaScriptDevEnv;
+
+ipcMain.on('launchCaosTool', (event, args) => {
+  createCaosToolWindow();
+});
 
 function launchApp(){
-  ipcMain.on('launchCaosTool', (event, args) => {
-    createCaosToolWindow();
+  loadSettings(createLauncherWindow);
+}
+
+function loadSettings(then){
+  storage.get('devEnvironment', function(error, data) {
+    if (error) throw error;
+    if (data == {}){
+      console.log("empty data")
+      storage.set('devEnvironment', { 'isDev': false }, function(error) {
+        if (error) throw error;
+        javaScriptDevEnv = false;
+        then();
+      });
+    }else{
+      if (data.isDev){
+        javaScriptDevEnv = true;
+        then();
+      }else{
+        javaScriptDevEnv = false;
+        then();
+      }
+    }
   });
-  createLauncherWindow();
 }
 
 function createLauncherWindow () {
@@ -40,7 +64,7 @@ function createCaosToolWindow() {
 }
 
 function loadWindow(browserWindow, loadFile){
-  if(!devEnv){
+  if(!javaScriptDevEnv){
     browserWindow.loadFile(loadFile);
   }else{
     loadWindowWithDevTools(browserWindow, loadFile);
