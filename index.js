@@ -21,21 +21,7 @@ function createLauncherWindow () {
 
   win.setMenu(null)
 
-  let devtools = new BrowserWindow({show: false})
-  devtools.setBounds({ x: 0, y: 0,})
-  devtools.minimize()
-
-  win.on('close', () => {
-    if(!devtools.isDestroyed()){
-      devtools.close()
-    }
-  })
-
-  // and load the index.html of the app.
-  win.loadFile('launcher-window/index.html')
-
-  win.webContents.setDevToolsWebContents(devtools.webContents)
-  win.webContents.openDevTools()
+  loadWindowWithDevTools(win, 'launcher-window/index.html')
 }
 
 function createCaosToolWindow() {
@@ -48,18 +34,25 @@ function createCaosToolWindow() {
     }
   })
 
+  loadWindowWithDevTools(win, 'caos-tool-window/index.html')
+}
+
+function loadWindow(browserWindow, loadFile){
+  browserWindow.loadFile(loadFile);
+}
+
+function loadWindowWithDevTools(browserWindow, loadFile){
   let devtools = new BrowserWindow({show: false})
   devtools.setBounds({ x: 0, y: 0,})
   devtools.minimize()
 
-  win.on('close', () => {
+  browserWindow.on('close', () => {
     if(!devtools.isDestroyed()){
       devtools.close()
     }
   })
 
-  // and load the index.html of the app.
-  win.loadFile('caos-tool-window/index.html')
+  browserWindow.loadFile(loadFile);
 
   win.webContents.setDevToolsWebContents(devtools.webContents)
   win.webContents.openDevTools()
