@@ -1,6 +1,14 @@
+<script>
+  window.jQuery = window.$ = require('jquery');
+</script>
+
 <head>
 <title>CAOS Tool 2020</title>
 </head>
 <div>
-  <p>CAOS Tool 2020 is not yet implimented.</p>
+  <button id='execute' onclick='injectUserCode()'>Inject</button>
+  <div id='caos-result'>Result</div>
+  <textarea id="caos-user-code" rows="30" cols="80" style='resize: none; '></textarea>
 </div>
+
+<script src="index.js"></script>
