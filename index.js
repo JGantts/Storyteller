@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron');
 const devEnv = false;
 
 
@@ -60,8 +60,8 @@ function loadWindowWithDevTools(browserWindow, loadFile){
 
   browserWindow.loadFile(loadFile);
 
-  win.webContents.setDevToolsWebContents(devtools.webContents)
-  win.webContents.openDevTools()
+  browserWindow.webContents.setDevToolsWebContents(devtools.webContents)
+  browserWindow.webContents.openDevTools()
 }
 
 app.whenReady().then(launchApp)
