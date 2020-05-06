@@ -27,7 +27,7 @@ function createWindow () {
   devtools.minimize()
 
   // and load the index.html of the app.
-  win.loadFile('index.html')
+  win.loadFile('launcher-window/index.html')
 
   win.webContents.setDevToolsWebContents(devtools.webContents)
   win.webContents.openDevTools()

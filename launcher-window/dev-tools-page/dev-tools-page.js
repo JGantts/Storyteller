@@ -1,4 +1,4 @@
-$.getScript('engine-api/CAOS.js');
+$.getScript('../engine-api/CAOS.js');
 
 function executeUserCode(){
   let caosUserCode = document.getElementById('caos-user-code').value;
