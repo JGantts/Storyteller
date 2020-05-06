@@ -13,7 +13,7 @@ async (input) => {
   {
     try
     {
-        CaosResult result = injector.ExecuteCaos("outs \\"hi\\"");
+        CaosResult result = injector.ExecuteCaos(input.ToString());
         if (result.Success)
         {
             return result.Content;
@@ -27,7 +27,7 @@ async (input) => {
     {
         return "Game exited unexpectedly. Error message: " + e.Message;
     }
-    return "Connected to game. ";// +
+    //return "Connected to game. ";// +
       //injector.ProcessID().ToString();
   }
   else
@@ -37,16 +37,6 @@ async (input) => {
 
 }
 `);
-
-(async function(){
-  await helloWorld('JavaScript', function (error, result) {
-      if (error) throw error;
-      console.log(result);
-  });
-}());
-
-
-
 
 /*var child = require('child_process').execFile;
 //var executablePath = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
