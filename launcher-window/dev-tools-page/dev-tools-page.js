@@ -1,3 +1,5 @@
+var { ipcRenderer } = require('electron');
+
 $.getScript('../engine-api/CAOS.js');
 
 function executeUserCode(){
@@ -6,4 +8,8 @@ function executeUserCode(){
       if (error) throw error;
       document.getElementById('caos-result').innerHTML = result;
   });
+}
+
+function launchCaolTool(){
+  ipcRenderer.send('launchCaosTool', null)
 }

@@ -1,8 +1,15 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
 var devtools
 
-function createWindow () {
+function launchApp(){
+  ipcMain.on('launchCaosTool', (event, args) => {
+    createCaosToolWindow();
+  });
+  createLauncherWindow();
+}
+
+function createLauncherWindow () {
   // Create the browser window.
   let win = new BrowserWindow({
     width: 800,
@@ -33,4 +40,20 @@ function createWindow () {
   win.webContents.openDevTools()
 }
 
-app.whenReady().then(createWindow)
+function createCaosToolWindow() {
+  // Create the browser window.
+  let win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+
+  win.setMenu(null)
+
+  // and load the index.html of the app.
+  win.loadFile('caos-tool-window/index.html')
+}
+
+app.whenReady().then(launchApp)
