@@ -21,7 +21,7 @@ function createLauncherWindow () {
 
   win.setMenu(null)
 
-  devtools = new BrowserWindow({show: false})
+  let devtools = new BrowserWindow({show: false})
   devtools.setBounds({ x: 0, y: 0,})
   devtools.minimize()
 
@@ -48,7 +48,7 @@ function createCaosToolWindow() {
     }
   })
 
-  devtools = new BrowserWindow({show: false})
+  let devtools = new BrowserWindow({show: false})
   devtools.setBounds({ x: 0, y: 0,})
   devtools.minimize()
 
