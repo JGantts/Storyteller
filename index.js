@@ -1,7 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 
-var devtools
-
 function launchApp(){
   ipcMain.on('launchCaosTool', (event, args) => {
     createCaosToolWindow();
@@ -23,15 +21,15 @@ function createLauncherWindow () {
 
   win.setMenu(null)
 
+  devtools = new BrowserWindow({show: false})
+  devtools.setBounds({ x: 0, y: 0,})
+  devtools.minimize()
+
   win.on('close', () => {
     if(!devtools.isDestroyed()){
       devtools.close()
     }
   })
-
-  devtools = new BrowserWindow({show: false})
-  devtools.setBounds({ x: 0, y: 0,})
-  devtools.minimize()
 
   // and load the index.html of the app.
   win.loadFile('launcher-window/index.html')
@@ -50,10 +48,21 @@ function createCaosToolWindow() {
     }
   })
 
-  win.setMenu(null)
+  devtools = new BrowserWindow({show: false})
+  devtools.setBounds({ x: 0, y: 0,})
+  devtools.minimize()
+
+  win.on('close', () => {
+    if(!devtools.isDestroyed()){
+      devtools.close()
+    }
+  })
 
   // and load the index.html of the app.
   win.loadFile('caos-tool-window/index.html')
+
+  win.webContents.setDevToolsWebContents(devtools.webContents)
+  win.webContents.openDevTools()
 }
 
 app.whenReady().then(launchApp)
