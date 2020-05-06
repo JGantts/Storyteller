@@ -1,5 +1,5 @@
 {
-  "name": "Story Teller",
+  "name": "Story&nbsp;Teller",
   "version": "1.0.0",
   "description": "Displays and uploads world histories.",
   "main": "index.js",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "electron-edge-js": "^12.13.0",
+    "electron-json-storage": "^4.1.8",
     "jquery": "^3.5.1",
     "remote": "^0.2.6"
   }
