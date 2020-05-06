@@ -39,7 +39,7 @@
         <img class='icon' src="icons/settings.svg" height='10px' draggable="false"/>
       </span>
     </button>
-    <button id='nav-btn-local' href='#' class='nav-btn' onclick='loadLocalPage(this.id);' draggable='false'>
+    <button id='nav-btn-local' href='#' class='nav-btn active' onclick='loadLocalPage(this.id);' draggable='false'>
       <span class='icon'>
         <img class='icon' src="icons/folder.svg" height='10px' draggable="false"/>
       </span>
@@ -47,12 +47,20 @@
         Display Local Data
       </span>
     </button>
-    <button id='nav-btn-server' href='#' class='nav-btn active' onclick='loadServerPage(this.id);' draggable='false'>
+    <button id='nav-btn-server' href='#' class='nav-btn' onclick='loadServerPage(this.id);' draggable='false'>
       <span class='icon'>
         <img class='icon' src="icons/cloud.svg" height='10px' draggable="false"/>
       </span>
       <span class='label'>
         Display Server Data
+      </span>
+    </button>
+    <button id='nav-btn-dev' href='#' class='nav-btn' onclick='loadDevToolsPage(this.id);' draggable='false'>
+      <span class='icon'>
+        <img class='icon' src="icons/cloud.svg" height='10px' draggable="false"/>
+      </span>
+      <span class='label'>
+        Dev Tools
       </span>
     </button>
   </div>

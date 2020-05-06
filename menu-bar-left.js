@@ -19,6 +19,13 @@ function loadServerPage(clicked){
   document.getElementById(clicked).className += ' active';
 }
 
+function loadDevToolsPage(clicked){
+  $("#main").load("dev-tools-page/dev-tools-page.html");
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(' active', '');
+  document.getElementById(clicked).className += ' active';
+}
+
 $(function(){
-  loadServerPage('nav-btn-server');
+  loadLocalPage('nav-btn-local');
 });
