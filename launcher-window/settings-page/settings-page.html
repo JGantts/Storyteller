@@ -1,7 +1,12 @@
-<div>
-  <p style='background-color: rgb(71,59,99);'>
-    Settings page not yet implimented.
-  </p>
+<div style='background-color: rgb(71,59,99);'>
+  <form>
+    <input class='setting-checkbox' type='checkbox' id='dev-js-checkbox' data-backend-name='development.javascript' data-default=false>
+    <span>JavaSript Developer Tools</span>
+    <div id='dev-js-checkbox-statehint'
+      data-checked-statehint='Chrome Developer Tools will open with each window.'
+      data-unchecked-statehint='Chrome Developer Tools will not open.'>
+    </div>
+  </form>
 </div>
 
 <script src="settings-page/settings-page.js"></script>

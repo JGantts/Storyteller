@@ -1,7 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const storage = require('electron-json-storage');
-
-let javaScriptDevEnv;
+let settings;
 
 ipcMain.on('launchCaosTool', (event, args) => {
   createCaosToolWindow();
@@ -12,25 +10,12 @@ function launchApp(){
 }
 
 function loadSettings(then){
-  storage.get('devEnvironment', function(error, data) {
-    if (error) throw error;
-    if (data == {}){
-      console.log("empty data")
-      storage.set('devEnvironment', { 'isDev': false }, function(error) {
-        if (error) throw error;
-        javaScriptDevEnv = false;
-        then();
-      });
-    }else{
-      if (data.isDev){
-        javaScriptDevEnv = true;
-        then();
-      }else{
-        javaScriptDevEnv = false;
-        then();
-      }
-    }
-  });
+  settings = require('electron-settings');
+  let settingLoaderWin = new BrowserWindow({show: false})
+  then();
+  settingLoaderWin.once('ready-to-show', () => {
+    settingLoaderWin.show();
+  })
 }
 
 function createLauncherWindow () {
@@ -64,7 +49,7 @@ function createCaosToolWindow() {
 }
 
 function loadWindow(browserWindow, loadFile){
-  if(!javaScriptDevEnv){
+  if(!settings.get('development.javascript')){
     browserWindow.loadFile(loadFile);
   }else{
     loadWindowWithDevTools(browserWindow, loadFile);
@@ -72,7 +57,11 @@ function loadWindow(browserWindow, loadFile){
 }
 
 function loadWindowWithDevTools(browserWindow, loadFile){
-  let devtools = new BrowserWindow({show: false})
+  let devtools = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: false
+  });
   devtools.setBounds({ x: 0, y: 0,})
   devtools.minimize()
 
