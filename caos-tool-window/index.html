@@ -8,7 +8,8 @@
 <div>
   <button id='execute' onclick='injectUserCode()'>Inject</button>
   <div id='caos-result'>Result</div>
-  <textarea id="caos-user-code" rows="30" cols="80" style='resize: none; '></textarea>
+  <textarea id="caos-user-code" rows="30" cols="80" style='resize: none;' onkeyup='parseText()' onchange='parseText()'></textarea>
+  <div id='inprocessParse'></div>
 </div>
 
 <script src="index.js"></script>
