@@ -141,7 +141,20 @@ function parseBoolean(chunks){
   }
   var right_chunks = parseNumberOrString(left_chunks.chunks.slice(1));
   return {
-    boolean: {left: left_chunks.value, operator: operator, right: right_chunks.value},
+    boolean: {
+      left: left_chunks.value,
+      operator: {
+        type: 'operator',
+        variant: operator.toLowerCase()
+          .replace('eq', '=')
+          .replace('ne', '<>')
+          .replace('gt', '>')
+          .replace('ge', '>=')
+          .replace('lt', '<')
+          .replace('le', '<='),
+        name: operator},
+      right: right_chunks.value
+    },
     chunks: right_chunks.chunks
   }
 }
@@ -149,7 +162,12 @@ function parseBoolean(chunks){
 function parsePossibleBoolop(chunks){
   if (['and', 'or'].includes(chunks[0].toLowerCase())){
     return {
-      possibleBoolop: chunks[0], chunks: chunks.slice(1)
+      possibleBoolop: {
+        type: 'bool-op',
+        variant: chunks[0].toLowerCase(),
+        name: chunks[0]
+      },
+      chunks: chunks.slice(1)
     };
   }
   return {
@@ -160,7 +178,11 @@ function parsePossibleBoolop(chunks){
 function parseCommand(chunks){
   if (['inst'].includes(chunks[0].toLowerCase())){
     return {
-      command: {type: 'command', name: chunks[0]},
+      command: {
+        type: 'command',
+        variant: chunks[0].toLowerCase(),
+        name: chunks[0]
+      },
       chunks: chunks.slice(1)
     };
   }else if (['setv', 'addv'].includes(chunks[0].toLowerCase())){
@@ -178,6 +200,7 @@ function parseSetvAddsEtc(chunks){
     return {
       command: {
         type: 'command',
+        variant: commandName.toLowerCase(),
         name: commandName,
         arguments: [argument1_chunks.variable, argument2_chunks.value]
       },
@@ -232,6 +255,7 @@ function parseNumber(chunks){
       value: {
         command: {
           type: 'command',
+          variant: chunks[0].toLowerCase(),
           name: chunks[0],
           arguments: [leftArgument_chunks.value, rightArgument_chunks.value]
         }
