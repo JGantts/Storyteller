@@ -69,11 +69,11 @@ function parseDoifElifElseEndiStatements(chunks){
       chunks = commands_chunks.chunks;
     }else if ('elif' === chunks[0].toLowerCase()){
       var conditional_chunks = parseConditional(chunks);
-      var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks, 'else|endi');
+      var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks, 'elif|else|endi');
       commandList.push(commands_chunks.commandBlob);
       chunks = commands_chunks.chunks;
     }else if ('else' === chunks[0].toLowerCase()){
-      var commands_chunks = parseCommandList(chunks[0], chunks.slice(1), 'endi');
+      var commands_chunks = parseCommandList({statement: chunks[0]}, chunks.slice(1), 'endi');
       commandList.push(commands_chunks.commandBlob);
       chunks = commands_chunks.chunks;
     }else if ('endi' === chunks[0].toLowerCase()){
