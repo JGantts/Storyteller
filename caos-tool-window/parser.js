@@ -145,6 +145,7 @@ function parseBoolean(chunks){
   var right_chunks = parseNumberOrString(left_chunks.chunks.slice(1));
   return {
     boolean: {
+      type: 'boolean',
       left: left_chunks.value,
       operator: {
         type: 'operator',
@@ -235,8 +236,9 @@ function parseVariable(chunks){
       variable:
       {
         type: 'variable',
-        variant: chunks[0],
-        name: string_chunks.value
+        variant: chunks[0].toLowerCase(),
+        name: chunks[0],
+        varname: string_chunks.value
       },
       chunks: string_chunks.chunks
     };
@@ -256,12 +258,10 @@ function parseNumber(chunks){
     var rightArgument_chunks = parseNumber(leftArgument_chunks.chunks);
     return{
       value: {
-        command: {
-          type: 'returning-command',
-          variant: chunks[0].toLowerCase(),
-          name: chunks[0],
-          arguments: [leftArgument_chunks.value, rightArgument_chunks.value]
-        }
+        type: 'returning-command',
+        variant: chunks[0].toLowerCase(),
+        name: chunks[0],
+        arguments: [leftArgument_chunks.value, rightArgument_chunks.value]
       },
       chunks: rightArgument_chunks.chunks,
     }

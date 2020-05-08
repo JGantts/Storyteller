@@ -1,0 +1,15 @@
+span.syntax-variable, span.syntax-returning-command, span.syntax-operator, span.syntax-bool-op{
+  color: rgb(200,0,200);
+}
+
+span.syntax-comment{
+  color: rgb(0,128,0);
+}
+
+span.syntax-command, span.syntax-flow{
+  color: rgb(0,0,255);
+}
+
+span.syntax-number-literal, span.syntax-string-literal{
+  color: rgb(128,64,64);
+}
