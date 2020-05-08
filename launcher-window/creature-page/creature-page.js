@@ -36,7 +36,7 @@ $(async function(){
           let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + kinData.parent1Moniker +'/name')
           if (nameResponse.ok){
             let nameData = await nameResponse.json();
-            parentNamePlacement.textContent = nameData.name;
+            parentNamePlacement.textContent = '🠖' + nameData.name;
           }else{
             alert("HTTP-Error: " + response.status);
           }
@@ -46,7 +46,7 @@ $(async function(){
           let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + kinData.parent2Moniker +'/name')
           if (nameResponse.ok){
             let nameData = await nameResponse.json();
-            parentNamePlacement.textContent = nameData.name;
+            parentNamePlacement.textContent = '🠖' + nameData.name;
           }else{
             alert("HTTP-Error: " + response.status);
           }
@@ -77,7 +77,7 @@ $(async function(){
           let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + childData.moniker +'/name');
           if (nameResponse.ok){
             let nameData = await nameResponse.json();
-            childNamePlacement.textContent = nameData.name;
+            childNamePlacement.textContent = '🠖' + nameData.name;
             if(childDataIndex < kinData.children.length - 1){
               childNamePlacement.textContent += ", ";
             }
