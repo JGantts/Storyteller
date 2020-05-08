@@ -80,9 +80,7 @@ function parseDoifElifElseEndiStatements(chunks){
   var done = false;
   do{
     if ('doif' === chunks[0].toLowerCase()){
-      console.log('parsing conditional: ' + chunks);
       var conditional_chunks = parseConditional(chunks);
-      console.log('parsed conditional: ' + JSON.stringify(conditional_chunks));
       var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks, 'elif|else|endi');
       commandList.push(commands_chunks.commandBlob);
       chunks = commands_chunks.chunks;
@@ -110,7 +108,6 @@ function parseConditional(chunks){
   var done = false;
   do{
     var boolean_chunks = parseBoolean(chunks);
-    console.log('boolean_chunks: ' + JSON.stringify(boolean_chunks));
     chain.push(boolean_chunks.boolean);
     var possibleBoolop_chunks = parsePossibleBoolop(boolean_chunks.chunks);
     chunks = possibleBoolop_chunks.chunks;
@@ -135,7 +132,7 @@ function parseBoolean(chunks){
   if (['eq', 'ne', 'gt', 'ge', 'lt', 'le', '=', '<>', '>', '>=', '<', '<='].includes(left_chunks.chunks[0].toLowerCase())){
     operator = left_chunks.chunks[0];
   }else{
-
+    console.log(chunks);
   }
   var right_chunks = parseNumberOrString(left_chunks.chunks.slice(1));
   return {
@@ -173,15 +170,15 @@ function parseSetvAddsEtc(chunks){
   var argument1_chunks;
   if (['setv', 'addv'].includes(command.toLowerCase())){
     argument2_chunks = parseNumber(argument1_chunks.chunks);
+    return {
+      command: {
+        command: command,
+        arguments: [argument1_chunks.variable, argument2_chunks.value]
+      },
+      chunks: argument2_chunks.chunks
+    };
   }
-
-  return {
-    command: {
-      command: command,
-      arguments: [argument1_chunks.variable, argument2_chunks.value]
-    },
-    chunks: argument2_chunks.chunks
-  };
+  console.log(chunks);
 }
 
 function parseVariable(chunks){
@@ -194,10 +191,11 @@ function parseVariable(chunks){
     var string_chunks = parseString(chunks.slice(1));
     return {variable: {type: chunks[0], name: string_chunks.string}, chunks: string_chunks.chunks};
   }else if(['name'].includes(chunks[0].toLowerCase())){
-
+    console.log(chunks);
   }else{
     return {variable: null, chunks: chunks};
   }
+  console.log(chunks);
 }
 
 function parseNumber(chunks){
@@ -207,6 +205,7 @@ function parseNumber(chunks){
     var variable_chunks = parseVariable(chunks);
     return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
   }
+  console.log(chunks);
 }
 
 function parseString(chunks){
@@ -223,6 +222,7 @@ function parseString(chunks){
     var variable_chunks = parseVariable(chunks);
     return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
   }
+  console.log(chunks);
 }
 
 
