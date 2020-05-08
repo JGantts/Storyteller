@@ -18,14 +18,31 @@ function parseText(){
   $('#inprocessParse').text(JSON.stringify(tree));
 }
 
+function chunkCode(code){
+  var lines = code.split('\n');
+  var linesNoComments = lines.filter((line) => {
+    return line[0] !== '*';
+  });
+  var linesReducedWhitespace = linesNoComments.map((line) => {
+    return line.replace(/\s+/g, ' ');
+  });
+  var linesRemovedInitialFinalWhitespace = linesReducedWhitespace.map((line) => {
+    return line.trim();
+  });
+
+  var linesRemovedBlanks = linesRemovedInitialFinalWhitespace.filter((line) => {
+    return line != '';
+  });
+
+  var chunksJoined = linesRemovedBlanks.join(' ');
+  return chunksJoined.split(' ');
+}
+
 function parseInjectEventsRemove(chunks){
   var inject_chunks = parseCommandList({}, chunks, 'scrp|rscr|EOF');
-  $('#inprocessParse').text(JSON.stringify(inject_chunks));
-  var events_chunks = parseEventsList(inject_chunks.chunks);
-  $('#inprocessParse').text(JSON.stringify(events_chunks));
-  var remove_chunks = parseCommandList({start: 'rscr'}, events_chunks.chunks, 'EOF');
-  $('#inprocessParse').text(JSON.stringify(remove_chunks));
-  return {inject: inject_chunks.commands, events: events_chunks.events, remove: remove_chunks.commands};
+  //var events_chunks = parseEventsList(inject_chunks.chunks);
+  //var remove_chunks = parseCommandList({start: 'rscr'}, events_chunks.chunks, 'EOF');
+  return {inject: inject_chunks.commandBlob, events: {}, remove: {}};
 }
 
 function parseEventsList(){
@@ -106,26 +123,4 @@ function parseCommand(chunks){
     },
     chunks: chunks.slice(3)
   }
-}
-
-
-
-function chunkCode(code){
-  var lines = code.split('\n');
-  var linesNoComments = lines.filter((line) => {
-    return line[0] !== '*';
-  });
-  var linesReducedWhitespace = linesNoComments.map((line) => {
-    return line.replace(/\s+/g, ' ');
-  });
-  var linesRemovedInitialFinalWhitespace = linesReducedWhitespace.map((line) => {
-    return line.trim();
-  });
-
-  var linesRemovedBlanks = linesRemovedInitialFinalWhitespace.filter((line) => {
-    return line != '';
-  });
-
-  var chunksJoined = linesRemovedBlanks.join(' ');
-  return chunksJoined.split(' ');
 }
