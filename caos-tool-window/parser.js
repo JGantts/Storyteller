@@ -1,8 +1,6 @@
 function parseCode(code){
   chunks = chunkCode(code);
-
   var tree = parseInjectEventsRemove(chunks);
-
   return tree;
 }
 
@@ -27,10 +25,10 @@ function chunkCode(code){
 }
 
 function parseInjectEventsRemove(chunks){
-  var inject_chunks = parseCommandList({}, chunks, 'scrp|rscr|EOF');
+  var inject_chunks = parseCommandList(chunks, 'scrp|rscr|EOF');
   //var events_chunks = parseEventsList(inject_chunks.chunks);
   //var remove_chunks = parseCommandList({start: 'rscr'}, events_chunks.chunks, 'EOF');
-  return {inject: inject_chunks.commandBlob, events: {}, remove: {}};
+  return {type: 'caos-file', inject: inject_chunks.commandList, events: {}, remove: {}};
 }
 
 function parseEventsList(){
@@ -41,7 +39,7 @@ function parseScrp(chunks){
 
 }
 
-function parseCommandList(begining, chunks, endings){
+function parseCommandList(chunks, endings){
   var commandList = [];
   var done = false;
   do{
@@ -59,8 +57,7 @@ function parseCommandList(begining, chunks, endings){
       chunks = command_chunks.chunks;
     }
   }while(!done);
-  begining.commands = commandList;
-  return {commandBlob: begining, chunks: chunks};
+  return {commandList: {type: 'commandList', commands: commandList}, chunks: chunks};
 }
 
 function parseDoifElifElseEndiStatements(chunks){
@@ -68,33 +65,53 @@ function parseDoifElifElseEndiStatements(chunks){
   var done = false;
   do{
     if ('doif' === chunks[0].toLowerCase()){
-      var conditional_chunks = parseConditional(chunks);
-      var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks, 'elif|else|endi');
-      commandList.push(commands_chunks.commandBlob);
+      var conditional_chunks = parseConditional(chunks.slice(1));
+      var commands_chunks = parseCommandList(conditional_chunks.chunks, 'elif|else|endi');
+      commandList.push({
+        type: 'flow',
+        variant: chunks[0].toLowerCase(),
+        name: chunks[0],
+        conditional: conditional_chunks.conditional,
+        commandList: commands_chunks.commandList
+      });
       chunks = commands_chunks.chunks;
     }else if ('elif' === chunks[0].toLowerCase()){
-      var conditional_chunks = parseConditional(chunks);
-      var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks, 'elif|else|endi');
-      commandList.push(commands_chunks.commandBlob);
+      var conditional_chunks = parseConditional(chunks.slice(1));
+      var commands_chunks = parseCommandList(conditional_chunks.chunks, 'elif|else|endi');
+      commandList.push({
+        type: 'flow',
+        variant: chunks[0].toLowerCase(),
+        name: chunks[0],
+        conditional: conditional_chunks.conditional,
+        commandList: commands_chunks.commandList
+      });
       chunks = commands_chunks.chunks;
     }else if ('else' === chunks[0].toLowerCase()){
-      var commands_chunks = parseCommandList({statement: chunks[0]}, chunks.slice(1), 'endi');
-      commandList.push(commands_chunks.commandBlob);
+      var commands_chunks = parseCommandList(chunks.slice(1), 'endi');
+      commandList.push({
+        type: 'flow',
+        variant: chunks[0].toLowerCase(),
+        name: chunks[0],
+        commandList: commands_chunks.commandList
+      });
       chunks = commands_chunks.chunks;
     }else if ('endi' === chunks[0].toLowerCase()){
+      commandList.push({
+        type: 'flow',
+        variant: chunks[0].toLowerCase(),
+        name: chunks[0]
+      });
       chunks = chunks.slice(1);
       done = true;
     }else{
       console.log(chunks);
     }
   }while(!done);
-  return {commands: {commandDoifBlob: commandList}, chunks: chunks};
+  return {commands: {type: 'doif-blob', commands: commandList}, chunks: chunks};
 }
 
 function parseConditional(chunks){
   var chain = [];
-  var statement = chunks[0];
-  chunks = chunks.slice(1);
   var done = false;
   do{
     var boolean_chunks = parseBoolean(chunks);
@@ -108,12 +125,8 @@ function parseConditional(chunks){
     }
   }while (!done);
 
-
   return {
-    conditional: {
-      statement: statement,
-      condition: chain
-    },
+    conditional: chain,
     chunks: chunks
   }
 }
