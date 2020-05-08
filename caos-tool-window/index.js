@@ -96,6 +96,8 @@ function parseDoifElifElseEndiStatements(chunks){
     }else if ('endi' === chunks[0].toLowerCase()){
       chunks = chunks.slice(1);
       done = true;
+    }else{
+      console.log(chunks);
     }
   }while(!done);
   return {commands: {commandDoifBlob: commandList}, chunks: chunks};
@@ -120,8 +122,10 @@ function parseConditional(chunks){
 
 
   return {
-    statement: statement,
-    conditional: chain,
+    conditional: {
+      statement: statement,
+      condition: chain
+    },
     chunks: chunks
   }
 }
@@ -136,7 +140,7 @@ function parseBoolean(chunks){
   }
   var right_chunks = parseNumberOrString(left_chunks.chunks.slice(1));
   return {
-    booloean: {left: left_chunks.value, operator: operator, right: right_chunks.value},
+    boolean: {left: left_chunks.value, operator: operator, right: right_chunks.value},
     chunks: right_chunks.chunks
   }
 }
@@ -201,6 +205,16 @@ function parseVariable(chunks){
 function parseNumber(chunks){
   if (!isNaN(chunks[0])){
     return {value: chunks[0], chunks: chunks.slice(1)};
+  }else if (['rand'].includes(chunks[0].toLowerCase())){
+    var leftArgument_chunks = parseNumber(chunks.slice(1));
+    var rightArgument_chunks = parseNumber(leftArgument_chunks.chunks);
+    return{
+      value: {
+        command: chunks[0],
+        arguments: [leftArgument_chunks.value, rightArgument_chunks.value]
+      },
+      chunks: rightArgument_chunks.chunks,
+    }
   }else{
     var variable_chunks = parseVariable(chunks);
     return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
