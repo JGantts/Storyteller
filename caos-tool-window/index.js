@@ -193,7 +193,7 @@ function parseVariable(chunks){
     return {variable: chunks[0], chunks: chunks.slice(1)}
   }else if(['game'].includes(chunks[0].toLowerCase())){
     var string_chunks = parseString(chunks.slice(1));
-    return {variable: {type: chunks[0], name: string_chunks.string}, chunks: string_chunks.chunks};
+    return {variable: {type: chunks[0], name: string_chunks.value}, chunks: string_chunks.chunks};
   }else if(['name'].includes(chunks[0].toLowerCase())){
     console.log(chunks);
   }else{
@@ -224,8 +224,9 @@ function parseNumber(chunks){
 
 function parseString(chunks){
   if (chunks[0][0]==='"'){
-    var stringsChunks = []
-    var index = 0
+    var stringsChunks = [];
+    var index = 0;
+    chunks[0] = chunks[0].slice(1);
     while (chunks[index][chunks[index].length-1]!=='"'){
       stringsChunks.push(chunks[index]);
       index++;
