@@ -53,13 +53,13 @@ function parseScrp(chunks){
 
 }
 
-function parseCommandList(begining, chunks, ending){
+function parseCommandList(begining, chunks, endings){
   var commandList = [];
   var done = false;
   do{
     if (chunks.length === 0){
       done = true;
-    }else if (ending.includes(chunks[0].toLowerCase())){
+    }else if (endings.includes(chunks[0].toLowerCase())){
       done = true;
     }else if ('doif' === chunks[0].toLowerCase()){
       var commands_chunks = parseDoifElifElseEndiStatements(chunks);
@@ -80,7 +80,9 @@ function parseDoifElifElseEndiStatements(chunks){
   var done = false;
   do{
     if ('doif' === chunks[0].toLowerCase()){
+      console.log('parsing conditional: ' + chunks);
       var conditional_chunks = parseConditional(chunks);
+      console.log('parsed conditional: ' + JSON.stringify(conditional_chunks));
       var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks, 'elif|else|endi');
       commandList.push(commands_chunks.commandBlob);
       chunks = commands_chunks.chunks;
@@ -102,25 +104,136 @@ function parseDoifElifElseEndiStatements(chunks){
 }
 
 function parseConditional(chunks){
+  var chain = [];
+  var statement = chunks[0];
+  chunks = chunks.slice(1);
+  var done = false;
+  do{
+    var boolean_chunks = parseBoolean(chunks);
+    console.log('boolean_chunks: ' + JSON.stringify(boolean_chunks));
+    chain.push(boolean_chunks.boolean);
+    var possibleBoolop_chunks = parsePossibleBoolop(boolean_chunks.chunks);
+    chunks = possibleBoolop_chunks.chunks;
+    if (possibleBoolop_chunks.possibleBoolop!==null){
+      chain.push(possibleBoolop_chunks.possibleBoolop);
+    }else{
+      done = true;
+    }
+  }while (!done);
+
+
   return {
-    conditional: {
-      statement: chunks[0],
-      condition: {
-        left: chunks[1],
-        operator: chunks[2],
-        right: chunks[3]
-      }
-    },
-    chunks: chunks.slice(4)
+    statement: statement,
+    conditional: chain,
+    chunks: chunks
+  }
+}
+
+function parseBoolean(chunks){
+  var left_chunks = parseNumberOrString(chunks);
+  var operator;
+  if (['eq', 'ne', 'gt', 'ge', 'lt', 'le', '=', '<>', '>', '>=', '<', '<='].includes(left_chunks.chunks[0].toLowerCase())){
+    operator = left_chunks.chunks[0];
+  }else{
+
+  }
+  var right_chunks = parseNumberOrString(left_chunks.chunks.slice(1));
+  return {
+    booloean: {left: left_chunks.value, operator: operator, right: right_chunks.value},
+    chunks: right_chunks.chunks
+  }
+}
+
+function parsePossibleBoolop(chunks){
+  if (['and', 'or'].includes(chunks[0].toLowerCase())){
+    return {
+      possibleBoolop: chunks[0], chunks: chunks.slice(1)
+    };
+  }
+  return {
+      possibleBoolop: null, chunks: chunks
   }
 }
 
 function parseCommand(chunks){
+  if (['inst'].includes(chunks[0].toLowerCase())){
+    return {
+      command: chunks[0],
+      chunks: chunks.slice(1)
+    };
+  }else if (['setv', 'addv'].includes(chunks[0].toLowerCase())){
+    return parseSetvAddsEtc(chunks);
+  }
+  console.log(chunks);
+}
+
+function parseSetvAddsEtc(chunks){
+  var command = chunks[0];
+  var argument1_chunks = parseVariable(chunks.slice(1));
+  var argument1_chunks;
+  if (['setv', 'addv'].includes(command.toLowerCase())){
+    argument2_chunks = parseNumber(argument1_chunks.chunks);
+  }
+
   return {
     command: {
-      command: chunks[0],
-      arguments: [chunks[1], chunks[2]]
+      command: command,
+      arguments: [argument1_chunks.variable, argument2_chunks.value]
     },
-    chunks: chunks.slice(3)
+    chunks: argument2_chunks.chunks
+  };
+}
+
+function parseVariable(chunks){
+  if (chunks[0][0].toLowerCase()==='v'
+  && chunks[0][1].toLowerCase()==='a'
+  && (chunks[0][2] >= '0' && chunks[0][2] <= '9')
+  && (chunks[0][3] >= '0' && chunks[0][3] <= '9')){
+    return {variable: chunks[0], chunks: chunks.slice(1)}
+  }else if(['game'].includes(chunks[0].toLowerCase())){
+    var string_chunks = parseString(chunks.slice(1));
+    return {variable: {type: chunks[0], name: string_chunks.string}, chunks: string_chunks.chunks};
+  }else if(['name'].includes(chunks[0].toLowerCase())){
+
+  }else{
+    return {variable: null, chunks: chunks};
   }
+}
+
+function parseNumber(chunks){
+  if (!isNaN(chunks[0])){
+    return {value: chunks[0], chunks: chunks.slice(1)};
+  }else{
+    var variable_chunks = parseVariable(chunks);
+    return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
+  }
+}
+
+function parseString(chunks){
+  if (chunks[0][0]==='"'){
+    var stringsChunks = []
+    var index = 0
+    while (chunks[index][chunks[index].length-1]!=='"'){
+      stringsChunks.push(chunks[index]);
+      index++;
+    }
+    stringsChunks.push(chunks[index].substring(0, chunks[index].length-1));
+    return {value: stringsChunks.join(' '), chunks: chunks.slice(index+1)};
+  }else{
+    var variable_chunks = parseVariable(chunks);
+    return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
+  }
+}
+
+
+function parseNumberOrString(chunks){
+  var possibleNumber_chunks = parseNumber(chunks);
+  if (possibleNumber_chunks.value!==null){
+    return {value: possibleNumber_chunks.value, chunks: possibleNumber_chunks.chunks};
+  }
+  var possibleString_chunks = parseString(chunks);
+  if (possibleString_chunks.value!==null){
+    return {value: possibleString_chunks.value, chunks: possibleString_chunks.chunks};
+  }
+  console.log(chunks);
 }
