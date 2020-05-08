@@ -57,17 +57,17 @@ function parseCommandList(chunks, endings){
       chunks = command_chunks.chunks;
     }
   }while(!done);
-  return {commandList: {type: 'commandList', commands: commandList}, chunks: chunks};
+  return {commandList: {type: 'command-list', commands: commandList}, chunks: chunks};
 }
 
 function parseDoifElifElseEndiStatements(chunks){
-  var commandList = [];
+  var sections = [];
   var done = false;
   do{
     if ('doif' === chunks[0].toLowerCase()){
       var conditional_chunks = parseConditional(chunks.slice(1));
       var commands_chunks = parseCommandList(conditional_chunks.chunks, 'elif|else|endi');
-      commandList.push({
+      sections.push({
         type: 'flow',
         variant: chunks[0].toLowerCase(),
         name: chunks[0],
@@ -78,7 +78,7 @@ function parseDoifElifElseEndiStatements(chunks){
     }else if ('elif' === chunks[0].toLowerCase()){
       var conditional_chunks = parseConditional(chunks.slice(1));
       var commands_chunks = parseCommandList(conditional_chunks.chunks, 'elif|else|endi');
-      commandList.push({
+      sections.push({
         type: 'flow',
         variant: chunks[0].toLowerCase(),
         name: chunks[0],
@@ -88,7 +88,7 @@ function parseDoifElifElseEndiStatements(chunks){
       chunks = commands_chunks.chunks;
     }else if ('else' === chunks[0].toLowerCase()){
       var commands_chunks = parseCommandList(chunks.slice(1), 'endi');
-      commandList.push({
+      sections.push({
         type: 'flow',
         variant: chunks[0].toLowerCase(),
         name: chunks[0],
@@ -96,7 +96,7 @@ function parseDoifElifElseEndiStatements(chunks){
       });
       chunks = commands_chunks.chunks;
     }else if ('endi' === chunks[0].toLowerCase()){
-      commandList.push({
+      sections.push({
         type: 'flow',
         variant: chunks[0].toLowerCase(),
         name: chunks[0]
@@ -107,7 +107,7 @@ function parseDoifElifElseEndiStatements(chunks){
       console.log(chunks);
     }
   }while(!done);
-  return {commands: {type: 'doif-blob', commands: commandList}, chunks: chunks};
+  return {commands: {type: 'doif-blob', sections: sections}, chunks: chunks};
 }
 
 function parseConditional(chunks){
@@ -126,7 +126,10 @@ function parseConditional(chunks){
   }while (!done);
 
   return {
-    conditional: chain,
+    conditional: {
+      type: 'conditional',
+      conditional: chain
+    },
     chunks: chunks
   }
 }
@@ -254,7 +257,7 @@ function parseNumber(chunks){
     return{
       value: {
         command: {
-          type: 'command',
+          type: 'returning-command',
           variant: chunks[0].toLowerCase(),
           name: chunks[0],
           arguments: [leftArgument_chunks.value, rightArgument_chunks.value]
