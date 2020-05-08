@@ -1,11 +1,9 @@
-function parseText(){
-  var code = $('#caos-user-code').val();
-
+function parseCode(code){
   chunks = chunkCode(code);
 
   var tree = parseInjectEventsRemove(chunks);
 
-  $('#inprocessParse').text(JSON.stringify(tree));
+  return tree;
 }
 
 function chunkCode(code){
@@ -149,7 +147,7 @@ function parsePossibleBoolop(chunks){
 function parseCommand(chunks){
   if (['inst'].includes(chunks[0].toLowerCase())){
     return {
-      command: chunks[0],
+      command: {type: 'command', name: chunks[0]},
       chunks: chunks.slice(1)
     };
   }else if (['setv', 'addv'].includes(chunks[0].toLowerCase())){
@@ -159,14 +157,15 @@ function parseCommand(chunks){
 }
 
 function parseSetvAddsEtc(chunks){
-  var command = chunks[0];
+  var commandName = chunks[0];
   var argument1_chunks = parseVariable(chunks.slice(1));
   var argument1_chunks;
-  if (['setv', 'addv'].includes(command.toLowerCase())){
+  if (['setv', 'addv'].includes(commandName.toLowerCase())){
     argument2_chunks = parseNumber(argument1_chunks.chunks);
     return {
       command: {
-        command: command,
+        type: 'command',
+        name: commandName,
         arguments: [argument1_chunks.variable, argument2_chunks.value]
       },
       chunks: argument2_chunks.chunks
@@ -176,14 +175,32 @@ function parseSetvAddsEtc(chunks){
 }
 
 function parseVariable(chunks){
-  if (chunks[0][0].toLowerCase()==='v'
-  && chunks[0][1].toLowerCase()==='a'
-  && (chunks[0][2] >= '0' && chunks[0][2] <= '9')
-  && (chunks[0][3] >= '0' && chunks[0][3] <= '9')){
-    return {variable: chunks[0], chunks: chunks.slice(1)}
+  if (
+    chunks[0][0].toLowerCase()==='v'
+    && chunks[0][1].toLowerCase()==='a'
+    && (chunks[0][2] >= '0' && chunks[0][2] <= '9')
+    && (chunks[0][3] >= '0' && chunks[0][3] <= '9')
+  ){
+    return {
+      variable:
+      {
+        type: 'variable',
+        variant: 'va',
+        name: chunks[0]
+      },
+      chunks: chunks.slice(1)
+    }
   }else if(['game'].includes(chunks[0].toLowerCase())){
     var string_chunks = parseString(chunks.slice(1));
-    return {variable: {type: chunks[0], name: string_chunks.value}, chunks: string_chunks.chunks};
+    return {
+      variable:
+      {
+        type: 'variable',
+        variant: chunks[0],
+        name: string_chunks.value
+      },
+      chunks: string_chunks.chunks
+    };
   }else if(['name'].includes(chunks[0].toLowerCase())){
     console.log(chunks);
   }else{
@@ -194,14 +211,17 @@ function parseVariable(chunks){
 
 function parseNumber(chunks){
   if (!isNaN(chunks[0])){
-    return {value: chunks[0], chunks: chunks.slice(1)};
+    return {value: {type: 'number-literal', value: chunks[0]}, chunks: chunks.slice(1)};
   }else if (['rand'].includes(chunks[0].toLowerCase())){
     var leftArgument_chunks = parseNumber(chunks.slice(1));
     var rightArgument_chunks = parseNumber(leftArgument_chunks.chunks);
     return{
       value: {
-        command: chunks[0],
-        arguments: [leftArgument_chunks.value, rightArgument_chunks.value]
+        command: {
+          type: 'command',
+          name: chunks[0],
+          arguments: [leftArgument_chunks.value, rightArgument_chunks.value]
+        }
       },
       chunks: rightArgument_chunks.chunks,
     }
@@ -222,7 +242,7 @@ function parseString(chunks){
       index++;
     }
     stringsChunks.push(chunks[index].substring(0, chunks[index].length-1));
-    return {value: stringsChunks.join(' '), chunks: chunks.slice(index+1)};
+    return {value: {type:'string-literal', value: stringsChunks.join(' ')}, chunks: chunks.slice(index+1)};
   }else{
     var variable_chunks = parseVariable(chunks);
     return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
