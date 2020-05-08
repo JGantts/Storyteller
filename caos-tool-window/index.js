@@ -38,15 +38,14 @@ function parseScrp(chunks){
 
 function parseCommandList(begining, chunks, ending){
   var commandList = [];
+  var done = false;
   do{
-    if ('doif' === chunks[0].toLowerCase()){
-      var conditional_chunks = parseConditional(chunks);
-      var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks, 'endi');
-      commandList.push(commands_chunks.commands);
-      chunks = commands_chunks.chunks;
-    }else if ('elif' === chunks[0].toLowerCase()) {
-      var conditional_chunks = parseConditional(chunks);
-      var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks);
+    if (chunks.length === 0){
+      done = true;
+    }else if (ending.includes(chunks[0].toLowerCase())){
+      done = true;
+    }else if ('doif' === chunks[0].toLowerCase()){
+      var commands_chunks = parseDoifElifElseEndiStatements(chunks);
       commandList.push(commands_chunks.commands);
       chunks = commands_chunks.chunks;
     }else{
@@ -54,13 +53,35 @@ function parseCommandList(begining, chunks, ending){
       commandList.push(command_chunks.command);
       chunks = command_chunks.chunks;
     }
-  }while(
-    chunks.length!=0
-    && (chunks[0].toLowerCase()!==ending)
-    && !(ending==='scrp|rscr|EOF' && (chunks[0]==='scrp'||chunks[0]==='rscr'))
-  );
+  }while(!done);
   begining.commands = commandList;
-  return {commands: begining, chunks: chunks};
+  return {commandBlob: begining, chunks: chunks};
+}
+
+function parseDoifElifElseEndiStatements(chunks){
+  var commandList = [];
+  var done = false;
+  do{
+    if ('doif' === chunks[0].toLowerCase()){
+      var conditional_chunks = parseConditional(chunks);
+      var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks, 'elif|else|endi');
+      commandList.push(commands_chunks.commandBlob);
+      chunks = commands_chunks.chunks;
+    }else if ('elif' === chunks[0].toLowerCase()){
+      var conditional_chunks = parseConditional(chunks);
+      var commands_chunks = parseCommandList(conditional_chunks.conditional, conditional_chunks.chunks, 'else|endi');
+      commandList.push(commands_chunks.commandBlob);
+      chunks = commands_chunks.chunks;
+    }else if ('else' === chunks[0].toLowerCase()){
+      var commands_chunks = parseCommandList(chunks[0], chunks.slice(1), 'endi');
+      commandList.push(commands_chunks.commandBlob);
+      chunks = commands_chunks.chunks;
+    }else if ('endi' === chunks[0].toLowerCase()){
+      chunks = chunks.slice(1);
+      done = true;
+    }
+  }while(!done);
+  return {commands: {commandDoifBlob: commandList}, chunks: chunks};
 }
 
 function parseConditional(chunks){
