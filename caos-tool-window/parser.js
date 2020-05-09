@@ -7,7 +7,7 @@ function parseCode(code){
 function chunkCode(code){
   var lines = code.split('\n');
   var linesNoComments = lines.filter((line) => {
-    return line[0] !== '*';
+    return line.trim()[0] !== '*';
   });
   var linesReducedWhitespace = linesNoComments.map((line) => {
     return line.replace(/\s+/g, ' ');
