@@ -8,6 +8,7 @@ span.syntax-variable, span.syntax-returning-command, span.syntax-operator, span.
 
 span.syntax-comment{
   color: rgb(67,255,134);
+  opacity: (0.5);
 }
 
 span.syntax-command, span.syntax-flow{

@@ -14,27 +14,46 @@ function injectUserCode(){
 function userTextChanged(){
   var codeElement = document.getElementById('caos-user-code');
   var codeText = codeElement.innerText;
+  for(index = 0; index < 10; index++){
+    console.log(codeText.charCodeAt(index) + ':' + codeText[index]);
+  }
 
-  var codeTree = parseCode(codeText);
 
-  //$('#inprocessParse').text(JSON.stringify(codeTree));
+  var chars = (codeText).split('', 10);
+  /*chars.forEach((item, i) => {
+    console.log(item.charCodeAt(0) + ':' + item[0]);
+  });*/
 
-  var asSplit = ('\n' + codeText).split('*');
-  var noComments = asSplit.map((chunk) => {
-    return chunk.slice(chunk.indexOf('\n'))
-  })
-  .join('');
 
-  var whiteSpaceList = noComments.slice(1).match(/\s+/g);
+  var lines = (codeText).split('\n');
+
+  var noComments = lines.map((chunk) => {
+    var astIndex = chunk.indexOf('*');
+    if (astIndex === -1){
+      return chunk;
+    }else if(astIndex === 0){
+      return '\n';
+    }else{
+      return chunk.slice(0, astIndex);
+    }
+  }).filter((chunk) => {return chunk!=='\n';})
+  .map((chunk) => {return chunk;})
+  .join('\n');
+
+  var whiteSpaceList = noComments.match(/\s+/g);
 
   var commentList =
     codeText
     .split('\n')
-    .filter((line) => {return line.trim()[0]==='*'})
+    .filter((line) => {return leftTrim(line)[0]==='*'})
     .map((line) => {return leftTrim(line)});
 
   console.log(whiteSpaceList);
   console.log(commentList);
+
+  var codeTree = parseCode(codeText);
+  //$('#inprocessParse').text(JSON.stringify(codeTree));
+
 
   var highlighted = highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0).highlighted;
 
