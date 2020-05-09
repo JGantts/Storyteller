@@ -1,19 +1,19 @@
 #caos-user-code{
-  background-color: white;
+  background-color: rgb(53,61,83);
 }
 
 span.syntax-variable, span.syntax-returning-command, span.syntax-operator, span.syntax-bool-op{
-  color: rgb(200,0,200);
+  color: rgb(255,51,187);
 }
 
 span.syntax-comment{
-  color: rgb(0,128,0);
+  color: rgb(67,255,134);
 }
 
 span.syntax-command, span.syntax-flow{
-  color: rgb(0,0,255);
+  color: rgb(46,161,255);
 }
 
 span.syntax-number-literal, span.syntax-string-literal{
-  color: rgb(128,64,64);
+  color: rgb(255,170,84);
 }
