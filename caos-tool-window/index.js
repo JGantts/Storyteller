@@ -14,18 +14,49 @@ function injectUserCode(){
 function userTextChanged(){
   var codeElement = document.getElementById('caos-user-code');
   var codeText = codeElement.innerText;
-  for(index = 0; index < 10; index++){
+
+////////////////
+///BEGIN CRAP///
+////////////////
+//Remove this crap once we figure out where the double newlines subsequent to
+//  first newline in a sequence of newlines are coming from.
+  var inASequence = false;
+  var odd = false;
+  var codeText = codeText.split('')
+    .filter((char, index) => {
+      if (inASequence){
+        if (char === '\n'){
+          if (odd){
+            odd = !odd;
+            return false;
+          }else{
+            odd = !odd;
+            return true;
+          }
+        }else{
+          inASequence = false;
+          return true;
+        }
+      }else{
+        if (char === '\n'){
+          inASequence = true;
+          odd = false;
+          return true;
+        }else{
+          return true;
+        }
+      }
+    })
+    .join('');
+//////////////
+///END CRAP///
+//////////////
+
+/*  for(index = 0; index < 10; index++){
     console.log(codeText.charCodeAt(index) + ':' + codeText[index]);
-  }
+  }*/
 
-
-  var chars = (codeText).split('', 10);
-  /*chars.forEach((item, i) => {
-    console.log(item.charCodeAt(0) + ':' + item[0]);
-  });*/
-
-
-  var lines = (codeText).split('\n');
+  var lines = codeText.split('\n');
 
   var noComments = lines.map((chunk) => {
     var astIndex = chunk.indexOf('*');
