@@ -58,20 +58,20 @@ function userTextChanged(){
 
   var lines = codeText.split('\n');
 
-  var noComments = lines.map((chunk) => {
+  var whiteSpaceList = lines.map((chunk) => {
     var astIndex = chunk.indexOf('*');
     if (astIndex === -1){
       return chunk;
     }else if(astIndex === 0){
-      return '\n';
+      return '*';
     }else{
-      return chunk.slice(0, astIndex);
+      return chunk.slice(0, astIndex+1);
     }
-  }).filter((chunk) => {return chunk!=='\n';})
-  .map((chunk) => {return chunk;})
-  .join('\n');
+  }).filter((chunk) => {return chunk!==null;})
+  .join('\n')
+  .match(/\s+/g);
 
-  var whiteSpaceList = noComments.match(/\s+/g);
+  //var whiteSpaceList;
 
   var commentList =
     codeText
@@ -79,8 +79,8 @@ function userTextChanged(){
     .filter((line) => {return leftTrim(line)[0]==='*'})
     .map((line) => {return leftTrim(line)});
 
-//  console.log(whiteSpaceList);
-//  console.log(commentList);
+  console.log(whiteSpaceList);
+  console.log(commentList);
 
   var codeTree = parseCode(codeText);
   //$('#inprocessParse').text(JSON.stringify(codeTree));

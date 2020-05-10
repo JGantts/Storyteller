@@ -269,11 +269,9 @@ function checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, co
 function addWhiteSpace(codeTree, whiteSpaceList, commentList, codeText, codeIndex){
   assert(
     whiteSpaceList[0] === codeText.substr(codeIndex, whiteSpaceList[0].length),
-    codeText.substr(codeIndex-2, whiteSpaceList[0].length+2)
-    + '\n|\n'
-    + whiteSpaceList[0].length
-    + '\n|\n'
-    + `'` + codeText.substr(codeIndex, whiteSpaceList[0].length) + `'`
+    whiteSpaceList[0].split('').map((char) => {return char.charCodeAt(0);}).join('')
+    + '|'
+    + codeText.substr(codeIndex, whiteSpaceList[0].length).split('').map((char) => {return char.charCodeAt(0);}).join('')
   );
   //console.log('whitespace:|' + whiteSpaceList[0] + '|' );
   return {
