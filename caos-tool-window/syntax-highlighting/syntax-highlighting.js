@@ -26,7 +26,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
       codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
     }else if(['game'].includes(codeTree.variant)){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
@@ -36,7 +36,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
       codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
       highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(codeTree.varname, whiteSpaceList, commentList, codeText, codeIndex);
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
@@ -69,7 +69,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
       codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
     }else if(['bhvr', 'setv'].includes(codeTree.variant)){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
@@ -79,7 +79,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
       codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
       codeTree.arguments.forEach((arg, index) => {
         highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(arg, whiteSpaceList, commentList, codeText, codeIndex);
@@ -97,7 +97,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
     highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
     codeTree.arguments.forEach((arg, index) => {
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
@@ -125,7 +125,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     if (highlighted_whiteSpaceList_commentList_newIndex !== null){
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
       codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
     }
     if (['doif', 'elif'].includes(codeTree.variant)){
@@ -178,7 +178,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
     highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
   }else if(['bool-op'].includes(codeTree.type)) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
@@ -188,7 +188,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
     highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
   }else if(['number-literal'].includes(codeTree.type)) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
@@ -199,7 +199,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
     highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
   }else if(['string-literal'].includes(codeTree.type)) {
@@ -210,7 +210,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
     highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commandList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
   }else{
     console.log(codeTree.type);
@@ -238,7 +238,7 @@ function checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, co
   }else if ('*' === codeText[codeIndex]){
     commentToAdd_newCommentList_newIndex = addComment(commentList, codeText, codeIndex);
     highlighted += commentToAdd_newCommentList_newIndex.comment;
-    commandList = commentToAdd_newCommentList_newIndex.commandList;
+    commentList = commentToAdd_newCommentList_newIndex.commentList;
     codeIndex = commentToAdd_newCommentList_newIndex.newIndex;
   }else{
 
@@ -255,7 +255,7 @@ function checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, co
   if (attempt !== null){
     highlighted += attempt.highlighted;
     whiteSpaceList = attempt.whiteSpaceList;
-    commandList = attempt.commentList;
+    commentList = attempt.commentList;
     codeIndex = attempt.newIndex;
   }
   return {
@@ -282,7 +282,10 @@ function addWhiteSpace(codeTree, whiteSpaceList, commentList, codeText, codeInde
 }
 
 function addComment(commentList, codeText, codeIndex){
-  assert(commentList[0] === codeText.substr(codeIndex, commentList[0].length));
+  assert(
+    commentList[0] === codeText.substr(codeIndex, commentList[0].length),
+    commentList[0] +'|'+ codeText.substr(codeIndex, commentList[0].length)
+  );
   return {
     comment: `<span class='syntax-comment'>${commentList[0]}</span>`,
     commentList: commentList.slice(1),
