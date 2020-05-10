@@ -95,7 +95,7 @@ function userTextChanged(){
     .replace(/\n/g, '<br />');
 
 
-  document.getElementById('highlighted').innerHTML = highlightedHtml;
+  document.getElementById('caos-user-code').innerHTML = highlightedHtml;
 
   //codeElement.innerHTML = highlighted.highlighted.replace(new RegExp('\n', 'g'), '<br />');
     /*'<span style="color: green; display=\'inline-block;\'">'
