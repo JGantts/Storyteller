@@ -17,3 +17,7 @@ span.syntax-command, span.syntax-flow{
 span.syntax-number-literal, span.syntax-string-literal{
   color: rgb(128,64,64);
 }
+
+span.syntax-error{
+  color: rgb(255,0,0);
+}

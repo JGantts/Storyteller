@@ -104,7 +104,14 @@ function parseDoifElifElseEndiStatements(chunks){
       chunks = chunks.slice(1);
       done = true;
     }else{
-      console.log(chunks);
+      sections.push({
+        type: 'flow',
+        variant: 'error',
+        name: chunks[0],
+        message: `Expected 'endi' but found '${chunks[0]}'.`
+      });
+      chunks = chunks.slice(1);
+      done = true;
     }
   }while(!done);
   return {commands: {type: 'doif-blob', sections: sections}, chunks: chunks};
@@ -136,30 +143,44 @@ function parseConditional(chunks){
 
 function parseBoolean(chunks){
   var left_chunks = parseNumberOrString(chunks);
-  var operator;
-  if (['eq', 'ne', 'gt', 'ge', 'lt', 'le', '=', '<>', '>', '>=', '<', '<='].includes(left_chunks.chunks[0].toLowerCase())){
-    operator = left_chunks.chunks[0];
-  }else{
-    console.log(chunks);
-  }
+  var operator = left_chunks.chunks[0];
   var right_chunks = parseNumberOrString(left_chunks.chunks.slice(1));
-  return {
-    boolean: {
-      type: 'boolean',
-      left: left_chunks.value,
-      operator: {
-        type: 'operator',
-        variant: operator.toLowerCase()
-          .replace('eq', '=')
-          .replace('ne', '<>')
-          .replace('gt', '>')
-          .replace('ge', '>=')
-          .replace('lt', '<')
-          .replace('le', '<='),
-        name: operator},
-      right: right_chunks.value
-    },
-    chunks: right_chunks.chunks
+  if (
+    ['eq', 'ne', 'gt', 'ge', 'lt', 'le', '=', '<>', '>', '>=', '<', '<=']
+    .includes(operator.toLowerCase())
+  ){
+    return {
+      boolean: {
+        type: 'boolean',
+        left: left_chunks.value,
+        operator: {
+          type: 'operator',
+          variant: operator.toLowerCase()
+            .replace('eq', '=')
+            .replace('ne', '<>')
+            .replace('gt', '>')
+            .replace('ge', '>=')
+            .replace('lt', '<')
+            .replace('le', '<='),
+          name: operator},
+        right: right_chunks.value
+      },
+      chunks: right_chunks.chunks
+    }
+  }else{
+    return {
+      boolean: {
+        type: 'boolean',
+        left: left_chunks.value,
+        operator: {
+          type: 'operator',
+          variant: 'error',
+          name: operator,
+          message: `Expected operator but found '${operator}'.`},
+        right: right_chunks.value
+      },
+      chunks: right_chunks.chunks
+    }
   }
 }
 
@@ -191,6 +212,16 @@ function parseCommand(chunks){
     };
   }else if (['setv', 'addv'].includes(chunks[0].toLowerCase())){
     return parseSetvAddsEtc(chunks);
+  }else{
+    return {
+      command: {
+        type: 'command',
+        variant: 'error',
+        name: chunks[0],
+        message: `Expected command but found '${chunks[0]}'`
+      },
+      chunks: chunks.slice(1)
+    };
   }
   console.log(chunks);
 }
@@ -210,8 +241,10 @@ function parseSetvAddsEtc(chunks){
       },
       chunks: argument2_chunks.chunks
     };
+  }else{
+    console.log(chunks);
+    assert(false);
   }
-  console.log(chunks);
 }
 
 function parseVariable(chunks){
@@ -245,7 +278,14 @@ function parseVariable(chunks){
   }else if(['name'].includes(chunks[0].toLowerCase())){
     console.log(chunks);
   }else{
-    return {variable: null, chunks: chunks};
+    return {
+      variable: {
+        type: 'variable',
+        variant: 'error',
+        name: chunks[0],
+      },
+      chunks: chunks.slice(1)
+    };
   }
   console.log(chunks);
 }

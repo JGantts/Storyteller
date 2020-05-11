@@ -79,11 +79,11 @@ function userTextChanged(){
     .filter((line) => {return leftTrim(line)[0]==='*'})
     .map((line) => {return leftTrim(line)});
 
-  console.log(whiteSpaceList);
-  console.log(commentList);
+  //console.log(whiteSpaceList);
+  //console.log(commentList);
 
   var codeTree = parseCode(codeText);
-  //$('#inprocessParse').text(JSON.stringify(codeTree));
+  $('#inprocessParse').text(JSON.stringify(codeTree));
 
 
   var highlighted = highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0).highlighted;

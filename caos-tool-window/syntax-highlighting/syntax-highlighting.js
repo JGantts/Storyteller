@@ -86,7 +86,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
       commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
       codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-    }else if(['bhvr', 'setv'].includes(codeTree.variant)){
+    }else if (['bhvr', 'setv'].includes(codeTree.variant)){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
       highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
       assert(
@@ -106,6 +106,19 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
         commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
         codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
       });
+    }else if ('error' === codeTree.variant){
+      highlighted += `<span class='syntax-error'>${codeTree.name}</span>`;
+      assert(
+        codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
+        codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
+      );
+      codeIndex += codeTree.name.length;
+      //console.log(codeIndex);
+      highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
+      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
+      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
+      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
     }
   }else if ('returning-command' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
