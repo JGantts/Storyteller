@@ -107,7 +107,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
         codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
       });
     }else if ('error' === codeTree.variant){
-      highlighted += `<span class='syntax-error'>${codeTree.name}</span>`;
+      highlighted += `<span class='syntax-error'>${codeTree.name}<span class='error-tooltip'>${codeTree.message}</span></span>`;
       assert(
         codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
