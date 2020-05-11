@@ -293,7 +293,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
   }else if ('end-of-file' === codeTree.type){
     assert('error' == codeTree.variant);
-    highlighted += `\n<span class='code-decorator tooltip-holder'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
+    highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
   }else{
     console.log(codeTree.type);
     if (codeTree.type === undefined){
