@@ -48,6 +48,7 @@ function parseCommandList(chunks, endings){
     }else if (endings.includes(chunks[0].toLowerCase())){
       done = true;
     }else if ('doif' === chunks[0].toLowerCase()){
+      console.log(chunks);
       var commands_chunks = parseDoifElifElseEndiStatements(chunks);
       commandList.push(commands_chunks.commands);
       chunks = commands_chunks.chunks;
@@ -64,7 +65,19 @@ function parseDoifElifElseEndiStatements(chunks){
   var sections = [];
   var done = false;
   do{
-    if ('doif' === chunks[0].toLowerCase()){
+    console.log(chunks);
+    if (chunks.length === 0){
+      sections.push({
+        type: 'end-of-file',
+        variant: 'error',
+        name: chunks[0],
+        message: `Expected 'endi' but found end of file instead.`
+      });
+      chunks = chunks.slice(1);
+      console.log(chunks);
+      done = true;
+    }
+    else if ('doif' === chunks[0].toLowerCase()){
       var conditional_chunks = parseConditional(chunks.slice(1));
       var commands_chunks = parseCommandList(conditional_chunks.chunks, 'elif|else|endi');
       sections.push({
@@ -104,14 +117,8 @@ function parseDoifElifElseEndiStatements(chunks){
       chunks = chunks.slice(1);
       done = true;
     }else{
-      sections.push({
-        type: 'flow',
-        variant: 'error',
-        name: chunks[0],
-        message: `Expected 'endi' but found '${chunks[0]}'.`
-      });
-      chunks = chunks.slice(1);
-      done = true;
+      console.log(chunks);
+      assert(false);
     }
   }while(!done);
   return {commands: {type: 'doif-blob', sections: sections}, chunks: chunks};
