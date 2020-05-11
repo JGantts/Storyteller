@@ -117,7 +117,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
         codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
       });
     }else if ('error' === codeTree.variant){
-      highlighted += `<span class='syntax-error'>${codeTree.name}<span class='error-tooltip'>${codeTree.message}</span></span>`;
+      highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
       assert(
         codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
@@ -193,7 +193,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
         codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
       }
     }else{
-      highlighted += `<span class='syntax-error'>${codeTree.name}<span class='error-tooltip'>${codeTree.message}</span></span>`;
+      highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
       assert(
         codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
@@ -287,7 +287,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
   }else if ('end-of-file' === codeTree.type){
     assert('error' == codeTree.variant);
-    highlighted += `\n<span class='syntax-error code-decorator-eof'>EOF<span class='error-tooltip'>${codeTree.message}</span></span>`;
+    highlighted += `\n<span class='code-decorator tooltip-holder'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
   }else{
     console.log(codeTree.type);
     if (codeTree.type === undefined){

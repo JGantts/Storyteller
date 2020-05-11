@@ -1,4 +1,4 @@
-.code-decorator-eof {
+.code-decorator {
   padding: 1px 5px;
   margin: -1px 0;
   border: 0px;
@@ -6,13 +6,12 @@
 }
 
 /* Tooltip container */
-.syntax-error {
+.tooltip-holder {
   position: relative;
-  border-bottom: 1px dotted black;
 }
 
 /* Tooltip text */
-.syntax-error .error-tooltip {
+.tooltip {
   visibility: hidden;
   text-align: center;
   padding: 5px;
@@ -25,6 +24,6 @@
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
-.syntax-error:hover .error-tooltip {
+.tooltip-holder:hover .tooltip {
   visibility: visible;
 }

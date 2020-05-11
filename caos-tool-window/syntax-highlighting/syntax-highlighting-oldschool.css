@@ -2,27 +2,33 @@
   background-color: white;
 }
 
-span.syntax-variable, span.syntax-returning-command, span.syntax-operator, span.syntax-bool-op{
+.syntax-variable, .syntax-returning-command, .syntax-operator, .syntax-bool-op{
   color: rgb(200,0,200);
 }
 
-span.syntax-comment{
+.syntax-comment{
   color: rgb(0,128,0);
 }
 
-span.syntax-command, span.syntax-flow{
+.syntax-command, .syntax-flow{
   color: rgb(0,0,255);
 }
 
-span.syntax-number-literal, span.syntax-string-literal{
+.syntax-number-literal, .syntax-string-literal{
   color: rgb(128,64,64);
 }
 
-span.syntax-error{
+.syntax-error{
   color: rgb(255,0,0);
+  border-bottom: 1px dotted black;
 }
 
-.syntax-error .error-tooltip {
+.code-decorator{
+  background: black;
+  color: rgb(255,100,100);
+}
+
+.tooltip {
   background-color: rgba(0,0,0,0.8);
   color: #fff;
 }
