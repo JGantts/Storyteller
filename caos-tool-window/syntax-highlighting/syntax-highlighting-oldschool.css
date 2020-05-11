@@ -21,3 +21,8 @@ span.syntax-number-literal, span.syntax-string-literal{
 span.syntax-error{
   color: rgb(255,0,0);
 }
+
+.syntax-error .error-tooltip {
+  background-color: rgba(0,0,0,0.8);
+  color: #fff;
+}

@@ -1,15 +1,12 @@
 /* Tooltip container */
 .syntax-error {
   position: relative;
-  display: inline-block;
   border-bottom: 1px dotted black;
 }
 
 /* Tooltip text */
 .syntax-error .error-tooltip {
   visibility: hidden;
-  background-color: rgba(0,0,0,0.8);
-  color: #fff;
   text-align: center;
   padding: 5px;
   border-radius: 6px;
