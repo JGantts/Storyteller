@@ -5,28 +5,43 @@
   font-family: 'Inconsolata', monospace;
 }
 
-span.syntax-variable, span.syntax-returning-command, span.syntax-operator, span.syntax-bool-op{
+.syntax-variable, .syntax-returning-command, .syntax-operator, .syntax-bool-op{
   color: rgb(255,123,172);
 }
 
-span.syntax-comment{
+.syntax-comment{
   color: rgb(140,198,63);
   opacity: (0.5);
 }
 
-span.syntax-command, span.syntax-flow{
+.syntax-command, .syntax-flow{
   color: rgb(46,161,255);
 }
 
-span.syntax-number-literal, span.syntax-string-literal{
+.syntax-number-literal, .syntax-string-literal{
   color: rgb(255,147,30);
 }
 
-span.syntax-error{
+.syntax-error{
   color: rgb(255,0,0);
 }
 
 .syntax-error .error-tooltip {
+  background-color: rgba(0,0,0,0.8);
+  color: #fff;
+}}
+
+.syntax-error{
+  color: rgb(255,0,0);
+  border-bottom: 1px dotted black;
+}
+
+.code-decorator{
+  background: black;
+  color: rgb(255,100,100);
+}
+
+.tooltip {
   background-color: rgba(0,0,0,0.8);
   color: #fff;
 }
