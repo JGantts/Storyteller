@@ -65,7 +65,6 @@ function parseDoifElifElseEndiStatements(chunks){
   var sections = [];
   var done = false;
   do{
-    //console.log(chunks);
     if (chunks.length === 0){
       sections.push({
         type: 'end-of-file',
@@ -74,7 +73,6 @@ function parseDoifElifElseEndiStatements(chunks){
         message: `Expected 'endi' but found end of file instead.`
       });
       chunks = chunks.slice(1);
-      //console.log(chunks);
       done = true;
     }
     else if ('doif' === chunks[0].toLowerCase()){
@@ -125,6 +123,16 @@ function parseDoifElifElseEndiStatements(chunks){
 }
 
 function parseConditional(chunks){
+  if (chunks.length === 0){
+    return {
+      conditional: {
+        type: 'end-of-file',
+        variant: 'error',
+        message: `Expected conditional but found end of file instead.`
+      },
+      chunks: chunks
+    }
+  }
   var chain = [];
   var done = false;
   do{

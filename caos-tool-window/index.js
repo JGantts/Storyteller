@@ -48,13 +48,24 @@ function userTextChanged(){
       }
     })
     .join('');
+    /*  for(index = 0; index < 10; index++){
+        console.log(codeText.charCodeAt(index) + ':' + codeText[index]);
+      }*/
+
 //////////////
 ///END CRAP///
 //////////////
 
-/*  for(index = 0; index < 10; index++){
-    console.log(codeText.charCodeAt(index) + ':' + codeText[index]);
-  }*/
+////////////////
+///BEGIN CRAP///
+////////////////
+  codeText = codeText
+    .replace(/\nEOF/g, '')
+    .replace(/EOF/g, '');
+//////////////
+///END CRAP///
+//////////////
+
 
   var lines = codeText.split('\n');
 
