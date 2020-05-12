@@ -47,7 +47,8 @@ function userTextChanged(){
         }
       }
     })
-    .join('');
+    .join('')
+    .replace(/EOF/g, '');
 //////////////
 ///END CRAP///
 //////////////

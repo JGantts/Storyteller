@@ -206,14 +206,17 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
     }
   }else if(['conditional'].includes(codeTree.type)) {
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-    codeTree.conditional.forEach((boolOrBoolop, index) => {
-      highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(boolOrBoolop, whiteSpaceList, commentList, codeText, codeIndex);
-      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-    });
+    if ('end-of-file' == codeTree.variant){
+
+    }else{
+      codeTree.conditional.forEach((boolOrBoolop, index) => {
+        highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(boolOrBoolop, whiteSpaceList, commentList, codeText, codeIndex);
+        highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
+        whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
+        commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
+        codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+      });
+    }
   }else if(['boolean'].includes(codeTree.type)) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(codeTree.left, whiteSpaceList, commentList, codeText, codeIndex);
@@ -286,8 +289,8 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
   }else if ('end-of-file' === codeTree.type){
-    assert('error' == codeTree.variant);
-    highlighted += `\n<span class='code-decorator tooltip-holder'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
+    assert('error' === codeTree.variant);
+    highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
   }else{
     console.log(codeTree.type);
     if (codeTree.type === undefined){

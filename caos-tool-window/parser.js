@@ -125,6 +125,16 @@ function parseDoifElifElseEndiStatements(chunks){
 }
 
 function parseConditional(chunks){
+  if (chunks.length === 0){
+    return {
+      conditional: {
+        type: 'end-of-file',
+        variant: 'error',
+        message: `Expected conditional but found end of file instead.`
+      },
+      chunks: chunks
+    }
+  }
   var chain = [];
   var done = false;
   do{
