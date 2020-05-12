@@ -47,15 +47,25 @@ function userTextChanged(){
         }
       }
     })
-    .join('')
+    .join('');
+    /*  for(index = 0; index < 10; index++){
+        console.log(codeText.charCodeAt(index) + ':' + codeText[index]);
+      }*/
+
+//////////////
+///END CRAP///
+//////////////
+
+////////////////
+///BEGIN CRAP///
+////////////////
+  codeText = codeText
+    .replace(/\nEOF/g, '')
     .replace(/EOF/g, '');
 //////////////
 ///END CRAP///
 //////////////
 
-/*  for(index = 0; index < 10; index++){
-    console.log(codeText.charCodeAt(index) + ':' + codeText[index]);
-  }*/
 
   var lines = codeText.split('\n');
 
