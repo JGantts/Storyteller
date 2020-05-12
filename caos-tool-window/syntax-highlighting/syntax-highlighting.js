@@ -123,12 +123,13 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       );
       codeIndex += codeTree.name.length;
-      //console.log(codeIndex);
-      highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+      attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
+      if (attempt !== null){
+        highlighted += attempt.highlighted;
+        whiteSpaceList = attempt.whiteSpaceList;
+        commentList = attempt.commentList;
+        codeIndex = attempt.newIndex;
+      }
     }
   }else if ('returning-command' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
