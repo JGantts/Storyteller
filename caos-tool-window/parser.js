@@ -48,7 +48,7 @@ function parseCommandList(chunks, endings){
     }else if (endings.includes(chunks[0].toLowerCase())){
       done = true;
     }else if ('doif' === chunks[0].toLowerCase()){
-      console.log(chunks);
+      //console.log(chunks);
       var commands_chunks = parseDoifElifElseEndiStatements(chunks);
       commandList.push(commands_chunks.commands);
       chunks = commands_chunks.chunks;
@@ -238,7 +238,6 @@ function parseCommand(chunks){
       chunks: chunks.slice(1)
     };
   }
-  console.log(chunks);
 }
 
 function parseSetvAddsEtc(chunks){
@@ -324,7 +323,6 @@ function parseNumber(chunks){
     var variable_chunks = parseVariable(chunks);
     return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
   }
-  console.log(chunks);
 }
 
 function parseString(chunks){
@@ -342,7 +340,6 @@ function parseString(chunks){
     var variable_chunks = parseVariable(chunks);
     return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
   }
-  console.log(chunks);
 }
 
 

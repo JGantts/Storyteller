@@ -3,6 +3,7 @@
   margin: -1px 0;
   border: 0px;
   border-radius: 6px;
+  user-select: none;
 }
 
 /* Tooltip container */
