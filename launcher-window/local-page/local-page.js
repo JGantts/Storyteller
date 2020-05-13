@@ -23,10 +23,11 @@ function FindDSPath() {
 	"C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station/",
 	"C:/Program Files (x86)/Docking Station/",
 	"C:/Program Files/Docking Station/",
-	`C:${(process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE).split('\\').join('/')}/Documents/Creatures/Docking Station`
+	`C:${(process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE).split('\\').join('/')}/Documents/Creatures/Docking Station/`
 	]
-	for (const path in possiblePaths) {
-		if (fs.existsSync(`${path}/engine.exe`)) {
+	for (const path of possiblePaths) {
+		console.log(path)
+		if (fs.existsSync(`${path}engine.exe`)) {
 			return path;
 		}
 	}
