@@ -7,13 +7,12 @@ function launchDockingStation(){
   var { spawn } = require('child_process');
 
   if (executablePath) {
-	const engineRef = spawn(executablePath + '/engine.exe', {
-	detached: true,
-	stdio: 'ignore',
-	cwd: executablePath
-	});
-
-	engineRef.unref();
+  	const engineRef = spawn(executablePath + '/engine.exe', {
+    	detached: true,
+    	stdio: 'ignore',
+    	cwd: executablePath
+  	});
+    engineRef.unref();
 	} else {
 		//this shouldn't really show up because the button shouldn't exist?
 		$('#info').text('Please set a valid Docking Station Path to launch');
@@ -29,10 +28,10 @@ function findDSPath() {
 	// then try to guess based on common paths
 	// (should maybe externalize these at some point?)
 	const possiblePaths = [
-	'C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station',
-	'C:/Program Files (x86)/Docking Station',
-	'C:/Program Files/Docking Station',
-	`C:${(process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE).split('\\').join('/')}/Documents/Creatures/Docking Station`
+  	'C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station',
+  	'C:/Program Files (x86)/Docking Station',
+  	'C:/Program Files/Docking Station',
+  	`C:${(process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE).split('\\').join('/')}/Documents/Creatures/Docking Station`
 	]
 	for (const path of possiblePaths) {
 		if (fs.existsSync(`${path}/engine.exe`)) {
