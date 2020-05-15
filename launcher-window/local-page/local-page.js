@@ -1,3 +1,7 @@
+var pathToDS = false;
+const { dialog } = require('electron').remote
+
+
 function launchDockingStation(){
   var { spawn } = require('child_process');
   var executablePath = FindDSPath();
@@ -17,13 +21,13 @@ function launchDockingStation(){
 }
 
 
-function FindDSPath() {
+function findDSPath() {
 	const fs = require("fs");
 	//should probably externalize these at some point 
 	const possiblePaths = [
-	"C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station/",
-	"C:/Program Files (x86)/Docking Station/",
-	"C:/Program Files/Docking Station/",
+	'C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station/',
+	'C:/Program Files (x86)/Docking Station/',
+	'C:/Program Files/Docking Station/',
 	`C:${(process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE).split('\\').join('/')}/Documents/Creatures/Docking Station/`
 	]
 	for (const path of possiblePaths) {
@@ -33,4 +37,30 @@ function FindDSPath() {
 	}
 	return false;
 }
+
+function displayPathInfo() {
+	if (pathToDS) {
+		$('#info').text(`Docking Station Path set to ${pathToDS}`);
+	} else {
+		$('#info').text('No Docking Station Path was found...');
+		$('#launch-button').hide();
+	}
+}
+
+function validateDSPath(path) {
+	pathToDS = path;
+	displayPathInfo();
+}
+
+function setDSPath() {
+	validateDSPath(dialog.showOpenDialogSync({ properties: ['openFile', 'multiSelections'] }));
+}
+
+//this seems unsafe... what's a good way to check if the content is loaded before running this?
+pathToDS =  findDSPath();
+displayPathInfo();
+
+
+
+
 
