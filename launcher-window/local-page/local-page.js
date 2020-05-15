@@ -19,6 +19,10 @@ function launchDockingStation(){
 
 
 function findDSPath() {
+	// checking settings first
+	if (settings.get('gamePath')) {
+		return settings.get('gamePath');
+	}
 	//should probably externalize these at some point 
 	const possiblePaths = [
 	'C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station',
@@ -28,6 +32,7 @@ function findDSPath() {
 	]
 	for (const path of possiblePaths) {
 		if (fs.existsSync(`${path}/engine.exe`)) {
+			settings.set('gamePath', path);
 			return path;
 		}
 	}
@@ -49,6 +54,7 @@ function validateDSPath(path) {
 		const pathString = path.toString();
 		if (fs.existsSync(`${pathString}/engine.exe`)) {
 			executablePath = pathString;
+			settings.set('gamePath', pathString);
 			displayPathInfo();
 		} else {
 			$('#info').text(`Sorry, ${pathString} isn't a valid path. (Valid paths contain an engine.exe file)`);
