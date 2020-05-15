@@ -14,6 +14,9 @@ function launchDockingStation(){
 	});
 
 	engineRef.unref();
+	} else {
+		//this shouldn't really show up because the button shouldn't exist?
+		$('#info').text('Please set a valid Docking Station Path to launch');
 	}
 }
 
@@ -23,7 +26,8 @@ function findDSPath() {
 	if (settings.get('gamePath')) {
 		return settings.get('gamePath');
 	}
-	//should probably externalize these at some point 
+	// then try to guess based on common paths
+	// (should maybe externalize these at some point?)
 	const possiblePaths = [
 	'C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station',
 	'C:/Program Files (x86)/Docking Station',
@@ -63,10 +67,10 @@ function validateDSPath(path) {
 	}
 }
 
-function setDSPath() {
+function selectDSPath() {
 	validateDSPath(dialog.showOpenDialogSync({ properties: ['openDirectory', 'multiSelections'] }));
 }
 
-//this seems unsafe... what's a good way to check if the content is loaded before running this?
+//this seems unsafe... should there be a check if the content is loaded before running this?
 executablePath =  findDSPath();
 displayPathInfo();
