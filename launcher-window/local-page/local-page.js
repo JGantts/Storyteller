@@ -46,10 +46,12 @@ function findDSPath() {
 function displayPathInfo() {
 	if (executablePath) {
 		$('#info').text(`Docking Station Path set to ${executablePath}`);
+		$('#find-path-button').hide();
 		$('#launch-button').show();
 	} else {
-		$('#info').text('No Docking Station Path was found...');
+		$('#info').text('Your Docking Station path could not be automatically detected.');
 		$('#launch-button').hide();
+		$('#find-path-button').show();
 	}
 }
 
@@ -63,6 +65,7 @@ function validateDSPath(path) {
 		} else {
 			$('#info').text(`Sorry, ${pathString} isn't a valid path. (Valid paths contain an engine.exe file)`);
 			$('#launch-button').hide();
+			$('#find-path-button').show();
 		}
 	}
 }
