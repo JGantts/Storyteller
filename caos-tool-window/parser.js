@@ -250,7 +250,46 @@ function _setvAddsEtc(){
   }
 }
 
+function _numberOrString(){
+  var possibleNumber = _possibleNumber();
+  if (possibleNumber){
+    return possibleNumber;
+  }
+  var possibleString = _possibleString();
+  if (possibleString){
+    return possibleString;
+  }
+  var possibleVariable = _possibleVariable();
+  if (possibleVariable){
+    return possibleVariable;
+  }
+  let name = chunks[0];
+  chunks = chunks.slice(1);
+  return {
+    type: 'number-string-variable',
+    variant: 'error',
+    name: name,
+    message: `Excpected number, string, or variable, but found ${name} instead.`
+  };
+}
+
 function _variable(){
+  let possibleVariable = _possibleVariable();
+  if (possibleVariable){
+    return possibleVariable;
+  }else{
+    let name = chunks[0];
+    chunks = chunks.slice(1);
+    return {
+      type: 'variable',
+      variant: 'error',
+      name: name,
+      message: `Excpected variable, but found ${name} instead.`
+    };
+  }
+}
+
+function _possibleVariable(){
   if (
     chunks[0][0].toLowerCase()==='v'
     && chunks[0][1].toLowerCase()==='a'
@@ -278,18 +317,24 @@ function _variable(){
   }else if(['name'].includes(chunks[0].toLowerCase())){
     console.log(chunks);
   }else{
-    let name = chunks[0];
-    chunks = chunks.slice(1);
-    return {
-      type: 'variable',
-      variant: 'error',
-      name: name
-    };
+    return null;
   }
-  console.log(chunks);
 }
 
 function _number(){
+  let possibleNumber = _possibleNumber();
+  if (possibleNumber){
+    return possibleNumber;
+  }else{
+    return {
+      type: 'number',
+      variant: 'error',
+      name: ''
+    };
+  }
+}
+
+function _possibleNumber(){
   if (!isNaN(chunks[0])){
     let value = chunks[0];
     chunks = chunks.slice(1);
@@ -328,16 +373,4 @@ function _string(){
     var variable = _variable();
     return variable;
   }
-}
-
-function _numberOrString(){
-  var possibleNumber = _number();
-  if (possibleNumber){
-    return possibleNumber;
-  }
-  var possibleString = _string();
-  if (possibleString){
-    return possibleString;
-  }
-  console.log(chunks);
 }
