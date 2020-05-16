@@ -7,23 +7,22 @@ exports.caos = (code) => {
 }
 
 function _chunkCode(code){
-  var lines = code.split('\n');
-  var linesNoComments = lines.filter((line) => {
+  return code
+  .split('\n')
+  .filter((line) => {
     return line.trim()[0] !== '*';
-  });
-  var linesReducedWhitespace = linesNoComments.map((line) => {
+  })
+  .map((line) => {
     return line.replace(/\s+/g, ' ');
-  });
-  var linesRemovedInitialFinalWhitespace = linesReducedWhitespace.map((line) => {
+  })
+  .map((line) => {
     return line.trim();
-  });
-
-  var linesRemovedBlanks = linesRemovedInitialFinalWhitespace.filter((line) => {
+  })
+  .filter((line) => {
     return line != '';
-  });
-
-  var chunksJoined = linesRemovedBlanks.join(' ');
-  return chunksJoined.split(' ');
+  })
+  .join(' ')
+  .split(' ');
 }
 
 function _injectEventsRemove(){
