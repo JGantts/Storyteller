@@ -45,9 +45,9 @@ function findDSPath() {
 
 function displayPathInfo() {
   if (executablePath) {
-    $('#info').text(`${executablePath}`);
+    $('#info').text(`Current Path: ${executablePath}`);
   } else {
-    $('#info').text('Your Docking Station path could not be automatically detected.');
+    $('#info').text('Your Docking Station path could not be automatically detected. Please set one manually.');
 
   }
 }
