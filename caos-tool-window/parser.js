@@ -7,23 +7,22 @@ exports.caos = (code) => {
 }
 
 function _chunkCode(code){
-  var lines = code.split('\n');
-  var linesNoComments = lines.filter((line) => {
+  return code
+  .split('\n')
+  .filter((line) => {
     return line.trim()[0] !== '*';
-  });
-  var linesReducedWhitespace = linesNoComments.map((line) => {
+  })
+  .map((line) => {
     return line.replace(/\s+/g, ' ');
-  });
-  var linesRemovedInitialFinalWhitespace = linesReducedWhitespace.map((line) => {
+  })
+  .map((line) => {
     return line.trim();
-  });
-
-  var linesRemovedBlanks = linesRemovedInitialFinalWhitespace.filter((line) => {
+  })
+  .filter((line) => {
     return line != '';
-  });
-
-  var chunksJoined = linesRemovedBlanks.join(' ');
-  return chunksJoined.split(' ');
+  })
+  .join(' ')
+  .split(' ');
 }
 
 function _injectEventsRemove(){
@@ -250,7 +249,46 @@ function _setvAddsEtc(){
   }
 }
 
+function _numberOrString(){
+  var possibleNumber = _possibleNumber();
+  if (possibleNumber){
+    return possibleNumber;
+  }
+  var possibleString = _possibleString();
+  if (possibleString){
+    return possibleString;
+  }
+  var possibleVariable = _possibleVariable();
+  if (possibleVariable){
+    return possibleVariable;
+  }
+  let name = chunks[0];
+  chunks = chunks.slice(1);
+  return {
+    type: 'number-string-variable',
+    variant: 'error',
+    name: name,
+    message: `Excpected number, string, or variable, but found ${name} instead.`
+  };
+}
+
 function _variable(){
+  let possibleVariable = _possibleVariable();
+  if (possibleVariable){
+    return possibleVariable;
+  }else{
+    let name = chunks[0];
+    chunks = chunks.slice(1);
+    return {
+      type: 'variable',
+      variant: 'error',
+      name: name,
+      message: `Excpected variable, but found ${name} instead.`
+    };
+  }
+}
+
+function _possibleVariable(){
   if (
     chunks[0][0].toLowerCase()==='v'
     && chunks[0][1].toLowerCase()==='a'
@@ -278,18 +316,24 @@ function _variable(){
   }else if(['name'].includes(chunks[0].toLowerCase())){
     console.log(chunks);
   }else{
-    let name = chunks[0];
-    chunks = chunks.slice(1);
-    return {
-      type: 'variable',
-      variant: 'error',
-      name: name
-    };
+    return null;
   }
-  console.log(chunks);
 }
 
 function _number(){
+  let possibleNumber = _possibleNumber();
+  if (possibleNumber){
+    return possibleNumber;
+  }else{
+    return {
+      type: 'number',
+      variant: 'error',
+      name: ''
+    };
+  }
+}
+
+function _possibleNumber(){
   if (!isNaN(chunks[0])){
     let value = chunks[0];
     chunks = chunks.slice(1);
@@ -328,16 +372,4 @@ function _string(){
     var variable = _variable();
     return variable;
   }
-}
-
-function _numberOrString(){
-  var possibleNumber = _number();
-  if (possibleNumber){
-    return possibleNumber;
-  }
-  var possibleString = _string();
-  if (possibleString){
-    return possibleString;
-  }
-  console.log(chunks);
 }
