@@ -60,8 +60,22 @@ function _commandList(endings){
 }
 
 function _doifElifElseEndiStatements(){
+  assert(chunks[0].toLowerCase() === 'doif')
   var sections = [];
+  let variant = chunks[0].toLowerCase();
+  let name = chunks[0];
+  chunks = chunks.slice(1);
+  var conditional = _conditional();
+  var commandList = _commandList('elif|else|endi');
+  sections.push({
+    type: 'flow',
+    variant: variant,
+    name: name,
+    conditional: conditional,
+    commandList: commandList
+  });
   var done = false;
+  var needEndi = false;
   do{
     if (chunks.length === 0){
       sections.push({
@@ -72,20 +86,29 @@ function _doifElifElseEndiStatements(){
       });
       chunks = chunks.slice(1);
       done = true;
-    }
-    else if ('doif' === chunks[0].toLowerCase()){
+    }else if ('endi' === chunks[0].toLowerCase()){
       let variant = chunks[0].toLowerCase();
       let name = chunks[0];
-      chunks = chunks.slice(1);
-      var conditional = _conditional();
-      var commandList = _commandList('elif|else|endi');
       sections.push({
         type: 'flow',
         variant: variant,
-        name: name,
-        conditional: conditional,
-        commandList: commandList
+        name: name
       });
+      chunks = chunks.slice(1);
+      done = true;
+    }else if (needEndi){
+        let variant = 'error';
+        let name = chunks[0]
+        chunks = chunks.slice(1);
+        var conditional = _conditional();
+        var commandList = _commandList('elif|else|endi');
+        sections.push({
+          type: 'flow',
+          variant: variant,
+          name: name,
+          message: `Expected 'endi' but found ${name} instead.`
+        });
+        done = true;
     }else if ('elif' === chunks[0].toLowerCase()){
       let variant = chunks[0].toLowerCase();
       let name = chunks[0];
@@ -103,23 +126,15 @@ function _doifElifElseEndiStatements(){
       let variant = chunks[0].toLowerCase();
       let name = chunks[0];
       chunks = chunks.slice(1);
-      var commandList = _commandList('endi');
+      //Pass fake endings so errors propogate back up to this while loop.
+      var commandList = _commandList('elif|else|endi');
       sections.push({
         type: 'flow',
         variant: variant,
         name: name,
         commandList: commandList
       });
-    }else if ('endi' === chunks[0].toLowerCase()){
-      let variant = chunks[0].toLowerCase();
-      let name = chunks[0];
-      sections.push({
-        type: 'flow',
-        variant: variant,
-        name: name
-      });
-      chunks = chunks.slice(1);
-      done = true;
+      needEndi = true;
     }else{
       console.log(chunks);
       assert(false);
