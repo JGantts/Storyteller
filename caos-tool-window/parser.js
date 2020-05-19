@@ -1,45 +1,46 @@
-function parseCode(code){
-  chunks = chunkCode(code);
-  var tree = parseInjectEventsRemove(chunks);
+var chunks = null;
+
+exports.caos = (code) => {
+  chunks = _chunkCode(code);
+  var tree = _injectEventsRemove();
   return tree;
 }
 
-function chunkCode(code){
-  var lines = code.split('\n');
-  var linesNoComments = lines.filter((line) => {
+function _chunkCode(code){
+  return code
+  .split('\n')
+  .filter((line) => {
     return line.trim()[0] !== '*';
-  });
-  var linesReducedWhitespace = linesNoComments.map((line) => {
+  })
+  .map((line) => {
     return line.replace(/\s+/g, ' ');
-  });
-  var linesRemovedInitialFinalWhitespace = linesReducedWhitespace.map((line) => {
+  })
+  .map((line) => {
     return line.trim();
-  });
-
-  var linesRemovedBlanks = linesRemovedInitialFinalWhitespace.filter((line) => {
+  })
+  .filter((line) => {
     return line != '';
-  });
-
-  var chunksJoined = linesRemovedBlanks.join(' ');
-  return chunksJoined.split(' ');
+  })
+  .join(' ')
+  .split(' ');
 }
 
-function parseInjectEventsRemove(chunks){
-  var inject_chunks = parseCommandList(chunks, 'scrp|rscr|EOF');
+function _injectEventsRemove(){
+  var inject = _commandList('scrp|rscr|EOF');
   //var events_chunks = parseEventsList(inject_chunks.chunks);
   //var remove_chunks = parseCommandList({start: 'rscr'}, events_chunks.chunks, 'EOF');
-  return {type: 'caos-file', inject: inject_chunks.commandList, events: {}, remove: {}};
+  return {type: 'caos-file', inject: inject, events: {}, remove: {}};
 }
 
-function parseEventsList(){
-
-}
-
-function parseScrp(chunks){
+function _eventsList(){
 
 }
 
-function parseCommandList(chunks, endings){
+function _scrp(chunks){
+
+}
+
+function _commandList(endings){
   var commandList = [];
   var done = false;
   do{
@@ -48,20 +49,17 @@ function parseCommandList(chunks, endings){
     }else if (endings.includes(chunks[0].toLowerCase())){
       done = true;
     }else if ('doif' === chunks[0].toLowerCase()){
-      //console.log(chunks);
-      var commands_chunks = parseDoifElifElseEndiStatements(chunks);
-      commandList.push(commands_chunks.commands);
-      chunks = commands_chunks.chunks;
+      var commands = _doifElifElseEndiStatements();
+      commandList.push(commands);
     }else{
-      var command_chunks = parseCommand(chunks);
-      commandList.push(command_chunks.command);
-      chunks = command_chunks.chunks;
+      var command = _command();
+      commandList.push(command);
     }
   }while(!done);
-  return {commandList: {type: 'command-list', commands: commandList}, chunks: chunks};
+  return {type: 'command-list', commands: commandList};
 }
 
-function parseDoifElifElseEndiStatements(chunks){
+function _doifElifElseEndiStatements(){
   var sections = [];
   var done = false;
   do{
@@ -76,41 +74,49 @@ function parseDoifElifElseEndiStatements(chunks){
       done = true;
     }
     else if ('doif' === chunks[0].toLowerCase()){
-      var conditional_chunks = parseConditional(chunks.slice(1));
-      var commands_chunks = parseCommandList(conditional_chunks.chunks, 'elif|else|endi');
+      let variant = chunks[0].toLowerCase();
+      let name = chunks[0];
+      chunks = chunks.slice(1);
+      var conditional = _conditional();
+      var commandList = _commandList('elif|else|endi');
       sections.push({
         type: 'flow',
-        variant: chunks[0].toLowerCase(),
-        name: chunks[0],
-        conditional: conditional_chunks.conditional,
-        commandList: commands_chunks.commandList
+        variant: variant,
+        name: name,
+        conditional: conditional,
+        commandList: commandList
       });
-      chunks = commands_chunks.chunks;
     }else if ('elif' === chunks[0].toLowerCase()){
-      var conditional_chunks = parseConditional(chunks.slice(1));
-      var commands_chunks = parseCommandList(conditional_chunks.chunks, 'elif|else|endi');
+      let variant = chunks[0].toLowerCase();
+      let name = chunks[0];
+      chunks = chunks.slice(1);
+      var conditional = _conditional();
+      var commandList = _commandList('elif|else|endi');
       sections.push({
         type: 'flow',
-        variant: chunks[0].toLowerCase(),
-        name: chunks[0],
-        conditional: conditional_chunks.conditional,
-        commandList: commands_chunks.commandList
+        variant: variant,
+        name: name,
+        conditional: conditional,
+        commandList: commandList
       });
-      chunks = commands_chunks.chunks;
     }else if ('else' === chunks[0].toLowerCase()){
-      var commands_chunks = parseCommandList(chunks.slice(1), 'endi');
+      let variant = chunks[0].toLowerCase();
+      let name = chunks[0];
+      chunks = chunks.slice(1);
+      var commandList = _commandList('endi');
       sections.push({
         type: 'flow',
-        variant: chunks[0].toLowerCase(),
-        name: chunks[0],
-        commandList: commands_chunks.commandList
+        variant: variant,
+        name: name,
+        commandList: commandList
       });
-      chunks = commands_chunks.chunks;
     }else if ('endi' === chunks[0].toLowerCase()){
+      let variant = chunks[0].toLowerCase();
+      let name = chunks[0];
       sections.push({
         type: 'flow',
-        variant: chunks[0].toLowerCase(),
-        name: chunks[0]
+        variant: variant,
+        name: name
       });
       chunks = chunks.slice(1);
       done = true;
@@ -119,141 +125,123 @@ function parseDoifElifElseEndiStatements(chunks){
       assert(false);
     }
   }while(!done);
-  return {commands: {type: 'doif-blob', sections: sections}, chunks: chunks};
+  return {type: 'doif-blob', sections: sections};
 }
 
-function parseConditional(chunks){
+function _conditional(){
   if (chunks.length === 0){
     return {
-      conditional: {
-        type: 'end-of-file',
-        variant: 'error',
-        message: `Expected conditional but found end of file instead.`
-      },
-      chunks: chunks
+      type: 'end-of-file',
+      variant: 'error',
+      message: `Expected conditional but found end of file instead.`
     }
   }
   var chain = [];
   var done = false;
   do{
-    var boolean_chunks = parseBoolean(chunks);
-    chain.push(boolean_chunks.boolean);
-    var possibleBoolop_chunks = parsePossibleBoolop(boolean_chunks.chunks);
-    chunks = possibleBoolop_chunks.chunks;
-    if (possibleBoolop_chunks.possibleBoolop!==null){
-      chain.push(possibleBoolop_chunks.possibleBoolop);
+    var boolean = _boolean();
+    chain.push(boolean);
+    var possibleBoolop = _possibleBoolop();
+    if (possibleBoolop){
+      chain.push(possibleBoolop);
     }else{
       done = true;
     }
   }while (!done);
 
   return {
-    conditional: {
-      type: 'conditional',
-      conditional: chain
-    },
-    chunks: chunks
+    type: 'conditional',
+    conditional: chain
   }
 }
 
-function parseBoolean(chunks){
-  var left_chunks = parseNumberOrString(chunks);
-  var operator = left_chunks.chunks[0];
-  var right_chunks = parseNumberOrString(left_chunks.chunks.slice(1));
+function _boolean(){
+  var left = _numberOrString();
+  var operator = chunks[0];
+  chunks = chunks.slice(1);
+  var right = _numberOrString();
   if (
     ['eq', 'ne', 'gt', 'ge', 'lt', 'le', '=', '<>', '>', '>=', '<', '<=']
     .includes(operator.toLowerCase())
   ){
     return {
-      boolean: {
-        type: 'boolean',
-        left: left_chunks.value,
-        operator: {
-          type: 'operator',
-          variant: operator.toLowerCase()
-            .replace('eq', '=')
-            .replace('ne', '<>')
-            .replace('gt', '>')
-            .replace('ge', '>=')
-            .replace('lt', '<')
-            .replace('le', '<='),
-          name: operator},
-        right: right_chunks.value
-      },
-      chunks: right_chunks.chunks
-    }
+      type: 'boolean',
+      left: left,
+      operator: {
+        type: 'operator',
+        variant: operator.toLowerCase()
+          .replace('eq', '=')
+          .replace('ne', '<>')
+          .replace('gt', '>')
+          .replace('ge', '>=')
+          .replace('lt', '<')
+          .replace('le', '<='),
+        name: operator},
+      right: right
+    };
   }else{
     return {
-      boolean: {
-        type: 'boolean',
-        left: left_chunks.value,
-        operator: {
-          type: 'operator',
-          variant: 'error',
-          name: operator,
-          message: `Expected operator but found '${operator}'.`},
-        right: right_chunks.value
-      },
-      chunks: right_chunks.chunks
-    }
-  }
-}
-
-function parsePossibleBoolop(chunks){
-  if (['and', 'or'].includes(chunks[0].toLowerCase())){
-    return {
-      possibleBoolop: {
-        type: 'bool-op',
-        variant: chunks[0].toLowerCase(),
-        name: chunks[0]
-      },
-      chunks: chunks.slice(1)
+      type: 'boolean',
+      left: left,
+      operator: {
+        type: 'operator',
+        variant: 'error',
+        name: operator,
+        message: `Expected operator but found '${operator}'.`},
+      right: right
     };
   }
-  return {
-      possibleBoolop: null, chunks: chunks
-  }
 }
 
-function parseCommand(chunks){
-  if (['inst'].includes(chunks[0].toLowerCase())){
+function _possibleBoolop(){
+  if (['and', 'or'].includes(chunks[0].toLowerCase())){
+    let variant = chunks[0].toLowerCase();
+    let name = chunks[0];
+    chunks = chunks.slice(1)
     return {
-      command: {
-        type: 'command',
-        variant: chunks[0].toLowerCase(),
-        name: chunks[0]
-      },
-      chunks: chunks.slice(1)
+      type: 'bool-op',
+      variant: variant,
+      name: name
+    };
+  }
+  return null;
+}
+
+function _command(){
+  if (['inst'].includes(chunks[0].toLowerCase())){
+    let variant = chunks[0].toLowerCase();
+    let name = chunks[0];
+    chunks = chunks.slice(1);
+    return {
+      type: 'command',
+      variant: variant,
+      name: name
     };
   }else if (['setv', 'addv'].includes(chunks[0].toLowerCase())){
-    return parseSetvAddsEtc(chunks);
+    return _setvAddsEtc();
   }else{
+    let name = chunks[0];
+    chunks = chunks.slice(1);
     return {
-      command: {
-        type: 'command',
-        variant: 'error',
-        name: chunks[0],
-        message: `Expected command but found '${chunks[0]}'`
-      },
-      chunks: chunks.slice(1)
+      type: 'command',
+      variant: 'error',
+      name: name,
+      message: `Expected command but found '${name}'`
     };
   }
 }
 
-function parseSetvAddsEtc(chunks){
+function _setvAddsEtc(){
   var commandName = chunks[0];
-  var argument1_chunks = parseVariable(chunks.slice(1));
-  var argument1_chunks;
+  chunks = chunks.slice(1);
+  var argument1 = _variable();
   if (['setv', 'addv'].includes(commandName.toLowerCase())){
-    argument2_chunks = parseNumber(argument1_chunks.chunks);
+    argument2 = _number();
     return {
-      command: {
-        type: 'command',
-        variant: commandName.toLowerCase(),
-        name: commandName,
-        arguments: [argument1_chunks.variable, argument2_chunks.value]
-      },
-      chunks: argument2_chunks.chunks
+      type: 'command',
+      variant: commandName.toLowerCase(),
+      name: commandName,
+      arguments: [argument1, argument2]
     };
   }else{
     console.log(chunks);
@@ -261,71 +249,114 @@ function parseSetvAddsEtc(chunks){
   }
 }
 
-function parseVariable(chunks){
+function _numberOrString(){
+  var possibleNumber = _possibleNumber();
+  if (possibleNumber){
+    return possibleNumber;
+  }
+  var possibleString = _possibleString();
+  if (possibleString){
+    return possibleString;
+  }
+  var possibleVariable = _possibleVariable();
+  if (possibleVariable){
+    return possibleVariable;
+  }
+  let name = chunks[0];
+  chunks = chunks.slice(1);
+  return {
+    type: 'number-string-variable',
+    variant: 'error',
+    name: name,
+    message: `Excpected number, string, or variable, but found ${name} instead.`
+  };
+}
+
+function _variable(){
+  let possibleVariable = _possibleVariable();
+  if (possibleVariable){
+    return possibleVariable;
+  }else{
+    let name = chunks[0];
+    chunks = chunks.slice(1);
+    return {
+      type: 'variable',
+      variant: 'error',
+      name: name,
+      message: `Excpected variable, but found ${name} instead.`
+    };
+  }
+}
+
+function _possibleVariable(){
   if (
     chunks[0][0].toLowerCase()==='v'
     && chunks[0][1].toLowerCase()==='a'
     && (chunks[0][2] >= '0' && chunks[0][2] <= '9')
     && (chunks[0][3] >= '0' && chunks[0][3] <= '9')
   ){
+    let name = chunks[0];
+    chunks = chunks.slice(1);
     return {
-      variable:
-      {
-        type: 'variable',
-        variant: 'va',
-        name: chunks[0]
-      },
-      chunks: chunks.slice(1)
+      type: 'variable',
+      variant: 'va',
+      name: name
     }
   }else if(['game'].includes(chunks[0].toLowerCase())){
-    var string_chunks = parseString(chunks.slice(1));
+    let variant = chunks[0].toLowerCase();
+    let name = chunks[0];
+    chunks = chunks.slice(1);
+    var string = _string();
     return {
-      variable:
-      {
-        type: 'variable',
-        variant: chunks[0].toLowerCase(),
-        name: chunks[0],
-        varname: string_chunks.value
-      },
-      chunks: string_chunks.chunks
+      type: 'variable',
+      variant: variant,
+      name: name,
+      varname: string
     };
   }else if(['name'].includes(chunks[0].toLowerCase())){
     console.log(chunks);
   }else{
+    return null;
+  }
+}
+
+function _number(){
+  let possibleNumber = _possibleNumber();
+  if (possibleNumber){
+    return possibleNumber;
+  }else{
     return {
-      variable: {
-        type: 'variable',
-        variant: 'error',
-        name: chunks[0],
-      },
-      chunks: chunks.slice(1)
+      type: 'number',
+      variant: 'error',
+      name: ''
     };
   }
-  console.log(chunks);
 }
 
-function parseNumber(chunks){
+function _possibleNumber(){
   if (!isNaN(chunks[0])){
-    return {value: {type: 'number-literal', value: chunks[0]}, chunks: chunks.slice(1)};
+    let value = chunks[0];
+    chunks = chunks.slice(1);
+    return {type: 'number-literal', value: value};
   }else if (['rand'].includes(chunks[0].toLowerCase())){
-    var leftArgument_chunks = parseNumber(chunks.slice(1));
-    var rightArgument_chunks = parseNumber(leftArgument_chunks.chunks);
-    return{
-      value: {
-        type: 'returning-command',
-        variant: chunks[0].toLowerCase(),
-        name: chunks[0],
-        arguments: [leftArgument_chunks.value, rightArgument_chunks.value]
-      },
-      chunks: rightArgument_chunks.chunks,
+    let variant = chunks[0].toLowerCase();
+    let name = chunks[0];
+    chunks = chunks.slice(1);
+    var leftArgument = _number();
+    var rightArgument = _number();
+    return {
+      type: 'returning-command',
+      variant: variant,
+      name: name,
+      arguments: [leftArgument, rightArgument]
     }
   }else{
-    var variable_chunks = parseVariable(chunks);
-    return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
+    var variable = _variable();
+    return variable;
   }
 }
 
-function parseString(chunks){
+function _string(){
   if (chunks[0][0]==='"'){
     var stringsChunks = [];
     var index = 0;
@@ -335,22 +366,10 @@ function parseString(chunks){
       index++;
     }
     stringsChunks.push(chunks[index].substring(0, chunks[index].length-1));
-    return {value: {type:'string-literal', value: stringsChunks.join(' ')}, chunks: chunks.slice(index+1)};
+    chunks = chunks.slice(index+1);
+    return {type:'string-literal', value: stringsChunks.join(' ')};
   }else{
-    var variable_chunks = parseVariable(chunks);
-    return {value: variable_chunks.variable, chunks: variable_chunks.chunks};
+    var variable = _variable();
+    return variable;
   }
-}
-
-
-function parseNumberOrString(chunks){
-  var possibleNumber_chunks = parseNumber(chunks);
-  if (possibleNumber_chunks.value!==null){
-    return {value: possibleNumber_chunks.value, chunks: possibleNumber_chunks.chunks};
-  }
-  var possibleString_chunks = parseString(chunks);
-  if (possibleString_chunks.value!==null){
-    return {value: possibleString_chunks.value, chunks: possibleString_chunks.chunks};
-  }
-  console.log(chunks);
 }

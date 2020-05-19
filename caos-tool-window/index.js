@@ -1,10 +1,9 @@
 $.getScript('../engine-api/CAOS.js');
-$.getScript('parser.js');
 $.getScript('syntax-highlighting/syntax-highlighting.js');
-
+const parser = require('./parser.js');
 
 function injectUserCode(){
-  let caosUserCode = document.getElementById('caos-user-code').value;
+  let caosUserCode = document.getElementById('caos-user-code').innerText;
   executeCaos(caosUserCode, function (error, result) {
       if (error) throw error;
       document.getElementById('caos-result').innerHTML = result;
@@ -93,7 +92,7 @@ function userTextChanged(){
   //console.log(whiteSpaceList);
   //console.log(commentList);
 
-  var codeTree = parseCode(codeText);
+  var codeTree = parser.caos(codeText);
   $('#inprocessParse').text(JSON.stringify(codeTree));
 
 
