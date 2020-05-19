@@ -1,3 +1,6 @@
+var { dialog } = require('electron').remote
+var fs = require("fs");
+
 // devtools checkbox
 $('.setting-checkbox').each(function() {
   this.checked = settings.get(this.getAttribute('data-backend-name'), this.getAttribute('data-default'))
@@ -9,8 +12,9 @@ $('.setting-checkbox').each(function() {
  });
 
 // gamepath display
-executablePath =  findDSPath();
-displayPathInfo();
+var executablePath =  findDSPath();
+displayPathInfo(executablePath);
+
 
 function setStatehint(checkbox){
   let stateHintDivSelector = '#' + checkbox.id + '-statehint';
@@ -21,6 +25,9 @@ function setStatehint(checkbox){
   ) + ')');
 }
 
+/**
+ * @return {string|boolean} Game path if it finds it, false if it doesn't.
+ */
 function findDSPath() {
   // checking settings first
   if (settings.get('gamePath')) {
@@ -43,28 +50,57 @@ function findDSPath() {
   return false;
 }
 
-function displayPathInfo() {
-  if (executablePath) {
-    $('#info').text(`Current Path: ${executablePath}`);
-  } else {
+/**
+ * Updates the #info component with text regarding the status of the path
+ * @param  {String} The pathname. If there is none, the element will display as such.
+ * @param  {Boolean} If the path given is invalid (used if the user selected the path but if did not validate)
+ */
+function displayPathInfo(path, invalid) {
+  if (path && !invalid) {
+    $('#info').text(`Current Game Path: ${path}`);
+    $('#find-path-button').hide();
+    $('#launch-button').show();
+  } else if (!path) {
     $('#info').text('Your Docking Station path could not be automatically detected. Please set one manually.');
-
+    $('#launch-button').hide();
+    $('#find-path-button').show();
+  } else if (invalid) {
+    $('#info').text(`Sorry, ${path} isn't a valid path. (Valid paths contain an engine.exe file)`);
+    $('#launch-button').hide();
+    $('#find-path-button').show();
   }
 }
 
+/**
+ * @param  {String} The path of an intended DS directory
+ * @return {Boolean|String} Returns the path if it is valid, and false if it is not.
+ */
 function validateDSPath(path) {
   if(path) {
     const pathString = path.toString();
     if (fs.existsSync(`${pathString}/engine.exe`)) {
-      executablePath = pathString;
-      settings.set('gamePath', pathString);
-      displayPathInfo();
+      return pathString;
     } else {
-      $('#info').text(`Sorry, ${pathString} isn't a valid path. (Valid paths contain an engine.exe file)`);
+     return false; 
     }
   }
 }
 
+/**
+ * Assumes access to executablePath and settings
+ * Prompts user to select a directory from their machine
+ * If it's a valid DS path, sets it in settings and updates the display
+ */
 function selectDSPath() {
-  validateDSPath(dialog.showOpenDialogSync({ properties: ['openDirectory', 'multiSelections'] }));
+  var attemptedPath = dialog.showOpenDialogSync({ properties: ['openDirectory', 'multiSelections'] });
+  if (attemptedPath) {
+    var gamePath = validateDSPath(attemptedPath)
+    if (gamePath) {
+        executablePath = gamePath;
+        settings.set('gamePath', gamePath);
+        displayPathInfo(gamePath);
+    } else {
+      displayPathInfo(attemptedPath,true);
+    }
+  }
 }
