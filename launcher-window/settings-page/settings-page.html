@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="settings-page/settings-page.css">
 
-<div style='background-color: rgb(71,59,99);'>
+<div class = "setting-block" style='background-color: rgb(71,59,99);'>
   <form>
     <input class='setting-checkbox' type='checkbox' id='dev-js-checkbox' data-backend-name='development.javascript' data-default=false>
     <span>JavaScript Developer Tools</span>
@@ -10,5 +10,13 @@
     </div>
   </form>
 </div>
+
+<div class = "setting-block" style='background-color: rgb(71,59,99);'>
+	<div id='set-path-button'>
+		<button onclick='selectDSPath()'>Set Docking Station Game Path </button>
+	</div>
+	<div id='info' class='setting-checkbox-statehint'></div>
+</div>	
+
 
 <script src="settings-page/settings-page.js"></script>

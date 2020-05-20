@@ -2,3 +2,8 @@
   font-weight: 300;
   font-size: 0.7rem;
 }
+
+.setting-block {
+	padding-top: 10px;
+	padding-botton: 10px;
+}
