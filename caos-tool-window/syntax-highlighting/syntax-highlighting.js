@@ -267,7 +267,10 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
     commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-  }else if(['number-literal'].includes(codeTree.type)) {
+  }else if(
+    ['literal'].includes(codeTree.type)
+    && ['number'].includes(codeTree.variant)
+  ) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     //console.log('here codeTree.value: ' + codeTree.value + ':' + codeTree.value.length);
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.value}</span>`;
@@ -276,13 +279,18 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       codeTree.value +'|'+ codeText.substr(codeIndex, codeTree.value.length)
     );
     codeIndex += codeTree.value.length;
-    highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-    whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-    codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+    attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
+    if (attempt !== null){
+      highlighted += attempt.highlighted;
+      whiteSpaceList = attempt.whiteSpaceList;
+      commentList = attempt.commentList;
+      codeIndex = attempt.newIndex;
+    }
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-  }else if(['string-literal'].includes(codeTree.type)) {
+  }else if(
+    ['literal'].includes(codeTree.type)
+    && ['string'].includes(codeTree.variant)
+  ) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     highlighted += `<span class='syntax-${codeTree.type}'>"${codeTree.value}"</span>`;
     assert(
@@ -296,6 +304,9 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
   }else if ('end-of-file' === codeTree.type){
+    assert('error' === codeTree.variant);
+    highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
+  }else if ('number-string-variable' === codeTree.type){
     assert('error' === codeTree.variant);
     highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
   }else{
@@ -327,7 +338,6 @@ function checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, co
     commentList = commentToAdd_newCommentList_newIndex.commentList;
     codeIndex = commentToAdd_newCommentList_newIndex.newIndex;
   }else{
-
     /*console.log(codeTree.type);
     if (codeTree.type === undefined){
       console.log(JSON.stringify(codeTree));
