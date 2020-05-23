@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 var chunks = null;
 
 exports.caos = (code) => {

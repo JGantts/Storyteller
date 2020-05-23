@@ -1,7 +1,10 @@
-var assert = require('assert');
-$('head').append( $('<link rel="stylesheet" type="text/css" />').attr('href', 'syntax-highlighting/syntax-highlighting-oldschool.css') );
+const assert = require('assert');
 
-function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIndex){
+exports.highlightSyntax = (codeTree, whiteSpaceList, commentList, codeText, codeIndex) => {
+  return _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
+}
+
+function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIndex){
   var highlighted = '';
 
   attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
@@ -14,7 +17,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
 
   if ('caos-file' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-    highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(codeTree.inject, whiteSpaceList, commentList, codeText, codeIndex);
+    highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.inject, whiteSpaceList, commentList, codeText, codeIndex);
     highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
     commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
@@ -50,7 +53,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
       commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
       codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-      highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(codeTree.varname, whiteSpaceList, commentList, codeText, codeIndex);
+      highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.varname, whiteSpaceList, commentList, codeText, codeIndex);
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
       commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
@@ -74,7 +77,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     codeTree.commands.forEach((command, index) => {
       //console.log('here');
-      highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(command, whiteSpaceList, commentList, codeText, codeIndex);
+      highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(command, whiteSpaceList, commentList, codeText, codeIndex);
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
       commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
@@ -114,7 +117,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
       codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
       codeTree.arguments.forEach((arg, index) => {
-        highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(arg, whiteSpaceList, commentList, codeText, codeIndex);
+        highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(arg, whiteSpaceList, commentList, codeText, codeIndex);
         highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
         whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
         commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
@@ -150,7 +153,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
     codeTree.arguments.forEach((arg, index) => {
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-      highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(arg, whiteSpaceList, commentList, codeText, codeIndex);
+      highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(arg, whiteSpaceList, commentList, codeText, codeIndex);
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
       commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
@@ -159,7 +162,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
   }else if ('doif-blob' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     codeTree.sections.forEach((blob, index) => {
-      highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(blob, whiteSpaceList, commentList, codeText, codeIndex);
+      highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(blob, whiteSpaceList, commentList, codeText, codeIndex);
       highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
       whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
       commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
@@ -183,7 +186,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       }
       if (['doif', 'elif'].includes(codeTree.variant)){
         //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-        highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(codeTree.conditional, whiteSpaceList, commentList, codeText, codeIndex);
+        highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.conditional, whiteSpaceList, commentList, codeText, codeIndex);
         highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
         whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
         commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
@@ -191,7 +194,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
       }
       if (['doif', 'elif', 'else'].includes(codeTree.variant)){
         //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-        highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(codeTree.commandList, whiteSpaceList, commentList, codeText, codeIndex);
+        highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.commandList, whiteSpaceList, commentList, codeText, codeIndex);
         highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
         whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
         commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
@@ -217,7 +220,7 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
 
     }else{
       codeTree.conditional.forEach((boolOrBoolop, index) => {
-        highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(boolOrBoolop, whiteSpaceList, commentList, codeText, codeIndex);
+        highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(boolOrBoolop, whiteSpaceList, commentList, codeText, codeIndex);
         highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
         whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
         commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
@@ -226,17 +229,17 @@ function highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIn
     }
   }else if(['boolean'].includes(codeTree.type)) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-    highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(codeTree.left, whiteSpaceList, commentList, codeText, codeIndex);
+    highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.left, whiteSpaceList, commentList, codeText, codeIndex);
     highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
     commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-    highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(codeTree.operator, whiteSpaceList, commentList, codeText, codeIndex);
+    highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.operator, whiteSpaceList, commentList, codeText, codeIndex);
     highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
     commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
     codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-    highlighted_whiteSpaceList_commentList_newIndex = highlightSyntax(codeTree.right, whiteSpaceList, commentList, codeText, codeIndex);
+    highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.right, whiteSpaceList, commentList, codeText, codeIndex);
     highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
     whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
     commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;

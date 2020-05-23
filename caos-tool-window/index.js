@@ -1,6 +1,6 @@
 $.getScript('../engine-api/CAOS.js');
-$.getScript('syntax-highlighting/syntax-highlighting.js');
 const parser = require('./parser.js');
+const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 
 function injectUserCode(){
   let caosUserCode = document.getElementById('caos-user-code').innerText;
@@ -96,7 +96,7 @@ function userTextChanged(){
   $('#inprocessParse').text(JSON.stringify(codeTree));
 
 
-  var highlighted = highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0).highlighted;
+  var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0).highlighted;
 
   var highlightedHtml =
     highlighted
