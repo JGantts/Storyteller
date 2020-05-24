@@ -230,7 +230,7 @@ function _boolean(){
       left: left,
       operator: operator,
       right: right,
-      message: `Cannot compare ${left.name}, which is a  ${left.variant}, with ${right.name}, which is a ${right.variant}.`
+      message: `Cannot compare ${left.name}, which is a ${left.variant}, with ${right.name}, which is a ${right.variant}.`
     };
   }
 }
