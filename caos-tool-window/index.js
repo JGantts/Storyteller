@@ -96,7 +96,7 @@ function userTextChanged(){
   $('#inprocessParse').text(JSON.stringify(codeTree));
 
 
-  var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0).highlighted;
+  var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
   var highlightedHtml =
     highlighted

@@ -1,29 +1,33 @@
 const assert = require('assert');
+var whiteSpaceList = null;
+var commentList = null;
+var codeText = null;
+var codeIndex = null;
 
-exports.highlightSyntax = (codeTree, whiteSpaceList, commentList, codeText, codeIndex) => {
-  return _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
+
+exports.highlightSyntax = (codeTreeIn, whiteSpaceListIn, commentListIn, codeTextIn, codeIndexIn) => {
+  assert('caos-file' === codeTreeIn.type);
+  whiteSpaceList = whiteSpaceListIn;
+  commentList = commentListIn;
+  codeText = codeTextIn;
+  codeIndex = codeIndexIn;
+
+  inject = _highlightSyntax(codeTreeIn.inject);
+  events = _highlightSyntax(codeTreeIn.events);
+  remove = _highlightSyntax(codeTreeIn.remove);
+
+  return inject + events + remove;
 }
 
-function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeIndex){
+function _highlightSyntax(codeTree){
   var highlighted = '';
 
-  attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-  if (attempt !== null){
-    highlighted += attempt.highlighted;
-    whiteSpaceList = attempt.whiteSpaceList;
-    commentList = attempt.commentList;
-    codeIndex = attempt.newIndex;
-  }
-
-  if ('caos-file' === codeTree.type){
+  highlighted += checkForWhiteSpaceAndComments();
+  if (['command-list'].includes(codeTree.type)){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-    highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.inject, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-    whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-    codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-
-
+    codeTree.commands.forEach((command, i) => {
+      highlighted += _highlightSyntax(command);
+    });
   }else if ('event-scripts' === codeTree.type){
 
   }else if ('variable' === codeTree.type){
@@ -35,11 +39,7 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       );
       codeIndex += codeTree.name.length;
-      highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+      highlighted += checkForWhiteSpaceAndComments();
     }else if(['game'].includes(codeTree.variant)){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
       highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
@@ -48,16 +48,8 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       );
       codeIndex += codeTree.name.length;
-      highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-      highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.varname, whiteSpaceList, commentList, codeText, codeIndex);
-      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+      highlighted += checkForWhiteSpaceAndComments();
+      highlighted += _highlightSyntax(codeTree.varname);
     }else {
       highlighted += `<span class='syntax-error'>${codeTree.name}</span>`;
       assert(
@@ -65,23 +57,13 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       );
       codeIndex += codeTree.name.length;
-      attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-      if (attempt !== null){
-        highlighted += attempt.highlighted;
-        whiteSpaceList = attempt.whiteSpaceList;
-        commentList = attempt.commentList;
-        codeIndex = attempt.newIndex;
-      }
+      highlighted += checkForWhiteSpaceAndComments();
     }
   }else if ('command-list' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     codeTree.commands.forEach((command, index) => {
       //console.log('here');
-      highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(command, whiteSpaceList, commentList, codeText, codeIndex);
-      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+      highlighted += _highlightSyntax(command);
     });
   }else if ('command' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
@@ -96,13 +78,7 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
       );
       codeIndex += codeTree.name.length;
       //console.log(codeIndex);
-      attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-      if (attempt !== null){
-        highlighted += attempt.highlighted;
-        whiteSpaceList = attempt.whiteSpaceList;
-        commentList = attempt.commentList;
-        codeIndex = attempt.newIndex;
-      }
+      highlighted += checkForWhiteSpaceAndComments();
     }else if (['bhvr', 'setv'].includes(codeTree.variant)){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
       highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
@@ -111,17 +87,9 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       );
       codeIndex += codeTree.name.length;
-      highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+      highlighted += checkForWhiteSpaceAndComments();
       codeTree.arguments.forEach((arg, index) => {
-        highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(arg, whiteSpaceList, commentList, codeText, codeIndex);
-        highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-        whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-        commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-        codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+        highlighted += _highlightSyntax(arg);
       });
     }else if ('error' === codeTree.variant){
       highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
@@ -130,13 +98,7 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       );
       codeIndex += codeTree.name.length;
-      attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-      if (attempt !== null){
-        highlighted += attempt.highlighted;
-        whiteSpaceList = attempt.whiteSpaceList;
-        commentList = attempt.commentList;
-        codeIndex = attempt.newIndex;
-      }
+      highlighted += checkForWhiteSpaceAndComments();
     }
   }else if ('returning-command' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
@@ -146,27 +108,15 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
       codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
     );
     codeIndex += codeTree.name.length;
-    highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-    whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-    codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+    highlighted += checkForWhiteSpaceAndComments();
     codeTree.arguments.forEach((arg, index) => {
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-      highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(arg, whiteSpaceList, commentList, codeText, codeIndex);
-      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+      highlighted += _highlightSyntax(arg);
     });
   }else if ('doif-blob' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     codeTree.sections.forEach((blob, index) => {
-      highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(blob, whiteSpaceList, commentList, codeText, codeIndex);
-      highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-      whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-      commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-      codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+      highlighted += _highlightSyntax(blob);
     });
   }else if ('flow' === codeTree.type){
     if ('error' !== codeTree.variant){
@@ -177,28 +127,14 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       );
       codeIndex += codeTree.name.length;
-      highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-      if (highlighted_whiteSpaceList_commentList_newIndex !== null){
-        highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-        whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-        commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-        codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-      }
+      highlighted += checkForWhiteSpaceAndComments();
       if (['doif', 'elif'].includes(codeTree.variant)){
         //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-        highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.conditional, whiteSpaceList, commentList, codeText, codeIndex);
-        highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-        whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-        commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-        codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+        highlighted += _highlightSyntax(codeTree.conditional);
       }
       if (['doif', 'elif', 'else'].includes(codeTree.variant)){
         //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-        highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.commandList, whiteSpaceList, commentList, codeText, codeIndex);
-        highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-        whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-        commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-        codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+        highlighted += _highlightSyntax(codeTree.commandList);
       }
     }else{
       highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
@@ -207,43 +143,21 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       );
       codeIndex += codeTree.name.length;
-      attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-      if (attempt !== null){
-        highlighted += attempt.highlighted;
-        whiteSpaceList = attempt.whiteSpaceList;
-        commentList = attempt.commentList;
-        codeIndex = attempt.newIndex;
-      }
+      highlighted += checkForWhiteSpaceAndComments();
     }
   }else if(['conditional'].includes(codeTree.type)) {
     if ('end-of-file' == codeTree.variant){
 
     }else{
       codeTree.conditional.forEach((boolOrBoolop, index) => {
-        highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(boolOrBoolop, whiteSpaceList, commentList, codeText, codeIndex);
-        highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-        whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-        commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-        codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+        highlighted += _highlightSyntax(boolOrBoolop);
       });
     }
   }else if(['boolean'].includes(codeTree.type)) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-    highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.left, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-    whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-    codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-    highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.operator, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-    whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-    codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
-    highlighted_whiteSpaceList_commentList_newIndex = _highlightSyntax(codeTree.right, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-    whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-    codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+    highlighted += _highlightSyntax(codeTree.left);
+    highlighted += _highlightSyntax(codeTree.operator);
+    highlighted += _highlightSyntax(codeTree.right);
   }else if(['operator'].includes(codeTree.type)) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
@@ -252,11 +166,7 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
       codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
     );
     codeIndex += codeTree.name.length;
-    highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-    whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-    codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+    highlighted += checkForWhiteSpaceAndComments();
   }else if(['bool-op'].includes(codeTree.type)) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
@@ -265,11 +175,7 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
       codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
     );
     codeIndex += codeTree.name.length;
-    highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-    whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-    codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+    highlighted += checkForWhiteSpaceAndComments();
   }else if(
     ['literal'].includes(codeTree.type)
     && ['number'].includes(codeTree.variant)
@@ -282,13 +188,7 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
       codeTree.value +'|'+ codeText.substr(codeIndex, codeTree.value.length)
     );
     codeIndex += codeTree.value.length;
-    attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-    if (attempt !== null){
-      highlighted += attempt.highlighted;
-      whiteSpaceList = attempt.whiteSpaceList;
-      commentList = attempt.commentList;
-      codeIndex = attempt.newIndex;
-    }
+    highlighted += checkForWhiteSpaceAndComments();
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
   }else if(
     ['literal'].includes(codeTree.type)
@@ -301,11 +201,7 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
       codeTree.value +'|'+ codeText.substr(codeIndex+1, codeTree.value.length)
     );
     codeIndex += codeTree.value.length+2;
-    highlighted_whiteSpaceList_commentList_newIndex = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += highlighted_whiteSpaceList_commentList_newIndex.highlighted;
-    whiteSpaceList = highlighted_whiteSpaceList_commentList_newIndex.whiteSpaceList;
-    commentList = highlighted_whiteSpaceList_commentList_newIndex.commentList;
-    codeIndex = highlighted_whiteSpaceList_commentList_newIndex.newIndex;
+    highlighted += checkForWhiteSpaceAndComments();
   }else if ('end-of-file' === codeTree.type){
     assert('error' === codeTree.variant);
     highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
@@ -318,28 +214,17 @@ function _highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, codeI
       console.log(JSON.stringify(codeTree));
     }
   }
-  return {
-    highlighted: highlighted,
-    whiteSpaceList: whiteSpaceList,
-    commentList: commentList,
-    newIndex: codeIndex
-  };
+  return highlighted;
 }
 
-function checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex){
+function checkForWhiteSpaceAndComments(){
   var highlighted = '';
 
   //console.log(codeIndex);
   if (/\s/.test(codeText[codeIndex])){
-    whiteSpaceToAdd_newWhiteSpaceList_newIndex = addWhiteSpace(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-    highlighted += whiteSpaceToAdd_newWhiteSpaceList_newIndex.whiteSpace;
-    whiteSpaceList = whiteSpaceToAdd_newWhiteSpaceList_newIndex.whiteSpaceList;
-    codeIndex = whiteSpaceToAdd_newWhiteSpaceList_newIndex.newIndex;
+    highlighted += addWhiteSpace();
   }else if ('*' === codeText[codeIndex]){
-    commentToAdd_newCommentList_newIndex = addComment(commentList, codeText, codeIndex);
-    highlighted += commentToAdd_newCommentList_newIndex.comment;
-    commentList = commentToAdd_newCommentList_newIndex.commentList;
-    codeIndex = commentToAdd_newCommentList_newIndex.newIndex;
+    highlighted += addComment();
   }else{
     /*console.log(codeTree.type);
     if (codeTree.type === undefined){
@@ -348,24 +233,13 @@ function checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, co
     console.log(codeText.substring(codeIndex-20, codeIndex));
     console.log(codeIndex + ':' + codeText[codeIndex]);
     console.log(codeText.substr(codeIndex, 20));*/
-    return null;
+    return '';
   }
-  var attempt = checkForWhiteSpaceAndComments(codeTree, whiteSpaceList, commentList, codeText, codeIndex);
-  if (attempt !== null){
-    highlighted += attempt.highlighted;
-    whiteSpaceList = attempt.whiteSpaceList;
-    commentList = attempt.commentList;
-    codeIndex = attempt.newIndex;
-  }
-  return {
-    highlighted: highlighted,
-    whiteSpaceList: whiteSpaceList,
-    commentList: commentList,
-    newIndex: codeIndex
-  };
+  highlighted += checkForWhiteSpaceAndComments();
+  return highlighted;
 }
 
-function addWhiteSpace(codeTree, whiteSpaceList, commentList, codeText, codeIndex){
+function addWhiteSpace(){
   assert(
     whiteSpaceList[0] === codeText.substr(codeIndex, whiteSpaceList[0].length),
     whiteSpaceList[0].split('').map((char) => {return char.charCodeAt(0);}).join('')
@@ -373,21 +247,19 @@ function addWhiteSpace(codeTree, whiteSpaceList, commentList, codeText, codeInde
     + codeText.substr(codeIndex, whiteSpaceList[0].length).split('').map((char) => {return char.charCodeAt(0);}).join('')
   );
   //console.log('whitespace:|' + whiteSpaceList[0] + '|' );
-  return {
-    whiteSpace: whiteSpaceList[0],
-    whiteSpaceList: whiteSpaceList.slice(1),
-    newIndex: codeIndex + whiteSpaceList[0].length
-  };
+  let whiteSpaceToAdd = whiteSpaceList[0];
+  whiteSpaceList = whiteSpaceList.slice(1);
+  codeIndex += whiteSpaceToAdd.length;
+  return whiteSpaceToAdd;
 }
 
-function addComment(commentList, codeText, codeIndex){
+function addComment(){
   assert(
     commentList[0] === codeText.substr(codeIndex, commentList[0].length),
     commentList[0] +'|'+ codeText.substr(codeIndex, commentList[0].length)
   );
-  return {
-    comment: `<span class='syntax-comment'>${commentList[0]}</span>`,
-    commentList: commentList.slice(1),
-    newIndex: codeIndex + commentList[0].length
-  };
+  let commentToAdd = commentList[0];
+  commentList = commentList.slice(1);
+  codeIndex += commentToAdd.length;
+  return `<span class='syntax-comment'>${commentToAdd}</span>`;
 }
