@@ -18,7 +18,7 @@
   color: rgb(171,227,255);
 }
 
-.syntax-number-literal, .syntax-string-literal{
+.syntax-literal{
   color: rgb(255,202,131);
 }
 

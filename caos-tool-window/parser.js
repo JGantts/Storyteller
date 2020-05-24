@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 var chunks = null;
 
 exports.caos = (code) => {
@@ -60,8 +62,22 @@ function _commandList(endings){
 }
 
 function _doifElifElseEndiStatements(){
+  assert(chunks[0].toLowerCase() === 'doif')
   var sections = [];
+  let variant = chunks[0].toLowerCase();
+  let name = chunks[0];
+  chunks = chunks.slice(1);
+  var conditional = _conditional();
+  var commandList = _commandList('elif|else|endi');
+  sections.push({
+    type: 'flow',
+    variant: variant,
+    name: name,
+    conditional: conditional,
+    commandList: commandList
+  });
   var done = false;
+  var needEndi = false;
   do{
     if (chunks.length === 0){
       sections.push({
@@ -72,20 +88,29 @@ function _doifElifElseEndiStatements(){
       });
       chunks = chunks.slice(1);
       done = true;
-    }
-    else if ('doif' === chunks[0].toLowerCase()){
+    }else if ('endi' === chunks[0].toLowerCase()){
       let variant = chunks[0].toLowerCase();
       let name = chunks[0];
-      chunks = chunks.slice(1);
-      var conditional = _conditional();
-      var commandList = _commandList('elif|else|endi');
       sections.push({
         type: 'flow',
         variant: variant,
-        name: name,
-        conditional: conditional,
-        commandList: commandList
+        name: name
       });
+      chunks = chunks.slice(1);
+      done = true;
+    }else if (needEndi){
+        let variant = 'error';
+        let name = chunks[0]
+        chunks = chunks.slice(1);
+        var conditional = _conditional();
+        var commandList = _commandList('elif|else|endi');
+        sections.push({
+          type: 'flow',
+          variant: variant,
+          name: name,
+          message: `Expected 'endi' but found ${name} instead.`
+        });
+        done = true;
     }else if ('elif' === chunks[0].toLowerCase()){
       let variant = chunks[0].toLowerCase();
       let name = chunks[0];
@@ -103,23 +128,15 @@ function _doifElifElseEndiStatements(){
       let variant = chunks[0].toLowerCase();
       let name = chunks[0];
       chunks = chunks.slice(1);
-      var commandList = _commandList('endi');
+      //Pass fake endings so errors propogate back up to this while loop.
+      var commandList = _commandList('elif|else|endi');
       sections.push({
         type: 'flow',
         variant: variant,
         name: name,
         commandList: commandList
       });
-    }else if ('endi' === chunks[0].toLowerCase()){
-      let variant = chunks[0].toLowerCase();
-      let name = chunks[0];
-      sections.push({
-        type: 'flow',
-        variant: variant,
-        name: name
-      });
-      chunks = chunks.slice(1);
-      done = true;
+      needEndi = true;
     }else{
       console.log(chunks);
       assert(false);
@@ -156,44 +173,72 @@ function _conditional(){
 }
 
 function _boolean(){
-  var left = _numberOrString();
-  var operator = chunks[0];
-  chunks = chunks.slice(1);
-  var right = _numberOrString();
-  if (
-    ['eq', 'ne', 'gt', 'ge', 'lt', 'le', '=', '<>', '>', '>=', '<', '<=']
-    .includes(operator.toLowerCase())
-  ){
+  if (chunks.length === 0){
     return {
-      type: 'boolean',
-      left: left,
-      operator: {
+      type: 'end-of-file',
+      variant: 'error',
+      message: `Expected boolean but found end of file instead.`
+    }
+  }
+  var left = _numberOrString();
+  if (chunks.length === 0){
+    var operator = {
+      type: 'end-of-file',
+      variant: 'error',
+      message: `Expected operator but found end of file.`
+    };
+  }else{
+    var operatorName = chunks[0];
+    chunks = chunks.slice(1);
+    if (
+      ['eq', 'ne', 'gt', 'ge', 'lt', 'le', '=', '<>', '>', '>=', '<', '<=']
+      .includes(operatorName.toLowerCase())
+    ){
+      var operator = {
         type: 'operator',
-        variant: operator.toLowerCase()
+        variant: operatorName.toLowerCase()
           .replace('eq', '=')
           .replace('ne', '<>')
           .replace('gt', '>')
           .replace('ge', '>=')
           .replace('lt', '<')
           .replace('le', '<='),
-        name: operator},
+        name: operatorName
+      };
+    }else{
+      var operator = {
+        type: 'operator',
+        variant: 'error',
+        name: operatorName,
+        message: `Expected operator but found '${operatorName}'.`
+      };
+    }
+  }
+  var right = _numberOrString();
+  if (left.variant === right.variant){
+    return {
+      type: 'boolean',
+      variant: left.variant,
+      left: left,
+      operator: operator,
       right: right
     };
   }else{
     return {
       type: 'boolean',
+      variant: 'error',
       left: left,
-      operator: {
-        type: 'operator',
-        variant: 'error',
-        name: operator,
-        message: `Expected operator but found '${operator}'.`},
-      right: right
+      operator: operator,
+      right: right,
+      message: `Cannot compare ${left.name}, which is a ${left.variant}, with ${right.name}, which is a ${right.variant}.`
     };
   }
 }
 
 function _possibleBoolop(){
+  if (chunks.length === 0){
+    return null;
+  }
   if (['and', 'or'].includes(chunks[0].toLowerCase())){
     let variant = chunks[0].toLowerCase();
     let name = chunks[0];
@@ -289,7 +334,9 @@ function _variable(){
 }
 
 function _possibleVariable(){
-  if (
+  if (chunks.length === 0){
+    return null;
+  }else if (
     chunks[0][0].toLowerCase()==='v'
     && chunks[0][1].toLowerCase()==='a'
     && (chunks[0][2] >= '0' && chunks[0][2] <= '9')
@@ -334,10 +381,12 @@ function _number(){
 }
 
 function _possibleNumber(){
-  if (!isNaN(chunks[0])){
+  if (chunks.length === 0){
+    return null;
+  }else if (!isNaN(chunks[0])){
     let value = chunks[0];
     chunks = chunks.slice(1);
-    return {type: 'number-literal', value: value};
+    return {type: 'literal', variant: 'number', value: value};
   }else if (['rand'].includes(chunks[0].toLowerCase())){
     let variant = chunks[0].toLowerCase();
     let name = chunks[0];
@@ -357,7 +406,22 @@ function _possibleNumber(){
 }
 
 function _string(){
-  if (chunks[0][0]==='"'){
+  let possibleString = _possibleString();
+  if (possibleString){
+    return possibleString;
+  }else{
+    return {
+      type: 'string',
+      variant: 'error',
+      name: ''
+    };
+  }
+}
+
+function _possibleString(){
+  if (chunks.length === 0){
+    return null;
+  }else if (chunks[0][0]==='"'){
     var stringsChunks = [];
     var index = 0;
     chunks[0] = chunks[0].slice(1);
@@ -367,7 +431,7 @@ function _string(){
     }
     stringsChunks.push(chunks[index].substring(0, chunks[index].length-1));
     chunks = chunks.slice(index+1);
-    return {type:'string-literal', value: stringsChunks.join(' ')};
+    return {type: 'literal', variant: 'string', value: stringsChunks.join(' ')};
   }else{
     var variable = _variable();
     return variable;
