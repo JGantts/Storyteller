@@ -148,10 +148,13 @@ function setCaretPositionWithin(element, caretPosition) {
       index++;
     }while(index < visibleTextNodes.length && !done)
 
-    let offsetInto = currentTextLength - caretPosition;
+    let offsetInto = visibleTextNodes[index-1].length - (currentTextLength - caretPosition);
 
+    console.log(currentTextLength);
+    console.log(caretPosition);
     console.log(offsetInto);
 
+    //range.selectNode(visibleTextNodes[index-1]);
     range.setStart(visibleTextNodes[index-1], offsetInto);
     range.setEnd(visibleTextNodes[index-1], offsetInto);
     sel.removeAllRanges();
