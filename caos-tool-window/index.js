@@ -12,59 +12,18 @@ function injectUserCode(){
 
 function userTextChanged(){
   var codeElement = document.getElementById('caos-user-code');
-  var codeText = codeElement.innerText;
+  var codeText = getVisibleTextInElement(codeElement);
+  var caretPosition = getCaretPositionWithin(codeElement);
 
-////////////////
-///BEGIN CRAP///
-////////////////
-//Remove this crap once we figure out where the double newlines subsequent to
-//  first newline in a sequence of newlines are coming from.
-  var inASequence = false;
-  var odd = false;
-  var codeText = codeText.split('')
-    .filter((char, index) => {
-      if (inASequence){
-        if (char === '\n'){
-          if (odd){
-            odd = !odd;
-            return false;
-          }else{
-            odd = !odd;
-            return true;
-          }
-        }else{
-          inASequence = false;
-          return true;
-        }
-      }else{
-        if (char === '\n'){
-          inASequence = true;
-          odd = false;
-          return true;
-        }else{
-          return true;
-        }
-      }
-    })
-    .join('');
-    /*  for(index = 0; index < 10; index++){
-        console.log(codeText.charCodeAt(index) + ':' + codeText[index]);
-      }*/
-
-//////////////
-///END CRAP///
-//////////////
-
-////////////////
-///BEGIN CRAP///
-////////////////
-  codeText = codeText
-    .replace(/\nEOF/g, '')
-    .replace(/EOF/g, '');
-//////////////
-///END CRAP///
-//////////////
-
+  ////////////////
+  ///BEGIN CRAP///
+  ////////////////
+    codeText = codeText
+      .replace(/\nEOF/g, '')
+      .replace(/EOF/g, '');
+  //////////////
+  ///END CRAP///
+  //////////////
 
   var lines = codeText.split('\n');
 
@@ -105,7 +64,8 @@ function userTextChanged(){
     .replace(/\n/g, '<br />');
 
 
-  document.getElementById('caos-user-code').innerHTML = highlightedHtml;
+  codeElement.innerHTML = highlightedHtml;
+  setCaretPositionWithin(codeElement, caretPosition);
 
   //codeElement.innerHTML = highlighted.highlighted.replace(new RegExp('\n', 'g'), '<br />');
     /*'<span style="color: green; display=\'inline-block;\'">'
@@ -116,3 +76,138 @@ function userTextChanged(){
 function leftTrim(str) {
   return str.replace(/^\s+/g, '');
 }
+
+function getCaretPositionWithin(element) {
+    var caretPosition = 0;
+    var doc = element.ownerDocument || element.document;
+    var win = doc.defaultView || doc.parentWindow;
+    var sel;
+    if (typeof win.getSelection != "undefined") {
+        sel = win.getSelection();
+        if (sel.rangeCount > 0) {
+            var range = win.getSelection().getRangeAt(0);
+            var preCaretRange = range.cloneRange();
+            preCaretRange.selectNodeContents(element);
+            preCaretRange.setEnd(range.endContainer, range.endOffset);
+
+            console.log(
+              getNodesInRange(preCaretRange)
+              .filter(node =>
+                node.parentNode.className !== 'tooltip'
+                && node.nodeType === Node.TEXT_NODE
+              )
+              .map(node =>
+                node.textContent
+              )
+            )
+
+            caretPosition = (
+              getNodesInRange(preCaretRange)
+              .filter(node =>
+                node.parentNode.className !== 'tooltip'
+                && node.nodeType === Node.TEXT_NODE
+              )
+              .reduce(
+                (total, node) => total + node.textContent.length,
+                0
+              )
+              - (preCaretRange.endContainer.textContent.length - preCaretRange.endOffset));
+        }
+    }
+    console.log(caretPosition)
+    caretPosition =
+      caretPosition < 0
+      ? 0
+      : caretPosition;
+    return caretPosition;
+}
+
+function setCaretPositionWithin(element, caretPosition) {
+  var doc = element.ownerDocument || element.document;
+  var win = doc.defaultView || doc.parentWindow;
+  var sel;
+  if (typeof win.getSelection != "undefined") {
+    sel = win.getSelection();
+    let range = doc.createRange();
+    range.selectNode(element);
+    let visibleTextNodes =
+      getNodesInRange(range)
+      .filter(node =>
+        node.parentNode.className !== 'tooltip'
+        && node.nodeType === Node.TEXT_NODE
+      )
+
+    var currentTextLength = 0
+    var index = 0;
+    var done = false;
+    do{
+      currentTextLength += visibleTextNodes[index].textContent.length;
+      if (currentTextLength >= caretPosition){
+        done = true;
+      }
+      index++;
+    }while(index < visibleTextNodes.length && !done)
+
+    let offsetInto = visibleTextNodes[index-1].length - (currentTextLength - caretPosition);
+
+    console.log(currentTextLength);
+    console.log(caretPosition);
+    console.log(offsetInto);
+
+    //range.selectNode(visibleTextNodes[index-1]);
+    range.setStart(visibleTextNodes[index-1], offsetInto);
+    range.setEnd(visibleTextNodes[index-1], offsetInto);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+}
+
+function getVisibleTextInElement(element){
+  var doc = element.ownerDocument || element.document;
+  let range = doc.createRange();
+  range.selectNode(element);
+  return getNodesInRange(range)
+    .filter(node =>
+      node.parentNode.className !== 'tooltip'
+      && node.nodeType === Node.TEXT_NODE
+    )
+    .reduce(
+      (total, node) => total + node.textContent,
+      ''
+    )
+}
+
+function getNodesInRange(range){
+  var startNode = range.startContainer.childNodes[range.startOffset]
+    || range.startContainer;//it's a text node
+  var endNode = range.endContainer.childNodes[range.endOffset]
+    || range.endContainer;
+
+  if (startNode == endNode && startNode.childNodes.length === 0) {
+    return [startNode];
+  };
+
+  var nodes = [];
+  do {
+    nodes.push(startNode);
+  }
+  while ((startNode = getNextNode(startNode, false, endNode))
+    && (startNode != endNode));
+  nodes.push(endNode);
+  return nodes;
+};
+
+function getNextNode(node, skipChildren, endNode){
+  //if there are child nodes and we didn't come from a child node
+  if (endNode == node) {
+    return null;
+  }
+  if (node.firstChild && !skipChildren) {
+    return node.firstChild;
+  }
+  if (!node.parentNode){
+    return null;
+  }
+  return node.nextSibling
+         || getNextNode(node.parentNode, true, endNode);
+};

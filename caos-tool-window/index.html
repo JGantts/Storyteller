@@ -10,14 +10,12 @@
 <div>
   <button id='execute' onclick='injectUserCode()'>Inject</button>
   <div id='caos-result'>Result</div>
-  <code
+  <div
     id='caos-user-code'
     contenteditable='true'
     style='width: calc(100% - 10px); display: block; white-space:pre; padding: 5px;'
     onkeyup='userTextChanged()'
-  >
-    var foo = bar
-  </code>
+  >var foo = bar</div>
   <div id='highlighted' style='font-family:Courier; '></div>
   <div id='inprocessParse'></div>
 </div>
