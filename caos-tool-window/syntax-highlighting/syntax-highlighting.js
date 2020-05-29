@@ -13,10 +13,10 @@ exports.highlightSyntax = (codeTreeIn, whiteSpaceListIn, commentListIn, codeText
   codeIndex = codeIndexIn;
 
   inject = _highlightSyntax(codeTreeIn.inject);
-  events = _highlightSyntax(codeTreeIn.events);
-  remove = _highlightSyntax(codeTreeIn.remove);
+  //events = _highlightSyntax(codeTreeIn.events);
+  //remove = _highlightSyntax(codeTreeIn.remove);
 
-  return inject + events + remove;
+  return inject ;//+ events + remove;
 }
 
 function _highlightSyntax(codeTree){
@@ -250,7 +250,7 @@ function addWhiteSpace(){
   let whiteSpaceToAdd = whiteSpaceList[0];
   whiteSpaceList = whiteSpaceList.slice(1);
   codeIndex += whiteSpaceToAdd.length;
-  return whiteSpaceToAdd;
+  return `<span class='syntax-whitespace'>${whiteSpaceToAdd}</span>`;
 }
 
 function addComment(){

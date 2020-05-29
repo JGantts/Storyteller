@@ -90,17 +90,6 @@ function getCaretPositionWithin(element) {
             preCaretRange.selectNodeContents(element);
             preCaretRange.setEnd(range.endContainer, range.endOffset);
 
-            console.log(
-              getNodesInRange(preCaretRange)
-              .filter(node =>
-                node.parentNode.className !== 'tooltip'
-                && node.nodeType === Node.TEXT_NODE
-              )
-              .map(node =>
-                node.textContent
-              )
-            )
-
             caretPosition = (
               getNodesInRange(preCaretRange)
               .filter(node =>
@@ -114,7 +103,6 @@ function getCaretPositionWithin(element) {
               - (preCaretRange.endContainer.textContent.length - preCaretRange.endOffset));
         }
     }
-    console.log(caretPosition)
     caretPosition =
       caretPosition < 0
       ? 0
@@ -150,11 +138,6 @@ function setCaretPositionWithin(element, caretPosition) {
 
     let offsetInto = visibleTextNodes[index-1].length - (currentTextLength - caretPosition);
 
-    console.log(currentTextLength);
-    console.log(caretPosition);
-    console.log(offsetInto);
-
-    //range.selectNode(visibleTextNodes[index-1]);
     range.setStart(visibleTextNodes[index-1], offsetInto);
     range.setEnd(visibleTextNodes[index-1], offsetInto);
     sel.removeAllRanges();
@@ -169,6 +152,7 @@ function getVisibleTextInElement(element){
   return getNodesInRange(range)
     .filter(node =>
       node.parentNode.className !== 'tooltip'
+      && node.parentNode.className.includes('syntax-')
       && node.nodeType === Node.TEXT_NODE
     )
     .reduce(
