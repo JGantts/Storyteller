@@ -250,7 +250,7 @@ function addWhiteSpace(){
   let whiteSpaceToAdd = whiteSpaceList[0];
   whiteSpaceList = whiteSpaceList.slice(1);
   codeIndex += whiteSpaceToAdd.length;
-  return whiteSpaceToAdd;
+  return `<span class='syntax-whitespace'>${whiteSpaceToAdd}</span>`;
 }
 
 function addComment(){
