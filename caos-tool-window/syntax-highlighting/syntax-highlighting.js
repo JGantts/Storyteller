@@ -13,10 +13,10 @@ exports.highlightSyntax = (codeTreeIn, whiteSpaceListIn, commentListIn, codeText
   codeIndex = codeIndexIn;
 
   inject = _highlightSyntax(codeTreeIn.inject);
-  events = _highlightSyntax(codeTreeIn.events);
-  remove = _highlightSyntax(codeTreeIn.remove);
+  //events = _highlightSyntax(codeTreeIn.events);
+  //remove = _highlightSyntax(codeTreeIn.remove);
 
-  return inject + events + remove;
+  return inject ;//+ events + remove;
 }
 
 function _highlightSyntax(codeTree){
