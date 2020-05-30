@@ -15,16 +15,6 @@ function userTextChanged(){
   var codeText = getVisibleTextInElement(codeElement);
   var caretPosition = getCaretPositionWithin(codeElement);
 
-  ////////////////
-  ///BEGIN CRAP///
-  ////////////////
-    codeText = codeText
-      .replace(/\nEOF/g, '')
-      .replace(/EOF/g, '');
-  //////////////
-  ///END CRAP///
-  //////////////
-
   var lines = codeText.split('\n');
 
   var whiteSpaceList = lines.map((chunk) => {
@@ -39,6 +29,8 @@ function userTextChanged(){
   }).filter((chunk) => {return chunk!==null;})
   .join('\n')
   .match(/\s+/g);
+
+  var whiteSpaceList = whiteSpaceList ? whiteSpaceList : [];
 
   //var whiteSpaceList;
 
@@ -63,7 +55,7 @@ function userTextChanged(){
 
   var highlightedHtml =
     highlighted
-    .replace(/ {2,}/g, '&nbsp;')
+    .replace(/  /g, '&nbsp;&nbsp;')
     //.replace(/\t/g, '\t')
     .replace(/\n/g, '<br />');
 
