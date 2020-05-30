@@ -45,7 +45,7 @@ function userTextChanged(){
   //console.log(commentList);
 
   var codeTree = parser.caos(codeText);
-  $('#inprocessParse').text(JSON.stringify(codeTree));
+  //$('#inprocessParse').text(JSON.stringify(codeTree));
 
 
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
