@@ -15,16 +15,6 @@ function userTextChanged(){
   var codeText = getVisibleTextInElement(codeElement);
   var caretPosition = getCaretPositionWithin(codeElement);
 
-  ////////////////
-  ///BEGIN CRAP///
-  ////////////////
-    codeText = codeText
-      .replace(/\nEOF/g, '')
-      .replace(/EOF/g, '');
-  //////////////
-  ///END CRAP///
-  //////////////
-
   var lines = codeText.split('\n');
 
   var whiteSpaceList = lines.map((chunk) => {
