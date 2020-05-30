@@ -28,7 +28,7 @@ function _chunkCode(code){
 }
 
 function _injectEventsRemove(){
-  var inject = _commandList('scrp|rscr|EOF');
+  var inject = _commandList(['scrp', 'rscr', 'EOF']);
   //var events_chunks = parseEventsList(inject_chunks.chunks);
   //var remove_chunks = parseCommandList({start: 'rscr'}, events_chunks.chunks, 'EOF');
   return {type: 'caos-file', inject: inject, events: {}, remove: {}};
@@ -47,6 +47,8 @@ function _commandList(endings){
   var done = false;
   do{
     if (chunks.length === 0){
+      done = true;
+    }else if (chunks[0] === ''){
       done = true;
     }else if (endings.includes(chunks[0].toLowerCase())){
       done = true;
@@ -68,7 +70,7 @@ function _doifElifElseEndiStatements(){
   let name = chunks[0];
   chunks = chunks.slice(1);
   var conditional = _conditional();
-  var commandList = _commandList('elif|else|endi');
+  var commandList = _commandList(['elif', 'else', 'endi']);
   sections.push({
     type: 'flow',
     variant: variant,
@@ -103,7 +105,7 @@ function _doifElifElseEndiStatements(){
         let name = chunks[0]
         chunks = chunks.slice(1);
         var conditional = _conditional();
-        var commandList = _commandList('elif|else|endi');
+        var commandList = _commandList(['elif', 'else', 'endi']);
         sections.push({
           type: 'flow',
           variant: variant,
@@ -116,7 +118,7 @@ function _doifElifElseEndiStatements(){
       let name = chunks[0];
       chunks = chunks.slice(1);
       var conditional = _conditional();
-      var commandList = _commandList('elif|else|endi');
+      var commandList = _commandList(['elif', 'else', 'endi']);
       sections.push({
         type: 'flow',
         variant: variant,
@@ -129,7 +131,7 @@ function _doifElifElseEndiStatements(){
       let name = chunks[0];
       chunks = chunks.slice(1);
       //Pass fake endings so errors propogate back up to this while loop.
-      var commandList = _commandList('elif|else|endi');
+      var commandList = _commandList(['elif', 'else', 'endi']);
       sections.push({
         type: 'flow',
         variant: variant,
