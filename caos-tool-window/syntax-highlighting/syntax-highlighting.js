@@ -15,7 +15,18 @@ exports.highlightSyntax = (codeTreeIn, whiteSpaceListIn, commentListIn, codeText
   inject = _highlightSyntax(codeTreeIn.inject);
   //events = _highlightSyntax(codeTreeIn.events);
   //remove = _highlightSyntax(codeTreeIn.remove);
-
+  assert(
+    codeText.length === codeIndex,
+    codeText
+  );
+  assert(
+    whiteSpaceList.length === 0,
+    whiteSpaceList
+  );
+  assert(
+    commentList.length === 0,
+    commentList
+  );
   return inject ;//+ events + remove;
 }
 

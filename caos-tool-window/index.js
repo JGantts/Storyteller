@@ -30,6 +30,8 @@ function userTextChanged(){
   .join('\n')
   .match(/\s+/g);
 
+  var whiteSpaceList = whiteSpaceList ? whiteSpaceList : [];
+
   //var whiteSpaceList;
 
   var commentList =
