@@ -3,8 +3,9 @@ const parser = require('./parser.js');
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 
 function injectUserCode(){
-  let caosUserCode = document.getElementById('caos-user-code').innerText;
-  executeCaos(caosUserCode, function (error, result) {
+  var codeElement = document.getElementById('caos-user-code');
+  var codeText = getVisibleTextInElement(codeElement);
+  executeCaos(codeText, function (error, result) {
       if (error) throw error;
       document.getElementById('caos-result').innerHTML = result;
   });
