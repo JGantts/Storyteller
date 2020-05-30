@@ -57,12 +57,15 @@ function userTextChanged(){
 
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
+  if (highlighted === ''){
+    highlighted = '<span class="syntax-blankfile"> </span>'
+  }
+
   var highlightedHtml =
     highlighted
     .replace(/ {2,}/g, '&nbsp;')
     //.replace(/\t/g, '\t')
     .replace(/\n/g, '<br />');
-
 
   codeElement.innerHTML = highlightedHtml;
   setCaretPositionWithin(codeElement, caretPosition);
@@ -118,28 +121,37 @@ function setCaretPositionWithin(element, caretPosition) {
     sel = win.getSelection();
     let range = doc.createRange();
     range.selectNode(element);
-    let visibleTextNodes =
+    let visibleNodes =
       getNodesInRange(range)
       .filter(node =>
         node.parentNode.className !== 'tooltip'
-        && node.nodeType === Node.TEXT_NODE
+      )
+    let visibleTextNodes =
+      visibleNodes
+      .filter(node =>
+        node.nodeType === Node.TEXT_NODE
       )
 
-    var currentTextLength = 0
-    var index = 0;
-    var done = false;
-    do{
-      currentTextLength += visibleTextNodes[index].textContent.length;
-      if (currentTextLength >= caretPosition){
-        done = true;
-      }
-      index++;
-    }while(index < visibleTextNodes.length && !done)
+    if (visibleTextNodes.length > 1){
+      var currentTextLength = 0
+      var index = 0;
+      var done = false;
+      do{
+        currentTextLength += visibleTextNodes[index].textContent.length;
+        if (currentTextLength >= caretPosition){
+          done = true;
+        }
+        index++;
+      }while(index < visibleTextNodes.length && !done)
 
-    let offsetInto = visibleTextNodes[index-1].length - (currentTextLength - caretPosition);
+      let offsetInto = visibleTextNodes[index-1].length - (currentTextLength - caretPosition);
 
-    range.setStart(visibleTextNodes[index-1], offsetInto);
-    range.setEnd(visibleTextNodes[index-1], offsetInto);
+      range.setStart(visibleTextNodes[index-1], offsetInto);
+      range.setEnd(visibleTextNodes[index-1], offsetInto);
+    }else{
+      range.setStart(visibleNodes[1], 0);
+      range.setEnd(visibleNodes[1], 0);
+    }
     sel.removeAllRanges();
     sel.addRange(range);
   }
