@@ -53,7 +53,7 @@ function userTextChanged(){
 
   var highlightedHtml =
     highlighted
-    .replace(/ {2,}/g, '&nbsp;')
+    .replace(/  /g, '&nbsp;&nbsp;')
     //.replace(/\t/g, '\t')
     .replace(/\n/g, '<br />');
 
