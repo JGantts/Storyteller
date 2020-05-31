@@ -2,7 +2,7 @@ var edge = require('electron-edge-js');
 var path = require('path');
 
 var executeCaos = edge.func(`
-#r "engine-api/CAOS.dll"
+#r "resources/app/engine-api/CAOS.dll"
 using CAOS;
 
 async (input) => {
