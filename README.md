@@ -3,6 +3,7 @@
 Intended to be a one-stop-shop for Creatures players and developers.
 
 ### Features:
+---
 - [X] Docking Station launcher
 - [ ] Creatures 3 launcher
 - [ ] Creatures 2 launcher
