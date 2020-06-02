@@ -35,16 +35,11 @@ function userTextChanged(){
 
   var whiteSpaceList = whiteSpaceList ? whiteSpaceList : [];
 
-  //var whiteSpaceList;
-
   var commentList =
     codeText
     .split('\n')
     .filter((line) => {return leftTrim(line)[0]==='*'})
     .map((line) => {return leftTrim(line)});
-
-  console.log(whiteSpaceList);
-  //console.log(commentList);
 
   var codeTree = parser.caos(codeText);
   //$('#inprocessParse').text(JSON.stringify(codeTree));
