@@ -143,26 +143,19 @@ function setCaretPositionWithin(element, caretPosition) {
 
 function getVisibleTextInElement(element){
   var doc = element.ownerDocument || element.document;
-  element.childNodes.forEach((item, i) => {
-    console.log('"' + item.textContent + '"')
-  });
 
   let range = doc.createRange();
   range.selectNode(element);
   return getNodesInRange(range)
     .filter(node =>
       {
-        console.log('"' + node.textContent + '"');
         return node.parentNode.className !== 'tooltip'
           && node.parentNode.className.includes('syntax-')
           && node.nodeType === Node.TEXT_NODE;
       }
     )
     .reduce(
-      (total, node) => {
-        console.log('"' + node.textContent + '"');
-        return total + node.textContent;
-      },
+      (total, node) => {return total + node.textContent;},
       ''
     )
 }

@@ -264,7 +264,6 @@ function addWhiteSpace(){
   whiteSpaceToAdd =
     whiteSpaceToAdd
     .replace(/\x20/g, '&nbsp;')
-  console.log('"' + whiteSpaceToAdd + '"');
   return `<span class='syntax-whitespace'>${whiteSpaceToAdd}</span>`;
 }
 
