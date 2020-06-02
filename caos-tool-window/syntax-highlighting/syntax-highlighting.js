@@ -261,9 +261,7 @@ function addWhiteSpace(){
   let whiteSpaceToAdd = whiteSpaceList[0];
   whiteSpaceList = whiteSpaceList.slice(1);
   codeIndex += whiteSpaceToAdd.length;
-  whiteSpaceToAdd =
-    whiteSpaceToAdd
-    .replace(/\x20/g, '&nbsp;')
+  whiteSpaceToAdd = whiteSpaceToAdd.replace(/\x20/g, '&nbsp;')
   return `<span class='syntax-whitespace'>${whiteSpaceToAdd}</span>`;
 }
 
