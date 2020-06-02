@@ -262,11 +262,8 @@ function addWhiteSpace(){
   whiteSpaceList = whiteSpaceList.slice(1);
   codeIndex += whiteSpaceToAdd.length;
   whiteSpaceToAdd =
-    whiteSpaceToAdd[0]
+    whiteSpaceToAdd
     .replace(/\x20/g, '&nbsp;')
-    .replace(/&nbsp;/g, '&nbsp;')
-    .replace(/\t/g, '____')
-    .replace(/\n/g, '\n');  //... I don't even -JG (but it works, so...)
   console.log('"' + whiteSpaceToAdd + '"');
   return `<span class='syntax-whitespace'>${whiteSpaceToAdd}</span>`;
 }
