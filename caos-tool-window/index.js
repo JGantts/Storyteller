@@ -3,8 +3,9 @@ const parser = require('./parser.js');
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 
 function injectUserCode(){
-  let caosUserCode = document.getElementById('caos-user-code').innerText;
-  executeCaos(caosUserCode, function (error, result) {
+  var codeElement = document.getElementById('caos-user-code');
+  var codeText = getVisibleTextInElement(codeElement);
+  executeCaos(codeText, function (error, result) {
       if (error) throw error;
       document.getElementById('caos-result').innerHTML = result;
   });
@@ -15,20 +16,22 @@ function userTextChanged(){
   var codeText = getVisibleTextInElement(codeElement);
   var caretPosition = getCaretPositionWithin(codeElement);
 
-  var lines = codeText.split('\n');
-
-  var whiteSpaceList = lines.map((chunk) => {
-    var astIndex = chunk.indexOf('*');
-    if (astIndex === -1){
-      return chunk;
-    }else if(astIndex === 0){
-      return '*';
-    }else{
-      return chunk.slice(0, astIndex+1);
-    }
-  }).filter((chunk) => {return chunk!==null;})
-  .join('\n')
-  .match(/\s+/g);
+  var whiteSpaceList =
+    codeText
+    .split('\n')
+    .map((chunk) => {
+      var astIndex = chunk.indexOf('*');
+      if (astIndex === -1){
+        return chunk;
+      }else if(astIndex === 0){
+        return '*';
+      }else{
+        return chunk.slice(0, astIndex+1);
+      }
+    })
+    .filter((chunk) => {return chunk!==null;})
+    .join('\n')
+    .match(/\s+/g);
 
   var whiteSpaceList = whiteSpaceList ? whiteSpaceList : [];
 
@@ -40,26 +43,20 @@ function userTextChanged(){
     .filter((line) => {return leftTrim(line)[0]==='*'})
     .map((line) => {return leftTrim(line)});
 
-  //console.log(whiteSpaceList);
+  console.log(whiteSpaceList);
   //console.log(commentList);
 
   var codeTree = parser.caos(codeText);
-  $('#inprocessParse').text(JSON.stringify(codeTree));
+  //$('#inprocessParse').text(JSON.stringify(codeTree));
 
 
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
   if (highlighted === ''){
-    highlighted = '<span class="syntax-blankfile"> </span>'
+    highlighted = '<span class="syntax-blankfile">&nbsp;</span>'
   }
 
-  var highlightedHtml =
-    highlighted
-    .replace(/  /g, '&nbsp;&nbsp;')
-    //.replace(/\t/g, '\t')
-    .replace(/\n/g, '<br />');
-
-  codeElement.innerHTML = highlightedHtml;
+  codeElement.innerHTML = highlighted;
   setCaretPositionWithin(codeElement, caretPosition);
 
   //codeElement.innerHTML = highlighted.highlighted.replace(new RegExp('\n', 'g'), '<br />');
@@ -151,16 +148,26 @@ function setCaretPositionWithin(element, caretPosition) {
 
 function getVisibleTextInElement(element){
   var doc = element.ownerDocument || element.document;
+  element.childNodes.forEach((item, i) => {
+    console.log('"' + item.textContent + '"')
+  });
+
   let range = doc.createRange();
   range.selectNode(element);
   return getNodesInRange(range)
     .filter(node =>
-      node.parentNode.className !== 'tooltip'
-      && node.parentNode.className.includes('syntax-')
-      && node.nodeType === Node.TEXT_NODE
+      {
+        console.log('"' + node.textContent + '"');
+        return node.parentNode.className !== 'tooltip'
+          && node.parentNode.className.includes('syntax-')
+          && node.nodeType === Node.TEXT_NODE;
+      }
     )
     .reduce(
-      (total, node) => total + node.textContent,
+      (total, node) => {
+        console.log('"' + node.textContent + '"');
+        return total + node.textContent;
+      },
       ''
     )
 }
