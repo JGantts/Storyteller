@@ -35,25 +35,24 @@ function userTextChanged(){
 
   var whiteSpaceList = whiteSpaceList ? whiteSpaceList : [];
 
-  //var whiteSpaceList;
-
   var commentList =
     codeText
     .split('\n')
     .filter((line) => {return leftTrim(line)[0]==='*'})
     .map((line) => {return leftTrim(line)});
 
-  console.log(whiteSpaceList);
-  //console.log(commentList);
-
   var codeTree = parser.caos(codeText);
   //$('#inprocessParse').text(JSON.stringify(codeTree));
 
-
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
+  const BLANK_FILE = "<span class='syntax-blankfile'> </span>"
+
   if (highlighted === ''){
-    highlighted = '<span class="syntax-blankfile">&nbsp;</span>'
+    highlighted = BLANK_FILE
+  }
+  if (highlighted === BLANK_FILE){
+    caretPosition = 0;
   }
 
   codeElement.innerHTML = highlighted;
@@ -148,25 +147,27 @@ function setCaretPositionWithin(element, caretPosition) {
 
 function getVisibleTextInElement(element){
   var doc = element.ownerDocument || element.document;
-  element.childNodes.forEach((item, i) => {
-    console.log('"' + item.textContent + '"')
-  });
 
   let range = doc.createRange();
   range.selectNode(element);
   return getNodesInRange(range)
     .filter(node =>
       {
-        console.log('"' + node.textContent + '"');
         return node.parentNode.className !== 'tooltip'
           && node.parentNode.className.includes('syntax-')
+          && !(node.parentNode.className === 'syntax-blankfile' && node.textContent === ' ')
           && node.nodeType === Node.TEXT_NODE;
       }
     )
     .reduce(
       (total, node) => {
-        console.log('"' + node.textContent + '"');
-        return total + node.textContent;
+        var toAdd = '';
+        if (node.parentNode.className === 'syntax-blankfile'){
+          toAdd = node.textContent.substring(0, node.textContent.length - 1);
+        }else{
+          toAdd = node.textContent
+        }
+        return total + toAdd;
       },
       ''
     )
