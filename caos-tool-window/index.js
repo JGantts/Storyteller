@@ -44,11 +44,15 @@ function userTextChanged(){
   var codeTree = parser.caos(codeText);
   //$('#inprocessParse').text(JSON.stringify(codeTree));
 
-
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
+  const BLANK_FILE = "<span class='syntax-blankfile'> </span>"
+
   if (highlighted === ''){
-    highlighted = '<span class="syntax-blankfile">&nbsp;</span>'
+    highlighted = BLANK_FILE
+  }
+  if (highlighted === BLANK_FILE){
+    caretPosition = 0;
   }
 
   codeElement.innerHTML = highlighted;
@@ -151,11 +155,20 @@ function getVisibleTextInElement(element){
       {
         return node.parentNode.className !== 'tooltip'
           && node.parentNode.className.includes('syntax-')
+          && !(node.parentNode.className === 'syntax-blankfile' && node.textContent === ' ')
           && node.nodeType === Node.TEXT_NODE;
       }
     )
     .reduce(
-      (total, node) => {return total + node.textContent;},
+      (total, node) => {
+        var toAdd = '';
+        if (node.parentNode.className === 'syntax-blankfile'){
+          toAdd = node.textContent.substring(0, node.textContent.length - 1);
+        }else{
+          toAdd = node.textContent
+        }
+        return total + toAdd;
+      },
       ''
     )
 }
