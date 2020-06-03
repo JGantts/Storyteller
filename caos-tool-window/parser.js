@@ -46,7 +46,10 @@ function _commandList(endings){
   var commandList = [];
   var done = false;
   do{
-    if (chunks.length === 0){
+    if (
+      endings.includes('EOF')
+      && chunks.length === 0
+    ){
       done = true;
     }else if (chunks[0] === ''){
       done = true;
