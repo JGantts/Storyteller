@@ -51,6 +51,14 @@ function _commandList(endings){
       && chunks.length === 0
     ){
       done = true;
+    }else if (chunks.length === 0){
+      commandList.push({
+        type: 'end-of-file',
+        variant: 'error',
+        name: chunks[0],
+        message: `Expected command but found end of file instead.`
+      });
+      done = true;
     }else if (chunks[0] === ''){
       done = true;
     }else if (endings.includes(chunks[0].toLowerCase())){
