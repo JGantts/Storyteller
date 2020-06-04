@@ -14,7 +14,8 @@
     id='caos-user-code'
     contenteditable='true'
     style='width: calc(100% - 10px); display: block; white-space:pre; padding: 5px;'
-    onkeyup='userTextChanged()'
+    onkeydown='userTextKeyDown(event)'
+    onkeyup='userTextKeyUp()'
   ><span class="syntax-error">var foo = bar</span></div>
   <div id='highlighted' style='font-family:Courier; '></div>
   <div id='inprocessParse'></div>

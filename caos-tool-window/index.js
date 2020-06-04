@@ -11,11 +11,53 @@ function injectUserCode(){
   });
 }
 
-function userTextChanged(){
+function userTextKeyDown(event){
+  if (event.defaultPrevented) {
+    return; // Do nothing if the event was already processed
+  }
+
+  switch (event.key){
+    case 'Enter':
+      insertText('\n');
+      //insertChar('\t');
+      break;
+    case 'Tab':
+      insertText('\t');
+      //insertChar('\t');
+      break;
+    default:
+      return;
+      break;
+  }
+
+  event.preventDefault();
+}
+
+function userTextKeyUp(event){
+  userTextChanged();
+}
+
+function insertText(text){
   var codeElement = document.getElementById('caos-user-code');
   var codeText = getVisibleTextInElement(codeElement);
   var caretPosition = getCaretPositionWithin(codeElement);
 
+  let newCodeText =
+    codeText.substring(0, caretPosition)
+    + text
+    + codeText.substring(caretPosition, codeText.length)
+
+  checkCode(codeElement, newCodeText, caretPosition+text.length);
+}
+
+function userTextChanged(){
+  var codeElement = document.getElementById('caos-user-code');
+  var codeText = getVisibleTextInElement(codeElement);
+  var caretPosition = getCaretPositionWithin(codeElement);
+  checkCode(codeElement, codeText, caretPosition);
+}
+
+function checkCode(codeElement, codeText, caretPosition){
   var whiteSpaceList =
     codeText
     .split('\n')
