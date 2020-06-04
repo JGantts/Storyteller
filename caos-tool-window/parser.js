@@ -55,7 +55,6 @@ function _commandList(endings){
       commandList.push({
         type: 'end-of-file',
         variant: 'error',
-        name: chunks[0],
         message: `Expected command but found end of file instead.`
       });
       done = true;
@@ -96,7 +95,6 @@ function _doifElifElseEndiStatements(){
       sections.push({
         type: 'end-of-file',
         variant: 'error',
-        name: chunks[0],
         message: `Expected 'endi' but found end of file instead.`
       });
       chunks = chunks.slice(1);
@@ -335,14 +333,22 @@ function _variable(){
   if (possibleVariable){
     return possibleVariable;
   }else{
-    let name = chunks[0];
-    chunks = chunks.slice(1);
-    return {
-      type: 'variable',
-      variant: 'error',
-      name: name,
-      message: `Excpected variable, but found ${name} instead.`
-    };
+    if (chunks.length === 0){
+      return {
+        type: 'end-of-file',
+        variant: 'error',
+        message: `Expected variable, but found end of file instead.`
+      };
+    }else{
+      let name = chunks[0];
+      chunks = chunks.slice(1);
+      return {
+        type: 'variable',
+        variant: 'error',
+        name: name,
+        message: `Excpected variable, but found ${name} instead.`
+      };
+    }
   }
 }
 
@@ -350,7 +356,8 @@ function _possibleVariable(){
   if (chunks.length === 0){
     return null;
   }else if (
-    chunks[0][0].toLowerCase()==='v'
+    chunks[0].length === 4
+    && chunks[0][0].toLowerCase()==='v'
     && chunks[0][1].toLowerCase()==='a'
     && (chunks[0][2] >= '0' && chunks[0][2] <= '9')
     && (chunks[0][3] >= '0' && chunks[0][3] <= '9')
@@ -399,7 +406,12 @@ function _possibleNumber(){
   }else if (!isNaN(chunks[0])){
     let value = chunks[0];
     chunks = chunks.slice(1);
-    return {type: 'literal', variant: 'number', value: value};
+    return {
+      type: 'literal',
+      variant: 'number',
+      name: 'number',
+      value: value
+    };
   }else if (['rand'].includes(chunks[0].toLowerCase())){
     let variant = chunks[0].toLowerCase();
     let name = chunks[0];
