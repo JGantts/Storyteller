@@ -51,6 +51,13 @@ function _commandList(endings){
       && chunks.length === 0
     ){
       done = true;
+    }else if (chunks.length === 0){
+      commandList.push({
+        type: 'end-of-file',
+        variant: 'error',
+        message: `Expected command but found end of file instead.`
+      });
+      done = true;
     }else if (chunks[0] === ''){
       done = true;
     }else if (endings.includes(chunks[0].toLowerCase())){
@@ -88,7 +95,6 @@ function _doifElifElseEndiStatements(){
       sections.push({
         type: 'end-of-file',
         variant: 'error',
-        name: chunks[0],
         message: `Expected 'endi' but found end of file instead.`
       });
       chunks = chunks.slice(1);
@@ -179,19 +185,11 @@ function _conditional(){
 
 function _boolean(){
   if (chunks.length === 0){
-    return {
-      type: 'end-of-file',
-      variant: 'error',
-      message: `Expected boolean but found end of file instead.`
-    }
+    return _eof('boolean');
   }
   var left = _numberOrString();
   if (chunks.length === 0){
-    var operator = {
-      type: 'end-of-file',
-      variant: 'error',
-      message: `Expected operator but found end of file.`
-    };
+    var operator = _eof('operator');
   }else{
     var operatorName = chunks[0];
     chunks = chunks.slice(1);
@@ -211,12 +209,7 @@ function _boolean(){
         name: operatorName
       };
     }else{
-      var operator = {
-        type: 'operator',
-        variant: 'error',
-        name: operatorName,
-        message: `Expected operator but found '${operatorName}'.`
-      };
+      var operator = _error('operator', operatorName);
     }
   }
   var right = _numberOrString();
@@ -272,12 +265,7 @@ function _command(){
   }else{
     let name = chunks[0];
     chunks = chunks.slice(1);
-    return {
-      type: 'command',
-      variant: 'error',
-      name: name,
-      message: `Expected command but found '${name}'`
-    };
+    return _error('command', name);
   }
 }
 
@@ -285,6 +273,14 @@ function _setvAddsEtc(){
   var commandName = chunks[0];
   chunks = chunks.slice(1);
   var argument1 = _variable();
+  if (argument1.type === 'end-of-file'){
+    return {
+      type: 'command',
+      variant: commandName.toLowerCase(),
+      name: commandName,
+      arguments: [argument1]
+    };
+  }
   if (['setv', 'addv'].includes(commandName.toLowerCase())){
     argument2 = _number();
     return {
@@ -314,12 +310,7 @@ function _numberOrString(){
   }
   let name = chunks[0];
   chunks = chunks.slice(1);
-  return {
-    type: 'number-string-variable',
-    variant: 'error',
-    name: name,
-    message: `Excpected number, string, or variable, but found ${name} instead.`
-  };
+  return _error('number-string-variable', name);
 }
 
 function _variable(){
@@ -327,14 +318,7 @@ function _variable(){
   if (possibleVariable){
     return possibleVariable;
   }else{
-    let name = chunks[0];
-    chunks = chunks.slice(1);
-    return {
-      type: 'variable',
-      variant: 'error',
-      name: name,
-      message: `Excpected variable, but found ${name} instead.`
-    };
+    return _errorOrEof('variable');
   }
 }
 
@@ -342,7 +326,8 @@ function _possibleVariable(){
   if (chunks.length === 0){
     return null;
   }else if (
-    chunks[0][0].toLowerCase()==='v'
+    chunks[0].length === 4
+    && chunks[0][0].toLowerCase()==='v'
     && chunks[0][1].toLowerCase()==='a'
     && (chunks[0][2] >= '0' && chunks[0][2] <= '9')
     && (chunks[0][3] >= '0' && chunks[0][3] <= '9')
@@ -377,11 +362,7 @@ function _number(){
   if (possibleNumber){
     return possibleNumber;
   }else{
-    return {
-      type: 'number',
-      variant: 'error',
-      name: ''
-    };
+      return _errorOrEof('number');
   }
 }
 
@@ -391,7 +372,12 @@ function _possibleNumber(){
   }else if (!isNaN(chunks[0])){
     let value = chunks[0];
     chunks = chunks.slice(1);
-    return {type: 'literal', variant: 'number', value: value};
+    return {
+      type: 'literal',
+      variant: 'number',
+      name: 'number',
+      value: value
+    };
   }else if (['rand'].includes(chunks[0].toLowerCase())){
     let variant = chunks[0].toLowerCase();
     let name = chunks[0];
@@ -415,11 +401,7 @@ function _string(){
   if (possibleString){
     return possibleString;
   }else{
-    return {
-      type: 'string',
-      variant: 'error',
-      name: ''
-    };
+    return _errorOrEof('string');
   }
 }
 
@@ -441,4 +423,35 @@ function _possibleString(){
     var variable = _variable();
     return variable;
   }
+}
+
+function _errorOrEof(expecting){
+  if (chunks.length === 0){
+    return {
+      type: 'end-of-file',
+      variant: 'error',
+      message: `Expected ${expecting}, but found end of file instead.`
+    };
+  }else{
+    let name = chunks[0];
+    chunks = chunks.slice(1);
+    return _error(expecting, name);
+  }
+}
+
+function _error(expecting, foundName){
+  return {
+    type: expecting,
+    variant: 'error',
+    name: foundName,
+    message: `Excpected ${expecting}, but found ${foundName} instead.`
+  };
+}
+
+function _eof(expecting){
+  return {
+    type: 'end-of-file',
+    variant: 'error',
+    message: `Excpected ${expecting}, but found end of file instead.`
+  };
 }
