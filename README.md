@@ -1,5 +1,5 @@
-# Story Teller (Creatures Launcher)
- 
+# Storyteller (Creatures Launcher)
+
 Intended to be a one-stop-shop for Creatures players and developers.
 
 ### Features:
