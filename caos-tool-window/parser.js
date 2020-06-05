@@ -185,19 +185,11 @@ function _conditional(){
 
 function _boolean(){
   if (chunks.length === 0){
-    return {
-      type: 'end-of-file',
-      variant: 'error',
-      message: `Expected boolean but found end of file instead.`
-    }
+    return _eof('boolean');
   }
   var left = _numberOrString();
   if (chunks.length === 0){
-    var operator = {
-      type: 'end-of-file',
-      variant: 'error',
-      message: `Expected operator but found end of file.`
-    };
+    var operator = _eof('operator');
   }else{
     var operatorName = chunks[0];
     chunks = chunks.slice(1);
@@ -217,12 +209,7 @@ function _boolean(){
         name: operatorName
       };
     }else{
-      var operator = {
-        type: 'operator',
-        variant: 'error',
-        name: operatorName,
-        message: `Expected operator but found '${operatorName}'.`
-      };
+      var operator = _error('operator', operatorName);
     }
   }
   var right = _numberOrString();
@@ -278,12 +265,7 @@ function _command(){
   }else{
     let name = chunks[0];
     chunks = chunks.slice(1);
-    return {
-      type: 'command',
-      variant: 'error',
-      name: name,
-      message: `Expected command but found '${name}'`
-    };
+    return _error('command', name);
   }
 }
 
@@ -328,12 +310,7 @@ function _numberOrString(){
   }
   let name = chunks[0];
   chunks = chunks.slice(1);
-  return {
-    type: 'number-string-variable',
-    variant: 'error',
-    name: name,
-    message: `Excpected number, string, or variable, but found ${name} instead.`
-  };
+  return _error('number-string-variable', name);
 }
 
 function _variable(){
@@ -424,11 +401,7 @@ function _string(){
   if (possibleString){
     return possibleString;
   }else{
-    return {
-      type: 'string',
-      variant: 'error',
-      name: ''
-    };
+    return _errorOrEof('string');
   }
 }
 
@@ -462,11 +435,23 @@ function _errorOrEof(expecting){
   }else{
     let name = chunks[0];
     chunks = chunks.slice(1);
-    return {
-      type: expecting,
-      variant: 'error',
-      name: name,
-      message: `Excpected ${expecting}, but found ${name} instead.`
-    };
+    return _error(expecting, name);
   }
+}
+
+function _error(expecting, foundName){
+  return {
+    type: expecting,
+    variant: 'error',
+    name: foundName,
+    message: `Excpected ${expecting}, but found ${foundName} instead.`
+  };
+}
+
+function _eof(expecting){
+  return {
+    type: 'end-of-file',
+    variant: 'error',
+    message: `Excpected ${expecting}, but found end of file instead.`
+  };
 }
