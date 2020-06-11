@@ -1,3 +1,8 @@
+module.exports = {
+  Variable: _variable,
+  PossibleVariable: _possibleVariable,
+}
+
 const assert = require('assert');
 const {
   String,
@@ -8,11 +13,6 @@ const {
   Eof,
 } = require('./error.js');
 const { State } = require('./tokens.js');
-
-module.exports = {
-  Variable: _variable,
-  PossibleVariable: _possibleVariable,
-}
 
 function _variable(){
   let possibleVariable = _possibleVariable();

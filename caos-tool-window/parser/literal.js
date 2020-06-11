@@ -1,3 +1,11 @@
+module.exports = {
+  NumberOrString: _numberOrString,
+  Number: _number,
+  PossibleNumber: _possibleNumber,
+  String: _string,
+  PossibleString: _possibleString,
+}
+
 const assert = require('assert');
 const {
   ErrorOrEof,
@@ -6,14 +14,6 @@ const {
 } = require('./error.js');
 const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
-
-module.exports = {
-  NumberOrString: _numberOrString,
-  Number: _number,
-  PossibleNumber: _possibleNumber,
-  String: _string,
-  PossibleString: _possibleString,
-}
 
 function _numberOrString(){
   var possibleNumber = _possibleNumber();
