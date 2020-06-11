@@ -1,13 +1,18 @@
 const assert = require('assert');
-const { chunks } = require('./parser.js');
-const error = require('./error-parser.js')
+const { Chunks } = require('./parser.js');
+const {
+  ErrorOrEof,
+  Error,
+  Eof,
+} = require('./error-parser.js');
 
 module.exports = {
   Command: _command,
 }
 
 function _command() {
-  if (['inst'].includes(chunks[0].toLowerCase())){
+  console.log(Chunks);
+  if (['inst'].includes(Chunks()[0].toLowerCase())){
     let variant = chunks[0].toLowerCase();
     let name = chunks[0];
     chunks = chunks.slice(1);

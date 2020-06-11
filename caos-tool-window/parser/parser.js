@@ -13,15 +13,23 @@ const {
   Eof,
 } = require('./error-parser.js');
 
-module.exports = {
-  chunks: null,
 
-  Caos: (code) => {
-    chunks = _chunkCode(code);
-    var tree = _injectEventsRemove();
-    return tree;
-  },
+module.exports = {
+  Chunks: _chunks,
+  Caos: _caos,
+};
+
+let chunks = null;
+function _chunks(){
+  return chunks;
 }
+
+function _caos(code){
+  chunks = _chunkCode(code);
+  var tree = _injectEventsRemove();
+  return tree;
+}
+
 
 function _chunkCode(code){
   return code

@@ -1,6 +1,10 @@
 const assert = require('assert');
-const chunks = require('./parser.js').chunks;
-const error = require('./error-parser.js')
+const { chunks } = require('./parser.js');
+const {
+  ErrorOrEof,
+  Error,
+  Eof,
+} = require('./error-parser.js');
 
 module.exports = {
   NumberOrString: _numberOrString,

@@ -84,7 +84,7 @@ function checkCode(codeElement, codeText, caretPosition){
     .map((line) => {return leftTrim(line)});
 
   var codeTree = Caos(codeText);
-  //$('#inprocessParse').text(JSON.stringify(codeTree));
+  $('#inprocessParse').text(JSON.stringify(codeTree));
 
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
