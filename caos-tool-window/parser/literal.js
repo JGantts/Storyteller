@@ -3,7 +3,8 @@ const {
   ErrorOrEof,
   Error,
   Eof,
-} = require('./error-parser.js');
+} = require('./error.js');
+const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
 
 module.exports = {
@@ -23,7 +24,7 @@ function _numberOrString(){
   if (possibleString){
     return possibleString;
   }
-  var possibleVariable = _possibleVariable();
+  var possibleVariable = PossibleVariable();
   if (possibleVariable){
     return possibleVariable;
   }
@@ -37,7 +38,7 @@ function _number(){
   if (possibleNumber){
     return possibleNumber;
   }else{
-      return _errorOrEof('number');
+      return ErrorOrEof('number');
   }
 }
 
@@ -66,7 +67,7 @@ function _possibleNumber() {
       arguments: [leftArgument, rightArgument]
     }
   }else{
-    var variable = _variable();
+    var variable = Variable();
     return variable;
   }
 }
@@ -95,7 +96,7 @@ function _possibleString() {
     State.tokens = State.tokens.slice(index+1);
     return {type: 'literal', variant: 'string', value: stringsChunks.join(' ')};
   }else{
-    var variable = _variable();
+    var variable = Variable();
     return variable;
   }
 }
