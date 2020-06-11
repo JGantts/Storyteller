@@ -12,27 +12,17 @@ const {
   Error,
   Eof,
 } = require('./error-parser.js');
-const {
-  GetTokens,
-  SetTokens,
-} = require('./tokens.js');
-
-module.exports = {
-  Chunks: _chunks,
-  Caos: _caos,
-};
-
-let chunks = null;
-function _chunks(){
-  return chunks;
-}
+const { State } = require('./tokens.js');
 
 function _caos(code){
-  SetTokens(_chunkCode(code));
+  State.tokens = _chunkCode(code);
   var tree = _injectEventsRemove();
   return tree;
 }
 
+module.exports = {
+  Caos: _caos,
+};
 
 function _chunkCode(code){
   return code
@@ -55,8 +45,8 @@ function _chunkCode(code){
 
 function _injectEventsRemove(){
   var inject = _commandList(['scrp', 'rscr', 'EOF']);
-  //var events_chunks = parseEventsList(inject_chunks.chunks);
-  //var remove_chunks = parseCommandList({start: 'rscr'}, events_chunks.chunks, 'EOF');
+  //var events_State.tokens = parseEventsList(inject_State.tokens.State.tokens);
+  //var remove_State.tokens = parseCommandList({start: 'rscr'}, events_State.tokens.State.tokens, 'EOF');
   return {type: 'caos-file', inject: inject, events: {}, remove: {}};
 }
 
@@ -64,7 +54,7 @@ function _eventsList(){
 
 }
 
-function _scrp(chunks){
+function _scrp(){
 
 }
 
@@ -74,21 +64,21 @@ function _commandList(endings){
   do{
     if (
       endings.includes('EOF')
-      && chunks.length === 0
+      && State.tokens.length === 0
     ){
       done = true;
-    }else if (chunks.length === 0){
+    }else if (State.tokens.length === 0){
       commandList.push({
         type: 'end-of-file',
         variant: 'error',
         message: `Expected command but found end of file instead.`
       });
       done = true;
-    }else if (chunks[0] === ''){
+    }else if (State.tokens[0] === ''){
       done = true;
-    }else if (endings.includes(chunks[0].toLowerCase())){
+    }else if (endings.includes(State.tokens[0].toLowerCase())){
       done = true;
-    }else if ('doif' === chunks[0].toLowerCase()){
+    }else if ('doif' === State.tokens[0].toLowerCase()){
       var commands = _doifElifElseEndiStatements();
       commandList.push(commands);
     }else{
@@ -100,11 +90,11 @@ function _commandList(endings){
 }
 
 function _doifElifElseEndiStatements(){
-  assert(chunks[0].toLowerCase() === 'doif')
+  assert(State.tokens[0].toLowerCase() === 'doif')
   var sections = [];
-  let variant = chunks[0].toLowerCase();
-  let name = chunks[0];
-  chunks = chunks.slice(1);
+  let variant = State.tokens[0].toLowerCase();
+  let name = State.tokens[0];
+  State.tokens = State.tokens.slice(1);
   var conditional = _conditional();
   var commandList = _commandList(['elif', 'else', 'endi']);
   sections.push({
@@ -117,28 +107,28 @@ function _doifElifElseEndiStatements(){
   var done = false;
   var needEndi = false;
   do{
-    if (chunks.length === 0){
+    if (State.tokens.length === 0){
       sections.push({
         type: 'end-of-file',
         variant: 'error',
         message: `Expected 'endi' but found end of file instead.`
       });
-      chunks = chunks.slice(1);
+      State.tokens = State.tokens.slice(1);
       done = true;
-    }else if ('endi' === chunks[0].toLowerCase()){
-      let variant = chunks[0].toLowerCase();
-      let name = chunks[0];
+    }else if ('endi' === State.tokens[0].toLowerCase()){
+      let variant = State.tokens[0].toLowerCase();
+      let name = State.tokens[0];
       sections.push({
         type: 'flow',
         variant: variant,
         name: name
       });
-      chunks = chunks.slice(1);
+      State.tokens = State.tokens.slice(1);
       done = true;
     }else if (needEndi){
         let variant = 'error';
-        let name = chunks[0]
-        chunks = chunks.slice(1);
+        let name = State.tokens[0]
+        State.tokens = State.tokens.slice(1);
         var conditional = _conditional();
         var commandList = _commandList(['elif', 'else', 'endi']);
         sections.push({
@@ -148,10 +138,10 @@ function _doifElifElseEndiStatements(){
           message: `Expected 'endi' but found ${name} instead.`
         });
         done = true;
-    }else if ('elif' === chunks[0].toLowerCase()){
-      let variant = chunks[0].toLowerCase();
-      let name = chunks[0];
-      chunks = chunks.slice(1);
+    }else if ('elif' === State.tokens[0].toLowerCase()){
+      let variant = State.tokens[0].toLowerCase();
+      let name = State.tokens[0];
+      State.tokens = State.tokens.slice(1);
       var conditional = _conditional();
       var commandList = _commandList(['elif', 'else', 'endi']);
       sections.push({
@@ -161,10 +151,10 @@ function _doifElifElseEndiStatements(){
         conditional: conditional,
         commandList: commandList
       });
-    }else if ('else' === chunks[0].toLowerCase()){
-      let variant = chunks[0].toLowerCase();
-      let name = chunks[0];
-      chunks = chunks.slice(1);
+    }else if ('else' === State.tokens[0].toLowerCase()){
+      let variant = State.tokens[0].toLowerCase();
+      let name = State.tokens[0];
+      State.tokens = State.tokens.slice(1);
       //Pass fake endings so errors propogate back up to this while loop.
       var commandList = _commandList(['elif', 'else', 'endi']);
       sections.push({
@@ -175,7 +165,7 @@ function _doifElifElseEndiStatements(){
       });
       needEndi = true;
     }else{
-      console.log(chunks);
+      console.log(State.tokens);
       assert(false);
     }
   }while(!done);
@@ -183,7 +173,7 @@ function _doifElifElseEndiStatements(){
 }
 
 function _conditional(){
-  if (chunks.length === 0){
+  if (State.tokens.length === 0){
     return {
       type: 'end-of-file',
       variant: 'error',
@@ -210,15 +200,15 @@ function _conditional(){
 }
 
 function _boolean(){
-  if (chunks.length === 0){
+  if (State.tokens.length === 0){
     return _eof('boolean');
   }
   var left = _numberOrString();
-  if (chunks.length === 0){
+  if (State.tokens.length === 0){
     var operator = _eof('operator');
   }else{
-    var operatorName = chunks[0];
-    chunks = chunks.slice(1);
+    var operatorName = State.tokens[0];
+    State.tokens = State.tokens.slice(1);
     if (
       ['eq', 'ne', 'gt', 'ge', 'lt', 'le', '=', '<>', '>', '>=', '<', '<=']
       .includes(operatorName.toLowerCase())
@@ -260,13 +250,13 @@ function _boolean(){
 }
 
 function _possibleBoolop(){
-  if (chunks.length === 0){
+  if (State.tokens.length === 0){
     return null;
   }
-  if (['and', 'or'].includes(chunks[0].toLowerCase())){
-    let variant = chunks[0].toLowerCase();
-    let name = chunks[0];
-    chunks = chunks.slice(1)
+  if (['and', 'or'].includes(State.tokens[0].toLowerCase())){
+    let variant = State.tokens[0].toLowerCase();
+    let name = State.tokens[0];
+    State.tokens = State.tokens.slice(1)
     return {
       type: 'bool-op',
       variant: variant,
@@ -286,26 +276,26 @@ function _variable(){
 }
 
 function _possibleVariable(){
-  if (chunks.length === 0){
+  if (State.tokens.length === 0){
     return null;
   }else if (
-    chunks[0].length === 4
-    && chunks[0][0].toLowerCase()==='v'
-    && chunks[0][1].toLowerCase()==='a'
-    && (chunks[0][2] >= '0' && chunks[0][2] <= '9')
-    && (chunks[0][3] >= '0' && chunks[0][3] <= '9')
+    State.tokens[0].length === 4
+    && State.tokens[0][0].toLowerCase()==='v'
+    && State.tokens[0][1].toLowerCase()==='a'
+    && (State.tokens[0][2] >= '0' && State.tokens[0][2] <= '9')
+    && (State.tokens[0][3] >= '0' && State.tokens[0][3] <= '9')
   ){
-    let name = chunks[0];
-    chunks = chunks.slice(1);
+    let name = State.tokens[0];
+    State.tokens = State.tokens.slice(1);
     return {
       type: 'variable',
       variant: 'va',
       name: name
     }
-  }else if(['game'].includes(chunks[0].toLowerCase())){
-    let variant = chunks[0].toLowerCase();
-    let name = chunks[0];
-    chunks = chunks.slice(1);
+  }else if(['game'].includes(State.tokens[0].toLowerCase())){
+    let variant = State.tokens[0].toLowerCase();
+    let name = State.tokens[0];
+    State.tokens = State.tokens.slice(1);
     var string = _string();
     return {
       type: 'variable',
@@ -313,8 +303,8 @@ function _possibleVariable(){
       name: name,
       varname: string
     };
-  }else if(['name'].includes(chunks[0].toLowerCase())){
-    console.log(chunks);
+  }else if(['name'].includes(State.tokens[0].toLowerCase())){
+    console.log(State.tokens);
   }else{
     return null;
   }

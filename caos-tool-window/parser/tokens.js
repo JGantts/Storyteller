@@ -1,26 +1,15 @@
-module.exports = {
-  State: _state,
-};
-
-let _tokens = null;
-function _getTokens(){
-  return _tokens;
-}
-function _setTokens(tokens){
-  _tokens = tokens;
-}
-
-
-
-
 var _state = {
   _defTokens: null,
 
   get tokens() {
-    return this.defColor;
+    return this._defTokens;
   },
 
-  set tokens(newColor) {
-    this.defColor = newColor;
+  set tokens(newTokens) {
+    this._defTokens = newTokens;
   }
+};
+
+module.exports = {
+  State: _state,
 };

@@ -1,10 +1,10 @@
 const assert = require('assert');
-const { chunks } = require('./parser.js');
 const {
   ErrorOrEof,
   Error,
   Eof,
 } = require('./error-parser.js');
+const { State } = require('./tokens.js');
 
 module.exports = {
   NumberOrString: _numberOrString,
@@ -27,8 +27,8 @@ function _numberOrString(){
   if (possibleVariable){
     return possibleVariable;
   }
-  let name = chunks[0];
-  chunks = chunks.slice(1);
+  let name = State.tokens[0];
+  State.tokens = State.tokens.slice(1);
   return _error('number-string-variable', name);
 }
 
@@ -42,21 +42,21 @@ function _number(){
 }
 
 function _possibleNumber() {
-  if (chunks.length === 0){
+  if (State.tokens.length === 0){
     return null;
-  }else if (!isNaN(chunks[0])){
-    let value = chunks[0];
-    chunks = chunks.slice(1);
+  }else if (!isNaN(State.tokens[0])){
+    let value = State.tokens[0];
+    State.tokens = State.tokens.slice(1);
     return {
       type: 'literal',
       variant: 'number',
       name: 'number',
       value: value
     };
-  }else if (['rand'].includes(chunks[0].toLowerCase())){
-    let variant = chunks[0].toLowerCase();
-    let name = chunks[0];
-    chunks = chunks.slice(1);
+  }else if (['rand'].includes(State.tokens[0].toLowerCase())){
+    let variant = State.tokens[0].toLowerCase();
+    let name = State.tokens[0];
+    State.tokens = State.tokens.slice(1);
     var leftArgument = _number();
     var rightArgument = _number();
     return {
@@ -81,18 +81,18 @@ function _string() {
 }
 
 function _possibleString() {
-  if (chunks.length === 0){
+  if (State.tokens.length === 0){
     return null;
-  }else if (chunks[0][0]==='"'){
+  }else if (State.tokens[0][0]==='"'){
     var stringsChunks = [];
     var index = 0;
-    chunks[0] = chunks[0].slice(1);
-    while (chunks[index][chunks[index].length-1]!=='"'){
-      stringsChunks.push(chunks[index]);
+    State.tokens[0] = State.tokens[0].slice(1);
+    while (State.tokens[index][State.tokens[index].length-1]!=='"'){
+      stringsChunks.push(State.tokens[index]);
       index++;
     }
-    stringsChunks.push(chunks[index].substring(0, chunks[index].length-1));
-    chunks = chunks.slice(index+1);
+    stringsChunks.push(State.tokens[index].substring(0, State.tokens[index].length-1));
+    State.tokens = State.tokens.slice(index+1);
     return {type: 'literal', variant: 'string', value: stringsChunks.join(' ')};
   }else{
     var variable = _variable();

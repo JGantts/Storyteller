@@ -1,5 +1,5 @@
 const assert = require('assert');
-const chunks = require('./parser.js').chunks;
+const { State } = require('./tokens.js');
 
 module.exports = {
   ErrorOrEof: _errorOrEof,
@@ -8,15 +8,15 @@ module.exports = {
 }
 
 function _errorOrEof(expecting){
-  if (chunks.length === 0){
+  if (State.tokens.length === 0){
     return {
       type: 'end-of-file',
       variant: 'error',
       message: `Expected ${expecting}, but found end of file instead.`
     };
   }else{
-    let name = chunks[0];
-    chunks = chunks.slice(1);
+    let name = State.tokens[0];
+    State.tokens = State.tokens.slice(1);
     return _error(expecting, name);
   }
 }
