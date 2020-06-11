@@ -11,7 +11,6 @@ module.exports = {
 }
 
 function _command() {
-  console.log(State.tokens);
   if (['inst'].includes(State.tokens[0].toLowerCase())){
     let variant = State.tokens[0].toLowerCase();
     let name = State.tokens[0];
@@ -26,7 +25,7 @@ function _command() {
   }else{
     let name = State.tokens[0];
     State.tokens = State.tokens.slice(1);
-    return _error('command', name);
+    return Error('command', name);
   }
 }
 
