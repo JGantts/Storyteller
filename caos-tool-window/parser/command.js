@@ -1,9 +1,17 @@
 const assert = require('assert');
 const {
+  NumberOrString,
+  Number,
+  PossibleNumber,
+  String,
+  PossibleString,
+} = require('./literal.js');
+const {
   ErrorOrEof,
   Error,
   Eof,
-} = require('./error-parser.js');
+} = require('./error.js');
+const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
 
 module.exports = {
@@ -32,7 +40,7 @@ function _command() {
 function _setvAddsEtc() {
   var commandName = State.tokens[0];
   State.tokens = State.tokens.slice(1);
-  var argument1 = _variable();
+  var argument1 = Variable();
   if (argument1.type === 'end-of-file'){
     return {
       type: 'command',
@@ -42,7 +50,7 @@ function _setvAddsEtc() {
     };
   }
   if (['setv', 'addv'].includes(commandName.toLowerCase())){
-    argument2 = _number();
+    argument2 = Number();
     return {
       type: 'command',
       variant: commandName.toLowerCase(),
