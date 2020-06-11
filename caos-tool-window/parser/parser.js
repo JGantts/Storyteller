@@ -1,11 +1,26 @@
 const assert = require('assert');
+const { Command } = require('./command-parser.js');
+const {
+  NumberOrString,
+  Number,
+  PossibleNumber,
+  String,
+  PossibleString,
+} = require('./literal-parser.js');
+const {
+  ErrorOrEof,
+  Error,
+  Eof,
+} = require('./error-parser.js');
 
-var chunks = null;
+module.exports = {
+  chunks: null,
 
-exports.caos = (code) => {
-  chunks = _chunkCode(code);
-  var tree = _injectEventsRemove();
-  return tree;
+  Caos: (code) => {
+    chunks = _chunkCode(code);
+    var tree = _injectEventsRemove();
+    return tree;
+  },
 }
 
 function _chunkCode(code){
@@ -66,7 +81,7 @@ function _commandList(endings){
       var commands = _doifElifElseEndiStatements();
       commandList.push(commands);
     }else{
-      var command = _command();
+      var command = Command();
       commandList.push(command);
     }
   }while(!done);
@@ -250,69 +265,6 @@ function _possibleBoolop(){
   return null;
 }
 
-function _command(){
-  if (['inst'].includes(chunks[0].toLowerCase())){
-    let variant = chunks[0].toLowerCase();
-    let name = chunks[0];
-    chunks = chunks.slice(1);
-    return {
-      type: 'command',
-      variant: variant,
-      name: name
-    };
-  }else if (['setv', 'addv'].includes(chunks[0].toLowerCase())){
-    return _setvAddsEtc();
-  }else{
-    let name = chunks[0];
-    chunks = chunks.slice(1);
-    return _error('command', name);
-  }
-}
-
-function _setvAddsEtc(){
-  var commandName = chunks[0];
-  chunks = chunks.slice(1);
-  var argument1 = _variable();
-  if (argument1.type === 'end-of-file'){
-    return {
-      type: 'command',
-      variant: commandName.toLowerCase(),
-      name: commandName,
-      arguments: [argument1]
-    };
-  }
-  if (['setv', 'addv'].includes(commandName.toLowerCase())){
-    argument2 = _number();
-    return {
-      type: 'command',
-      variant: commandName.toLowerCase(),
-      name: commandName,
-      arguments: [argument1, argument2]
-    };
-  }else{
-    console.log(chunks);
-    assert(false);
-  }
-}
-
-function _numberOrString(){
-  var possibleNumber = _possibleNumber();
-  if (possibleNumber){
-    return possibleNumber;
-  }
-  var possibleString = _possibleString();
-  if (possibleString){
-    return possibleString;
-  }
-  var possibleVariable = _possibleVariable();
-  if (possibleVariable){
-    return possibleVariable;
-  }
-  let name = chunks[0];
-  chunks = chunks.slice(1);
-  return _error('number-string-variable', name);
-}
-
 function _variable(){
   let possibleVariable = _possibleVariable();
   if (possibleVariable){
@@ -355,103 +307,4 @@ function _possibleVariable(){
   }else{
     return null;
   }
-}
-
-function _number(){
-  let possibleNumber = _possibleNumber();
-  if (possibleNumber){
-    return possibleNumber;
-  }else{
-      return _errorOrEof('number');
-  }
-}
-
-function _possibleNumber(){
-  if (chunks.length === 0){
-    return null;
-  }else if (!isNaN(chunks[0])){
-    let value = chunks[0];
-    chunks = chunks.slice(1);
-    return {
-      type: 'literal',
-      variant: 'number',
-      name: 'number',
-      value: value
-    };
-  }else if (['rand'].includes(chunks[0].toLowerCase())){
-    let variant = chunks[0].toLowerCase();
-    let name = chunks[0];
-    chunks = chunks.slice(1);
-    var leftArgument = _number();
-    var rightArgument = _number();
-    return {
-      type: 'returning-command',
-      variant: variant,
-      name: name,
-      arguments: [leftArgument, rightArgument]
-    }
-  }else{
-    var variable = _variable();
-    return variable;
-  }
-}
-
-function _string(){
-  let possibleString = _possibleString();
-  if (possibleString){
-    return possibleString;
-  }else{
-    return _errorOrEof('string');
-  }
-}
-
-function _possibleString(){
-  if (chunks.length === 0){
-    return null;
-  }else if (chunks[0][0]==='"'){
-    var stringsChunks = [];
-    var index = 0;
-    chunks[0] = chunks[0].slice(1);
-    while (chunks[index][chunks[index].length-1]!=='"'){
-      stringsChunks.push(chunks[index]);
-      index++;
-    }
-    stringsChunks.push(chunks[index].substring(0, chunks[index].length-1));
-    chunks = chunks.slice(index+1);
-    return {type: 'literal', variant: 'string', value: stringsChunks.join(' ')};
-  }else{
-    var variable = _variable();
-    return variable;
-  }
-}
-
-function _errorOrEof(expecting){
-  if (chunks.length === 0){
-    return {
-      type: 'end-of-file',
-      variant: 'error',
-      message: `Expected ${expecting}, but found end of file instead.`
-    };
-  }else{
-    let name = chunks[0];
-    chunks = chunks.slice(1);
-    return _error(expecting, name);
-  }
-}
-
-function _error(expecting, foundName){
-  return {
-    type: expecting,
-    variant: 'error',
-    name: foundName,
-    message: `Excpected ${expecting}, but found ${foundName} instead.`
-  };
-}
-
-function _eof(expecting){
-  return {
-    type: 'end-of-file',
-    variant: 'error',
-    message: `Excpected ${expecting}, but found end of file instead.`
-  };
 }
