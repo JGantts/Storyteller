@@ -12,7 +12,10 @@ const {
   Error,
   Eof,
 } = require('./error-parser.js');
-
+const {
+  GetTokens,
+  SetTokens,
+} = require('./tokens.js');
 
 module.exports = {
   Chunks: _chunks,
@@ -25,7 +28,7 @@ function _chunks(){
 }
 
 function _caos(code){
-  chunks = _chunkCode(code);
+  SetTokens(_chunkCode(code));
   var tree = _injectEventsRemove();
   return tree;
 }
