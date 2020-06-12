@@ -23,6 +23,18 @@ var _namespaces = [
     'name': 'global',
     'commands': [
     {'name': 'inst', params: []},
+    {'name': 'attr', params: ['number']},
+    {'name': 'bhvr', params: ['number']},
+    {'name': 'tick', params: ['number']},
+    {'name': 'elas', params: ['number']},
+    {'name': 'aero', params: ['number']},
+    {'name': 'accg', params: ['number']},
+    {'name': 'perm', params: ['number']},
+    {'name': 'rand', params: ['number', 'number']},
+    {'name': 'pose', params: ['number']},
+    {'name': 'puhl', params: ['number', 'number', 'number']},
+    {'name': 'tick', params: ['number']},
+    {'name': 'mvto', params: ['number', 'number']},
     {'name': 'setv', params: ['variable', 'number']},
     {'name': 'addv', params: ['variable', 'number']},
   ]},
@@ -91,9 +103,10 @@ function _argument(param){
     return Variable();
   }else if (param === 'number'){
     return Number();
-  }else if (param === 'number'){
+  }else if (param === 'string'){
     return String();
   }else{
+    console.log(param);
     console.log(State.tokens);
     assert(false);
   }
