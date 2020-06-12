@@ -3,7 +3,10 @@ module.exports = {
 }
 
 const assert = require('assert');
-const { Command } = require('./command.js');
+const {
+  Command,
+  Arguments
+} = require('./command.js');
 const { Conditional } = require('./conditional.js');
 const {
   ErrorOrEof,
@@ -35,6 +38,9 @@ function _commandList(endings){
     }else if ('doif' === State.tokens[0].toLowerCase()){
       var commands = _doifElifElseEndiStatements();
       commandList.push(commands);
+    }else if ('reps' === State.tokens[0].toLowerCase()){
+      var command = _reps();
+      commandList.push(command);
     }else{
       var command = Command();
       commandList.push(command);
@@ -124,4 +130,20 @@ function _doifElifElseEndiStatements(){
     }
   }while(!done);
   return {type: 'doif-blob', sections: sections};
+}
+
+function _reps(){
+  assert(State.tokens[0].toLowerCase() === 'reps')
+  let variant = State.tokens[0].toLowerCase();
+  let name = State.tokens[0];
+  State.tokens = State.tokens.slice(1);
+  var arguments = Arguments(['number']);
+  var commandList = _commandList(['repe']);
+  return {
+    type: 'flow',
+    variant: variant,
+    name: name,
+    args: arguments,
+    commandList: commandList
+  };
 }

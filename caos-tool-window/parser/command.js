@@ -1,5 +1,6 @@
 module.exports = {
-  Command: _publicCommand,
+  Command: _command,
+  Arguments: _arguments,
 }
 
 const assert = require('assert');
@@ -46,7 +47,7 @@ var _namespaces = [
   ]},
 ]
 
-function _publicCommand() {
+function _command() {
   var namespace =
     _namespaces
     .filter(namespace => namespace.name === State.tokens[0].toLowerCase())[0]
@@ -61,7 +62,7 @@ function _publicCommand() {
     if (command){
       variant += ' ' + State.tokens[0].toLowerCase();
       name += ' ' + State.tokens[0];
-      return _command(command, variant, name);
+      return _commandTree(command, variant, name);
     }else{
       let name = State.tokens[0];
       State.tokens = State.tokens.slice(1);
@@ -74,7 +75,7 @@ function _publicCommand() {
     if (command){
       let variant = State.tokens[0].toLowerCase();
       let name = State.tokens[0];
-      return _command(command, variant, name);
+      return _commandTree(command, variant, name);
     }else{
       let name = State.tokens[0];
       State.tokens = State.tokens.slice(1);
@@ -83,7 +84,7 @@ function _publicCommand() {
   }
 }
 
-function _command(command, variant, name){
+function _commandTree(command, variant, name){
   State.tokens = State.tokens.slice(1);
   arguments = _arguments(command.params);
   return {
