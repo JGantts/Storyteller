@@ -1,3 +1,7 @@
+module.exports = {
+  CommandList: _commandList,
+}
+
 const assert = require('assert');
 const { Command } = require('./command.js');
 const { Conditional } = require('./conditional.js');
@@ -7,10 +11,6 @@ const {
   Eof,
 } = require('./error.js');
 const { State } = require('./tokens.js');
-
-module.exports = {
-  CommandList: _commandList,
-}
 
 function _commandList(endings){
   var commandList = [];

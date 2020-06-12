@@ -1,3 +1,7 @@
+module.exports = {
+  Command: _publicCommand,
+}
+
 const assert = require('assert');
 const {
   NumberOrString,
@@ -13,10 +17,6 @@ const {
 } = require('./error.js');
 const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
-
-module.exports = {
-  Command: _publicCommand,
-}
 
 var _namespaces = [
   {
