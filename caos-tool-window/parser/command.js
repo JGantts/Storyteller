@@ -15,48 +15,84 @@ const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
 
 module.exports = {
-  Command: _command,
+  Command: _publicCommand,
 }
 
-function _command() {
-  if (['inst'].includes(State.tokens[0].toLowerCase())){
+var _namespaces = [
+  {
+    'name': 'global',
+    'commands': [
+    {'name': 'inst', params: []},
+    {'name': 'setv', params: ['variable', 'number']},
+    {'name': 'addv', params: ['variable', 'number']},
+  ]},
+  {
+    'name': 'new:',
+    'commands': [
+    {'name': 'simp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
+    {'name': 'comp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
+  ]},
+]
+
+function _publicCommand() {
+  var namespace =
+    _namespaces
+    .filter(namespace => namespace.name === State.tokens[0].toLowerCase())[0]
+
+  if (namespace){
     let variant = State.tokens[0].toLowerCase();
     let name = State.tokens[0];
     State.tokens = State.tokens.slice(1);
-    return {
-      type: 'command',
-      variant: variant,
-      name: name
-    };
-  }else if (['setv', 'addv'].includes(State.tokens[0].toLowerCase())){
-    return _setvAddsEtc();
+    var command =
+      namespace.commands
+      .filter(command => command.name === State.tokens[0].toLowerCase())[0]
+    if (command){
+      variant += ' ' + State.tokens[0].toLowerCase();
+      name += ' ' + State.tokens[0];
+      return _command(command, variant, name);
+    }else{
+      let name = State.tokens[0];
+      State.tokens = State.tokens.slice(1);
+      return Error('command', name);
+    }
   }else{
-    let name = State.tokens[0];
-    State.tokens = State.tokens.slice(1);
-    return Error('command', name);
+    var command =
+      _namespaces[0].commands
+      .filter(command => command.name === State.tokens[0].toLowerCase())[0]
+    if (command){
+      let variant = State.tokens[0].toLowerCase();
+      let name = State.tokens[0];
+      return _command(command, variant, name);
+    }else{
+      let name = State.tokens[0];
+      State.tokens = State.tokens.slice(1);
+      return Error('command', name);
+    }
   }
 }
 
-function _setvAddsEtc() {
-  var commandName = State.tokens[0];
+function _command(command, variant, name){
   State.tokens = State.tokens.slice(1);
-  var argument1 = Variable();
-  if (argument1.type === 'end-of-file'){
-    return {
-      type: 'command',
-      variant: commandName.toLowerCase(),
-      name: commandName,
-      arguments: [argument1]
-    };
-  }
-  if (['setv', 'addv'].includes(commandName.toLowerCase())){
-    argument2 = Number();
-    return {
-      type: 'command',
-      variant: commandName.toLowerCase(),
-      name: commandName,
-      arguments: [argument1, argument2]
-    };
+  arguments = _arguments(command.params);
+  return {
+    type: 'command',
+    variant: variant,
+    name: name,
+    arguments: arguments
+  };
+}
+
+function _arguments(params){
+  return params.map(param => _argument(param));
+}
+
+function _argument(param){
+  if (param === 'variable'){
+    return Variable();
+  }else if (param === 'number'){
+    return Number();
+  }else if (param === 'number'){
+    return String();
   }else{
     console.log(State.tokens);
     assert(false);

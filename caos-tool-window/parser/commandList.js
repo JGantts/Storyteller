@@ -1,6 +1,11 @@
 const assert = require('assert');
 const { Command } = require('./command.js');
 const { Conditional } = require('./conditional.js');
+const {
+  ErrorOrEof,
+  Error,
+  Eof,
+} = require('./error.js');
 const { State } = require('./tokens.js');
 
 module.exports = {
