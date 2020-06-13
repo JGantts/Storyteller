@@ -41,6 +41,9 @@ function userTextKeyDown(event){
         case 'Enter':
           insertText('\n');
           break;
+        case 'Shift':
+
+          break
         default:
           if (
             (event.keyCode >= 32 && event.keyCode <= 126)
@@ -56,6 +59,7 @@ function userTextKeyDown(event){
 }
 
 function controlKey(event){
+  
 }
 
 function caretKey(event){
