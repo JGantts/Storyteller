@@ -56,6 +56,9 @@ function _command() {
     let variant = State.tokens[0].toLowerCase();
     let name = State.tokens[0];
     State.tokens = State.tokens.slice(1);
+    if (State.tokens.length === 0){
+      return Eof('command');
+    }
     var command =
       namespace.commands
       .filter(command => command.name === State.tokens[0].toLowerCase())[0]

@@ -42,6 +42,9 @@ function userTextKeyDown(event){
         case 'Enter':
           insertText('\n');
           break;
+        case 'Shift':
+
+          break
         default:
           if (
             (event.keyCode >= 32 && event.keyCode <= 126)
@@ -70,9 +73,7 @@ function caretKey(event){
   switch (event.key){
     case 'ArrowDown':
     case 'ArrowLeft':
-      console.log(caretPosition);
       caretPosition -= 1;
-      console.log(caretPosition);
       break;
     case 'ArrowRight':
       caretPosition += 1;
