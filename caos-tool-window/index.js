@@ -29,7 +29,7 @@ function userTextKeyDown(event){
       case 'ArrowUp':
       case 'End':
       case 'Home':
-        controlKey(event);
+        caretKey(event);
         break;
       case 'Backspace':
       case 'Delete':
@@ -56,11 +56,23 @@ function userTextKeyDown(event){
 }
 
 function controlKey(event){
+}
+
+function caretKey(event){
+  var codeElement = document.getElementById('caos-user-code');
+  var codeText = getVisibleTextInElement(codeElement);
+  var caretPosition = getCaretPositionWithin(codeElement);
+
   switch (event.key){
-    case 'Tab':
     case 'ArrowDown':
     case 'ArrowLeft':
+      console.log(caretPosition);
+      caretPosition -= 1;
+      console.log(caretPosition);
+      break;
     case 'ArrowRight':
+      caretPosition += 1;
+      break;
     case 'ArrowUp':
     case 'End':
     case 'Home':
@@ -69,6 +81,8 @@ function controlKey(event){
       assert(false);
       break;
   }
+
+  setCaretPositionWithin(codeElement, caretPosition);
 }
 
 function editingKey(event){
@@ -224,7 +238,7 @@ function setCaretPositionWithin(element, caretPosition) {
       caretPosition = 0;
     }
 
-    if (visibleTextNodes.length > 1){
+    if (visibleTextNodes.length > 0){
       var currentTextLength = 0
       var index = 0;
       var done = false;
@@ -238,15 +252,13 @@ function setCaretPositionWithin(element, caretPosition) {
 
       let offsetInto = visibleTextNodes[index-1].length - (currentTextLength - caretPosition);
 
-      console.log(visibleTextNodes.map(node => node.parentNode))
       range.setStart(visibleTextNodes[index-1], offsetInto);
       range.setEnd(visibleTextNodes[index-1], offsetInto);
+      sel.removeAllRanges();
+      sel.addRange(range);
     }else{
-      range.setStart(visibleNodes[1], 0);
-      range.setEnd(visibleNodes[1], 0);
+      //Don't do anything?
     }
-    sel.removeAllRanges();
-    sel.addRange(range);
   }
 }
 
