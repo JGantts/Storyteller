@@ -1,5 +1,5 @@
 module.exports = {
-  Command: _command,
+  Command: _paseCommand,
   Arguments: _arguments,
 }
 
@@ -47,37 +47,37 @@ var _namespaces = [
   ]},
 ]
 
-function _command() {
-  var namespace =
+function _paseCommand() {
+  var namespaceDef =
     _namespaces
     .filter(namespace => namespace.name === State.tokens[0].toLowerCase())[0]
 
-  if (namespace){
-    let variant = State.tokens[0].toLowerCase();
-    let name = State.tokens[0];
+  if (namespaceDef){
+    let nsVariant = State.tokens[0].toLowerCase();
+    let nsName = State.tokens[0];
     State.tokens = State.tokens.slice(1);
-    var command =
-      namespace.commands
+    var commandDef =
+      namespaceDef.commands
       .filter(command => command.name === State.tokens[0].toLowerCase())[0]
-    if (command){
-      variant += ' ' + State.tokens[0].toLowerCase();
-      name += ' ' + State.tokens[0];
+    if (commandDef){
+      let cmdVariant = State.tokens[0].toLowerCase();
+      let cmdName = State.tokens[0];
       State.tokens = State.tokens.slice(1);
-      return _commandTree(command, variant, name);
+      return _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName);
     }else{
       let name = State.tokens[0];
       State.tokens = State.tokens.slice(1);
-      return Error('command', name);
+      return Error('command', nsName);
     }
   }else{
-    var command =
+    var commandDef =
       _namespaces[0].commands
       .filter(command => command.name === State.tokens[0].toLowerCase())[0]
-    if (command){
+    if (commandDef){
       let variant = State.tokens[0].toLowerCase();
       let name = State.tokens[0];
       State.tokens = State.tokens.slice(1);
-      return _commandTree(command, variant, name);
+      return _command(commandDef, variant, name);
     }else{
       let name = State.tokens[0];
       State.tokens = State.tokens.slice(1);
@@ -86,8 +86,22 @@ function _command() {
   }
 }
 
-function _commandTree(command, variant, name){
-  arguments = _arguments(command.params);
+function _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName){
+  namespace = {
+    type: 'namespace',
+    variant: nsVariant,
+    name: nsName,
+  }
+  command = _command(commandDef, cmdVariant, cmdName);
+  return {
+    type: 'namespaced-command',
+    namespace: namespace,
+    command: command
+  }
+}
+
+function _command(commandDef, variant, name){
+  arguments = _arguments(commandDef.params);
   return {
     type: 'command',
     variant: variant,
