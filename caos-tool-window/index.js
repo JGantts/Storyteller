@@ -1,6 +1,8 @@
 $.getScript('../engine-api/CAOS.js');
-const parser = require('./parser.js');
+const assert = require('assert');
+const { Caos } = require('./parser/parser.js');
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
+const { KeyCapture } = require('./key-capture.js');
 
 function injectUserCode(){
   var codeElement = document.getElementById('caos-user-code');
@@ -15,22 +17,63 @@ function userTextKeyDown(event){
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
   }
+  event.preventDefault();
 
+  if (event.altKey || event.ctrlKey || event.metaKey){
+    controlKey(event);
+  }else{
+    switch (event.key){
+      case 'Tab':
+      case 'ArrowDown':
+      case 'ArrowLeft':
+      case 'ArrowRight':
+      case 'ArrowUp':
+      case 'End':
+      case 'Home':
+        controlKey(event);
+        break;
+      case 'Backspace':
+      case 'Delete':
+        editingKey(event);
+        break;
+      default:
+        let toInsert = KeyCapture(event);
+        insertText(toInsert);
+        break;
+    }
+  }
+}
+
+function controlKey(event){
   switch (event.key){
-    case 'Enter':
-      insertText('\n');
-      //insertChar('\t');
-      break;
     case 'Tab':
-      insertText('\t');
-      //insertChar('\t');
+    case 'ArrowDown':
+    case 'ArrowLeft':
+    case 'ArrowRight':
+    case 'ArrowUp':
+    case 'End':
+    case 'Home':
       break;
     default:
-      return;
+      assert(false);
       break;
   }
+}
 
-  event.preventDefault();
+function editingKey(event){
+  switch (event.key){
+    case 'Tab':
+    case 'ArrowDown':
+    case 'ArrowLeft':
+    case 'ArrowRight':
+    case 'ArrowUp':
+    case 'End':
+    case 'Home':
+      break;
+    default:
+      assert(false);
+      break;
+  }
 }
 
 function userTextKeyUp(event){
@@ -88,14 +131,14 @@ function checkCode(codeElement, codeText, caretPosition){
 
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
-  const BLANK_FILE = "<span class='syntax-blankfile'> </span>"
+  /*const BLANK_FILE = "<span class='syntax-blankfile'> </span>"
 
   if (highlighted === ''){
     highlighted = BLANK_FILE
   }
   if (highlighted === BLANK_FILE){
     caretPosition = 0;
-  }
+  }*/
 
   codeElement.innerHTML = highlighted;
   setCaretPositionWithin(codeElement, caretPosition);
@@ -195,21 +238,16 @@ function getVisibleTextInElement(element){
   return getNodesInRange(range)
     .filter(node =>
       {
+        console.log(node);
         return node.parentNode.className !== 'tooltip'
           && node.parentNode.className.includes('syntax-')
-          && !(node.parentNode.className === 'syntax-blankfile' && node.textContent === ' ')
           && node.nodeType === Node.TEXT_NODE;
       }
     )
     .reduce(
       (total, node) => {
-        var toAdd = '';
-        if (node.parentNode.className === 'syntax-blankfile'){
-          toAdd = node.textContent.substring(0, node.textContent.length - 1);
-        }else{
-          toAdd = node.textContent
-        }
-        return total + toAdd;
+        console.log(node.textContent);
+        return total + node.textContent;
       },
       ''
     )
