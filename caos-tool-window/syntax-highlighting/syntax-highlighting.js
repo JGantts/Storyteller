@@ -62,7 +62,7 @@ function _highlightSyntax(codeTree){
       highlighted += checkForWhiteSpaceAndComments();
       highlighted += _highlightSyntax(codeTree.varname);
     }else {
-      highlighted += `<span class='syntax-error'>${codeTree.name}</span>`;
+      highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
       assert(
         codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
