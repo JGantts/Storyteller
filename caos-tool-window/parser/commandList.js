@@ -1,11 +1,19 @@
-const assert = require('assert');
-const { Command } = require('./command.js');
-const { Conditional } = require('./conditional.js');
-const { State } = require('./tokens.js');
-
 module.exports = {
   CommandList: _commandList,
 }
+
+const assert = require('assert');
+const {
+  Command,
+  Arguments
+} = require('./command.js');
+const { Conditional } = require('./conditional.js');
+const {
+  ErrorOrEof,
+  Error,
+  Eof,
+} = require('./error.js');
+const { State } = require('./tokens.js');
 
 function _commandList(endings){
   var commandList = [];
@@ -30,6 +38,10 @@ function _commandList(endings){
     }else if ('doif' === State.tokens[0].toLowerCase()){
       var commands = _doifElifElseEndiStatements();
       commandList.push(commands);
+    }else if ('reps' === State.tokens[0].toLowerCase()){
+      var reps = _reps();
+      commandList.push(reps.startCommands);
+      commandList.push(reps.end);
     }else{
       var command = Command();
       commandList.push(command);
@@ -119,4 +131,35 @@ function _doifElifElseEndiStatements(){
     }
   }while(!done);
   return {type: 'doif-blob', sections: sections};
+}
+
+function _reps(){
+  assert(State.tokens[0].toLowerCase() === 'reps')
+  let variant = State.tokens[0].toLowerCase();
+  let name = State.tokens[0];
+  State.tokens = State.tokens.slice(1);
+  var arguments = Arguments(['number']);
+  var commandList = _commandList(['repe']);
+  return {
+    'startCommands': {
+      type: 'flow',
+      variant: variant,
+      name: name,
+      args: arguments,
+      commandList: commandList
+    },
+    'end': _repe()
+  };
+}
+
+function _repe(){
+  assert(State.tokens[0].toLowerCase() === 'repe')
+  let variant = State.tokens[0].toLowerCase();
+  let name = State.tokens[0];
+  State.tokens = State.tokens.slice(1);
+  return {
+    type: 'flow',
+    variant: variant,
+    name: name,
+  }
 }

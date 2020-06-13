@@ -90,7 +90,7 @@ function _highlightSyntax(codeTree){
       codeIndex += codeTree.name.length;
       //console.log(codeIndex);
       highlighted += checkForWhiteSpaceAndComments();
-    }else if (['bhvr', 'setv'].includes(codeTree.variant)){
+    }else if (['bhvr', 'setv', 'new: simp'].includes(codeTree.variant)){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
       highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
       assert(
@@ -143,7 +143,12 @@ function _highlightSyntax(codeTree){
         //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
         highlighted += _highlightSyntax(codeTree.conditional);
       }
-      if (['doif', 'elif', 'else'].includes(codeTree.variant)){
+      if (['reps'].includes(codeTree.variant)){
+        codeTree.args.forEach((arg, i) => {
+          highlighted += _highlightSyntax(arg);
+        });
+      }
+      if (['doif', 'elif', 'else', 'reps'].includes(codeTree.variant)){
         //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
         highlighted += _highlightSyntax(codeTree.commandList);
       }
@@ -237,13 +242,6 @@ function checkForWhiteSpaceAndComments(){
   }else if ('*' === codeText[codeIndex]){
     highlighted += addComment();
   }else{
-    /*console.log(codeTree.type);
-    if (codeTree.type === undefined){
-      console.log(JSON.stringify(codeTree));
-    }
-    console.log(codeText.substring(codeIndex-20, codeIndex));
-    console.log(codeIndex + ':' + codeText[codeIndex]);
-    console.log(codeText.substr(codeIndex, 20));*/
     return '';
   }
   highlighted += checkForWhiteSpaceAndComments();
