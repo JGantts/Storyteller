@@ -153,6 +153,9 @@ function _reps(){
 }
 
 function _repe(){
+  if (State.tokens.length === 0){
+    return Eof('repe');
+  }
   assert(State.tokens[0].toLowerCase() === 'repe')
   let variant = State.tokens[0].toLowerCase();
   let name = State.tokens[0];
