@@ -61,7 +61,7 @@ function userTextKeyDown(event){
 
 function controlKey(event){
   if (event.ctrlKey && event.key === 'v'){
-    insertText(clipboard.readText());
+    insertText(clipboard.readText().replace(/(?:\r\n|\r|\n)/g, '\n'));
   }
 }
 
@@ -120,7 +120,7 @@ function editingKey(event){
 }
 
 function userTextKeyUp(event){
-  userTextChanged();
+  //userTextChanged();
 }
 
 function insertText(text){

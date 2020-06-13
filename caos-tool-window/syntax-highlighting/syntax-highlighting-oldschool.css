@@ -10,7 +10,7 @@
   color: rgb(0,128,0);
 }
 
-.syntax-command, .syntax-flow{
+.syntax-command, .syntax-namespace, .syntax-flow{
   color: rgb(0,0,255);
 }
 
