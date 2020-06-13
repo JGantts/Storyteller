@@ -155,22 +155,9 @@ function checkCode(codeElement, codeText, caretPosition){
 
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
-  /*const BLANK_FILE = "<span class='syntax-blankfile'> </span>"
-
-  if (highlighted === ''){
-    highlighted = BLANK_FILE
-  }
-  if (highlighted === BLANK_FILE){
-    caretPosition = 0;
-  }*/
 
   codeElement.innerHTML = highlighted;
   setCaretPositionWithin(codeElement, caretPosition);
-
-  //codeElement.innerHTML = highlighted.highlighted.replace(new RegExp('\n', 'g'), '<br />');
-    /*'<span style="color: green; display=\'inline-block;\'">'
-    + lines.join('<br />')
-    + '</span>';*/
 }
 
 function leftTrim(str) {
@@ -218,16 +205,24 @@ function setCaretPositionWithin(element, caretPosition) {
     sel = win.getSelection();
     let range = doc.createRange();
     range.selectNode(element);
-    let visibleNodes =
+    let visibleTextNodes =
       getNodesInRange(range)
+      .filter(node =>
+        node.parentNode.tagName !== 'DIV'
+      )
       .filter(node =>
         node.parentNode.className !== 'tooltip'
       )
-    let visibleTextNodes =
-      visibleNodes
       .filter(node =>
         node.nodeType === Node.TEXT_NODE
-      )
+      );
+
+    let textLength = visibleTextNodes.reduce((total, node) => total + node.textContent.length, 0);
+    if (caretPosition > textLength){
+      caretPosition = textLength;
+    }else if (caretPosition < 0){
+      caretPosition = 0;
+    }
 
     if (visibleTextNodes.length > 1){
       var currentTextLength = 0
@@ -243,6 +238,7 @@ function setCaretPositionWithin(element, caretPosition) {
 
       let offsetInto = visibleTextNodes[index-1].length - (currentTextLength - caretPosition);
 
+      console.log(visibleTextNodes.map(node => node.parentNode))
       range.setStart(visibleTextNodes[index-1], offsetInto);
       range.setEnd(visibleTextNodes[index-1], offsetInto);
     }else{
