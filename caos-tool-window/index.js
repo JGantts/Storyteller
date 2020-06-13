@@ -23,7 +23,6 @@ function userTextKeyDown(event){
     controlKey(event);
   }else{
     switch (event.key){
-      case 'Tab':
       case 'ArrowDown':
       case 'ArrowLeft':
       case 'ArrowRight':
@@ -36,10 +35,22 @@ function userTextKeyDown(event){
       case 'Delete':
         editingKey(event);
         break;
-      default:
-        let toInsert = KeyCapture(event);
-        insertText(toInsert);
-        break;
+        case 'Tab':
+          insertText('\t');
+          break;
+        case 'Enter':
+          insertText('\n');
+          break;
+        default:
+          if (
+            (event.keyCode >= 32 && event.keyCode <= 126)
+            || event.keyCode >= 160
+          ){
+            insertText(event.key);
+          }else{
+            assert(false, `key: ${event.key}, keyCode: ${event.keyCode}`)
+          }
+          break;
     }
   }
 }
@@ -61,19 +72,32 @@ function controlKey(event){
 }
 
 function editingKey(event){
+  var codeElement = document.getElementById('caos-user-code');
+  var codeText = getVisibleTextInElement(codeElement);
+  var caretPosition = getCaretPositionWithin(codeElement);
+
+  var newCodeText = '';
+  var newCaretPosition = 0;
+
   switch (event.key){
-    case 'Tab':
-    case 'ArrowDown':
-    case 'ArrowLeft':
-    case 'ArrowRight':
-    case 'ArrowUp':
-    case 'End':
-    case 'Home':
+    case 'Backspace':
+      newCodeText =
+        codeText.substring(0, caretPosition-1)
+        + codeText.substring(caretPosition, codeText.length);
+      newCaretPosition = caretPosition-1;
+      break;
+    case 'Delete':
+      newCodeText =
+        codeText.substring(0, caretPosition)
+        + codeText.substring(caretPosition+1, codeText.length);
+      newCaretPosition = caretPosition;
       break;
     default:
       assert(false);
       break;
   }
+
+  checkCode(codeElement, newCodeText, newCaretPosition);
 }
 
 function userTextKeyUp(event){
@@ -238,7 +262,6 @@ function getVisibleTextInElement(element){
   return getNodesInRange(range)
     .filter(node =>
       {
-        console.log(node);
         return node.parentNode.className !== 'tooltip'
           && node.parentNode.className.includes('syntax-')
           && node.nodeType === Node.TEXT_NODE;
@@ -246,7 +269,6 @@ function getVisibleTextInElement(element){
     )
     .reduce(
       (total, node) => {
-        console.log(node.textContent);
         return total + node.textContent;
       },
       ''
