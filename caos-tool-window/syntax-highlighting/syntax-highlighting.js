@@ -254,6 +254,7 @@ function addWhiteSpace(){
     whiteSpaceList[0].split('').map((char) => {return char.charCodeAt(0);}).join('')
     + '|'
     + codeText.substr(codeIndex, whiteSpaceList[0].length).split('').map((char) => {return char.charCodeAt(0);}).join('')
+    + `code: '${codeText.substr(codeIndex-1, whiteSpaceList[0].length+2)}'`
   );
   //console.log('whitespace:|' + whiteSpaceList[0] + '|' );
   let whiteSpaceToAdd = whiteSpaceList[0];
