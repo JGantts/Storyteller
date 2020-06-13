@@ -249,7 +249,6 @@ function checkForWhiteSpaceAndComments(){
 }
 
 function addWhiteSpace(){
-  console.log(codeText.substr(codeIndex, whiteSpaceList[0].length))
   assert(
     whiteSpaceList[0] === codeText.substr(codeIndex, whiteSpaceList[0].length),
     whiteSpaceList[0].split('').map((char) => {return char.charCodeAt(0);}).join('')

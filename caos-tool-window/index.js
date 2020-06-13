@@ -1,6 +1,8 @@
 $.getScript('../engine-api/CAOS.js');
+const assert = require('assert');
 const { Caos } = require('./parser/parser.js');
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
+const { KeyCapture } = require('./key-capture.js');
 
 function injectUserCode(){
   var codeElement = document.getElementById('caos-user-code');
@@ -15,22 +17,101 @@ function userTextKeyDown(event){
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
   }
+  event.preventDefault();
+
+  if (event.altKey || event.ctrlKey || event.metaKey){
+    controlKey(event);
+  }else{
+    switch (event.key){
+      case 'ArrowDown':
+      case 'ArrowLeft':
+      case 'ArrowRight':
+      case 'ArrowUp':
+      case 'End':
+      case 'Home':
+        caretKey(event);
+        break;
+      case 'Backspace':
+      case 'Delete':
+        editingKey(event);
+        break;
+        case 'Tab':
+          insertText('\t');
+          break;
+        case 'Enter':
+          insertText('\n');
+          break;
+        default:
+          if (
+            (event.keyCode >= 32 && event.keyCode <= 126)
+            || event.keyCode >= 160
+          ){
+            insertText(event.key);
+          }else{
+            assert(false, `key: ${event.key}, keyCode: ${event.keyCode}`)
+          }
+          break;
+    }
+  }
+}
+
+function controlKey(event){
+}
+
+function caretKey(event){
+  var codeElement = document.getElementById('caos-user-code');
+  var codeText = getVisibleTextInElement(codeElement);
+  var caretPosition = getCaretPositionWithin(codeElement);
 
   switch (event.key){
-    case 'Enter':
-      insertText('\n');
-      //insertChar('\t');
+    case 'ArrowDown':
+    case 'ArrowLeft':
+      console.log(caretPosition);
+      caretPosition -= 1;
+      console.log(caretPosition);
       break;
-    case 'Tab':
-      insertText('\t');
-      //insertChar('\t');
+    case 'ArrowRight':
+      caretPosition += 1;
+      break;
+    case 'ArrowUp':
+    case 'End':
+    case 'Home':
       break;
     default:
-      return;
+      assert(false);
       break;
   }
 
-  event.preventDefault();
+  setCaretPositionWithin(codeElement, caretPosition);
+}
+
+function editingKey(event){
+  var codeElement = document.getElementById('caos-user-code');
+  var codeText = getVisibleTextInElement(codeElement);
+  var caretPosition = getCaretPositionWithin(codeElement);
+
+  var newCodeText = '';
+  var newCaretPosition = 0;
+
+  switch (event.key){
+    case 'Backspace':
+      newCodeText =
+        codeText.substring(0, caretPosition-1)
+        + codeText.substring(caretPosition, codeText.length);
+      newCaretPosition = caretPosition-1;
+      break;
+    case 'Delete':
+      newCodeText =
+        codeText.substring(0, caretPosition)
+        + codeText.substring(caretPosition+1, codeText.length);
+      newCaretPosition = caretPosition;
+      break;
+    default:
+      assert(false);
+      break;
+  }
+
+  checkCode(codeElement, newCodeText, newCaretPosition);
 }
 
 function userTextKeyUp(event){
@@ -88,22 +169,9 @@ function checkCode(codeElement, codeText, caretPosition){
 
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
-  const BLANK_FILE = "<span class='syntax-blankfile'> </span>"
-
-  if (highlighted === ''){
-    highlighted = BLANK_FILE
-  }
-  if (highlighted === BLANK_FILE){
-    caretPosition = 0;
-  }
 
   codeElement.innerHTML = highlighted;
   setCaretPositionWithin(codeElement, caretPosition);
-
-  //codeElement.innerHTML = highlighted.highlighted.replace(new RegExp('\n', 'g'), '<br />');
-    /*'<span style="color: green; display=\'inline-block;\'">'
-    + lines.join('<br />')
-    + '</span>';*/
 }
 
 function leftTrim(str) {
@@ -151,18 +219,26 @@ function setCaretPositionWithin(element, caretPosition) {
     sel = win.getSelection();
     let range = doc.createRange();
     range.selectNode(element);
-    let visibleNodes =
+    let visibleTextNodes =
       getNodesInRange(range)
+      .filter(node =>
+        node.parentNode.tagName !== 'DIV'
+      )
       .filter(node =>
         node.parentNode.className !== 'tooltip'
       )
-    let visibleTextNodes =
-      visibleNodes
       .filter(node =>
         node.nodeType === Node.TEXT_NODE
-      )
+      );
 
-    if (visibleTextNodes.length > 1){
+    let textLength = visibleTextNodes.reduce((total, node) => total + node.textContent.length, 0);
+    if (caretPosition > textLength){
+      caretPosition = textLength;
+    }else if (caretPosition < 0){
+      caretPosition = 0;
+    }
+
+    if (visibleTextNodes.length > 0){
       var currentTextLength = 0
       var index = 0;
       var done = false;
@@ -178,12 +254,11 @@ function setCaretPositionWithin(element, caretPosition) {
 
       range.setStart(visibleTextNodes[index-1], offsetInto);
       range.setEnd(visibleTextNodes[index-1], offsetInto);
+      sel.removeAllRanges();
+      sel.addRange(range);
     }else{
-      range.setStart(visibleNodes[1], 0);
-      range.setEnd(visibleNodes[1], 0);
+      //Don't do anything?
     }
-    sel.removeAllRanges();
-    sel.addRange(range);
   }
 }
 
@@ -197,19 +272,12 @@ function getVisibleTextInElement(element){
       {
         return node.parentNode.className !== 'tooltip'
           && node.parentNode.className.includes('syntax-')
-          && !(node.parentNode.className === 'syntax-blankfile' && node.textContent === ' ')
           && node.nodeType === Node.TEXT_NODE;
       }
     )
     .reduce(
       (total, node) => {
-        var toAdd = '';
-        if (node.parentNode.className === 'syntax-blankfile'){
-          toAdd = node.textContent.substring(0, node.textContent.length - 1);
-        }else{
-          toAdd = node.textContent
-        }
-        return total + toAdd;
+        return total + node.textContent;
       },
       ''
     )
