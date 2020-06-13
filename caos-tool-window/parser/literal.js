@@ -77,7 +77,7 @@ function _string() {
   if (possibleString){
     return possibleString;
   }else{
-    return _errorOrEof('string');
+    return ErrorOrEof('string');
   }
 }
 

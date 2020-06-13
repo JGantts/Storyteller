@@ -1,3 +1,7 @@
+module.exports = {
+  Caos: _caos,
+};
+
 const assert = require('assert');
 const { CommandList } = require('./commandList.js');
 const { State } = require('./tokens.js');
@@ -7,10 +11,6 @@ function _caos(code){
   var tree = _injectEventsRemove();
   return tree;
 }
-
-module.exports = {
-  Caos: _caos,
-};
 
 function _chunkCode(code){
   return code

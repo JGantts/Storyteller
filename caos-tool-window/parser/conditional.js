@@ -1,3 +1,7 @@
+module.exports = {
+  Conditional: _conditional,
+}
+
 const assert = require('assert');
 const {
   NumberOrString,
@@ -7,12 +11,6 @@ const {
   PossibleString,
 } = require('./literal.js');
 const { State } = require('./tokens.js');
-
-module.exports = {
-  Conditional: _conditional,
-  //Boolean: _boolean,
-  //PossibleBoolop: _possibleBoolop,
-}
 
 function _conditional(){
   if (State.tokens.length === 0){
