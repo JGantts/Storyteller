@@ -1,6 +1,7 @@
 $.getScript('../engine-api/CAOS.js');
 const assert = require('assert');
 const { Caos } = require('./parser/parser.js');
+const { clipboard } = require('electron')
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 const { KeyCapture } = require('./key-capture.js');
 
@@ -59,7 +60,9 @@ function userTextKeyDown(event){
 }
 
 function controlKey(event){
-  
+  if (event.ctrlKey && event.key === 'v'){
+    insertText(clipboard.readText());
+  }
 }
 
 function caretKey(event){
