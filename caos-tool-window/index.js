@@ -66,9 +66,7 @@ function caretKey(event){
   switch (event.key){
     case 'ArrowDown':
     case 'ArrowLeft':
-      console.log(caretPosition);
       caretPosition -= 1;
-      console.log(caretPosition);
       break;
     case 'ArrowRight':
       caretPosition += 1;
