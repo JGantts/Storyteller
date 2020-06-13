@@ -23,27 +23,27 @@ var _namespaces = [
   {
     'name': 'global',
     'commands': [
-    {'name': 'inst', params: []},
-    {'name': 'attr', params: ['number']},
-    {'name': 'bhvr', params: ['number']},
-    {'name': 'tick', params: ['number']},
-    {'name': 'elas', params: ['number']},
-    {'name': 'aero', params: ['number']},
-    {'name': 'accg', params: ['number']},
-    {'name': 'perm', params: ['number']},
-    {'name': 'rand', params: ['number', 'number']},
-    {'name': 'pose', params: ['number']},
-    {'name': 'puhl', params: ['number', 'number', 'number']},
-    {'name': 'tick', params: ['number']},
-    {'name': 'mvto', params: ['number', 'number']},
-    {'name': 'setv', params: ['variable', 'number']},
-    {'name': 'addv', params: ['variable', 'number']},
+      {'name': 'inst', params: []},
+      {'name': 'attr', params: ['number']},
+      {'name': 'bhvr', params: ['number']},
+      {'name': 'tick', params: ['number']},
+      {'name': 'elas', params: ['number']},
+      {'name': 'aero', params: ['number']},
+      {'name': 'accg', params: ['number']},
+      {'name': 'perm', params: ['number']},
+      {'name': 'rand', params: ['number', 'number']},
+      {'name': 'pose', params: ['number']},
+      {'name': 'puhl', params: ['number', 'number', 'number']},
+      {'name': 'tick', params: ['number']},
+      {'name': 'mvto', params: ['number', 'number']},
+      {'name': 'setv', params: ['variable', 'number']},
+      {'name': 'addv', params: ['variable', 'number']},
   ]},
   {
     'name': 'new:',
     'commands': [
-    {'name': 'simp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
-    {'name': 'comp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
+      {'name': 'simp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
+      {'name': 'comp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
   ]},
 ]
 
@@ -62,6 +62,7 @@ function _command() {
     if (command){
       variant += ' ' + State.tokens[0].toLowerCase();
       name += ' ' + State.tokens[0];
+      State.tokens = State.tokens.slice(1);
       return _commandTree(command, variant, name);
     }else{
       let name = State.tokens[0];
@@ -75,6 +76,7 @@ function _command() {
     if (command){
       let variant = State.tokens[0].toLowerCase();
       let name = State.tokens[0];
+      State.tokens = State.tokens.slice(1);
       return _commandTree(command, variant, name);
     }else{
       let name = State.tokens[0];
@@ -85,7 +87,6 @@ function _command() {
 }
 
 function _commandTree(command, variant, name){
-  State.tokens = State.tokens.slice(1);
   arguments = _arguments(command.params);
   return {
     type: 'command',

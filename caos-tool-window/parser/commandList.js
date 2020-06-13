@@ -39,8 +39,9 @@ function _commandList(endings){
       var commands = _doifElifElseEndiStatements();
       commandList.push(commands);
     }else if ('reps' === State.tokens[0].toLowerCase()){
-      var command = _reps();
-      commandList.push(command);
+      var reps = _reps();
+      commandList.push(reps.startCommands);
+      commandList.push(reps.end);
     }else{
       var command = Command();
       commandList.push(command);
@@ -140,10 +141,25 @@ function _reps(){
   var arguments = Arguments(['number']);
   var commandList = _commandList(['repe']);
   return {
+    'startCommands': {
+      type: 'flow',
+      variant: variant,
+      name: name,
+      args: arguments,
+      commandList: commandList
+    },
+    'end': _repe()
+  };
+}
+
+function _repe(){
+  assert(State.tokens[0].toLowerCase() === 'repe')
+  let variant = State.tokens[0].toLowerCase();
+  let name = State.tokens[0];
+  State.tokens = State.tokens.slice(1);
+  return {
     type: 'flow',
     variant: variant,
     name: name,
-    args: arguments,
-    commandList: commandList
-  };
+  }
 }
