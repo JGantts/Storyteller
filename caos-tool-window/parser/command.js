@@ -140,6 +140,7 @@ var _namespaces = [
       {name: 'dmpt', returnType: 'doesnt', params: ['number']},
       {name: 'setd', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
       {name: 'setl', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'setn', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
       {name: 'sett', returnType: 'doesnt', params: ['number', 'number', 'number']},
   ]},
   {
