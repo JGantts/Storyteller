@@ -41,12 +41,10 @@ function _commandList(endings){
       commandList.push(commands);
     }else if ('reps' === State.tokens[0].toLowerCase()){
       var reps = _loop1('reps', ['number'], 'repe');
-      commandList.push(reps.startCommands);
-      commandList.push(reps.end);
+      commandList.push(reps);
     }else if (['enum', 'esee', 'etch'].includes(State.tokens[0].toLowerCase())){
-      var reps = _loop1(State.tokens[0], ['number', 'number', 'number'], 'next');
-      commandList.push(reps.startCommands);
-      commandList.push(reps.end);
+      var enumeration = _loop1(State.tokens[0], ['number', 'number', 'number'], 'next');
+      commandList.push(enumeration);
     }else{
       var command = Command('doesnt');
       commandList.push(command);
@@ -139,20 +137,11 @@ function _doifElifElseEndiStatements(){
 }
 
 function _loop1(start, arguments, end){
-  assert(State.tokens[0].toLowerCase() === start)
-  let variant = State.tokens[0].toLowerCase();
-  let name = State.tokens[0];
-  State.tokens = State.tokens.slice(1);
-  var arguments = Arguments(arguments);
-  var commandList = _commandList([end]);
   return {
-    'startCommands': {
-      type: 'flow',
-      variant: variant,
-      name: name,
-      args: arguments,
-      commandList: commandList
-    },
-    'end': CherryPick('flow', end)
+    type: 'loop1',
+    start: CherryPick('flow', start),
+    arguments: Arguments(arguments),
+    commandList: _commandList([end]),
+    end: CherryPick('flow', end),
   };
 }
