@@ -42,8 +42,11 @@ function _commandList(endings){
     }else if ('reps' === State.tokens[0].toLowerCase()){
       var reps = _loop1('reps', ['number'], 'repe');
       commandList.push(reps);
-    }else if (['enum', 'esee', 'etch'].includes(State.tokens[0].toLowerCase())){
+    }else if (['enum', 'esee', 'etch', 'epas'].includes(State.tokens[0].toLowerCase())){
       var enumeration = _loop1(State.tokens[0], ['number', 'number', 'number'], 'next');
+      commandList.push(enumeration);
+    }else if (['econ'].includes(State.tokens[0].toLowerCase())){
+      var enumeration = _loop1(State.tokens[0], ['agent'], 'next');
       commandList.push(enumeration);
     }else if (['loop'].includes(State.tokens[0].toLowerCase())){
       var loop = _loop2(State.tokens[0], ['untl', 'ever'], [['condition'], []]);
