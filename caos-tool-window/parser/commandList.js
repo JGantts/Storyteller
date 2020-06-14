@@ -45,6 +45,9 @@ function _commandList(endings){
     }else if (['enum', 'esee', 'etch'].includes(State.tokens[0].toLowerCase())){
       var enumeration = _loop1(State.tokens[0], ['number', 'number', 'number'], 'next');
       commandList.push(enumeration);
+    }else if (['loop'].includes(State.tokens[0].toLowerCase())){
+      var loop = _loop2(State.tokens[0], ['untl', 'ever'], [['condition'], []]);
+      commandList.push(loop);
     }else{
       var command = Command('doesnt');
       commandList.push(command);
@@ -143,5 +146,22 @@ function _loop1(start, arguments, end){
     arguments: Arguments(arguments),
     commandList: _commandList([end]),
     end: CherryPick('flow', end),
+  };
+}
+
+function _loop2(start, ends, arguments){
+  var start = CherryPick('flow', start);
+  var commandList = _commandList(ends);
+  assert(ends[0] === 'untl');
+  assert(ends[1] === 'ever');
+  var endString = State.tokens[0];
+  var end = CherryPick('flow', endString);
+  var arguments = Arguments(arguments[ends.indexOf(endString.toLowerCase())]);
+  return {
+    type: 'loop2',
+    start: start,
+    commandList: commandList,
+    end: end,
+    arguments: arguments,
   };
 }

@@ -152,6 +152,16 @@ function _highlightSyntax(codeTree){
     highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.end);
     highlighted += checkForWhiteSpaceAndComments();
+  }else if ('loop2' === codeTree.type){
+    highlighted += _highlightSyntax(codeTree.start);
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += _highlightSyntax(codeTree.commandList);
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += _highlightSyntax(codeTree.end);
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += codeTree.arguments
+      .reduce((total, arg) => total + _highlightSyntax(arg), '');
+    highlighted += checkForWhiteSpaceAndComments();
   }else if ('flow' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex] + ' ' + codeText.substr(codeIndex, 8));
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;

@@ -4,6 +4,7 @@ module.exports = {
 }
 
 const assert = require('assert');
+const { Conditional } = require('./conditional.js')
 const {
   NumberOrString,
   Number,
@@ -304,8 +305,8 @@ function _argument(param){
     return Number();
   }else if (param === 'string'){
     return String();
-  }else if (param === 'string'){
-    return String();
+  }else if (param === 'condition'){
+    return Conditional();
   }else{
     return _paseCommand(param);
   }
