@@ -23,6 +23,7 @@ var _namespaces = [
   {
     'name': 'global',
     'commands': [
+    //Agents
       {name: 'abba', returnType: 'number', params: []},
       {name: 'alph', returnType: 'doesnt', params: ['number', 'number']},
       {name: 'anim', returnType: 'doesnt', params: ['byte-string']},
@@ -115,8 +116,44 @@ var _namespaces = [
       {name: 'wild', returnType: 'string', params: ['number', 'number', 'number', 'string', 'number']},
       {name: '_it_', returnType: 'agent', params: []},
 
+    //Brain
       {name: 'adin', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
       {name: 'doin', returnType: 'doesnt', params: ['number']},
+
+    //Camera
+    //CD Player
+
+    //Compounds
+      {name: 'fcus', returnType: 'doesnt', params: []},
+      {name: 'frmt', returnType: 'doesnt', params: ['number', 'number', 'number', 'number', 'number', 'number', 'number']},
+      {name: 'grpl', returnType: 'doesnt', params: ['number', 'number', 'number', 'number', 'number']},
+      {name: 'grpv', returnType: 'doesnt', params: ['number', 'number']},
+      {name: 'npgs', returnType: 'number', params: []},
+      {name: 'page', returnType: 'doesnt', params: ['number']},
+      {name: 'page', returnType: 'number', params: []},
+      {name: 'part', returnType: 'doesnt', params: ['number']},
+      {name: 'part', returnType: 'number', params: ['number']},
+      {name: 'pnxt', returnType: 'number', params: ['number']},
+      {name: 'ptxt', returnType: 'doesnt', params: ['string']},
+      {name: 'ptxt', returnType: 'string', params: []},
+
+    //Creatures
+    //Debug
+    //Files
+    //Flow
+    //Genetics
+    //History
+    //Input
+    //Map
+    //Motion
+    //Net
+    //Ports
+    //Resources
+    //Scripts
+    //Sounds
+    //Time
+    //Variables
+    //Vehicles
 
       {name: '____', returnType: 'doesnt', params: ['____', '____']},
 
@@ -154,6 +191,18 @@ var _namespaces = [
     'commands': [
       {name: 'simp', returnType: 'doesnt', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
       {name: 'comp', returnType: 'doesnt', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
+  ]},
+  {
+    'name': 'pat:',
+    'commands': [
+      {name: 'butt', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'number', 'byte-string', 'number', 'number']},
+      {name: 'cmra', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number']},
+      {name: 'dull', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number']},
+      {name: 'fixd', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'string']},
+      {name: 'grph', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'number']},
+      {name: 'kill', returnType: 'doesnt', params: ['number']},
+      {name: 'move', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'text', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'number', 'string']},
   ]},
 ]
 
