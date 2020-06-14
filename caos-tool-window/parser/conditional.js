@@ -69,7 +69,11 @@ function _boolean(){
     }
   }
   var right = NumberOrString();
-  if (left.variant !== right.variant){
+  if (
+    left.type === 'literal'
+    && right.type === 'literal'
+    && left.variant !== right.variant
+  ){
     message = `Cannot compare ${left.name}, which is a ${left.variant}, with ${right.name}, which is a ${right.variant}.`
     operator = _operatorToError(operator, message);
   }
