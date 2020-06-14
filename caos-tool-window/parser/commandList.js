@@ -7,6 +7,7 @@ const {
   Command,
   Arguments
 } = require('./command.js');
+const { CherryPick } = require('./common.js');
 const { Conditional } = require('./conditional.js');
 const {
   ErrorOrEof,
@@ -152,21 +153,6 @@ function _loop1(start, arguments, end){
       args: arguments,
       commandList: commandList
     },
-    'end': _cherryPick(end)
+    'end': CherryPick('flow', end)
   };
-}
-
-function _cherryPick(toPick){
-  if (State.tokens.length === 0){
-    return Eof(toPick);
-  }
-  assert(State.tokens[0].toLowerCase() === toPick)
-  let variant = State.tokens[0].toLowerCase();
-  let name = State.tokens[0];
-  State.tokens = State.tokens.slice(1);
-  return {
-    type: 'flow',
-    variant: variant,
-    name: name,
-  }
 }

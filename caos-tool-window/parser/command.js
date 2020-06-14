@@ -218,9 +218,9 @@ function _argument(param){
     return Number();
   }else if (param === 'string'){
     return String();
+  }else if (param === 'string'){
+    return String();
   }else{
-    console.log(param);
-    console.log(State.tokens);
-    assert(false);
+    return _paseCommand(param);
   }
 }

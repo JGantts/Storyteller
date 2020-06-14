@@ -4,6 +4,8 @@ module.exports = {
 
 const assert = require('assert');
 const { CommandList } = require('./commandList.js');
+const { CherryPick } = require('./common.js');
+const { Number } = require('./literal.js');
 const { State } = require('./tokens.js');
 
 function _caos(code){
@@ -24,24 +26,57 @@ function _chunkCode(code){
   .map((line) => {
     return line.trim();
   })
+  .join(' ')
+  .split(' ')
   .filter((line) => {
     return line != '';
-  })
-  .join(' ')
-  .split(' ');
+  });
 }
 
 function _injectEventsRemove(){
   var inject = CommandList(['scrp', 'rscr', 'EOF']);
-  //var events_State.tokens = parseEventsList(inject_State.tokens.State.tokens);
-  //var remove_State.tokens = parseCommandList({start: 'rscr'}, events_State.tokens.State.tokens, 'EOF');
-  return {type: 'caos-file', inject: inject, events: {}, remove: {}};
+  var eventScripts = _eventsList();
+  var remove = _rscr();
+  return {type: 'caos-file', inject: inject, eventScripts: eventScripts, remove: remove};
 }
 
 function _eventsList(){
-
+  eventScripts = [];
+  while (
+    State.tokens.length > 0
+    && 'rscr' !== State.tokens[0].toLowerCase()
+  ){
+    var scrp = CherryPick('script', 'scrp');
+    var family = Number();
+    var genus = Number();
+    var species = Number();
+    var script = Number();
+    var commands = CommandList(['endm']);
+    var endm = CherryPick('script', 'endm')
+    eventScripts.push({
+      type: 'events-list',
+      scrp: scrp,
+      family: family,
+      genus: genus,
+      species: species,
+      script: script,
+      commands: commands,
+      endm: endm
+    });
+  }
+  return eventScripts;
 }
 
-function _scrp(){
+function _rscr(){
+  if (State.tokens.length > 0){
+    var rscr = CherryPick('script', 'rscr');
+    return {
+      type: 'remove',
+      rscr: rscr,
+      commands: CommandList(['EOF'])
+    };
+  }else{
+    return null;
+  }
 
 }
