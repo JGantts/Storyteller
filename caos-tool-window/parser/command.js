@@ -114,6 +114,10 @@ var _namespaces = [
       {name: 'wdth', returnType: 'number', params: []},
       {name: 'wild', returnType: 'string', params: ['number', 'number', 'number', 'string', 'number']},
       {name: '_it_', returnType: 'agent', params: []},
+
+      {name: 'adin', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
+      {name: 'doin', returnType: 'doesnt', params: ['number']},
+
       {name: '____', returnType: 'doesnt', params: ['____', '____']},
 
       {name: 'inst', returnType: 'doesnt', params: []},
@@ -127,11 +131,23 @@ var _namespaces = [
       {name: 'addv', returnType: 'doesnt', params: ['variable', 'number']},
   ]},
   {
+    'name': 'brn:',
+    'commands': [
+      {name: 'dmpb', returnType: 'doesnt', params: []},
+      {name: 'dmpd', returnType: 'doesnt', params: ['number']},
+      {name: 'dmpl', returnType: 'doesnt', params: ['number']},
+      {name: 'dmpn', returnType: 'doesnt', params: ['number', 'number']},
+      {name: 'dmpt', returnType: 'doesnt', params: ['number']},
+      {name: 'setd', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
+      {name: 'setl', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'sett', returnType: 'doesnt', params: ['number', 'number', 'number']},
+  ]},
+  {
     'name': 'mesg',
     'commands': [
       {name: 'writ', returnType: 'doesnt', params: ['agent', 'number']},
       {name: 'wrt+', returnType: 'doesnt', params: ['agent', 'number', 'any', 'any', 'number']},
-  ]},,
+  ]},
   {
     'name': 'new:',
     'commands': [
