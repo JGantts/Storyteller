@@ -126,9 +126,7 @@ function _highlightSyntax(codeTree){
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
-  }else if ('command' === codeTree.type){
-    console.log(`Processing command: `);
-    console.log(codeTree);
+  }else if (['command', 'returning-command'].includes(codeTree.type)){
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
     assert(
       codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
@@ -137,19 +135,6 @@ function _highlightSyntax(codeTree){
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
     codeTree.arguments.forEach((arg, index) => {
-      highlighted += _highlightSyntax(arg);
-    });
-  }else if ('returning-command' === codeTree.type){
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
-    assert(
-      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-    );
-    codeIndex += codeTree.name.length;
-    highlighted += checkForWhiteSpaceAndComments();
-    codeTree.arguments.forEach((arg, index) => {
-      //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
       highlighted += _highlightSyntax(arg);
     });
   }else if ('doif-blob' === codeTree.type){

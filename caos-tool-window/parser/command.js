@@ -184,8 +184,14 @@ function _paseCommand(returnType) {
 }
 
 function _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName){
+  var type = '';
+  if (commandDef.returnType === 'doesnt'){
+    type = 'namespace';
+  }else{
+    type = 'returning-namespace';
+  }
   namespace = {
-    type: 'namespace',
+    type: type,
     variant: nsVariant,
     name: nsName,
   }
@@ -198,9 +204,15 @@ function _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName){
 }
 
 function _command(commandDef, variant, name){
+  var type = '';
+  if (commandDef.returnType === 'doesnt'){
+    type = 'command';
+  }else{
+    type = 'returning-command';
+  }
   arguments = _arguments(commandDef.params);
   return {
-    type: 'command',
+    type: type,
     variant: variant,
     name: name,
     arguments: arguments
