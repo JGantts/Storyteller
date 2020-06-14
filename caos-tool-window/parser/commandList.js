@@ -41,12 +41,16 @@ function _commandList(endings){
       commandList.push(commands);
     }else if ('reps' === State.tokens[0].toLowerCase()){
       var reps = _loop1('reps', ['number'], 'repe');
-      commandList.push(reps.startCommands);
-      commandList.push(reps.end);
-    }else if (['enum', 'esee', 'etch'].includes(State.tokens[0].toLowerCase())){
-      var reps = _loop1(State.tokens[0], ['number', 'number', 'number'], 'next');
-      commandList.push(reps.startCommands);
-      commandList.push(reps.end);
+      commandList.push(reps);
+    }else if (['enum', 'esee', 'etch', 'epas'].includes(State.tokens[0].toLowerCase())){
+      var enumeration = _loop1(State.tokens[0], ['number', 'number', 'number'], 'next');
+      commandList.push(enumeration);
+    }else if (['econ'].includes(State.tokens[0].toLowerCase())){
+      var enumeration = _loop1(State.tokens[0], ['agent'], 'next');
+      commandList.push(enumeration);
+    }else if (['loop'].includes(State.tokens[0].toLowerCase())){
+      var loop = _loop2(State.tokens[0], ['untl', 'ever'], [['condition'], []]);
+      commandList.push(loop);
     }else{
       var command = Command('doesnt');
       commandList.push(command);
@@ -139,20 +143,28 @@ function _doifElifElseEndiStatements(){
 }
 
 function _loop1(start, arguments, end){
-  assert(State.tokens[0].toLowerCase() === start)
-  let variant = State.tokens[0].toLowerCase();
-  let name = State.tokens[0];
-  State.tokens = State.tokens.slice(1);
-  var arguments = Arguments(arguments);
-  var commandList = _commandList([end]);
   return {
-    'startCommands': {
-      type: 'flow',
-      variant: variant,
-      name: name,
-      args: arguments,
-      commandList: commandList
-    },
-    'end': CherryPick('flow', end)
+    type: 'loop1',
+    start: CherryPick('flow', start),
+    arguments: Arguments(arguments),
+    commandList: _commandList([end]),
+    end: CherryPick('flow', end),
+  };
+}
+
+function _loop2(start, ends, arguments){
+  var start = CherryPick('flow', start);
+  var commandList = _commandList(ends);
+  assert(ends[0] === 'untl');
+  assert(ends[1] === 'ever');
+  var endString = State.tokens[0];
+  var end = CherryPick('flow', endString);
+  var arguments = Arguments(arguments[ends.indexOf(endString.toLowerCase())]);
+  return {
+    type: 'loop2',
+    start: start,
+    commandList: commandList,
+    end: end,
+    arguments: arguments,
   };
 }

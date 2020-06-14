@@ -142,6 +142,26 @@ function _highlightSyntax(codeTree){
     codeTree.sections.forEach((blob, index) => {
       highlighted += _highlightSyntax(blob);
     });
+  }else if ('loop1' === codeTree.type){
+    highlighted += _highlightSyntax(codeTree.start);
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += codeTree.arguments
+      .reduce((total, arg) => total + _highlightSyntax(arg), '');
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += _highlightSyntax(codeTree.commandList);
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += _highlightSyntax(codeTree.end);
+    highlighted += checkForWhiteSpaceAndComments();
+  }else if ('loop2' === codeTree.type){
+    highlighted += _highlightSyntax(codeTree.start);
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += _highlightSyntax(codeTree.commandList);
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += _highlightSyntax(codeTree.end);
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += codeTree.arguments
+      .reduce((total, arg) => total + _highlightSyntax(arg), '');
+    highlighted += checkForWhiteSpaceAndComments();
   }else if ('flow' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex] + ' ' + codeText.substr(codeIndex, 8));
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
@@ -155,12 +175,7 @@ function _highlightSyntax(codeTree){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
       highlighted += _highlightSyntax(codeTree.conditional);
     }
-    if (['reps', 'enum', 'esee', 'etch'].includes(codeTree.variant)){
-      codeTree.args.forEach((arg, i) => {
-        highlighted += _highlightSyntax(arg);
-      });
-    }
-    if (['doif', 'elif', 'else', 'reps', 'enum', 'esee', 'etch'].includes(codeTree.variant)){
+    if (['doif', 'elif', 'else'].includes(codeTree.variant)){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
       highlighted += _highlightSyntax(codeTree.commandList);
     }
