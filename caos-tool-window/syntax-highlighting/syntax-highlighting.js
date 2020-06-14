@@ -41,8 +41,19 @@ function _highlightSyntax(codeTree){
     });
   }else if ('event-scripts' === codeTree.type){
 
+  }else if ('error' === codeTree.variant){
+    highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
+    assert(
+      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
+      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
+    );
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
+  }else if ('end-of-file' === codeTree.type){
+    assert('error' === codeTree.variant);
+    highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
   }else if ('variable' === codeTree.type){
-    if('va' === codeTree.variant){
+    if(['ov', 'va'].includes(codeTree.variant)){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
       highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
       assert(
@@ -84,26 +95,16 @@ function _highlightSyntax(codeTree){
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else if ('command' === codeTree.type){
-    if ('error' === codeTree.variant){
-      highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
-      assert(
-        codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-        codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-      );
-      codeIndex += codeTree.name.length;
-      highlighted += checkForWhiteSpaceAndComments();
-    }else{
-      highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
-      assert(
-        codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-        codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-      );
-      codeIndex += codeTree.name.length;
-      highlighted += checkForWhiteSpaceAndComments();
-      codeTree.arguments.forEach((arg, index) => {
-        highlighted += _highlightSyntax(arg);
-      });
-    }
+    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
+    assert(
+      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
+      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
+    );
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
+    codeTree.arguments.forEach((arg, index) => {
+      highlighted += _highlightSyntax(arg);
+    });
   }else if ('returning-command' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
@@ -123,36 +124,26 @@ function _highlightSyntax(codeTree){
       highlighted += _highlightSyntax(blob);
     });
   }else if ('flow' === codeTree.type){
-    if ('error' !== codeTree.variant){
-      //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex] + ' ' + codeText.substr(codeIndex, 8));
-      highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
-      assert(
-        codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-        codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-      );
-      codeIndex += codeTree.name.length;
-      highlighted += checkForWhiteSpaceAndComments();
-      if (['doif', 'elif'].includes(codeTree.variant)){
-        //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-        highlighted += _highlightSyntax(codeTree.conditional);
-      }
-      if (['reps'].includes(codeTree.variant)){
-        codeTree.args.forEach((arg, i) => {
-          highlighted += _highlightSyntax(arg);
-        });
-      }
-      if (['doif', 'elif', 'else', 'reps'].includes(codeTree.variant)){
-        //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-        highlighted += _highlightSyntax(codeTree.commandList);
-      }
-    }else{
-      highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
-      assert(
-        codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-        codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-      );
-      codeIndex += codeTree.name.length;
-      highlighted += checkForWhiteSpaceAndComments();
+    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex] + ' ' + codeText.substr(codeIndex, 8));
+    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
+    assert(
+      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
+      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
+    );
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
+    if (['doif', 'elif'].includes(codeTree.variant)){
+      //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
+      highlighted += _highlightSyntax(codeTree.conditional);
+    }
+    if (['reps'].includes(codeTree.variant)){
+      codeTree.args.forEach((arg, i) => {
+        highlighted += _highlightSyntax(arg);
+      });
+    }
+    if (['doif', 'elif', 'else', 'reps'].includes(codeTree.variant)){
+      //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
+      highlighted += _highlightSyntax(codeTree.commandList);
     }
   }else if(['conditional'].includes(codeTree.type)) {
     if ('end-of-file' == codeTree.variant){
@@ -211,9 +202,6 @@ function _highlightSyntax(codeTree){
     );
     codeIndex += codeTree.value.length+2;
     highlighted += checkForWhiteSpaceAndComments();
-  }else if ('end-of-file' === codeTree.type){
-    assert('error' === codeTree.variant);
-    highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
   }else if ('number-string-variable' === codeTree.type){
     assert('error' === codeTree.variant);
     highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;

@@ -69,24 +69,17 @@ function _boolean(){
     }
   }
   var right = NumberOrString();
-  if (left.variant === right.variant){
-    return {
-      type: 'boolean',
-      variant: left.variant,
-      left: left,
-      operator: operator,
-      right: right
-    };
-  }else{
-    return {
-      type: 'boolean',
-      variant: 'error',
-      left: left,
-      operator: operator,
-      right: right,
-      message: `Cannot compare ${left.name}, which is a ${left.variant}, with ${right.name}, which is a ${right.variant}.`
-    };
+  if (left.variant !== right.variant){
+    message = `Cannot compare ${left.name}, which is a ${left.variant}, with ${right.name}, which is a ${right.variant}.`
+    operator = _operatorToError(operator, message);
   }
+  return {
+    type: 'boolean',
+    variant: left.variant,
+    left: left,
+    operator: operator,
+    right: right
+  };
 }
 
 function _possibleBoolop(){
@@ -104,4 +97,13 @@ function _possibleBoolop(){
     };
   }
   return null;
+}
+
+function _operatorToError(operator, message){
+  return {
+    type: operator.type,
+    variant: 'error',
+    name: operator.name,
+    message: message
+  };
 }
