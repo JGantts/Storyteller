@@ -23,31 +23,141 @@ var _namespaces = [
   {
     'name': 'global',
     'commands': [
-      {'name': 'inst', params: []},
-      {'name': 'attr', params: ['number']},
-      {'name': 'bhvr', params: ['number']},
-      {'name': 'tick', params: ['number']},
-      {'name': 'elas', params: ['number']},
-      {'name': 'aero', params: ['number']},
-      {'name': 'accg', params: ['number']},
-      {'name': 'perm', params: ['number']},
-      {'name': 'rand', params: ['number', 'number']},
-      {'name': 'pose', params: ['number']},
-      {'name': 'puhl', params: ['number', 'number', 'number']},
-      {'name': 'tick', params: ['number']},
-      {'name': 'mvto', params: ['number', 'number']},
-      {'name': 'setv', params: ['variable', 'number']},
-      {'name': 'addv', params: ['variable', 'number']},
+      {name: 'abba', returnType: 'number', params: []},
+      {name: 'alph', returnType: 'doesnt', params: ['number', 'number']},
+      {name: 'anim', returnType: 'doesnt', params: ['byte-string']},
+      {name: 'anms', returnType: 'doesnt', params: ['string']},
+      {name: 'attr', returnType: 'doesnt', params: ['number']},
+      {name: 'attr', returnType: 'number', params: []},
+      {name: 'base', returnType: 'doesnt', params: ['number']},
+      {name: 'base', returnType: 'number', params: []},
+      {name: 'bhvr', returnType: 'doesnt', params: ['number']},
+      {name: 'bhvr', returnType: 'number', params: []},
+      {name: 'call', returnType: 'doesnt', params: ['number', 'anything', 'anything']},
+      {name: 'carr', returnType: 'agent', params: []},
+      {name: 'cata', returnType: 'number', params: []},
+      {name: 'cati', returnType: 'number', params: ['number', 'number', 'number']},
+      {name: 'cato', returnType: 'doesnt', params: ['number']},
+      {name: 'catx', returnType: 'string', params: ['number']},
+      {name: 'clac', returnType: 'number', params: []},
+      {name: 'clik', returnType: 'number', params: ['number']},
+      {name: 'core', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
+      {name: 'dcor', returnType: 'doesnt', params: ['number']},
+      {name: 'disq', returnType: 'number', params: ['agent']},
+      {name: 'drop', returnType: 'doesnt', params: []},
+      {name: 'dsee', returnType: 'doesnt', params: ['number']},
+      {name: 'fltx', returnType: 'number', params: []},
+      {name: 'flty', returnType: 'number', params: []},
+      {name: 'fmly', returnType: 'number', params: []},
+      {name: 'frat', returnType: 'doesnt', params: ['number']},
+      {name: 'from', returnType: 'any', params: []},
+      {name: 'gait', returnType: 'doesnt', params: ['number']},
+      {name: 'gall', returnType: 'doesnt', params: ['number']},
+      {name: 'gall', returnType: 'string', params: []},
+      {name: 'gnus', returnType: 'number', params: []},
+      {name: 'hand', returnType: 'doesnt', params: ['string']},
+      {name: 'hand', returnType: 'string', params: []},
+      {name: 'held', returnType: 'agent', params: []},
+      {name: 'hght', returnType: 'number', params: []},
+      {name: 'iitt', returnType: 'agent', params: []},
+      {name: 'imsk', returnType: 'number', params: []},
+      {name: 'kill', returnType: 'doesnt', params: ['agent']},
+      {name: 'mira', returnType: 'doesnt', params: ['number']},
+      {name: 'mira', returnType: 'number', params: []},
+      {name: 'mows', returnType: 'number', params: []},
+      {name: 'mthx', returnType: 'number', params: []},
+      {name: 'mthy', returnType: 'number', params: []},
+      {name: 'ncls', returnType: 'agent', params: ['agent', 'number', 'number', 'number']},
+      {name: 'nohh', returnType: 'doesnt', params: []},
+      {name: 'null', returnType: 'agent', params: []},
+      {name: 'over', returnType: 'doesnt', params: []},
+      {name: 'ownr', returnType: 'agent', params: []},
+      {name: 'paus', returnType: 'doesnt', params: ['number']},
+      {name: 'paus', returnType: 'number', params: []},
+      {name: 'pcls', returnType: 'agent', params: ['agent', 'number', 'number', 'number']},
+      {name: 'plne', returnType: 'doesnt', params: ['number']},
+      {name: 'plne', returnType: 'number', params: []},
+      {name: 'pntr', returnType: 'agent', params: []},
+      {name: 'posb', returnType: 'number', params: []},
+      {name: 'pose', returnType: 'doesnt', params: ['number']},
+      {name: 'pose', returnType: 'number', params: []},
+      {name: 'posl', returnType: 'number', params: []},
+      {name: 'posr', returnType: 'number', params: []},
+      {name: 'post', returnType: 'number', params: []},
+      {name: 'posx', returnType: 'number', params: []},
+      {name: 'posy', returnType: 'number', params: []},
+      {name: 'puhl', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'puhl', returnType: 'number', params: ['number', 'number']},
+      {name: 'pupt', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'pupt', returnType: 'number', params: ['number', 'number']},
+      {name: 'rnge', returnType: 'doesnt', params: ['number']},
+      {name: 'rnge', returnType: 'number', params: []},
+      {name: 'rtar', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'seee', returnType: 'number', params: ['agent', 'agent']},
+      {name: 'show', returnType: 'doesnt', params: ['number']},
+      {name: 'spcs', returnType: 'number', params: []},
+      {name: 'star', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'targ', returnType: 'agent', params: []},
+      {name: 'tcor', returnType: 'number', params: ['number', 'number', 'number', 'number']},
+      {name: 'tick', returnType: 'doesnt', params: ['number']},
+      {name: 'tick', returnType: 'number', params: []},
+      {name: 'tino', returnType: 'doesnt', params: ['number', 'number', 'number', 'number', 'number']},
+      {name: 'tint', returnType: 'doesnt', params: ['number', 'number', 'number', 'number', 'number']},
+      {name: 'tint', returnType: 'number', params: ['number']},
+      {name: 'totl', returnType: 'number', params: ['number', 'number', 'number']},
+      {name: 'touc', returnType: 'number', params: ['agent', 'agent']},
+      {name: 'tran', returnType: 'number', params: ['number', 'number']},
+      {name: 'ttar', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'twin', returnType: 'agent', params: ['agent', 'number']},
+      {name: 'ucln', returnType: 'doesnt', params: []},
+      {name: 'visi', returnType: 'number', params: ['number']},
+      {name: 'wdth', returnType: 'number', params: []},
+      {name: 'wild', returnType: 'string', params: ['number', 'number', 'number', 'string', 'number']},
+      {name: '_it_', returnType: 'agent', params: []},
+
+      {name: 'adin', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
+      {name: 'doin', returnType: 'doesnt', params: ['number']},
+
+      {name: '____', returnType: 'doesnt', params: ['____', '____']},
+
+      {name: 'inst', returnType: 'doesnt', params: []},
+      {name: 'elas', returnType: 'doesnt', params: ['number']},
+      {name: 'aero', returnType: 'doesnt', params: ['number']},
+      {name: 'accg', returnType: 'doesnt', params: ['number']},
+      {name: 'perm', returnType: 'doesnt', params: ['number']},
+      {name: 'rand', returnType: 'number', params: ['number', 'number']},
+      {name: 'mvto', returnType: 'doesnt', params: ['number', 'number']},
+      {name: 'setv', returnType: 'doesnt', params: ['variable', 'number']},
+      {name: 'addv', returnType: 'doesnt', params: ['variable', 'number']},
+  ]},
+  {
+    'name': 'brn:',
+    'commands': [
+      {name: 'dmpb', returnType: 'doesnt', params: []},
+      {name: 'dmpd', returnType: 'doesnt', params: ['number']},
+      {name: 'dmpl', returnType: 'doesnt', params: ['number']},
+      {name: 'dmpn', returnType: 'doesnt', params: ['number', 'number']},
+      {name: 'dmpt', returnType: 'doesnt', params: ['number']},
+      {name: 'setd', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
+      {name: 'setl', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'setn', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
+      {name: 'sett', returnType: 'doesnt', params: ['number', 'number', 'number']},
+  ]},
+  {
+    'name': 'mesg',
+    'commands': [
+      {name: 'writ', returnType: 'doesnt', params: ['agent', 'number']},
+      {name: 'wrt+', returnType: 'doesnt', params: ['agent', 'number', 'any', 'any', 'number']},
   ]},
   {
     'name': 'new:',
     'commands': [
-      {'name': 'simp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
-      {'name': 'comp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
+      {name: 'simp', returnType: 'doesnt', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
+      {name: 'comp', returnType: 'doesnt', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
   ]},
 ]
 
-function _paseCommand() {
+function _paseCommand(returnType) {
   var namespaceDef =
     _namespaces
     .filter(namespace => namespace.name === State.tokens[0].toLowerCase())[0]
@@ -58,7 +168,11 @@ function _paseCommand() {
     State.tokens = State.tokens.slice(1);
     var commandDef =
       namespaceDef.commands
-      .filter(command => command.name === State.tokens[0].toLowerCase())[0]
+      .filter(
+        command =>
+        command.name === State.tokens[0].toLowerCase()
+        && command.returnType
+      )[0]
     if (commandDef){
       let cmdVariant = State.tokens[0].toLowerCase();
       let cmdName = State.tokens[0];
@@ -87,8 +201,14 @@ function _paseCommand() {
 }
 
 function _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName){
+  var type = '';
+  if (commandDef.returnType === 'doesnt'){
+    type = 'namespace';
+  }else{
+    type = 'returning-namespace';
+  }
   namespace = {
-    type: 'namespace',
+    type: type,
     variant: nsVariant,
     name: nsName,
   }
@@ -101,9 +221,15 @@ function _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName){
 }
 
 function _command(commandDef, variant, name){
+  var type = '';
+  if (commandDef.returnType === 'doesnt'){
+    type = 'command';
+  }else{
+    type = 'returning-command';
+  }
   arguments = _arguments(commandDef.params);
   return {
-    type: 'command',
+    type: type,
     variant: variant,
     name: name,
     arguments: arguments
@@ -121,9 +247,9 @@ function _argument(param){
     return Number();
   }else if (param === 'string'){
     return String();
+  }else if (param === 'string'){
+    return String();
   }else{
-    console.log(param);
-    console.log(State.tokens);
-    assert(false);
+    return _paseCommand(param);
   }
 }

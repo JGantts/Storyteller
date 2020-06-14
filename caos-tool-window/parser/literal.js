@@ -8,6 +8,10 @@ module.exports = {
 
 const assert = require('assert');
 const {
+  Command,
+  Arguments
+} = require('./command.js');
+const {
   ErrorOrEof,
   Error,
   Eof,
@@ -54,21 +58,13 @@ function _possibleNumber() {
       name: 'number',
       value: value
     };
-  }else if (['rand'].includes(State.tokens[0].toLowerCase())){
-    let variant = State.tokens[0].toLowerCase();
-    let name = State.tokens[0];
-    State.tokens = State.tokens.slice(1);
-    var leftArgument = _number();
-    var rightArgument = _number();
-    return {
-      type: 'returning-command',
-      variant: variant,
-      name: name,
-      arguments: [leftArgument, rightArgument]
-    }
   }else{
-    var variable = Variable();
-    return variable;
+    var variable = PossibleVariable();
+    if(variable){
+      return variable;
+    }else{
+      return Command('number');
+    }
   }
 }
 
@@ -96,7 +92,11 @@ function _possibleString() {
     State.tokens = State.tokens.slice(index+1);
     return {type: 'literal', variant: 'string', value: stringsChunks.join(' ')};
   }else{
-    var variable = Variable();
-    return variable;
+    var variable = PossibleVariable();
+    if(variable){
+      return variable;
+    }else{
+      return Command('string');
+    }
   }
 }

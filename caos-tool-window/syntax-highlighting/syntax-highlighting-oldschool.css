@@ -2,7 +2,7 @@
   background-color: white;
 }
 
-.syntax-variable, .syntax-returning-command, .syntax-operator, .syntax-bool-op{
+.syntax-variable, .syntax-returning-command, .syntax-returning-namespace, .syntax-operator, .syntax-bool-op{
   color: rgb(200,0,200);
 }
 
@@ -10,7 +10,7 @@
   color: rgb(0,128,0);
 }
 
-.syntax-command, .syntax-namespace, .syntax-flow{
+.syntax-command, .syntax-namespace, .syntax-flow, .syntax-script{
   color: rgb(0,0,255);
 }
 

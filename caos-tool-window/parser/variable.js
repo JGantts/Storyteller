@@ -40,6 +40,20 @@ function _possibleVariable(){
       variant: 'va',
       name: name
     }
+  }else if (
+    State.tokens[0].length === 4
+    && State.tokens[0][0].toLowerCase()==='o'
+    && State.tokens[0][1].toLowerCase()==='v'
+    && (State.tokens[0][2] >= '0' && State.tokens[0][2] <= '9')
+    && (State.tokens[0][3] >= '0' && State.tokens[0][3] <= '9')
+  ){
+    let name = State.tokens[0];
+    State.tokens = State.tokens.slice(1);
+    return {
+      type: 'variable',
+      variant: 'ov',
+      name: name
+    }
   }else if(['game'].includes(State.tokens[0].toLowerCase())){
     let variant = State.tokens[0].toLowerCase();
     let name = State.tokens[0];

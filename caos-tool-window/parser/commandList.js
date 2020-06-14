@@ -7,6 +7,7 @@ const {
   Command,
   Arguments
 } = require('./command.js');
+const { CherryPick } = require('./common.js');
 const { Conditional } = require('./conditional.js');
 const {
   ErrorOrEof,
@@ -39,11 +40,15 @@ function _commandList(endings){
       var commands = _doifElifElseEndiStatements();
       commandList.push(commands);
     }else if ('reps' === State.tokens[0].toLowerCase()){
-      var reps = _reps();
+      var reps = _loop1('reps', ['number'], 'repe');
+      commandList.push(reps.startCommands);
+      commandList.push(reps.end);
+    }else if (['enum', 'esee', 'etch'].includes(State.tokens[0].toLowerCase())){
+      var reps = _loop1(State.tokens[0], ['number', 'number', 'number'], 'next');
       commandList.push(reps.startCommands);
       commandList.push(reps.end);
     }else{
-      var command = Command();
+      var command = Command('doesnt');
       commandList.push(command);
     }
   }while(!done);
@@ -133,13 +138,13 @@ function _doifElifElseEndiStatements(){
   return {type: 'doif-blob', sections: sections};
 }
 
-function _reps(){
-  assert(State.tokens[0].toLowerCase() === 'reps')
+function _loop1(start, arguments, end){
+  assert(State.tokens[0].toLowerCase() === start)
   let variant = State.tokens[0].toLowerCase();
   let name = State.tokens[0];
   State.tokens = State.tokens.slice(1);
-  var arguments = Arguments(['number']);
-  var commandList = _commandList(['repe']);
+  var arguments = Arguments(arguments);
+  var commandList = _commandList([end]);
   return {
     'startCommands': {
       type: 'flow',
@@ -148,21 +153,6 @@ function _reps(){
       args: arguments,
       commandList: commandList
     },
-    'end': _repe()
+    'end': CherryPick('flow', end)
   };
-}
-
-function _repe(){
-  if (State.tokens.length === 0){
-    return Eof('repe');
-  }
-  assert(State.tokens[0].toLowerCase() === 'repe')
-  let variant = State.tokens[0].toLowerCase();
-  let name = State.tokens[0];
-  State.tokens = State.tokens.slice(1);
-  return {
-    type: 'flow',
-    variant: variant,
-    name: name,
-  }
 }
