@@ -181,7 +181,11 @@ function _paseCommand(returnType) {
     }else{
       let name = State.tokens[0];
       State.tokens = State.tokens.slice(1);
-      return Error('command', nsName);
+      if (returnType === 'doesnt'){
+        return Error('command', nsName);
+      }else{
+        return Error(`command that returns a ${returnType}`, nsName);
+      }
     }
   }else{
     var commandDef =
@@ -195,7 +199,11 @@ function _paseCommand(returnType) {
     }else{
       let name = State.tokens[0];
       State.tokens = State.tokens.slice(1);
-      return Error('command', name);
+      if (returnType === 'doesnt'){
+        return Error('command', name);
+      }else{
+        return Error(`command that returns a ${returnType}`, name);
+      }
     }
   }
 }
