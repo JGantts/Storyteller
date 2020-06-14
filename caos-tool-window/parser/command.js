@@ -23,31 +23,32 @@ var _namespaces = [
   {
     'name': 'global',
     'commands': [
-      {'name': 'inst', params: []},
-      {'name': 'attr', params: ['number']},
-      {'name': 'bhvr', params: ['number']},
-      {'name': 'tick', params: ['number']},
-      {'name': 'elas', params: ['number']},
-      {'name': 'aero', params: ['number']},
-      {'name': 'accg', params: ['number']},
-      {'name': 'perm', params: ['number']},
-      {'name': 'rand', params: ['number', 'number']},
-      {'name': 'pose', params: ['number']},
-      {'name': 'puhl', params: ['number', 'number', 'number']},
-      {'name': 'tick', params: ['number']},
-      {'name': 'mvto', params: ['number', 'number']},
-      {'name': 'setv', params: ['variable', 'number']},
-      {'name': 'addv', params: ['variable', 'number']},
+      {name: 'inst', returnType: 'doesnt', params: []},
+      {name: 'attr', returnType: 'doesnt', params: ['number']},
+      {name: 'bhvr', returnType: 'doesnt', params: ['number']},
+      {name: 'tick', returnType: 'doesnt', params: ['number']},
+      {name: 'elas', returnType: 'doesnt', params: ['number']},
+      {name: 'aero', returnType: 'doesnt', params: ['number']},
+      {name: 'accg', returnType: 'doesnt', params: ['number']},
+      {name: 'perm', returnType: 'doesnt', params: ['number']},
+      {name: 'rand', returnType: 'number', params: ['number', 'number']},
+      {name: 'pose', returnType: 'doesnt', params: ['number']},
+      {name: 'pose', returnType: 'number', params: []},
+      {name: 'puhl', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'tick', returnType: 'doesnt', params: ['number']},
+      {name: 'mvto', returnType: 'doesnt', params: ['number', 'number']},
+      {name: 'setv', returnType: 'doesnt', params: ['variable', 'number']},
+      {name: 'addv', returnType: 'doesnt', params: ['variable', 'number']},
   ]},
   {
     'name': 'new:',
     'commands': [
-      {'name': 'simp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
-      {'name': 'comp', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
+      {name: 'simp', returnType: 'doesnt', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
+      {name: 'comp', returnType: 'doesnt', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
   ]},
 ]
 
-function _paseCommand() {
+function _paseCommand(returnType) {
   var namespaceDef =
     _namespaces
     .filter(namespace => namespace.name === State.tokens[0].toLowerCase())[0]
@@ -58,7 +59,11 @@ function _paseCommand() {
     State.tokens = State.tokens.slice(1);
     var commandDef =
       namespaceDef.commands
-      .filter(command => command.name === State.tokens[0].toLowerCase())[0]
+      .filter(
+        command =>
+        command.name === State.tokens[0].toLowerCase()
+        && command.returnType
+      )[0]
     if (commandDef){
       let cmdVariant = State.tokens[0].toLowerCase();
       let cmdName = State.tokens[0];

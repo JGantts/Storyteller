@@ -43,7 +43,7 @@ function _commandList(endings){
       commandList.push(reps.startCommands);
       commandList.push(reps.end);
     }else{
-      var command = Command();
+      var command = Command('doesnt');
       commandList.push(command);
     }
   }while(!done);
