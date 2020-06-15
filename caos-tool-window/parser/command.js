@@ -11,6 +11,8 @@ const {
   PossibleNumber,
   String,
   PossibleString,
+  ByteString,
+  PossibleByteString,
 } = require('./literal.js');
 const {
   ErrorOrEof,
@@ -52,7 +54,7 @@ var _namespaces = [
       {name: 'flty', returnType: 'number', params: []},
       {name: 'fmly', returnType: 'number', params: []},
       {name: 'frat', returnType: 'doesnt', params: ['number']},
-      {name: 'from', returnType: 'any', params: []},
+      {name: 'from', returnType: 'anything', params: []},
       {name: 'gait', returnType: 'doesnt', params: ['number']},
       {name: 'gall', returnType: 'doesnt', params: ['number']},
       {name: 'gall', returnType: 'string', params: []},
@@ -150,7 +152,20 @@ var _namespaces = [
     //Net
     //Ports
     //Resources
+
     //Scripts
+      {name: 'caos', returnType: 'string', params: ['number', 'number', 'anything', 'anything', 'string', 'number', 'number', 'variable']},
+      {name: 'inst', returnType: 'doesnt', params: []},
+      {name: 'ject', returnType: 'doesnt', params: ['string', 'number']},
+      {name: 'lock', returnType: 'doesnt', params: []},
+      {name: 'scrx', returnType: 'doesnt', params: ['number', 'number', 'number']},
+      {name: 'slow', returnType: 'doesnt', params: []},
+      {name: 'sorc', returnType: 'string', params: ['number', 'number', 'number', 'number']},
+      {name: 'sorq', returnType: 'number', params: ['number', 'number', 'number', 'number']},
+      {name: 'stop', returnType: 'doesnt', params: []},
+      {name: 'stpt', returnType: 'doesnt', params: []},
+      {name: 'unlk', returnType: 'doesnt', params: []},
+      {name: 'wait', returnType: 'doesnt', params: ['number']},
     //Sounds
     //Time
     //Variables
@@ -158,7 +173,6 @@ var _namespaces = [
 
       {name: '____', returnType: 'doesnt', params: ['____', '____']},
 
-      {name: 'inst', returnType: 'doesnt', params: []},
       {name: 'elas', returnType: 'doesnt', params: ['number']},
       {name: 'aero', returnType: 'doesnt', params: ['number']},
       {name: 'accg', returnType: 'doesnt', params: ['number']},
@@ -166,7 +180,10 @@ var _namespaces = [
       {name: 'rand', returnType: 'number', params: ['number', 'number']},
       {name: 'mvto', returnType: 'doesnt', params: ['number', 'number']},
       {name: 'setv', returnType: 'doesnt', params: ['variable', 'number']},
+      {name: 'sets', returnType: 'doesnt', params: ['variable', 'string']},
       {name: 'addv', returnType: 'doesnt', params: ['variable', 'number']},
+      {name: 'read', returnType: 'string', params: ['string', 'number']},
+      {name: 'sndc', returnType: 'doesnt', params: ['string']},
   ]},
   {
     'name': 'brn:',
@@ -182,10 +199,18 @@ var _namespaces = [
       {name: 'sett', returnType: 'doesnt', params: ['number', 'number', 'number']},
   ]},
   {
+    'name': 'gids',
+    'commands': [
+      {name: 'fmly', returnType: 'doesnt', params: ['number']},
+      {name: 'gnus', returnType: 'doesnt', params: ['number', 'number']},
+      {name: 'root', returnType: 'doesnt', params: []},
+      {name: 'spcs', returnType: 'doesnt', params: ['number', 'number', 'number']},
+  ]},
+  {
     'name': 'mesg',
     'commands': [
       {name: 'writ', returnType: 'doesnt', params: ['agent', 'number']},
-      {name: 'wrt+', returnType: 'doesnt', params: ['agent', 'number', 'any', 'any', 'number']},
+      {name: 'wrt+', returnType: 'doesnt', params: ['agent', 'number', 'anything', 'anything', 'number']},
   ]},
   {
     'name': 'new:',
@@ -299,12 +324,23 @@ function _arguments(params){
 }
 
 function _argument(param){
-  if (param === 'variable'){
+  if (param === 'anything'){
+//  Any can only be
+    var possible = PossibleNumber();
+    if (possible){ return possible }
+    var possible = PossibleString();
+    if (possible){ return possible }
+    let name = State.tokens[0];
+    State.tokens = State.tokens.slice(1);
+    return Error(`anything`, name);
+  }else if (param === 'variable'){
     return Variable();
   }else if (param === 'number'){
     return Number();
   }else if (param === 'string'){
     return String();
+  }else if (param === 'byte-string'){
+    return ByteString();
   }else if (param === 'condition'){
     return Conditional();
   }else{

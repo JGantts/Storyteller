@@ -4,6 +4,8 @@ module.exports = {
   PossibleNumber: _possibleNumber,
   String: _string,
   PossibleString: _possibleString,
+  ByteString: _byteString,
+  PossibleByteString: _possibleByteString,
 }
 
 const assert = require('assert');
@@ -98,5 +100,39 @@ function _possibleString() {
     }else{
       return Command('string');
     }
+  }
+}
+
+function _byteString() {
+  let possibleString = _possibleByteString();
+  if (possibleString){
+    return possibleString;
+  }else{
+    return ErrorOrEof('byte-string');
+  }
+}
+
+function _possibleByteString() {
+  if (State.tokens.length === 0){
+    return null;
+  }else if (State.tokens[0][0]==='['){
+    var byteParticles = [];
+    var index = 0;
+    State.tokens[0] = State.tokens[0].slice(1);
+    while (State.tokens[index][State.tokens[index].length-1]!==']'){
+      byteParticles.push(State.tokens[index]);
+      index++;
+    }
+    byteParticles.push(State.tokens[index].substring(0, State.tokens[index].length-1));
+    State.tokens = State.tokens.slice(index+1);
+    return {
+      type: 'literal',
+      variant: 'byte-string',
+      particles: byteParticles
+        .filter(byteParticle => byteParticle !== '')
+        .map(byteParticle => {return {type: 'literal', variant: 'byte-string-particle', value: byteParticle}}),
+    };
+  }else{
+    return null;
   }
 }

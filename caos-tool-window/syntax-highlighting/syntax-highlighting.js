@@ -55,24 +55,15 @@ function _highlightSyntax(codeTree){
     });
   }else if ('events-list' === codeTree.type){
     highlighted += _highlightSyntax(codeTree.scrp);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.family);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.genus);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.species);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.script);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.commands);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.endm);
-    highlighted += checkForWhiteSpaceAndComments();
   }else if ('remove' === codeTree.type){
     highlighted += _highlightSyntax(codeTree.rscr);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.commands);
-    highlighted += checkForWhiteSpaceAndComments();
   }else if ('error' === codeTree.variant){
     highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
     assert(
@@ -144,24 +135,16 @@ function _highlightSyntax(codeTree){
     });
   }else if ('loop1' === codeTree.type){
     highlighted += _highlightSyntax(codeTree.start);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += codeTree.arguments
       .reduce((total, arg) => total + _highlightSyntax(arg), '');
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.commandList);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.end);
-    highlighted += checkForWhiteSpaceAndComments();
   }else if ('loop2' === codeTree.type){
     highlighted += _highlightSyntax(codeTree.start);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.commandList);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += _highlightSyntax(codeTree.end);
-    highlighted += checkForWhiteSpaceAndComments();
     highlighted += codeTree.arguments
       .reduce((total, arg) => total + _highlightSyntax(arg), '');
-    highlighted += checkForWhiteSpaceAndComments();
   }else if ('flow' === codeTree.type){
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex] + ' ' + codeText.substr(codeIndex, 8));
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
@@ -236,6 +219,25 @@ function _highlightSyntax(codeTree){
     );
     codeIndex += codeTree.value.length+2;
     highlighted += checkForWhiteSpaceAndComments();
+  }else if(
+    ['literal'].includes(codeTree.type)
+    && ['byte-string'].includes(codeTree.variant)
+  ) {
+    highlighted += `<span class='syntax-${codeTree.type}'>[</span>`;
+    codeIndex += 1;
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += codeTree.particles
+      .reduce((total, particle) => total + _highlightSyntax(particle), '');
+    highlighted += `<span class='syntax-${codeTree.type}'>]</span>`;
+    codeIndex += 1;
+    highlighted += checkForWhiteSpaceAndComments();
+  }else if(
+    ['literal'].includes(codeTree.type)
+    && ['byte-string-particle'].includes(codeTree.variant)
+  ) {
+    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.value}</span>`;
+    codeIndex += codeTree.value.length;
+    highlighted += checkForWhiteSpaceAndComments();
   }else if ('number-string-variable' === codeTree.type){
     assert('error' === codeTree.variant);
     highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
@@ -252,6 +254,7 @@ function _highlightSyntax(codeTree){
     if (codeTree.type === undefined){
       console.log(JSON.stringify(codeTree));
     }
+    assert(false);
   }
   return highlighted;
 }
