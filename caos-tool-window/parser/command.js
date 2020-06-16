@@ -1,5 +1,6 @@
 module.exports = {
-  Command: _paseCommand,
+  PossibleCommand: _parsePossibleCommand,
+  Command: _parseCommand,
   Arguments: _arguments,
 }
 
@@ -25,7 +26,20 @@ const { State } = require('./tokens.js');
 
 var _commands = C3Commands();
 
-function _paseCommand(returnType) {
+function _parseCommand(returnType) {
+  let possibleCommand = _parsePossibleCommand();
+  if (possibleCommand){
+    return possibleCommand;
+  }else{
+    if (returnType === 'doesnt'){
+        return ErrorOrEof('command');
+      }else{
+        return ErrorOrEof(`command that returns a ${returnType}`);
+      }
+  }
+}
+
+function _parsePossibleCommand(returnType) {
   var namespaceDef =
     _commands
     .filter(namespace => namespace.name === State.tokens[0].toLowerCase())[0]
@@ -47,13 +61,7 @@ function _paseCommand(returnType) {
       State.tokens = State.tokens.slice(1);
       return _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName);
     }else{
-      let name = State.tokens[0];
-      State.tokens = State.tokens.slice(1);
-      if (returnType === 'doesnt'){
-        return Error('command', nsName);
-      }else{
-        return Error(`command that returns a ${returnType}`, nsName);
-      }
+      return null;
     }
   }else{
     var commandDef =
@@ -65,13 +73,7 @@ function _paseCommand(returnType) {
       State.tokens = State.tokens.slice(1);
       return _command(commandDef, variant, name);
     }else{
-      let name = State.tokens[0];
-      State.tokens = State.tokens.slice(1);
-      if (returnType === 'doesnt'){
-        return Error('command', name);
-      }else{
-        return Error(`command that returns a ${returnType}`, name);
-      }
+      return null;
     }
   }
 }
@@ -123,12 +125,20 @@ function _argument(param){
     if (possible){ return possible }
     var possible = PossibleString();
     if (possible){ return possible }
-    let name = State.tokens[0];
-    State.tokens = State.tokens.slice(1);
-    return Error(`anything`, name);
+    return ErrorOrEof(`anything`);
   }else if (param === 'variable'){
     return Variable();
-  }else if (param === 'number'){
+  }else if (param === 'decimal'){
+      var possible = PossibleNumber();
+      if (possible){ return possible }
+      var possible = _parsePossibleCommand(`integer`);
+      if (possible){ return possible }
+      var possible = _parsePossibleCommand(`float`);
+      if (possible){ return possible }
+      return ErrorOrEof(`decimal`);
+  }else if (param === 'float'){
+    return Number();
+  }else if (param === 'integer'){
     return Number();
   }else if (param === 'string'){
     return String();
@@ -137,6 +147,6 @@ function _argument(param){
   }else if (param === 'condition'){
     return Conditional();
   }else{
-    return _paseCommand(param);
+    return _parseCommand(param);
   }
 }

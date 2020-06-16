@@ -44,7 +44,7 @@ function _number(){
   if (possibleNumber){
     return possibleNumber;
   }else{
-      return ErrorOrEof('number');
+      return ErrorOrEof('decimal');
   }
 }
 
@@ -65,7 +65,7 @@ function _possibleNumber() {
     if(variable){
       return variable;
     }else{
-      return Command('number');
+      return Command('variable');
     }
   }
 }
