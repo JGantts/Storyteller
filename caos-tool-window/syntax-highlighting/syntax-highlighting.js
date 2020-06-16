@@ -64,6 +64,9 @@ function _highlightSyntax(codeTree){
   }else if ('remove' === codeTree.type){
     highlighted += _highlightSyntax(codeTree.rscr);
     highlighted += _highlightSyntax(codeTree.commands);
+  }else if ('end-of-file' === codeTree.type){
+    assert('error' === codeTree.variant);
+    highlighted += `<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
   }else if ('error' === codeTree.variant){
     highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
     assert(
@@ -72,9 +75,6 @@ function _highlightSyntax(codeTree){
     );
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
-  }else if ('end-of-file' === codeTree.type){
-    assert('error' === codeTree.variant);
-    highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
   }else if ('variable' === codeTree.type){
     if(['ov', 'va'].includes(codeTree.variant)){
       //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);

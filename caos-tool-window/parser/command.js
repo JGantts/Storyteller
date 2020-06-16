@@ -20,6 +20,7 @@ const {
   PossibleByteString,
 } = require('./literal.js');
 const {
+  CheckForEof,
   ErrorOrEof,
   Error,
   Eof,
@@ -139,22 +140,26 @@ function _argument(param){
   "label"
   "string"
 */
-
+  let possible = null;
+  possible = CheckForEof(param);
+  if (possible){
+    return possible;
+  }
   if (param === 'anything'){
-    var possible = PossibleDecimal();
+    possible = PossibleDecimal();
     if (possible){ return possible }
-    var possible = PossibleString();
+    possible = PossibleString();
     if (possible){ return possible }
     return ErrorOrEof(`anything`);
 
   }else if (param === 'variable'){
     return Variable();
   }else if (param === 'decimal'){
-      var possible = PossibleDecimal();
+      possible = PossibleDecimal();
       if (possible){ return possible }
-      var possible = _parsePossibleCommand(`integer`);
+      possible = _parsePossibleCommand(`integer`);
       if (possible){ return possible }
-      var possible = _parsePossibleCommand(`float`);
+      possible = _parsePossibleCommand(`float`);
       if (possible){ return possible }
       return ErrorOrEof(`decimal`);
   }else if (param === 'float'){

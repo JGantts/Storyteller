@@ -1,4 +1,5 @@
 module.exports = {
+  CheckForEof: _checkForEof,
   ErrorOrEof: _errorOrEof,
   Error: _error,
   Eof: _eof,
@@ -6,6 +7,18 @@ module.exports = {
 
 const assert = require('assert');
 const { State } = require('./tokens.js');
+
+function _checkForEof(expecting){
+  if (State.tokens.length === 0){
+    return {
+      type: 'end-of-file',
+      variant: 'error',
+      message: `Expected ${expecting}, but found end of file instead.`
+    };
+  }else{
+    return null;
+  }
+}
 
 function _errorOrEof(expecting){
   if (State.tokens.length === 0){
