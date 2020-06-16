@@ -195,7 +195,7 @@ function _highlightSyntax(codeTree){
     highlighted += checkForWhiteSpaceAndComments();
   }else if(
     ['literal'].includes(codeTree.type)
-    && ['number'].includes(codeTree.variant)
+    && ['integer', 'float'].includes(codeTree.variant)
   ) {
     //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     //console.log('here codeTree.value: ' + codeTree.value + ':' + codeTree.value.length);

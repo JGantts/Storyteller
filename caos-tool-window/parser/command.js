@@ -9,8 +9,10 @@ const { Conditional } = require('./conditional.js')
 const { C3Commands } = require('./commandLoader.js')
 const {
   NumberOrString,
-  Number,
-  PossibleNumber,
+  Integer,
+  PossibleInteger,
+  Float,
+  PossibleFloat,
   String,
   PossibleString,
   ByteString,
@@ -143,9 +145,9 @@ function _argument(param){
       if (possible){ return possible }
       return ErrorOrEof(`decimal`);
   }else if (param === 'float'){
-    return Number();
+    return Float();
   }else if (param === 'integer'){
-    return Number();
+    return Integer();
   }else if (param === 'string'){
     return String();
   }else if (param === 'byte-string'){

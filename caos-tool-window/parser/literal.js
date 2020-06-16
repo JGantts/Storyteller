@@ -1,7 +1,9 @@
 module.exports = {
   NumberOrString: _numberOrString,
-  Number: _number,
-  PossibleNumber: _possibleNumber,
+  Integer: _integer,
+  PossibleInteger: _possibleInteger,
+  Float: _float,
+  PossibleFloat: _possibleFloat,
   String: _string,
   PossibleString: _possibleString,
   ByteString: _byteString,
@@ -22,7 +24,7 @@ const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
 
 function _numberOrString(){
-  var possibleNumber = _possibleNumber();
+  var possibleNumber = _possibleInteger();
   if (possibleNumber){
     return possibleNumber;
   }
@@ -39,8 +41,8 @@ function _numberOrString(){
   return _error('number-string-variable', name);
 }
 
-function _number(){
-  let possibleNumber = _possibleNumber();
+function _decimal(){
+  let possibleNumber = _possibleDecimal();
   if (possibleNumber){
     return possibleNumber;
   }else{
@@ -48,7 +50,24 @@ function _number(){
   }
 }
 
-function _possibleNumber() {
+function _possibleDecimal() {
+  let possible = _possibleInteger();
+  if (possible){ return possible; }
+  possible = _possibleFloat();
+  if (possible){ return possible; }
+  return null;
+}
+
+function _integer(){
+  let possibleNumber = _possibleInteger();
+  if (possibleNumber){
+    return possibleNumber;
+  }else{
+      return ErrorOrEof('integer');
+  }
+}
+
+function _possibleInteger() {
   if (State.tokens.length === 0){
     return null;
   }else if (!isNaN(State.tokens[0])){
@@ -56,8 +75,39 @@ function _possibleNumber() {
     State.tokens = State.tokens.slice(1);
     return {
       type: 'literal',
-      variant: 'number',
-      name: 'number',
+      variant: 'integer',
+      name: 'integer',
+      value: value
+    };
+  }else{
+    var variable = PossibleVariable();
+    if(variable){
+      return variable;
+    }else{
+      return Command('variable');
+    }
+  }
+}
+
+function _float(){
+  let possibleNumber = _possibleNumber();
+  if (possibleNumber){
+    return possibleNumber;
+  }else{
+      return ErrorOrEof('float');
+  }
+}
+
+function _possibleFloat() {
+  if (State.tokens.length === 0){
+    return null;
+  }else if (!isNaN(State.tokens[0])){
+    let value = State.tokens[0];
+    State.tokens = State.tokens.slice(1);
+    return {
+      type: 'literal',
+      variant: 'float',
+      name: 'float',
       value: value
     };
   }else{

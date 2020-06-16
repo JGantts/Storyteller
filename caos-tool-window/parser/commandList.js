@@ -40,10 +40,10 @@ function _commandList(endings){
       var commands = _doifElifElseEndiStatements();
       commandList.push(commands);
     }else if ('reps' === State.tokens[0].toLowerCase()){
-      var reps = _loop1('reps', ['number'], 'repe');
+      var reps = _loop1('reps', ['integer'], 'repe');
       commandList.push(reps);
     }else if (['enum', 'esee', 'etch', 'epas'].includes(State.tokens[0].toLowerCase())){
-      var enumeration = _loop1(State.tokens[0], ['number', 'number', 'number'], 'next');
+      var enumeration = _loop1(State.tokens[0], ['integer', 'integer', 'integer'], 'next');
       commandList.push(enumeration);
     }else if (['econ'].includes(State.tokens[0].toLowerCase())){
       var enumeration = _loop1(State.tokens[0], ['agent'], 'next');
