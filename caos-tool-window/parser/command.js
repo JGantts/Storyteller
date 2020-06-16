@@ -40,9 +40,15 @@ function _parseCommand(returnType) {
 }
 
 function _parsePossibleCommand(returnType) {
-  var namespaceDef =
-    _commands
-    .filter(namespace => namespace.name === State.tokens[0].toLowerCase())[0]
+  if (State.tokens.length === 0){
+    return null;
+  }
+
+  var namespaceName =
+    Object.keys(_commands)
+    .filter(namespaceKey => namespaceKey === State.tokens[0].toLowerCase())[0];
+
+  var namespaceDef = _commands[namespaceName];
 
   if (namespaceDef){
     let nsVariant = State.tokens[0].toLowerCase();
@@ -65,7 +71,7 @@ function _parsePossibleCommand(returnType) {
     }
   }else{
     var commandDef =
-      _commands[0].commands
+      _commands['global']
       .filter(command => command.name === State.tokens[0].toLowerCase())[0]
     if (commandDef){
       let variant = State.tokens[0].toLowerCase();

@@ -36,7 +36,9 @@ function _c3Commands(){
     }
   }
 
-  //return namespaces;
+  console.log(namespaces);
+
+  return namespaces;
 
   return [
     {
