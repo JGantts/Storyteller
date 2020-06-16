@@ -141,7 +141,7 @@ function _byteString() {
   if (possibleString){
     return possibleString;
   }else{
-    return ErrorOrEof('byte-string');
+    return ErrorOrEof('bytestring');
   }
 }
 
@@ -160,10 +160,10 @@ function _possibleByteString() {
     State.tokens = State.tokens.slice(index+1);
     return {
       type: 'literal',
-      variant: 'byte-string',
+      variant: 'bytestring',
       particles: byteParticles
         .filter(byteParticle => byteParticle !== '')
-        .map(byteParticle => {return {type: 'literal', variant: 'byte-string-particle', value: byteParticle}}),
+        .map(byteParticle => {return {type: 'literal', variant: 'bytestring-particle', value: byteParticle}}),
     };
   }else{
     return null;

@@ -222,7 +222,7 @@ function _highlightSyntax(codeTree){
     highlighted += checkForWhiteSpaceAndComments();
   }else if(
     ['literal'].includes(codeTree.type)
-    && ['byte-string'].includes(codeTree.variant)
+    && ['bytestring'].includes(codeTree.variant)
   ) {
     highlighted += `<span class='syntax-${codeTree.type}'>[</span>`;
     codeIndex += 1;
@@ -234,7 +234,7 @@ function _highlightSyntax(codeTree){
     highlighted += checkForWhiteSpaceAndComments();
   }else if(
     ['literal'].includes(codeTree.type)
-    && ['byte-string-particle'].includes(codeTree.variant)
+    && ['bytestring-particle'].includes(codeTree.variant)
   ) {
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.value}</span>`;
     codeIndex += codeTree.value.length;

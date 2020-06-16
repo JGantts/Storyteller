@@ -131,7 +131,7 @@ function _argument(param){
 /*
   "anything" -> "agent", "decimal", "string"
   "agent"
-  "byte-string"
+  "bytestring"
   "condition"
   "decimal" -> "float", "integer"
   "float"
@@ -163,7 +163,7 @@ function _argument(param){
     return Integer();
   }else if (param === 'string'){
     return String();
-  }else if (param === 'byte-string'){
+  }else if (param === 'bytestring'){
     return ByteString();
   }else if (param === 'condition'){
     return Conditional();
