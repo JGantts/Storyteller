@@ -25,7 +25,20 @@ function _c3Commands(){
       if (commandReturnType === 'command'){
         commandReturnType = 'doesnt'
       }
-      let commandParams = commandIn.arguments.map(arg => arg.type);
+      let commandParams = commandIn.arguments
+        .map(param => param.type)
+//FIX FOR TYPOS IN openc2e
+        .map(type => {
+          if (type === 'any'){
+            return 'anything';
+          }else if (type === 'bytestring'){
+            return 'byte-string';
+          }else{
+            return type;
+          }
+        })
+//FIX FOR TYPOS IN openc2e
+        ;
       namespaces[namespaceString].push(
         {
           name: commandName,
