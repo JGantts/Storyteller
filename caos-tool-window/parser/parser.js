@@ -5,7 +5,7 @@ module.exports = {
 const assert = require('assert');
 const { CommandList } = require('./commandList.js');
 const { CherryPick } = require('./common.js');
-const { Number } = require('./literal.js');
+const { Integer } = require('./literal.js');
 const { State } = require('./tokens.js');
 
 function _caos(code){
@@ -47,10 +47,10 @@ function _eventsList(){
     && 'rscr' !== State.tokens[0].toLowerCase()
   ){
     var scrp = CherryPick('script', 'scrp');
-    var family = Number();
-    var genus = Number();
-    var species = Number();
-    var script = Number();
+    var family = Integer();
+    var genus = Integer();
+    var species = Integer();
+    var script = Integer();
     var commands = CommandList(['endm']);
     var endm = CherryPick('script', 'endm')
     eventScripts.push({

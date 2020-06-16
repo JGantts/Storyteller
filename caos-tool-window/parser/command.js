@@ -8,7 +8,8 @@ const assert = require('assert');
 const { Conditional } = require('./conditional.js')
 const { C3Commands } = require('./commandLoader.js')
 const {
-  NumberOrString,
+  Decimal,
+  PossibleDecimal,
   Integer,
   PossibleInteger,
   Float,
@@ -57,7 +58,7 @@ function _parsePossibleCommand(returnType) {
     let nsName = State.tokens[0];
     State.tokens = State.tokens.slice(1);
     var commandDef =
-      namespaceDef.commands
+      namespaceDef
       .filter(
         command =>
         command.name === State.tokens[0].toLowerCase()
@@ -127,17 +128,29 @@ function _arguments(params){
 }
 
 function _argument(param){
+/*
+  "anything" -> "agent", "decimal", "string"
+  "agent"
+  "byte-string"
+  "condition"
+  "decimal" -> "float", "integer"
+  "float"
+  "integer"
+  "label"
+  "string"
+*/
+
   if (param === 'anything'){
-//  Any can only be
-    var possible = PossibleNumber();
+    var possible = PossibleDecimal();
     if (possible){ return possible }
     var possible = PossibleString();
     if (possible){ return possible }
     return ErrorOrEof(`anything`);
+
   }else if (param === 'variable'){
     return Variable();
   }else if (param === 'decimal'){
-      var possible = PossibleNumber();
+      var possible = PossibleDecimal();
       if (possible){ return possible }
       var possible = _parsePossibleCommand(`integer`);
       if (possible){ return possible }

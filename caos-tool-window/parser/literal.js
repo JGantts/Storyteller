@@ -1,5 +1,6 @@
 module.exports = {
-  NumberOrString: _numberOrString,
+  Decimal: _decimal,
+  PossibleDecimal: _possibleDecimal,
   Integer: _integer,
   PossibleInteger: _possibleInteger,
   Float: _float,
@@ -22,24 +23,6 @@ const {
 } = require('./error.js');
 const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
-
-function _numberOrString(){
-  var possibleNumber = _possibleInteger();
-  if (possibleNumber){
-    return possibleNumber;
-  }
-  var possibleString = _possibleString();
-  if (possibleString){
-    return possibleString;
-  }
-  var possibleVariable = PossibleVariable();
-  if (possibleVariable){
-    return possibleVariable;
-  }
-  let name = State.tokens[0];
-  State.tokens = State.tokens.slice(1);
-  return _error('number-string-variable', name);
-}
 
 function _decimal(){
   let possibleNumber = _possibleDecimal();
@@ -90,7 +73,7 @@ function _possibleInteger() {
 }
 
 function _float(){
-  let possibleNumber = _possibleNumber();
+  let possibleNumber = _possibleFloat();
   if (possibleNumber){
     return possibleNumber;
   }else{
