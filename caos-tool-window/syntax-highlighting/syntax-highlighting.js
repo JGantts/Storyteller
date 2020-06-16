@@ -217,6 +217,7 @@ function _highlightSyntax(codeTree){
       codeTree.value === codeText.substr(codeIndex+1, codeTree.value.length),
       codeTree.value +'|'+ codeText.substr(codeIndex+1, codeTree.value.length)
     );
+    skipWhitespaceInString(codeTree.value);
     codeIndex += codeTree.value.length+2;
     highlighted += checkForWhiteSpaceAndComments();
   }else if(
@@ -257,6 +258,15 @@ function _highlightSyntax(codeTree){
     assert(false);
   }
   return highlighted;
+}
+
+function skipWhitespaceInString(stringIn){
+  let whitespaceInString = stringIn.match(/\s+/g);
+  let toSkip = 0;
+  if (whitespaceInString){
+    toSkip = whitespaceInString.length;
+  }
+  whiteSpaceList = whiteSpaceList.slice(toSkip);
 }
 
 function checkForWhiteSpaceAndComments(){
