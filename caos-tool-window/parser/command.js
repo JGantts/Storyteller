@@ -31,14 +31,14 @@ const { State } = require('./tokens.js');
 var _commands = C3Commands();
 
 function _parseCommand(returnType) {
-  let possibleCommand = _parsePossibleCommand();
+  let possibleCommand = _parsePossibleCommand(returnType);
   if (possibleCommand){
     return possibleCommand;
   }else{
     if (returnType === 'doesnt'){
         return ErrorOrEof('command');
       }else{
-        return ErrorOrEof(`command that returns a ${returnType}`);
+        return ErrorOrEof(returnType);
       }
   }
 }
@@ -57,40 +57,46 @@ function _parsePossibleCommand(returnType) {
   if (namespaceDef){
     let nsVariant = State.tokens[0].toLowerCase();
     let nsName = State.tokens[0];
-    State.tokens = State.tokens.slice(1);
-    var commandDef =
-      namespaceDef
-      .filter(
-        command =>
-        command.name === State.tokens[0].toLowerCase()
-        && command.returnType
-      )[0]
-    if (commandDef){
-      let cmdVariant = State.tokens[0].toLowerCase();
-      let cmdName = State.tokens[0];
-      State.tokens = State.tokens.slice(1);
-      return _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName);
+    if (State.tokens.length > 1){
+      var commandDef =
+        namespaceDef
+        .filter(
+          command => {return (
+            command.name === State.tokens[1].toLowerCase()
+            && command.returnType === returnType
+          );}
+        )[0];
+      if (commandDef){
+        State.tokens = State.tokens.slice(1);
+        let cmdVariant = State.tokens[0].toLowerCase();
+        let cmdName = State.tokens[0];
+        State.tokens = State.tokens.slice(1);
+        return _namespacedCommand(commandDef.returnType, nsVariant, nsName, _command(commandDef, cmdVariant, cmdName));
+      }
     }else{
-      return null;
+    return _namespacedCommand('doesnt', nsVariant, nsName, Eof('command'));
     }
   }else{
     var commandDef =
       _commands['global']
-      .filter(command => command.name === State.tokens[0].toLowerCase())[0]
+      .filter(command => {return (
+        command.name === State.tokens[0].toLowerCase()
+        && command.returnType === returnType
+      );}
+    )[0];
     if (commandDef){
       let variant = State.tokens[0].toLowerCase();
       let name = State.tokens[0];
       State.tokens = State.tokens.slice(1);
       return _command(commandDef, variant, name);
-    }else{
-      return null;
     }
   }
+  return null;
 }
 
-function _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName){
+function _namespacedCommand(commandDefReturnType, nsVariant, nsName, command){
   var type = '';
-  if (commandDef.returnType === 'doesnt'){
+  if (commandDefReturnType === 'doesnt'){
     type = 'namespace';
   }else{
     type = 'returning-namespace';
@@ -100,7 +106,6 @@ function _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName){
     variant: nsVariant,
     name: nsName,
   }
-  command = _command(commandDef, cmdVariant, cmdName);
   return {
     type: 'namespaced-command',
     namespace: namespace,

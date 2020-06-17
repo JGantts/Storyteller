@@ -5,6 +5,24 @@ module.exports = {
 const assert = require('assert');
 const fs = require('fs');
 
+const handledCommands = [
+  'doif',
+  'elif',
+  'else',
+  'endi',
+  'scrp',
+  'endm',
+  'gsub',
+  'subr',
+  'reps',
+  'repe',
+  'enum',
+  'econ',
+  'epas',
+  'etch',
+  'next',
+]
+
 function _c3Commands(){
   let namespaces = [];
 
@@ -21,21 +39,23 @@ function _c3Commands(){
         namespaces[namespaceString] = [];
       }
       let commandName = commandIn.match.toLowerCase();
-      commandReturnType = commandIn.type;
-      if (commandReturnType === 'command'){
-        commandReturnType = 'doesnt'
-      }
-      let commandParams = commandIn.arguments
-        .map(param => param.type);
-      namespaces[namespaceString].push(
-        {
-          name: commandName,
-          returnType: commandReturnType,
-          params: commandParams,
+      if (!handledCommands.includes(commandName)){
+        commandReturnType = commandIn.type;
+        if (commandReturnType === 'command'){
+          commandReturnType = 'doesnt'
         }
-      );
+        let commandParams = commandIn.arguments
+          .map(param => param.type);
+        namespaces[namespaceString].push(
+          {
+            name: commandName,
+            returnType: commandReturnType,
+            params: commandParams,
+          }
+        );
+      }
     }
   }
-  
+  console.log(namespaces);
   return namespaces;
 }

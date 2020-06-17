@@ -67,7 +67,7 @@ function _possibleInteger() {
     if(variable){
       return variable;
     }else{
-      return Command('variable');
+      return Command('integer');
     }
   }
 }
@@ -98,7 +98,7 @@ function _possibleFloat() {
     if(variable){
       return variable;
     }else{
-      return Command('variable');
+      return Command('float');
     }
   }
 }
@@ -115,17 +115,18 @@ function _string() {
 function _possibleString() {
   if (State.tokens.length === 0){
     return null;
-  }else if (State.tokens[0][0]==='"'){
-    var stringsChunks = [];
-    var index = 0;
-    State.tokens[0] = State.tokens[0].slice(1);
-    while (State.tokens[index][State.tokens[index].length-1]!=='"'){
-      stringsChunks.push(State.tokens[index]);
-      index++;
-    }
-    stringsChunks.push(State.tokens[index].substring(0, State.tokens[index].length-1));
-    State.tokens = State.tokens.slice(index+1);
-    return {type: 'literal', variant: 'string', value: stringsChunks.join(' ')};
+  }else if (
+    State.tokens[0][0] === '"'
+    && State.tokens[0][State.tokens[0].length-1] === '"'
+  ){
+    let value = State.tokens[0].substring(1, State.tokens[0].length-1);
+    console.log(value);
+    State.tokens = State.tokens.slice(1);
+    return {
+      type: 'literal',
+      variant: 'string',
+      value: value,
+    };
   }else{
     var variable = PossibleVariable();
     if(variable){

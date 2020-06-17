@@ -4,6 +4,7 @@ module.exports = {
 
 const assert = require('assert');
 const {
+  CheckForEof,
   ErrorOrEof,
   Error,
   Eof,
@@ -21,13 +22,8 @@ const {
 const { State } = require('./tokens.js');
 
 function _conditional(){
-  if (State.tokens.length === 0){
-    return {
-      type: 'end-of-file',
-      variant: 'error',
-      message: `Expected conditional but found end of file instead.`
-    }
-  }
+  let possibleEof = CheckForEof('conditional');
+  if (possibleEof){ return possibleEof; }
   var chain = [];
   var done = false;
   do{

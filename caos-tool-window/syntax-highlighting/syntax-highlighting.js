@@ -68,7 +68,7 @@ function _highlightSyntax(codeTree){
     assert('error' === codeTree.variant);
     highlighted += ` <span class='code-decorator tooltip-holder' contenteditable='false'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
   }else if ('error' === codeTree.variant){
-    highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
+    highlighted += `<span class='syntax-error tooltip-holder' contenteditable='false'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
     assert(
       codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
       codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
@@ -211,7 +211,6 @@ function _highlightSyntax(codeTree){
     ['literal'].includes(codeTree.type)
     && ['string'].includes(codeTree.variant)
   ) {
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     highlighted += `<span class='syntax-${codeTree.type}'>"${codeTree.value}"</span>`;
     assert(
       codeTree.value === codeText.substr(codeIndex+1, codeTree.value.length),
