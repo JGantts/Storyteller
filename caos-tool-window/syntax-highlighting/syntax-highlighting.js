@@ -66,7 +66,7 @@ function _highlightSyntax(codeTree){
     highlighted += _highlightSyntax(codeTree.commands);
   }else if ('end-of-file' === codeTree.type){
     assert('error' === codeTree.variant);
-    highlighted += `<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
+    highlighted += ` <span class='code-decorator tooltip-holder' contenteditable='false'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
   }else if ('error' === codeTree.variant){
     highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
     assert(

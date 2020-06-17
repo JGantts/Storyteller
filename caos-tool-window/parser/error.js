@@ -13,6 +13,7 @@ function _checkForEof(expecting){
     return {
       type: 'end-of-file',
       variant: 'error',
+      name: expecting,
       message: `Expected ${expecting}, but found end of file instead.`
     };
   }else{
@@ -25,6 +26,7 @@ function _errorOrEof(expecting){
     return {
       type: 'end-of-file',
       variant: 'error',
+      name: 'EOF',
       message: `Expected ${expecting}, but found end of file instead.`
     };
   }else{
