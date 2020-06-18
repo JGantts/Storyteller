@@ -156,7 +156,10 @@ function _argument(param){
     possible = PossibleString();
     if (possible){ return possible }
     return ErrorOrEof(`anything`);
-
+  }else if (param === 'agent'){
+    possible = PossibleVariable();
+    if (possible){ return possible }
+    return _parseCommand(param);
   }else if (param === 'variable'){
     return Variable();
   }else if (param === 'decimal'){
@@ -177,7 +180,22 @@ function _argument(param){
     return ByteString();
   }else if (param === 'condition'){
     return Conditional();
+  }else if (param === 'label'){
+    return _label();
   }else{
     return _parseCommand(param);
   }
+}
+
+function _label(){
+  if (State.tokens.length === 0){
+    return Eof('label');
+  }
+  let name = State.tokens[0];
+  State.tokens = State.tokens.slice(1);
+  return {
+    type: 'label',
+    variant: 'label',
+    name: name,
+  };
 }

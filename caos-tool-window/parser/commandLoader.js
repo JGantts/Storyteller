@@ -12,7 +12,7 @@ const handledCommands = [
   'endi',
   'scrp',
   'endm',
-  'gsub',
+//'gsub',
   'subr',
   'reps',
   'repe',

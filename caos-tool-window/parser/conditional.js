@@ -69,7 +69,7 @@ function _boolean(){
         name: operatorName
       };
     }else{
-      var operator = _error('operator', operatorName);
+      var operator = Error('operator', operatorName);
     }
   }
   var right = _numberOrString();

@@ -49,7 +49,11 @@ function _highlightSyntax(codeTree){
   var highlighted = '';
 
   highlighted += checkForWhiteSpaceAndComments();
-  if (['command-list'].includes(codeTree.type)){
+  if (Array.isArray(codeTree)){
+    codeTree.forEach((element, i) => {
+      highlighted += _highlightSyntax(element);
+    });
+  }else if (['command-list'].includes(codeTree.type)){
     codeTree.commands.forEach((command, i) => {
       highlighted += _highlightSyntax(command);
     });
@@ -247,6 +251,17 @@ function _highlightSyntax(codeTree){
       codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
       codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
     );
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
+  }else if ('subroutine' === codeTree.type){
+    highlighted += `<span class='syntax-${'flow'}'>${codeTree.name}</span>`;
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += _highlightSyntax(codeTree.arguments);
+    highlighted += _highlightSyntax(codeTree.commandList);
+    highlighted += _highlightSyntax(codeTree.end);
+  }else if (['label'].includes(codeTree.type)) {
+    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else{
