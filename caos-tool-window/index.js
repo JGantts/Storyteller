@@ -4,11 +4,23 @@ const { Caos } = require('./parser/parser.js');
 const { clipboard } = require('electron')
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 const { KeyCapture } = require('./key-capture.js');
+const { TreeToText } = require('./tree-to-text.js');
 
 function injectUserCode(){
-  var codeElement = document.getElementById('caos-user-code');
-  var codeText = getVisibleTextInElement(codeElement);
-  executeCaos(codeText, function (error, result) {
+  document.getElementById('caos-result').innerHTML = '';
+  let codeElement = document.getElementById('caos-user-code');
+  let codeText = getVisibleTextInElement(codeElement);
+  let codeTree = Caos(codeText);
+  let inject = TreeToText(codeTree.inject);
+  let events = codeTree.eventScripts
+    .map(script => TreeToText(script));
+  let remove = '';
+  if (codeTree.remove){
+    remove = TreeToText(codeTree.remove);
+  }
+
+
+  executeCaos(inject, function (error, result) {
       if (error) throw error;
       document.getElementById('caos-result').innerHTML = result;
   });

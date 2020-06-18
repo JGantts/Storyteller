@@ -120,7 +120,6 @@ function _possibleString() {
     && State.tokens[0][State.tokens[0].length-1] === '"'
   ){
     let value = State.tokens[0].substring(1, State.tokens[0].length-1);
-    console.log(value);
     State.tokens = State.tokens.slice(1);
     return {
       type: 'literal',
