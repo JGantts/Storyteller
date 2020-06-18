@@ -4,22 +4,26 @@ module.exports = {
 
 const assert = require('assert');
 const {
-  NumberOrString,
-  Number,
-  PossibleNumber,
+  CheckForEof,
+  ErrorOrEof,
+  Error,
+  Eof,
+} = require('./error.js');
+const {
+  Integer,
+  PossibleInteger,
+  Float,
+  PossibleFloat,
   String,
   PossibleString,
+  ByteString,
+  PossibleByteString,
 } = require('./literal.js');
 const { State } = require('./tokens.js');
 
 function _conditional(){
-  if (State.tokens.length === 0){
-    return {
-      type: 'end-of-file',
-      variant: 'error',
-      message: `Expected conditional but found end of file instead.`
-    }
-  }
+  let possibleEof = CheckForEof('conditional');
+  if (possibleEof){ return possibleEof; }
   var chain = [];
   var done = false;
   do{
@@ -43,7 +47,7 @@ function _boolean(){
   if (State.tokens.length === 0){
     return _eof('boolean');
   }
-  var left = NumberOrString();
+  var left = _numberOrString();
   if (State.tokens.length === 0){
     var operator = _eof('operator');
   }else{
@@ -68,7 +72,7 @@ function _boolean(){
       var operator = _error('operator', operatorName);
     }
   }
-  var right = NumberOrString();
+  var right = _numberOrString();
   if (
     left.type === 'literal'
     && right.type === 'literal'
@@ -84,6 +88,24 @@ function _boolean(){
     operator: operator,
     right: right
   };
+}
+
+function _numberOrString(){
+  var possibleNumber = PossibleInteger();
+  if (possibleNumber){
+    return possibleNumber;
+  }
+  var possibleString = PossibleString();
+  if (possibleString){
+    return possibleString;
+  }
+  var possibleVariable = PossibleVariable();
+  if (possibleVariable){
+    return possibleVariable;
+  }
+  let name = State.tokens[0];
+  State.tokens = State.tokens.slice(1);
+  return Error('number-string-variable', name);
 }
 
 function _possibleBoolop(){

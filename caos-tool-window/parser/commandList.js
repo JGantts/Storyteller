@@ -12,6 +12,7 @@ const { Conditional } = require('./conditional.js');
 const {
   ErrorOrEof,
   Error,
+  TypedError,
   Eof,
 } = require('./error.js');
 const { State } = require('./tokens.js');
@@ -26,11 +27,7 @@ function _commandList(endings){
     ){
       done = true;
     }else if (State.tokens.length === 0){
-      commandList.push({
-        type: 'end-of-file',
-        variant: 'error',
-        message: `Expected command but found end of file instead.`
-      });
+      commandList.push(Eof('command'));
       done = true;
     }else if (State.tokens[0] === ''){
       done = true;
@@ -40,10 +37,10 @@ function _commandList(endings){
       var commands = _doifElifElseEndiStatements();
       commandList.push(commands);
     }else if ('reps' === State.tokens[0].toLowerCase()){
-      var reps = _loop1('reps', ['number'], 'repe');
+      var reps = _loop1('reps', ['integer'], 'repe');
       commandList.push(reps);
     }else if (['enum', 'esee', 'etch', 'epas'].includes(State.tokens[0].toLowerCase())){
-      var enumeration = _loop1(State.tokens[0], ['number', 'number', 'number'], 'next');
+      var enumeration = _loop1(State.tokens[0], ['integer', 'integer', 'integer'], 'next');
       commandList.push(enumeration);
     }else if (['econ'].includes(State.tokens[0].toLowerCase())){
       var enumeration = _loop1(State.tokens[0], ['agent'], 'next');
@@ -78,12 +75,7 @@ function _doifElifElseEndiStatements(){
   var needEndi = false;
   do{
     if (State.tokens.length === 0){
-      sections.push({
-        type: 'end-of-file',
-        variant: 'error',
-        message: `Expected 'endi' but found end of file instead.`
-      });
-      State.tokens = State.tokens.slice(1);
+      commandList.push(Eof('endi'));
       done = true;
     }else if ('endi' === State.tokens[0].toLowerCase()){
       let variant = State.tokens[0].toLowerCase();
@@ -99,14 +91,7 @@ function _doifElifElseEndiStatements(){
         let variant = 'error';
         let name = State.tokens[0]
         State.tokens = State.tokens.slice(1);
-        var conditional = Conditional();
-        var commandList = _commandList(['elif', 'else', 'endi']);
-        sections.push({
-          type: 'flow',
-          variant: variant,
-          name: name,
-          message: `Expected 'endi' but found ${name} instead.`
-        });
+        sections.push(TypedError('flow', 'endi', name));
         done = true;
     }else if ('elif' === State.tokens[0].toLowerCase()){
       let variant = State.tokens[0].toLowerCase();

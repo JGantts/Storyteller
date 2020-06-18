@@ -144,6 +144,9 @@ function userTextChanged(){
 }
 
 function checkCode(codeElement, codeText, caretPosition){
+  $('#inprocessParse').text('');
+  $('#highlighted').text('');
+
   var whiteSpaceList =
     codeText
     .split('\n')

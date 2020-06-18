@@ -5,32 +5,56 @@ module.exports = {
 const assert = require('assert');
 const { CommandList } = require('./commandList.js');
 const { CherryPick } = require('./common.js');
-const { Number } = require('./literal.js');
+const { Integer } = require('./literal.js');
 const { State } = require('./tokens.js');
 
 function _caos(code){
-  State.tokens = _chunkCode(code);
+  State.tokens = _tokenizeCode(code);
   var tree = _injectEventsRemove();
   return tree;
 }
 
-function _chunkCode(code){
+function _tokenizeCode(code){
   return code
-  .split('\n')
-  .filter((line) => {
-    return line.trim()[0] !== '*';
-  })
-  .map((line) => {
-    return line.replace(/\s+/g, ' ');
-  })
-  .map((line) => {
-    return line.trim();
-  })
-  .join(' ')
-  .split(' ')
-  .filter((line) => {
-    return line != '';
-  });
+    .split('\n')
+    .map((line) => {
+      return line.trim();
+    })
+    .filter((line) => {
+      return line[0] !== '*';
+    })
+    .reduce((total, line) => {
+      if (line === ''){
+        return total;
+      }
+      let inString = false;
+      let escaped = false;
+      let currentToken = '';
+      do{
+        if (
+          line[0] === '"'
+          && !escaped
+        ){
+          inString = !inString;
+        }else if (line[0] === '\\'){
+          escaped = !escaped;
+        }else if (
+          !inString
+          && (/\s/.test(line[0]))
+        ){
+          total.push(currentToken);
+          currentToken = '';
+          line = line.slice(1);
+          continue;
+        }else{
+          escaped = false;
+        }
+        currentToken += line[0];
+        line = line.slice(1);
+      }while (line.length > 0);
+      total.push(currentToken);
+      return total;
+    }, []);
 }
 
 function _injectEventsRemove(){
@@ -47,10 +71,10 @@ function _eventsList(){
     && 'rscr' !== State.tokens[0].toLowerCase()
   ){
     var scrp = CherryPick('script', 'scrp');
-    var family = Number();
-    var genus = Number();
-    var species = Number();
-    var script = Number();
+    var family = Integer();
+    var genus = Integer();
+    var species = Integer();
+    var script = Integer();
     var commands = CommandList(['endm']);
     var endm = CherryPick('script', 'endm')
     eventScripts.push({

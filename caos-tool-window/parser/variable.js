@@ -19,6 +19,7 @@ function _variable(){
   if (possibleVariable){
     return possibleVariable;
   }else{
+    console.log(here);
     return ErrorOrEof('variable');
   }
 }

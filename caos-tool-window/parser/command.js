@@ -1,18 +1,26 @@
 module.exports = {
-  Command: _paseCommand,
+  PossibleCommand: _parsePossibleCommand,
+  Command: _parseCommand,
   Arguments: _arguments,
 }
 
 const assert = require('assert');
 const { Conditional } = require('./conditional.js')
+const { C3Commands } = require('./commandLoader.js')
 const {
-  NumberOrString,
-  Number,
-  PossibleNumber,
+  Decimal,
+  PossibleDecimal,
+  Integer,
+  PossibleInteger,
+  Float,
+  PossibleFloat,
   String,
   PossibleString,
+  ByteString,
+  PossibleByteString,
 } = require('./literal.js');
 const {
+  CheckForEof,
   ErrorOrEof,
   Error,
   Eof,
@@ -20,247 +28,75 @@ const {
 const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
 
-var _namespaces = [
-  {
-    'name': 'global',
-    'commands': [
-    //Agents
-      {name: 'abba', returnType: 'number', params: []},
-      {name: 'alph', returnType: 'doesnt', params: ['number', 'number']},
-      {name: 'anim', returnType: 'doesnt', params: ['byte-string']},
-      {name: 'anms', returnType: 'doesnt', params: ['string']},
-      {name: 'attr', returnType: 'doesnt', params: ['number']},
-      {name: 'attr', returnType: 'number', params: []},
-      {name: 'base', returnType: 'doesnt', params: ['number']},
-      {name: 'base', returnType: 'number', params: []},
-      {name: 'bhvr', returnType: 'doesnt', params: ['number']},
-      {name: 'bhvr', returnType: 'number', params: []},
-      {name: 'call', returnType: 'doesnt', params: ['number', 'anything', 'anything']},
-      {name: 'carr', returnType: 'agent', params: []},
-      {name: 'cata', returnType: 'number', params: []},
-      {name: 'cati', returnType: 'number', params: ['number', 'number', 'number']},
-      {name: 'cato', returnType: 'doesnt', params: ['number']},
-      {name: 'catx', returnType: 'string', params: ['number']},
-      {name: 'clac', returnType: 'number', params: []},
-      {name: 'clik', returnType: 'number', params: ['number']},
-      {name: 'core', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
-      {name: 'dcor', returnType: 'doesnt', params: ['number']},
-      {name: 'disq', returnType: 'number', params: ['agent']},
-      {name: 'drop', returnType: 'doesnt', params: []},
-      {name: 'dsee', returnType: 'doesnt', params: ['number']},
-      {name: 'fltx', returnType: 'number', params: []},
-      {name: 'flty', returnType: 'number', params: []},
-      {name: 'fmly', returnType: 'number', params: []},
-      {name: 'frat', returnType: 'doesnt', params: ['number']},
-      {name: 'from', returnType: 'any', params: []},
-      {name: 'gait', returnType: 'doesnt', params: ['number']},
-      {name: 'gall', returnType: 'doesnt', params: ['number']},
-      {name: 'gall', returnType: 'string', params: []},
-      {name: 'gnus', returnType: 'number', params: []},
-      {name: 'hand', returnType: 'doesnt', params: ['string']},
-      {name: 'hand', returnType: 'string', params: []},
-      {name: 'held', returnType: 'agent', params: []},
-      {name: 'hght', returnType: 'number', params: []},
-      {name: 'iitt', returnType: 'agent', params: []},
-      {name: 'imsk', returnType: 'number', params: []},
-      {name: 'kill', returnType: 'doesnt', params: ['agent']},
-      {name: 'mira', returnType: 'doesnt', params: ['number']},
-      {name: 'mira', returnType: 'number', params: []},
-      {name: 'mows', returnType: 'number', params: []},
-      {name: 'mthx', returnType: 'number', params: []},
-      {name: 'mthy', returnType: 'number', params: []},
-      {name: 'ncls', returnType: 'agent', params: ['agent', 'number', 'number', 'number']},
-      {name: 'nohh', returnType: 'doesnt', params: []},
-      {name: 'null', returnType: 'agent', params: []},
-      {name: 'over', returnType: 'doesnt', params: []},
-      {name: 'ownr', returnType: 'agent', params: []},
-      {name: 'paus', returnType: 'doesnt', params: ['number']},
-      {name: 'paus', returnType: 'number', params: []},
-      {name: 'pcls', returnType: 'agent', params: ['agent', 'number', 'number', 'number']},
-      {name: 'plne', returnType: 'doesnt', params: ['number']},
-      {name: 'plne', returnType: 'number', params: []},
-      {name: 'pntr', returnType: 'agent', params: []},
-      {name: 'posb', returnType: 'number', params: []},
-      {name: 'pose', returnType: 'doesnt', params: ['number']},
-      {name: 'pose', returnType: 'number', params: []},
-      {name: 'posl', returnType: 'number', params: []},
-      {name: 'posr', returnType: 'number', params: []},
-      {name: 'post', returnType: 'number', params: []},
-      {name: 'posx', returnType: 'number', params: []},
-      {name: 'posy', returnType: 'number', params: []},
-      {name: 'puhl', returnType: 'doesnt', params: ['number', 'number', 'number']},
-      {name: 'puhl', returnType: 'number', params: ['number', 'number']},
-      {name: 'pupt', returnType: 'doesnt', params: ['number', 'number', 'number']},
-      {name: 'pupt', returnType: 'number', params: ['number', 'number']},
-      {name: 'rnge', returnType: 'doesnt', params: ['number']},
-      {name: 'rnge', returnType: 'number', params: []},
-      {name: 'rtar', returnType: 'doesnt', params: ['number', 'number', 'number']},
-      {name: 'seee', returnType: 'number', params: ['agent', 'agent']},
-      {name: 'show', returnType: 'doesnt', params: ['number']},
-      {name: 'spcs', returnType: 'number', params: []},
-      {name: 'star', returnType: 'doesnt', params: ['number', 'number', 'number']},
-      {name: 'targ', returnType: 'agent', params: []},
-      {name: 'tcor', returnType: 'number', params: ['number', 'number', 'number', 'number']},
-      {name: 'tick', returnType: 'doesnt', params: ['number']},
-      {name: 'tick', returnType: 'number', params: []},
-      {name: 'tino', returnType: 'doesnt', params: ['number', 'number', 'number', 'number', 'number']},
-      {name: 'tint', returnType: 'doesnt', params: ['number', 'number', 'number', 'number', 'number']},
-      {name: 'tint', returnType: 'number', params: ['number']},
-      {name: 'totl', returnType: 'number', params: ['number', 'number', 'number']},
-      {name: 'touc', returnType: 'number', params: ['agent', 'agent']},
-      {name: 'tran', returnType: 'number', params: ['number', 'number']},
-      {name: 'ttar', returnType: 'doesnt', params: ['number', 'number', 'number']},
-      {name: 'twin', returnType: 'agent', params: ['agent', 'number']},
-      {name: 'ucln', returnType: 'doesnt', params: []},
-      {name: 'visi', returnType: 'number', params: ['number']},
-      {name: 'wdth', returnType: 'number', params: []},
-      {name: 'wild', returnType: 'string', params: ['number', 'number', 'number', 'string', 'number']},
-      {name: '_it_', returnType: 'agent', params: []},
+var _commands = C3Commands();
 
-    //Brain
-      {name: 'adin', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
-      {name: 'doin', returnType: 'doesnt', params: ['number']},
+function _parseCommand(returnType) {
+  let possibleCommand = _parsePossibleCommand(returnType);
+  if (possibleCommand){
+    return possibleCommand;
+  }else{
+    if (returnType === 'doesnt'){
+        return ErrorOrEof('command');
+      }else{
+        return ErrorOrEof(returnType);
+      }
+  }
+}
 
-    //Camera
-    //CD Player
+function _parsePossibleCommand(returnType) {
+  if (State.tokens.length === 0){
+    return null;
+  }
 
-    //Compounds
-      {name: 'fcus', returnType: 'doesnt', params: []},
-      {name: 'frmt', returnType: 'doesnt', params: ['number', 'number', 'number', 'number', 'number', 'number', 'number']},
-      {name: 'grpl', returnType: 'doesnt', params: ['number', 'number', 'number', 'number', 'number']},
-      {name: 'grpv', returnType: 'doesnt', params: ['number', 'number']},
-      {name: 'npgs', returnType: 'number', params: []},
-      {name: 'page', returnType: 'doesnt', params: ['number']},
-      {name: 'page', returnType: 'number', params: []},
-      {name: 'part', returnType: 'doesnt', params: ['number']},
-      {name: 'part', returnType: 'number', params: ['number']},
-      {name: 'pnxt', returnType: 'number', params: ['number']},
-      {name: 'ptxt', returnType: 'doesnt', params: ['string']},
-      {name: 'ptxt', returnType: 'string', params: []},
+  var namespaceName =
+    Object.keys(_commands)
+    .filter(namespaceKey => namespaceKey === State.tokens[0].toLowerCase())[0];
 
-    //Creatures
-    //Debug
-    //Files
-    //Flow
-    //Genetics
-    //History
-    //Input
-    //Map
-    //Motion
-    //Net
-    //Ports
-    //Resources
-    //Scripts
-    //Sounds
-    //Time
-    //Variables
-    //Vehicles
-
-      {name: '____', returnType: 'doesnt', params: ['____', '____']},
-
-      {name: 'inst', returnType: 'doesnt', params: []},
-      {name: 'elas', returnType: 'doesnt', params: ['number']},
-      {name: 'aero', returnType: 'doesnt', params: ['number']},
-      {name: 'accg', returnType: 'doesnt', params: ['number']},
-      {name: 'perm', returnType: 'doesnt', params: ['number']},
-      {name: 'rand', returnType: 'number', params: ['number', 'number']},
-      {name: 'mvto', returnType: 'doesnt', params: ['number', 'number']},
-      {name: 'setv', returnType: 'doesnt', params: ['variable', 'number']},
-      {name: 'addv', returnType: 'doesnt', params: ['variable', 'number']},
-  ]},
-  {
-    'name': 'brn:',
-    'commands': [
-      {name: 'dmpb', returnType: 'doesnt', params: []},
-      {name: 'dmpd', returnType: 'doesnt', params: ['number']},
-      {name: 'dmpl', returnType: 'doesnt', params: ['number']},
-      {name: 'dmpn', returnType: 'doesnt', params: ['number', 'number']},
-      {name: 'dmpt', returnType: 'doesnt', params: ['number']},
-      {name: 'setd', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
-      {name: 'setl', returnType: 'doesnt', params: ['number', 'number', 'number']},
-      {name: 'setn', returnType: 'doesnt', params: ['number', 'number', 'number', 'number']},
-      {name: 'sett', returnType: 'doesnt', params: ['number', 'number', 'number']},
-  ]},
-  {
-    'name': 'mesg',
-    'commands': [
-      {name: 'writ', returnType: 'doesnt', params: ['agent', 'number']},
-      {name: 'wrt+', returnType: 'doesnt', params: ['agent', 'number', 'any', 'any', 'number']},
-  ]},
-  {
-    'name': 'new:',
-    'commands': [
-      {name: 'simp', returnType: 'doesnt', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
-      {name: 'comp', returnType: 'doesnt', params: ['number', 'number', 'number', 'string', 'number', 'number', 'number']},
-  ]},
-  {
-    'name': 'pat:',
-    'commands': [
-      {name: 'butt', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'number', 'byte-string', 'number', 'number']},
-      {name: 'cmra', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number']},
-      {name: 'dull', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number']},
-      {name: 'fixd', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'string']},
-      {name: 'grph', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'number']},
-      {name: 'kill', returnType: 'doesnt', params: ['number']},
-      {name: 'move', returnType: 'doesnt', params: ['number', 'number', 'number']},
-      {name: 'text', returnType: 'doesnt', params: ['number', 'string', 'number', 'number', 'number', 'number', 'number', 'string']},
-  ]},
-]
-
-function _paseCommand(returnType) {
-  var namespaceDef =
-    _namespaces
-    .filter(namespace => namespace.name === State.tokens[0].toLowerCase())[0]
+  var namespaceDef = _commands[namespaceName];
 
   if (namespaceDef){
     let nsVariant = State.tokens[0].toLowerCase();
     let nsName = State.tokens[0];
-    State.tokens = State.tokens.slice(1);
-    var commandDef =
-      namespaceDef.commands
-      .filter(
-        command =>
-        command.name === State.tokens[0].toLowerCase()
-        && command.returnType
-      )[0]
-    if (commandDef){
-      let cmdVariant = State.tokens[0].toLowerCase();
-      let cmdName = State.tokens[0];
-      State.tokens = State.tokens.slice(1);
-      return _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName);
-    }else{
-      let name = State.tokens[0];
-      State.tokens = State.tokens.slice(1);
-      if (returnType === 'doesnt'){
-        return Error('command', nsName);
-      }else{
-        return Error(`command that returns a ${returnType}`, nsName);
+    if (State.tokens.length > 1){
+      var commandDef =
+        namespaceDef
+        .filter(
+          command => {return (
+            command.name === State.tokens[1].toLowerCase()
+            && command.returnType === returnType
+          );}
+        )[0];
+      if (commandDef){
+        State.tokens = State.tokens.slice(1);
+        let cmdVariant = State.tokens[0].toLowerCase();
+        let cmdName = State.tokens[0];
+        State.tokens = State.tokens.slice(1);
+        return _namespacedCommand(commandDef.returnType, nsVariant, nsName, _command(commandDef, cmdVariant, cmdName));
       }
+    }else{
+    return _namespacedCommand('doesnt', nsVariant, nsName, Eof('command'));
     }
   }else{
     var commandDef =
-      _namespaces[0].commands
-      .filter(command => command.name === State.tokens[0].toLowerCase())[0]
+      _commands['global']
+      .filter(command => {return (
+        command.name === State.tokens[0].toLowerCase()
+        && command.returnType === returnType
+      );}
+    )[0];
     if (commandDef){
       let variant = State.tokens[0].toLowerCase();
       let name = State.tokens[0];
       State.tokens = State.tokens.slice(1);
       return _command(commandDef, variant, name);
-    }else{
-      let name = State.tokens[0];
-      State.tokens = State.tokens.slice(1);
-      if (returnType === 'doesnt'){
-        return Error('command', name);
-      }else{
-        return Error(`command that returns a ${returnType}`, name);
-      }
     }
   }
+  return null;
 }
 
-function _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName){
+function _namespacedCommand(commandDefReturnType, nsVariant, nsName, command){
   var type = '';
-  if (commandDef.returnType === 'doesnt'){
+  if (commandDefReturnType === 'doesnt'){
     type = 'namespace';
   }else{
     type = 'returning-namespace';
@@ -270,7 +106,6 @@ function _namespacedCommand(commandDef, nsVariant, nsName, cmdVariant, cmdName){
     variant: nsVariant,
     name: nsName,
   }
-  command = _command(commandDef, cmdVariant, cmdName);
   return {
     type: 'namespaced-command',
     namespace: namespace,
@@ -299,15 +134,50 @@ function _arguments(params){
 }
 
 function _argument(param){
-  if (param === 'variable'){
+/*
+  "anything" -> "agent", "decimal", "string"
+  "agent"
+  "bytestring"
+  "condition"
+  "decimal" -> "float", "integer"
+  "float"
+  "integer"
+  "label"
+  "string"
+*/
+  let possible = null;
+  possible = CheckForEof(param);
+  if (possible){
+    return possible;
+  }
+  if (param === 'anything'){
+    possible = PossibleDecimal();
+    if (possible){ return possible }
+    possible = PossibleString();
+    if (possible){ return possible }
+    return ErrorOrEof(`anything`);
+
+  }else if (param === 'variable'){
     return Variable();
-  }else if (param === 'number'){
-    return Number();
+  }else if (param === 'decimal'){
+      possible = PossibleDecimal();
+      if (possible){ return possible }
+      possible = _parsePossibleCommand(`integer`);
+      if (possible){ return possible }
+      possible = _parsePossibleCommand(`float`);
+      if (possible){ return possible }
+      return ErrorOrEof(`decimal`);
+  }else if (param === 'float'){
+    return Float();
+  }else if (param === 'integer'){
+    return Integer();
   }else if (param === 'string'){
     return String();
+  }else if (param === 'bytestring'){
+    return ByteString();
   }else if (param === 'condition'){
     return Conditional();
   }else{
-    return _paseCommand(param);
+    return _parseCommand(param);
   }
 }
