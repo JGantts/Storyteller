@@ -34,6 +34,8 @@ function _treeToText(codeTree){
     }else {
       throw new Error(codeTree.message);
     }
+  }else if ('returning-namespace' === codeTree.type){
+    codeText += codeTree.name + ' ';
   }else if ('command-list' === codeTree.type){
     codeTree.commands.forEach((command, index) => {
       codeText += _treeToText(command);
