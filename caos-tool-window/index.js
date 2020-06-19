@@ -7,23 +7,48 @@ const { KeyCapture } = require('./key-capture.js');
 const { TreeToText } = require('./tree-to-text.js');
 
 function injectUserCode(){
+
   document.getElementById('caos-result').innerHTML = '';
   let codeElement = document.getElementById('caos-user-code');
   let codeText = getVisibleTextInElement(codeElement);
   let codeTree = Caos(codeText);
   let inject = TreeToText(codeTree.inject);
+
   let events = codeTree.eventScripts
-    .map(script => TreeToText(script));
+    .map(script => {console.log(script); return {
+      family: script.family.value,
+      genus: script.genus.value,
+      species: script.species.value,
+      eventNum: script.script.value,
+      script: TreeToText(script.commands)
+    };});
   let remove = '';
   if (codeTree.remove){
-    remove = TreeToText(codeTree.remove);
+    remove = TreeToText(codeTree.remove).slice(5);
   }
 
+  if (remove !== ''){
+    executeCaos(remove, function (error, result) {
+        if (error) console.log(error);
+        document.getElementById('caos-result').innerHTML = result;
+    });
+  }
 
-  executeCaos(inject, function (error, result) {
-      if (error) throw error;
-      document.getElementById('caos-result').innerHTML = result;
+  events.forEach((script, i) => {
+    console.log(script);
+    injectScript(script, function (error, result) {
+        if (error) console.log(error);
+        document.getElementById('caos-result').innerHTML = result;
+    });
   });
+
+
+  if (inject !== ''){
+    executeCaos(inject, function (error, result) {
+        if (error) console.log(error);
+        document.getElementById('caos-result').innerHTML = result;
+    });
+  }
 }
 
 function userTextKeyDown(event){

@@ -20,7 +20,7 @@ const handledCommands = [
   'econ',
   'epas',
   'etch',
-  'next',
+  //'next',
 ]
 
 function _c3Commands(){
