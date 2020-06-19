@@ -12,7 +12,7 @@ const handledCommands = [
   'endi',
   'scrp',
   'endm',
-  'gsub',
+//'gsub',
   'subr',
   'reps',
   'repe',
@@ -56,6 +56,6 @@ function _c3Commands(){
       }
     }
   }
-  console.log(namespaces);
+  //console.log(namespaces);
   return namespaces;
 }

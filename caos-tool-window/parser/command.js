@@ -36,10 +36,10 @@ function _parseCommand(returnType) {
     return possibleCommand;
   }else{
     if (returnType === 'doesnt'){
-        return ErrorOrEof('command');
-      }else{
-        return ErrorOrEof(returnType);
-      }
+      return ErrorOrEof('command');
+    }else{
+      return ErrorOrEof(returnType);
+    }
   }
 }
 
@@ -141,7 +141,7 @@ function _argument(param){
   "condition"
   "decimal" -> "float", "integer"
   "float"
-  "integer"
+  "integer" -> "float"
   "label"
   "string"
 */
@@ -156,19 +156,24 @@ function _argument(param){
     possible = PossibleString();
     if (possible){ return possible }
     return ErrorOrEof(`anything`);
-
+  }else if (param === 'agent'){
+    possible = PossibleVariable();
+    if (possible){ return possible }
+    return _parseCommand(param);
   }else if (param === 'variable'){
     return Variable();
   }else if (param === 'decimal'){
-      possible = PossibleDecimal();
-      if (possible){ return possible }
-      possible = _parsePossibleCommand(`integer`);
-      if (possible){ return possible }
-      possible = _parsePossibleCommand(`float`);
-      if (possible){ return possible }
-      return ErrorOrEof(`decimal`);
+    possible = PossibleDecimal();
+    if (possible){ return possible }
+    possible = _parsePossibleCommand(`integer`);
+    if (possible){ return possible }
+    possible = _parsePossibleCommand(`float`);
+    if (possible){ return possible }
+    return ErrorOrEof(`decimal`);
   }else if (param === 'float'){
-    return Float();
+    possible =  PossibleFloat();
+    if (possible){ return possible; }
+    return Integer();
   }else if (param === 'integer'){
     return Integer();
   }else if (param === 'string'){
@@ -177,7 +182,23 @@ function _argument(param){
     return ByteString();
   }else if (param === 'condition'){
     return Conditional();
+  }else if (param === 'label'){
+    return _label();
   }else{
-    return _parseCommand(param);
+    let temp = _parseCommand(param);
+    return temp;
   }
+}
+
+function _label(){
+  if (State.tokens.length === 0){
+    return Eof('label');
+  }
+  let name = State.tokens[0];
+  State.tokens = State.tokens.slice(1);
+  return {
+    type: 'label',
+    variant: 'label',
+    name: name,
+  };
 }

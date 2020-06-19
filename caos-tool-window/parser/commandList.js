@@ -48,12 +48,32 @@ function _commandList(endings){
     }else if (['loop'].includes(State.tokens[0].toLowerCase())){
       var loop = _loop2(State.tokens[0], ['untl', 'ever'], [['condition'], []]);
       commandList.push(loop);
+    }else if (['subr'].includes(State.tokens[0].toLowerCase())){
+      var subroutine = _subroutine();
+      commandList.push(subroutine);
     }else{
       var command = Command('doesnt');
       commandList.push(command);
     }
   }while(!done);
   return {type: 'command-list', commands: commandList};
+}
+
+function _subroutine(){
+  let variant = State.tokens[0];
+  let name = State.tokens[0].toLowerCase();
+  State.tokens = State.tokens.slice(1);
+  let arguments = Arguments(['label']);
+  let commandList = _commandList(['retn']);
+  let end = CherryPick('flow', 'retn');
+  return {
+    type: 'subroutine',
+    variant: variant,
+    name: name,
+    arguments: arguments,
+    commandList: commandList,
+    end: end,
+  };
 }
 
 function _doifElifElseEndiStatements(){
@@ -88,6 +108,7 @@ function _doifElifElseEndiStatements(){
       State.tokens = State.tokens.slice(1);
       done = true;
     }else if (needEndi){
+        assert(false);
         let variant = 'error';
         let name = State.tokens[0]
         State.tokens = State.tokens.slice(1);

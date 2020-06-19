@@ -49,7 +49,11 @@ function _highlightSyntax(codeTree){
   var highlighted = '';
 
   highlighted += checkForWhiteSpaceAndComments();
-  if (['command-list'].includes(codeTree.type)){
+  if (Array.isArray(codeTree)){
+    codeTree.forEach((element, i) => {
+      highlighted += _highlightSyntax(element);
+    });
+  }else if (['command-list'].includes(codeTree.type)){
     codeTree.commands.forEach((command, i) => {
       highlighted += _highlightSyntax(command);
     });
@@ -110,6 +114,14 @@ function _highlightSyntax(codeTree){
       //console.log('here');
       highlighted += _highlightSyntax(command);
     });
+  }else if ('returning-namespace' === codeTree.type){
+    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
+    assert(
+      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
+      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
+    );
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
   }else if ('namespaced-command' === codeTree.type){
     highlighted += _highlightSyntax(codeTree.namespace);
     highlighted += _highlightSyntax(codeTree.command);
@@ -249,11 +261,19 @@ function _highlightSyntax(codeTree){
     );
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
+  }else if ('subroutine' === codeTree.type){
+    highlighted += `<span class='syntax-${'flow'}'>${codeTree.name}</span>`;
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
+    highlighted += _highlightSyntax(codeTree.arguments);
+    highlighted += _highlightSyntax(codeTree.commandList);
+    highlighted += _highlightSyntax(codeTree.end);
+  }else if (['label'].includes(codeTree.type)) {
+    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
   }else{
-    console.log(codeTree.type);
-    if (codeTree.type === undefined){
-      console.log(JSON.stringify(codeTree));
-    }
+    console.log(codeTree);
     assert(false);
   }
   return highlighted;

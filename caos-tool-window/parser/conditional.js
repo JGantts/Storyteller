@@ -4,6 +4,11 @@ module.exports = {
 
 const assert = require('assert');
 const {
+  PossibleCommand,
+  Command,
+  Arguments
+} = require('./command.js');
+const {
   CheckForEof,
   ErrorOrEof,
   Error,
@@ -19,6 +24,7 @@ const {
   ByteString,
   PossibleByteString,
 } = require('./literal.js');
+const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
 
 function _conditional(){
@@ -47,7 +53,7 @@ function _boolean(){
   if (State.tokens.length === 0){
     return _eof('boolean');
   }
-  var left = _numberOrString();
+  var left = _numberOrStringOrAgent();
   if (State.tokens.length === 0){
     var operator = _eof('operator');
   }else{
@@ -69,10 +75,10 @@ function _boolean(){
         name: operatorName
       };
     }else{
-      var operator = _error('operator', operatorName);
+      var operator = Error('operator', operatorName);
     }
   }
-  var right = _numberOrString();
+  var right = _numberOrStringOrAgent();
   if (
     left.type === 'literal'
     && right.type === 'literal'
@@ -90,20 +96,25 @@ function _boolean(){
   };
 }
 
-function _numberOrString(){
-  var possibleNumber = PossibleInteger();
-  if (possibleNumber){
-    return possibleNumber;
-  }
-  var possibleString = PossibleString();
-  if (possibleString){
-    return possibleString;
-  }
-  var possibleVariable = PossibleVariable();
-  if (possibleVariable){
-    return possibleVariable;
-  }
+function _numberOrStringOrAgent(){
+  var possible = PossibleInteger();
+  if (possible){ return possible; }
+  var possible = PossibleFloat();
+  if (possible){ return possible; }
+  possible = PossibleString();
+  if (possible){ return possible; }
+  possible = PossibleVariable();
+  if (possible){ return possible; }
+  possible = PossibleCommand('string');
+  if (possible){ return possible; }
+  possible = PossibleCommand('integer');
+  if (possible){ return possible; }
+  possible = PossibleCommand('float');
+  if (possible){ return possible; }
+  possible = PossibleCommand('agent');
+  if (possible){ return possible; }
   let name = State.tokens[0];
+  console.log(State.tokens);
   State.tokens = State.tokens.slice(1);
   return Error('number-string-variable', name);
 }
@@ -126,6 +137,7 @@ function _possibleBoolop(){
 }
 
 function _operatorToError(operator, message){
+  assert(false);
   return {
     type: operator.type,
     variant: 'error',
