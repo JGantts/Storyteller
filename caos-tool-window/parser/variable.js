@@ -59,17 +59,6 @@ function _possibleVariable(){
       variant: 'ov',
       name: name
     }
-  }else if(['game'].includes(State.tokens[0].toLowerCase())){
-    let variant = State.tokens[0].toLowerCase();
-    let name = State.tokens[0];
-    State.tokens = State.tokens.slice(1);
-    var string = String();
-    return {
-      type: 'variable',
-      variant: variant,
-      name: name,
-      varname: string
-    };
   }else{
     let possibleCommand = PossibleCommand('variable');
     return possibleCommand;
