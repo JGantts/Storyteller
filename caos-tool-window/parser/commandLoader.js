@@ -56,6 +56,6 @@ function _c3Commands(){
       }
     }
   }
-  console.log(namespaces);
+  //console.log(namespaces);
   return namespaces;
 }
