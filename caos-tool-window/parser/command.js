@@ -36,12 +36,10 @@ function _parseCommand(returnType) {
     return possibleCommand;
   }else{
     if (returnType === 'doesnt'){
-        return ErrorOrEof('command');
-      }else{
-        console.log(returnType);
-        console.log(State.tokens);
-        return ErrorOrEof(returnType);
-      }
+      return ErrorOrEof('command');
+    }else{
+      return ErrorOrEof(returnType);
+    }
   }
 }
 
@@ -177,7 +175,7 @@ function _argument(param){
     if (possible){ return possible; }
     return Integer();
   }else if (param === 'integer'){
-    return PossibleInteger();
+    return Integer();
   }else if (param === 'string'){
     return String();
   }else if (param === 'bytestring'){
@@ -187,7 +185,8 @@ function _argument(param){
   }else if (param === 'label'){
     return _label();
   }else{
-    return _parseCommand(param);
+    let temp = _parseCommand(param);
+    return temp;
   }
 }
 

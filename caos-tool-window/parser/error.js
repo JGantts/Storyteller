@@ -28,6 +28,8 @@ function _errorOrEof(expecting){
 }
 
 function _error(expecting, foundName){
+  //console.log(State.tokens);
+  //assert(false);
   return {
     type: expecting,
     variant: 'error',
@@ -37,6 +39,8 @@ function _error(expecting, foundName){
 }
 
 function _typedError(type, expecting, foundName){
+  //console.log(State.tokens);
+  //assert(false);
   return {
     type: type,
     variant: 'error',
@@ -46,6 +50,8 @@ function _typedError(type, expecting, foundName){
 }
 
 function _eof(expecting){
+  //console.log(State.tokens);
+  //assert(false);
   return {
     type: 'end-of-file',
     variant: 'error',

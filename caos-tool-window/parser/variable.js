@@ -24,7 +24,6 @@ function _variable(){
   if (possibleVariable){
     return possibleVariable;
   }else{
-    console.log(here);
     return ErrorOrEof('variable');
   }
 }
@@ -71,8 +70,6 @@ function _possibleVariable(){
       name: name,
       varname: string
     };
-  }else if(['name'].includes(State.tokens[0].toLowerCase())){
-    console.log(State.tokens);
   }else{
     let possibleCommand = PossibleCommand('variable');
     return possibleCommand;
