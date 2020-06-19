@@ -114,6 +114,14 @@ function _highlightSyntax(codeTree){
       //console.log('here');
       highlighted += _highlightSyntax(command);
     });
+  }else if ('returning-namespace' === codeTree.type){
+    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
+    assert(
+      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
+      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
+    );
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
   }else if ('namespaced-command' === codeTree.type){
     highlighted += _highlightSyntax(codeTree.namespace);
     highlighted += _highlightSyntax(codeTree.command);
@@ -265,10 +273,7 @@ function _highlightSyntax(codeTree){
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else{
-    console.log(codeTree.type);
-    if (codeTree.type === undefined){
-      console.log(JSON.stringify(codeTree));
-    }
+    console.log(codeTree);
     assert(false);
   }
   return highlighted;
