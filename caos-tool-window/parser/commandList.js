@@ -108,6 +108,7 @@ function _doifElifElseEndiStatements(){
       State.tokens = State.tokens.slice(1);
       done = true;
     }else if (needEndi){
+        assert(false);
         let variant = 'error';
         let name = State.tokens[0]
         State.tokens = State.tokens.slice(1);

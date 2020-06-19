@@ -38,6 +38,8 @@ function _parseCommand(returnType) {
     if (returnType === 'doesnt'){
         return ErrorOrEof('command');
       }else{
+        console.log(returnType);
+        console.log(State.tokens);
         return ErrorOrEof(returnType);
       }
   }
@@ -141,7 +143,7 @@ function _argument(param){
   "condition"
   "decimal" -> "float", "integer"
   "float"
-  "integer"
+  "integer" -> "float"
   "label"
   "string"
 */
@@ -163,17 +165,19 @@ function _argument(param){
   }else if (param === 'variable'){
     return Variable();
   }else if (param === 'decimal'){
-      possible = PossibleDecimal();
-      if (possible){ return possible }
-      possible = _parsePossibleCommand(`integer`);
-      if (possible){ return possible }
-      possible = _parsePossibleCommand(`float`);
-      if (possible){ return possible }
-      return ErrorOrEof(`decimal`);
+    possible = PossibleDecimal();
+    if (possible){ return possible }
+    possible = _parsePossibleCommand(`integer`);
+    if (possible){ return possible }
+    possible = _parsePossibleCommand(`float`);
+    if (possible){ return possible }
+    return ErrorOrEof(`decimal`);
   }else if (param === 'float'){
-    return Float();
-  }else if (param === 'integer'){
+    possible =  PossibleFloat();
+    if (possible){ return possible; }
     return Integer();
+  }else if (param === 'integer'){
+    return PossibleInteger();
   }else if (param === 'string'){
     return String();
   }else if (param === 'bytestring'){

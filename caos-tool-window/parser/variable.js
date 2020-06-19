@@ -5,6 +5,11 @@ module.exports = {
 
 const assert = require('assert');
 const {
+  Command,
+  Arguments,
+  PossibleCommand,
+} = require('./command.js');
+const {
   String,
 } = require('./literal.js');
 const {
@@ -69,6 +74,7 @@ function _possibleVariable(){
   }else if(['name'].includes(State.tokens[0].toLowerCase())){
     console.log(State.tokens);
   }else{
-    return null;
+    let possibleCommand = PossibleCommand('variable');
+    return possibleCommand;
   }
 }

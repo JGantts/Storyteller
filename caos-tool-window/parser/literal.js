@@ -13,6 +13,7 @@ module.exports = {
 
 const assert = require('assert');
 const {
+  PossibleCommand,
   Command,
   Arguments
 } = require('./command.js');
@@ -67,7 +68,7 @@ function _possibleInteger() {
     if(variable){
       return variable;
     }else{
-      return Command('integer');
+      return PossibleCommand('integer');
     }
   }
 }
@@ -82,9 +83,11 @@ function _float(){
 }
 
 function _possibleFloat() {
+  console.log(State.tokens[0]);
   if (State.tokens.length === 0){
     return null;
   }else if (!isNaN(State.tokens[0])){
+    console.log(State.tokens[0]);
     let value = State.tokens[0];
     State.tokens = State.tokens.slice(1);
     return {
@@ -94,11 +97,12 @@ function _possibleFloat() {
       value: value
     };
   }else{
+    console.log(State.tokens[0]);
     var variable = PossibleVariable();
     if(variable){
       return variable;
     }else{
-      return Command('float');
+      return PossibleCommand('float');
     }
   }
 }
@@ -131,7 +135,7 @@ function _possibleString() {
     if(variable){
       return variable;
     }else{
-      return Command('string');
+      return PossibleCommand('string');
     }
   }
 }
