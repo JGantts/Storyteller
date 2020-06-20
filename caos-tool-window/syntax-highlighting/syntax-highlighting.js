@@ -173,9 +173,9 @@ function _highlightSyntax(codeTree){
   ) {
     highlighted += `<span class='syntax-${codeTree.type}'>"${
       codeTree.value
-        /*.replace(/</g, '&lt;')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-        .replace(/&/g, '&amp;')*/
     }"</span>`;
     assert(
       codeTree.value === codeText.substr(codeIndex+1, codeTree.value.length),
