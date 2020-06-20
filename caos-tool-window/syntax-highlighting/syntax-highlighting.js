@@ -136,19 +136,19 @@ function _highlightSyntax(codeTree){
     ['literal'].includes(codeTree.type)
     && ['string'].includes(codeTree.variant)
   ) {
-    highlighted += `<span class='syntax-${codeTree.type}'>"${
-      codeTree.value
+    highlighted += `<span class='syntax-${codeTree.type}'>${
+      codeTree.name
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-    }"</span>`;
+    }</span>`;
     assert(
-      codeTree.value === codeText.substr(codeIndex+1, codeTree.value.length),
-      codeTree.value +'|'+ codeText.substr(codeIndex+1, codeTree.value.length)
+      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
+      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       + '|' + JSON.stringify(codeTree) + '|' + codeText.substr(codeIndex, 100)
     );
     skipWhitespaceInString(codeTree.value);
-    codeIndex += codeTree.value.length+2;
+    codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else if(
     ['literal'].includes(codeTree.type)

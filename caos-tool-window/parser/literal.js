@@ -119,7 +119,8 @@ function _possibleString() {
   if (State.tokens.length === 0){
     return null;
   }else if (
-    State.tokens[0][0] === '"'
+    State.tokens[0].length >= 2
+    && State.tokens[0][0] === '"'
     && State.tokens[0][State.tokens[0].length-1] === '"'
   ){
     let name = State.tokens[0];
