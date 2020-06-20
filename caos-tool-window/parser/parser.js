@@ -42,7 +42,9 @@ function _tokenizeCode(code){
           !inString
           && (/\s/.test(line[0]))
         ){
-          total.push(currentToken);
+          if (currentToken != ''){
+            total.push(currentToken);
+          }
           currentToken = '';
           line = line.slice(1);
           continue;
@@ -52,7 +54,9 @@ function _tokenizeCode(code){
         currentToken += line[0];
         line = line.slice(1);
       }while (line.length > 0);
-      total.push(currentToken);
+      if (currentToken != ''){
+        total.push(currentToken);
+      }
       return total;
     }, []);
 }

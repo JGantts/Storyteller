@@ -51,11 +51,11 @@ function _conditional(){
 
 function _boolean(){
   if (State.tokens.length === 0){
-    return _eof('boolean');
+    return Eof('boolean');
   }
   var left = _numberOrStringOrAgent();
   if (State.tokens.length === 0){
-    var operator = _eof('operator');
+    var operator = Eof('operator');
   }else{
     var operatorName = State.tokens[0];
     State.tokens = State.tokens.slice(1);
