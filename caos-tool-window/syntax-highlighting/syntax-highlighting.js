@@ -99,14 +99,6 @@ function _highlightSyntax(codeTree){
       codeIndex += codeTree.name.length;
       highlighted += checkForWhiteSpaceAndComments();
     }
-  }else if ('returning-namespace' === codeTree.type){
-    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
-    assert(
-      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-    );
-    codeIndex += codeTree.name.length;
-    highlighted += checkForWhiteSpaceAndComments();
   }else if ('namespaced-command' === codeTree.type){
     highlighted += _highlightSyntax(codeTree.namespace);
     highlighted += _highlightSyntax(codeTree.command);
@@ -140,33 +132,6 @@ function _highlightSyntax(codeTree){
     highlighted += _highlightSyntax(codeTree.left);
     highlighted += _highlightSyntax(codeTree.operator);
     highlighted += _highlightSyntax(codeTree.right);
-  }else if(['operator'].includes(codeTree.type)) {
-    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
-    assert(
-      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-    );
-    codeIndex += codeTree.name.length;
-    highlighted += checkForWhiteSpaceAndComments();
-  }else if(['bool-op'].includes(codeTree.type)) {
-    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
-    assert(
-      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-    );
-    codeIndex += codeTree.name.length;
-    highlighted += checkForWhiteSpaceAndComments();
-  }else if(
-    ['literal'].includes(codeTree.type)
-    && ['integer', 'float'].includes(codeTree.variant)
-  ) {
-    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.value}</span>`;
-    assert(
-      codeTree.value === codeText.substr(codeIndex, codeTree.value.length),
-      codeTree.value +'|'+ codeText.substr(codeIndex, codeTree.value.length)
-    );
-    codeIndex += codeTree.value.length;
-    highlighted += checkForWhiteSpaceAndComments();
   }else if(
     ['literal'].includes(codeTree.type)
     && ['string'].includes(codeTree.variant)
@@ -201,8 +166,8 @@ function _highlightSyntax(codeTree){
     ['literal'].includes(codeTree.type)
     && ['bytestring-particle'].includes(codeTree.variant)
   ) {
-    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.value}</span>`;
-    codeIndex += codeTree.value.length;
+    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
+    codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else if ('number-string-variable' === codeTree.type){
     assert('error' === codeTree.variant);
@@ -212,8 +177,13 @@ function _highlightSyntax(codeTree){
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else{
-    console.log(codeTree);
-    assert(false);
+    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
+    assert(
+      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
+      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
+    );
+    codeIndex += codeTree.name.length;
+    highlighted += checkForWhiteSpaceAndComments();
   }
   return highlighted;
 }
