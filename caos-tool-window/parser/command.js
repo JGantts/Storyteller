@@ -208,7 +208,7 @@ function _argument(param){
   "bytestring"
   "condition"
   "decimal" -> "float", "integer"
-  "float"
+  "float" -> "integer"
   "integer" -> "float"
   "label"
   "string"
@@ -239,11 +239,13 @@ function _argument(param){
     if (possible){ return possible }
     return ErrorOrEof(`decimal`);
   }else if (param === 'float'){
-    possible =  PossibleFloat();
+    possible = PossibleFloat();
     if (possible){ return possible; }
     return Integer();
   }else if (param === 'integer'){
-    return Integer();
+    possible = PossibleInteger();
+    if (possible){ return possible; }
+    return Float();
   }else if (param === 'string'){
     return String();
   }else if (param === 'bytestring'){

@@ -73,7 +73,7 @@ function _highlightSyntax(codeTree){
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else if ('variable' === codeTree.type){
-    if(['ov', 'va'].includes(codeTree.variant)){
+    if(['ov', 'va', 'mv'].includes(codeTree.variant)){
       highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
       assert(
         codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
@@ -81,7 +81,7 @@ function _highlightSyntax(codeTree){
       );
       codeIndex += codeTree.name.length;
       highlighted += checkForWhiteSpaceAndComments();
-    }else if(['game'].includes(codeTree.variant)){
+    }else if(['game', 'name'].includes(codeTree.variant)){
       highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
       assert(
         codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
@@ -122,6 +122,9 @@ function _highlightSyntax(codeTree){
     );
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
+    if (codeTree.arguments.filter(arg => arg.value === '\"').length === 1){
+      console.log(codeTree);
+    }
     codeTree.arguments.forEach((arg, index) => {
       highlighted += _highlightSyntax(arg);
     });
@@ -168,10 +171,16 @@ function _highlightSyntax(codeTree){
     ['literal'].includes(codeTree.type)
     && ['string'].includes(codeTree.variant)
   ) {
-    highlighted += `<span class='syntax-${codeTree.type}'>"${codeTree.value}"</span>`;
+    highlighted += `<span class='syntax-${codeTree.type}'>"${
+      codeTree.value
+        /*.replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/&/g, '&amp;')*/
+    }"</span>`;
     assert(
       codeTree.value === codeText.substr(codeIndex+1, codeTree.value.length),
       codeTree.value +'|'+ codeText.substr(codeIndex+1, codeTree.value.length)
+      + '|' + JSON.stringify(codeTree) + '|' + codeText.substr(codeIndex, 100)
     );
     skipWhitespaceInString(codeTree.value);
     codeIndex += codeTree.value.length+2;
