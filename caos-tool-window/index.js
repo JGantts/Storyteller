@@ -211,11 +211,11 @@ function checkCode(codeElement, codeText, caretPosition){
 
   var codeTree = Caos(codeText);
 
-  $('#inprocessParse').text(JSON.stringify(codeTree));
+  //$('#inprocessParse').text(JSON.stringify(codeTree));
 
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
-  $('#highlighted').text(highlighted);
+  //$('#highlighted').text(highlighted);
 
   codeElement.innerHTML = highlighted;
   setCaretPositionWithin(codeElement, caretPosition);
