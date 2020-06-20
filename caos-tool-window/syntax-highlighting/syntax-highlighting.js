@@ -120,11 +120,11 @@ function _highlightSyntax(codeTree){
     codeTree.arguments.forEach((arg, index) => {
       highlighted += _highlightSyntax(arg);
     });
-  }else if(['conditional'].includes(codeTree.type)) {
+  }else if(['condition'].includes(codeTree.type)) {
     if ('end-of-file' == codeTree.variant){
 
     }else{
-      codeTree.conditional.forEach((boolOrBoolop, index) => {
+      codeTree.condition.forEach((boolOrBoolop, index) => {
         highlighted += _highlightSyntax(boolOrBoolop);
       });
     }
