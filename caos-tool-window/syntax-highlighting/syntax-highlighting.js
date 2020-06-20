@@ -49,25 +49,18 @@ function _highlightSyntax(codeTree){
   var highlighted = '';
 
   highlighted += checkForWhiteSpaceAndComments();
-  if (Array.isArray(codeTree)){
+  if (codeTree === null){
+    return highlighted;
+  }else if (Array.isArray(codeTree)){
     codeTree.forEach((element, i) => {
       highlighted += _highlightSyntax(element);
     });
   }else if (['command-list'].includes(codeTree.type)){
+    highlighted += _highlightSyntax(codeTree.start);
     codeTree.commands.forEach((command, i) => {
       highlighted += _highlightSyntax(command);
     });
-  }else if ('events-list' === codeTree.type){
-    highlighted += _highlightSyntax(codeTree.scrp);
-    highlighted += _highlightSyntax(codeTree.family);
-    highlighted += _highlightSyntax(codeTree.genus);
-    highlighted += _highlightSyntax(codeTree.species);
-    highlighted += _highlightSyntax(codeTree.script);
-    highlighted += _highlightSyntax(codeTree.commands);
-    highlighted += _highlightSyntax(codeTree.endm);
-  }else if ('remove' === codeTree.type){
-    highlighted += _highlightSyntax(codeTree.rscr);
-    highlighted += _highlightSyntax(codeTree.commands);
+    highlighted += _highlightSyntax(codeTree.end);
   }else if ('end-of-file' === codeTree.type){
     assert('error' === codeTree.variant);
     highlighted += ` <span class='code-decorator tooltip-holder' contenteditable='false'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
@@ -80,8 +73,7 @@ function _highlightSyntax(codeTree){
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else if ('variable' === codeTree.type){
-    if(['ov', 'va'].includes(codeTree.variant)){
-      //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
+    if(['ov', 'va', 'mv'].includes(codeTree.variant)){
       highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
       assert(
         codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
@@ -89,8 +81,7 @@ function _highlightSyntax(codeTree){
       );
       codeIndex += codeTree.name.length;
       highlighted += checkForWhiteSpaceAndComments();
-    }else if(['game'].includes(codeTree.variant)){
-      //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
+    }else if(['game', 'name'].includes(codeTree.variant)){
       highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
       assert(
         codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
@@ -108,12 +99,6 @@ function _highlightSyntax(codeTree){
       codeIndex += codeTree.name.length;
       highlighted += checkForWhiteSpaceAndComments();
     }
-  }else if ('command-list' === codeTree.type){
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-    codeTree.commands.forEach((command, index) => {
-      //console.log('here');
-      highlighted += _highlightSyntax(command);
-    });
   }else if ('returning-namespace' === codeTree.type){
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
     assert(
@@ -137,43 +122,12 @@ function _highlightSyntax(codeTree){
     );
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
+    if (codeTree.arguments.filter(arg => arg.value === '\"').length === 1){
+      console.log(codeTree);
+    }
     codeTree.arguments.forEach((arg, index) => {
       highlighted += _highlightSyntax(arg);
     });
-  }else if ('doif-blob' === codeTree.type){
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-    codeTree.sections.forEach((blob, index) => {
-      highlighted += _highlightSyntax(blob);
-    });
-  }else if ('loop1' === codeTree.type){
-    highlighted += _highlightSyntax(codeTree.start);
-    highlighted += codeTree.arguments
-      .reduce((total, arg) => total + _highlightSyntax(arg), '');
-    highlighted += _highlightSyntax(codeTree.commandList);
-    highlighted += _highlightSyntax(codeTree.end);
-  }else if ('loop2' === codeTree.type){
-    highlighted += _highlightSyntax(codeTree.start);
-    highlighted += _highlightSyntax(codeTree.commandList);
-    highlighted += _highlightSyntax(codeTree.end);
-    highlighted += codeTree.arguments
-      .reduce((total, arg) => total + _highlightSyntax(arg), '');
-  }else if ('flow' === codeTree.type){
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex] + ' ' + codeText.substr(codeIndex, 8));
-    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
-    assert(
-      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-    );
-    codeIndex += codeTree.name.length;
-    highlighted += checkForWhiteSpaceAndComments();
-    if (['doif', 'elif'].includes(codeTree.variant)){
-      //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-      highlighted += _highlightSyntax(codeTree.conditional);
-    }
-    if (['doif', 'elif', 'else'].includes(codeTree.variant)){
-      //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-      highlighted += _highlightSyntax(codeTree.commandList);
-    }
   }else if(['conditional'].includes(codeTree.type)) {
     if ('end-of-file' == codeTree.variant){
 
@@ -183,12 +137,10 @@ function _highlightSyntax(codeTree){
       });
     }
   }else if(['boolean'].includes(codeTree.type)) {
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     highlighted += _highlightSyntax(codeTree.left);
     highlighted += _highlightSyntax(codeTree.operator);
     highlighted += _highlightSyntax(codeTree.right);
   }else if(['operator'].includes(codeTree.type)) {
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
     assert(
       codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
@@ -197,7 +149,6 @@ function _highlightSyntax(codeTree){
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else if(['bool-op'].includes(codeTree.type)) {
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
     assert(
       codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
@@ -209,8 +160,6 @@ function _highlightSyntax(codeTree){
     ['literal'].includes(codeTree.type)
     && ['integer', 'float'].includes(codeTree.variant)
   ) {
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
-    //console.log('here codeTree.value: ' + codeTree.value + ':' + codeTree.value.length);
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.value}</span>`;
     assert(
       codeTree.value === codeText.substr(codeIndex, codeTree.value.length),
@@ -218,15 +167,20 @@ function _highlightSyntax(codeTree){
     );
     codeIndex += codeTree.value.length;
     highlighted += checkForWhiteSpaceAndComments();
-    //console.log('here codeIndex: ' + codeIndex + ':' + codeText[codeIndex]);
   }else if(
     ['literal'].includes(codeTree.type)
     && ['string'].includes(codeTree.variant)
   ) {
-    highlighted += `<span class='syntax-${codeTree.type}'>"${codeTree.value}"</span>`;
+    highlighted += `<span class='syntax-${codeTree.type}'>"${
+      codeTree.value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+    }"</span>`;
     assert(
       codeTree.value === codeText.substr(codeIndex+1, codeTree.value.length),
       codeTree.value +'|'+ codeText.substr(codeIndex+1, codeTree.value.length)
+      + '|' + JSON.stringify(codeTree) + '|' + codeText.substr(codeIndex, 100)
     );
     skipWhitespaceInString(codeTree.value);
     codeIndex += codeTree.value.length+2;
@@ -253,21 +207,6 @@ function _highlightSyntax(codeTree){
   }else if ('number-string-variable' === codeTree.type){
     assert('error' === codeTree.variant);
     highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
-  }else if ('script' === codeTree.type){
-    highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
-    assert(
-      codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
-      codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
-    );
-    codeIndex += codeTree.name.length;
-    highlighted += checkForWhiteSpaceAndComments();
-  }else if ('subroutine' === codeTree.type){
-    highlighted += `<span class='syntax-${'flow'}'>${codeTree.name}</span>`;
-    codeIndex += codeTree.name.length;
-    highlighted += checkForWhiteSpaceAndComments();
-    highlighted += _highlightSyntax(codeTree.arguments);
-    highlighted += _highlightSyntax(codeTree.commandList);
-    highlighted += _highlightSyntax(codeTree.end);
   }else if (['label'].includes(codeTree.type)) {
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
     codeIndex += codeTree.name.length;
@@ -291,7 +230,6 @@ function skipWhitespaceInString(stringIn){
 function checkForWhiteSpaceAndComments(){
   var highlighted = '';
 
-  //console.log(codeIndex);
   if (/\s/.test(codeText[codeIndex])){
     highlighted += addWhiteSpace();
   }else if ('*' === codeText[codeIndex]){
@@ -311,7 +249,6 @@ function addWhiteSpace(){
     + codeText.substr(codeIndex, whiteSpaceList[0].length).split('').map((char) => {return char.charCodeAt(0);}).join('')
     + `code: '${codeText.substr(codeIndex-1, whiteSpaceList[0].length+2)}'`
   );
-  //console.log('whitespace:|' + whiteSpaceList[0] + '|' );
   let whiteSpaceToAdd = whiteSpaceList[0];
   whiteSpaceList = whiteSpaceList.slice(1);
   codeIndex += whiteSpaceToAdd.length;

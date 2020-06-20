@@ -16,10 +16,10 @@ function injectUserCode(){
 
   let events = codeTree.eventScripts
     .map(script => {console.log(script); return {
-      family: script.family.value,
-      genus: script.genus.value,
-      species: script.species.value,
-      eventNum: script.script.value,
+      family: script.start.arguments[0].value,
+      genus: script.start.arguments[1].value,
+      species: script.start.arguments[2].value,
+      eventNum: script.start.arguments[3].value,
       script: TreeToText(script.commands)
     };});
   let remove = '';
@@ -211,11 +211,11 @@ function checkCode(codeElement, codeText, caretPosition){
 
   var codeTree = Caos(codeText);
 
-  //$('#inprocessParse').text(JSON.stringify(codeTree));
+  $('#inprocessParse').text(JSON.stringify(codeTree));
 
   var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
 
-  //$('#highlighted').text(highlighted);
+  $('#highlighted').text(highlighted);
 
   codeElement.innerHTML = highlighted;
   setCaretPositionWithin(codeElement, caretPosition);
@@ -314,7 +314,7 @@ function getVisibleTextInElement(element){
 
   let range = doc.createRange();
   range.selectNode(element);
-  return getNodesInRange(range)
+  return (getNodesInRange(range)
     .filter(node =>
       {
         return node.parentNode.className !== 'tooltip'
@@ -328,6 +328,9 @@ function getVisibleTextInElement(element){
       },
       ''
     )
+    /*.replace(/&lt;/g,'<')
+    .replace(/&gt;/g,'>')
+    .replace(/&amp;/g,'&')*/);
 }
 
 function getNodesInRange(range){

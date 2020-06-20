@@ -1,11 +1,16 @@
 var edge = require('electron-edge-js');
 var path = require('path');
 
-var executeCaos = edge.func(`
+/*
 #r "resources/app/engine-api/CAOS.dll"
+#r "engine-api/CAOS.dll"
+*/
+
+var executeCaos = edge.func(`
+#r "engine-api/CAOS.dll"
 using CAOS;
 
-async (input) => {
+async (dynamic input) => {
 
   CaosInjector injector = new CaosInjector("Docking Station");
 
@@ -38,14 +43,44 @@ async (input) => {
 }
 `);
 
-/*var child = require('child_process').execFile;
-//var executablePath = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
-var executablePath = "engine-api/CAOS.dll";
+var injectScript = edge.func(`
+#r "engine-api/CAOS.dll"
+using CAOS;
 
-child(executablePath, function(err, data) {
-    if(err){
-       console.error(err);
-       return;
+async (dynamic input) => {
+
+  CaosInjector injector = new CaosInjector("Docking Station");
+
+  if (injector.CanConnectToGame())
+  {
+    try
+    {
+        CaosResult result = injector.AddScriptToScriptorium(
+          int.Parse(input.family.ToString()),
+          int.Parse(input.genus.ToString()),
+          int.Parse(input.species.ToString()),
+          int.Parse(input.eventNum.ToString()),
+          input.script.ToString()
+        );
+        if (result.Success)
+        {
+            return result.Content;
+        }
+        else
+        {
+           return "Error Code: " + result.ResultCode;
+        }
     }
-    console.log(data.toString());
-});*/
+    catch (NoGameCaosException e)
+    {
+        return "Game exited unexpectedly. Error message: " + e.Message;
+    }
+    //return "Connected to game. ";// +
+      //injector.ProcessID().ToString();
+  }
+  else
+  {
+    return "Couldn't connect to game.";
+  }
+}
+`);
