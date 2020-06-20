@@ -10,7 +10,7 @@ const {
   Arguments
 } = require('./command.js');
 const { CherryPick } = require('./common.js');
-const { Conditional } = require('./conditional.js');
+const { Condition } = require('./condition.js');
 const {
   ErrorOrEof,
   Error,

@@ -55,12 +55,13 @@ function _possibleInteger() {
   if (State.tokens.length === 0){
     return null;
   }else if (!isNaN(State.tokens[0])){
-    let value = State.tokens[0];
+    let name = State.tokens[0];
+    let value = Number(name);
     State.tokens = State.tokens.slice(1);
     return {
       type: 'literal',
       variant: 'integer',
-      name: 'integer',
+      name: name,
       value: value
     };
   }else{
@@ -86,12 +87,13 @@ function _possibleFloat() {
   if (State.tokens.length === 0){
     return null;
   }else if (!isNaN(State.tokens[0])){
-    let value = State.tokens[0];
+    let name = State.tokens[0];
+    let value = Number(name);
     State.tokens = State.tokens.slice(1);
     return {
       type: 'literal',
       variant: 'float',
-      name: 'float',
+      name: name,
       value: value
     };
   }else{
@@ -117,14 +119,17 @@ function _possibleString() {
   if (State.tokens.length === 0){
     return null;
   }else if (
-    State.tokens[0][0] === '"'
+    State.tokens[0].length >= 2
+    && State.tokens[0][0] === '"'
     && State.tokens[0][State.tokens[0].length-1] === '"'
   ){
-    let value = State.tokens[0].substring(1, State.tokens[0].length-1);
+    let name = State.tokens[0];
+    let value = name.substring(1, name.length-1);
     State.tokens = State.tokens.slice(1);
     return {
       type: 'literal',
       variant: 'string',
+      name: name,
       value: value,
     };
   }else{
@@ -162,9 +167,10 @@ function _possibleByteString() {
     return {
       type: 'literal',
       variant: 'bytestring',
+      name: null,
       particles: byteParticles
         .filter(byteParticle => byteParticle !== '')
-        .map(byteParticle => {return {type: 'literal', variant: 'bytestring-particle', value: byteParticle}}),
+        .map(byteParticle => {return {type: 'literal', variant: 'bytestring-particle', name: byteParticle, value: Number(byteParticle)}}),
     };
   }else{
     return null;

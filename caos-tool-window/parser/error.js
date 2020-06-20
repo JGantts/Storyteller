@@ -34,7 +34,7 @@ function _error(expecting, foundName){
     type: expecting,
     variant: 'error',
     name: foundName,
-    message: `Excpected ${expecting}, but found ${foundName} instead.`
+    message: `Expected ${expecting}, but found ${foundName} instead.`
   };
 }
 
@@ -45,7 +45,7 @@ function _typedError(type, expecting, foundName){
     type: type,
     variant: 'error',
     name: foundName,
-    message: `Excpected ${expecting}, but found ${foundName} instead.`
+    message: `Expected ${expecting}, but found ${foundName} instead.`
   };
 }
 
@@ -56,6 +56,6 @@ function _eof(expecting){
     type: 'end-of-file',
     variant: 'error',
     name: expecting,
-    message: `Excpected ${expecting}, but found end of file instead.`
+    message: `Expected ${expecting}, but found end of file instead.`
   };
 }

@@ -7,7 +7,7 @@ module.exports = {
 }
 
 const assert = require('assert');
-const { Conditional } = require('./conditional.js')
+const { Condition } = require('./condition.js')
 const { C3Commands } = require('./commandLoader.js')
 const {
   Decimal,
@@ -223,8 +223,14 @@ function _argument(param){
     if (possible){ return possible }
     possible = PossibleString();
     if (possible){ return possible }
+    possible = _parsePossibleCommand(`agent`);
+    if (possible){ return possible }
+    possible = PossibleVariable();
+    if (possible){ return possible }
     return ErrorOrEof(`anything`);
   }else if (param === 'agent'){
+    possible = _parsePossibleCommand(`agent`);
+    if (possible){ return possible }
     possible = PossibleVariable();
     if (possible){ return possible }
     return _parseCommand(param);
@@ -251,7 +257,7 @@ function _argument(param){
   }else if (param === 'bytestring'){
     return ByteString();
   }else if (param === 'condition'){
-    return Conditional();
+    return Condition();
   }else if (param === 'label'){
     return _label();
   }else{

@@ -1,5 +1,5 @@
 module.exports = {
-  Conditional: _conditional,
+  Condition: _condition,
 }
 
 const assert = require('assert');
@@ -27,8 +27,8 @@ const {
 const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
 
-function _conditional(){
-  let possibleEof = CheckForEof('conditional');
+function _condition(){
+  let possibleEof = CheckForEof('condition');
   if (possibleEof){ return possibleEof; }
   var chain = [];
   var done = false;
@@ -44,18 +44,18 @@ function _conditional(){
   }while (!done);
 
   return {
-    type: 'conditional',
-    conditional: chain
+    type: 'condition',
+    condition: chain
   }
 }
 
 function _boolean(){
   if (State.tokens.length === 0){
-    return _eof('boolean');
+    return Eof('boolean');
   }
-  var left = _numberOrStringOrAgent();
+  var left = Arguments(['anything'])[0];
   if (State.tokens.length === 0){
-    var operator = _eof('operator');
+    var operator = Eof('operator');
   }else{
     var operatorName = State.tokens[0];
     State.tokens = State.tokens.slice(1);
@@ -78,7 +78,7 @@ function _boolean(){
       var operator = Error('operator', operatorName);
     }
   }
-  var right = _numberOrStringOrAgent();
+  var right = Arguments(['anything'])[0];
   if (
     left.type === 'literal'
     && right.type === 'literal'
@@ -89,34 +89,11 @@ function _boolean(){
   }
   return {
     type: 'boolean',
-    variant: left.variant,
+    variant: 'boolean',
     left: left,
     operator: operator,
     right: right
   };
-}
-
-function _numberOrStringOrAgent(){
-  var possible = PossibleInteger();
-  if (possible){ return possible; }
-  var possible = PossibleFloat();
-  if (possible){ return possible; }
-  possible = PossibleString();
-  if (possible){ return possible; }
-  possible = PossibleVariable();
-  if (possible){ return possible; }
-  possible = PossibleCommand('string');
-  if (possible){ return possible; }
-  possible = PossibleCommand('integer');
-  if (possible){ return possible; }
-  possible = PossibleCommand('float');
-  if (possible){ return possible; }
-  possible = PossibleCommand('agent');
-  if (possible){ return possible; }
-  let name = State.tokens[0];
-  console.log(State.tokens);
-  State.tokens = State.tokens.slice(1);
-  return Error('number-string-variable', name);
 }
 
 function _possibleBoolop(){
