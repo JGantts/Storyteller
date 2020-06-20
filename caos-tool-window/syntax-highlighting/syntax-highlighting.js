@@ -102,7 +102,7 @@ function _highlightSyntax(codeTree){
   }else if ('namespaced-command' === codeTree.type){
     highlighted += _highlightSyntax(codeTree.namespace);
     highlighted += _highlightSyntax(codeTree.command);
-  }else if ('namespace' === codeTree.type){
+  }else if (['namespace', 'returning-namespace'].includes(codeTree.type)){
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
@@ -121,13 +121,9 @@ function _highlightSyntax(codeTree){
       highlighted += _highlightSyntax(arg);
     });
   }else if(['condition'].includes(codeTree.type)) {
-    if ('end-of-file' == codeTree.variant){
-
-    }else{
-      codeTree.condition.forEach((boolOrBoolop, index) => {
-        highlighted += _highlightSyntax(boolOrBoolop);
-      });
-    }
+    codeTree.condition.forEach((boolOrBoolop, index) => {
+      highlighted += _highlightSyntax(boolOrBoolop);
+    });
   }else if(['boolean'].includes(codeTree.type)) {
     highlighted += _highlightSyntax(codeTree.left);
     highlighted += _highlightSyntax(codeTree.operator);
