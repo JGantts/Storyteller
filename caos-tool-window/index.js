@@ -109,6 +109,7 @@ function caretKey(event){
 
   switch (event.key){
     case 'ArrowDown':
+      break;
     case 'ArrowLeft':
       caretPosition -= 1;
       break;
