@@ -64,12 +64,14 @@ function _highlightSyntax(codeTree){
   }else if ('end-of-file' === codeTree.type){
     assert('error' === codeTree.variant);
     highlighted += ` <span class='code-decorator tooltip-holder' contenteditable='false'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
+    highlighted += checkForWhiteSpaceAndComments();
   }else if ('error' === codeTree.variant){
     highlighted += `<span class='syntax-error tooltip-holder' contenteditable='false'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
     assert(
       codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
       codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
     );
+    skipWhitespaceInString(codeTree.name);
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else if ('variable' === codeTree.type){
@@ -143,7 +145,7 @@ function _highlightSyntax(codeTree){
       codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
       + '|' + JSON.stringify(codeTree) + '|' + codeText.substr(codeIndex, 100)
     );
-    skipWhitespaceInString(codeTree.value);
+    skipWhitespaceInString(codeTree.name);
     codeIndex += codeTree.name.length;
     highlighted += checkForWhiteSpaceAndComments();
   }else if(
