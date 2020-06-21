@@ -62,9 +62,19 @@ function _tokenizeCode(code){
 }
 
 function _injectEventsRemove(){
-  var inject = CommandList(null, ['scrp', 'rscr', 'EOF'], false);
+  let inject = null;
+  if (
+    State.tokens.length > 0
+    && State.tokens[0] !== 'scrp'
+    && State.tokens[0] !== 'rscr'
+  ){
+    inject = CommandList(null, ['scrp', 'rscr', 'EOF'], false);
+  }
   var eventScripts = _eventsList();
-  var remove = CommandList('rscr', ['endm', 'EOF'], true);
+  let remove = null;
+  if (State.tokens.length > 0){
+    remove = CommandList('rscr', ['endm', 'EOF'], true);
+  }
   return {type: 'caos-file', inject: inject, eventScripts: eventScripts, remove: remove};
 }
 
