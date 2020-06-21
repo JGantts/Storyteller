@@ -1,8 +1,8 @@
 module.exports = {
   CommandByName: _parseCommandByName,
   PossibleCommandByName: _parsePossibleCommandByName,
-  PossibleCommand: _parsePossibleCommand,
-  Command: _parseCommand,
+  CommandByReturnType: _parseCommandByReturnType,
+  PossibleCommandByReturnType: _parsePossibleCommandByReturnType,
   Arguments: _arguments,
 }
 
@@ -32,74 +32,21 @@ const { State } = require('./tokens.js');
 
 var _commands = C3Commands();
 
-function _parseCommandByName(commandName){
-  let possibleCommand = _parsePossibleCommandByName(commandName);
+function _parseCommandByName(name){
+  let possibleCommand = _parsePossibleCommandByName(name);
   if (possibleCommand){
     return possibleCommand;
   }else{
-    return ErrorOrEof('command');
+    return ErrorOrEof(`command named ${name}`);
   }
 }
 
-function _parsePossibleCommandByName(commandName){
-  if (State.tokens.length === 0){
-    return null;
-  }
-
-  assert(
-    commandName === State.tokens[0].toLowerCase()
-    || (
-      State.tokens.length > 1
-      && commandName === State.tokens[0].toLowerCase() + ' ' + State.tokens[1].toLowerCase()
-    )
-  );
-
-  var namespaceName =
-    Object.keys(_commands)
-    .filter(namespaceKey => namespaceKey === State.tokens[0].toLowerCase())[0];
-
-  var namespaceDef = _commands[namespaceName];
-
-  if (namespaceDef){
-    let nsVariant = State.tokens[0].toLowerCase();
-    let nsName = State.tokens[0];
-    if (State.tokens.length > 1){
-      var commandDef =
-        namespaceDef
-        .filter(
-          command => {return (
-            command.name === State.tokens[1].toLowerCase()
-          );}
-        )[0];
-      if (commandDef){
-        State.tokens = State.tokens.slice(1);
-        let cmdVariant = State.tokens[0].toLowerCase();
-        let cmdName = State.tokens[0];
-        State.tokens = State.tokens.slice(1);
-        return _namespacedCommand(commandDef.returnType, nsVariant, nsName, _command(commandDef, cmdVariant, cmdName));
-      }
-    }else{
-    return _namespacedCommand('doesnt', nsVariant, nsName, Eof('command'));
-    }
-  }else{
-    var commandDef =
-      _commands['global']
-      .filter(command => {return (
-        command.name === State.tokens[0].toLowerCase()
-      );}
-    )[0];
-    if (commandDef){
-      let variant = State.tokens[0].toLowerCase();
-      let name = State.tokens[0];
-      State.tokens = State.tokens.slice(1);
-      return _command(commandDef, variant, name);
-    }
-  }
-  return null;
+function _parsePossibleCommandByName(name){
+  return _parsePossibleCommandByNameAndReturnType(name, null);
 }
 
-function _parseCommand(returnType){
-  let possibleCommand = _parsePossibleCommand(returnType);
+function _parseCommandByReturnType(returnType){
+  let possibleCommand = _parsePossibleCommandByReturnType(returnType);
   if (possibleCommand){
     return possibleCommand;
   }else{
@@ -111,55 +58,72 @@ function _parseCommand(returnType){
   }
 }
 
-function _parsePossibleCommand(returnType){
+function _parsePossibleCommandByReturnType(returnType){
+  return _parsePossibleCommandByNameAndReturnType(null, returnType);
+}
+
+
+function _parsePossibleCommandByNameAndReturnType(name, returnType){
   if (State.tokens.length === 0){
     return null;
   }
 
-  var namespaceName =
+  if (name && name !== State.tokens[0].toLowerCase()){
+    return null;
+  }
+
+  let namespaceName =
     Object.keys(_commands)
     .filter(namespaceKey => namespaceKey === State.tokens[0].toLowerCase())[0];
 
-  var namespaceDef = _commands[namespaceName];
-
-  if (namespaceDef){
-    let nsVariant = State.tokens[0].toLowerCase();
-    let nsName = State.tokens[0];
-    if (State.tokens.length > 1){
-      var commandDef =
-        namespaceDef
-        .filter(
-          command => {return (
-            command.name === State.tokens[1].toLowerCase()
-            && command.returnType === returnType
-          );}
-        )[0];
-      if (commandDef){
-        State.tokens = State.tokens.slice(1);
-        let cmdVariant = State.tokens[0].toLowerCase();
-        let cmdName = State.tokens[0];
-        State.tokens = State.tokens.slice(1);
-        return _namespacedCommand(commandDef.returnType, nsVariant, nsName, _command(commandDef, cmdVariant, cmdName));
-      }
-    }else{
-    return _namespacedCommand('doesnt', nsVariant, nsName, Eof('command'));
+  let namespaceDef;
+  let nsVariant;
+  let nsName;
+  let cmdVariant;
+  let cmdName;
+  if (!namespaceName){
+    if (State.tokens.length < 1){
+      return null;
     }
+    namespaceDef = _commands['global']
+    cmdVariant = State.tokens[0].toLowerCase();
+    cmdName = State.tokens[0];
   }else{
-    var commandDef =
-      _commands['global']
-      .filter(command => {return (
-        command.name === State.tokens[0].toLowerCase()
-        && command.returnType === returnType
+    if (State.tokens.length < 2){
+      return null;
+    }
+    namespaceDef = _commands[namespaceName];
+    nsVariant = State.tokens[0].toLowerCase();
+    nsName = State.tokens[0];
+    cmdVariant = State.tokens[1].toLowerCase();
+    cmdName = State.tokens[1];
+  }
+
+  let commandDef = namespaceDef
+    .filter(
+      command => {return (
+        command.name === cmdVariant
+        && (!returnType || returnType === command.returnType)
       );}
     )[0];
-    if (commandDef){
-      let variant = State.tokens[0].toLowerCase();
-      let name = State.tokens[0];
-      State.tokens = State.tokens.slice(1);
-      return _command(commandDef, variant, name);
-    }
+
+  if (!commandDef){
+    return null;
   }
-  return null;
+
+  if (!namespaceName){
+    State.tokens = State.tokens.slice(1);
+  }else{
+    State.tokens = State.tokens.slice(2);
+  }
+
+  let command = _command(commandDef, cmdVariant, cmdName);
+
+  if (!namespaceName){
+    return command;
+  }else{
+    return _namespacedCommand(commandDef.returnType, nsVariant, nsName, command);
+  }
 }
 
 function _namespacedCommand(commandDefReturnType, nsVariant, nsName, command){
@@ -182,6 +146,7 @@ function _namespacedCommand(commandDefReturnType, nsVariant, nsName, command){
 }
 
 function _command(commandDef, variant, name){
+  console.log(commandDef);
   var type = '';
   if (commandDef.returnType === 'doesnt'){
     type = 'command';
@@ -223,25 +188,25 @@ function _argument(param){
     if (possible){ return possible }
     possible = PossibleString();
     if (possible){ return possible }
-    possible = _parsePossibleCommand(`agent`);
+    possible = _parsePossibleCommandByReturnType(`agent`);
     if (possible){ return possible }
     possible = PossibleVariable();
     if (possible){ return possible }
     return ErrorOrEof(`anything`);
   }else if (param === 'agent'){
-    possible = _parsePossibleCommand(`agent`);
+    possible = _parsePossibleCommandByReturnType(`agent`);
     if (possible){ return possible }
     possible = PossibleVariable();
     if (possible){ return possible }
-    return _parseCommand(param);
+    return _parseCommandByReturnType(param);
   }else if (param === 'variable'){
     return Variable();
   }else if (param === 'decimal'){
     possible = PossibleDecimal();
     if (possible){ return possible }
-    possible = _parsePossibleCommand(`integer`);
+    possible = _parsePossibleCommandByReturnType(`integer`);
     if (possible){ return possible }
-    possible = _parsePossibleCommand(`float`);
+    possible = _parsePossibleCommandByReturnType(`float`);
     if (possible){ return possible }
     return ErrorOrEof(`decimal`);
   }else if (param === 'float'){
@@ -261,7 +226,7 @@ function _argument(param){
   }else if (param === 'label'){
     return _label();
   }else{
-    let temp = _parseCommand(param);
+    let temp = _parseCommandByReturnType(param);
     return temp;
   }
 }

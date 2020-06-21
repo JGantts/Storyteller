@@ -5,9 +5,11 @@ module.exports = {
 
 const assert = require('assert');
 const {
-  Command,
+  CommandByName,
+  PossibleCommandByName,
+  CommandByReturnType,
+  PossibleCommandByReturnType,
   Arguments,
-  PossibleCommand,
 } = require('./command.js');
 const {
   String,
@@ -74,7 +76,7 @@ function _possibleVariable(){
       name: name
     }
   }else{
-    let possibleCommand = PossibleCommand('variable');
+    let possibleCommand = PossibleCommandByReturnType('variable');
     return possibleCommand;
   }
 }

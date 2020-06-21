@@ -6,7 +6,7 @@ const assert = require('assert');
 const {
   CommandByName,
   PossibleCommandByName,
-  Command,
+  CommandByReturnType,
   Arguments
 } = require('./command.js');
 const { CherryPick } = require('./common.js');
@@ -22,7 +22,7 @@ const { State } = require('./tokens.js');
 function _commandList(start, endings, eatsEnd){
   let startCommand = null
   if (start){
-   startCommand = PossibleCommandByName(start);
+   startCommand = CommandByName(start);
  }else{
    startCommand = null;
  }
@@ -56,7 +56,7 @@ function _commandList(start, endings, eatsEnd){
       let subroutine = _commandList(State.tokens[0].toLowerCase(), ['retn'], true);
       commands.push(subroutine);
     }else{
-      var command = Command('doesnt');
+      var command = CommandByReturnType('doesnt');
       commands.push(command);
     }
   }while(!done);

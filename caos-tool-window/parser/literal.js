@@ -13,8 +13,8 @@ module.exports = {
 
 const assert = require('assert');
 const {
-  PossibleCommand,
-  Command,
+  PossibleCommandByReturnType,
+  CommandByReturnType,
   Arguments
 } = require('./command.js');
 const {
@@ -69,7 +69,7 @@ function _possibleInteger() {
     if(variable){
       return variable;
     }else{
-      return PossibleCommand('integer');
+      return PossibleCommandByReturnType('integer');
     }
   }
 }
@@ -101,7 +101,7 @@ function _possibleFloat() {
     if(variable){
       return variable;
     }else{
-      return PossibleCommand('float');
+      return PossibleCommandByReturnType('float');
     }
   }
 }
@@ -137,7 +137,7 @@ function _possibleString() {
     if(variable){
       return variable;
     }else{
-      return PossibleCommand('string');
+      return PossibleCommandByReturnType('string');
     }
   }
 }
