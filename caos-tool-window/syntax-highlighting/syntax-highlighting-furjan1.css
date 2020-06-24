@@ -5,6 +5,10 @@
   font-family: 'Inconsolata', monospace;
 }
 
+.syntax-whitespace{
+  color: rgb(255, 255, 255);
+}
+
 .syntax-variable, .syntax-returning-command, .syntax-operator, .syntax-bool-op{
   color: rgb(255,51,187);
 }
