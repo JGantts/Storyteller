@@ -42,3 +42,8 @@
 .banner-button img {
   padding: 0;
 }
+
+.banner-divider {
+  display: inline;
+  padding: 0.4rem;
+}
