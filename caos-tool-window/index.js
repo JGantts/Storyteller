@@ -82,13 +82,11 @@ function injectUserCode(doInstall, doEvents, doRemove){
   let codeText = getVisibleTextInElement(codeElement);
   let codeTree = Caos(codeText);
 
-  console.log('checking for errors');
   let errors = TreeToErrors(codeTree);
   if (errors !== ''){
     resultElement.innerHTML = errors;
     return;
   }
-  console.log('found no errors');
 
   if (doRemove && codeTree.remove){
     let remove = TreeToText(codeTree.remove).slice(5);
@@ -110,7 +108,6 @@ function injectUserCode(doInstall, doEvents, doRemove){
       };});
 
     events.forEach((script, i) => {
-      console.log(script);
       injectScript(script, function (error, result) {
           if (error) console.log(error);
           resultElement.innerHTML += `Injected ${script.family} ${script.genus} ${script.species} ${script.eventNum} event script:<br />`;
