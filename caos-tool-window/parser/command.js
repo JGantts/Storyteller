@@ -146,7 +146,6 @@ function _namespacedCommand(commandDefReturnType, nsVariant, nsName, command){
 }
 
 function _command(commandDef, variant, name){
-  console.log(commandDef);
   var type = '';
   if (commandDef.returnType === 'doesnt'){
     type = 'command';
