@@ -5,6 +5,7 @@ const { clipboard } = require('electron')
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 const { KeyCapture } = require('./key-capture.js');
 const { TreeToText } = require('./tree-to-text.js');
+const { TreeToErrors } = require('./tree-to-errors.js');
 
 function newFile(){
 
@@ -75,22 +76,32 @@ function injectRemove(){
 }
 
 function injectUserCode(doInstall, doEvents, doRemove){
-  document.getElementById('caos-result').innerHTML = '';
+  let resultElement = document.getElementById('caos-result');
+  resultElement.innerHTML = '';
   let codeElement = document.getElementById('caos-user-code');
   let codeText = getVisibleTextInElement(codeElement);
   let codeTree = Caos(codeText);
+
+  console.log('checking for errors');
+  let errors = TreeToErrors(codeTree);
+  if (errors !== ''){
+    resultElement.innerHTML = errors;
+    return;
+  }
+  console.log('found no errors');
 
   if (doRemove && codeTree.remove){
     let remove = TreeToText(codeTree.remove).slice(5);
     executeCaos(remove, function (error, result) {
         if (error) console.log(error);
-        document.getElementById('caos-result').innerHTML = result;
+        resultElement.innerHTML += 'Injected remove script:<br />';
+        resultElement.innerHTML += result + '<br />';
     });
   }
 
   if(doEvents && codeTree.eventScripts.length >= 1){
     let events = codeTree.eventScripts
-      .map(script => {console.log(script); return {
+      .map(script => {return {
         family: script.start.arguments[0].value,
         genus: script.start.arguments[1].value,
         species: script.start.arguments[2].value,
@@ -102,7 +113,8 @@ function injectUserCode(doInstall, doEvents, doRemove){
       console.log(script);
       injectScript(script, function (error, result) {
           if (error) console.log(error);
-          document.getElementById('caos-result').innerHTML = result;
+          resultElement.innerHTML += `Injected ${script.family} ${script.genus} ${script.species} ${script.eventNum} event script:<br />`;
+          resultElement.innerHTML += result + '<br />';
       });
     });
   }
@@ -112,7 +124,8 @@ function injectUserCode(doInstall, doEvents, doRemove){
     let inject = TreeToText(codeTree.inject);
     executeCaos(inject, function (error, result) {
         if (error) console.log(error);
-        document.getElementById('caos-result').innerHTML = result;
+        resultElement.innerHTML += 'Injected install script:<br />';
+        resultElement.innerHTML += result;
     });
   }
 }

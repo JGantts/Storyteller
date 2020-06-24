@@ -71,7 +71,7 @@ function _treeToText(codeTree){
   }else if ('number-string-variable' === codeTree.type){
     throw new Error(codeTree.message);
   }else{
-    highlighted += codeTree.name + ' ';
+    codeText += codeTree.name + ' ';
   }
   return codeText;
 }
