@@ -2,29 +2,136 @@
   window.jQuery = window.$ = require('jquery');
 </script>
 <link rel='stylesheet' type='text/css' href='index.css'>
-<link rel="stylesheet" type="text/css" href='syntax-highlighting/syntax-highlighting-oldschool.css'/>
+<link rel="stylesheet" type="text/css" href='syntax-highlighting/syntax-highlighting-furjan1.css'/>
 
 <head>
 <title>CAOS Tool 2020</title>
 </head>
-<div>
-  <button id='execute' onclick='injectUserCode()'>Inject</button>
-  <div id='caos-result'>Result</div>
-  <div
-    id='caos-user-code'
-    contenteditable='true'
-    style='
-      width: calc(100% - 10px);
-      display: block;
-      white-space: pre;
-      tab-size: 6;
-      padding: 5px;
-      font-family:Courier;'
-    onkeydown='userTextKeyDown(event)'
-    onkeyup='userTextKeyUp()'
-  ><span class="syntax-error"></span></div>
+<body style='margin: 0;'>
+<div style='height: 100%; background-color: #00000029' width: 100%;>
+  <div style='height: 25px; width: 100%; border: 0; margin: 0; padding: 0; background-color: #292F42;'>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_File.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Open File.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Save-03.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Save-04.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Paste-06.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Paste-07.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Search.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Undo.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Redo.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Code-11.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Code-12.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Redo Code.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Undo Code.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Code-15.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Code-16.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Code-17.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Code-18.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Code-19.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+
+    <div class='banner-button'>
+      <button id='execute' onclick='injectUserCode()'>
+        <img src='icons/CAOS Icons_Help.png' width='25rem' height='25rem' / >
+      </button>
+    </div>
+  </div>
+  <div style='padding: 5px; border: 0; height: calc(100% - 25px - 10px); width: calc(100% -10px); background-color: #353D53'>
+    <div
+      id='caos-user-code'
+      contenteditable='true'
+      style='
+        height: 100%;
+        width: 100%;
+        display: block;
+        white-space: pre;
+        tab-size: 6;
+        outline: 0;
+        padding: 0;
+        font-family: Courier;
+        background-color: #353D53;
+      '
+      onkeydown='userTextKeyDown(event)'
+      onkeyup='userTextKeyUp()'
+    ><span class="syntax-error"></span></div>
+  </div>
   <div id='highlighted'></div>
   <div id='inprocessParse'></div>
 </div>
 
 <script src="index.js"></script>
+</body>
