@@ -7,9 +7,10 @@
 <head>
 <title>CAOS Tool 2020</title>
 </head>
-<body style='margin: 0;'>
-<div style='height: 100%; background-color: #00000029' width: 100%;>
+<body style='margin: 0; background-color: #353D53;'>
+<div style='height: 100%; background-color: rgba(0,0,0,0);' width: 100%;>
   <div style='height: 25px; width: 100%; border: 0; margin: 0; padding: 0; background-color: #292F42;'>
+
     <div class='banner-button'>
       <button id='execute' onclick='injectUserCode()'>
         <img src='icons/CAOS Icons_File.png' width='25rem' height='25rem' / >
@@ -109,8 +110,16 @@
         <img src='icons/CAOS Icons_Help.png' width='25rem' height='25rem' / >
       </button>
     </div>
+
   </div>
-  <div style='padding: 5px; border: 0; height: calc(100% - 25px - 10px); width: calc(100% -10px); background-color: #353D53'>
+  <div style='
+    padding: 5px;
+    border: 0;
+    overflow: auto;
+    height: calc(100% - 25px - 10px);
+    width: calc(100% -10px);
+    background-color: rgba(0,0,0,0)
+  '>
     <div
       id='caos-user-code'
       contenteditable='true'
@@ -123,7 +132,7 @@
         outline: 0;
         padding: 0;
         font-family: Courier;
-        background-color: #353D53;
+        background-color: rgba(0,0,0,0);
       '
       onkeydown='userTextKeyDown(event)'
       onkeyup='userTextKeyUp()'
