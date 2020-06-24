@@ -80,7 +80,7 @@ function injectUserCode(doInstall, doEvents, doRemove){
   let codeText = getVisibleTextInElement(codeElement);
   let codeTree = Caos(codeText);
 
-  if (doremove && codeTree.remove){
+  if (doRemove && codeTree.remove){
     let remove = TreeToText(codeTree.remove).slice(5);
     executeCaos(remove, function (error, result) {
         if (error) console.log(error);
