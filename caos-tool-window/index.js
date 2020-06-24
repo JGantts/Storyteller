@@ -5,48 +5,124 @@ const { clipboard } = require('electron')
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 const { KeyCapture } = require('./key-capture.js');
 const { TreeToText } = require('./tree-to-text.js');
+const { TreeToErrors } = require('./tree-to-errors.js');
 
-function injectUserCode(){
+function newFile(){
 
-  document.getElementById('caos-result').innerHTML = '';
+}
+
+function openFile(){
+
+}
+
+function saveFile(){
+
+}
+
+function saveAllFiles(){
+
+}
+
+function cut(){
+
+}
+
+function copy(){
+
+}
+
+function paste(){
+
+}
+
+function find(){
+
+}
+
+function undo(){
+
+}
+
+function redo(){
+
+}
+
+function comment(){
+
+}
+
+function uncomment(){
+
+}
+
+function autoFormat(){
+
+}
+
+function injectInstall(){
+  injectUserCode(true, false, false);
+}
+
+function injectEvents(){
+  injectUserCode(false, true, false);
+}
+
+function injectAll(){
+  injectUserCode(true, true, true);
+}
+
+function injectRemove(){
+  injectUserCode(false, false, true);
+}
+
+function injectUserCode(doInstall, doEvents, doRemove){
+  let resultElement = document.getElementById('caos-result');
+  resultElement.innerHTML = '';
   let codeElement = document.getElementById('caos-user-code');
   let codeText = getVisibleTextInElement(codeElement);
   let codeTree = Caos(codeText);
-  let inject = TreeToText(codeTree.inject);
 
-  let events = codeTree.eventScripts
-    .map(script => {console.log(script); return {
-      family: script.start.arguments[0].value,
-      genus: script.start.arguments[1].value,
-      species: script.start.arguments[2].value,
-      eventNum: script.start.arguments[3].value,
-      script: TreeToText(script.commands)
-    };});
-  let remove = '';
-  if (codeTree.remove){
-    remove = TreeToText(codeTree.remove).slice(5);
+  let errors = TreeToErrors(codeTree);
+  if (errors !== ''){
+    resultElement.innerHTML = errors;
+    return;
   }
 
-  if (remove !== ''){
+  if (doRemove && codeTree.remove){
+    let remove = TreeToText(codeTree.remove).slice(5);
     executeCaos(remove, function (error, result) {
         if (error) console.log(error);
-        document.getElementById('caos-result').innerHTML = result;
+        resultElement.innerHTML += 'Injected remove script:<br />';
+        resultElement.innerHTML += result + '<br />';
     });
   }
 
-  events.forEach((script, i) => {
-    console.log(script);
-    injectScript(script, function (error, result) {
-        if (error) console.log(error);
-        document.getElementById('caos-result').innerHTML = result;
+  if(doEvents && codeTree.eventScripts.length >= 1){
+    let events = codeTree.eventScripts
+      .map(script => {return {
+        family: script.start.arguments[0].value,
+        genus: script.start.arguments[1].value,
+        species: script.start.arguments[2].value,
+        eventNum: script.start.arguments[3].value,
+        script: TreeToText(script.commands)
+      };});
+
+    events.forEach((script, i) => {
+      injectScript(script, function (error, result) {
+          if (error) console.log(error);
+          resultElement.innerHTML += `Injected ${script.family} ${script.genus} ${script.species} ${script.eventNum} event script:<br />`;
+          resultElement.innerHTML += result + '<br />';
+      });
     });
-  });
+  }
 
 
-  if (inject !== ''){
+  if (doInstall && codeTree.inject){
+    let inject = TreeToText(codeTree.inject);
     executeCaos(inject, function (error, result) {
         if (error) console.log(error);
-        document.getElementById('caos-result').innerHTML = result;
+        resultElement.innerHTML += 'Injected install script:<br />';
+        resultElement.innerHTML += result;
     });
   }
 }
