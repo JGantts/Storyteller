@@ -28,3 +28,17 @@
 .tooltip-holder:hover .tooltip {
   visibility: visible;
 }
+
+.banner-button {
+  display: inline;
+}
+
+.banner-button button {
+  padding: 0;
+  border: 0;
+  background-color: rgba(0,0,0,0);
+}
+
+.banner-button img {
+  padding: 0;
+}
