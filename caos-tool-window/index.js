@@ -32,7 +32,7 @@ function copy(){
 }
 
 function paste(){
-
+  insertText(clipboard.readText().replace(/(?:\r\n|\r|\n)/g, '\n'));
 }
 
 function find(){
@@ -174,7 +174,7 @@ function userTextKeyDown(event){
 
 function controlKey(event){
   if (event.ctrlKey && event.key === 'v'){
-    insertText(clipboard.readText().replace(/(?:\r\n|\r|\n)/g, '\n'));
+    paste();
   }
 }
 
