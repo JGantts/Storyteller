@@ -1,25 +1,140 @@
 $.getScript('../engine-api/CAOS.js');
 const assert = require('assert');
 const { Caos } = require('./parser/parser.js');
-const { clipboard } = require('electron')
+const { clipboard, remote } = require('electron')
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 const { KeyCapture } = require('./key-capture.js');
 const { TreeToText } = require('./tree-to-text.js');
 const { TreeToErrors } = require('./tree-to-errors.js');
+const dialog = remote.dialog;
+const fs = require('fs');
+//const path = require("path");
+const WIN = remote.getCurrentWindow();
 
-function newFile(){
+let currentFile = null;
+let currentFileNeedsSaving = false;
+let codeElement = document.getElementById('caos-user-code');
 
+
+async function newFile(){
+  if (currentFileNeedsSaving){
+    if (!await displaySaveFileReminderDialog()){
+      return;
+    }
+  }
+  codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
+  setCaretPositionWithin(codeElement, 0);
 }
 
-function openFile(){
+async function openFile(){
+  if (currentFileNeedsSaving){
+    if (!await displaySaveFileReminderDialog()){
+      return;
+    }
+  }
 
+  let options = {
+   title : 'Open CASO file',
+   defaultPath : '%HOMEPATH%/Documents/',
+   buttonLabel : 'Open',
+   filters :[
+    {name: 'CAOS', extensions: ['cos']},
+    {name: 'All Files', extensions: ['*']}
+   ],
+   properties: ['openFile']
+  }
+
+  let result = await dialog.showOpenDialog(WIN, options)
+  if (result.canceled){
+    return;
+  }
+  currentFile = result.filePaths[0];
+  try{
+    let fileContents = fs.readFileSync(currentFile, 'utf-8');
+    codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
+    setCaretPositionWithin(codeElement, 0);
+    insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
+    currentFileNeedsSaving = false;
+    updateTitle();
+  }catch (err){
+    console.log(err);
+    throw err;
+  }
 }
 
-function saveFile(){
-
+async function saveFile(){
+  if (!currentFileNeedsSaving){
+    return;
+  }
+  if (!currentFile){
+    let result = await displaySaveFileDialog();
+    if (result.canceled){
+      return false;
+    }
+    currentFile = result.filePaths[0];
+  }
+  try{
+    await fs.writeFileSync(currentFile, getVisibleTextInElement(codeElement), 'utf-8');
+    if (currentFileNeedsSaving){
+      currentFileNeedsSaving = false;
+      updateTitle();
+    }
+    return true;
+  }catch (err){
+    console.log(err);
+    throw err;
+  }
 }
 
 function saveAllFiles(){
+
+}
+
+async function displaySaveFileReminderDialog(){
+  let options  = {
+   buttons: ['Save', 'Toss', 'Cancel'],
+   message: 'Do you want to save your work?'
+  }
+  let result = await dialog.showMessageBox(options);
+  if(result.response === 0){
+    await saveFile();
+    return true;
+  }else if (result.response === 1){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+async function displaySaveFileDialog(){
+  let options = {
+    title: "Save CAOS file",
+    defaultPath : '%HOMEPATH%/Documents/',
+    buttonLabel : "Save",
+    filters :[
+      {name: 'CAOS', extensions: ['cos']},
+      {name: 'All Files', extensions: ['*']}
+    ]
+  }
+  return dialog.showSaveDialog(WIN, options);
+}
+
+function updateTitle(){
+  let title = '';
+  if (currentFile){
+    title += path.basename(currentFile) + ' ';
+  }
+  if (currentFileNeedsSaving){
+    title += '* '
+    $('#saveFileImg').css('opacity','1')
+  }else{
+    $('#saveFileImg').css('opacity','0.4')
+  }
+  if (currentFile){
+    title += '- ';
+  }
+  title += 'CAOS Tool 2020';
+  document.title = title;
 
 }
 
@@ -32,7 +147,11 @@ function copy(){
 }
 
 function paste(){
-  insertText(clipboard.readText().replace(/(?:\r\n|\r|\n)/g, '\n'));
+  let toInsert = clipboard.readText().replace(/(?:\r\n|\r|\n)/g, '\n')
+  if (toInsert === ''){
+    return;
+  }
+  insertText(toInsert);
 }
 
 function find(){
@@ -78,7 +197,6 @@ function injectRemove(){
 function injectUserCode(doInstall, doEvents, doRemove){
   let resultElement = document.getElementById('caos-result');
   resultElement.innerHTML = '';
-  let codeElement = document.getElementById('caos-user-code');
   let codeText = getVisibleTextInElement(codeElement);
   let codeTree = Caos(codeText);
 
@@ -179,7 +297,6 @@ function controlKey(event){
 }
 
 function caretKey(event){
-  var codeElement = document.getElementById('caos-user-code');
   var codeText = getVisibleTextInElement(codeElement);
   var caretPosition = getCaretPositionWithin(codeElement);
 
@@ -205,7 +322,6 @@ function caretKey(event){
 }
 
 function editingKey(event){
-  var codeElement = document.getElementById('caos-user-code');
   var codeText = getVisibleTextInElement(codeElement);
   var caretPosition = getCaretPositionWithin(codeElement);
 
@@ -238,7 +354,6 @@ function userTextKeyUp(event){
 }
 
 function insertText(text){
-  var codeElement = document.getElementById('caos-user-code');
   var codeText = getVisibleTextInElement(codeElement);
   var caretPosition = getCaretPositionWithin(codeElement);
 
@@ -251,13 +366,16 @@ function insertText(text){
 }
 
 function userTextChanged(){
-  var codeElement = document.getElementById('caos-user-code');
   var codeText = getVisibleTextInElement(codeElement);
   var caretPosition = getCaretPositionWithin(codeElement);
   checkCode(codeElement, codeText, caretPosition);
 }
 
 function checkCode(codeElement, codeText, caretPosition){
+  if (!currentFileNeedsSaving){
+    currentFileNeedsSaving = true;
+    updateTitle();
+  }
   $('#inprocessParse').text('');
   $('#highlighted').text('');
 
