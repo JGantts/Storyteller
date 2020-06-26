@@ -24,6 +24,13 @@ async function newFile(){
   }
   codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
   setCaretPositionWithin(codeElement, 0);
+  if (currentFileNeedsSaving){
+    currentFileNeedsSaving = false;
+  }
+  if (currentFile){
+    currentFile = null;
+  }
+  updateTitle();
 }
 
 async function openFile(){
