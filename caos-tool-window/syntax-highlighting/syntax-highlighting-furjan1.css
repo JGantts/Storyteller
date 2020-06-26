@@ -9,7 +9,12 @@
   color: rgb(255, 255, 255);
 }
 
-.syntax-variable, .syntax-returning-command, .syntax-operator, .syntax-bool-op{
+.syntax-variable,
+.syntax-returning-command,
+.syntax-returning-namespace,
+.syntax-operator,
+.syntax-bool-op,
+.syntax-label{
   color: rgb(255,51,187);
 }
 
@@ -18,7 +23,7 @@
   opacity: (0.5);
 }
 
-.syntax-command, .syntax-flow{
+.syntax-command, .syntax-namespace, .syntax-flow{
   color: rgb(46,161,255);
 }
 
