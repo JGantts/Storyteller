@@ -72,7 +72,7 @@ async function openFile(){
   try{
     let fileContents = fs.readFileSync(currentFile, 'utf-8');
     codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
-    setCaretPositionWithin(codeElement, 0);
+    SetCaretPositionWithin(codeElement, 0);
     insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
     currentFileNeedsSaving = false;
     updateTitle();
@@ -94,7 +94,7 @@ async function saveFile(){
     currentFile = result.filePaths[0];
   }
   try{
-    await fs.writeFileSync(currentFile, getVisibleTextInElement(codeElement), 'utf-8');
+    await fs.writeFileSync(currentFile, GetVisibleTextInElement(codeElement), 'utf-8');
     if (currentFileNeedsSaving){
       currentFileNeedsSaving = false;
       updateTitle();
