@@ -17,20 +17,28 @@ function _caos(code){
 function _tokenizeCode(code){
   return code
     .split('\n')
-    .map((line) => {
-      return line.trim();
-    })
-    .filter((line) => {
-      return line[0] !== '*';
-    })
     .reduce((total, line) => {
       if (line === ''){
         return total;
       }
+      let mayBeInComment = true;
       let inString = false;
       let escaped = false;
       let currentToken = '';
       do{
+        let isAsterisk = line[0] === '*';
+        let isWhiteSpace = /\s/.test(line[0]);
+        if (
+          isAsterisk
+          && mayBeInComment
+        ){
+          return total;
+        }else if (
+          mayBeInComment
+          && !isWhiteSpace
+        ){
+          mayBeInComment = false;
+        }
         if (
           line[0] === '"'
           && !escaped
@@ -40,7 +48,7 @@ function _tokenizeCode(code){
           escaped = !escaped;
         }else if (
           !inString
-          && (/\s/.test(line[0]))
+          && (isWhiteSpace)
         ){
           if (currentToken != ''){
             total.push(currentToken);
