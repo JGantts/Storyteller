@@ -47,8 +47,10 @@ function getCaretPositionWithin(element) {
           0
         )
         - (prePlusInCaretRange.endContainer.textContent.length - prePlusInCaretRange.endOffset));
+      return {start: caretStartPosition, end: caretEndPosition};
+    }else{
+      return {start: 0, end: 0};
     }
-    return {start: caretStartPosition, end: caretEndPosition};
 }
 
 function setCaretPositionWithin(element, caretPosition) {
