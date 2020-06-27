@@ -14,6 +14,9 @@ const{
   GetNodesInRange,
 } = require('./html-editing-helper.js');
 const{
+  ResetIdealCaretDepth,
+  GetCaretPositionOneCharLeft,
+  GetCaretPositionOneCharRight,
   GetCaretPositionOneLineDown,
   GetCaretPositionOneLineUp,
 } = require('./text-editing-helper.js');
@@ -324,14 +327,14 @@ function caretKey(event){
       break;
     case 'ArrowLeft':
       if (caretPositionIn.start === caretPositionIn.end){
-        caretPositionOut = caretPositionIn.start - 1;
+        caretPositionOut = GetCaretPositionOneCharLeft(caretPositionIn.end, codeText);
       }else{
         caretPositionOut = caretPositionIn.start;
       }
       break;
     case 'ArrowRight':
     if (caretPositionIn.start === caretPositionIn.end){
-      caretPositionOut = caretPositionIn.end + 1;
+      caretPositionOut = GetCaretPositionOneCharRight(caretPositionIn.end, codeText);
     }else{
       caretPositionOut = caretPositionIn.end;
     }
@@ -416,4 +419,10 @@ function insertText(text){
 
 function userTextKeyUp(event){
   //userTextChanged();
+}
+
+function userTextOnClick(event){
+  var codeText = GetVisibleTextInElement(codeElement);
+  var caretPosition = GetCaretPositionWithin(codeElement);
+  ResetIdealCaretDepth(caretPosition.end, codeText)
 }
