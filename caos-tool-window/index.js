@@ -13,6 +13,10 @@ const{
   GetVisibleTextInElement,
   GetNodesInRange,
 } = require('./html-editing-helper.js');
+const{
+  GetCaretPositionOneLineDown,
+  GetCaretPositionOneLineUp,
+} = require('./text-editing-helper.js');
 const dialog = remote.dialog;
 const fs = require('fs');
 //const path = require("path");
@@ -21,7 +25,6 @@ const WIN = remote.getCurrentWindow();
 let currentFile = null;
 let currentFileNeedsSaving = false;
 let codeElement = document.getElementById('caos-user-code');
-
 
 async function newFile(){
   if (currentFileNeedsSaving){
@@ -317,6 +320,7 @@ function caretKey(event){
 
   switch (event.key){
     case 'ArrowDown':
+      caretPositionOut = GetCaretPositionOneLineDown(caretPositionIn.end, codeText);
       break;
     case 'ArrowLeft':
       if (caretPositionIn.start === caretPositionIn.end){
@@ -333,6 +337,8 @@ function caretKey(event){
     }
       break;
     case 'ArrowUp':
+      caretPositionOut = GetCaretPositionOneLineUp(caretPositionIn.end, codeText);
+      break;
     case 'End':
     case 'Home':
       break;
