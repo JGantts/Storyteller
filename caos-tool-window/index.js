@@ -463,7 +463,6 @@ function getCaretPositionWithin(element) {
     sel = win.getSelection();
     if (sel.rangeCount > 0) {
       var range = win.getSelection().getRangeAt(0);
-      console.log(range);
 
       var preCaretRange = range.cloneRange();
       preCaretRange.selectNodeContents(element);
@@ -498,13 +497,6 @@ function getCaretPositionWithin(element) {
         )
         - (prePlusInCaretRange.endContainer.textContent.length - prePlusInCaretRange.endOffset));
     }
-    /*caretPosition =
-      caretPosition < 0
-      ? 0
-      : caretPosition;*/
-    console.log(preCaretRange);
-    console.log(prePlusInCaretRange);
-    console.log({caretStartPosition, caretEndPosition});
     return {start: caretStartPosition, end: caretEndPosition};
 }
 
