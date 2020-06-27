@@ -67,7 +67,7 @@ function _lineLength(text){
       if (char !== '\t'){
         return total + 1;
       }else{
-        return total + TAB_WIDTH_IN_SPACES;
+        return total + TAB_WIDTH_IN_SPACES - (total%TAB_WIDTH_IN_SPACES);
       }
     }, 0);
 
@@ -81,7 +81,7 @@ function _caretIndexFromCaretDepth(lineIndex, text, caretDepth){
     if (text.charAt(caretIndex) !== '\t'){
       charDepth += 1;
     }else{
-      charDepth += TAB_WIDTH_IN_SPACES;
+      charDepth += TAB_WIDTH_IN_SPACES - (charDepth%TAB_WIDTH_IN_SPACES);
     }
     caretIndex += 1;
   }
