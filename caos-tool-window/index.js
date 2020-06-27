@@ -274,25 +274,25 @@ function userTextKeyDown(event){
       case 'Delete':
         editingKey(event);
         break;
-        case 'Tab':
-          insertText('\t');
-          break;
-        case 'Enter':
-          insertText('\n');
-          break;
-        case 'Shift':
+      case 'Tab':
+        insertText('\t');
+        break;
+      case 'Enter':
+        insertText('\n');
+        break;
+      case 'Shift':
 
-          break
-        default:
-          if (
-            (event.keyCode >= 32 && event.keyCode <= 126)
-            || event.keyCode >= 160
-          ){
-            insertText(event.key);
-          }else{
-            assert(false, `key: ${event.key}, keyCode: ${event.keyCode}`)
-          }
-          break;
+        break
+      default:
+        if (
+          (event.keyCode >= 32 && event.keyCode <= 126)
+          || event.keyCode >= 160
+        ){
+          insertText(event.key);
+        }else{
+          assert(false, `key: ${event.key}, keyCode: ${event.keyCode}`)
+        }
+        break;
     }
   }
 }
@@ -304,17 +304,26 @@ function controlKey(event){
 }
 
 function caretKey(event){
-  var codeText = getVisibleTextInElement(codeElement);
-  var caretPosition = getCaretPositionWithin(codeElement);
+  let codeText = getVisibleTextInElement(codeElement);
+  let caretPositionIn = getCaretPositionWithin(codeElement);
+  let caretPositionOut = caretPositionIn.end;
 
   switch (event.key){
     case 'ArrowDown':
       break;
     case 'ArrowLeft':
-      caretPosition -= 1;
+      if (caretPositionIn.start === caretPositionIn.end){
+        caretPositionOut = caretPositionIn.start - 1;
+      }else{
+        caretPositionOut = caretPositionIn.start;
+      }
       break;
     case 'ArrowRight':
-      caretPosition += 1;
+    if (caretPositionIn.start === caretPositionIn.end){
+      caretPositionOut = caretPositionIn.end + 1;
+    }else{
+      caretPositionOut = caretPositionIn.end;
+    }
       break;
     case 'ArrowUp':
     case 'End':
@@ -325,58 +334,77 @@ function caretKey(event){
       break;
   }
 
-  setCaretPositionWithin(codeElement, caretPosition);
+  setCaretPositionWithin(codeElement, caretPositionOut);
 }
 
 function editingKey(event){
   var codeText = getVisibleTextInElement(codeElement);
-  var caretPosition = getCaretPositionWithin(codeElement);
+  var caretPositionIn = getCaretPositionWithin(codeElement);
 
   var newCodeText = '';
   var newCaretPosition = 0;
 
-  switch (event.key){
-    case 'Backspace':
-      newCodeText =
-        codeText.substring(0, caretPosition-1)
-        + codeText.substring(caretPosition, codeText.length);
-      newCaretPosition = caretPosition-1;
-      break;
-    case 'Delete':
-      newCodeText =
-        codeText.substring(0, caretPosition)
-        + codeText.substring(caretPosition+1, codeText.length);
-      newCaretPosition = caretPosition;
-      break;
-    default:
-      assert(false);
-      break;
+  if (caretPositionIn.start === caretPositionIn.end){
+    switch (event.key){
+      case 'Backspace':
+        newCodeText =
+          codeText.substring(0, caretPositionIn.end-1)
+          + codeText.substring(caretPositionIn.end, codeText.length);
+        caretPositionOut = caretPositionIn.end-1;
+        break;
+      case 'Delete':
+        newCodeText =
+          codeText.substring(0, caretPositionIn.end)
+          + codeText.substring(caretPositionIn.end+1, codeText.length);
+        caretPositionOut = caretPositionIn.end;
+        break;
+      default:
+        assert(false);
+        break;
+    }
+  }else{
+    switch (event.key){
+      case 'Backspace':
+      case 'Delete':
+        newCodeText =
+          codeText.substring(0, caretPositionIn.start)
+          + codeText.substring(caretPositionIn.end, codeText.length);
+        caretPositionOut = caretPositionIn.start;
+        break;
+      default:
+        assert(false);
+        break;
+    }
   }
 
-  checkCode(codeElement, newCodeText, newCaretPosition);
-}
-
-function userTextKeyUp(event){
-  //userTextChanged();
+  checkCode(codeElement, newCodeText, caretPositionOut);
 }
 
 function insertText(text){
   var codeText = getVisibleTextInElement(codeElement);
   var caretPosition = getCaretPositionWithin(codeElement);
 
-  let newCodeText =
-    codeText.substring(0, caretPosition)
-    + text
-    + codeText.substring(caretPosition, codeText.length)
+  let newCodeText;
+  if (caretPosition.start === caretPosition.end){
+    newCodeText =
+      codeText.substring(0, caretPosition.end)
+      + text
+      + codeText.substring(caretPosition.end, codeText.length);
+  }else{
+    newCodeText =
+      codeText.substring(0, caretPosition.start)
+      + text
+      + codeText.substring(caretPosition.end, codeText.length);
+  }
 
-  checkCode(codeElement, newCodeText, caretPosition+text.length);
+  checkCode(codeElement, newCodeText, caretPosition.start+text.length);
 }
 
-function userTextChanged(){
-  var codeText = getVisibleTextInElement(codeElement);
-  var caretPosition = getCaretPositionWithin(codeElement);
-  checkCode(codeElement, codeText, caretPosition);
+
+function userTextKeyUp(event){
+  //userTextChanged();
 }
+
 
 function checkCode(codeElement, codeText, caretPosition){
   if (!currentFileNeedsSaving){
@@ -432,82 +460,100 @@ function getCaretPositionWithin(element) {
     var doc = element.ownerDocument || element.document;
     var win = doc.defaultView || doc.parentWindow;
     var sel;
-    if (typeof win.getSelection != "undefined") {
-        sel = win.getSelection();
-        if (sel.rangeCount > 0) {
-            var range = win.getSelection().getRangeAt(0);
-            var preCaretRange = range.cloneRange();
-            preCaretRange.selectNodeContents(element);
-            preCaretRange.setEnd(range.endContainer, range.endOffset);
+    sel = win.getSelection();
+    if (sel.rangeCount > 0) {
+      var range = win.getSelection().getRangeAt(0);
+      console.log(range);
 
-            caretPosition = (
-              getNodesInRange(preCaretRange)
-              .filter(node =>
-                node.parentNode.className !== 'tooltip'
-                && node.nodeType === Node.TEXT_NODE
-              )
-              .reduce(
-                (total, node) => total + node.textContent.length,
-                0
-              )
-              - (preCaretRange.endContainer.textContent.length - preCaretRange.endOffset));
-        }
+      var preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(element);
+      if (range.startContainer)
+      preCaretRange.setEnd(range.startContainer, range.startOffset);
+
+      caretStartPosition = (
+        getNodesInRange(preCaretRange)
+        .filter(node =>
+          node.parentNode.className !== 'tooltip'
+          && node.nodeType === Node.TEXT_NODE
+        )
+        .reduce(
+          (total, node) => total + node.textContent.length,
+          0
+        )
+        - (preCaretRange.endContainer.textContent.length - preCaretRange.endOffset));
+
+      var prePlusInCaretRange = range.cloneRange();
+      prePlusInCaretRange.selectNodeContents(element);
+      prePlusInCaretRange.setEnd(range.endContainer, range.endOffset);
+
+      caretEndPosition = (
+        getNodesInRange(prePlusInCaretRange)
+        .filter(node =>
+          node.parentNode.className !== 'tooltip'
+          && node.nodeType === Node.TEXT_NODE
+        )
+        .reduce(
+          (total, node) => total + node.textContent.length,
+          0
+        )
+        - (prePlusInCaretRange.endContainer.textContent.length - prePlusInCaretRange.endOffset));
     }
-    caretPosition =
+    /*caretPosition =
       caretPosition < 0
       ? 0
-      : caretPosition;
-    return caretPosition;
+      : caretPosition;*/
+    console.log(preCaretRange);
+    console.log(prePlusInCaretRange);
+    console.log({caretStartPosition, caretEndPosition});
+    return {start: caretStartPosition, end: caretEndPosition};
 }
 
 function setCaretPositionWithin(element, caretPosition) {
   var doc = element.ownerDocument || element.document;
   var win = doc.defaultView || doc.parentWindow;
   var sel;
-  if (typeof win.getSelection != "undefined") {
-    sel = win.getSelection();
-    let range = doc.createRange();
-    range.selectNode(element);
-    let visibleTextNodes =
-      getNodesInRange(range)
-      .filter(node =>
-        node.parentNode.tagName !== 'DIV'
-      )
-      .filter(node =>
-        node.parentNode.className !== 'tooltip'
-      )
-      .filter(node =>
-        node.nodeType === Node.TEXT_NODE
-      );
+  sel = win.getSelection();
+  let range = doc.createRange();
+  range.selectNode(element);
+  let visibleTextNodes =
+    getNodesInRange(range)
+    .filter(node =>
+      node.parentNode.tagName !== 'DIV'
+    )
+    .filter(node =>
+      node.parentNode.className !== 'tooltip'
+    )
+    .filter(node =>
+      node.nodeType === Node.TEXT_NODE
+    );
 
-    let textLength = visibleTextNodes.reduce((total, node) => total + node.textContent.length, 0);
-    if (caretPosition > textLength){
-      caretPosition = textLength;
-    }else if (caretPosition < 0){
-      caretPosition = 0;
-    }
+  let textLength = visibleTextNodes.reduce((total, node) => total + node.textContent.length, 0);
+  if (caretPosition > textLength){
+    caretPosition = textLength;
+  }else if (caretPosition < 0){
+    caretPosition = 0;
+  }
 
-    if (visibleTextNodes.length > 0){
-      var currentTextLength = 0
-      var index = 0;
-      var done = false;
-      do{
-        currentTextLength += visibleTextNodes[index].textContent.length;
-        if (currentTextLength >= caretPosition){
-          done = true;
-        }
-        index++;
-      }while(index < visibleTextNodes.length && !done)
+  if (visibleTextNodes.length > 0){
+    var currentTextLength = 0
+    var index = 0;
+    var done = false;
+    do{
+      currentTextLength += visibleTextNodes[index].textContent.length;
+      if (currentTextLength >= caretPosition){
+        done = true;
+      }
+      index++;
+    }while(index < visibleTextNodes.length && !done)
 
-      let offsetInto = visibleTextNodes[index-1].length - (currentTextLength - caretPosition);
+    let offsetInto = visibleTextNodes[index-1].length - (currentTextLength - caretPosition);
 
-      range.setStart(visibleTextNodes[index-1], offsetInto);
-      range.setEnd(visibleTextNodes[index-1], offsetInto);
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }else{
-      //Don't do anything?
-    }
+    range.setStart(visibleTextNodes[index-1], offsetInto);
+    range.setEnd(visibleTextNodes[index-1], offsetInto);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }else{
+    //Don't do anything?
   }
 }
 
