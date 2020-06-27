@@ -155,15 +155,27 @@ function updateTitle(){
   }
   title += 'CAOS Tool 2020';
   document.title = title;
-
 }
 
 function cut(){
-
+  let codeText = GetVisibleTextInElement(codeElement);
+  let caretPosition = GetCaretPositionWithin(codeElement);
+  let toCopy = codeText.substring(caretPosition.start, caretPosition.end);
+  if (toCopy === ''){
+    return;
+  }
+  clipboard.writeText(toCopy);
+  insertText('');
 }
 
 function copy(){
-
+  let codeText = GetVisibleTextInElement(codeElement);
+  let caretPosition = GetCaretPositionWithin(codeElement);
+  let toCopy = codeText.substring(caretPosition.start, caretPosition.end);
+  if (toCopy === ''){
+    return;
+  }
+  clipboard.writeText(toCopy);
 }
 
 function paste(){
@@ -313,6 +325,10 @@ function userTextKeyDown(event){
 function controlKey(event){
   if (event.ctrlKey && event.key === 'v'){
     paste();
+  }else if (event.ctrlKey && event.key === 'c'){
+    copy();
+  }else if (event.ctrlKey && event.key === 'x'){
+    cut();
   }
 }
 
