@@ -23,6 +23,7 @@ function createLauncherWindow () {
   let win = new BrowserWindow({
     width: 800,
     height: 600,
+    backgroundColor: '#332D53',
     frame: false,
     resizable: false,
     webPreferences: {
@@ -40,10 +41,13 @@ function createCaosToolWindow() {
   let win = new BrowserWindow({
     width: 800,
     height: 600,
+    backgroundColor: '#353D53',
     webPreferences: {
       nodeIntegration: true
     }
   })
+
+  win.setMenu(null)
 
   loadWindow(win, 'caos-tool-window/index.html')
 }
