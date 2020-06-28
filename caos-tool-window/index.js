@@ -91,7 +91,7 @@ async function newFile(){
     }
   }
   codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
-  setCaretPositionWithin(codeElement, 0);
+  SetCaretPositionWithin(codeElement, 0);
   if (currentFileNeedsSaving){
     currentFileNeedsSaving = false;
   }
@@ -101,6 +101,7 @@ async function newFile(){
   updateTitle();
   _undoList = [];
   _redoList = [];
+  updateUndoRedoButtons();
 }
 
 async function openFile(){
@@ -135,6 +136,7 @@ async function openFile(){
     updateTitle();
     _undoList = [];
     _redoList = [];
+    updateUndoRedoButtons();
   }catch (err){
     console.log(err);
     throw err;
@@ -205,15 +207,28 @@ function updateTitle(){
   }
   if (currentFileNeedsSaving){
     title += '* '
-    $('#saveFileImg').css('opacity','1')
+    $('#save-file-img').css('opacity','1')
   }else{
-    $('#saveFileImg').css('opacity','0.4')
+    $('#save-file-img').css('opacity','0.4')
   }
   if (currentFile){
     title += '- ';
   }
   title += 'CAOS Tool 2020';
   document.title = title;
+}
+
+function updateUndoRedoButtons(){
+  if (_undoList.length === 0){
+    $('#undo-button-img').css('opacity','0.4')
+  }else{
+    $('#undo-button-img').css('opacity','1')
+  }
+  if (_redoList.length === 0){
+    $('#redo-button-img').css('opacity','0.4')
+  }else{
+    $('#redo-button-img').css('opacity','1')
+  }
 }
 
 function cut(){
@@ -251,14 +266,22 @@ function find(){
 
 function undo(){
   let command = _undoList.pop();
+  if (!command){
+    return;
+  }
   command.undo()
   _redoList.push(command);
+  updateUndoRedoButtons();
 }
 
 function redo(){
   let command = _redoList.pop();
+  if (!command){
+    return;
+  }
   command.redo()
   _undoList.push(command);
+  updateUndoRedoButtons();
 }
 
 function comment(){
@@ -489,6 +512,7 @@ function insertText(text){
     _undoList.push(insertCommand);
     insertCommand.do();
     _redoList = [];
+    updateUndoRedoButtons();
   }else{
     let deleteCommand = makeDeleteTextCommand(caretPosition.start, caretPosition.end - caretPosition.start);
     let insertCommand = makeInsertTextCommand(caretPosition.start, text);
@@ -496,6 +520,7 @@ function insertText(text){
     _undoList.push(multiCommand);
     multiCommand.do();
     _redoList = [];
+    updateUndoRedoButtons();
   }
 }
 
