@@ -315,7 +315,7 @@ function injectRemove(){
 function injectUserCode(doInstall, doEvents, doRemove){
   let resultElement = document.getElementById('caos-result');
   resultElement.innerHTML = '';
-  let codeText = getVisibleTextInElement(codeElement);
+  let codeText = GetVisibleTextInElement(codeElement);
   let codeTree = Caos(codeText);
 
   let errors = TreeToErrors(codeTree);
