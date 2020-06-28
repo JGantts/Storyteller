@@ -33,6 +33,10 @@ function getCaretPositionOneLineDown(caretPositionIn, text){
   let lineOneStart = text.indexOf('\n', caretPositionIn) + 1;
   let lineTwoStart = text.indexOf('\n', lineOneStart) + 1;
 
+  if (lineOneStart < lineZeroStart){
+    return text.length;
+  }
+
   let lineOneLength = _lineLength(text.substring(lineOneStart, lineTwoStart-1));
   let caretDepthOut =
     _idealCaretDepth > lineOneLength

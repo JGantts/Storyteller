@@ -29,6 +29,33 @@ let currentFile = null;
 let currentFileNeedsSaving = false;
 let codeElement = document.getElementById('caos-user-code');
 
+let _undoList = [];
+let _redoList = [];
+
+class Command{
+  constructor(
+    undo,
+    redo,
+    startIndex,
+    text
+  ) {
+    this._undo = undo;
+    this._redo = redo;
+    this._startIndex = startIndex;
+    this._text = text;
+  }
+
+  do(){
+    this.redo();
+  }
+  redo(){
+    this._redo(this._startIndex, this._text);
+  }
+  undo(){
+    this._undo(this._startIndex, this._text);
+  }
+}
+
 async function newFile(){
   if (currentFileNeedsSaving){
     if (!await displaySaveFileReminderDialog()){
@@ -44,6 +71,8 @@ async function newFile(){
     currentFile = null;
   }
   updateTitle();
+  _undoList = [];
+  _redoList = [];
 }
 
 async function openFile(){
@@ -72,10 +101,12 @@ async function openFile(){
   try{
     let fileContents = fs.readFileSync(currentFile, 'utf-8');
     codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
-    setCaretPositionWithin(codeElement, 0);
+    SetCaretPositionWithin(codeElement, 0);
     insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
     currentFileNeedsSaving = false;
     updateTitle();
+    _undoList = [];
+    _redoList = [];
   }catch (err){
     console.log(err);
     throw err;
@@ -94,7 +125,7 @@ async function saveFile(){
     currentFile = result.filePaths[0];
   }
   try{
-    await fs.writeFileSync(currentFile, getVisibleTextInElement(codeElement), 'utf-8');
+    await fs.writeFileSync(currentFile, GetVisibleTextInElement(codeElement), 'utf-8');
     if (currentFileNeedsSaving){
       currentFileNeedsSaving = false;
       updateTitle();
@@ -155,15 +186,27 @@ function updateTitle(){
   }
   title += 'CAOS Tool 2020';
   document.title = title;
-
 }
 
 function cut(){
-
+  let codeText = GetVisibleTextInElement(codeElement);
+  let caretPosition = GetCaretPositionWithin(codeElement);
+  let toCopy = codeText.substring(caretPosition.start, caretPosition.end);
+  if (toCopy === ''){
+    return;
+  }
+  clipboard.writeText(toCopy);
+  insertText('');
 }
 
 function copy(){
-
+  let codeText = GetVisibleTextInElement(codeElement);
+  let caretPosition = GetCaretPositionWithin(codeElement);
+  let toCopy = codeText.substring(caretPosition.start, caretPosition.end);
+  if (toCopy === ''){
+    return;
+  }
+  clipboard.writeText(toCopy);
 }
 
 function paste(){
@@ -179,11 +222,15 @@ function find(){
 }
 
 function undo(){
-
+  let command = _undoList.pop();
+  command.undo()
+  _redoList.push(command);
 }
 
 function redo(){
-
+  let command = _redoList.pop();
+  command.redo()
+  _undoList.push(command);
 }
 
 function comment(){
@@ -313,6 +360,14 @@ function userTextKeyDown(event){
 function controlKey(event){
   if (event.ctrlKey && event.key === 'v'){
     paste();
+  }else if (event.ctrlKey && event.key === 'c'){
+    copy();
+  }else if (event.ctrlKey && event.key === 'x'){
+    cut();
+  }else if (event.ctrlKey && event.key === 'z'){
+    undo();
+  }else if (event.ctrlKey && event.key === 'y'){
+    redo();
   }
 }
 
@@ -363,16 +418,16 @@ function editingKey(event){
   if (caretPositionIn.start === caretPositionIn.end){
     switch (event.key){
       case 'Backspace':
-        newCodeText =
-          codeText.substring(0, caretPositionIn.end-1)
-          + codeText.substring(caretPositionIn.end, codeText.length);
-        caretPositionOut = caretPositionIn.end-1;
+        let backspaceCommand = makeDeleteTextCommand(caretPositionIn.end-1, 1);
+        _undoList.push(backspaceCommand);
+        backspaceCommand.do();
+        _redoList = [];
         break;
       case 'Delete':
-        newCodeText =
-          codeText.substring(0, caretPositionIn.end)
-          + codeText.substring(caretPositionIn.end+1, codeText.length);
-        caretPositionOut = caretPositionIn.end;
+        let deleteCommand = makeDeleteTextCommand(caretPositionIn.end, 1);
+        _undoList.push(deleteCommand);
+        deleteCommand.do();
+        _redoList = [];
         break;
       default:
         assert(false);
@@ -382,10 +437,10 @@ function editingKey(event){
     switch (event.key){
       case 'Backspace':
       case 'Delete':
-        newCodeText =
-          codeText.substring(0, caretPositionIn.start)
-          + codeText.substring(caretPositionIn.end, codeText.length);
-        caretPositionOut = caretPositionIn.start;
+        let deleteCommand = makeDeleteTextCommand(caretPositionIn.start, caretPositionIn.end - caretPositionIn.start);
+        _undoList.push(deleteCommand);
+        deleteCommand.do();
+        _redoList = [];
         break;
       default:
         assert(false);
@@ -393,7 +448,7 @@ function editingKey(event){
     }
   }
 
-  CheckCode(codeElement, newCodeText, caretPositionOut);
+  //CheckCode(codeElement, newCodeText, caretPositionOut);
 }
 
 function insertText(text){
@@ -402,20 +457,57 @@ function insertText(text){
 
   let newCodeText;
   if (caretPosition.start === caretPosition.end){
-    newCodeText =
-      codeText.substring(0, caretPosition.end)
-      + text
-      + codeText.substring(caretPosition.end, codeText.length);
+    let insertCommand = makeInsertTextCommand(caretPosition.end, text);
+    _undoList.push(insertCommand);
+    insertCommand.do();
+    _redoList = [];
   }else{
-    newCodeText =
-      codeText.substring(0, caretPosition.start)
-      + text
-      + codeText.substring(caretPosition.end, codeText.length);
+    let deleteCommand = makeDeleteTextCommand(caretPosition.start, caretPosition.end - caretPosition.start);
+    _undoList.push(deleteCommand);
+    deleteCommand.do();
+    _redoList = [];
+    let insertCommand = makeInsertTextCommand(caretPosition.start, text);
+    _undoList.push(insertCommand);
+    insertCommand.do();
+    _redoList = [];
   }
-
-  CheckCode(codeElement, newCodeText, caretPosition.start+text.length);
 }
 
+function makeInsertTextCommand(startIndex, text){
+  return new Command(
+    deleteTextAbsolute,
+    insertTextAbsolute,
+    startIndex,
+    text
+  );
+}
+
+function insertTextAbsolute(startIndex, text){
+  let codeText = GetVisibleTextInElement(codeElement);
+  let newCodeText =
+    codeText.substring(0, startIndex)
+      + text
+      + codeText.substring(startIndex, codeText.length);
+  CheckCode(codeElement, newCodeText, startIndex+text.length);
+}
+
+function makeDeleteTextCommand(startIndex, length){
+  let codeText = GetVisibleTextInElement(codeElement);
+  return new Command(
+    insertTextAbsolute,
+    deleteTextAbsolute,
+    startIndex,
+    codeText.substring(startIndex, startIndex + length)
+  );
+}
+
+function deleteTextAbsolute(startIndex, text){
+  let codeText = GetVisibleTextInElement(codeElement);
+  let newCodeText =
+    codeText.substring(0, startIndex)
+      + codeText.substring(startIndex + text.length, codeText.length);
+  CheckCode(codeElement, newCodeText, startIndex);
+}
 
 function userTextKeyUp(event){
   //userTextChanged();
