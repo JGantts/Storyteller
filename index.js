@@ -64,10 +64,8 @@ function loadWindowWithDevTools(browserWindow, loadFile){
   let devtools = new BrowserWindow({
     width: 800,
     height: 600,
-    show: false
   });
   devtools.setBounds({ x: 0, y: 0,})
-  devtools.minimize()
 
   browserWindow.on('close', () => {
     if(!devtools.isDestroyed()){

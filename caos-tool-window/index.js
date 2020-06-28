@@ -35,25 +35,53 @@ let _redoList = [];
 class Command{
   constructor(
     undo,
+    undoArgs,
     redo,
-    startIndex,
-    text
+    redoArgs
   ) {
     this._undo = undo;
+    this._undoArgs = undoArgs;
     this._redo = redo;
-    this._startIndex = startIndex;
-    this._text = text;
+    this._redoArgs = redoArgs;
   }
 
   do(){
     this.redo();
   }
+
   redo(){
-    this._redo(this._startIndex, this._text);
+    this._redo(this._redoArgs);
   }
+
   undo(){
-    this._undo(this._startIndex, this._text);
+    this._undo(this._undoArgs);
   }
+}
+
+function buildMultiCommand(subcommands){
+  let subcommandsForwards = subcommands;
+  let subcommandsReversed = subcommands.slice();
+  subcommandsReversed.reverse();
+  return new Command(
+    undoMultiCommand,
+    subcommandsReversed,
+    redoMultiCommand,
+    subcommandsForwards,
+  );
+}
+
+function undoMultiCommand(subcommands){
+  subcommands
+    .forEach((subcommand, i) => {
+      subcommand.undo();
+    });
+}
+
+function redoMultiCommand(subcommands){
+  subcommands
+    .forEach((subcommand, i) => {
+      subcommand.redo();
+    });
 }
 
 async function newFile(){
@@ -63,7 +91,7 @@ async function newFile(){
     }
   }
   codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
-  setCaretPositionWithin(codeElement, 0);
+  SetCaretPositionWithin(codeElement, 0);
   if (currentFileNeedsSaving){
     currentFileNeedsSaving = false;
   }
@@ -73,6 +101,7 @@ async function newFile(){
   updateTitle();
   _undoList = [];
   _redoList = [];
+  updateUndoRedoButtons();
 }
 
 async function openFile(){
@@ -107,6 +136,7 @@ async function openFile(){
     updateTitle();
     _undoList = [];
     _redoList = [];
+    updateUndoRedoButtons();
   }catch (err){
     console.log(err);
     throw err;
@@ -177,15 +207,28 @@ function updateTitle(){
   }
   if (currentFileNeedsSaving){
     title += '* '
-    $('#saveFileImg').css('opacity','1')
+    $('#save-file-img').css('opacity','1')
   }else{
-    $('#saveFileImg').css('opacity','0.4')
+    $('#save-file-img').css('opacity','0.4')
   }
   if (currentFile){
     title += '- ';
   }
   title += 'CAOS Tool 2020';
   document.title = title;
+}
+
+function updateUndoRedoButtons(){
+  if (_undoList.length === 0){
+    $('#undo-button-img').css('opacity','0.4')
+  }else{
+    $('#undo-button-img').css('opacity','1')
+  }
+  if (_redoList.length === 0){
+    $('#redo-button-img').css('opacity','0.4')
+  }else{
+    $('#redo-button-img').css('opacity','1')
+  }
 }
 
 function cut(){
@@ -223,14 +266,22 @@ function find(){
 
 function undo(){
   let command = _undoList.pop();
+  if (!command){
+    return;
+  }
   command.undo()
   _redoList.push(command);
+  updateUndoRedoButtons();
 }
 
 function redo(){
   let command = _redoList.pop();
+  if (!command){
+    return;
+  }
   command.redo()
   _undoList.push(command);
+  updateUndoRedoButtons();
 }
 
 function comment(){
@@ -264,7 +315,7 @@ function injectRemove(){
 function injectUserCode(doInstall, doEvents, doRemove){
   let resultElement = document.getElementById('caos-result');
   resultElement.innerHTML = '';
-  let codeText = getVisibleTextInElement(codeElement);
+  let codeText = GetVisibleTextInElement(codeElement);
   let codeTree = Caos(codeText);
 
   let errors = TreeToErrors(codeTree);
@@ -461,28 +512,28 @@ function insertText(text){
     _undoList.push(insertCommand);
     insertCommand.do();
     _redoList = [];
+    updateUndoRedoButtons();
   }else{
     let deleteCommand = makeDeleteTextCommand(caretPosition.start, caretPosition.end - caretPosition.start);
-    _undoList.push(deleteCommand);
-    deleteCommand.do();
-    _redoList = [];
     let insertCommand = makeInsertTextCommand(caretPosition.start, text);
-    _undoList.push(insertCommand);
-    insertCommand.do();
+    let multiCommand = buildMultiCommand([deleteCommand, insertCommand])
+    _undoList.push(multiCommand);
+    multiCommand.do();
     _redoList = [];
+    updateUndoRedoButtons();
   }
 }
 
 function makeInsertTextCommand(startIndex, text){
   return new Command(
     deleteTextAbsolute,
+    {startIndex, text},
     insertTextAbsolute,
-    startIndex,
-    text
+    {startIndex, text},
   );
 }
 
-function insertTextAbsolute(startIndex, text){
+function insertTextAbsolute({startIndex, text}){
   let codeText = GetVisibleTextInElement(codeElement);
   let newCodeText =
     codeText.substring(0, startIndex)
@@ -493,15 +544,16 @@ function insertTextAbsolute(startIndex, text){
 
 function makeDeleteTextCommand(startIndex, length){
   let codeText = GetVisibleTextInElement(codeElement);
+  let text = codeText.substring(startIndex, startIndex + length);
   return new Command(
     insertTextAbsolute,
+    {startIndex, text},
     deleteTextAbsolute,
-    startIndex,
-    codeText.substring(startIndex, startIndex + length)
+    {startIndex, text},
   );
 }
 
-function deleteTextAbsolute(startIndex, text){
+function deleteTextAbsolute({startIndex, text}){
   let codeText = GetVisibleTextInElement(codeElement);
   let newCodeText =
     codeText.substring(0, startIndex)
