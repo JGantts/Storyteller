@@ -35,25 +35,53 @@ let _redoList = [];
 class Command{
   constructor(
     undo,
+    undoArgs,
     redo,
-    startIndex,
-    text
+    redoArgs
   ) {
     this._undo = undo;
+    this._undoArgs = undoArgs;
     this._redo = redo;
-    this._startIndex = startIndex;
-    this._text = text;
+    this._redoArgs = redoArgs;
   }
 
   do(){
     this.redo();
   }
+
   redo(){
-    this._redo(this._startIndex, this._text);
+    this._redo(this._redoArgs);
   }
+
   undo(){
-    this._undo(this._startIndex, this._text);
+    this._undo(this._undoArgs);
   }
+}
+
+function buildMultiCommand(subcommands){
+  let subcommandsForwards = subcommands;
+  let subcommandsReversed = subcommands.slice();
+  subcommandsReversed.reverse();
+  return new Command(
+    undoMultiCommand,
+    subcommandsReversed,
+    redoMultiCommand,
+    subcommandsForwards,
+  );
+}
+
+function undoMultiCommand(subcommands){
+  subcommands
+    .forEach((subcommand, i) => {
+      subcommand.undo();
+    });
+}
+
+function redoMultiCommand(subcommands){
+  subcommands
+    .forEach((subcommand, i) => {
+      subcommand.redo();
+    });
 }
 
 async function newFile(){
@@ -463,12 +491,10 @@ function insertText(text){
     _redoList = [];
   }else{
     let deleteCommand = makeDeleteTextCommand(caretPosition.start, caretPosition.end - caretPosition.start);
-    _undoList.push(deleteCommand);
-    deleteCommand.do();
-    _redoList = [];
     let insertCommand = makeInsertTextCommand(caretPosition.start, text);
-    _undoList.push(insertCommand);
-    insertCommand.do();
+    let multiCommand = buildMultiCommand([deleteCommand, insertCommand])
+    _undoList.push(multiCommand);
+    multiCommand.do();
     _redoList = [];
   }
 }
@@ -476,13 +502,13 @@ function insertText(text){
 function makeInsertTextCommand(startIndex, text){
   return new Command(
     deleteTextAbsolute,
+    {startIndex, text},
     insertTextAbsolute,
-    startIndex,
-    text
+    {startIndex, text},
   );
 }
 
-function insertTextAbsolute(startIndex, text){
+function insertTextAbsolute({startIndex, text}){
   let codeText = GetVisibleTextInElement(codeElement);
   let newCodeText =
     codeText.substring(0, startIndex)
@@ -493,15 +519,16 @@ function insertTextAbsolute(startIndex, text){
 
 function makeDeleteTextCommand(startIndex, length){
   let codeText = GetVisibleTextInElement(codeElement);
+  let text = codeText.substring(startIndex, startIndex + length);
   return new Command(
     insertTextAbsolute,
+    {startIndex, text},
     deleteTextAbsolute,
-    startIndex,
-    codeText.substring(startIndex, startIndex + length)
+    {startIndex, text},
   );
 }
 
-function deleteTextAbsolute(startIndex, text){
+function deleteTextAbsolute({startIndex, text}){
   let codeText = GetVisibleTextInElement(codeElement);
   let newCodeText =
     codeText.substring(0, startIndex)
