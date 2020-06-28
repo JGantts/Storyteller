@@ -71,6 +71,8 @@ async function newFile(){
     currentFile = null;
   }
   updateTitle();
+  _undoList = [];
+  _redoList = [];
 }
 
 async function openFile(){
@@ -103,6 +105,8 @@ async function openFile(){
     insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
     currentFileNeedsSaving = false;
     updateTitle();
+    _undoList = [];
+    _redoList = [];
   }catch (err){
     console.log(err);
     throw err;
@@ -360,6 +364,10 @@ function controlKey(event){
     copy();
   }else if (event.ctrlKey && event.key === 'x'){
     cut();
+  }else if (event.ctrlKey && event.key === 'z'){
+    undo();
+  }else if (event.ctrlKey && event.key === 'y'){
+    redo();
   }
 }
 
@@ -410,16 +418,16 @@ function editingKey(event){
   if (caretPositionIn.start === caretPositionIn.end){
     switch (event.key){
       case 'Backspace':
-        newCodeText =
-          codeText.substring(0, caretPositionIn.end-1)
-          + codeText.substring(caretPositionIn.end, codeText.length);
-        caretPositionOut = caretPositionIn.end-1;
+        let backspaceCommand = makeDeleteTextCommand(caretPositionIn.end-1, 1);
+        _undoList.push(backspaceCommand);
+        backspaceCommand.do();
+        _redoList = [];
         break;
       case 'Delete':
-        newCodeText =
-          codeText.substring(0, caretPositionIn.end)
-          + codeText.substring(caretPositionIn.end+1, codeText.length);
-        caretPositionOut = caretPositionIn.end;
+        let deleteCommand = makeDeleteTextCommand(caretPositionIn.end, 1);
+        _undoList.push(deleteCommand);
+        deleteCommand.do();
+        _redoList = [];
         break;
       default:
         assert(false);
@@ -429,10 +437,10 @@ function editingKey(event){
     switch (event.key){
       case 'Backspace':
       case 'Delete':
-        newCodeText =
-          codeText.substring(0, caretPositionIn.start)
-          + codeText.substring(caretPositionIn.end, codeText.length);
-        caretPositionOut = caretPositionIn.start;
+        let deleteCommand = makeDeleteTextCommand(caretPositionIn.start, caretPositionIn.end - caretPositionIn.start);
+        _undoList.push(deleteCommand);
+        deleteCommand.do();
+        _redoList = [];
         break;
       default:
         assert(false);
@@ -440,7 +448,7 @@ function editingKey(event){
     }
   }
 
-  CheckCode(codeElement, newCodeText, caretPositionOut);
+  //CheckCode(codeElement, newCodeText, caretPositionOut);
 }
 
 function insertText(text){
@@ -452,13 +460,16 @@ function insertText(text){
     let insertCommand = makeInsertTextCommand(caretPosition.end, text);
     _undoList.push(insertCommand);
     insertCommand.do();
+    _redoList = [];
   }else{
-    let deleteCommand = makeDeleteTextCommand(caretPosition.end, caretPosition.end - caretPosition.start);
+    let deleteCommand = makeDeleteTextCommand(caretPosition.start, caretPosition.end - caretPosition.start);
     _undoList.push(deleteCommand);
     deleteCommand.do();
+    _redoList = [];
     let insertCommand = makeInsertTextCommand(caretPosition.start, text);
     _undoList.push(insertCommand);
     insertCommand.do();
+    _redoList = [];
   }
 }
 
@@ -480,13 +491,13 @@ function insertTextAbsolute(startIndex, text){
   CheckCode(codeElement, newCodeText, startIndex+text.length);
 }
 
-function makeDeleteTextCommand(endIndex, length){
+function makeDeleteTextCommand(startIndex, length){
   let codeText = GetVisibleTextInElement(codeElement);
   return new Command(
     insertTextAbsolute,
     deleteTextAbsolute,
-    endIndex - length,
-    codeText.substring(endIndex - length, endIndex)
+    startIndex,
+    codeText.substring(startIndex, startIndex + length)
   );
 }
 
