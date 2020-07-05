@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="dev-tools-page/dev-tools-page.css">
+
 <div style='background-color: rgb(71,59,99);'>
   <textarea id="caos-user-code" rows="1" cols="80" style='resize: none; '></textarea>
   <button id='execute' onclick='executeUserCode()'>Execute</button>
@@ -5,7 +7,21 @@
 </div>
 
 <br />
-<br />
-<button id="launch-caos" onclick='launchCaolTool()'>Launch CAOS Tool 2020</button>
+<button
+  id="launch-caos"
+  class="toolButton"
+  onclick='launchCaolTool()'
+  >
+  <img src="../caos-tool-window/icon.png" width="80" height="80"/><br />
+  CAOS Tool
+</button>
+<button
+  id="launch-caos"
+  class="toolButton"
+  onclick='launchCaolTool()'
+  >
+  <img src="../caos-tool-window/icon.png" width="80" height="80"/><br />
+  CAOS Tool
+</button>
 
 <script src="dev-tools-page/dev-tools-page.js" ></script>
