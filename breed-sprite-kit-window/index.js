@@ -4,7 +4,7 @@ let tabGroup = new TabGroup();
 tabGroup.addTab({
   title: '',
   iconURL: 'icons/blender-script.svg',
-  src: 'http://electron.atom.io',
+  src: 'blender-script-tab/index.html',
   visible: true,
   closable: false,
   active: true,
@@ -12,7 +12,7 @@ tabGroup.addTab({
 tabGroup.addTab({
   title: '',
   iconURL: 'icons/png-crop.svg',
-  src: 'http://electron.atom.io',
+  src: 'http://google.com',
   visible: true,
   closable: false,
 });
