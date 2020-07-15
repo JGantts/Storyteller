@@ -131,7 +131,7 @@
 .etabs-views {
   position: relative;
   border-top: 1px solid #aaa;
-  height: calc(100vh - 33px);
+  height: calc(100vh - 48px - 1px);
 }
 
 .etab-view {
