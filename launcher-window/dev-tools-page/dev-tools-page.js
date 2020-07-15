@@ -10,6 +10,10 @@ function executeUserCode(){
   });
 }
 
-function launchCaolTool(){
+function launchCaosTool(){
   ipcRenderer.send('launchCaosTool', null)
+}
+
+function launchBreedSpriteKit(){
+  ipcRenderer.send('createBreedSpriteKitWindow', null)
 }

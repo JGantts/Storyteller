@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="475.193" height="356.969" viewBox="0 0 475.193 356.969">
+  <title>Conversion of Blender renders to c16</title>
+  <g>
+    <g>
+      <rect x="280.483" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="32.452" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="64.903" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="97.355" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="129.807" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="162.259" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="194.71" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="227.162" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="259.614" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="292.065" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="280.483" y="324.517" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="32.452" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="64.903" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="97.355" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="129.807" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="162.259" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="194.71" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="227.162" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="259.614" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="292.065" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="312.934" y="324.517" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="32.452" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="64.903" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="97.355" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="129.807" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="162.259" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="194.71" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="227.162" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="259.614" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="292.065" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="345.386" y="324.517" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="377.838" y="32.452" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="377.838" y="64.903" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="377.838" y="97.355" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="377.838" y="129.807" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="377.838" y="162.259" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="377.838" y="194.71" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="377.838" y="227.162" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="377.838" y="259.614" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="377.838" y="292.065" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="410.289" y="64.903" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="410.289" y="97.355" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="410.289" y="129.807" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="410.289" y="162.259" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="410.289" y="194.71" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="410.289" y="227.162" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="410.289" y="259.614" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="442.741" y="129.807" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="442.741" y="162.259" width="32.452" height="32.452" fill="#fff"/>
+      <rect x="442.741" y="194.71" width="32.452" height="32.452" fill="#fff"/>
+    </g>
+    <path d="M0,0V356.969A178.484,178.484,0,0,0,178.484,178.484,178.484,178.484,0,0,0,0,0Z" fill="#fff"/>
+    <g>
+      <rect x="202.988" y="147.037" width="19.809" height="62.895" fill="#fff"/>
+      <polygon points="255.979 178.484 222.798 147.037 222.798 209.932 255.979 178.484" fill="#fff"/>
+    </g>
+  </g>
+</svg>

@@ -5,6 +5,10 @@ ipcMain.on('launchCaosTool', (event, args) => {
   createCaosToolWindow();
 });
 
+ipcMain.on('createBreedSpriteKitWindow', (event, args) => {
+  createBreedSpriteKitWindow();
+});
+
 function launchApp(){
   loadSettings(createLauncherWindow);
 }
@@ -50,6 +54,23 @@ function createCaosToolWindow() {
   win.setMenu(null)
 
   loadWindow(win, 'caos-tool-window/index.html')
+}
+
+function createBreedSpriteKitWindow() {
+  // Create the browser window.
+  let win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    backgroundColor: '#233D43',
+    webPreferences: {
+      nodeIntegration: true,
+      webviewTag: true,
+    }
+  })
+
+  win.setMenu(null)
+
+  loadWindow(win, 'breed-sprite-kit-window/index.html')
 }
 
 function loadWindow(browserWindow, loadFile){
