@@ -1,5 +1,5 @@
 $(async function(){
-  let creaturesResponse = await fetch('https://lemurware.tech/api/v1/creatures/')
+  let creaturesResponse = await fetch('https://gantt42.com/api/v1/storyteller/creatures/')
   if (creaturesResponse.ok){
     let creaturesData = await creaturesResponse.json();
     let creatureGrid = document.querySelector("#creatureGrid")
@@ -10,10 +10,10 @@ $(async function(){
       let nameImagePlacement = document.importNode(nameImageTemplate.content, true);
 
       nameImagePlacement.querySelector('#creatureImage').src =
-        'https://lemurware.tech/api/v1/creatures/' + rowData.moniker + '/image';
+        'https://gantt42.com/api/v1/storyteller/creatures/' + rowData.moniker + '/image';
 
       (async function(creatureNamePlacement){
-        let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + rowData.moniker +'/name')
+        let nameResponse = await fetch('https://gantt42.com/api/v1/storyteller/creatures/' + rowData.moniker +'/name')
         if (nameResponse.ok){
           let nameData = await nameResponse.json();
           creatureNamePlacement.textContent = nameData.name;

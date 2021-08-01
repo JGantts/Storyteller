@@ -1,10 +1,10 @@
 $(async function(){
   document.querySelector('#creatureMoniker').innerHTML = window.creatureMoniker;
 
-  document.querySelector('#creatureImage').src = 'https://lemurware.tech/api/v1/creatures/' + window.creatureMoniker + '/image';
+  document.querySelector('#creatureImage').src = 'https://gantt42.com/api/v1/storyteller/creatures/' + window.creatureMoniker + '/image';
 
   (async function(creatureNamePlacement){
-    let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + window.creatureMoniker +'/name')
+    let nameResponse = await fetch('https://gantt42.com/api/v1/storyteller/creatures/' + window.creatureMoniker +'/name')
     if (nameResponse.ok){
       let nameData = await nameResponse.json();
       creatureNamePlacement.textContent = nameData.name;
@@ -13,7 +13,7 @@ $(async function(){
     }
   }(document.querySelector('#creatureName')));
 
-  let kinResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + window.creatureMoniker + '/kin');
+  let kinResponse = await fetch('https://gantt42.com/api/v1/storyteller/creatures/' + window.creatureMoniker + '/kin');
   if (kinResponse.ok){
     let kinData = await kinResponse.json();
 
@@ -33,7 +33,7 @@ $(async function(){
         });
 
         (async function(parentNamePlacement){
-          let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + kinData.parent1Moniker +'/name')
+          let nameResponse = await fetch('https://gantt42.com/api/v1/storyteller/creatures/' + kinData.parent1Moniker +'/name')
           if (nameResponse.ok){
             let nameData = await nameResponse.json();
             parentNamePlacement.textContent = '🠖' + nameData.name;
@@ -43,7 +43,7 @@ $(async function(){
         }(conceptionEventPlacement.querySelector('#parent1Name')));
 
         (async function(parentNamePlacement){
-          let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + kinData.parent2Moniker +'/name')
+          let nameResponse = await fetch('https://gantt42.com/api/v1/storyteller/creatures/' + kinData.parent2Moniker +'/name')
           if (nameResponse.ok){
             let nameData = await nameResponse.json();
             parentNamePlacement.textContent = '🠖' + nameData.name;
@@ -74,7 +74,7 @@ $(async function(){
         });
 
         (async function(childNamePlacement){
-          let nameResponse = await fetch('https://lemurware.tech/api/v1/creatures/' + childData.moniker +'/name');
+          let nameResponse = await fetch('https://gantt42.com/api/v1/storyteller/creatures/' + childData.moniker +'/name');
           if (nameResponse.ok){
             let nameData = await nameResponse.json();
             childNamePlacement.textContent = '🠖' + nameData.name;
