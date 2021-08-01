@@ -11,102 +11,119 @@
 <div style='height: 100%; background-color: rgba(0,0,0,0);' width: 100%;>
   <div style='height: 25px; width: 100%; border: 0; margin: 0; padding: 0; background-color: #292F42;'>
 
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder' class='tooltip-holder'>
       <button id='execute' onclick='newFile()'>
-        <img src='icons/CAOS Icons_File.png' width='25rem' height='25rem' />
+        <img src='icons/CAOS Icons_File.png' width='25rem' height='25rem'/>
       </button>
+      <span class='tooltip'>New File</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='openFile()'>
         <img src='icons/CAOS Icons_Open File.png' width='25rem' height='25rem' />
       </button>
+      <span class='tooltip'>Open File</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='saveFile' onclick='saveFile()'>
         <img id='save-file-img' src='icons/CAOS Icons_Save-03.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
+      <span class='tooltip'>Save File</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='saveAllFiles()'>
         <img src='icons/CAOS Icons_Save-04.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
+      <span class='tooltip'>Save All Files</span>
     </div>
 
     <div class='banner-divider'></div>
 
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='cut()'>
         <img src='icons/CAOS Icons_Cut.png' width='25rem' height='25rem' />
       </button>
+      <span class='tooltip'>Cut</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='copy()'>
         <img src='icons/CAOS Icons_Paste-06.png' width='25rem' height='25rem' />
       </button>
+      <span class='tooltip'>Copy</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='paste()'>
         <img src='icons/CAOS Icons_Paste-07.png' width='25rem' height='25rem' />
       </button>
+      <span class='tooltip'>Paste</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='find()'>
         <img src='icons/CAOS Icons_Search.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
+      <span class='tooltip'>Find</span>
     </div>
 
     <div class='banner-divider'></div>
 
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button onclick='undo()'>
         <img id='undo-button-img' src='icons/CAOS Icons_Undo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
+      <span class='tooltip'>Undo</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button onclick='redo()'>
         <img id='redo-button-img' src='icons/CAOS Icons_Redo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
+      <span class='tooltip'>Redo</span>
     </div>
 
-    <div class='banner-divider'></div>
+    <div class='banner-divider tooltip-holder'></div>
 
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='comment()'>
         <img src='icons/CAOS Icons_Redo Code.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
+      <span class='tooltip'>Comment Selection</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='uncomment()'>
         <img src='icons/CAOS Icons_Undo Code.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
+      <span class='tooltip'>Uncomment Selection</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='autoFormat()'>
         <img src='icons/CAOS Icons_Code-15.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
+      <span class='tooltip'>Auto Format</span>
     </div>
 
     <div class='banner-divider'></div>
 
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='injectInstall()'>
         <img src='icons/CAOS Icons_Code-16.png' width='25rem' height='25rem' />
       </button>
+      <span class='tooltip'>Install Script</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='injectEvents()'>
         <img src='icons/CAOS Icons_Code-17.png' width='25rem' height='25rem' />
       </button>
+      <span class='tooltip'>Events Scripts</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='injectAll()'>
         <img src='icons/CAOS Icons_Code-18.png' width='25rem' height='25rem' />
       </button>
+      <span class='tooltip'>Remove, Events, Install</span>
     </div>
-    <div class='banner-button'>
+    <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='injectRemove()'>
         <img src='icons/CAOS Icons_Code-19.png' width='25rem' height='25rem' />
       </button>
+      <span class='tooltip'>Remove Script</span>
     </div>
 
   </div>
