@@ -33,3 +33,12 @@ $(async function(){
     alert("HTTP-Error: " + creaturesResponse.status);
   }
 });
+
+function monikerKeyPress(e) {
+    if(e.keyCode === 13){
+        e.preventDefault();
+        var x = document.getElementById("moniker-search");
+        window.creatureMoniker = x.value;
+        $("#main").load("creature-page/creature-page.html");
+    }
+}

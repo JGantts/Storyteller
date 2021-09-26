@@ -17,3 +17,7 @@ function launchCaosTool(){
 function launchBreedSpriteKit(){
   ipcRenderer.send('createBreedSpriteKitWindow', null)
 }
+
+function createMapToolWindow(){
+  ipcRenderer.send('createMapToolWindow', null)
+}

@@ -4,7 +4,13 @@
   </span>
   <span style='float: left; vertical-align:center; width: 400px;'>
     <form style='width:100%;'>
-      <input placeholder="Search" autofocus=true style='width: 100%; margin: 5.5px; background-color: rgb(71,59,99); border:0; outline:none; color:white; font-size: 1rem;'>
+      <input
+        id='moniker-search'
+        placeholder="Moniker"
+        autofocus=true
+        style='width: 100%; margin: 5.5px; background-color: rgb(71,59,99); border:0; outline:none; color:white; font-size: 1rem;'
+        onkeypress='monikerKeyPress(event)'
+      >
     <form>
   </span>
 </div>

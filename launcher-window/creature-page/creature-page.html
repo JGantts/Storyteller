@@ -4,7 +4,7 @@
     <div style='position: sticky; top: calc(-100px + 16px + 20px);'>
       <div style='background-color: rgb(71,59,99); padding: 10px 0;'>
         <p id='creatureName' style='padding: 0; margin: 0; width: 100%; text-align: center; font-weight: 600;'>Loading...</p>
-        <p id="creatureMoniker" style='padding: 0; width: 100%; text-align: center; font-size: 0.85rem; font-weight: 300;'>006-dusk-tejxm-56gq7-k7vfy-46asb</p>
+        <p id="creatureMoniker" style='padding: 0; width: 100%; text-align: center; font-size: 0.85rem; font-weight: 300;'>...</p>
       </div>
       <div style='margin-top: 10px; background-color: rgb(71,59,99); padding: 20px'>
         <div id='creatureKinParent'></div>
@@ -18,82 +18,7 @@
       </div>
     </div>
   </div>
-  <div style='width: calc(100% - 238px - 70px); background-color: rgba(51,45,83,0.75); display: inline-block; margin-left: 10px; padding: 30px;'>
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
-    <hr />
-    <div style=''>Details</div>
+  <div id='creatureEventsContainer' style='width: calc(100% - 238px - 70px); background-color: rgba(51,45,83,0.75); display: inline-block; margin-left: 10px; padding: 30px;'>
   </div>
 </div>
 
@@ -132,12 +57,9 @@
   </a>
 </template>
 
-<template id='kin-parents-spliced'>
-  Parent 1: <a id='parent1Link' href='#'>
+<template id='kin-parents-cloned'>
+  From: <a id='parent1Link' href='#'>
     <span id='parent1Name'></span>
-  </a>
-  Parent 2: <a id='parent2Link' href='#'>
-    <span id='parent2Name'></span>
   </a>
 </template>
 
@@ -147,13 +69,14 @@
   </a>
 </template>
 
-
-<template id='event-conceived'>
-  <div style='width: 119px; margin: 14px; padding:0; background-color: rgb(34,49,63);'>
-    <a id='creatureLink' href='#'>
-      <img id='creatureImage' width='119px' height='139px' src='' />
-      <h6 id='creatureName' style='text-align: left; font-size: 0.7rem; padding:6px; width: 119px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; color: white;'></h6>
-    </a>
+<template id='event-default'>
+  <div id='main-div' style='width: calc(100%; - 14px); min-height: 139px; margin: 7px; padding:0; background-color: rgb(34,49,63);'>
+    <div style='display: inline-block; text-align: left; width: 421.25px - 119px; '>
+      <h6 id='eventDescription' style='font-size: 1rem; padding:6px; margin: 0; color: white;'> </h6>
+      <h6 id='eventTickAge' style='font-size: 0.7rem; padding:6px; margin: 0; color: white;'></h6>
+      <h6 id='eventTimeUTC' style='font-size: 0.7rem; padding:6px; margin: 0; color: white;'></h6>
+    </div>
+    <img style='float: right;' id='eventImage' width='119px' height='139px' src='' />
   </div>
 </template>
 

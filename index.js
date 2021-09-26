@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 let settings;
 
 ipcMain.on('launchCaosTool', (event, args) => {
@@ -7,6 +7,10 @@ ipcMain.on('launchCaosTool', (event, args) => {
 
 ipcMain.on('createBreedSpriteKitWindow', (event, args) => {
   createBreedSpriteKitWindow();
+});
+
+ipcMain.on('createMapToolWindow', (event, args) => {
+  createMapToolWindow();
 });
 
 function launchApp(){
@@ -71,6 +75,128 @@ function createBreedSpriteKitWindow() {
   win.setMenu(null)
 
   loadWindow(win, 'breed-sprite-kit-window/index.html')
+}
+
+function createMapToolWindow() {
+  // Create the browser window.
+  let win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    backgroundColor: '#503642',
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+
+  const template =
+   [
+     {
+        label: 'File',
+        submenu: [
+           {
+              label: 'New',
+              click() {
+                 console.log('item 1 clicked')
+              }
+           },
+           {
+              role: 'redo'
+           },
+           {
+              type: 'separator'
+           },
+           {
+              role: 'cut'
+           },
+           {
+              role: 'copy'
+           },
+           {
+              role: 'paste'
+           }
+        ]
+     },
+
+     {
+        label: 'Edit',
+        submenu: [
+           {
+              role: 'undo'
+           },
+           {
+              role: 'redo'
+           },
+           {
+              type: 'separator'
+           },
+           {
+              role: 'cut'
+           },
+           {
+              role: 'copy'
+           },
+           {
+              role: 'paste'
+           }
+        ]
+     },
+
+     {
+        label: 'View',
+        submenu: [
+           {
+              role: 'reload'
+           },
+           {
+              role: 'toggledevtools'
+           },
+           {
+              type: 'separator'
+           },
+           {
+              role: 'resetzoom'
+           },
+           {
+              role: 'zoomin'
+           },
+           {
+              role: 'zoomout'
+           },
+           {
+              type: 'separator'
+           },
+           {
+              role: 'togglefullscreen'
+           }
+        ]
+     },
+
+     {
+        role: 'window',
+        submenu: [
+           {
+              role: 'minimize'
+           },
+           {
+              role: 'close'
+           }
+        ]
+     },
+
+     {
+        role: 'help',
+        submenu: [
+           {
+              label: 'Learn More'
+           }
+        ]
+     }
+  ]
+
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+
+  loadWindow(win, 'map-tool-window/index.html')
 }
 
 function loadWindow(browserWindow, loadFile){
