@@ -8,7 +8,7 @@ Intended to be a one-stop-shop for Creatures players and developers.
 - [ ] Creatures 2 launcher
 - [ ] Creatures 1 launcher
 ---
-- [X] CAOS Tool 2020
+- [X] CAOS Tool (Sorcerer's Kit)
   - [X] C3/DS Syntax
   - [X] C3/DS Injection
   - [ ] C2 Syntax
@@ -16,10 +16,18 @@ Intended to be a one-stop-shop for Creatures players and developers.
   - [ ] C1 Syntax
   - [ ] C1 Injection
   - [ ] DS CAOS Tutorial
-- [ ] Sprite Tool 2020
-- [ ] Map Tool 2020
-- [ ] Agent Builder 2020
-- [ ] ATT Tool 2020
+- [ ] Sprite Tool (Painters's Kit)
+- [ ] Map Tool (Cartographer's Kit)
+- [ ] Agent Builder (Architects Kit)
+- [ ] Breed Tool (Designer's Kit)
+  - [ ] Blender Script
+  - [ ] PNG Crop Tool
+  - [ ] PNG to c16 Tool
+  - [ ] Reslotter Script
+  - [ ] ATT Editor
+  - [ ] Blender Script
+  - [ ] Apperance Genetics Editor
+- [ ] Genetics Kit (Tailor's Kit)
 ---
 - [ ] Creature Database
   - [X] Creature images

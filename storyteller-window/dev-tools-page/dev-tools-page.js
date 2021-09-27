@@ -10,14 +10,14 @@ function executeUserCode(){
   });
 }
 
-function launchCaosTool(){
-  ipcRenderer.send('launchCaosTool', null)
+function launchSorcerersKit(){
+  ipcRenderer.send('createSorcerersKitWindow', null)
 }
 
-function launchBreedSpriteKit(){
-  ipcRenderer.send('createBreedSpriteKitWindow', null)
+function launchDesignersKit(){
+  ipcRenderer.send('createDesignersKitWindow', null)
 }
 
-function createMapToolWindow(){
-  ipcRenderer.send('createMapToolWindow', null)
+function launchCartographersKit(){
+  ipcRenderer.send('createCartographersKitWindow', null)
 }

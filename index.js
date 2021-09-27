@@ -1,20 +1,20 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 let settings;
 
-ipcMain.on('launchCaosTool', (event, args) => {
-  createCaosToolWindow();
+ipcMain.on('createSorcerersKitWindow', (event, args) => {
+  createSorcerersKitWindow();
 });
 
-ipcMain.on('createBreedSpriteKitWindow', (event, args) => {
-  createBreedSpriteKitWindow();
+ipcMain.on('createDesignersKitWindow', (event, args) => {
+  createDesignersKitWindow();
 });
 
-ipcMain.on('createMapToolWindow', (event, args) => {
-  createMapToolWindow();
+ipcMain.on('createCartographersKitWindow', (event, args) => {
+  createCartographersKitWindow();
 });
 
 function launchApp(){
-  loadSettings(createLauncherWindow);
+  loadSettings(createStorytellerWindow);
 }
 
 function loadSettings(then){
@@ -26,7 +26,7 @@ function loadSettings(then){
   })
 }
 
-function createLauncherWindow () {
+function createStorytellerWindow () {
   // Create the browser window.
   let win = new BrowserWindow({
     width: 800,
@@ -41,10 +41,10 @@ function createLauncherWindow () {
 
   win.setMenu(null)
 
-  loadWindow(win, 'launcher-window/index.html')
+  loadWindow(win, 'storyteller-window/index.html')
 }
 
-function createCaosToolWindow() {
+function createSorcerersKitWindow() {
   // Create the browser window.
   let win = new BrowserWindow({
     width: 800,
@@ -57,10 +57,10 @@ function createCaosToolWindow() {
 
   win.setMenu(null)
 
-  loadWindow(win, 'caos-tool-window/index.html')
+  loadWindow(win, 'sorcerers-kit-window/index.html')
 }
 
-function createBreedSpriteKitWindow() {
+function createDesignersKitWindow() {
   // Create the browser window.
   let win = new BrowserWindow({
     width: 800,
@@ -74,10 +74,10 @@ function createBreedSpriteKitWindow() {
 
   win.setMenu(null)
 
-  loadWindow(win, 'breed-sprite-kit-window/index.html')
+  loadWindow(win, 'designers-kit-window/index.html')
 }
 
-function createMapToolWindow() {
+function createCartographersKitWindow() {
   // Create the browser window.
   let win = new BrowserWindow({
     width: 800,
@@ -196,7 +196,7 @@ function createMapToolWindow() {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 
-  loadWindow(win, 'map-tool-window/index.html')
+  loadWindow(win, 'cartographers-kit-window/index.html')
 }
 
 function loadWindow(browserWindow, loadFile){
