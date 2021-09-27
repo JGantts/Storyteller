@@ -9,7 +9,12 @@ const WIN = remote.getCurrentWindow();
 let currentFile = null;
 let currentFileNeedsSaving = false;
 let canvasElement = document.getElementById('myCanvas');
-let ctx = setupCanvas(canvasElement);
+let ctx = setupCanvas(canvasElement, canvasElement.getBoundingClientRect());
+
+canvasElement.onmousedown=handleMouseDown;
+canvasElement.onmousemove=handleMouseMove;
+canvasElement.onmouseup=handleMouseUp;
+canvasElement.onmouseout=handleMouseOut;
 
 let _undoList = [];
 let _redoList = [];
@@ -78,7 +83,12 @@ let metarooms = [
   {
     id: 'ed230242fd94c9504eef2f0f435aeb8d638a1e49',
     name: 'Dollhouse',
-
+    //background: 'https://eemfoo.org/ccarchive/Other/Assets/Moe/Background%20Images/Hydrocea/massivepreview.png',
+    background: 'https://eemfoo.org/ccarchive/Other/Assets/Moe/Background%20Images/Hydrocea/hydrocea5.jpg',
+    x: 0,
+    y: 0,
+    width: 7000,
+    height: 2500,
     rooms: [
       {
         leftX: 100,
@@ -114,14 +124,171 @@ let metarooms = [
       }
     ]
   }
-]
+];
+
+let doors = [
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 100,
+            "y": 100
+        },
+        "end": {
+            "x": 200,
+            "y": 80
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 100,
+            "y": 200
+        },
+        "end": {
+            "x": 100,
+            "y": 100
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 100,
+            "y": 250
+        },
+        "end": {
+            "x": 200,
+            "y": 250
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 100,
+            "y": 300
+        },
+        "end": {
+            "x": 100,
+            "y": 250
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 200,
+            "y": 80
+        },
+        "end": {
+            "x": 300,
+            "y": 100
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 200,
+            "y": 220
+        },
+        "end": {
+            "x": 100,
+            "y": 200
+        }
+    },
+    {
+        "permeability": 1.0,
+        "start": {
+            "x": 200,
+            "y": 220
+        },
+        "end": {
+            "x": 200,
+            "y": 80
+        }
+    },
+    {
+        "permeability": 0.5,
+        "start": {
+            "x": 200,
+            "y": 220
+        },
+        "end": {
+            "x": 300,
+            "y": 200
+        }
+    },
+    {
+        "permeability": 0.0,
+        "start": {
+            "x": 200,
+            "y": 250
+        },
+        "end": {
+            "x": 200,
+            "y": 300
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 200,
+            "y": 300
+        },
+        "end": {
+            "x": 100,
+            "y": 300
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 300,
+            "y": 100
+        },
+        "end": {
+            "x": 300,
+            "y": 200
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 300,
+            "y": 200
+        },
+        "end": {
+            "x": 300,
+            "y": 300
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 300,
+            "y": 300
+        },
+        "end": {
+            "x": 200,
+            "y": 300
+        }
+    },
+    {
+        "permeability": -1.0,
+        "start": {
+            "x": 200,
+            "y": 220
+        },
+        "end": {
+            "x": 200,
+            "y": 250
+        }
+    }
+];
 
 
-function setupCanvas(canvas) {
+function setupCanvas(canvas, rect) {
   // Get the device pixel ratio, falling back to 1.
   var dpr = window.devicePixelRatio || 1;
   // Get the size of the canvas in CSS pixels.
-  var rect = canvas.getBoundingClientRect();
+  //var rect = canvas.getBoundingClientRect();
   // Give the canvas pixel dimensions of their CSS
   // size * the device pixel ratio.
   canvas.width = rect.width * dpr;
@@ -206,9 +373,11 @@ function getDoorsFromRooms(rooms) {
 }
 
 async function newFile(){
-
-  doors = getDoorsFromRooms(metarooms[0].rooms);
-/*    .sort((one, two) => {
+  ctx = setupCanvas(canvasElement, metarooms[0]);
+  canvasElement.width =  metarooms[0].width;
+  canvasElement.height =  metarooms[0].height;
+  /*doors = getDoorsFromRooms(metarooms[0].rooms)
+    .sort((one, two) => {
       if (one.start.x < two.start.x) return -1;
       if (one.start.x > two.start.x) return 1;
       if (one.start.y < two.start.y) return -1;
@@ -220,22 +389,30 @@ async function newFile(){
       return 0;
      });
   console.log(JSON.stringify(doors, null, 4));*/
+  var img = new Image;
+  img.src = metarooms[0].background;
+  ctx.moveTo(0, 0);
+  await img.decode();
+  ctx.drawImage(img, 0, 0);
   ctx.lineWidth = 2;
-  doors.forEach((door, i) => {
-    if (door.permeability < 0) {
-      ctx.strokeStyle = '#33DDDD';
-    } else if (door.permeability === 0) {
-      ctx.strokeStyle = '#DD3333';
-    } else if (door.permeability < 1) {
-      ctx.strokeStyle = '#DDDD33';
-    } else if (door.permeability === 1) {
-      ctx.strokeStyle = '#33DD33';
-    }
-    ctx.beginPath();
-    ctx.moveTo(door.start.x, door.start.y);
-    ctx.lineTo(door.end.x, door.end.y);
-    ctx.stroke();
-  });
+  doors
+    //.flatMap(x => [x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x])
+    .forEach((door, i) => {
+      if (door.permeability < 0) {
+        ctx.strokeStyle = '#33DDDD';
+      } else if (door.permeability === 0) {
+        ctx.strokeStyle = '#DD3333';
+      } else if (door.permeability < 1) {
+        ctx.strokeStyle = '#DDDD33';
+      } else if (door.permeability === 1) {
+        ctx.strokeStyle = '#33DD33';
+      }
+      ctx.beginPath();
+      ctx.moveTo(door.start.x, door.start.y);
+      ctx.lineTo(door.end.x, door.end.y);
+      ctx.stroke();
+    });
+
 
 
   /*if (currentFileNeedsSaving){
@@ -575,42 +752,6 @@ function controlKey(event){
   }
 }
 
-function caretKey(event){
-  let codeText = GetVisibleTextInElement(codeElement);
-  let caretPositionIn = GetCaretPositionWithin(codeElement);
-  let caretPositionOut = caretPositionIn.end;
-
-  switch (event.key){
-    case 'ArrowDown':
-      caretPositionOut = GetCaretPositionOneLineDown(caretPositionIn.end, codeText);
-      break;
-    case 'ArrowLeft':
-      if (caretPositionIn.start === caretPositionIn.end){
-        caretPositionOut = GetCaretPositionOneCharLeft(caretPositionIn.end, codeText);
-      }else{
-        caretPositionOut = caretPositionIn.start;
-      }
-      break;
-    case 'ArrowRight':
-    if (caretPositionIn.start === caretPositionIn.end){
-      caretPositionOut = GetCaretPositionOneCharRight(caretPositionIn.end, codeText);
-    }else{
-      caretPositionOut = caretPositionIn.end;
-    }
-      break;
-    case 'ArrowUp':
-      caretPositionOut = GetCaretPositionOneLineUp(caretPositionIn.end, codeText);
-      break;
-    case 'End':
-    case 'Home':
-      break;
-    default:
-      assert(false);
-      break;
-  }
-
-  SetCaretPositionWithin(codeElement, caretPositionOut);
-}
 
 function editingKey(event){
   var codeText = GetVisibleTextInElement(codeElement);
@@ -722,4 +863,148 @@ function userTextOnClick(event){
   var codeText = GetVisibleTextInElement(codeElement);
   var caretPosition = GetCaretPositionWithin(codeElement);
   ResetIdealCaretDepth(caretPosition.end, codeText)
+}
+
+
+
+
+
+
+
+
+
+// save relevant information about shapes drawn on the canvas
+var shapes=[];
+// define one circle and save it in the shapes[] array
+shapes.push( {x:30, y:30, radius:15, color:'blue'} );
+// define one rectangle and save it in the shapes[] array
+shapes.push( {x:100, y:-1, width:75, height:35, color:'red'} );
+
+// drag related vars
+var isDragging=false;
+var startX,startY;
+
+// hold the index of the shape being dragged (if any)
+var selectedShapeIndex;
+
+// draw the shapes on the canvas
+drawAll();
+
+// listen for mouse events
+canvas.onmousedown=handleMouseDown;
+canvas.onmousemove=handleMouseMove;
+canvas.onmouseup=handleMouseUp;
+canvas.onmouseout=handleMouseOut;
+
+// given mouse X & Y (mx & my) and shape object
+// return true/false whether mouse is inside the shape
+function isMouseInShape(mx,my,shape){
+    if(shape.radius){
+        // this is a circle
+        var dx=mx-shape.x;
+        var dy=my-shape.y;
+        // math test to see if mouse is inside circle
+        if(dx*dx+dy*dy<shape.radius*shape.radius){
+            // yes, mouse is inside this circle
+            return(true);
+        }
+    }else if(shape.width){
+        // this is a rectangle
+        var rLeft=shape.x;
+        var rRight=shape.x+shape.width;
+        var rTop=shape.y;
+        var rBott=shape.y+shape.height;
+        // math test to see if mouse is inside rectangle
+        if( mx>rLeft && mx<rRight && my>rTop && my<rBott){
+            return(true);
+        }
+    }
+    // the mouse isn't in any of the shapes
+    return(false);
+}
+
+function handleMouseDown(e){
+    // tell the browser we're handling this event
+    e.preventDefault();
+    e.stopPropagation();
+    // calculate the current mouse position
+    startX=parseInt(e.clientX-offsetX);
+    startY=parseInt(e.clientY-offsetY);
+    // test mouse position against all shapes
+    // post result if mouse is in a shape
+    for(var i=0;i<shapes.length;i++){
+        if(isMouseInShape(startX,startY,shapes[i])){
+            // the mouse is inside this shape
+            // select this shape
+            selectedShapeIndex=i;
+            // set the isDragging flag
+            isDragging=true;
+            // and return (==stop looking for
+            //     further shapes under the mouse)
+            return;
+        }
+    }
+}
+
+function handleMouseUp(e){
+    // return if we're not dragging
+    if(!isDragging){return;}
+    // tell the browser we're handling this event
+    e.preventDefault();
+    e.stopPropagation();
+    // the drag is over -- clear the isDragging flag
+    isDragging=false;
+}
+
+function handleMouseOut(e){
+    // return if we're not dragging
+    if(!isDragging){return;}
+    // tell the browser we're handling this event
+    e.preventDefault();
+    e.stopPropagation();
+    // the drag is over -- clear the isDragging flag
+    isDragging=false;
+}
+
+function handleMouseMove(e){
+    // return if we're not dragging
+    if(!isDragging){return;}
+    // tell the browser we're handling this event
+    e.preventDefault();
+    e.stopPropagation();
+    // calculate the current mouse position
+    mouseX=parseInt(e.clientX-offsetX);
+    mouseY=parseInt(e.clientY-offsetY);
+    // how far has the mouse dragged from its previous mousemove position?
+    var dx=mouseX-startX;
+    var dy=mouseY-startY;
+    // move the selected shape by the drag distance
+    var selectedShape=shapes[selectedShapeIndex];
+    selectedShape.x+=dx;
+    selectedShape.y+=dy;
+    // clear the canvas and redraw all shapes
+    drawAll();
+    // update the starting drag position (== the current mouse position)
+    startX=mouseX;
+    startY=mouseY;
+}
+
+// clear the canvas and
+// redraw all shapes in their current positions
+function drawAll(){
+    ctx.clearRect(0,0,cw,ch);
+    for(var i=0;i<shapes.length;i++){
+        var shape=shapes[i];
+        if(shape.radius){
+            // it's a circle
+            ctx.beginPath();
+            ctx.arc(shape.x,shape.y,shape.radius,0,Math.PI*2);
+            ctx.fillStyle=shape.color;
+            ctx.fill();
+        }else if(shape.width){
+            // it's a rectangle
+            ctx.fillStyle=shape.color;
+            ctx.fillRect(shape.x,shape.y,shape.width,shape.height);
+        }
+    }
 }
