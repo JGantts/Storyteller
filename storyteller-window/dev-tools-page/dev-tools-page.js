@@ -10,7 +10,7 @@ function executeUserCode(){
   });
 }
 
-function launchSorcererTable(){
+function launchSorcerersTable(){
   ipcRenderer.send('createSorcerersTableWindow', null)
 }
 
