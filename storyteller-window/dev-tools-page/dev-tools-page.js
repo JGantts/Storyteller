@@ -10,14 +10,14 @@ function executeUserCode(){
   });
 }
 
-function launchSorcerersKit(){
-  ipcRenderer.send('createSorcerersKitWindow', null)
+function launchSorcererTable(){
+  ipcRenderer.send('createSorcerersTableWindow', null)
 }
 
-function launchDesignersKit(){
-  ipcRenderer.send('createDesignersKitWindow', null)
+function launchDesignersTable(){
+  ipcRenderer.send('createDesignersTableWindow', null)
 }
 
-function launchCartographersKit(){
-  ipcRenderer.send('createCartographersKitWindow', null)
+function launchCartographersTable(){
+  ipcRenderer.send('createCartographersTableWindow', null)
 }

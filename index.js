@@ -1,16 +1,16 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 let settings;
 
-ipcMain.on('createSorcerersKitWindow', (event, args) => {
-  createSorcerersKitWindow();
+ipcMain.on('createSorcerersTableWindow', (event, args) => {
+  createSorcerersTableWindow();
 });
 
-ipcMain.on('createDesignersKitWindow', (event, args) => {
-  createDesignersKitWindow();
+ipcMain.on('createDesignersTableWindow', (event, args) => {
+  createDesignersTableWindow();
 });
 
-ipcMain.on('createCartographersKitWindow', (event, args) => {
-  createCartographersKitWindow();
+ipcMain.on('createCartographersTableWindow', (event, args) => {
+  createCartographersTableWindow();
 });
 
 function launchApp(){
@@ -44,7 +44,7 @@ function createStorytellerWindow () {
   loadWindow(win, 'storyteller-window/index.html')
 }
 
-function createSorcerersKitWindow() {
+function createSorcerersTableWindow() {
   // Create the browser window.
   let win = new BrowserWindow({
     width: 800,
@@ -57,10 +57,10 @@ function createSorcerersKitWindow() {
 
   win.setMenu(null)
 
-  loadWindow(win, 'sorcerers-kit-window/index.html')
+  loadWindow(win, 'sorcerers-table-window/index.html')
 }
 
-function createDesignersKitWindow() {
+function createDesignersTableWindow() {
   // Create the browser window.
   let win = new BrowserWindow({
     width: 800,
@@ -74,10 +74,10 @@ function createDesignersKitWindow() {
 
   win.setMenu(null)
 
-  loadWindow(win, 'designers-kit-window/index.html')
+  loadWindow(win, 'designers-table-window/index.html')
 }
 
-function createCartographersKitWindow() {
+function createCartographersTableWindow() {
   // Create the browser window.
   let win = new BrowserWindow({
     width: 800,
@@ -196,7 +196,7 @@ function createCartographersKitWindow() {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 
-  loadWindow(win, 'cartographers-kit-window/index.html')
+  loadWindow(win, 'cartographers-table-window/index.html')
 }
 
 function loadWindow(browserWindow, loadFile){
