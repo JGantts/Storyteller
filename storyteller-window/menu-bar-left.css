@@ -5,7 +5,7 @@
   padding-left: 41.5px;
   padding-top: 17px;
   display: inline-grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   grid-gap: 20px;
 }
 
@@ -13,7 +13,7 @@
   background-color: rgb(51,45,83);
   color: white;
   display: inline-block;
-  width: 150px;
+  width: 100px;
   height: 30px;
   border: 0;
   outline: none;

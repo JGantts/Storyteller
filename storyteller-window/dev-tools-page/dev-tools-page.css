@@ -12,6 +12,7 @@
 	padding:12px 16px;
 	text-decoration:none;
   outline:none;
+	width: 150px;
 }
 .toolButton:hover {
 	background-color: rgb(71,59,99);;

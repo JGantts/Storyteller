@@ -84,11 +84,12 @@ let metarooms = [
     id: 'ed230242fd94c9504eef2f0f435aeb8d638a1e49',
     name: 'Dollhouse',
     //background: 'https://eemfoo.org/ccarchive/Other/Assets/Moe/Background%20Images/Hydrocea/massivepreview.png',
-    background: 'https://eemfoo.org/ccarchive/Other/Assets/Moe/Background%20Images/Hydrocea/hydrocea5.jpg',
+    //background: 'https://eemfoo.org/ccarchive/Other/Assets/Moe/Background%20Images/Hydrocea/hydrocea5.jpg',
+    background: 'https://github.com/Lantoniar/dollhouse/raw/main/artAssets/background/dh_background.bmp',
     x: 0,
     y: 0,
-    width: 7000,
-    height: 2500,
+    width: 2221,
+    height: 1008,
     rooms: [
       {
         leftX: 100,
