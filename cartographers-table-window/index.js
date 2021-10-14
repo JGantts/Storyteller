@@ -18,6 +18,8 @@ canvasElement.onmousemove=handleMouseMove;
 canvasElement.onmouseup=handleMouseUp;
 canvasElement.onmouseout=handleMouseOut;
 
+
+
 let _undoList = [];
 let _redoList = [];
 
@@ -73,7 +75,25 @@ function redoMultiCommand(subcommands){
     });
 }
 
+function getRoomCeiling(room) {
+    return {
+      point: {
+          x: room.leftX,
+          y: room.leftCeilingY
+      },
+      slope: (room.leftCeilingY - room.rightCeilingY)/(room.leftX - room.rightX)
+    };
+}
 
+function getRoomFloor(room) {
+    return {
+      point: {
+          x: room.leftX,
+          y: room.leftFloorY
+      },
+      slope: (room.leftFloorY - room.rightFloorY)/(room.leftX - room.rightX)
+    };
+}
 
 function setupCanvas(canvas, rect) {
   // Get the device pixel ratio, falling back to 1.
@@ -154,42 +174,16 @@ function getDoorsFromRooms(rooms, perms) {
       }
 
       //Now check the less performant opeeration: horizontal floors/ceilings which can be slopped
+      let roomALineTop = getRoomCeiling(roomA);
 
-      let roomARun = roomA.leftX - roomA.rightX;
+      let roomALineBottom = getRoomFloor(roomA);
 
-      let roomALineTop = {
-        point: {
-            x: roomA.leftX,
-            y: roomA.leftCeilingY
-        },
-        slope: (roomA.leftCeilingY - roomA.rightCeilingY)/roomARun
-      };
 
-      let roomALineBottom = {
-        point: {
-          x: roomA.leftX,
-          y: roomA.leftFloorY
-        },
-        slope: (roomA.leftFloorY - roomA.rightFloorY)/roomARun
-      };
+      let roomBLineTop = getRoomCeiling(roomB);
 
-      let roomBRun = roomB.leftX - roomB.rightX;
+      let roomBLineBottom = getRoomFloor(roomB);
 
-      let roomBLineTop = {
-        point: {
-            x: roomB.leftX,
-            y: roomB.leftCeilingY
-        },
-        slope: (roomB.leftCeilingY - roomB.rightCeilingY)/roomBRun
-      };
-
-      let roomBLineBottom = {
-        point: {
-            x: roomB.leftX,
-            y: roomB.leftFloorY
-        },
-        slope: (roomB.leftFloorY - roomB.rightFloorY)/roomBRun
-      };
+      console.log(roomBLineBottom);
 
       /*if (getIntersectsFromFour(roomALineTop, roomB) || getIntersectsFromFour(roomBLineBottom, roomA)) {
           let ourPoints = getMiddleTwoPointsConsideredVertically(
@@ -233,7 +227,6 @@ function getDoorsFromRooms(rooms, perms) {
 
 function getMiddleTwo(one, two, three, four){
     let sorted = [one, two, three, four];
-    sorted.sort();
     return {
         high: sorted[2],
         low: sorted[1]
@@ -285,7 +278,6 @@ function getIntersectsFromOne(line, point){
     if (((point.x - line.point.x) * -(line.slope) + line.point.y) === point.y) {
         return point;
     }
-    console.log("No Match:");
     return null;
 }
 
@@ -349,44 +341,7 @@ function getWallsFromRooms(rooms) {
 }
 
 async function newFile(){
-  ctx = setupCanvas(canvasElement, metaroom);
-  canvasElement.width =  metaroom.width;
-  canvasElement.height =  metaroom.height;
-  /*doors = getDoorsFromRooms(metarooms[0].rooms)
-    .sort((one, two) => {
-      if (one.start.x < two.start.x) return -1;
-      if (one.start.x > two.start.x) return 1;
-      if (one.start.y < two.start.y) return -1;
-      if (one.start.y > two.start.y) return 1;
-      if (one.end.x < two.end.x) return -1;
-      if (one.end.x > two.end.x) return 1;
-      if (one.end.y < two.end.y) return -1;
-      if (one.end.y > two.end.y) return 1;
-      return 0;
-     });
-  console.log(JSON.stringify(doors, null, 4));*/
-  var img = new Image;
-  img.src = metaroom.background;
-  ctx.moveTo(0, 0);
-  await img.decode();
-  ctx.drawImage(img, 0, 0);
-  ctx.lineWidth = 2;
-  getWallsFromRooms(metaroom.rooms).concat(getDoorsFromRooms(metaroom.rooms, metaroom.perms))
-    .forEach((door, i) => {
-      if (door.permeability < 0) {
-        ctx.strokeStyle = '#33DDDD';
-      } else if (door.permeability === 0) {
-        ctx.strokeStyle = '#DD3333';
-      } else if (door.permeability < 1) {
-        ctx.strokeStyle = '#DDDD33';
-      } else if (door.permeability === 1) {
-        ctx.strokeStyle = '#33DD33';
-      }
-      ctx.beginPath();
-      ctx.moveTo(door.start.x, door.start.y);
-      ctx.lineTo(door.end.x, door.end.y);
-      ctx.stroke();
-    });
+
 
 
 
@@ -599,138 +554,174 @@ function controlKey(event){
 
 
 
-// save relevant information about shapes drawn on the canvas
-var shapes=[];
-// define one circle and save it in the shapes[] array
-shapes.push( {x:30, y:30, radius:15, color:'blue'} );
-// define one rectangle and save it in the shapes[] array
-shapes.push( {x:100, y:-1, width:75, height:35, color:'red'} );
-
-// drag related vars
-var isDragging=false;
-var startX,startY;
-
 // hold the index of the shape being dragged (if any)
 var selectedShapeIndex;
 
-// draw the shapes on the canvas
-drawAll();
-
-// listen for mouse events
-canvas.onmousedown=handleMouseDown;
-canvas.onmousemove=handleMouseMove;
-canvas.onmouseup=handleMouseUp;
-canvas.onmouseout=handleMouseOut;
+/*
+leftX: 100,
+rightX: 200,
+leftCeilingY: 250,
+rightCeilingY: 250,
+leftFloorY: 300,
+rightFloorY: 300,
+*/
 
 // given mouse X & Y (mx & my) and shape object
 // return true/false whether mouse is inside the shape
-function isMouseInShape(mx,my,shape){
-    if(shape.radius){
-        // this is a circle
-        var dx=mx-shape.x;
-        var dy=my-shape.y;
-        // math test to see if mouse is inside circle
-        if(dx*dx+dy*dy<shape.radius*shape.radius){
-            // yes, mouse is inside this circle
-            return(true);
-        }
-    }else if(shape.width){
-        // this is a rectangle
-        var rLeft=shape.x;
-        var rRight=shape.x+shape.width;
-        var rTop=shape.y;
-        var rBott=shape.y+shape.height;
-        // math test to see if mouse is inside rectangle
-        if( mx>rLeft && mx<rRight && my>rTop && my<rBott){
-            return(true);
-        }
+function isClickInRoom(mx, my, room){
+    //console.log((mx <= room.leftX) );
+    if (mx <= room.leftX) {
+        return false;
     }
-    // the mouse isn't in any of the shapes
-    return(false);
+    //console.log((mx >= room.rightX));
+    if (mx >= room.rightX) {
+        return false;
+    }
+    let ceiling = getRoomCeiling(room);
+    //console.log((((mx - ceiling.point.x) * -(ceiling.slope) + ceiling.point.y) >= my) );
+    if (((mx - ceiling.point.x) * (ceiling.slope) + ceiling.point.y) >= my) {
+        return false;
+    }
+    let floor = getRoomFloor(room);
+    /*console.log((((mx - floor.point.x) * -(floor.slope) + floor.point.y) <= my) );
+    console.log((((mx - floor.point.x) * -(floor.slope) + floor.point.y) - my) );
+    console.log(mx);
+    console.log(floor.point.x);
+    console.log(floor.slope);
+    console.log(floor.point.y);
+    console.log(my);*/
+    if (((mx - floor.point.x) * (floor.slope) + floor.point.y) <= my) {
+        return false;
+    }
+    return true;
 }
 
+let selectedRoomId = -1;
+
 function handleMouseDown(e){
+    console.log(e);
     // tell the browser we're handling this event
     e.preventDefault();
     e.stopPropagation();
     // calculate the current mouse position
-    startX=parseInt(e.clientX-offsetX);
-    startY=parseInt(e.clientY-offsetY);
+    startX=parseInt(e.offsetX);
+    startY=parseInt(e.offsetY);
     // test mouse position against all shapes
     // post result if mouse is in a shape
-    for(var i=0;i<shapes.length;i++){
-        if(isMouseInShape(startX,startY,shapes[i])){
-            // the mouse is inside this shape
-            // select this shape
-            selectedShapeIndex=i;
-            // set the isDragging flag
-            isDragging=true;
-            // and return (==stop looking for
-            //     further shapes under the mouse)
-            return;
+    selectedRoomId = -1;
+    //console.log("\n\n\n\n\n\n\n\n\n\n\n");
+    //console.log("--------");
+    for(var i=0; i<metaroom.rooms.length; i++){
+        //console.log("\n\n");
+        //console.log(i);
+        if(isClickInRoom(startX, startY, metaroom.rooms[i])){
+            selectedRoomId = i;
+            break;
         }
     }
+    redrawMetaroom();
 }
 
 function handleMouseUp(e){
-    // return if we're not dragging
-    if(!isDragging){return;}
-    // tell the browser we're handling this event
-    e.preventDefault();
-    e.stopPropagation();
-    // the drag is over -- clear the isDragging flag
-    isDragging=false;
+
 }
 
 function handleMouseOut(e){
     // return if we're not dragging
-    if(!isDragging){return;}
-    // tell the browser we're handling this event
-    e.preventDefault();
-    e.stopPropagation();
-    // the drag is over -- clear the isDragging flag
-    isDragging=false;
+
 }
 
 function handleMouseMove(e){
-    // return if we're not dragging
-    if(!isDragging){return;}
-    // tell the browser we're handling this event
-    e.preventDefault();
-    e.stopPropagation();
-    // calculate the current mouse position
-    mouseX=parseInt(e.clientX-offsetX);
-    mouseY=parseInt(e.clientY-offsetY);
-    // how far has the mouse dragged from its previous mousemove position?
-    var dx=mouseX-startX;
-    var dy=mouseY-startY;
-    // move the selected shape by the drag distance
-    var selectedShape=shapes[selectedShapeIndex];
-    selectedShape.x+=dx;
-    selectedShape.y+=dy;
-    // clear the canvas and redraw all shapes
-    drawAll();
-    // update the starting drag position (== the current mouse position)
-    startX=mouseX;
-    startY=mouseY;
+  console.log(e);
+  // tell the browser we're handling this event
+  e.preventDefault();
+  e.stopPropagation();
+  // calculate the current mouse position
+  startX=parseInt(e.offsetX);
+  startY=parseInt(e.offsetY);
+  // test mouse position against all shapes
+  // post result if mouse is in a shape
+  selectedRoomId = -1;
+  //console.log("\n\n\n\n\n\n\n\n\n\n\n");
+  //console.log("--------");
+  for(var i=0; i<metaroom.rooms.length; i++){
+      //console.log("\n\n");
+      //console.log(i);
+      if(isClickInRoom(startX, startY, metaroom.rooms[i])){
+          selectedRoomId = i;
+          break;
+      }
+  }
+  redrawMetaroom();
 }
 
-// clear the canvas and
-// redraw all shapes in their current positions
-function drawAll(){
-    ctx.clearRect(0,0,cw,ch);
-    for(var i=0;i<shapes.length;i++){
-        var shape=shapes[i];
-        if(shape.radius){
-            // it's a circle
-            ctx.beginPath();
-            ctx.arc(shape.x,shape.y,shape.radius,0,Math.PI*2);
-            ctx.fillStyle=shape.color;
-            ctx.fill();
-        }else if(shape.width){
-            // it's a rectangle
-            ctx.fillStyle=shape.color;
-            ctx.fillRect(shape.x,shape.y,shape.width,shape.height);
-        }
-    }
+async function redrawMetaroom(){
+    ctx = setupCanvas(canvasElement, metaroom);
+    canvasElement.width =  metaroom.width;
+    canvasElement.height =  metaroom.height;
+    var img = new Image;
+    img.src = metaroom.background;
+    ctx.moveTo(0, 0);
+    await img.decode();
+    ctx.drawImage(img, 0, 0);
+    redrawRooms();
 }
+
+async function redrawRooms(){
+    ctx.lineWidth = 2;
+    getWallsFromRooms(metaroom.rooms).concat(getDoorsFromRooms(metaroom.rooms, metaroom.perms))
+      .forEach((door, i) => {
+        if (door.permeability < 0) {
+          ctx.strokeStyle = '#33DDDD';
+        } else if (door.permeability === 0) {
+          ctx.strokeStyle = '#DD3333';
+        } else if (door.permeability < 1) {
+          ctx.strokeStyle = '#DDDD33';
+        } else if (door.permeability === 1) {
+          ctx.strokeStyle = '#33DD33';
+        }
+        ctx.beginPath();
+        ctx.moveTo(door.start.x, door.start.y);
+        ctx.lineTo(door.end.x, door.end.y);
+        ctx.stroke();
+      });
+
+      if (selectedRoomId !== -1) {
+          let room = metaroom.rooms[selectedRoomId];
+
+          var pattern = document.createElement('canvas');
+          pattern.width = 40;
+          pattern.height = 40;
+          var pctx = pattern.getContext('2d');
+
+          pctx.beginPath();
+          pctx.moveTo(0.0, 40.0);
+          pctx.lineTo(26.9, 36.0);
+          pctx.bezierCurveTo(31.7, 36.0, 36.0, 32.1, 36.0, 27.3);
+          pctx.lineTo(40.0, 0.0);
+          pctx.lineTo(11.8, 3.0);
+          pctx.bezierCurveTo(7.0, 3.0, 3.0, 6.9, 3.0, 11.7);
+          pctx.lineTo(0.0, 40.0);
+          pctx.closePath();
+          pctx.fillStyle = "rgb(188, 222, 178)";
+          pctx.fill();
+          pctx.lineWidth = 0.8;
+          pctx.strokeStyle = "rgb(0, 156, 86)";
+          pctx.lineJoin = "miter";
+          pctx.miterLimit = 4.0;
+          pctx.stroke();
+
+          var pattern = ctx.createPattern(pattern, "repeat");
+
+          ctx.fillStyle = pattern;
+          ctx.beginPath();
+          ctx.moveTo(room.leftX, room.leftCeilingY);
+          ctx.lineTo(room.rightX, room.rightCeilingY);
+          ctx.lineTo(room.rightX, room.rightFloorY);
+          ctx.lineTo(room.leftX, room.leftFloorY);
+          ctx.closePath();
+          ctx.fill();
+      }
+}
+
+redrawMetaroom();
