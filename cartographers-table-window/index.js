@@ -1,10 +1,12 @@
 $.getScript('../engine-api/CAOS.js');
 const assert = require('assert');
-const { clipboard, remote } = require('electron')
+const { clipboard, remote } = require('electron');
 const dialog = remote.dialog;
 const fs = require('fs');
 //const path = require("path");
 const WIN = remote.getCurrentWindow();
+
+const { metaroom } = require('./dollhouse.js');
 
 let currentFile = null;
 let currentFileNeedsSaving = false;
@@ -72,218 +74,6 @@ function redoMultiCommand(subcommands){
 }
 
 
-//X_LEFT
-//X_RIGHT
-//Y_LEFT_CEILING
-//Y_RIGHT_CEILING
-//Y_LEFT_FLOOR
-//Y_RIGHT_FLOOR
-
-let metarooms = [
-  {
-    id: 'ed230242fd94c9504eef2f0f435aeb8d638a1e49',
-    name: 'Dollhouse',
-    //background: 'https://eemfoo.org/ccarchive/Other/Assets/Moe/Background%20Images/Hydrocea/massivepreview.png',
-    //background: 'https://eemfoo.org/ccarchive/Other/Assets/Moe/Background%20Images/Hydrocea/hydrocea5.jpg',
-    background: 'https://github.com/Lantoniar/dollhouse/raw/main/artAssets/background/dh_background.bmp',
-    x: 0,
-    y: 0,
-    width: 2221,
-    height: 1008,
-    rooms: [
-      {
-        leftX: 100,
-        rightX: 200,
-        leftCeilingY: 100,
-        rightCeilingY: 80,
-        leftFloorY: 200,
-        rightFloorY: 220,
-      },
-      {
-        leftX: 200,
-        rightX: 300,
-        leftCeilingY: 80,
-        rightCeilingY: 100,
-        leftFloorY: 220,
-        rightFloorY: 200,
-      },
-      {
-        leftX: 200,
-        rightX: 300,
-        leftCeilingY: 220,
-        rightCeilingY: 200,
-        leftFloorY: 300,
-        rightFloorY: 300,
-      },
-      {
-        leftX: 100,
-        rightX: 200,
-        leftCeilingY: 250,
-        rightCeilingY: 250,
-        leftFloorY: 300,
-        rightFloorY: 300,
-      }
-    ]
-  }
-];
-
-let doors = [
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 100,
-            "y": 100
-        },
-        "end": {
-            "x": 200,
-            "y": 80
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 100,
-            "y": 200
-        },
-        "end": {
-            "x": 100,
-            "y": 100
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 100,
-            "y": 250
-        },
-        "end": {
-            "x": 200,
-            "y": 250
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 100,
-            "y": 300
-        },
-        "end": {
-            "x": 100,
-            "y": 250
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 200,
-            "y": 80
-        },
-        "end": {
-            "x": 300,
-            "y": 100
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 200,
-            "y": 220
-        },
-        "end": {
-            "x": 100,
-            "y": 200
-        }
-    },
-    {
-        "permeability": 1.0,
-        "start": {
-            "x": 200,
-            "y": 220
-        },
-        "end": {
-            "x": 200,
-            "y": 80
-        }
-    },
-    {
-        "permeability": 0.5,
-        "start": {
-            "x": 200,
-            "y": 220
-        },
-        "end": {
-            "x": 300,
-            "y": 200
-        }
-    },
-    {
-        "permeability": 0.0,
-        "start": {
-            "x": 200,
-            "y": 250
-        },
-        "end": {
-            "x": 200,
-            "y": 300
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 200,
-            "y": 300
-        },
-        "end": {
-            "x": 100,
-            "y": 300
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 300,
-            "y": 100
-        },
-        "end": {
-            "x": 300,
-            "y": 200
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 300,
-            "y": 200
-        },
-        "end": {
-            "x": 300,
-            "y": 300
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 300,
-            "y": 300
-        },
-        "end": {
-            "x": 200,
-            "y": 300
-        }
-    },
-    {
-        "permeability": -1.0,
-        "start": {
-            "x": 200,
-            "y": 220
-        },
-        "end": {
-            "x": 200,
-            "y": 250
-        }
-    }
-];
-
 
 function setupCanvas(canvas, rect) {
   // Get the device pixel ratio, falling back to 1.
@@ -301,25 +91,210 @@ function setupCanvas(canvas, rect) {
   return ctx;
 }
 
-function perm() {
-    let random = Math.random();
-    if (random < 0.25) {
-        return -1;
-    } else if (random < 0.5) {
-        return 0;
-    } else if (random < 0.75) {
-        return 0.5;
-    } else if (random < 1) {
-        return 1.0;
+/*
+leftX: 100,
+rightX: 200,
+leftCeilingY: 250,
+rightCeilingY: 250,
+leftFloorY: 300,
+rightFloorY: 300,
+*/
+
+function getDoorsFromRooms(rooms, perms) {
+  let doors = [];
+  for (const perm of perms) {
+      console.log(perm);
+  //perms.forEach((perm, i) => {
+      let roomA = rooms[perm.rooms.a];
+      let roomB = rooms[perm.rooms.b];
+
+      //console.log(rooms);
+      //console.log(perms);
+
+      //First check the more performant opeeration: vertical walls
+
+      if (roomA.leftX === roomB.rightX) {
+
+          let middleTwo = getMiddleTwo(roomA.leftCeilingY, roomA.leftFloorY, roomB.rightCeilingY, roomB.rightFloorY);
+
+          doors.push(
+            {
+              permeability: perm.permeability,
+              start: {
+                x: roomA.leftX,
+                y: middleTwo.high
+              },
+              end: {
+                x: roomA.leftX,
+                y: middleTwo.low
+              }
+            }
+          );
+          continue;
+      }
+      if (roomA.rightX === roomB.leftX) {
+
+        let middleTwo = getMiddleTwo(roomA.rightCeilingY, roomA.rightFloorY, roomB.leftCeilingY, roomB.leftFloorY);
+
+        doors.push(
+          {
+            permeability: perm.permeability,
+            start: {
+              x: roomB.leftX,
+              y: middleTwo.high
+            },
+            end: {
+              x: roomB.leftX,
+              y: middleTwo.low
+            }
+          }
+        );
+        continue;
+
+      }
+
+      //Now check the less performant opeeration: horizontal floors/ceilings which can be slopped
+
+      let roomARun = roomA.leftX - roomA.rightX;
+
+      let roomALineTop = {
+        point: {
+            x: roomA.leftX,
+            y: roomA.leftCeilingY
+        },
+        slope: (roomA.leftCeilingY - roomA.rightCeilingY)/roomARun
+      };
+
+      let roomALineBottom = {
+        point: {
+          x: roomA.leftX,
+          y: roomA.leftFloorY
+        },
+        slope: (roomA.leftFloorY - roomA.rightFloorY)/roomARun
+      };
+
+      let roomBRun = roomB.leftX - roomB.rightX;
+
+      let roomBLineTop = {
+        point: {
+            x: roomB.leftX,
+            y: roomB.leftCeilingY
+        },
+        slope: (roomB.leftCeilingY - roomB.rightCeilingY)/roomBRun
+      };
+
+      let roomBLineBottom = {
+        point: {
+            x: roomB.leftX,
+            y: roomB.leftFloorY
+        },
+        slope: (roomB.leftFloorY - roomB.rightFloorY)/roomBRun
+      };
+
+      /*if (getIntersectsFromFour(roomALineTop, roomB) || getIntersectsFromFour(roomBLineBottom, roomA)) {
+          let ourPoints = getMiddleTwoPointsConsideredVertically(
+              {x: roomA.leftX, y: roomA.leftCeilingY},
+              {x: roomA.rightX, y: roomA.rightCeilingY},
+              {x: roomB.leftX, y: roomB.leftFLoorY},
+              {x: roomB.rightX, y: roomB.rightFloorY}
+          );
+          doors.push(
+            {
+              permeability: perm.permeability,
+              start: ourPoints.high,
+              end: ourPoints.low
+            }
+          );
+          continue;
+      }*/
+
+    //  if (getIntersectsFromFour(roomALineBottom, roomB) || getIntersectsFromFour(roomBLineTop, roomA)) {
+      if (getIntersectsFromFour(roomALineBottom, roomB)) {
+          let ourPoints = getMiddleTwoPointsConsideredVertically(
+              {x: roomA.leftX, y: roomA.leftFloorY},
+              {x: roomA.rightX, y: roomA.rightFloorY},
+              {x: roomB.leftX, y: roomB.leftCeilingY},
+              {x: roomB.rightX, y: roomB.rightCeilingY}
+          );
+          doors.push(
+            {
+              permeability: perm.permeability,
+              start: ourPoints.high,
+              end: ourPoints.low
+            }
+          );
+          continue;
+      }
+      console.log("wtf");
+  }
+  console.log(doors);
+  return doors;
+}
+
+function getMiddleTwo(one, two, three, four){
+    let sorted = [one, two, three, four];
+    sorted.sort();
+    return {
+        high: sorted[2],
+        low: sorted[1]
     }
 }
 
-function getDoorsFromRooms(rooms) {
+function getMiddleTwoPointsConsideredVertically(one, two, three, four){
+    let sorted = [one, two, three, four];
+    sorted.sort((a, b) => {return a.y -b.y});
+    return {
+        high: sorted[2],
+        low: sorted[1]
+    }
+}
+
+/*
+leftX: 100,
+rightX: 200,
+leftCeilingY: 250,
+rightCeilingY: 250,
+leftFloorY: 300,
+rightFloorY: 300,
+*/
+
+function getPointOne(room){
+    return {x: room.leftX, y: room.leftCeilingY};
+}
+
+function getPointTwo(room){
+    return {x: room.leftX, y: room.leftFloorY};
+}
+
+function getPointThree(room){
+    return {x: room.rightX, y: room.rightFloorY};
+}
+
+function getPointFour(room){
+    return {x: room.rightX, y: room.rightCeilingY};
+}
+
+function getIntersectsFromFour(line, room){
+    return (getIntersectsFromOne(line, getPointOne(room)))
+      ?? (getIntersectsFromOne(line, getPointTwo(room)))
+      ?? (getIntersectsFromOne(line, getPointThree(room)))
+      ?? (getIntersectsFromOne(line, getPointFour(room)));
+}
+
+function getIntersectsFromOne(line, point){
+    if (((point.x - line.point.x) * -(line.slope) + line.point.y) === point.y) {
+        return point;
+    }
+    console.log("No Match:");
+    return null;
+}
+
+function getWallsFromRooms(rooms) {
   let doors = [];
   rooms.forEach((room, i) => {
     doors.push(
       {
-        permeability: perm(),
+        permeability: -1,
         start: {
           x: room.leftX,
           y: room.leftCeilingY
@@ -332,7 +307,7 @@ function getDoorsFromRooms(rooms) {
     );
     doors.push(
       {
-        permeability: perm(),
+        permeability: -1,
         start: {
           x: room.rightX,
           y: room.rightCeilingY
@@ -345,7 +320,7 @@ function getDoorsFromRooms(rooms) {
     );
     doors.push(
       {
-        permeability: perm(),
+        permeability: -1,
         start: {
           x: room.rightX,
           y: room.rightFloorY
@@ -358,7 +333,7 @@ function getDoorsFromRooms(rooms) {
     );
     doors.push(
       {
-        permeability: perm(),
+        permeability: -1,
         start: {
           x: room.leftX,
           y: room.leftFloorY
@@ -374,9 +349,9 @@ function getDoorsFromRooms(rooms) {
 }
 
 async function newFile(){
-  ctx = setupCanvas(canvasElement, metarooms[0]);
-  canvasElement.width =  metarooms[0].width;
-  canvasElement.height =  metarooms[0].height;
+  ctx = setupCanvas(canvasElement, metaroom);
+  canvasElement.width =  metaroom.width;
+  canvasElement.height =  metaroom.height;
   /*doors = getDoorsFromRooms(metarooms[0].rooms)
     .sort((one, two) => {
       if (one.start.x < two.start.x) return -1;
@@ -391,13 +366,12 @@ async function newFile(){
      });
   console.log(JSON.stringify(doors, null, 4));*/
   var img = new Image;
-  img.src = metarooms[0].background;
+  img.src = metaroom.background;
   ctx.moveTo(0, 0);
   await img.decode();
   ctx.drawImage(img, 0, 0);
   ctx.lineWidth = 2;
-  doors
-    //.flatMap(x => [x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x])
+  getWallsFromRooms(metaroom.rooms).concat(getDoorsFromRooms(metaroom.rooms, metaroom.perms))
     .forEach((door, i) => {
       if (door.permeability < 0) {
         ctx.strokeStyle = '#33DDDD';
@@ -436,66 +410,11 @@ async function newFile(){
 }
 
 async function openFile(){
-  /*if (currentFileNeedsSaving){
-    if (!await displaySaveFileReminderDialog()){
-      return;
-    }
-  }
 
-  let options = {
-   title : 'Open CASO file',
-   defaultPath : '%HOMEPATH%/Documents/',
-   buttonLabel : 'Open',
-   filters :[
-    {name: 'CAOS', extensions: ['cos']},
-    {name: 'All Files', extensions: ['*']}
-   ],
-   properties: ['openFile']
-  }
-
-  let result = await dialog.showOpenDialog(WIN, options)
-  if (result.canceled){
-    return;
-  }
-  currentFile = result.filePaths[0];
-  try{
-    let fileContents = fs.readFileSync(currentFile, 'utf-8');
-    codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
-    SetCaretPositionWithin(codeElement, 0);
-    insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
-    currentFileNeedsSaving = false;
-    updateTitle();
-    _undoList = [];
-    _redoList = [];
-    updateUndoRedoButtons();
-  }catch (err){
-    console.log(err);
-    throw err;
-  }*/
 }
 
 async function saveFile(){
-  /*if (!currentFileNeedsSaving){
-    return;
-  }
-  if (!currentFile){
-    let result = await displaySaveFileDialog();
-    if (result.canceled){
-      return false;
-    }
-    currentFile = result.filePaths[0];
-  }
-  try{
-    await fs.writeFileSync(currentFile, GetVisibleTextInElement(codeElement), 'utf-8');
-    if (currentFileNeedsSaving){
-      currentFileNeedsSaving = false;
-      updateTitle();
-    }
-    return true;
-  }catch (err){
-    console.log(err);
-    throw err;
-  }*/
+
 }
 
 function saveAllFiles(){
@@ -615,85 +534,6 @@ function redo(){
   updateUndoRedoButtons();
 }
 
-function comment(){
-
-}
-
-function uncomment(){
-
-}
-
-function autoFormat(){
-
-}
-
-function injectInstall(){
-  injectUserCode(true, false, false);
-}
-
-function injectEvents(){
-  injectUserCode(false, true, false);
-}
-
-function injectAll(){
-  injectUserCode(true, true, true);
-}
-
-function injectRemove(){
-  injectUserCode(false, false, true);
-}
-
-function injectUserCode(doInstall, doEvents, doRemove){
-  let resultElement = document.getElementById('caos-result');
-  resultElement.innerHTML = '';
-  let codeText = GetVisibleTextInElement(codeElement);
-  let codeTree = Caos(codeText);
-
-  let errors = TreeToErrors(codeTree);
-  if (errors !== ''){
-    resultElement.innerHTML = errors;
-    return;
-  }
-
-  if (doRemove && codeTree.remove){
-    let remove = TreeToText(codeTree.remove).slice(5);
-    executeCaos(remove, function (error, result) {
-        if (error) console.log(error);
-        resultElement.innerHTML += 'Injected remove script:<br />';
-        resultElement.innerHTML += result + '<br />';
-    });
-  }
-
-  if(doEvents && codeTree.eventScripts.length >= 1){
-    let events = codeTree.eventScripts
-      .map(script => {return {
-        family: script.start.arguments[0].value,
-        genus: script.start.arguments[1].value,
-        species: script.start.arguments[2].value,
-        eventNum: script.start.arguments[3].value,
-        script: TreeToText(script.commands)
-      };});
-
-    events.forEach((script, i) => {
-      injectScript(script, function (error, result) {
-          if (error) console.log(error);
-          resultElement.innerHTML += `Injected ${script.family} ${script.genus} ${script.species} ${script.eventNum} event script:<br />`;
-          resultElement.innerHTML += result + '<br />';
-      });
-    });
-  }
-
-
-  if (doInstall && codeTree.inject){
-    let inject = TreeToText(codeTree.inject);
-    executeCaos(inject, function (error, result) {
-        if (error) console.log(error);
-        resultElement.innerHTML += 'Injected install script:<br />';
-        resultElement.innerHTML += result;
-    });
-  }
-}
-
 function userTextKeyDown(event){
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
@@ -752,121 +592,6 @@ function controlKey(event){
     redo();
   }
 }
-
-
-function editingKey(event){
-  var codeText = GetVisibleTextInElement(codeElement);
-  var caretPositionIn = GetCaretPositionWithin(codeElement);
-
-  var newCodeText = '';
-  var newCaretPosition = 0;
-
-  if (caretPositionIn.start === caretPositionIn.end){
-    switch (event.key){
-      case 'Backspace':
-        let backspaceCommand = makeDeleteTextCommand(caretPositionIn.end-1, 1);
-        _undoList.push(backspaceCommand);
-        backspaceCommand.do();
-        _redoList = [];
-        break;
-      case 'Delete':
-        let deleteCommand = makeDeleteTextCommand(caretPositionIn.end, 1);
-        _undoList.push(deleteCommand);
-        deleteCommand.do();
-        _redoList = [];
-        break;
-      default:
-        assert(false);
-        break;
-    }
-  }else{
-    switch (event.key){
-      case 'Backspace':
-      case 'Delete':
-        let deleteCommand = makeDeleteTextCommand(caretPositionIn.start, caretPositionIn.end - caretPositionIn.start);
-        _undoList.push(deleteCommand);
-        deleteCommand.do();
-        _redoList = [];
-        break;
-      default:
-        assert(false);
-        break;
-    }
-  }
-
-  //CheckCode(codeElement, newCodeText, caretPositionOut);
-}
-
-function insertText(text){
-  var codeText = GetVisibleTextInElement(codeElement);
-  var caretPosition = GetCaretPositionWithin(codeElement);
-
-  let newCodeText;
-  if (caretPosition.start === caretPosition.end){
-    let insertCommand = makeInsertTextCommand(caretPosition.end, text);
-    _undoList.push(insertCommand);
-    insertCommand.do();
-    _redoList = [];
-    updateUndoRedoButtons();
-  }else{
-    let deleteCommand = makeDeleteTextCommand(caretPosition.start, caretPosition.end - caretPosition.start);
-    let insertCommand = makeInsertTextCommand(caretPosition.start, text);
-    let multiCommand = buildMultiCommand([deleteCommand, insertCommand])
-    _undoList.push(multiCommand);
-    multiCommand.do();
-    _redoList = [];
-    updateUndoRedoButtons();
-  }
-}
-
-function makeInsertTextCommand(startIndex, text){
-  return new Command(
-    deleteTextAbsolute,
-    {startIndex, text},
-    insertTextAbsolute,
-    {startIndex, text},
-  );
-}
-
-function insertTextAbsolute({startIndex, text}){
-  let codeText = GetVisibleTextInElement(codeElement);
-  let newCodeText =
-    codeText.substring(0, startIndex)
-      + text
-      + codeText.substring(startIndex, codeText.length);
-  CheckCode(codeElement, newCodeText, startIndex+text.length);
-}
-
-function makeDeleteTextCommand(startIndex, length){
-  let codeText = GetVisibleTextInElement(codeElement);
-  let text = codeText.substring(startIndex, startIndex + length);
-  return new Command(
-    insertTextAbsolute,
-    {startIndex, text},
-    deleteTextAbsolute,
-    {startIndex, text},
-  );
-}
-
-function deleteTextAbsolute({startIndex, text}){
-  let codeText = GetVisibleTextInElement(codeElement);
-  let newCodeText =
-    codeText.substring(0, startIndex)
-      + codeText.substring(startIndex + text.length, codeText.length);
-  CheckCode(codeElement, newCodeText, startIndex);
-}
-
-function userTextKeyUp(event){
-  //userTextChanged();
-}
-
-function userTextOnClick(event){
-  var codeText = GetVisibleTextInElement(codeElement);
-  var caretPosition = GetCaretPositionWithin(codeElement);
-  ResetIdealCaretDepth(caretPosition.end, codeText)
-}
-
-
 
 
 
