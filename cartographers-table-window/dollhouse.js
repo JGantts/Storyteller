@@ -50,6 +50,14 @@ let dollhouse =
       rightCeilingY: 100,
       leftFloorY: 200,
       rightFloorY: 200,
+    },
+    {
+      leftX: 300,
+      rightX: 400,
+      leftCeilingY: 200,
+      rightCeilingY: 200,
+      leftFloorY: 300,
+      rightFloorY: 280,
     }
   ],
   "perms": [
@@ -78,6 +86,20 @@ let dollhouse =
           "rooms": {
               "a": 1,
               "b": 4,
+          },
+          "permeability": 1.0
+      },
+      {
+          "rooms": {
+              "a": 4,
+              "b": 5,
+          },
+          "permeability": 0.5
+      },
+      {
+          "rooms": {
+              "a": 2,
+              "b": 5,
           },
           "permeability": 1.0
       }
