@@ -841,7 +841,7 @@ function loadMetaroom(){
 }
 
 function subtractDoorsFromWalls(wallsOverreach, door){
-
+    return metaroomWallsOverreach;
 }
 
 async function redrawMetaroom(){
