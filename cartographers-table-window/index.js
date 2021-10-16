@@ -998,15 +998,121 @@ function drawSelectionCirclePortion(x, y, theta0, theta1, color) {
     selectionCtx.stroke();
 }
 
-function drawSelectionCirclePortion(x, y, theta0, theta1, color) {
+const selectionLineWidth = selectionCheckMargin;
+
+function drawSelectionLine(selected) {
+    let dashLength = selectionCheckMargin * 2;
+
+    let rise = selected.end.y - selected.start.y;
+    let run = selected.end.x - selected.start.x;
+    let lineLength = Math.sqrt(rise*rise+run*run);
+
+    let dashCountFractional = lineLength / dashLength;
+    let dashCountRemainder = dashCountFractional - Math.floor(dashCountFractional);
+    let dashCountWhole = Math.ceil(dashCountFractional);
+
+    let color1 = "#1e1e1e";
+    let color2 = "#e1e1e1";
+    selectionCtx.lineWidth = selectionLineWidth;
+
+    let time = new Date();
+    let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond*2));
+    let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
+    //console.log(percentageAfterFrameStart);
+
+    for (let i=-1.0/dashCountFractional-1.0; i < dashCountWhole; i++) {
+        let startPercent = (i+percentageAfterFrameStart) / dashCountFractional;
+        let stopPercent = startPercent + 1.0/dashCountFractional;
+        if (startPercent > 1.0) {
+            continue;
+        }
+        if (stopPercent < 0.0 ) {
+          continue;
+        }
+        let startPercentActual = Math.max(startPercent, 0.0);
+        let stopPercentActual = Math.min(stopPercent, 1.0);
+        //console.log(`${i} ${startPercentActual} ${stopPercentActual}`)
+        drawSeclectionLineSegment(selected.start, rise, run, startPercentActual, stopPercentActual , Math.floor(i)%2 ? color1 : color2)
+    }
+
+}
+
+function drawSeclectionLineSegment(lineStart, lineRise, lineRun, startPercent, stopPercent, color) {
+    //console.log(`${startPercent} ${stopPercent}`)
     selectionCtx.strokeStyle = color;
     selectionCtx.beginPath();
-    selectionCtx.arc(x, y, selctionCircleWidth, theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
+    selectionCtx.moveTo(lineStart.x + lineRun*startPercent, lineStart.y + lineRise*startPercent);
+    selectionCtx.lineTo(lineStart.x + lineRun*stopPercent, lineStart.y + lineRise*stopPercent);
     selectionCtx.stroke();
 }
 
-const selectionLineWidth = selectionCheckMargin;
+function drawSelectionRoom(selected) {
+    let time = new Date();
+    let pattern = document.createElement('canvas');
+    pattern.width = 40;
+    pattern.height = 40;
+    let pctx = pattern.getContext('2d');
 
+    let color1 = "#ffffff00"
+    let color2 = "#24A8AC";
+    let numberOfStripes = 20;
+    for (let i=0; i < numberOfStripes*5; i++){
+        let thickness = 40 / numberOfStripes;
+        pctx.beginPath();
+        pctx.strokeStyle = i%4 ? color1 : color2;
+        pctx.lineWidth = thickness;
+
+        let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
+        let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
+
+        let animationOffset = 40*percentageAfterFrameStart;
+        pctx.moveTo(-5, -45 + i*thickness + thickness/2 - animationOffset);
+        pctx.lineTo(45 + 100, 5 + 100 + i*thickness + thickness/2 - animationOffset);
+        pctx.stroke();
+    }
+/*
+    for (let i=0; i < numberOfStripes*2.1; i++){
+    let thickness = 40 / numberOfStripes;
+    pctx.beginPath();
+    pctx.strokeStyle = i % 2?color1:color2;
+    pctx.lineWidth = thickness;
+
+    pctx.moveTo(-5,  i*thickness + thickness/2);
+    pctx.lineTo(11, -11 + i*thickness + thickness/2);
+    pctx.stroke();
+}*/
+
+
+/*
+    pctx.beginPath();
+    pctx.moveTo(0.0, 40.0);
+    pctx.lineTo(26.9, 36.0);
+    pctx.bezierCurveTo(31.7, 36.0, 36.0, 32.1, 36.0, 27.3);
+    pctx.lineTo(40.0, 0.0);
+    pctx.lineTo(11.8, 3.0);
+    pctx.bezierCurveTo(7.0, 3.0, 3.0, 6.9, 3.0, 11.7);
+    pctx.lineTo(0.0, 40.0);
+    pctx.closePath();
+    pctx.fillStyle = "rgb(188, 222, 178)";
+    pctx.fill();
+    pctx.lineWidth = 0.8;
+    pctx.strokeStyle = "rgb(0, 156, 86)";
+    pctx.lineJoin = "miter";
+    pctx.miterLimit = 4.0;
+    pctx.stroke();
+*/
+
+    let patternStyle = selectionCtx.createPattern(pattern, "repeat");
+
+    selectionCtx.fillStyle = patternStyle;
+    selectionCtx.beginPath();
+    selectionCtx.moveTo(selected.leftX, selected.leftCeilingY);
+    selectionCtx.lineTo(selected.rightX, selected.rightCeilingY);
+    selectionCtx.lineTo(selected.rightX, selected.rightFloorY);
+    selectionCtx.lineTo(selected.leftX, selected.leftFloorY);
+    selectionCtx.closePath();
+    selectionCtx.fill();
+}
 
 
 //room
@@ -1017,7 +1123,6 @@ const selectionLineWidth = selectionCheckMargin;
 async function redrawSelection(){
     //console.log(selectedType);
     //console.log((selectedId));
-    let time = new Date();
     selectionCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     if (selectedType === "point" || selectedType === "corner") {
         let selected = metaroomPoints[selectedId];
@@ -1029,82 +1134,9 @@ async function redrawSelection(){
         } else {
             selected = metaroomWalls[selectedId];
         }
-
-        let animationOffset = (time.getMilliseconds()%(1000*selectionCircleRotationsPerSecond))/1000;
-        selectionCtx.strokeStyle = '#fefefe';
-        selectionCtx.lineWidth = selectionLineWidth;
-
-        selectionCtx.beginPath();
-        selectionCtx.moveTo(selected.start.x, selected.start.y);
-        selectionCtx.lineTo(selected.end.x, selected.end.y);
-        selectionCtx.stroke();
+        drawSelectionLine(selected);
     } else if (selectedType === "room") {
-        let selected = metaroom.rooms[selectedId];
-
-        let pattern = document.createElement('canvas');
-        pattern.width = 40;
-        pattern.height = 40;
-        let pctx = pattern.getContext('2d');
-
-        let color1 = "#ffffff00"
-        let color2 = "#24A8AC";
-        let numberOfStripes = 20;
-        for (let i=0; i < numberOfStripes*5; i++){
-            let thickness = 40 / numberOfStripes;
-            pctx.beginPath();
-            pctx.strokeStyle = i %4?color1:color2;
-            pctx.lineWidth = thickness;
-
-            let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
-            let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
-
-            let animationOffset = 40*percentageAfterFrameStart;
-            pctx.moveTo(-5, -45 + i*thickness + thickness/2 - animationOffset);
-            pctx.lineTo(45 + 100, 5 + 100 + i*thickness + thickness/2 - animationOffset);
-            pctx.stroke();
-        }
-/*
-        for (let i=0; i < numberOfStripes*2.1; i++){
-        let thickness = 40 / numberOfStripes;
-        pctx.beginPath();
-        pctx.strokeStyle = i % 2?color1:color2;
-        pctx.lineWidth = thickness;
-
-        pctx.moveTo(-5,  i*thickness + thickness/2);
-        pctx.lineTo(11, -11 + i*thickness + thickness/2);
-        pctx.stroke();
-}*/
-
-
-/*
-        pctx.beginPath();
-        pctx.moveTo(0.0, 40.0);
-        pctx.lineTo(26.9, 36.0);
-        pctx.bezierCurveTo(31.7, 36.0, 36.0, 32.1, 36.0, 27.3);
-        pctx.lineTo(40.0, 0.0);
-        pctx.lineTo(11.8, 3.0);
-        pctx.bezierCurveTo(7.0, 3.0, 3.0, 6.9, 3.0, 11.7);
-        pctx.lineTo(0.0, 40.0);
-        pctx.closePath();
-        pctx.fillStyle = "rgb(188, 222, 178)";
-        pctx.fill();
-        pctx.lineWidth = 0.8;
-        pctx.strokeStyle = "rgb(0, 156, 86)";
-        pctx.lineJoin = "miter";
-        pctx.miterLimit = 4.0;
-        pctx.stroke();
-*/
-
-        let patternStyle = selectionCtx.createPattern(pattern, "repeat");
-
-        selectionCtx.fillStyle = patternStyle;
-        selectionCtx.beginPath();
-        selectionCtx.moveTo(selected.leftX, selected.leftCeilingY);
-        selectionCtx.lineTo(selected.rightX, selected.rightCeilingY);
-        selectionCtx.lineTo(selected.rightX, selected.rightFloorY);
-        selectionCtx.lineTo(selected.leftX, selected.leftFloorY);
-        selectionCtx.closePath();
-        selectionCtx.fill();
+        drawSelectionRoom(metaroom.rooms[selectedId]);
     }
 }
 
