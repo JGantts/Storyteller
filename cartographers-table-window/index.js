@@ -292,6 +292,14 @@ function getIntersectsFromOne(line, point){
     return null;
 }
 
+
+function subtractDoorsFromWalls(wallsOverreach, door){
+
+
+
+    return metaroomWallsOverreach;
+}
+
 /*
 leftX: 100,
 rightX: 200,
@@ -838,10 +846,6 @@ function loadMetaroom(){
     selectionCtx = setupCanvas(selectionCanvasElement, metaroom);
     roomCtx.lineWidth = 2;
     redrawMetaroom()
-}
-
-function subtractDoorsFromWalls(wallsOverreach, door){
-    return metaroomWallsOverreach;
 }
 
 async function redrawMetaroom(){
