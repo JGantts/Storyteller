@@ -655,7 +655,7 @@ function checkSelection(x, y){
     if (selectedType === "") {
         checkRoomSelection(x, y);
     }
-    redrawSelection();
+    //redrawSelection();
 }
 
 function checkPointSelection(x, y){
@@ -863,7 +863,7 @@ async function redrawRooms(){
         roomCtx.stroke();
       });
 
-      redrawSelection();
+      //redrawSelection();
 }
 
 const selctionSquareWidth = selectionCheckMargin * 4/3;
@@ -882,8 +882,10 @@ function drawSelectionSquare(x, y) {
 }
 
 const selctionCircleWidth = selectionCheckMargin * 2;
+const selectionCircleRotationsPerSecond = 0.1;
 
 function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
+    var time = new Date();
     selectionCtx.lineWidth = "2.5";
 
     //gay pride! That's right fuckers
@@ -947,7 +949,11 @@ function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
         let thetaSection0Continuous = Math.max(thetaSection0Discrete, thetaFull0);
         let thetaSection1Continuous = Math.min(thetaSection1Discrete, thetaFull1);
 
-        let percentage = i/resolution;
+        let percentageActual = i/resolution;
+        let percentageAnimation = (1.0 + (
+          percentageActual - (time.getMilliseconds()%1000) / 1000
+        )) % 1.0;
+        let percentage = percentageAnimation;
         let mod = (percentage) % (1.0000001/6.0);
 
         let twoColorGradientPercentage = mod * 6;
@@ -1090,3 +1096,5 @@ async function redrawSelection(){
 
 
 loadMetaroom();
+
+setInterval(redrawSelection, 50);
