@@ -848,19 +848,19 @@ async function redrawRooms(){
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     metaroomWalls.concat(metaroomDoors)
       .forEach((door, i) => {
-        if (door.permeability < 0) {
-          roomCtx.strokeStyle = '#33DDDD';
-        } else if (door.permeability === 0) {
-          roomCtx.strokeStyle = '#DD3333';
-        } else if (door.permeability < 1) {
-          roomCtx.strokeStyle = '#DDDD33';
-        } else if (door.permeability === 1) {
-          roomCtx.strokeStyle = '#33DD33';
-        }
-        roomCtx.beginPath();
-        roomCtx.moveTo(door.start.x, door.start.y);
-        roomCtx.lineTo(door.end.x, door.end.y);
-        roomCtx.stroke();
+          if (door.permeability < 0) {
+            roomCtx.strokeStyle = '#33DDDD';
+          } else if (door.permeability === 0) {
+            roomCtx.strokeStyle = '#DD3333';
+          } else if (door.permeability < 1) {
+            roomCtx.strokeStyle = '#DDDD33';
+          } else if (door.permeability === 1) {
+            roomCtx.strokeStyle = '#33DD33';
+          }
+          roomCtx.beginPath();
+          roomCtx.moveTo(door.start.x, door.start.y);
+          roomCtx.lineTo(door.end.x, door.end.y);
+          roomCtx.stroke();
       });
 
       //redrawSelection();
@@ -1011,8 +1011,8 @@ function drawSelectionLine(selected) {
     let dashCountRemainder = dashCountFractional - Math.floor(dashCountFractional);
     let dashCountWhole = Math.ceil(dashCountFractional);
 
-    let color1 = "#1e1e1e";
-    let color2 = "#e1e1e1";
+    let color1 = "#2e2e2e";
+    let color2 = "#e2e2e2";
     selectionCtx.lineWidth = selectionLineWidth;
 
     let time = new Date();
