@@ -866,6 +866,50 @@ async function redrawRooms(){
       //redrawSelection();
 }
 
+//gay pride! That's right fuckers
+//red     RGB 228 003 003
+//orange  RGB 255 140 000
+//yellow  RGB 255 237 000
+//green   RGB 000 128 038
+//blue    RGB 000 077 255
+//purple  RGB 117 007 135
+
+const red = {
+  red: 228,
+  green: 003,
+  blue: 003
+}
+
+const orange = {
+  red: 255,
+  green: 140,
+  blue: 000
+}
+
+const yellow = {
+  red: 255,
+  green: 237,
+  blue: 000
+}
+
+const green = {
+  red: 000,
+  green: 128,
+  blue: 038
+}
+
+const blue = {
+  red: 000,
+  green: 077,
+  blue: 255
+}
+
+const purple = {
+  red: 117,
+  green: 007,
+  blue: 135
+}
+
 const selctionSquareWidth = selectionCheckMargin * 4/3;
 
 function drawSelectionSquare(x, y) {
@@ -887,50 +931,6 @@ const selectionCircleRotationsPerSecond = 3/4;
 function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
     let time = new Date();
     selectionCtx.lineWidth = "2.5";
-
-    //gay pride! That's right fuckers
-    //red     RGB 228 003 003
-    //orange  RGB 255 140 000
-    //yellow  RGB 255 237 000
-    //green   RGB 000 128 038
-    //blue    RGB 000 077 255
-    //purple  RGB 117 007 135
-
-    let red = {
-      red: 228,
-      green: 003,
-      blue: 003
-    }
-
-    let orange = {
-      red: 255,
-      green: 140,
-      blue: 000
-    }
-
-    let yellow = {
-      red: 255,
-      green: 237,
-      blue: 000
-    }
-
-    let green = {
-      red: 000,
-      green: 128,
-      blue: 038
-    }
-
-    let blue = {
-      red: 000,
-      green: 077,
-      blue: 255
-    }
-
-    let purple = {
-      red: 117,
-      green: 007,
-      blue: 135
-    }
 
     let resolution =  6*5;
 
@@ -1008,6 +1008,7 @@ const selectionLineWidth = selectionCheckMargin;
 async function redrawSelection(){
   //console.log(selectedType);
   //console.log((selectedId));
+  let time = new Date();
   selectionCtx.clearRect(0, 0, metaroom.width, metaroom.height);
   if (selectedType === "point" || selectedType === "corner") {
       let selected = metaroomPoints[selectedId];
@@ -1020,6 +1021,7 @@ async function redrawSelection(){
           selected = metaroomWalls[selectedId];
       }
 
+      let animationOffset = (time.getMilliseconds()%(1000*selectionCircleRotationsPerSecond))/1000;
       selectionCtx.strokeStyle = '#fefefe';
       selectionCtx.lineWidth = selectionLineWidth;
 
@@ -1038,14 +1040,16 @@ async function redrawSelection(){
       let color1 = "#ffffff00"
       let color2 = "#24A8AC";
       let numberOfStripes = 20;
-      let time = new Date();
       for (let i=0; i < numberOfStripes*5; i++){
           let thickness = 40 / numberOfStripes;
           pctx.beginPath();
           pctx.strokeStyle = i %4?color1:color2;
           pctx.lineWidth = thickness;
 
-          let animationOffset = 40*(time.getMilliseconds()%(1000*selectionCircleRotationsPerSecond))/1000;
+          let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
+          let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
+
+          let animationOffset = 40*percentageAfterFrameStart;
           pctx.moveTo(-5, -45 + i*thickness + thickness/2 - animationOffset);
           pctx.lineTo(45 + 100, 5 + 100 + i*thickness + thickness/2 - animationOffset);
           pctx.stroke();
