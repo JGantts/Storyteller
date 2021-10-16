@@ -878,12 +878,14 @@ function drawSelectionSquare(x, y) {
     selectionCtx.rect(x-selctionSquareWidth/2, y-selctionSquareWidth/2, selctionSquareWidth, selctionSquareWidth);
     selectionCtx.fill();
     selectionCtx.stroke();
-    drawSelectionCircle(x, y, 0, 1)
+    drawSelectionCircle(x, y, 0.0, 1.0)
 }
 
 const selctionCircleWidth = selectionCheckMargin * 2;
 
-function drawSelectionCircle(x, y, theta00, theta01) {
+function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
+    selectionCtx.lineWidth = "2.5";
+
     //gay pride! That's right fuckers
     //red     RGB 228 003 003
     //orange  RGB 255 140 000
@@ -928,21 +930,28 @@ function drawSelectionCircle(x, y, theta00, theta01) {
       blue: 135
     }
 
-    let resolution = 6*5;
-    let scale = resolution*(theta01 - theta00);
+    let resolution =  6*5;
 
-    selectionCtx.lineWidth = "2.5";
+    for (var i=0; i < resolution; i++) {
 
-    for (var i=0; i < scale; i++) {
+        let thetaSection0Discrete = i/resolution;
+        let thetaSection1Discrete = thetaSection0Discrete + 1/resolution;
 
+        if (thetaSection1Discrete < thetaFull0) {
+            continue;
+        }
+        if (thetaSection0Discrete > thetaFull1) {
+            continue;
+        }
 
-        let theta10 = theta00 + i/scale;
-        let theta11 = theta10 + 1/resolution;
+        let thetaSection0Continuous = Math.max(thetaSection0Discrete, thetaFull0);
+        let thetaSection1Continuous = Math.min(thetaSection1Discrete, thetaFull1);
 
-        let percentage = i/scale;
+        let percentage = i/resolution;
         let mod = (percentage) % (1.0000001/6.0);
 
         let twoColorGradientPercentage = mod * 6;
+
         let color = null;
         if (percentage <= 1/6) {
             color = colorPercentage(twoColorGradientPercentage, red, orange);
@@ -959,7 +968,7 @@ function drawSelectionCircle(x, y, theta00, theta01) {
         }
 
         //if (i%2 == 0) {
-          drawSelectionCirclePortion(x, y, theta10, theta11, `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`);
+          drawSelectionCirclePortion(x, y, thetaSection0Continuous, thetaSection1Continuous, `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`);
         //}
     }
 }
