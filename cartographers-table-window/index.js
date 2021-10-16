@@ -115,16 +115,16 @@ function getSlope(a, b) {
 
 function setupCanvas(canvas, rect) {
   // Get the device pixel ratio, falling back to 1.
-  var dpr = window.devicePixelRatio || 1;
+  let dpr = window.devicePixelRatio || 1;
   // Get the size of the canvas in CSS pixels.
-  //var rect = canvas.getBoundingClientRect();
+  //let rect = canvas.getBoundingClientRect();
   // Give the canvas pixel dimensions of their CSS
   // size * the device pixel ratio.
   canvas.width = rect.width * dpr;
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
   canvas.height = rect.height * dpr;
-  var ctx = canvas.getContext('2d');
+  let ctx = canvas.getContext('2d');
   // Scale all drawing operations by the dpr, so you
   // don't have to worry about the difference.
   ctx.scale(dpr, dpr);
@@ -661,7 +661,7 @@ function checkSelection(x, y){
 function checkPointSelection(x, y){
     //console.log("\n\n\n\n\n\n\n\n\n\n\n");
     //console.log("--------");
-    for(var i=0; i<metaroomPoints.length; i++){
+    for(let i=0; i<metaroomPoints.length; i++){
         //console.log("\n\n");
         //console.log(i);
         if(isClickOnPoint(x, y, metaroomPoints[i])){
@@ -697,7 +697,7 @@ function checkPointSelection(x, y){
 function checkLineSelection(x, y){
     //console.log("\n\n\n\n\n\n\n\n\n\n\n");
     //console.log("--------");
-    for(var i=0; i<metaroomWalls.length; i++){
+    for(let i=0; i<metaroomWalls.length; i++){
         //console.log("\n\n");
         //console.log(i);
         if(isClickOnLine(x, y, metaroomWalls[i])){
@@ -707,7 +707,7 @@ function checkLineSelection(x, y){
         }
     }
     //console.log("--------");
-    for(var i=0; i<metaroomDoors.length; i++){
+    for(let i=0; i<metaroomDoors.length; i++){
         //console.log("\n\n");
         //console.log(i);
         if(isClickOnLine(x, y, metaroomDoors[i])){
@@ -721,7 +721,7 @@ function checkLineSelection(x, y){
 function checkRoomSelection(x, y){
     //console.log("\n\n\n\n\n\n\n\n\n\n\n");
     //console.log("--------");
-    for(var i=0; i<metaroom.rooms.length; i++){
+    for(let i=0; i<metaroom.rooms.length; i++){
         //console.log("\n\n");
         //console.log(i);
         if(isClickInRoom(x, y, metaroom.rooms[i])){
@@ -837,7 +837,7 @@ function loadMetaroom(){
 async function redrawMetaroom(){
     redrawRooms();
     backgroundCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    var img = new Image;
+    let img = new Image;
     img.src = metaroom.background;
     backgroundCtx.moveTo(0, 0);
     await img.decode();
@@ -882,10 +882,10 @@ function drawSelectionSquare(x, y) {
 }
 
 const selctionCircleWidth = selectionCheckMargin * 2;
-const selectionCircleRotationsPerSecond = 0.1;
+const selectionCircleRotationsPerSecond = 1.0;
 
 function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
-    var time = new Date();
+    let time = new Date();
     selectionCtx.lineWidth = "2.5";
 
     //gay pride! That's right fuckers
@@ -934,7 +934,7 @@ function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
 
     let resolution =  6*5;
 
-    for (var i=0; i < resolution; i++) {
+    for (let i=0; i < resolution; i++) {
 
         let thetaSection0Discrete = i/resolution;
         let thetaSection1Discrete = thetaSection0Discrete + 1/resolution;
@@ -950,9 +950,12 @@ function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
         let thetaSection1Continuous = Math.min(thetaSection1Discrete, thetaFull1);
 
         let percentageActual = i/resolution;
-        let percentageAnimation = (1.0 + (
-          percentageActual - (time.getMilliseconds()%1000) / 1000
-        )) % 1.0;
+
+        let millisecondsPerFrame = 0;
+        let milisecondsAfterSecond = (time.getMilliseconds()%(1000*selectionCircleRotationsPerSecond));
+        let percentageAfterFrameStart = milisecondsAfterSecond / (1000*selectionCircleRotationsPerSecond);
+
+        let percentageAnimation = (1.0 + percentageActual - percentageAfterFrameStart) % 1.0;
         let percentage = percentageAnimation;
         let mod = (percentage) % (1.0000001/6.0);
 
@@ -1030,27 +1033,29 @@ async function redrawSelection(){
   } else if (selectedType === "room") {
       let selected = metaroom.rooms[selectedId];
 
-      var pattern = document.createElement('canvas');
+      let pattern = document.createElement('canvas');
       pattern.width = 40;
       pattern.height = 40;
-      var pctx = pattern.getContext('2d');
+      let pctx = pattern.getContext('2d');
 
       let color1 = "#ffffff00"
       let color2 = "#24A8AC";
       let numberOfStripes = 20;
-      for (var i=0; i < numberOfStripes*2.1; i++){
-          var thickness = 40 / numberOfStripes;
+      let time = new Date();
+      for (let i=0; i < numberOfStripes*5; i++){
+          let thickness = 40 / numberOfStripes;
           pctx.beginPath();
-          pctx.strokeStyle = i % 2?color1:color2;
+          pctx.strokeStyle = i %4?color1:color2;
           pctx.lineWidth = thickness;
 
-          pctx.moveTo(-5, -45 + i*thickness + thickness/2);
-          pctx.lineTo(45, 00 + i*thickness + thickness/2);
+          let animationOffset = 40*(time.getMilliseconds()%(1000*selectionCircleRotationsPerSecond))/1000;
+          pctx.moveTo(-5, -45 + i*thickness + thickness/2 - animationOffset);
+          pctx.lineTo(45 + 100, 5 + 100 + i*thickness + thickness/2 - animationOffset);
           pctx.stroke();
       }
 /*
-      for (var i=0; i < numberOfStripes*2.1; i++){
-      var thickness = 40 / numberOfStripes;
+      for (let i=0; i < numberOfStripes*2.1; i++){
+      let thickness = 40 / numberOfStripes;
       pctx.beginPath();
       pctx.strokeStyle = i % 2?color1:color2;
       pctx.lineWidth = thickness;
@@ -1080,9 +1085,9 @@ async function redrawSelection(){
       pctx.stroke();
 */
 
-      var pattern = selectionCtx.createPattern(pattern, "repeat");
+      let patternStyle = selectionCtx.createPattern(pattern, "repeat");
 
-      selectionCtx.fillStyle = pattern;
+      selectionCtx.fillStyle = patternStyle;
       selectionCtx.beginPath();
       selectionCtx.moveTo(selected.leftX, selected.leftCeilingY);
       selectionCtx.lineTo(selected.rightX, selected.rightCeilingY);
