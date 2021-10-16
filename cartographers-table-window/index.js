@@ -644,6 +644,11 @@ let selectedRoomId = -1
 let selectedId = -1;
 
 function checkSelection(x, y){
+    if (selectedType === "room") {
+        selectedRoomId = selectedId;
+    } else {
+        selectedRoomId = -1;
+    }
     selectedType = ""
     selectedId = -1;
     if (selectedType === "") {
@@ -1001,7 +1006,7 @@ function drawSelectionCirclePortion(x, y, theta0, theta1, color) {
 const selectionLineWidth = selectionCheckMargin;
 
 function drawSelectionLine(selected) {
-    let dashLength = selectionCheckMargin * 2;
+    let dashLength = selectionCheckMargin;
 
     let rise = selected.end.y - selected.start.y;
     let run = selected.end.x - selected.start.x;
@@ -1011,8 +1016,6 @@ function drawSelectionLine(selected) {
     let dashCountRemainder = dashCountFractional - Math.floor(dashCountFractional);
     let dashCountWhole = Math.ceil(dashCountFractional);
 
-    let color1 = "#2e2e2e";
-    let color2 = "#e2e2e2";
     selectionCtx.lineWidth = selectionLineWidth;
 
     let time = new Date();
@@ -1020,7 +1023,8 @@ function drawSelectionLine(selected) {
     let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
     //console.log(percentageAfterFrameStart);
 
-    for (let i=-1.0/dashCountFractional-1.0; i < dashCountWhole; i++) {
+    let begniningNegative = -1.0/dashCountFractional-1.0;
+    for (let i=begniningNegative; i < dashCountWhole; i++) {
         let startPercent = (i+percentageAfterFrameStart) / dashCountFractional;
         let stopPercent = startPercent + 1.0/dashCountFractional;
         if (startPercent > 1.0) {
@@ -1032,7 +1036,29 @@ function drawSelectionLine(selected) {
         let startPercentActual = Math.max(startPercent, 0.0);
         let stopPercentActual = Math.min(stopPercent, 1.0);
         //console.log(`${i} ${startPercentActual} ${stopPercentActual}`)
-        drawSeclectionLineSegment(selected.start, rise, run, startPercentActual, stopPercentActual , Math.floor(i)%2 ? color1 : color2)
+        let colorIndex = Math.floor(i-begniningNegative) % 6;
+        let color = null;
+        if (colorIndex === 0) {
+            color = red;
+        } else if (colorIndex === 1) {
+            color = orange;
+        } else if (colorIndex === 2) {
+            color = yellow;
+        } else if (colorIndex === 3) {
+            color = green;
+        } else if (colorIndex === 4) {
+            color = blue;
+        } else if (colorIndex === 5) {
+            color = purple;
+        }
+        drawSeclectionLineSegment(
+          selected.start,
+          rise,
+          run,
+          startPercentActual,
+          stopPercentActual,
+          `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`
+        )
     }
 
 }
