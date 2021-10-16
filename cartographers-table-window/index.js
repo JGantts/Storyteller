@@ -998,7 +998,16 @@ function drawSelectionCirclePortion(x, y, theta0, theta1, color) {
     selectionCtx.stroke();
 }
 
+function drawSelectionCirclePortion(x, y, theta0, theta1, color) {
+    selectionCtx.strokeStyle = color;
+    selectionCtx.beginPath();
+    selectionCtx.arc(x, y, selctionCircleWidth, theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
+    selectionCtx.stroke();
+}
+
 const selectionLineWidth = selectionCheckMargin;
+
+
 
 //room
 //door
@@ -1006,97 +1015,97 @@ const selectionLineWidth = selectionCheckMargin;
 //corner
 //point
 async function redrawSelection(){
-  //console.log(selectedType);
-  //console.log((selectedId));
-  let time = new Date();
-  selectionCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-  if (selectedType === "point" || selectedType === "corner") {
-      let selected = metaroomPoints[selectedId];
-      drawSelectionSquare(selected.x, selected.y);
-  } else if (selectedType === "door" || selectedType === "wall") {
-      let selected = null;
-      if (selectedType === "door") {
-          selected = metaroomDoors[selectedId];
-      } else {
-          selected = metaroomWalls[selectedId];
-      }
+    //console.log(selectedType);
+    //console.log((selectedId));
+    let time = new Date();
+    selectionCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    if (selectedType === "point" || selectedType === "corner") {
+        let selected = metaroomPoints[selectedId];
+        drawSelectionSquare(selected.x, selected.y);
+    } else if (selectedType === "door" || selectedType === "wall") {
+        let selected = null;
+        if (selectedType === "door") {
+            selected = metaroomDoors[selectedId];
+        } else {
+            selected = metaroomWalls[selectedId];
+        }
 
-      let animationOffset = (time.getMilliseconds()%(1000*selectionCircleRotationsPerSecond))/1000;
-      selectionCtx.strokeStyle = '#fefefe';
-      selectionCtx.lineWidth = selectionLineWidth;
+        let animationOffset = (time.getMilliseconds()%(1000*selectionCircleRotationsPerSecond))/1000;
+        selectionCtx.strokeStyle = '#fefefe';
+        selectionCtx.lineWidth = selectionLineWidth;
 
-      selectionCtx.beginPath();
-      selectionCtx.moveTo(selected.start.x, selected.start.y);
-      selectionCtx.lineTo(selected.end.x, selected.end.y);
-      selectionCtx.stroke();
-  } else if (selectedType === "room") {
-      let selected = metaroom.rooms[selectedId];
+        selectionCtx.beginPath();
+        selectionCtx.moveTo(selected.start.x, selected.start.y);
+        selectionCtx.lineTo(selected.end.x, selected.end.y);
+        selectionCtx.stroke();
+    } else if (selectedType === "room") {
+        let selected = metaroom.rooms[selectedId];
 
-      let pattern = document.createElement('canvas');
-      pattern.width = 40;
-      pattern.height = 40;
-      let pctx = pattern.getContext('2d');
+        let pattern = document.createElement('canvas');
+        pattern.width = 40;
+        pattern.height = 40;
+        let pctx = pattern.getContext('2d');
 
-      let color1 = "#ffffff00"
-      let color2 = "#24A8AC";
-      let numberOfStripes = 20;
-      for (let i=0; i < numberOfStripes*5; i++){
-          let thickness = 40 / numberOfStripes;
-          pctx.beginPath();
-          pctx.strokeStyle = i %4?color1:color2;
-          pctx.lineWidth = thickness;
+        let color1 = "#ffffff00"
+        let color2 = "#24A8AC";
+        let numberOfStripes = 20;
+        for (let i=0; i < numberOfStripes*5; i++){
+            let thickness = 40 / numberOfStripes;
+            pctx.beginPath();
+            pctx.strokeStyle = i %4?color1:color2;
+            pctx.lineWidth = thickness;
 
-          let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
-          let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
+            let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
+            let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
 
-          let animationOffset = 40*percentageAfterFrameStart;
-          pctx.moveTo(-5, -45 + i*thickness + thickness/2 - animationOffset);
-          pctx.lineTo(45 + 100, 5 + 100 + i*thickness + thickness/2 - animationOffset);
-          pctx.stroke();
-      }
+            let animationOffset = 40*percentageAfterFrameStart;
+            pctx.moveTo(-5, -45 + i*thickness + thickness/2 - animationOffset);
+            pctx.lineTo(45 + 100, 5 + 100 + i*thickness + thickness/2 - animationOffset);
+            pctx.stroke();
+        }
 /*
-      for (let i=0; i < numberOfStripes*2.1; i++){
-      let thickness = 40 / numberOfStripes;
-      pctx.beginPath();
-      pctx.strokeStyle = i % 2?color1:color2;
-      pctx.lineWidth = thickness;
+        for (let i=0; i < numberOfStripes*2.1; i++){
+        let thickness = 40 / numberOfStripes;
+        pctx.beginPath();
+        pctx.strokeStyle = i % 2?color1:color2;
+        pctx.lineWidth = thickness;
 
-      pctx.moveTo(-5,  i*thickness + thickness/2);
-      pctx.lineTo(11, -11 + i*thickness + thickness/2);
-      pctx.stroke();
+        pctx.moveTo(-5,  i*thickness + thickness/2);
+        pctx.lineTo(11, -11 + i*thickness + thickness/2);
+        pctx.stroke();
 }*/
 
 
 /*
-      pctx.beginPath();
-      pctx.moveTo(0.0, 40.0);
-      pctx.lineTo(26.9, 36.0);
-      pctx.bezierCurveTo(31.7, 36.0, 36.0, 32.1, 36.0, 27.3);
-      pctx.lineTo(40.0, 0.0);
-      pctx.lineTo(11.8, 3.0);
-      pctx.bezierCurveTo(7.0, 3.0, 3.0, 6.9, 3.0, 11.7);
-      pctx.lineTo(0.0, 40.0);
-      pctx.closePath();
-      pctx.fillStyle = "rgb(188, 222, 178)";
-      pctx.fill();
-      pctx.lineWidth = 0.8;
-      pctx.strokeStyle = "rgb(0, 156, 86)";
-      pctx.lineJoin = "miter";
-      pctx.miterLimit = 4.0;
-      pctx.stroke();
+        pctx.beginPath();
+        pctx.moveTo(0.0, 40.0);
+        pctx.lineTo(26.9, 36.0);
+        pctx.bezierCurveTo(31.7, 36.0, 36.0, 32.1, 36.0, 27.3);
+        pctx.lineTo(40.0, 0.0);
+        pctx.lineTo(11.8, 3.0);
+        pctx.bezierCurveTo(7.0, 3.0, 3.0, 6.9, 3.0, 11.7);
+        pctx.lineTo(0.0, 40.0);
+        pctx.closePath();
+        pctx.fillStyle = "rgb(188, 222, 178)";
+        pctx.fill();
+        pctx.lineWidth = 0.8;
+        pctx.strokeStyle = "rgb(0, 156, 86)";
+        pctx.lineJoin = "miter";
+        pctx.miterLimit = 4.0;
+        pctx.stroke();
 */
 
-      let patternStyle = selectionCtx.createPattern(pattern, "repeat");
+        let patternStyle = selectionCtx.createPattern(pattern, "repeat");
 
-      selectionCtx.fillStyle = patternStyle;
-      selectionCtx.beginPath();
-      selectionCtx.moveTo(selected.leftX, selected.leftCeilingY);
-      selectionCtx.lineTo(selected.rightX, selected.rightCeilingY);
-      selectionCtx.lineTo(selected.rightX, selected.rightFloorY);
-      selectionCtx.lineTo(selected.leftX, selected.leftFloorY);
-      selectionCtx.closePath();
-      selectionCtx.fill();
-  }
+        selectionCtx.fillStyle = patternStyle;
+        selectionCtx.beginPath();
+        selectionCtx.moveTo(selected.leftX, selected.leftCeilingY);
+        selectionCtx.lineTo(selected.rightX, selected.rightCeilingY);
+        selectionCtx.lineTo(selected.rightX, selected.rightFloorY);
+        selectionCtx.lineTo(selected.leftX, selected.leftFloorY);
+        selectionCtx.closePath();
+        selectionCtx.fill();
+    }
 }
 
 
