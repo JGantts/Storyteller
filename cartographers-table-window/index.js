@@ -821,8 +821,9 @@ function isClickInRoom(mx, my, room){
 
 function loadMetaroom(){
 
-    metaroomWalls = getWallsFromRooms(metaroom.rooms);
+    let metaroomWallsOverreach = getWallsFromRooms(metaroom.rooms);
     metaroomDoors = getDoorsFromRooms(metaroom.rooms, metaroom.perms);
+    metaroomWalls = subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors);
     metaroomPoints = getPointsFromRooms(metaroom.rooms);
 
 
@@ -837,6 +838,10 @@ function loadMetaroom(){
     selectionCtx = setupCanvas(selectionCanvasElement, metaroom);
     roomCtx.lineWidth = 2;
     redrawMetaroom()
+}
+
+function subtractDoorsFromWalls(wallsOverreach, door){
+
 }
 
 async function redrawMetaroom(){
@@ -854,13 +859,13 @@ async function redrawRooms(){
     metaroomWalls.concat(metaroomDoors)
       .forEach((door, i) => {
           if (door.permeability < 0) {
-            roomCtx.strokeStyle = '#33DDDD';
+            roomCtx.strokeStyle = 'rgb(005, 170, 255)';
           } else if (door.permeability === 0) {
-            roomCtx.strokeStyle = '#DD3333';
+            roomCtx.strokeStyle = 'rgb(228, 000, 107)';
           } else if (door.permeability < 1) {
-            roomCtx.strokeStyle = '#DDDD33';
+            roomCtx.strokeStyle = 'rgb(207, 140, 003)';
           } else if (door.permeability === 1) {
-            roomCtx.strokeStyle = '#33DD33';
+            roomCtx.strokeStyle = 'rgb(172, 255, 083)';
           }
           roomCtx.beginPath();
           roomCtx.moveTo(door.start.x, door.start.y);
@@ -1006,7 +1011,7 @@ function drawSelectionCirclePortion(x, y, theta0, theta1, color) {
 const selectionLineWidth = selectionCheckMargin;
 
 function drawSelectionLine(selected) {
-    let dashLength = selectionCheckMargin;
+    let dashLength = selectionCheckMargin / 4;
 
     let rise = selected.end.y - selected.start.y;
     let run = selected.end.x - selected.start.x;
@@ -1023,7 +1028,7 @@ function drawSelectionLine(selected) {
     let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
     //console.log(percentageAfterFrameStart);
 
-    let begniningNegative = -1.0/dashCountFractional-1.0;
+    let begniningNegative = -1.0/dashCountFractional-1.0 - (1000/selectionCircleRotationsPerSecond*2);
     for (let i=begniningNegative; i < dashCountWhole; i++) {
         let startPercent = (i+percentageAfterFrameStart) / dashCountFractional;
         let stopPercent = startPercent + 1.0/dashCountFractional;
@@ -1036,20 +1041,28 @@ function drawSelectionLine(selected) {
         let startPercentActual = Math.max(startPercent, 0.0);
         let stopPercentActual = Math.min(stopPercent, 1.0);
         //console.log(`${i} ${startPercentActual} ${stopPercentActual}`)
-        let colorIndex = Math.floor(i-begniningNegative) % 6;
+        let colorIndex = i-begniningNegative;
+        let percentageActual = colorIndex/dashCountFractional;
+
+        let percentageAnimation = (1.0 + percentageActual - percentageAfterFrameStart) % 1.0;
+        let percentage = percentageAnimation;
+        let mod = (percentage) % (1.0000001/6.0);
+
+        let twoColorGradientPercentage = mod * 6;
+
         let color = null;
-        if (colorIndex === 0) {
-            color = red;
-        } else if (colorIndex === 1) {
-            color = orange;
-        } else if (colorIndex === 2) {
-            color = yellow;
-        } else if (colorIndex === 3) {
-            color = green;
-        } else if (colorIndex === 4) {
-            color = blue;
-        } else if (colorIndex === 5) {
-            color = purple;
+        if (percentage <= 1/6) {
+            color = colorPercentage(twoColorGradientPercentage, red, orange);
+        } else if (percentage <= 2/6) {
+            color = colorPercentage(twoColorGradientPercentage, orange, yellow);
+        } else if (percentage <= 3/6) {
+            color = colorPercentage(twoColorGradientPercentage, yellow, green);
+        } else if (percentage <= 4/6) {
+            color = colorPercentage(twoColorGradientPercentage, green, blue);
+        } else if (percentage <= 5/6) {
+            color = colorPercentage(twoColorGradientPercentage, blue, purple);
+        } else if (percentage <= 6/6) {
+            color = colorPercentage(twoColorGradientPercentage, purple, red);
         }
         drawSeclectionLineSegment(
           selected.start,
@@ -1079,8 +1092,8 @@ function drawSelectionRoom(selected) {
     pattern.height = 40;
     let pctx = pattern.getContext('2d');
 
-    let color1 = "#ffffff00"
-    let color2 = "#24A8AC";
+    let color1 = "#0000"
+    let color2 = "rgb(005, 170, 255)";
     let numberOfStripes = 20;
     for (let i=0; i < numberOfStripes*5; i++){
         let thickness = 40 / numberOfStripes;
