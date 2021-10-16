@@ -134,13 +134,24 @@
     width: calc(100% -10px);
     background-color: rgba(0,0,0,0)
   '>
-    <canvas
-      id='myCanvas'
+    <div
       width: 100%
       width: 100%
-    >
-      NOOOOO!
-    </canvas>
+      style='position: relative;'>
+      <canvas
+        id='backgroundCanvas'
+        style= 'position: absolute; z-index: 1'
+      >NOOOOO!</canvas>
+      <canvas
+        id='selectionCanvas'
+        style= 'position: absolute; z-index: 2'
+      >NOOOOO!</canvas>
+      <canvas
+        id='roomCanvas'
+        style= 'position: absolute; z-index: 3'
+      >NOOOOO!</canvas>
+    </div>
+
   </div>
   <div style='
     height: calc(50px - 10px);

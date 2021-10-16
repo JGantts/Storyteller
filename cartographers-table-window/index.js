@@ -8,16 +8,24 @@ const WIN = remote.getCurrentWindow();
 
 const { metaroom } = require('./dollhouse.js');
 
+let metaroomWalls = [];
+let metaroomDoors = [];
+let metaroomPoints = [];
+
 let currentFile = null;
 let currentFileNeedsSaving = false;
-let canvasElement = document.getElementById('myCanvas');
-let ctx = setupCanvas(canvasElement, canvasElement.getBoundingClientRect());
+let backgroundCanvasElement = document.getElementById('backgroundCanvas');
+let selectionCanvasElement = document.getElementById('selectionCanvas');
+let roomCanvasElement = document.getElementById('roomCanvas');
+let backgroundCtx = setupCanvas(backgroundCanvasElement, backgroundCanvasElement.getBoundingClientRect());
+let selectionCtx = setupCanvas(selectionCanvasElement, selectionCanvasElement.getBoundingClientRect());
+let roomCtx = setupCanvas(roomCanvasElement, roomCanvasElement.getBoundingClientRect());
 
-canvasElement.onmousedown=handleMouseDown;
-canvasElement.onmousemove=handleMouseMove;
-canvasElement.onmouseup=handleMouseUp;
-canvasElement.onmouseout=handleMouseOut;
-
+let topCanvasElement = roomCanvasElement;
+topCanvasElement.onmousedown=handleMouseDown;
+topCanvasElement.onmousemove=handleMouseMove;
+topCanvasElement.onmouseup=handleMouseUp;
+topCanvasElement.onmouseout=handleMouseOut;
 
 
 let _undoList = [];
@@ -95,6 +103,16 @@ function getRoomFloor(room) {
     };
 }
 
+function getSlope(a, b) {
+    return {
+      point: {
+          x: a.x,
+          y: a.y
+      },
+      slope: (a.y - b.y)/(a.x - b.x)
+    };
+}
+
 function setupCanvas(canvas, rect) {
   // Get the device pixel ratio, falling back to 1.
   var dpr = window.devicePixelRatio || 1;
@@ -103,6 +121,8 @@ function setupCanvas(canvas, rect) {
   // Give the canvas pixel dimensions of their CSS
   // size * the device pixel ratio.
   canvas.width = rect.width * dpr;
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
   canvas.height = rect.height * dpr;
   var ctx = canvas.getContext('2d');
   // Scale all drawing operations by the dpr, so you
@@ -123,7 +143,7 @@ rightFloorY: 300,
 function getDoorsFromRooms(rooms, perms) {
   let doors = [];
   for (const perm of perms) {
-      console.log(perm);
+      //console.log(perm);
   //perms.forEach((perm, i) => {
       let roomA = rooms[perm.rooms.a];
       let roomB = rooms[perm.rooms.b];
@@ -183,7 +203,7 @@ function getDoorsFromRooms(rooms, perms) {
 
       let roomBLineBottom = getRoomFloor(roomB);
 
-      console.log(roomBLineBottom);
+      //console.log(roomBLineBottom);
 
       /*if (getIntersectsFromFour(roomALineTop, roomB) || getIntersectsFromFour(roomBLineBottom, roomA)) {
           let ourPoints = getMiddleTwoPointsConsideredVertically(
@@ -221,7 +241,7 @@ function getDoorsFromRooms(rooms, perms) {
       }
       console.log("wtf");
   }
-  console.log(doors);
+  //console.log(doors);
   return doors;
 }
 
@@ -241,15 +261,6 @@ function getMiddleTwoPointsConsideredVertically(one, two, three, four){
         low: sorted[1]
     }
 }
-
-/*
-leftX: 100,
-rightX: 200,
-leftCeilingY: 250,
-rightCeilingY: 250,
-leftFloorY: 300,
-rightFloorY: 300,
-*/
 
 function getPointOne(room){
     return {x: room.leftX, y: room.leftCeilingY};
@@ -279,6 +290,46 @@ function getIntersectsFromOne(line, point){
         return point;
     }
     return null;
+}
+
+/*
+leftX: 100,
+rightX: 200,
+leftCeilingY: 250,
+rightCeilingY: 250,
+leftFloorY: 300,
+rightFloorY: 300,
+*/
+
+function getPointsFromRooms(rooms) {
+    let points = new Set();
+    rooms.forEach((room, i) => {
+        points.add(
+            {
+                x: rooms[i].leftX,
+                y: rooms[i].leftCeilingY
+            }
+        );
+        points.add(
+            {
+                x: rooms[i].rightX,
+                y: rooms[i].rightCeilingY
+            }
+        );
+        points.add(
+            {
+                x: rooms[i].rightX,
+                y: rooms[i].rightFloorY
+            }
+        );
+        points.add(
+            {
+                x: rooms[i].leftX,
+                y: rooms[i].leftFloorY
+            }
+        );
+    });
+    return Array.from(points);
 }
 
 function getWallsFromRooms(rooms) {
@@ -552,10 +603,134 @@ function controlKey(event){
 
 
 
+function handleMouseDown(e){
+    //console.log(e);
+    // tell the browser we're handling this event
+    e.preventDefault();
+    e.stopPropagation();
+    startX=parseInt(e.offsetX);
+    startY=parseInt(e.offsetY);
 
+    checkSelection(startX, startY);
+}
 
-// hold the index of the shape being dragged (if any)
-var selectedShapeIndex;
+function handleMouseUp(e){
+
+}
+
+function handleMouseOut(e){
+    // return if we're not dragging
+
+}
+
+function handleMouseMove(e){
+  // tell the browser we're handling this event
+  e.preventDefault();
+  e.stopPropagation();
+  // calculate the current mouse position
+  startX=parseInt(e.offsetX);
+  startY=parseInt(e.offsetY);
+
+  //checkSelection(startX, startY);
+}
+
+//room
+//door
+//wall
+//corner
+//point
+let selectedType = ""
+let selectedRoomId = -1
+let selectedId = -1;
+
+function checkSelection(x, y){
+    selectedType = ""
+    selectedId = -1;
+    if (selectedType === "") {
+        checkPointSelection(x, y);
+    }
+    if (selectedType === "") {
+        checkLineSelection(x, y);
+    }
+    if (selectedType === "") {
+        checkRoomSelection(x, y);
+    }
+    redrawSelection();
+}
+
+function checkPointSelection(x, y){
+    //console.log("\n\n\n\n\n\n\n\n\n\n\n");
+    //console.log("--------");
+    for(var i=0; i<metaroomPoints.length; i++){
+        //console.log("\n\n");
+        //console.log(i);
+        if(isClickOnPoint(x, y, metaroomPoints[i])){
+            //console.log(metaroomPoints[i]);
+            if (selectedRoomId === -1){
+                selectedType = "point";
+            } else {
+                selectedType = "corner";
+                /*let seletedRoom = metaroom.rooms[selectedRoomId];
+                if (x === seletedRoom.leftX) {
+                    if (y === seletedRoom.leftCeilingY) {
+                        selectedId = 0;
+                    } else {
+                        assert(y === seletedRoom.leftFLoorY);
+                        selectedId = 3;
+                    }
+                } else {
+                    assert(x === seletedRoom.rightX);
+                    if (y === seletedRoom.rightCeilingY) {
+                        selectedId = 1;
+                    } else {
+                        assert(y === seletedRoom.rightFloorY);
+                        selectedId = 2;
+                    }
+                }*/
+            }
+            selectedId = i;
+            break;
+        }
+    }
+}
+
+function checkLineSelection(x, y){
+    //console.log("\n\n\n\n\n\n\n\n\n\n\n");
+    //console.log("--------");
+    for(var i=0; i<metaroomWalls.length; i++){
+        //console.log("\n\n");
+        //console.log(i);
+        if(isClickOnLine(x, y, metaroomWalls[i])){
+            selectedType = "wall";
+            selectedId = i;
+            break;
+        }
+    }
+    //console.log("--------");
+    for(var i=0; i<metaroomDoors.length; i++){
+        //console.log("\n\n");
+        //console.log(i);
+        if(isClickOnLine(x, y, metaroomDoors[i])){
+            selectedType = "door";
+            selectedId = i;
+            break;
+        }
+    }
+}
+
+function checkRoomSelection(x, y){
+    //console.log("\n\n\n\n\n\n\n\n\n\n\n");
+    //console.log("--------");
+    for(var i=0; i<metaroom.rooms.length; i++){
+        //console.log("\n\n");
+        //console.log(i);
+        if(isClickInRoom(x, y, metaroom.rooms[i])){
+            selectedType = "room";
+            selectedId = i;
+            break;
+        }
+    }
+}
 
 /*
 leftX: 100,
@@ -566,8 +741,58 @@ leftFloorY: 300,
 rightFloorY: 300,
 */
 
-// given mouse X & Y (mx & my) and shape object
-// return true/false whether mouse is inside the shape
+let selectionCheckMargin = 6;
+
+function isClickOnPoint(mx, my, point){
+    //console.log(metaroomPoints);
+    if (mx <= point.x - selectionCheckMargin) {
+        return false;
+    }
+    //console.log((mx >= room.rightX));
+    if (mx >= point.x + selectionCheckMargin) {
+        return false;
+    }
+    if (my <= point.y - selectionCheckMargin) {
+        return false;
+    }
+    //console.log((mx >= room.rightX));
+    if (my >= point.y + selectionCheckMargin) {
+        return false;
+    }
+    return true;
+}
+
+function isClickOnLine(mx, my, line){
+
+
+    if (mx <= Math.min(line.start.x, line.end.x) - selectionCheckMargin) {
+        return false;
+    }
+    if (mx >= Math.max(line.start.x, line.end.x) + selectionCheckMargin) {
+        return false;
+    }
+    if (my <= Math.min(line.start.y, line.end.y) - selectionCheckMargin) {
+        return false;
+    }
+    if (my >= Math.max(line.start.y, line.end.y) + selectionCheckMargin) {
+        return false;
+    }
+    if (line.start.x == line.end.x) {
+        return true;
+    } else if (line.start.y == line.end.y) {
+        return true;
+    } else {
+        let slope = getSlope(line.start, line.end);
+        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) >= my + selectionCheckMargin) {
+            return false;
+        }
+        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) <= my - selectionCheckMargin) {
+            return false;
+        }
+        return true;
+    }
+}
+
 function isClickInRoom(mx, my, room){
     //console.log((mx <= room.leftX) );
     if (mx <= room.leftX) {
@@ -583,145 +808,276 @@ function isClickInRoom(mx, my, room){
         return false;
     }
     let floor = getRoomFloor(room);
-    /*console.log((((mx - floor.point.x) * -(floor.slope) + floor.point.y) <= my) );
-    console.log((((mx - floor.point.x) * -(floor.slope) + floor.point.y) - my) );
-    console.log(mx);
-    console.log(floor.point.x);
-    console.log(floor.slope);
-    console.log(floor.point.y);
-    console.log(my);*/
     if (((mx - floor.point.x) * (floor.slope) + floor.point.y) <= my) {
         return false;
     }
     return true;
 }
 
-let selectedRoomId = -1;
+function loadMetaroom(){
 
-function handleMouseDown(e){
-    console.log(e);
-    // tell the browser we're handling this event
-    e.preventDefault();
-    e.stopPropagation();
-    // calculate the current mouse position
-    startX=parseInt(e.offsetX);
-    startY=parseInt(e.offsetY);
-    // test mouse position against all shapes
-    // post result if mouse is in a shape
-    selectedRoomId = -1;
-    //console.log("\n\n\n\n\n\n\n\n\n\n\n");
-    //console.log("--------");
-    for(var i=0; i<metaroom.rooms.length; i++){
-        //console.log("\n\n");
-        //console.log(i);
-        if(isClickInRoom(startX, startY, metaroom.rooms[i])){
-            selectedRoomId = i;
-            break;
-        }
-    }
-    redrawMetaroom();
-}
+    metaroomWalls = getWallsFromRooms(metaroom.rooms);
+    metaroomDoors = getDoorsFromRooms(metaroom.rooms, metaroom.perms);
+    metaroomPoints = getPointsFromRooms(metaroom.rooms);
 
-function handleMouseUp(e){
 
-}
-
-function handleMouseOut(e){
-    // return if we're not dragging
-
-}
-
-function handleMouseMove(e){
-  console.log(e);
-  // tell the browser we're handling this event
-  e.preventDefault();
-  e.stopPropagation();
-  // calculate the current mouse position
-  startX=parseInt(e.offsetX);
-  startY=parseInt(e.offsetY);
-  // test mouse position against all shapes
-  // post result if mouse is in a shape
-  selectedRoomId = -1;
-  //console.log("\n\n\n\n\n\n\n\n\n\n\n");
-  //console.log("--------");
-  for(var i=0; i<metaroom.rooms.length; i++){
-      //console.log("\n\n");
-      //console.log(i);
-      if(isClickInRoom(startX, startY, metaroom.rooms[i])){
-          selectedRoomId = i;
-          break;
-      }
-  }
-  redrawMetaroom();
+    backgroundCanvasElement.width =  metaroom.width;
+    backgroundCanvasElement.height =  metaroom.height;
+    backgroundCtx = setupCanvas(backgroundCanvasElement, metaroom);
+    roomCanvasElement.width =  metaroom.width;
+    roomCanvasElement.height =  metaroom.height;
+    roomCtx = setupCanvas(roomCanvasElement, metaroom);
+    selectionCanvasElement.width =  metaroom.width;
+    selectionCanvasElement.height =  metaroom.height;
+    selectionCtx = setupCanvas(selectionCanvasElement, metaroom);
+    roomCtx.lineWidth = 2;
+    redrawMetaroom()
 }
 
 async function redrawMetaroom(){
-    ctx = setupCanvas(canvasElement, metaroom);
-    canvasElement.width =  metaroom.width;
-    canvasElement.height =  metaroom.height;
+    redrawRooms();
+    backgroundCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     var img = new Image;
     img.src = metaroom.background;
-    ctx.moveTo(0, 0);
+    backgroundCtx.moveTo(0, 0);
     await img.decode();
-    ctx.drawImage(img, 0, 0);
-    redrawRooms();
+    backgroundCtx.drawImage(img, 0, 0);
 }
 
 async function redrawRooms(){
-    ctx.lineWidth = 2;
-    getWallsFromRooms(metaroom.rooms).concat(getDoorsFromRooms(metaroom.rooms, metaroom.perms))
+    roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    metaroomWalls.concat(metaroomDoors)
       .forEach((door, i) => {
         if (door.permeability < 0) {
-          ctx.strokeStyle = '#33DDDD';
+          roomCtx.strokeStyle = '#33DDDD';
         } else if (door.permeability === 0) {
-          ctx.strokeStyle = '#DD3333';
+          roomCtx.strokeStyle = '#DD3333';
         } else if (door.permeability < 1) {
-          ctx.strokeStyle = '#DDDD33';
+          roomCtx.strokeStyle = '#DDDD33';
         } else if (door.permeability === 1) {
-          ctx.strokeStyle = '#33DD33';
+          roomCtx.strokeStyle = '#33DD33';
         }
-        ctx.beginPath();
-        ctx.moveTo(door.start.x, door.start.y);
-        ctx.lineTo(door.end.x, door.end.y);
-        ctx.stroke();
+        roomCtx.beginPath();
+        roomCtx.moveTo(door.start.x, door.start.y);
+        roomCtx.lineTo(door.end.x, door.end.y);
+        roomCtx.stroke();
       });
 
-      if (selectedRoomId !== -1) {
-          let room = metaroom.rooms[selectedRoomId];
-
-          var pattern = document.createElement('canvas');
-          pattern.width = 40;
-          pattern.height = 40;
-          var pctx = pattern.getContext('2d');
-
-          pctx.beginPath();
-          pctx.moveTo(0.0, 40.0);
-          pctx.lineTo(26.9, 36.0);
-          pctx.bezierCurveTo(31.7, 36.0, 36.0, 32.1, 36.0, 27.3);
-          pctx.lineTo(40.0, 0.0);
-          pctx.lineTo(11.8, 3.0);
-          pctx.bezierCurveTo(7.0, 3.0, 3.0, 6.9, 3.0, 11.7);
-          pctx.lineTo(0.0, 40.0);
-          pctx.closePath();
-          pctx.fillStyle = "rgb(188, 222, 178)";
-          pctx.fill();
-          pctx.lineWidth = 0.8;
-          pctx.strokeStyle = "rgb(0, 156, 86)";
-          pctx.lineJoin = "miter";
-          pctx.miterLimit = 4.0;
-          pctx.stroke();
-
-          var pattern = ctx.createPattern(pattern, "repeat");
-
-          ctx.fillStyle = pattern;
-          ctx.beginPath();
-          ctx.moveTo(room.leftX, room.leftCeilingY);
-          ctx.lineTo(room.rightX, room.rightCeilingY);
-          ctx.lineTo(room.rightX, room.rightFloorY);
-          ctx.lineTo(room.leftX, room.leftFloorY);
-          ctx.closePath();
-          ctx.fill();
-      }
+      redrawSelection();
 }
 
-redrawMetaroom();
+const selctionSquareWidth = selectionCheckMargin * 4/3;
+
+function drawSelectionSquare(x, y) {
+    //console.log(x);
+    //console.log(y);
+    selectionCtx.lineWidth = "1.5";
+    selectionCtx.strokeStyle = "white";
+    selectionCtx.fillStyle = "black";
+    selectionCtx.beginPath();
+    selectionCtx.rect(x-selctionSquareWidth/2, y-selctionSquareWidth/2, selctionSquareWidth, selctionSquareWidth);
+    selectionCtx.fill();
+    selectionCtx.stroke();
+    drawSelectionCircle(x, y, 0, 1)
+}
+
+const selctionCircleWidth = selectionCheckMargin * 2;
+
+function drawSelectionCircle(x, y, theta00, theta01) {
+    //gay pride! That's right fuckers
+    //red     RGB 228 003 003
+    //orange  RGB 255 140 000
+    //yellow  RGB 255 237 000
+    //green   RGB 000 128 038
+    //blue    RGB 000 077 255
+    //purple  RGB 117 007 135
+
+    let red = {
+      red: 228,
+      green: 003,
+      blue: 003
+    }
+
+    let orange = {
+      red: 255,
+      green: 140,
+      blue: 000
+    }
+
+    let yellow = {
+      red: 255,
+      green: 237,
+      blue: 000
+    }
+
+    let green = {
+      red: 000,
+      green: 128,
+      blue: 038
+    }
+
+    let blue = {
+      red: 000,
+      green: 077,
+      blue: 255
+    }
+
+    let purple = {
+      red: 117,
+      green: 007,
+      blue: 135
+    }
+
+    let resolution = 6*5;
+    let scale = resolution*(theta01 - theta00);
+
+    selectionCtx.lineWidth = "2.5";
+
+    for (var i=0; i < scale; i++) {
+
+
+        let theta10 = theta00 + i/scale;
+        let theta11 = theta10 + 1/resolution;
+
+        let percentage = i/scale;
+        let mod = (percentage) % (1.0000001/6.0);
+
+        let twoColorGradientPercentage = mod * 6;
+        let color = null;
+        if (percentage <= 1/6) {
+            color = colorPercentage(twoColorGradientPercentage, red, orange);
+        } else if (percentage <= 2/6) {
+            color = colorPercentage(twoColorGradientPercentage, orange, yellow);
+        } else if (percentage <= 3/6) {
+            color = colorPercentage(twoColorGradientPercentage, yellow, green);
+        } else if (percentage <= 4/6) {
+            color = colorPercentage(twoColorGradientPercentage, green, blue);
+        } else if (percentage <= 5/6) {
+            color = colorPercentage(twoColorGradientPercentage, blue, purple);
+        } else if (percentage <= 6/6) {
+            color = colorPercentage(twoColorGradientPercentage, purple, red);
+        }
+
+        //if (i%2 == 0) {
+          drawSelectionCirclePortion(x, y, theta10, theta11, `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`);
+        //}
+    }
+}
+
+function colorPercentage(percentage, colorA, colorB) {
+    let newRed = (1.0-percentage)*colorA.red + percentage*colorB.red;
+    let newGreen = (1.0-percentage)*colorA.green + percentage*colorB.green;
+    let newBlue = (1.0-percentage)*colorA.blue + percentage*colorB.blue;
+
+    return {
+      red: newRed,
+      green: newGreen,
+      blue: newBlue
+    }
+}
+
+function drawSelectionCirclePortion(x, y, theta0, theta1, color) {
+    selectionCtx.strokeStyle = color;
+    selectionCtx.beginPath();
+    selectionCtx.arc(x, y, selctionCircleWidth, theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
+    selectionCtx.stroke();
+}
+
+const selectionLineWidth = selectionCheckMargin;
+
+//room
+//door
+//wall
+//corner
+//point
+async function redrawSelection(){
+  //console.log(selectedType);
+  //console.log((selectedId));
+  selectionCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+  if (selectedType === "point" || selectedType === "corner") {
+      let selected = metaroomPoints[selectedId];
+      drawSelectionSquare(selected.x, selected.y);
+  } else if (selectedType === "door" || selectedType === "wall") {
+      let selected = null;
+      if (selectedType === "door") {
+          selected = metaroomDoors[selectedId];
+      } else {
+          selected = metaroomWalls[selectedId];
+      }
+
+      selectionCtx.strokeStyle = '#fefefe';
+      selectionCtx.lineWidth = selectionLineWidth;
+
+      selectionCtx.beginPath();
+      selectionCtx.moveTo(selected.start.x, selected.start.y);
+      selectionCtx.lineTo(selected.end.x, selected.end.y);
+      selectionCtx.stroke();
+  } else if (selectedType === "room") {
+      let selected = metaroom.rooms[selectedId];
+
+      var pattern = document.createElement('canvas');
+      pattern.width = 40;
+      pattern.height = 40;
+      var pctx = pattern.getContext('2d');
+
+      let color1 = "#ffffff00"
+      let color2 = "#24A8AC";
+      let numberOfStripes = 20;
+      for (var i=0; i < numberOfStripes*2.1; i++){
+          var thickness = 40 / numberOfStripes;
+          pctx.beginPath();
+          pctx.strokeStyle = i % 2?color1:color2;
+          pctx.lineWidth = thickness;
+
+          pctx.moveTo(-5, -45 + i*thickness + thickness/2);
+          pctx.lineTo(45, 00 + i*thickness + thickness/2);
+          pctx.stroke();
+      }
+/*
+      for (var i=0; i < numberOfStripes*2.1; i++){
+      var thickness = 40 / numberOfStripes;
+      pctx.beginPath();
+      pctx.strokeStyle = i % 2?color1:color2;
+      pctx.lineWidth = thickness;
+
+      pctx.moveTo(-5,  i*thickness + thickness/2);
+      pctx.lineTo(11, -11 + i*thickness + thickness/2);
+      pctx.stroke();
+}*/
+
+
+/*
+      pctx.beginPath();
+      pctx.moveTo(0.0, 40.0);
+      pctx.lineTo(26.9, 36.0);
+      pctx.bezierCurveTo(31.7, 36.0, 36.0, 32.1, 36.0, 27.3);
+      pctx.lineTo(40.0, 0.0);
+      pctx.lineTo(11.8, 3.0);
+      pctx.bezierCurveTo(7.0, 3.0, 3.0, 6.9, 3.0, 11.7);
+      pctx.lineTo(0.0, 40.0);
+      pctx.closePath();
+      pctx.fillStyle = "rgb(188, 222, 178)";
+      pctx.fill();
+      pctx.lineWidth = 0.8;
+      pctx.strokeStyle = "rgb(0, 156, 86)";
+      pctx.lineJoin = "miter";
+      pctx.miterLimit = 4.0;
+      pctx.stroke();
+*/
+
+      var pattern = selectionCtx.createPattern(pattern, "repeat");
+
+      selectionCtx.fillStyle = pattern;
+      selectionCtx.beginPath();
+      selectionCtx.moveTo(selected.leftX, selected.leftCeilingY);
+      selectionCtx.lineTo(selected.rightX, selected.rightCeilingY);
+      selectionCtx.lineTo(selected.rightX, selected.rightFloorY);
+      selectionCtx.lineTo(selected.leftX, selected.leftFloorY);
+      selectionCtx.closePath();
+      selectionCtx.fill();
+  }
+}
+
+
+
+loadMetaroom();
