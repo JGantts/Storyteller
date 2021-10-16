@@ -151,7 +151,7 @@ function getDoorsFromRooms(rooms, perms) {
       //console.log(rooms);
       //console.log(perms);
 
-      //First check the more performant opeeration: vertical walls
+      //First check the more performant opeeration: vertical doors
 
       if (roomA.leftX === roomB.rightX) {
 
@@ -193,7 +193,7 @@ function getDoorsFromRooms(rooms, perms) {
 
       }
 
-      //Now check the less performant opeeration: horizontal floors/ceilings which can be slopped
+      //Now check the less performant operation: horizontal floors/ceilings which can be slopped
       let roomALineTop = getRoomCeiling(roomA);
 
       let roomALineBottom = getRoomFloor(roomA);
@@ -247,6 +247,7 @@ function getDoorsFromRooms(rooms, perms) {
 
 function getMiddleTwo(one, two, three, four){
     let sorted = [one, two, three, four];
+    sorted.sort();
     return {
         high: sorted[2],
         low: sorted[1]
@@ -255,7 +256,7 @@ function getMiddleTwo(one, two, three, four){
 
 function getMiddleTwoPointsConsideredVertically(one, two, three, four){
     let sorted = [one, two, three, four];
-    sorted.sort((a, b) => {return a.y -b.y});
+    sorted.sort((a, b) => {return a.x - b.x});
     return {
         high: sorted[2],
         low: sorted[1]
@@ -293,11 +294,98 @@ function getIntersectsFromOne(line, point){
 }
 
 
-function subtractDoorsFromWalls(wallsOverreach, door){
+function subtractDoorsFromWalls(wallsOverreach, doors){
+    let walls = [];
+    for (let i=0; i<wallsOverreach.length; i++ ){
+        let wall = wallsOverreach[i];
+        let wallMinX = Math.min(wall.start.x, wall.end.x);
+        let wallMaxX = Math.max(wall.start.x, wall.end.x);
+        let wallMinY = Math.min(wall.start.y, wall.end.y);
+        let wallMaxY = Math.max(wall.start.y, wall.end.y);
+
+        let remainingWalls = wallsOverreach.subarray(i);
+        let wallsPlusDoorsToCheckAgainst = remainingWalls.concat(doors);
+        for (let j=0; j < wallsPlusDoorsToCheckAgainst.length; j++) {
+            let side = wallsPlusDoorsToCheckAgainst[j];
+            let sideMinX = Math.min(side.start.x, side.end.x);
+            let sideMaxX = Math.max(side.start.x, side.end.x);
+            let sideMinY = Math.min(side.start.y, side.end.y);
+            let sideMaxY = Math.max(side.start.y, side.end.y);
+
+            /*if (
+              sideMaxX < wallMinX
+              || sideMinX > wallMaxX
+              || sideMaxY < wallMinY
+              || sideMinY > wallMaxY
+            ) {
+                continue;
+            }*/
+
+            //vertical wall
+            if (wallMinX === wallMaxX) {
+                //vertical side
+                if (sideMinX === sideMaxX) {
+                    //if ()
 
 
+                    if (
+                      sideMaxY < wallMinY
+                      || sideMinY > wallMaxY
+                    ) {
+                        continue;
+                    }
 
-    return metaroomWallsOverreach;
+                }
+                //horizontal side
+                else if (sideMinY === sideMaxY) {
+                    continue;
+                }
+                //sloped side
+                else {
+                    continue;
+                }
+            }
+            //horizontal wall
+            else if (wallMinY === wallMaxY) {
+                //vertical side
+                if (sideMinX === sideMaxX) {
+                    continue;
+                }
+                //horizontal side
+                else if (sideMinY === sideMaxY) {
+
+                }
+                //sloped side
+                else {
+                    continue;
+                }
+            }
+            //sloped wall
+            else {
+                //vertical side
+                if (sideMinX === sideMaxX) {
+                    continue;
+                }
+                //horizontal side
+                else if (sideMinY === sideMaxY) {
+                    continue;
+                }
+                //sloped side
+                else {
+
+                }
+            }
+
+        }
+        if (wall) {
+            if (wall.start.x != wall.end.x) {
+                if (wall.start.y != wall.end.y) {
+                    walls.append(wall);
+                }
+            }
+        }
+    }
+    return walls;
 }
 
 /*
@@ -831,7 +919,7 @@ function loadMetaroom(){
 
     let metaroomWallsOverreach = getWallsFromRooms(metaroom.rooms);
     metaroomDoors = getDoorsFromRooms(metaroom.rooms, metaroom.perms);
-    metaroomWalls = subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors);
+    metaroomWalls = metaroomWallsOverreach;//subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors);
     metaroomPoints = getPointsFromRooms(metaroom.rooms);
 
 
