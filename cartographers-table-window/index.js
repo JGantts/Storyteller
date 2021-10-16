@@ -878,11 +878,11 @@ function drawSelectionSquare(x, y) {
     selectionCtx.rect(x-selctionSquareWidth/2, y-selctionSquareWidth/2, selctionSquareWidth, selctionSquareWidth);
     selectionCtx.fill();
     selectionCtx.stroke();
-    drawSelectionCircle(x, y, 0.0, 1.0)
+    drawSelectionCircle(x, y, 0.0, 1.0);
 }
 
 const selctionCircleWidth = selectionCheckMargin * 2;
-const selectionCircleRotationsPerSecond = 1.0;
+const selectionCircleRotationsPerSecond = 3/4;
 
 function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
     let time = new Date();
@@ -951,9 +951,8 @@ function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
 
         let percentageActual = i/resolution;
 
-        let millisecondsPerFrame = 0;
-        let milisecondsAfterSecond = (time.getMilliseconds()%(1000*selectionCircleRotationsPerSecond));
-        let percentageAfterFrameStart = milisecondsAfterSecond / (1000*selectionCircleRotationsPerSecond);
+        let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
+        let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
 
         let percentageAnimation = (1.0 + percentageActual - percentageAfterFrameStart) % 1.0;
         let percentage = percentageAnimation;
@@ -976,9 +975,7 @@ function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
             color = colorPercentage(twoColorGradientPercentage, purple, red);
         }
 
-        //if (i%2 == 0) {
-          drawSelectionCirclePortion(x, y, thetaSection0Continuous, thetaSection1Continuous, `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`);
-        //}
+        drawSelectionCirclePortion(x, y, thetaSection0Continuous, thetaSection1Continuous, `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`)
     }
 }
 
