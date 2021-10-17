@@ -1059,7 +1059,7 @@ function loadMetaroom(){
     metaroomWalls = subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors).filter(function(val) {return val});
     //console.log(metaroomDoors);
     //console.log(metaroomWalls);
-    metaroomDoors = [];
+    //metaroomDoors = [];
     //metaroomWalls = [];
     metaroomPoints = getPointsFromRooms(metaroom.rooms);
 
@@ -1256,14 +1256,13 @@ function drawSelectionLine(selected) {
     let dashCountRemainder = dashCountFractional - Math.floor(dashCountFractional);
     let dashCountWhole = Math.ceil(dashCountFractional);
 
-    selectionCtx.lineWidth = selectionLineWidth;
-
     let time = new Date();
     let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond*2));
     let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
     //console.log(percentageAfterFrameStart);
 
     let begniningNegative = -1.0/dashCountFractional-1.0 - (1000/selectionCircleRotationsPerSecond*2);
+    //console.log("\n\n\n\n\n\n\n\n");
     for (let i=begniningNegative; i < dashCountWhole; i++) {
         let startPercent = (i+percentageAfterFrameStart) / dashCountFractional;
         let stopPercent = startPercent + 1.0/dashCountFractional;
@@ -1299,10 +1298,12 @@ function drawSelectionLine(selected) {
         } else if (percentage <= 6/6) {
             color = colorPercentage(twoColorGradientPercentage, purple, red);
         }
+
         drawSeclectionLineSegment(
           selected.start,
           rise,
           run,
+          lineLength,
           startPercentActual,
           stopPercentActual,
           `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`
@@ -1311,9 +1312,36 @@ function drawSelectionLine(selected) {
 
 }
 
-function drawSeclectionLineSegment(lineStart, lineRise, lineRun, startPercent, stopPercent, color) {
+function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, startPercent, stopPercent, lineColor) {
+
+    let percentageAverage = (startPercent + stopPercent)/2;
+    let distancePercentFromEnd = 0.5 - Math.abs(0.5 - percentageAverage);
+    let distanceActualFromEnd = distancePercentFromEnd * lineLength;
+
+    let lineWidth = 0;
+    if (distanceActualFromEnd >= selectionLineWidth) {
+        lineWidth = selectionLineWidth;
+    } else {
+        let dist =  1 - distanceActualFromEnd/selectionLineWidth;
+        lineWidth = Math.sqrt(1 - dist * dist) * selectionLineWidth;
+    }
+
+    drawSeclectionLineSegmentAtWidth(
+      lineStart,
+      lineRise,
+      lineRun,
+      startPercent,
+      stopPercent,
+      lineWidth,
+      lineColor
+    )
+}
+
+function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidth, lineColor) {
     //console.log(`${startPercent} ${stopPercent}`)
-    selectionCtx.strokeStyle = color;
+
+    selectionCtx.lineWidth = lineWidth;
+    selectionCtx.strokeStyle = lineColor;
     selectionCtx.beginPath();
     selectionCtx.moveTo(lineStart.x + lineRun*startPercent, lineStart.y + lineRise*startPercent);
     selectionCtx.lineTo(lineStart.x + lineRun*stopPercent, lineStart.y + lineRise*stopPercent);
