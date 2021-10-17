@@ -1250,12 +1250,39 @@ function drawSelectionRoom(selected) {
 
     let color1 = "#0000"
     let color2 = "rgb(005, 170, 255)";
-    let numberOfStripes = 20;
+    let numberOfStripes = 24;
     for (let i=0; i < numberOfStripes*5; i++){
         let thickness = 40 / numberOfStripes;
         pctx.beginPath();
-        pctx.strokeStyle = i%4 ? color1 : color2;
-        pctx.lineWidth = thickness;
+
+
+        let color = null;
+        let aplaha = 255;
+        let rainbowIndex = Math.floor(i/4);
+        let rainbowMod = rainbowIndex % 6;
+        if (i%4 !== 0) {
+            color = {
+                red: 0,
+                green: 0,
+                blue: 0
+            }
+            aplaha = 0;
+        } else  if (rainbowMod == 0) {
+            color = red;
+        } else  if (rainbowMod == 1) {
+            color = orange;
+        } else  if (rainbowMod == 2) {
+            color = yellow;
+        } else  if (rainbowMod == 3) {
+            color = green;
+        } else  if (rainbowMod == 4) {
+            color = blue;
+        } else {
+            color = purple;
+        }
+
+        pctx.strokeStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${aplaha})`;
+        pctx.lineWidth = thickness/1.5;
 
         let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
         let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
@@ -1309,6 +1336,28 @@ function drawSelectionRoom(selected) {
     selectionCtx.fill();
 }
 
+async function wildSelection(){
+
+    for (let i=0; i < metaroomPoints.length; i++){
+        let selected = metaroomPoints[i];
+        drawSelectionSquare(selected.x, selected.y);
+    }
+
+    for (let i=0; i < metaroomDoors.length; i++){
+        let selected = metaroomDoors[i];
+        drawSelectionLine(selected);
+    }
+
+    for (let i=0; i < metaroomWalls.length; i++){
+        let selected = metaroomWalls[i];
+        drawSelectionLine(selected);
+    }
+
+    for (let i=0; i < metaroom.rooms.length; i++){
+        let selected = metaroom.rooms[i];
+        drawSelectionRoom(selected);
+    }
+}
 
 //room
 //door
@@ -1316,9 +1365,11 @@ function drawSelectionRoom(selected) {
 //corner
 //point
 async function redrawSelection(){
+    selectionCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    //wildSelection();
+//  return;
     //console.log(selectedType);
     //console.log((selectedId));
-    selectionCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     if (selectedType === "point" || selectedType === "corner") {
         let selected = metaroomPoints[selectedId];
         drawSelectionSquare(selected.x, selected.y);
