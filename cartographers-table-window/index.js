@@ -537,7 +537,7 @@ function subtractDoorsFromWall(wall, doors){
                                 let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                                 walls = walls.concat(newSegmmentsA);
 
-                            //overlap with upper-left and lower-right tails
+                            //overlap with left-door and right-wall tails
                             } else if (
                                 doorMinX < wallMinX
                             ) {
@@ -546,7 +546,7 @@ function subtractDoorsFromWall(wall, doors){
                                     wallChanged = true;
                                     walls = walls.concat(newSegmmentsA);
 
-                            //overlap with lower-right tail
+                            //overlap with right-wall tail
                             } else if (
                                 doorMinX === wallMinX
                                 && doorMaxX < wallMaxX
@@ -556,7 +556,7 @@ function subtractDoorsFromWall(wall, doors){
                                 wallChanged = true;
                                 walls = walls.concat(newSegmmentsA);
 
-                            //overlap with upper-right and lower-right tails
+                            //overlap with left- and right-wall tails
                             } else if (
                                 doorMinX > wallMinX
                                 && doorMaxX < wallMaxX
@@ -564,7 +564,7 @@ function subtractDoorsFromWall(wall, doors){
                                 let newSegmentA = getSortedDoor(wall.start.x, wall.start.y, door.start.x, door.start.y, -1);
                                 let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                                 walls = walls.concat(newSegmmentsA);
-                                let newSegmentB = getSortedDoor(door.end.x, wall.start.y, wall.end.x, wall.end.y, -1);
+                                let newSegmentB = getSortedDoor(door.end.x, door.end.y, wall.end.x, wall.end.y, -1);
                                 let newSegmmentsB = recurseSubtractionUntilNoChange(newSegmentB, doorsToPassDown);
                                 walls = walls.concat(newSegmmentsB);
                                 wallChanged = true;
@@ -577,7 +577,7 @@ function subtractDoorsFromWall(wall, doors){
                                 wallChanged = true;
                                 Function.prototype();
 
-                            //overlap with upper-left and lower-left tails
+                            //overlap with left- and right-door tails
                             } else if (
                                 doorMinX < wallMinX
                                 && doorMaxX > wallMaxX
@@ -585,7 +585,7 @@ function subtractDoorsFromWall(wall, doors){
                                 wallChanged = true;
                                 Function.prototype();
 
-                            //overlap with upper-left tail
+                            //overlap with left-door tail
                             } else if (
                                 doorMinX < wallMinX
                                 && doorMaxX === wallMaxX
@@ -593,7 +593,7 @@ function subtractDoorsFromWall(wall, doors){
                                 wallChanged = true;
                                 Function.prototype();
 
-                            //overlap with lower-left tail
+                            //overlap with right-door tail
                             } else if (
                                 doorMinX === wallMinX
                                 && doorMaxX > wallMaxX
@@ -602,7 +602,7 @@ function subtractDoorsFromWall(wall, doors){
                                 Function.prototype();
 
 
-                            //overlap with upper-right tail
+                            //overlap with left-wall tail
                             } else if (
                                 doorMinX > wallMinX
                                 && doorMaxX === wallMaxX
