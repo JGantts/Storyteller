@@ -382,10 +382,13 @@ function subtractDoorsFromWall(wall, doors){
 
         //vertical wall
         if (wallMinX === wallMaxX) {
+
             //vertical door
             if (doorMinX === doorMaxX) {
+
                 //on same axis
                 if (door.start.x === wall.start.x) {
+
                     //there is overlap
                     if (
                       doorMaxY >= wallMinY
@@ -477,7 +480,6 @@ function subtractDoorsFromWall(wall, doors){
                             walls = walls.concat(newSegmmentsA);
                             wallChanged = true;
 
-
                         } else {
                             console.log("wtf?");
                             console.log(wall);
@@ -485,29 +487,143 @@ function subtractDoorsFromWall(wall, doors){
                         }
                         break;
                     }
-                  }
-              }
+                }
+            }
             //not a match
         }
         //horizontal wall
         else {
+
             //horizontal door
             if (doorMinX !== doorMaxX) {
-                //exact match
-                if (
-                    door.start.x === wall.start.x
-                    && door.start.y === wall.start.y
-                    && door.end.x === wall.end.x
-                    && door.end.y === wall.end.y
-                ) {
-                      wallHandled = true;
-                      break;
+
+                //on same slope
+                let wallSlope = (wall.end.y - wall.start.y)/(wall.end.x - wall.start.x)
+                let doorSlope = (door.end.y - door.start.y)/(door.end.x - door.start.x)
+                if (wallSlope === doorSlope) {
+
+
+                    let lineSegmentsIntersect = false;
+
+                    //ensure we can safely compare these two points
+                    if (
+                        wall.end.x === door.start.x
+                        && wall.end.y === door.start.y
+                    ) {
+                        //we cannont. Fortunately that tells us that:
+                        lineSegmentsIntersect = true;
+                    } else {
+                        let comparisonRun = wall.end.x - door.start.x;
+                        let comparisonRise = comparisonRun * wallSlope;
+                        let comparisonIntersection = door.start.y + comparisonRise;
+                        lineSegmentsIntersect = (comparisonIntersection === wall.end.y);
+                    }
+
+
+                    //on same line
+                    if (lineSegmentsIntersect) {
+
+                        //there is overlap
+                        if (
+                          doorMaxX >= wallMinX
+                          && doorMinX <= wallMaxX
+                        ) {
+                            wallHandled = true;
+
+                            //well, "overlap"
+                            if (
+                                doorMaxX === wallMinX
+                                || doorMinX === wallMaxX
+                            ) {
+                                let newSegmentA = wall;
+                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                walls = walls.concat(newSegmmentsA);
+
+                            //overlap with upper-left and lower-right tails
+                            } else if (
+                                doorMinX < wallMinX
+                            ) {
+                                    let newSegmentA = getSortedDoor(door.end.x, door.end.y, wall.end.x, wall.end.y, -1);
+                                    let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                    wallChanged = true;
+                                    walls = walls.concat(newSegmmentsA);
+
+                            //overlap with lower-right tail
+                            } else if (
+                                doorMinX === wallMinX
+                                && doorMaxX < wallMaxX
+                            ) {
+                                let newSegmentA = getSortedDoor(door.end.x, door.end.y, wall.end.x, wall.end.y, -1);
+                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                wallChanged = true;
+                                walls = walls.concat(newSegmmentsA);
+
+                            //overlap with upper-right and lower-right tails
+                            } else if (
+                                doorMinX > wallMinX
+                                && doorMaxX < wallMaxX
+                            ) {
+                                let newSegmentA = getSortedDoor(wall.start.x, wall.start.y, door.start.x, door.start.y, -1);
+                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                walls = walls.concat(newSegmmentsA);
+                                let newSegmentB = getSortedDoor(door.end.x, wall.start.y, wall.end.x, wall.end.y, -1);
+                                let newSegmmentsB = recurseSubtrationUntilNoChange(newSegmentB, doorsToPassDown);
+                                walls = walls.concat(newSegmmentsB);
+                                wallChanged = true;
+
+                            //overlap with no tails
+                            } else if (
+                                doorMinX === wallMinX
+                                && doorMaxX === wallMaxX
+                            ) {
+                                wallChanged = true;
+                                Function.prototype();
+
+                            //overlap with upper-left and lower-left tails
+                            } else if (
+                                doorMinX < wallMinX
+                                && doorMaxX > wallMaxX
+                            ) {
+                                wallChanged = true;
+                                Function.prototype();
+
+                            //overlap with upper-left tail
+                            } else if (
+                                doorMinX < wallMinX
+                                && doorMaxX === wallMaxX
+                            ) {
+                                wallChanged = true;
+                                Function.prototype();
+
+                            //overlap with lower-left tail
+                            } else if (
+                                doorMinX === wallMinX
+                                && doorMaxX > wallMaxX
+                            ) {
+                                wallChanged = true;
+                                Function.prototype();
+
+
+                            //overlap with upper-right tail
+                            } else if (
+                                doorMinX > wallMinX
+                                && doorMaxX === wallMaxX
+                            ) {
+                                let newSegmentA = getSortedDoor(wall.start.x, wall.start.y, door.start.x, door.start.y, -1);
+                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                walls = walls.concat(newSegmmentsA);
+                                wallChanged = true;
+
+                            } else {
+                                console.log("wtf?");
+                                console.log(wall);
+                                console.log(door);
+                            }
+                            break;
+                        }
+                    }
                 }
-                //check for partials
-                //TODO
-                /*walls.push(wall);
-                wallHandled = true;
-                break;*/
+
             }
             //not a match
         }
@@ -1049,7 +1165,7 @@ function loadMetaroom(){
     metaroomWalls = subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors).filter(function(val) {return val});
     //console.log(metaroomDoors);
     //console.log(metaroomWalls);
-    //metaroomDoors = [];
+    metaroomDoors = [];
     //metaroomWalls = [];
     metaroomPoints = getPointsFromRooms(metaroom.rooms);
 
