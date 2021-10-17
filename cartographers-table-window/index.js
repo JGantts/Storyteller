@@ -85,11 +85,14 @@ function redoMultiCommand(subcommands){
 
 function getSortedDoor(aX, aY, bX, bY, perm) {
     let line = getSortedLine(aX, aY, bX, bY);
-    return {
-        permeability: perm,
-        start: line.start,
-        end: line.end
+    if (line) {
+        return {
+            permeability: perm,
+            start: line.start,
+            end: line.end
+        }
     }
+    return null;
 }
 
 function getSortedLine(aX, aY, bX, bY) {
@@ -129,7 +132,7 @@ function getSortedLine(aX, aY, bX, bY) {
                   y: bY
                 }
             };
-        } else {
+        } else if (aX > bX) {
             return {
                 start: {
                   x: bX,
@@ -140,6 +143,8 @@ function getSortedLine(aX, aY, bX, bY) {
                   y: aY
                 }
             };
+        } else {
+            return null;
         }
     }
 }
@@ -365,16 +370,6 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
             if (wallMinX === wallMaxX) {
                 //vertical door
                 if (doorMinX === doorMaxX) {
-                    /*//exact match
-                    if (
-                        door.start.x === wall.start.x
-                        && door.start.y === wall.start.y
-                        && door.end.x === wall.end.x
-                        && door.end.y === wall.end.y
-                    ) {
-                        wallHandled = true;
-                        break;
-                    }*/
                     //on same axis
                     if (door.start.x === wall.start.x) {
                         //there is overlap
@@ -383,7 +378,10 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
                           && doorMinY <= wallMaxY
                         ) {
                             wallHandled = true;
-                            //well, "overelap"
+                            //well, "overlap"
+                            console.log(wall);
+                            console.log(door);
+                            console.log("_______");
                             if (
                                 doorMaxY === wallMinY
                                 || doorMinY === wallMaxY
@@ -393,12 +391,12 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
                             } else if (
                                 doorMinY < wallMinY
                             ) {
-                                walls.push(
+                                /*walls.push(
                                     getSortedDoor(door.start.x, doorMinY, door.start.x, wallMinY, -1)
                                 );
                                 walls.push(
                                     getSortedDoor(door.start.x, wallMinY, door.start.x, doorMaxY, -1)
-                                )
+                                )*/
                                 walls.push(
                                     getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1)
                                 );
@@ -407,11 +405,11 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
                                 doorMinY === wallMinY
                                 && doorMaxY < wallMaxY
                             ) {
-                                walls.push(
+                                /*walls.push(
                                     getSortedDoor(door.start.x, doorMinY, door.start.x, doorMaxY, -1)
-                                );
+                                );*/
                                 walls.push(
-                                    getSortedDoor(door.start.x, doorMaxY, door.start.x, doorMaxY, -1)
+                                    getSortedDoor(door.start.x, wallMaxY, door.start.x, wallMaxY, -1)
                                 )
                             //overlap with upper-right and lower-right tails
                             } else if (
@@ -421,9 +419,9 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
                               walls.push(
                                   getSortedDoor(door.start.x, wallMinY, door.start.x, doorMinY, -1)
                               );
-                              walls.push(
+                              /*walls.push(
                                   getSortedDoor(door.start.x, doorMinY, door.start.x, doorMaxY, -1)
-                              )
+                              )*/
                               walls.push(
                                   getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1)
                               );
@@ -432,13 +430,16 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
                                 doorMinY === wallMinY
                                 && doorMaxY === wallMaxY
                             ) {
+                                /*console.log("doorMinY === wallMinY && doorMaxY === wallMaxY")
+                                console.log(wall);
+                                console.log(door);*/
                                 Function.prototype();
                             //overlap with upper-left and lower-left tails
                             } else if (
                                 doorMinY < wallMinY
                                 && doorMaxY > wallMaxY
                             ) {
-                                walls.push(
+                                /*walls.push(
                                     getSortedDoor(door.start.x, doorMinY, door.start.x, wallMinY, -1)
                                 );
                                 walls.push(
@@ -446,25 +447,29 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
                                 )
                                 walls.push(
                                     getSortedDoor(door.start.x, wallMaxY, door.start.x, doorMaxY, -1)
-                                );
+                                );*/
+                                Function.prototype();
                             //overlap with upper-left tail
                             } else if (
                                 doorMinY < wallMinY
                                 && doorMaxY === wallMaxY
                             ) {
-                                walls.push(
+                                /*walls.push(
                                     getSortedDoor(door.start.x, doorMinY, door.start.x, wallMinY, -1)
                                 );
                                 walls.push(
                                     getSortedDoor(door.start.x, wallMinY, door.start.x, wallMaxY, -1)
-                                )
+                                )*/
+                                Function.prototype();
                             } else {
                                 console.log("wtf?");
+                                console.log(wall);
+                                console.log(door);
                             }
                             break;
                         }
-                    }
-                }
+                      }
+                  }
                 //not a match
             }
             //horizontal wall
@@ -487,142 +492,7 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
                     wallHandled = true;
                     break;*/
                 }
-            }
-        }
-        if (!wallHandled) {
-            for (let j=0; j < remainingWalls.length; j++) {
-                let wallB = remainingWalls[j];
-                let wallBMinX = Math.min(wallB.start.x, wallB.end.x);
-                let wallBMaxX = Math.max(wallB.start.x, wallB.end.x);
-                let wallBMinY = Math.min(wallB.start.y, wallB.end.y);
-                let wallBMaxY = Math.max(wallB.start.y, wallB.end.y);
-
-                //vertical wallA
-                if (wallMinX === wallMaxX) {
-                    //vertical wallB
-                    if (wallBMinX === wallBMaxX) {
-                        //exact match
-                        if (
-                            wallB.start.x === wall.start.x
-                            && wallB.start.y === wall.start.y
-                            && wallB.end.x === wall.end.x
-                            && wallB.end.y === wall.end.y
-                        ) {
-                              wallHandled = true;
-                              break;
-                        }
-                        //on same axis
-                        if (wallB.start.x === wall.start.x) {
-                            //there is overlap
-                            if (
-                              wallBMaxY >= wallMinY
-                              && wallBMinY <= wallMaxY
-                            ) {
-                                wallHandled = true;
-                                //well, "overelap"
-                                if (
-                                    wallBMaxY === wallMinY
-                                    || wallBMinY === wallMaxY
-                                ) {
-                                    walls.push(wall);
-                                //overlap with upper-left and lower-right tails
-                                } else if (
-                                    wallBMinY < wallMinY
-                                ) {
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallBMinY, wallB.start.x, wallMinY, -1)
-                                    );
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallMinY, wallB.start.x, wallBMaxY, -1)
-                                    )
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallBMaxY, wallB.start.x, wallMaxY, -1)
-                                    );
-                                //overlap with lower-right tail
-                                } else if (
-                                    wallBMinY === wallMinY
-                                    && wallBMaxY < wallMaxY
-                                ) {
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallBMinY, wallB.start.x, wallBMaxY, -1)
-                                    );
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallBMaxY, wallB.start.x, wallBMaxY, -1)
-                                    )
-                                //overlap with upper-right and lower-right tails
-                                } else if (
-                                    wallBMinY > wallMinY
-                                    && wallBMaxY < wallMaxY
-                                ) {
-                                  walls.push(
-                                      getSortedDoor(wallB.start.x, wallMinY, wallB.start.x, wallBMinY, -1)
-                                  );
-                                  walls.push(
-                                      getSortedDoor(wallB.start.x, wallBMinY, wallB.start.x, wallBMaxY, -1)
-                                  )
-                                  walls.push(
-                                      getSortedDoor(wallB.start.x, wallBMaxY, wallB.start.x, wallMaxY, -1)
-                                  );
-                                //overlap with no tails
-                                } else if (
-                                    wallBMinY === wallMinY
-                                    && wallBMaxY === wallMaxY
-                                ) {
-                                    Function.prototype();
-                                //overlap with upper-left and lower-left tails
-                                } else if (
-                                    wallBMinY < wallMinY
-                                    && wallBMaxY > wallMaxY
-                                ) {
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallBMinY, wallB.start.x, wallMinY, -1)
-                                    );
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallMinY, wallB.start.x, wallMaxY, -1)
-                                    )
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallMaxY, wallB.start.x, wallBMaxY, -1)
-                                    );
-                                //overlap with upper-left tail
-                                } else if (
-                                    wallBMinY < wallMinY
-                                    && wallBMaxY === wallMaxY
-                                ) {
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallBMinY, wallB.start.x, wallMinY, -1)
-                                    );
-                                    walls.push(
-                                        getSortedDoor(wallB.start.x, wallMinY, wallB.start.x, wallMaxY, -1)
-                                    )
-                                } else {
-                                    console.log("wtf?");
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-                //horizontal wallA
-                else {
-                    //horizontal wallB
-                    if (wallBMinX !== wallBMaxX) {
-                        //exact match
-                        if (
-                            wallB.start.x === wall.start.x
-                            && wallB.start.y === wall.start.y
-                            && wallB.end.x === wall.end.x
-                            && wallB.end.y === wall.end.y
-                        ) {
-                              wallHandled = true;
-                              break;
-                        }
-                        //check for partials
-                        //TODO
-                        /*walls.push(wall);
-                        wallHandled = true;
-                        break;*/
-                    }
-                }
+                //not a match
             }
         }
         if (!wallHandled) {
@@ -630,6 +500,7 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
             walls.push(wall);
         }
     }
+
     return walls;
 }
 
@@ -1140,9 +1011,11 @@ function isClickInRoom(mx, my, room){
 
 function loadMetaroom(){
 
-    let metaroomWallsOverreach = getWallsFromRooms(metaroom.rooms);
-    metaroomDoors = getDoorsFromRooms(metaroom.rooms, metaroom.perms);
-    metaroomWalls = subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors);
+    let metaroomWallsOverreach = getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
+    metaroomDoors = getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
+    metaroomWalls = subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors).filter(function(val) {return val});
+    //console.log(metaroomDoors);
+    //console.log(metaroomWalls);
     metaroomDoors = [];
     //metaroomWalls = [];
     metaroomPoints = getPointsFromRooms(metaroom.rooms);
