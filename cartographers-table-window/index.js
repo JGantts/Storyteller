@@ -351,8 +351,9 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
     let walls = [];
     for (let i=0; i<wallsOverreach.length; i++ ){
         let wall = wallsOverreach[i];
-        let wallSegments = subtractDoorsFromWall(wall, doors);
-        console.log(wallSegments);
+        let wallSegments = subtractDoorsFromWall(wall, doors).segments;
+        assert(!wallSegments.changed);
+        //console.log(wallSegments);
         walls = walls.concat(wallSegments.filter(function(val) {return val !== null}));
     }
     console.log(walls);
@@ -369,6 +370,7 @@ function subtractDoorsFromWall(wall, doors){
     //let remainingWalls = wallsOverreach.slice(i + 1);
     //console.log(wallsPlusDoorsToCheckAgainst);
     let wallHandled = false;
+    let wallChanged = false;
     for (let j=0; j < doors.length; j++) {
         let door = doors[j];
         let doorMinX = Math.min(door.start.x, door.end.x);
@@ -388,6 +390,7 @@ function subtractDoorsFromWall(wall, doors){
                       && doorMinY <= wallMaxY
                     ) {
                         wallHandled = true;
+
                         //well, "overlap"
                         if (
                             doorMaxY === wallMinY
@@ -396,13 +399,16 @@ function subtractDoorsFromWall(wall, doors){
                             let newSegmentA = wall;
                             let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
                             walls = walls.concat(newSegmmentsA);
+
                         //overlap with upper-left and lower-right tails
                         } else if (
                             doorMinY < wallMinY
                         ) {
                                 let newSegmentA = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
                                 let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                                wallChanged = true;
                                 walls = walls.concat(newSegmmentsA);
+
                         //overlap with lower-right tail
                         } else if (
                             doorMinY === wallMinY
@@ -410,7 +416,9 @@ function subtractDoorsFromWall(wall, doors){
                         ) {
                             let newSegmentA = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
                             let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                            wallChanged = true;
                             walls = walls.concat(newSegmmentsA);
+
                         //overlap with upper-right and lower-right tails
                         } else if (
                             doorMinY > wallMinY
@@ -422,31 +430,38 @@ function subtractDoorsFromWall(wall, doors){
                             let newSegmentB = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
                             let newSegmmentsB = recurseSubtrationUntilNoChange(newSegmentB, doors.slice(j + 1));
                             walls = walls.concat(newSegmmentsB);
+                            wallChanged = true;
+
                         //overlap with no tails
                         } else if (
                             doorMinY === wallMinY
                             && doorMaxY === wallMaxY
                         ) {
+                            wallChanged = true;
                             Function.prototype();
+
                         //overlap with upper-left and lower-left tails
                         } else if (
                             doorMinY < wallMinY
                             && doorMaxY > wallMaxY
                         ) {
+                            wallChanged = true;
                             Function.prototype();
+
                         //overlap with upper-left tail
                         } else if (
                             doorMinY < wallMinY
                             && doorMaxY === wallMaxY
                         ) {
+                            wallChanged = true;
                             Function.prototype();
-
 
                         //overlap with lower-left tail
                         } else if (
                             doorMinY === wallMinY
                             && doorMaxY > wallMaxY
                         ) {
+                            wallChanged = true;
                             Function.prototype();
 
 
@@ -458,6 +473,7 @@ function subtractDoorsFromWall(wall, doors){
                             let newSegmentA = getSortedDoor(door.start.x, wallMinY, door.start.x, doorMinY, -1);
                             let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
                             walls = walls.concat(newSegmmentsA);
+                            wallChanged = true;
 
 
                         } else {
@@ -498,27 +514,36 @@ function subtractDoorsFromWall(wall, doors){
         //console.log("lazy pos");
         walls.push(wall);
     }
-    console.log(walls);
-    return walls;
+    //console.log(walls);
+    return {segments: walls, changed: wallChanged};
 }
 
 function recurseSubtrationUntilNoChange(wall, doors) {
     //console.log("torpedos");
     //console.log(wall);
     if (wall) {
+        //console.log(wall);
         let newWalls1 = subtractDoorsFromWall(wall, doors.slice(1));
         //console.log(newWalls1);
-        if (newWalls1.length === 1) {
-            return newWalls1;
-        } else {
+        if (newWalls1.changed) {
             let newWalls2 = [];
-            for(let i = 0; i < newWalls1.length; i++) {
-                newWalls2.push(recurseSubtrationUntilNoChange(newWalls1[i], doors.slice(1)));
+            //console.log("ugh1");
+            //console.log(newWalls1);
+            for(let i = 0; i < newWalls1.segments.length; i++) {
+                newWalls2.push(recurseSubtrationUntilNoChange(newWalls1.segments[i], doors.slice(1)));
             }
-            return newWalls2;
+            //console.log("ugh2");
+            //console.log(newWalls2);
+            //console.log(new Error().stack);
+            console.log(newWalls2.length);
+            assert(newWalls2.length === 1, `newWalls2.length: ${newWalls2.length}`);
+            return newWalls2[0];
+        } else {
+            return newWalls1.segments;
         }
     } else {
-      return [];
+        console.log(wall);
+        return [];
     }
 }
 
@@ -1063,6 +1088,8 @@ async function redrawMetaroom(){
 }
 
 async function redrawRooms(){
+    console.log(metaroomWalls);
+    console.log(metaroomDoors);
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     metaroomWalls.concat(metaroomDoors)
       .forEach((door, i) => {
