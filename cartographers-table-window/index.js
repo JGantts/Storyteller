@@ -1288,41 +1288,11 @@ function drawSelectionRoom(selected) {
         let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
 
         let animationOffset = 40*percentageAfterFrameStart;
-        pctx.moveTo(-5, -45 + i*thickness + thickness/2 - animationOffset);
-        pctx.lineTo(45 + 100, 5 + 100 + i*thickness + thickness/2 - animationOffset);
+        let lineAdustment = i*thickness + thickness/2 + animationOffset
+        pctx.moveTo(-5, -45 + lineAdustment);
+        pctx.lineTo(145, -195 + lineAdustment);
         pctx.stroke();
     }
-/*
-    for (let i=0; i < numberOfStripes*2.1; i++){
-    let thickness = 40 / numberOfStripes;
-    pctx.beginPath();
-    pctx.strokeStyle = i % 2?color1:color2;
-    pctx.lineWidth = thickness;
-
-    pctx.moveTo(-5,  i*thickness + thickness/2);
-    pctx.lineTo(11, -11 + i*thickness + thickness/2);
-    pctx.stroke();
-}*/
-
-
-/*
-    pctx.beginPath();
-    pctx.moveTo(0.0, 40.0);
-    pctx.lineTo(26.9, 36.0);
-    pctx.bezierCurveTo(31.7, 36.0, 36.0, 32.1, 36.0, 27.3);
-    pctx.lineTo(40.0, 0.0);
-    pctx.lineTo(11.8, 3.0);
-    pctx.bezierCurveTo(7.0, 3.0, 3.0, 6.9, 3.0, 11.7);
-    pctx.lineTo(0.0, 40.0);
-    pctx.closePath();
-    pctx.fillStyle = "rgb(188, 222, 178)";
-    pctx.fill();
-    pctx.lineWidth = 0.8;
-    pctx.strokeStyle = "rgb(0, 156, 86)";
-    pctx.lineJoin = "miter";
-    pctx.miterLimit = 4.0;
-    pctx.stroke();
-*/
 
     let patternStyle = selectionCtx.createPattern(pattern, "repeat");
 
@@ -1338,10 +1308,10 @@ function drawSelectionRoom(selected) {
 
 async function wildSelection(){
 
-    for (let i=0; i < metaroomPoints.length; i++){
+    /*for (let i=0; i < metaroomPoints.length; i++){
         let selected = metaroomPoints[i];
         drawSelectionSquare(selected.x, selected.y);
-    }
+    }*/
 
     for (let i=0; i < metaroomDoors.length; i++){
         let selected = metaroomDoors[i];
@@ -1353,10 +1323,10 @@ async function wildSelection(){
         drawSelectionLine(selected);
     }
 
-    for (let i=0; i < metaroom.rooms.length; i++){
+    /*for (let i=0; i < metaroom.rooms.length; i++){
         let selected = metaroom.rooms[i];
         drawSelectionRoom(selected);
-    }
+    }*/
 }
 
 //room
