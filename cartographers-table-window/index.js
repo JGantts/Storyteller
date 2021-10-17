@@ -356,7 +356,6 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
         //console.log(wallSegments);
         walls = walls.concat(wallSegments.filter(function(val) {return val !== null}));
     }
-    console.log(walls);
     return walls;
 }
 
@@ -366,13 +365,16 @@ function subtractDoorsFromWall(wall, doors){
     let wallMaxX = Math.max(wall.start.x, wall.end.x);
     let wallMinY = Math.min(wall.start.y, wall.end.y);
     let wallMaxY = Math.max(wall.start.y, wall.end.y);
-    //console.log(wallsOverreach);
-    //let remainingWalls = wallsOverreach.slice(i + 1);
-    //console.log(wallsPlusDoorsToCheckAgainst);
     let wallHandled = false;
     let wallChanged = false;
     for (let j=0; j < doors.length; j++) {
         let door = doors[j];
+        let doorsToPassDown =  doors.filter(function(val) {return (
+          val.start.x !== door.start.x
+          ||val.start.y !== door.start.y
+          ||val.end.x !== door.end.x
+          ||val.end.y !== door.end.y
+        )});
         let doorMinX = Math.min(door.start.x, door.end.x);
         let doorMaxX = Math.max(door.start.x, door.end.x);
         let doorMinY = Math.min(door.start.y, door.end.y);
@@ -397,7 +399,7 @@ function subtractDoorsFromWall(wall, doors){
                             || doorMinY === wallMaxY
                         ) {
                             let newSegmentA = wall;
-                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
                             walls = walls.concat(newSegmmentsA);
 
                         //overlap with upper-left and lower-right tails
@@ -405,7 +407,7 @@ function subtractDoorsFromWall(wall, doors){
                             doorMinY < wallMinY
                         ) {
                                 let newSegmentA = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
-                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
                                 wallChanged = true;
                                 walls = walls.concat(newSegmmentsA);
 
@@ -415,7 +417,7 @@ function subtractDoorsFromWall(wall, doors){
                             && doorMaxY < wallMaxY
                         ) {
                             let newSegmentA = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
-                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
                             wallChanged = true;
                             walls = walls.concat(newSegmmentsA);
 
@@ -425,10 +427,10 @@ function subtractDoorsFromWall(wall, doors){
                             && doorMaxY < wallMaxY
                         ) {
                             let newSegmentA = getSortedDoor(door.start.x, wallMinY, door.start.x, doorMinY, -1);
-                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
                             walls = walls.concat(newSegmmentsA);
                             let newSegmentB = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
-                            let newSegmmentsB = recurseSubtrationUntilNoChange(newSegmentB, doors.slice(j + 1));
+                            let newSegmmentsB = recurseSubtrationUntilNoChange(newSegmentB, doorsToPassDown);
                             walls = walls.concat(newSegmmentsB);
                             wallChanged = true;
 
@@ -471,7 +473,7 @@ function subtractDoorsFromWall(wall, doors){
                             && doorMaxY === wallMaxY
                         ) {
                             let newSegmentA = getSortedDoor(door.start.x, wallMinY, door.start.x, doorMinY, -1);
-                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
                             walls = walls.concat(newSegmmentsA);
                             wallChanged = true;
 
@@ -514,35 +516,23 @@ function subtractDoorsFromWall(wall, doors){
         //console.log("lazy pos");
         walls.push(wall);
     }
-    //console.log(walls);
     return {segments: walls, changed: wallChanged};
 }
 
 function recurseSubtrationUntilNoChange(wall, doors) {
-    //console.log("torpedos");
-    //console.log(wall);
     if (wall) {
-        //console.log(wall);
-        let newWalls1 = subtractDoorsFromWall(wall, doors.slice(1));
-        //console.log(newWalls1);
+        let newWalls1 = subtractDoorsFromWall(wall, doors);
         if (newWalls1.changed) {
             let newWalls2 = [];
-            //console.log("ugh1");
-            //console.log(newWalls1);
             for(let i = 0; i < newWalls1.segments.length; i++) {
-                newWalls2.push(recurseSubtrationUntilNoChange(newWalls1.segments[i], doors.slice(1)));
+                newWalls2.push(recurseSubtrationUntilNoChange(newWalls1.segments[i], doors));
             }
-            //console.log("ugh2");
-            //console.log(newWalls2);
-            //console.log(new Error().stack);
-            console.log(newWalls2.length);
-            assert(newWalls2.length === 1, `newWalls2.length: ${newWalls2.length}`);
+            assert(newWalls2.length <= 1, `newWalls2.length: ${newWalls2.length}`);
             return newWalls2[0];
         } else {
             return newWalls1.segments;
         }
     } else {
-        console.log(wall);
         return [];
     }
 }
@@ -1088,8 +1078,6 @@ async function redrawMetaroom(){
 }
 
 async function redrawRooms(){
-    console.log(metaroomWalls);
-    console.log(metaroomDoors);
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     metaroomWalls.concat(metaroomDoors)
       .forEach((door, i) => {
