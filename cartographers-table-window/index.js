@@ -17,11 +17,13 @@ let currentFileNeedsSaving = false;
 let backgroundCanvasElement = document.getElementById('backgroundCanvas');
 let selectionCanvasElement = document.getElementById('selectionCanvas');
 let roomCanvasElement = document.getElementById('roomCanvas');
+let pastiesCanvasElement = document.getElementById('pastiesCanvas');
 let backgroundCtx = setupCanvas(backgroundCanvasElement, backgroundCanvasElement.getBoundingClientRect());
 let selectionCtx = setupCanvas(selectionCanvasElement, selectionCanvasElement.getBoundingClientRect());
 let roomCtx = setupCanvas(roomCanvasElement, roomCanvasElement.getBoundingClientRect());
+let pastiesCtx = setupCanvas(pastiesCanvasElement, pastiesCanvasElement.getBoundingClientRect());
 
-let topCanvasElement = roomCanvasElement;
+let topCanvasElement = pastiesCanvasElement;
 topCanvasElement.onmousedown=handleMouseDown;
 topCanvasElement.onmousemove=handleMouseMove;
 topCanvasElement.onmouseup=handleMouseUp;
@@ -661,34 +663,52 @@ rightFloorY: 300,
 */
 
 function getPointsFromRooms(rooms) {
-    let points = new Set();
+    let points = [];
     rooms.forEach((room, i) => {
-        points.add(
+        points.push(
             {
                 x: rooms[i].leftX,
                 y: rooms[i].leftCeilingY
             }
         );
-        points.add(
+        points.push(
             {
                 x: rooms[i].rightX,
                 y: rooms[i].rightCeilingY
             }
         );
-        points.add(
+        points.push(
             {
                 x: rooms[i].rightX,
                 y: rooms[i].rightFloorY
             }
         );
-        points.add(
+        points.push(
             {
                 x: rooms[i].leftX,
                 y: rooms[i].leftFloorY
             }
         );
     });
-    return Array.from(points);
+
+    let filteredPoints = points.filter((point1, i1, arr) => {
+          let weAreTheFirst = true;
+          points.forEach((point2, i2) => {
+              if (
+                point1.x === point2.x
+                && point1.y === point2.y
+                && i1 > i2
+              ) {
+                  weAreTheFirst = false;
+              }
+          });
+          return weAreTheFirst;
+     });
+
+    console.log(points);
+    console.log(filteredPoints);
+
+    return Array.from(filteredPoints);
 }
 
 function getWallsFromRooms(rooms) {
@@ -1163,11 +1183,9 @@ function loadMetaroom(){
     metaroomWalls = subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors).filter(function(val) {return val});
     //console.log(metaroomDoors);
     //console.log(metaroomWalls);
-    metaroomDoors = [];
+    //metaroomDoors = [];
     //metaroomWalls = [];
     metaroomPoints = getPointsFromRooms(metaroom.rooms);
-
-
     backgroundCanvasElement.width =  metaroom.width;
     backgroundCanvasElement.height =  metaroom.height;
     backgroundCtx = setupCanvas(backgroundCanvasElement, metaroom);
@@ -1177,6 +1195,9 @@ function loadMetaroom(){
     selectionCanvasElement.width =  metaroom.width;
     selectionCanvasElement.height =  metaroom.height;
     selectionCtx = setupCanvas(selectionCanvasElement, metaroom);
+    pastiesCanvasElement.width =  metaroom.width;
+    pastiesCanvasElement.height =  metaroom.height;
+    pastiesCtx = setupCanvas(pastiesCanvasElement, metaroom);
     roomCtx.lineWidth = 2;
     redrawMetaroom()
 }
@@ -1194,23 +1215,50 @@ async function redrawMetaroom(){
 async function redrawRooms(){
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     metaroomWalls.concat(metaroomDoors)
-      .forEach((door, i) => {
-          if (door.permeability < 0) {
-            roomCtx.strokeStyle = 'rgb(005, 170, 255)';
-          } else if (door.permeability === 0) {
-            roomCtx.strokeStyle = 'rgb(228, 000, 107)';
-          } else if (door.permeability < 1) {
-            roomCtx.strokeStyle = 'rgb(207, 140, 003)';
-          } else if (door.permeability === 1) {
-            roomCtx.strokeStyle = 'rgb(172, 255, 083)';
-          }
-          roomCtx.beginPath();
-          roomCtx.moveTo(door.start.x, door.start.y);
-          roomCtx.lineTo(door.end.x, door.end.y);
-          roomCtx.stroke();
-      });
-
+        .forEach((door, i) => {
+            if (door.permeability < 0) {
+              roomCtx.strokeStyle = 'rgb(005, 170, 255)';
+            } else if (door.permeability === 0) {
+              roomCtx.strokeStyle = 'rgb(228, 000, 107)';
+            } else if (door.permeability < 1) {
+              roomCtx.strokeStyle = 'rgb(207, 140, 003)';
+            } else if (door.permeability === 1) {
+              roomCtx.strokeStyle = 'rgb(172, 255, 083)';
+            }
+            roomCtx.beginPath();
+            roomCtx.moveTo(door.start.x, door.start.y);
+            roomCtx.lineTo(door.end.x, door.end.y);
+            roomCtx.stroke();
+        });
+    redrawPasties();
       //redrawSelection();
+}
+
+const roomLineThickness = 2;
+
+async function redrawPasties(){
+    pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    metaroomPoints
+        .forEach((point, i) => {
+            if ( ((selectedType === "point") || (selectedType === "corner")) && (selectedId === i)) {
+                radius = selctionSquareWidth/2;
+                pastiesCtx.fillStyle = 'rgb(0, 0, 0)';
+                pastiesCtx.beginPath();
+                pastiesCtx.rect(
+                  point.x-selctionSquareWidth/2 + roomLineThickness/2,
+                  point.y-selctionSquareWidth/2 + roomLineThickness/2,
+                  selctionSquareWidth - roomLineThickness,
+                  selctionSquareWidth - roomLineThickness
+                );
+                pastiesCtx.fill();
+            } else {
+                pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
+                pastiesCtx.beginPath();
+                pastiesCtx.arc(point.x, point.y, roomLineThickness, 0, 2 * Math.PI, true);
+                pastiesCtx.fill();
+            }
+
+        });
 }
 
 //gay pride! That's right fuckers
@@ -1262,7 +1310,7 @@ const selctionSquareWidth = selectionCheckMargin * 4/3;
 function drawSelectionSquare(x, y) {
     //console.log(x);
     //console.log(y);
-    selectionCtx.lineWidth = "1.5";
+    selectionCtx.lineWidth = roomLineThickness;
     selectionCtx.strokeStyle = "white";
     selectionCtx.fillStyle = "black";
     selectionCtx.beginPath();
@@ -1544,6 +1592,7 @@ async function wildSelection(){
 //corner
 //point
 async function redrawSelection(){
+    redrawPasties();
     selectionCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     //wildSelection();
 //  return;
