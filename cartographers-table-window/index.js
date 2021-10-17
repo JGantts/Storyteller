@@ -106,7 +106,7 @@ function getSortedLine(aX, aY, bX, bY) {
               y: bY
             }
         };
-    } else {
+    } else if (aSum > bSum) {
         return {
             start: {
               x: bX,
@@ -117,6 +117,30 @@ function getSortedLine(aX, aY, bX, bY) {
               y: aY
             }
         };
+    } else {
+        if (aX < bX) {
+            return {
+                start: {
+                  x: aX,
+                  y: aY
+                },
+                end: {
+                  x: bX,
+                  y: bY
+                }
+            };
+        } else {
+            return {
+                start: {
+                  x: bX,
+                  y: bY
+                },
+                end: {
+                  x: aX,
+                  y: aY
+                }
+            };
+        }
     }
 }
 
@@ -958,7 +982,7 @@ function loadMetaroom(){
     let metaroomWallsOverreach = getWallsFromRooms(metaroom.rooms);
     metaroomDoors = getDoorsFromRooms(metaroom.rooms, metaroom.perms);
     metaroomWalls = subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors);
-    metaroomDoors = [];
+    //metaroomDoors = [];
     //metaroomWalls = [];
     metaroomPoints = getPointsFromRooms(metaroom.rooms);
 
