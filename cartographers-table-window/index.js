@@ -96,9 +96,7 @@ function getSortedDoor(aX, aY, bX, bY, perm) {
 }
 
 function getSortedLine(aX, aY, bX, bY) {
-    let aSum = aX + aY;
-    let bSum = bX + bY;
-    if (aSum < bSum) {
+    if (aX < bX) {
         return {
             start: {
               x: aX,
@@ -109,7 +107,7 @@ function getSortedLine(aX, aY, bX, bY) {
               y: bY
             }
         };
-    } else if (aSum > bSum) {
+    } else if (aX > bX) {
         return {
             start: {
               x: bX,
@@ -121,7 +119,7 @@ function getSortedLine(aX, aY, bX, bY) {
             }
         };
     } else {
-        if (aX < bX) {
+        if (aY < bY) {
             return {
                 start: {
                   x: aX,
@@ -132,7 +130,7 @@ function getSortedLine(aX, aY, bX, bY) {
                   y: bY
                 }
             };
-        } else if (aX > bX) {
+        } else if (aY > bY) {
             return {
                 start: {
                   x: bX,
@@ -402,7 +400,7 @@ function subtractDoorsFromWall(wall, doors){
                             || doorMinY === wallMaxY
                         ) {
                             let newSegmentA = wall;
-                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                            let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                             walls = walls.concat(newSegmmentsA);
 
                         //overlap with upper-left and lower-right tails
@@ -410,7 +408,7 @@ function subtractDoorsFromWall(wall, doors){
                             doorMinY < wallMinY
                         ) {
                                 let newSegmentA = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
-                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                                 wallChanged = true;
                                 walls = walls.concat(newSegmmentsA);
 
@@ -420,7 +418,7 @@ function subtractDoorsFromWall(wall, doors){
                             && doorMaxY < wallMaxY
                         ) {
                             let newSegmentA = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
-                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                            let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                             wallChanged = true;
                             walls = walls.concat(newSegmmentsA);
 
@@ -430,10 +428,10 @@ function subtractDoorsFromWall(wall, doors){
                             && doorMaxY < wallMaxY
                         ) {
                             let newSegmentA = getSortedDoor(door.start.x, wallMinY, door.start.x, doorMinY, -1);
-                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                            let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                             walls = walls.concat(newSegmmentsA);
                             let newSegmentB = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
-                            let newSegmmentsB = recurseSubtrationUntilNoChange(newSegmentB, doorsToPassDown);
+                            let newSegmmentsB = recurseSubtractionUntilNoChange(newSegmentB, doorsToPassDown);
                             walls = walls.concat(newSegmmentsB);
                             wallChanged = true;
 
@@ -476,7 +474,7 @@ function subtractDoorsFromWall(wall, doors){
                             && doorMaxY === wallMaxY
                         ) {
                             let newSegmentA = getSortedDoor(door.start.x, wallMinY, door.start.x, doorMinY, -1);
-                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                            let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                             walls = walls.concat(newSegmmentsA);
                             wallChanged = true;
 
@@ -536,7 +534,7 @@ function subtractDoorsFromWall(wall, doors){
                                 || doorMinX === wallMaxX
                             ) {
                                 let newSegmentA = wall;
-                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                                 walls = walls.concat(newSegmmentsA);
 
                             //overlap with upper-left and lower-right tails
@@ -544,7 +542,7 @@ function subtractDoorsFromWall(wall, doors){
                                 doorMinX < wallMinX
                             ) {
                                     let newSegmentA = getSortedDoor(door.end.x, door.end.y, wall.end.x, wall.end.y, -1);
-                                    let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                    let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                                     wallChanged = true;
                                     walls = walls.concat(newSegmmentsA);
 
@@ -554,7 +552,7 @@ function subtractDoorsFromWall(wall, doors){
                                 && doorMaxX < wallMaxX
                             ) {
                                 let newSegmentA = getSortedDoor(door.end.x, door.end.y, wall.end.x, wall.end.y, -1);
-                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                                 wallChanged = true;
                                 walls = walls.concat(newSegmmentsA);
 
@@ -564,10 +562,10 @@ function subtractDoorsFromWall(wall, doors){
                                 && doorMaxX < wallMaxX
                             ) {
                                 let newSegmentA = getSortedDoor(wall.start.x, wall.start.y, door.start.x, door.start.y, -1);
-                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                                 walls = walls.concat(newSegmmentsA);
                                 let newSegmentB = getSortedDoor(door.end.x, wall.start.y, wall.end.x, wall.end.y, -1);
-                                let newSegmmentsB = recurseSubtrationUntilNoChange(newSegmentB, doorsToPassDown);
+                                let newSegmmentsB = recurseSubtractionUntilNoChange(newSegmentB, doorsToPassDown);
                                 walls = walls.concat(newSegmmentsB);
                                 wallChanged = true;
 
@@ -610,7 +608,7 @@ function subtractDoorsFromWall(wall, doors){
                                 && doorMaxX === wallMaxX
                             ) {
                                 let newSegmentA = getSortedDoor(wall.start.x, wall.start.y, door.start.x, door.start.y, -1);
-                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doorsToPassDown);
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, doorsToPassDown);
                                 walls = walls.concat(newSegmmentsA);
                                 wallChanged = true;
 
@@ -635,13 +633,13 @@ function subtractDoorsFromWall(wall, doors){
     return {segments: walls, changed: wallChanged};
 }
 
-function recurseSubtrationUntilNoChange(wall, doors) {
+function recurseSubtractionUntilNoChange(wall, doors) {
     if (wall) {
         let newWalls1 = subtractDoorsFromWall(wall, doors);
         if (newWalls1.changed) {
             let newWalls2 = [];
             for(let i = 0; i < newWalls1.segments.length; i++) {
-                newWalls2.push(recurseSubtrationUntilNoChange(newWalls1.segments[i], doors));
+                newWalls2.push(recurseSubtractionUntilNoChange(newWalls1.segments[i], doors));
             }
             assert(newWalls2.length <= 1, `newWalls2.length: ${newWalls2.length}`);
             return newWalls2[0];
