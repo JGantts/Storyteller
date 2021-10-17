@@ -351,157 +351,175 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
     let walls = [];
     for (let i=0; i<wallsOverreach.length; i++ ){
         let wall = wallsOverreach[i];
-        let wallMinX = Math.min(wall.start.x, wall.end.x);
-        let wallMaxX = Math.max(wall.start.x, wall.end.x);
-        let wallMinY = Math.min(wall.start.y, wall.end.y);
-        let wallMaxY = Math.max(wall.start.y, wall.end.y);
-        //console.log(wallsOverreach);
-        let remainingWalls = wallsOverreach.slice(i + 1);
-        //console.log(wallsPlusDoorsToCheckAgainst);
-        let wallHandled = false;
-        for (let j=0; j < doors.length; j++) {
-            let door = doors[j];
-            let doorMinX = Math.min(door.start.x, door.end.x);
-            let doorMaxX = Math.max(door.start.x, door.end.x);
-            let doorMinY = Math.min(door.start.y, door.end.y);
-            let doorMaxY = Math.max(door.start.y, door.end.y);
+        let wallSegments = subtractDoorsFromWall(wall, doors);
+        console.log(wallSegments);
+        walls = walls.concat(wallSegments.filter(function(val) {return val !== null}));
+    }
+    console.log(walls);
+    return walls;
+}
 
-            //vertical wall
-            if (wallMinX === wallMaxX) {
-                //vertical door
-                if (doorMinX === doorMaxX) {
-                    //on same axis
-                    if (door.start.x === wall.start.x) {
-                        //there is overlap
+function subtractDoorsFromWall(wall, doors){
+    let walls = [];
+    let wallMinX = Math.min(wall.start.x, wall.end.x);
+    let wallMaxX = Math.max(wall.start.x, wall.end.x);
+    let wallMinY = Math.min(wall.start.y, wall.end.y);
+    let wallMaxY = Math.max(wall.start.y, wall.end.y);
+    //console.log(wallsOverreach);
+    //let remainingWalls = wallsOverreach.slice(i + 1);
+    //console.log(wallsPlusDoorsToCheckAgainst);
+    let wallHandled = false;
+    for (let j=0; j < doors.length; j++) {
+        let door = doors[j];
+        let doorMinX = Math.min(door.start.x, door.end.x);
+        let doorMaxX = Math.max(door.start.x, door.end.x);
+        let doorMinY = Math.min(door.start.y, door.end.y);
+        let doorMaxY = Math.max(door.start.y, door.end.y);
+
+        //vertical wall
+        if (wallMinX === wallMaxX) {
+            //vertical door
+            if (doorMinX === doorMaxX) {
+                //on same axis
+                if (door.start.x === wall.start.x) {
+                    //there is overlap
+                    if (
+                      doorMaxY >= wallMinY
+                      && doorMinY <= wallMaxY
+                    ) {
+                        wallHandled = true;
+                        //well, "overlap"
                         if (
-                          doorMaxY >= wallMinY
-                          && doorMinY <= wallMaxY
+                            doorMaxY === wallMinY
+                            || doorMinY === wallMaxY
                         ) {
-                            wallHandled = true;
-                            //well, "overlap"
+                            let newSegmentA = wall;
+                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                            walls = walls.concat(newSegmmentsA);
+                        //overlap with upper-left and lower-right tails
+                        } else if (
+                            doorMinY < wallMinY
+                        ) {
+                                let newSegmentA = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
+                                let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                                walls = walls.concat(newSegmmentsA);
+                        //overlap with lower-right tail
+                        } else if (
+                            doorMinY === wallMinY
+                            && doorMaxY < wallMaxY
+                        ) {
+                            let newSegmentA = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
+                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                            walls = walls.concat(newSegmmentsA);
+                        //overlap with upper-right and lower-right tails
+                        } else if (
+                            doorMinY > wallMinY
+                            && doorMaxY < wallMaxY
+                        ) {
+                            let newSegmentA = getSortedDoor(door.start.x, wallMinY, door.start.x, doorMinY, -1);
+                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                            walls = walls.concat(newSegmmentsA);
+                            let newSegmentB = getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1);
+                            let newSegmmentsB = recurseSubtrationUntilNoChange(newSegmentB, doors.slice(j + 1));
+                            walls = walls.concat(newSegmmentsB);
+                        //overlap with no tails
+                        } else if (
+                            doorMinY === wallMinY
+                            && doorMaxY === wallMaxY
+                        ) {
+                            Function.prototype();
+                        //overlap with upper-left and lower-left tails
+                        } else if (
+                            doorMinY < wallMinY
+                            && doorMaxY > wallMaxY
+                        ) {
+                            Function.prototype();
+                        //overlap with upper-left tail
+                        } else if (
+                            doorMinY < wallMinY
+                            && doorMaxY === wallMaxY
+                        ) {
+                            Function.prototype();
+
+
+                        //overlap with lower-left tail
+                        } else if (
+                            doorMinY === wallMinY
+                            && doorMaxY > wallMaxY
+                        ) {
+                            Function.prototype();
+
+
+                        //overlap with upper-right tail
+                        } else if (
+                            doorMinY > wallMinY
+                            && doorMaxY === wallMaxY
+                        ) {
+                            let newSegmentA = getSortedDoor(door.start.x, wallMinY, door.start.x, doorMinY, -1);
+                            let newSegmmentsA = recurseSubtrationUntilNoChange(newSegmentA, doors.slice(j + 1));
+                            walls = walls.concat(newSegmmentsA);
+
+
+                        } else {
+                            console.log("wtf?");
                             console.log(wall);
                             console.log(door);
-                            console.log("_______");
-                            if (
-                                doorMaxY === wallMinY
-                                || doorMinY === wallMaxY
-                            ) {
-                                walls.push(wall);
-                            //overlap with upper-left and lower-right tails
-                            } else if (
-                                doorMinY < wallMinY
-                            ) {
-                                /*walls.push(
-                                    getSortedDoor(door.start.x, doorMinY, door.start.x, wallMinY, -1)
-                                );
-                                walls.push(
-                                    getSortedDoor(door.start.x, wallMinY, door.start.x, doorMaxY, -1)
-                                )*/
-                                walls.push(
-                                    getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1)
-                                );
-                            //overlap with lower-right tail
-                            } else if (
-                                doorMinY === wallMinY
-                                && doorMaxY < wallMaxY
-                            ) {
-                                /*walls.push(
-                                    getSortedDoor(door.start.x, doorMinY, door.start.x, doorMaxY, -1)
-                                );*/
-                                walls.push(
-                                    getSortedDoor(door.start.x, wallMaxY, door.start.x, wallMaxY, -1)
-                                )
-                            //overlap with upper-right and lower-right tails
-                            } else if (
-                                doorMinY > wallMinY
-                                && doorMaxY < wallMaxY
-                            ) {
-                              walls.push(
-                                  getSortedDoor(door.start.x, wallMinY, door.start.x, doorMinY, -1)
-                              );
-                              /*walls.push(
-                                  getSortedDoor(door.start.x, doorMinY, door.start.x, doorMaxY, -1)
-                              )*/
-                              walls.push(
-                                  getSortedDoor(door.start.x, doorMaxY, door.start.x, wallMaxY, -1)
-                              );
-                            //overlap with no tails
-                            } else if (
-                                doorMinY === wallMinY
-                                && doorMaxY === wallMaxY
-                            ) {
-                                /*console.log("doorMinY === wallMinY && doorMaxY === wallMaxY")
-                                console.log(wall);
-                                console.log(door);*/
-                                Function.prototype();
-                            //overlap with upper-left and lower-left tails
-                            } else if (
-                                doorMinY < wallMinY
-                                && doorMaxY > wallMaxY
-                            ) {
-                                /*walls.push(
-                                    getSortedDoor(door.start.x, doorMinY, door.start.x, wallMinY, -1)
-                                );
-                                walls.push(
-                                    getSortedDoor(door.start.x, wallMinY, door.start.x, wallMaxY, -1)
-                                )
-                                walls.push(
-                                    getSortedDoor(door.start.x, wallMaxY, door.start.x, doorMaxY, -1)
-                                );*/
-                                Function.prototype();
-                            //overlap with upper-left tail
-                            } else if (
-                                doorMinY < wallMinY
-                                && doorMaxY === wallMaxY
-                            ) {
-                                /*walls.push(
-                                    getSortedDoor(door.start.x, doorMinY, door.start.x, wallMinY, -1)
-                                );
-                                walls.push(
-                                    getSortedDoor(door.start.x, wallMinY, door.start.x, wallMaxY, -1)
-                                )*/
-                                Function.prototype();
-                            } else {
-                                console.log("wtf?");
-                                console.log(wall);
-                                console.log(door);
-                            }
-                            break;
                         }
-                      }
-                  }
-                //not a match
-            }
-            //horizontal wall
-            else {
-                //horizontal door
-                if (doorMinX !== doorMaxX) {
-                    //exact match
-                    if (
-                        door.start.x === wall.start.x
-                        && door.start.y === wall.start.y
-                        && door.end.x === wall.end.x
-                        && door.end.y === wall.end.y
-                    ) {
-                          wallHandled = true;
-                          break;
+                        break;
                     }
-                    //check for partials
-                    //TODO
-                    /*walls.push(wall);
-                    wallHandled = true;
-                    break;*/
-                }
-                //not a match
-            }
+                  }
+              }
+            //not a match
         }
-        if (!wallHandled) {
-            console.log("lazy pos");
-            walls.push(wall);
+        //horizontal wall
+        else {
+            //horizontal door
+            if (doorMinX !== doorMaxX) {
+                //exact match
+                if (
+                    door.start.x === wall.start.x
+                    && door.start.y === wall.start.y
+                    && door.end.x === wall.end.x
+                    && door.end.y === wall.end.y
+                ) {
+                      wallHandled = true;
+                      break;
+                }
+                //check for partials
+                //TODO
+                /*walls.push(wall);
+                wallHandled = true;
+                break;*/
+            }
+            //not a match
         }
     }
-
+    if (!wallHandled) {
+        //console.log("lazy pos");
+        walls.push(wall);
+    }
+    console.log(walls);
     return walls;
+}
+
+function recurseSubtrationUntilNoChange(wall, doors) {
+    //console.log("torpedos");
+    //console.log(wall);
+    if (wall) {
+        let newWalls1 = subtractDoorsFromWall(wall, doors.slice(1));
+        //console.log(newWalls1);
+        if (newWalls1.length === 1) {
+            return newWalls1;
+        } else {
+            let newWalls2 = [];
+            for(let i = 0; i < newWalls1.length; i++) {
+                newWalls2.push(recurseSubtrationUntilNoChange(newWalls1[i], doors.slice(1)));
+            }
+            return newWalls2;
+        }
+    } else {
+      return [];
+    }
 }
 
 /*
