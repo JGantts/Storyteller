@@ -1,4 +1,4 @@
-$.getScript('../engine-api/CAOS.js');
+//$.getScript('../engine-api/CAOS.js');
 const assert = require('assert');
 const { clipboard, remote } = require('electron');
 const dialog = remote.dialog;
@@ -83,6 +83,43 @@ function redoMultiCommand(subcommands){
     });
 }
 
+function getSortedDoor(aX, aY, bX, bY, perm) {
+    let line = getSortedLine(aX, aY, bX, bY);
+    return {
+        permeability: perm,
+        start: line.start,
+        end: line.end
+    }
+}
+
+function getSortedLine(aX, aY, bX, bY) {
+    let aSum = aX + aY;
+    let bSum = bX + bY;
+    if (aSum < bSum) {
+        return {
+            start: {
+              x: aX,
+              y: aY
+            },
+            end: {
+              x: bX,
+              y: bY
+            }
+        };
+    } else {
+        return {
+            start: {
+              x: bX,
+              y: bY
+            },
+            end: {
+              x: aX,
+              y: aY
+            }
+        };
+    }
+}
+
 function getRoomCeiling(room) {
     return {
       point: {
@@ -158,17 +195,11 @@ function getDoorsFromRooms(rooms, perms) {
           let middleTwo = getMiddleTwo(roomA.leftCeilingY, roomA.leftFloorY, roomB.rightCeilingY, roomB.rightFloorY);
 
           doors.push(
-            {
-              permeability: perm.permeability,
-              start: {
-                x: roomA.leftX,
-                y: middleTwo.high
-              },
-              end: {
-                x: roomA.leftX,
-                y: middleTwo.low
-              }
-            }
+              getSortedDoor(
+                  roomA.leftX, middleTwo.high,
+                  roomA.leftX, middleTwo.low,
+                  perm.permeability
+              )
           );
           continue;
       }
@@ -177,17 +208,11 @@ function getDoorsFromRooms(rooms, perms) {
         let middleTwo = getMiddleTwo(roomA.rightCeilingY, roomA.rightFloorY, roomB.leftCeilingY, roomB.leftFloorY);
 
         doors.push(
-          {
-            permeability: perm.permeability,
-            start: {
-              x: roomB.leftX,
-              y: middleTwo.high
-            },
-            end: {
-              x: roomB.leftX,
-              y: middleTwo.low
-            }
-          }
+            getSortedDoor(
+                roomB.leftX, middleTwo.high,
+                roomB.leftX, middleTwo.low,
+                perm.permeability
+            )
         );
         continue;
 
@@ -206,7 +231,7 @@ function getDoorsFromRooms(rooms, perms) {
       //console.log(roomBLineBottom);
 
       /*if (getIntersectsFromFour(roomALineTop, roomB) || getIntersectsFromFour(roomBLineBottom, roomA)) {
-          let ourPoints = getMiddleTwoPointsConsideredVertically(
+          let ourPoints = getMiddleTwoPointsConsideredHoizontally(
               {x: roomA.leftX, y: roomA.leftCeilingY},
               {x: roomA.rightX, y: roomA.rightCeilingY},
               {x: roomB.leftX, y: roomB.leftFLoorY},
@@ -224,18 +249,18 @@ function getDoorsFromRooms(rooms, perms) {
 
     //  if (getIntersectsFromFour(roomALineBottom, roomB) || getIntersectsFromFour(roomBLineTop, roomA)) {
       if (getIntersectsFromFour(roomALineBottom, roomB)) {
-          let ourPoints = getMiddleTwoPointsConsideredVertically(
+          let ourPoints = getMiddleTwoPointsConsideredHoizontally(
               {x: roomA.leftX, y: roomA.leftFloorY},
               {x: roomA.rightX, y: roomA.rightFloorY},
               {x: roomB.leftX, y: roomB.leftCeilingY},
               {x: roomB.rightX, y: roomB.rightCeilingY}
           );
           doors.push(
-            {
-              permeability: perm.permeability,
-              start: ourPoints.high,
-              end: ourPoints.low
-            }
+              getSortedDoor(
+                  ourPoints.high.x, ourPoints.high.y,
+                  ourPoints.low.x, ourPoints.low.y,
+                  perm.permeability
+              )
           );
           continue;
       }
@@ -254,7 +279,7 @@ function getMiddleTwo(one, two, three, four){
     }
 }
 
-function getMiddleTwoPointsConsideredVertically(one, two, three, four){
+function getMiddleTwoPointsConsideredHoizontally(one, two, three, four){
     let sorted = [one, two, three, four];
     sorted.sort((a, b) => {return a.x - b.x});
     return {
@@ -293,7 +318,6 @@ function getIntersectsFromOne(line, point){
     return null;
 }
 
-
 function subtractDoorsFromWalls(wallsOverreach, doors){
     let walls = [];
     for (let i=0; i<wallsOverreach.length; i++ ){
@@ -302,87 +326,123 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
         let wallMaxX = Math.max(wall.start.x, wall.end.x);
         let wallMinY = Math.min(wall.start.y, wall.end.y);
         let wallMaxY = Math.max(wall.start.y, wall.end.y);
+        //console.log(wallsOverreach);
+        let remainingWalls = wallsOverreach.slice(i + 1);
+        //console.log(wallsPlusDoorsToCheckAgainst);
+        let wallHandled = false;
+        for (let j=0; j < remainingWalls.length; j++) {
+            let wallB = remainingWalls[j];
+            let wallBMinX = Math.min(wallB.start.x, wallB.end.x);
+            let wallBMaxX = Math.max(wallB.start.x, wallB.end.x);
+            let wallBMinY = Math.min(wallB.start.y, wallB.end.y);
+            let wallBMaxY = Math.max(wallB.start.y, wallB.end.y);
 
-        let remainingWalls = wallsOverreach.subarray(i);
-        let wallsPlusDoorsToCheckAgainst = remainingWalls.concat(doors);
-        for (let j=0; j < wallsPlusDoorsToCheckAgainst.length; j++) {
-            let side = wallsPlusDoorsToCheckAgainst[j];
-            let sideMinX = Math.min(side.start.x, side.end.x);
-            let sideMaxX = Math.max(side.start.x, side.end.x);
-            let sideMinY = Math.min(side.start.y, side.end.y);
-            let sideMaxY = Math.max(side.start.y, side.end.y);
-
-            /*if (
-              sideMaxX < wallMinX
-              || sideMinX > wallMaxX
-              || sideMaxY < wallMinY
-              || sideMinY > wallMaxY
-            ) {
-                continue;
-            }*/
-
-            //vertical wall
+            //vertical wallA
             if (wallMinX === wallMaxX) {
-                //vertical side
-                if (sideMinX === sideMaxX) {
-                    //if ()
-
-
+                //vertical wallB
+                if (wallBMinX === wallBMaxX) {
+                    //exact match
                     if (
-                      sideMaxY < wallMinY
-                      || sideMinY > wallMaxY
+                        wallB.start.x === wall.start.x
+                        && wallB.start.y === wall.start.y
+                        && wallB.end.x === wall.end.x
+                        && wallB.end.y === wall.end.y
                     ) {
-                        continue;
+                          wallHandled = true;
+                          break;
                     }
+                    //check for partials
+                    //TODO
 
-                }
-                //horizontal side
-                else if (sideMinY === sideMaxY) {
-                    continue;
-                }
-                //sloped side
-                else {
-                    continue;
+                    /*let sorted = [one, two, three, four];
+                    sorted.sort((a, b) => {return a.y - b.y});
+                    return {
+                        high: sorted[2],
+                        low: sorted[1]
+                    }*/
+
+                    /*walls.push(wall);
+                    wallHandled = true;
+                    break;*/
                 }
             }
-            //horizontal wall
-            else if (wallMinY === wallMaxY) {
-                //vertical side
-                if (sideMinX === sideMaxX) {
-                    continue;
-                }
-                //horizontal side
-                else if (sideMinY === sideMaxY) {
-
-                }
-                //sloped side
-                else {
-                    continue;
-                }
-            }
-            //sloped wall
+            //horizontal wallA
             else {
-                //vertical side
-                if (sideMinX === sideMaxX) {
-                    continue;
-                }
-                //horizontal side
-                else if (sideMinY === sideMaxY) {
-                    continue;
-                }
-                //sloped side
-                else {
-
+                //horizontal wallB
+                if (wallBMinX !== wallBMaxX) {
+                    //exact match
+                    if (
+                        wallB.start.x === wall.start.x
+                        && wallB.start.y === wall.start.y
+                        && wallB.end.x === wall.end.x
+                        && wallB.end.y === wall.end.y
+                    ) {
+                          wallHandled = true;
+                          break;
+                    }
+                    //check for partials
+                    //TODO
+                    /*walls.push(wall);
+                    wallHandled = true;
+                    break;*/
                 }
             }
-
         }
-        if (wall) {
-            if (wall.start.x != wall.end.x) {
-                if (wall.start.y != wall.end.y) {
-                    walls.append(wall);
+        if (!wallHandled) {
+            for (let j=0; j < doors.length; j++) {
+                let door = doors[j];
+                let doorMinX = Math.min(door.start.x, door.end.x);
+                let doorMaxX = Math.max(door.start.x, door.end.x);
+                let doorMinY = Math.min(door.start.y, door.end.y);
+                let doorMaxY = Math.max(door.start.y, door.end.y);
+
+                //vertical wall
+                if (wallMinX === wallMaxX) {
+                    //vertical door
+                    if (doorMinX === doorMaxX) {
+                        //exact match
+                        if (
+                            door.start.x === wall.start.x
+                            && door.start.y === wall.start.y
+                            && door.end.x === wall.end.x
+                            && door.end.y === wall.end.y
+                        ) {
+                            wallHandled = true;
+                            break;
+                        }
+                        //check for partials
+                        //TODO
+                        /*walls.push(wall);
+                        wallHandled = true;
+                        break;*/
+                    }
+                }
+                //horizontal wall
+                else {
+                    //horizontal door
+                    if (doorMinX !== doorMaxX) {
+                        //exact match
+                        if (
+                            door.start.x === wall.start.x
+                            && door.start.y === wall.start.y
+                            && door.end.x === wall.end.x
+                            && door.end.y === wall.end.y
+                        ) {
+                              wallHandled = true;
+                              break;
+                        }
+                        //check for partials
+                        //TODO
+                        /*walls.push(wall);
+                        wallHandled = true;
+                        break;*/
+                    }
                 }
             }
+        }
+        if (!wallHandled) {
+            console.log("lazy pos");
+            walls.push(wall);
         }
     }
     return walls;
@@ -431,58 +491,36 @@ function getPointsFromRooms(rooms) {
 function getWallsFromRooms(rooms) {
   let doors = [];
   rooms.forEach((room, i) => {
+
     doors.push(
-      {
-        permeability: -1,
-        start: {
-          x: room.leftX,
-          y: room.leftCeilingY
-        },
-        end: {
-          x: room.rightX,
-          y: room.rightCeilingY
-        }
-      }
+        getSortedDoor(
+            room.leftX, room.leftCeilingY,
+            room.rightX, room.rightCeilingY,
+            -1
+        )
     );
     doors.push(
-      {
-        permeability: -1,
-        start: {
-          x: room.rightX,
-          y: room.rightCeilingY
-        },
-        end: {
-          x: room.rightX,
-          y: room.rightFloorY
-        }
-      }
+        getSortedDoor(
+            room.rightX, room.rightCeilingY,
+            room.rightX, room.rightFloorY,
+            -1
+        )
     );
     doors.push(
-      {
-        permeability: -1,
-        start: {
-          x: room.rightX,
-          y: room.rightFloorY
-        },
-        end: {
-          x: room.leftX,
-          y: room.leftFloorY
-        }
-      }
+        getSortedDoor(
+            room.rightX, room.rightFloorY,
+            room.leftX, room.leftFloorY,
+            -1
+        )
     );
     doors.push(
-      {
-        permeability: -1,
-        start: {
-          x: room.leftX,
-          y: room.leftFloorY
-        },
-        end: {
-          x: room.leftX,
-          y: room.leftCeilingY
-        }
-      }
+        getSortedDoor(
+            room.leftX, room.leftFloorY,
+            room.leftX, room.leftCeilingY,
+            -1
+        )
     );
+
   });
   return doors;
 }
@@ -919,7 +957,9 @@ function loadMetaroom(){
 
     let metaroomWallsOverreach = getWallsFromRooms(metaroom.rooms);
     metaroomDoors = getDoorsFromRooms(metaroom.rooms, metaroom.perms);
-    metaroomWalls = metaroomWallsOverreach;//subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors);
+    metaroomWalls = subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors);
+    metaroomDoors = [];
+    //metaroomWalls = [];
     metaroomPoints = getPointsFromRooms(metaroom.rooms);
 
 
