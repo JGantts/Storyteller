@@ -401,13 +401,13 @@ function handleMouseUp(e){
 
 function handleMouseOut(e){
     // return if we're not dragging
-    isMouseButtonDown = false;
+    /*isMouseButtonDown = false;
 
     isDragging = false;
     whatDragging = "";
     idDragging = -1;
     startDragging = null;
-    stopDragging = null;
+    stopDragging = null;*/
 }
 
 function handleMouseMove(e){
@@ -437,7 +437,57 @@ function handleMouseMove(e){
   //checkSelection(startX, startY);
 }
 
+function getPotentiaLinesPoints(startPoint, endPoint, dataStructures, selectedLine) {
+      let room = getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine);
 
+      if (!room) {
+          return null;
+      }
+
+      let doorWalls = dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(room, dataStructures);
+      let points = dataStructureFactory.getPointsFromRooms([room]);
+
+      return {
+          lines: doorWalls,
+          points: points
+      }
+}
+
+function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
+  // Vertical
+  if (selectedLine.start.x === selectedLine.end.x) {
+      let deltaX = endPoint.x - startPoint.x;
+
+      if (Math.abs(deltaX) < 5) {
+          return null;
+      }
+
+      if (deltaX > 0) {
+          return {
+              leftX: selectedLine.start.x,
+              rightX: selectedLine.start.x + deltaX,
+              leftCeilingY: selectedLine.start.y,
+              rightCeilingY: selectedLine.start.y,
+              leftFloorY: selectedLine.end.y,
+              rightFloorY: selectedLine.end.y,
+          };
+      } else {
+          return {
+              leftX: selectedLine.start.x + deltaX,
+              rightX: selectedLine.start.x,
+              leftCeilingY: selectedLine.start.y,
+              rightCeilingY: selectedLine.start.y,
+              leftFloorY: selectedLine.end.y,
+              rightFloorY: selectedLine.end.y,
+          };
+      }
+      potentialPerms = [];
+  // Horizontal
+  } else {
+      console.log("ehat");
+      return null;
+  }
+}
 
 function loadMetaroom(canvasElements, canvasContexts, metaroom){
 
@@ -481,7 +531,7 @@ function loadMetaroom(canvasElements, canvasContexts, metaroom){
 }
 
 async function redrawMetaroom(roomCtx, pastiesCtx, doors, walls, points, metaroom){
-    redrawRooms(roomCtx, pastiesCtx, doors, walls, points, metaroom);
+    redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
     backgroundCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     let img = new Image;
     img.src = metaroom.background;
@@ -490,23 +540,23 @@ async function redrawMetaroom(roomCtx, pastiesCtx, doors, walls, points, metaroo
     backgroundCtx.drawImage(img, 0, 0);
 }
 
-async function redrawRooms(roomCtx, pastiesCtx, doors, walls, points, metaroom){
+async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    walls.concat(doors)
-        .forEach((side, i) => {
-            if (side.permeability < 0) {
+    lines
+        .forEach((line, i) => {
+            if (line.permeability < 0) {
               roomCtx.strokeStyle = 'rgb(005, 170, 255)';
-            } else if (side.permeability === 0) {
+            } else if (line.permeability === 0) {
               roomCtx.strokeStyle = 'rgb(228, 000, 107)';
-            } else if (side.permeability < 1) {
+            } else if (line.permeability < 1) {
               roomCtx.strokeStyle = 'rgb(207, 140, 003)';
-            } else if (side.permeability === 1) {
+            } else if (line.permeability === 1) {
               roomCtx.strokeStyle = 'rgb(172, 255, 083)';
             }
             roomCtx.beginPath();
-            roomCtx.moveTo(side.start.x, side.start.y);
-            roomCtx.lineTo(side.end.x, side.end.y);
+            roomCtx.moveTo(line.start.x, line.start.y);
+            roomCtx.lineTo(line.end.x, line.end.y);
             roomCtx.stroke();
         });
     redrawPasties(pastiesCtx, points, metaroom);
@@ -569,52 +619,26 @@ async function redrawPotentialFromWall(startPoint, endPoint, dataStructures, sel
 
     if (roomFromPoint(endPoint) === -1) {
         let selectedLine = dataStructures.walls[selected.selectedId];
+        let linesPoints =  getPotentiaLinesPoints(startPoint, endPoint, dataStructures, selectedLine);
 
-        let potentialRooms = null;
-        let potentialPerms = null;
-
-        // Vertical
-        if (selectedLine.start.x === selectedLine.end.x) {
-            let deltaX = endPoint.x - startPoint.x;
-
-            if (Math.abs(deltaX) < 5) {
-                return;
-            }
-
-            if (deltaX > 0) {
-                potentialRoom = {
-                    leftX: selectedLine.start.x,
-                    rightX: selectedLine.start.x + deltaX,
-                    leftCeilingY: selectedLine.start.y,
-                    rightCeilingY: selectedLine.start.y,
-                    leftFloorY: selectedLine.end.y,
-                    rightFloorY: selectedLine.end.y,
-                };
-            } else {
-                potentialRoom = {
-                    leftX: selectedLine.start.x + deltaX,
-                    rightX: selectedLine.start.x,
-                    leftCeilingY: selectedLine.start.y,
-                    rightCeilingY: selectedLine.start.y,
-                    leftFloorY: selectedLine.end.y,
-                    rightFloorY: selectedLine.end.y,
-                };
-            }
-            potentialPerms = [];
-        // Horizontal
-        } else {
-            console.log("ehat");
+        if (linesPoints) {
+            console.log(linesPoints);
+            redrawRooms(potentialCtx, potentialCtx, linesPoints.lines, linesPoints.points, metaroom);
         }
 
-        potentialRooms = [potentialRoom];
+        /*let potentialRoom = getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine);
+        let potentialRooms = [];
+        if (potentialRoom) {
+            potentialRooms.push(potentialRoom);
+            let potentialPerms = null;
 
-        let wallsOverreach = dataStructureFactory.getWallsFromRooms(potentialRooms).filter(function(val) {return val});
-        let doors = dataStructureFactory.getDoorsFromRooms(potentialRooms, potentialPerms).filter(function(val) {return val});
-        let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
-        let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
+            let wallsOverreach = dataStructureFactory.getWallsFromRooms(potentialRooms).filter(function(val) {return val!==null});
+            let doors = dataStructureFactory.getDoorsFromRooms(potentialRooms, potentialPerms).filter(function(val) {return va!==nulll});
+            let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val!==null});
+            let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
 
-        redrawRooms(potentialCtx, potentialCtx, doors, walls, points, metaroom);
-
+            redrawRooms(potentialCtx, potentialCtx, doors.concat(walls), points, metaroom);
+        }*/
     }
 }
 

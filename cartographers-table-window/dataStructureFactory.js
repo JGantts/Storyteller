@@ -7,6 +7,300 @@ leftFloorY: 300,
 rightFloorY: 300,
 */
 
+function getDoorsWallsPotentialFromRoomPotential(roomPotential, dataStructuresActual) {
+    let wallsSimple = getWallsFromRooms([roomPotential]).filter(function(val) {return val});
+    let doorsWalls = slicePotentialRoomIntoPotentialLinesFromActualWalls(wallsSimple, dataStructuresActual.walls);
+    return doorsWalls;
+}
+
+function slicePotentialRoomIntoPotentialLinesFromActualWalls(sidesPotential, wallsActual){
+    let linesPotential = [];
+    for (let i=0; i<sidesPotential.length; i++ ){
+        let sidePotential = sidesPotential[i];
+        let lineSegmentsNew = slicePotentialSideIntoPotentialLinesFromActualWall(sidePotential, wallsActual).segments;
+        assert(!lineSegmentsNew.changed);
+        //console.log(wallSegments);
+        linesPotential = linesPotential.concat(lineSegmentsNew.filter(function(val) {return val !== null}));
+    }
+    return linesPotential;
+}
+
+function slicePotentialSideIntoPotentialLinesFromActualWall(side, walls){
+    let lines = [];
+    let sideMinX = Math.min(side.start.x, side.end.x);
+    let sideMaxX = Math.max(side.start.x, side.end.x);
+    let sideMinY = Math.min(side.start.y, side.end.y);
+    let sideMaxY = Math.max(side.start.y, side.end.y);
+    let sideHandled = false;
+    let sideChanged = false;
+    for (let j=0; j < walls.length; j++) {
+        let wall = walls[j];
+        let wallsToPassDown =  walls.filter(function(val) {return (
+          val.start.x !== wall.start.x
+          ||val.start.y !== wall.start.y
+          ||val.end.x !== wall.end.x
+          ||val.end.y !== wall.end.y
+        )});
+        let wallMinX = Math.min(wall.start.x, wall.end.x);
+        let wallMaxX = Math.max(wall.start.x, wall.end.x);
+        let wallMinY = Math.min(wall.start.y, wall.end.y);
+        let wallMaxY = Math.max(wall.start.y, wall.end.y);
+
+        //vertical side
+        if (sideMinX === sideMaxX) {
+
+            //vertical wall
+            if (wallMinX === wallMaxX) {
+
+                //on same axis
+                if (wall.start.x === side.start.x) {
+
+                    //there is overlap
+                    if (
+                      wallMaxY >= sideMinY
+                      && wallMinY <= sideMaxY
+                    ) {
+                        sideHandled = true;
+
+                        //well, "overlap"
+                        if (
+                            wallMaxY === sideMinY
+                            || wallMinY === sideMaxY
+                        ) {
+                            let newSegmentA = side;
+                            let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                            lines = lines.concat(newSegmmentsA);
+
+                        //overlap with upper-left and lower-right tails
+                        } else if (
+                            wallMinY < sideMinY
+                        ) {
+                                let newSegmentA = geometry.getSortedDoor(wall.start.x, wallMaxY, wall.start.x, sideMaxY, -1);
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                                sideChanged = true;
+                                sides = sides.concat(newSegmmentsA);
+
+                        //overlap with lower-right tail
+                        } else if (
+                            wallMinY === sideMinY
+                            && wallMaxY < sideMaxY
+                        ) {
+                            let newSegmentA = geometry.getSortedDoor(wall.start.x, wallMaxY, wall.start.x, sideMaxY, -1);
+                            let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                            sideChanged = true;
+                            lines = lines.concat(newSegmmentsA);
+
+                        //overlap with upper-right and lower-right tails
+                        } else if (
+                            wallMinY > sideMinY
+                            && wallMaxY < sideMaxY
+                        ) {
+                            let newSegmentA = geometry.getSortedDoor(wall.start.x, sideMinY, wall.start.x, wallMinY, -1);
+                            let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                            lines = lines.concat(newSegmmentsA);
+                            let newSegmentB = geometry.getSortedDoor(wall.start.x, wallMaxY, wall.start.x, sideMaxY, -1);
+                            let newSegmmentsB = recurseSubtractionUntilNoChange(newSegmentB, wallsToPassDown);
+                            lines = lines.concat(newSegmmentsB);
+                            sideChanged = true;
+
+                        //overlap with no tails
+                        } else if (
+                            wallMinY === sideMinY
+                            && wallMaxY === sideMaxY
+                        ) {
+                            sideChanged = true;
+                            Function.prototype();
+
+                        //overlap with upper-left and lower-left tails
+                        } else if (
+                            wallMinY < sideMinY
+                            && wallMaxY > sideMaxY
+                        ) {
+                            sideChanged = true;
+                            Function.prototype();
+
+                        //overlap with upper-left tail
+                        } else if (
+                            wallMinY < sideMinY
+                            && wallMaxY === sideMaxY
+                        ) {
+                            sideChanged = true;
+                            Function.prototype();
+
+                        //overlap with lower-left tail
+                        } else if (
+                            wallMinY === sideMinY
+                            && wallMaxY > sideMaxY
+                        ) {
+                            sideChanged = true;
+                            Function.prototype();
+
+
+                        //overlap with upper-right tail
+                        } else if (
+                            wallMinY > sideMinY
+                            && wallMaxY === sideMaxY
+                        ) {
+                            let newSegmentA = geometry.getSortedDoor(wall.start.x, sideMinY, wall.start.x, wallMinY, -1);
+                            let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                            lines = lines.concat(newSegmmentsA);
+                            sideChanged = true;
+
+                        } else {
+                            console.log("wtf?");
+                            console.log(side);
+                            console.log(wall);
+                        }
+                        break;
+                    }
+                }
+            }
+            //not a match
+
+        //horizontal side
+        } else {
+
+            //horizontal wall
+            if (wallMinX !== wallMaxX) {
+
+                //on same slope
+                let sideSlope = (side.end.y - side.start.y)/(side.end.x - side.start.x)
+                let wallSlope = (wall.end.y - wall.start.y)/(wall.end.x - wall.start.x)
+                if (sideSlope === wallSlope) {
+
+
+                    let lineSegmentsIntersect = false;
+
+                    //ensure we can safely compare these two points
+                    if (
+                        side.end.x === wall.start.x
+                        && side.end.y === wall.start.y
+                    ) {
+                        //we cannont. Fortunately that tells us that:
+                        lineSegmentsIntersect = true;
+                    } else {
+                        let comparisonRun = side.end.x - wall.start.x;
+                        let comparisonRise = comparisonRun * sideSlope;
+                        let comparisonIntersection = wall.start.y + comparisonRise;
+                        lineSegmentsIntersect = (comparisonIntersection === side.end.y);
+                    }
+
+
+                    //on same line
+                    if (lineSegmentsIntersect) {
+
+                        //there is overlap
+                        if (
+                          wallMaxX >= sideMinX
+                          && wallMinX <= sideMaxX
+                        ) {
+                            sideHandled = true;
+
+                            //well, "overlap"
+                            if (
+                                wallMaxX === sideMinX
+                                || wallMinX === sideMaxX
+                            ) {
+                                let newSegmentA = side;
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                                lines = lines.concat(newSegmmentsA);
+
+                            //overlap with left-wall and right-side tails
+                            } else if (
+                                wallMinX < sideMinX
+                            ) {
+                                    let newSegmentA = geometry.getSortedDoor(wall.end.x, wall.end.y, side.end.x, side.end.y, -1);
+                                    let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                                    sideChanged = true;
+                                    lines = lines.concat(newSegmmentsA);
+
+                            //overlap with right-side tail
+                            } else if (
+                                wallMinX === sideMinX
+                                && wallMaxX < sideMaxX
+                            ) {
+                                let newSegmentA = geometry.getSortedDoor(wall.end.x, wall.end.y, side.end.x, side.end.y, -1);
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                                sideChanged = true;
+                                lines = lines.concat(newSegmmentsA);
+
+                            //overlap with left- and right-side tails
+                            } else if (
+                                wallMinX > sideMinX
+                                && wallMaxX < sideMaxX
+                            ) {
+                                let newSegmentA = geometry.getSortedDoor(side.start.x, side.start.y, wall.start.x, wall.start.y, -1);
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                                lines = lines.concat(newSegmmentsA);
+                                let newSegmentB = geometry.getSortedDoor(wall.end.x, wall.end.y, side.end.x, side.end.y, -1);
+                                let newSegmmentsB = recurseSubtractionUntilNoChange(newSegmentB, wallsToPassDown);
+                                lines = lines.concat(newSegmmentsB);
+                                sideChanged = true;
+
+                            //overlap with no tails
+                            } else if (
+                                wallMinX === sideMinX
+                                && wallMaxX === sideMaxX
+                            ) {
+                                sideChanged = true;
+                                Function.prototype();
+
+                            //overlap with left- and right-wall tails
+                            } else if (
+                                wallMinX < sideMinX
+                                && wallMaxX > sideMaxX
+                            ) {
+                                sideChanged = true;
+                                Function.prototype();
+
+                            //overlap with left-wall tail
+                            } else if (
+                                wallMinX < sideMinX
+                                && wallMaxX === sideMaxX
+                            ) {
+                                sideChanged = true;
+                                Function.prototype();
+
+                            //overlap with right-wall tail
+                            } else if (
+                                wallMinX === sideMinX
+                                && wallMaxX > sideMaxX
+                            ) {
+                                sideChanged = true;
+                                Function.prototype();
+
+
+                            //overlap with left-side tail
+                            } else if (
+                                wallMinX > sideMinX
+                                && wallMaxX === sideMaxX
+                            ) {
+                                let newSegmentA = geometry.getSortedDoor(side.start.x, side.start.y, wall.start.x, wall.start.y, -1);
+                                let newSegmmentsA = recurseSubtractionUntilNoChange(newSegmentA, wallsToPassDown);
+                                lines = lines.concat(newSegmmentsA);
+                                sideChanged = true;
+
+                            } else {
+                                console.log("wtf?");
+                                console.log(side);
+                                console.log(wall);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+            }
+            //not a match
+        }
+    }
+    if (!sideHandled) {
+        //console.log("lazy pos");
+        lines.push(side);
+    }
+    return {segments: lines, changed: sideChanged};
+}
+
 function getDoorsFromRooms(rooms, perms) {
   let doors = [];
   for (const perm of perms) {
@@ -551,7 +845,7 @@ module.exports = {
         getWallsFromRooms: getWallsFromRooms,
         getDoorsFromRooms: getDoorsFromRooms,
         getPointsFromRooms: getPointsFromRooms,
-        subtractDoorsFromWalls: subtractDoorsFromWalls
-
+        subtractDoorsFromWalls: subtractDoorsFromWalls,
+        getDoorsWallsPotentialFromRoomPotential: getDoorsWallsPotentialFromRoomPotential
     }
 }
