@@ -12,9 +12,11 @@ const { selectionRenderer } = require('./selectionRenderer.js');
 const { selected, selectionChecker } = require('./selectionChecker.js');
 const { dataStructureFactory } = require('./dataStructureFactory.js');
 
-let metaroomWalls = [];
+/*let metaroomWalls = [];
 let metaroomDoors = [];
-let metaroomPoints = [];
+let metaroomPoints = [];*/
+
+let dataStructures = null;
 
 let currentFile = null;
 let currentFileNeedsSaving = false;
@@ -22,12 +24,14 @@ let backgroundCanvasElement = document.getElementById('backgroundCanvas');
 let selectionCanvasElement = document.getElementById('selectionCanvas');
 let roomCanvasElement = document.getElementById('roomCanvas');
 let pastiesCanvasElement = document.getElementById('pastiesCanvas');
+let potentialCanvasElement = document.getElementById('potentialCanvas');
 let backgroundCtx = setupCanvas(backgroundCanvasElement, backgroundCanvasElement.getBoundingClientRect());
 let selectionCtx = setupCanvas(selectionCanvasElement, selectionCanvasElement.getBoundingClientRect());
 let roomCtx = setupCanvas(roomCanvasElement, roomCanvasElement.getBoundingClientRect());
 let pastiesCtx = setupCanvas(pastiesCanvasElement, pastiesCanvasElement.getBoundingClientRect());
+let potentialCtx = setupCanvas(potentialCanvasElement, potentialCanvasElement.getBoundingClientRect());
 
-let topCanvasElement = pastiesCanvasElement;
+let topCanvasElement = potentialCanvasElement;
 topCanvasElement.onmousedown=handleMouseDown;
 topCanvasElement.onmousemove=handleMouseMove;
 topCanvasElement.onmouseup=handleMouseUp;
@@ -362,9 +366,12 @@ function shiftKeyUp(event){
 
 let isDragging = false;
 let whatDragging = "";
+let idDragging = -1;
+
+let startDraggingX = -1;
+let startDraggingY = -1;
 
 function handleMouseDown(e){
-    //console.log(e);
     // tell the browser we're handling this event
     e.preventDefault();
     e.stopPropagation();
@@ -374,16 +381,18 @@ function handleMouseDown(e){
     let wasSelectedType = selected.selectedType;
     let wasSelectedId = selected.selectedId;
 
-    selectionChecker.checkSelection(startX, startY);
+    selectionChecker.checkSelection(startX, startY, dataStructures);
 
     if (
-      wasSelectedType === selected.selectedType;
-      && wasSelectedId === selected.selectedId;
+      wasSelectedType === selected.selectedType
+      && wasSelectedId === selected.selectedId
     ) {
         if (selected.selectedType === "wall") {
             isDragging = true;
             whatDragging = "wall"
             idDragging = selected.selectedId;
+            startDraggingX = startX;
+            startDraggingY = startY;
         }
     }
 }
@@ -394,7 +403,11 @@ function handleMouseUp(e){
 
 function handleMouseOut(e){
     // return if we're not dragging
-
+    isDragging = false;
+    whatDragging = "";
+    idDragging = -1;
+    startDraggingX = -1;
+    startDraggingY = -1;
 }
 
 function handleMouseMove(e){
@@ -410,30 +423,40 @@ function handleMouseMove(e){
 
 
 
-function loadMetaroom(){
+function loadMetaroom(canvasElements, canvasContexts, pastiesCtx, metaroom){
 
-    let metaroomWallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
-    metaroomDoors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
-    metaroomWalls = dataStructureFactory.subtractDoorsFromWalls(metaroomWallsOverreach, metaroomDoors).filter(function(val) {return val});
-    metaroomPoints = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
-    backgroundCanvasElement.width =  metaroom.width;
-    backgroundCanvasElement.height =  metaroom.height;
-    backgroundCtx = setupCanvas(backgroundCanvasElement, metaroom);
-    roomCanvasElement.width =  metaroom.width;
-    roomCanvasElement.height =  metaroom.height;
-    roomCtx = setupCanvas(roomCanvasElement, metaroom);
-    selectionCanvasElement.width =  metaroom.width;
-    selectionCanvasElement.height =  metaroom.height;
-    selectionCtx = setupCanvas(selectionCanvasElement, metaroom);
-    pastiesCanvasElement.width =  metaroom.width;
-    pastiesCanvasElement.height =  metaroom.height;
-    pastiesCtx = setupCanvas(pastiesCanvasElement, metaroom);
-    roomCtx.lineWidth = 2;
-    redrawMetaroom()
+    let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
+    let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
+    let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
+    let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
+    dataStructures = {
+        metaroomDisk: metaroom,
+        points: points,
+        walls: walls,
+        doors: doors
+    };
+
+    canvasElements.background.width =  metaroom.width;
+    canvasElements.background.height =  metaroom.height;
+    backgroundCtx = setupCanvas(canvasElements.background, metaroom);
+    canvasElements.room.width =  metaroom.width;
+    canvasElements.room.height =  metaroom.height;
+    canvasContexts.room = setupCanvas(canvasElements.room, metaroom);
+    canvasContexts.room.lineWidth = 2;
+    canvasElements.selection.width =  metaroom.width;
+    canvasElements.selection.height =  metaroom.height;
+    canvasContexts.selection = setupCanvas(canvasElements.selection, metaroom);
+    canvasElements.pasties.width =  metaroom.width;
+    canvasElements.pasties.height =  metaroom.height;
+    canvasContexts.pasties = setupCanvas(canvasElements.pasties, metaroom);
+    canvasElements.potential.width =  metaroom.width;
+    canvasElements.potential.height =  metaroom.height;
+    potentialCtx = setupCanvas(canvasElements.potential, metaroom);
+    redrawMetaroom(canvasContexts.room, canvasContexts.pasties, doors, walls, points, metaroom)
 }
 
-async function redrawMetaroom(){
-    redrawRooms();
+async function redrawMetaroom(roomCtx, pastiesCtx, doors, walls, points, metaroom){
+    redrawRooms(roomCtx, pastiesCtx, doors, walls, points, metaroom);
     backgroundCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     let img = new Image;
     img.src = metaroom.background;
@@ -442,33 +465,33 @@ async function redrawMetaroom(){
     backgroundCtx.drawImage(img, 0, 0);
 }
 
-async function redrawRooms(){
+async function redrawRooms(roomCtx, pastiesCtx, doors, walls, points, metaroom){
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    metaroomWalls.concat(metaroomDoors)
-        .forEach((door, i) => {
-            if (door.permeability < 0) {
+    walls.concat(doors)
+        .forEach((side, i) => {
+            if (side.permeability < 0) {
               roomCtx.strokeStyle = 'rgb(005, 170, 255)';
-            } else if (door.permeability === 0) {
+            } else if (side.permeability === 0) {
               roomCtx.strokeStyle = 'rgb(228, 000, 107)';
-            } else if (door.permeability < 1) {
+            } else if (side.permeability < 1) {
               roomCtx.strokeStyle = 'rgb(207, 140, 003)';
-            } else if (door.permeability === 1) {
+            } else if (side.permeability === 1) {
               roomCtx.strokeStyle = 'rgb(172, 255, 083)';
             }
             roomCtx.beginPath();
-            roomCtx.moveTo(door.start.x, door.start.y);
-            roomCtx.lineTo(door.end.x, door.end.y);
+            roomCtx.moveTo(side.start.x, side.start.y);
+            roomCtx.lineTo(side.end.x, side.end.y);
             roomCtx.stroke();
         });
-    redrawPasties();
-      //redrawSelection();
+    redrawPasties(pastiesCtx, points, metaroom);
+    //redrawSelection();
 }
 
 const roomLineThickness = 2;
 
-async function redrawPasties(){
+async function redrawPasties(pastiesCtx, points, metaroom){
     pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    metaroomPoints
+    points
         .forEach((point, i) => {
             if ( ((selected.selectedType === "point") || (selected.selectedType === "corner")) && (selected.selectedId === i)) {
                 selctionSquareWidthToUse = selctionSquareWidth * getSelectionMultiplier();
@@ -491,11 +514,32 @@ async function redrawPasties(){
         });
 }
 
-async function redrawSelection(){
-    selectionRenderer.redrawSelection();
+async function redrawPotential(){
+    potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+
 }
 
+async function redrawSelection(){
+    selectionRenderer.redrawSelection(pastiesCtx, dataStructures, selected);
+}
 
-loadMetaroom();
+loadMetaroom(
+    {
+        background: backgroundCanvasElement,
+        selection: selectionCanvasElement,
+        room: roomCanvasElement,
+        pasties: pastiesCanvasElement,
+        potential: potentialCanvasElement
+    },
+    {
+        background: backgroundCtx,
+        selection: selectionCtx,
+        room: roomCtx,
+        pasties: pastiesCtx,
+        potential: potentialCtx
+    },
+    pastiesCtx,
+    metaroom
+);
 
 setInterval(redrawSelection, 50);

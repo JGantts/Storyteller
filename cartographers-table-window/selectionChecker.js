@@ -9,7 +9,7 @@ let selected = {
   selectedId: -1
 }
 
-function checkSelection(x, y){
+function checkSelection(x, y, dataStructures ){
     if (selected.selectedType === "room") {
         selected.selectedRoomId = selected.selectedId;
     } else {
@@ -18,24 +18,24 @@ function checkSelection(x, y){
     selected.selectedType = ""
     selected.selectedId = -1;
     if (selected.selectedType === "") {
-        checkPointSelection(x, y);
+        checkPointSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
-        checkLineSelection(x, y);
+        checkLineSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
-        checkRoomSelection(x, y);
+        checkRoomSelection(x, y, dataStructures);
     }
     //redrawSelection();
 }
 
-function checkPointSelection(x, y){
+function checkPointSelection(x, y, dataStructures){
     //console.log("\n\n\n\n\n\n\n\n\n\n\n");
     //console.log("--------");
-    for(let i=0; i<metaroomPoints.length; i++){
+    for(let i=0; i<dataStructures.points.length; i++){
         //console.log("\n\n");
         //console.log(i);
-        if(isClickOnPoint(x, y, metaroomPoints[i])){
+        if(isClickOnPoint(x, y, dataStructures.points[i])){
             //console.log(metaroomPoints[i]);
             if (selected.selectedRoomId === -1){
                 selected.selectedType = "point";
@@ -68,20 +68,20 @@ function checkPointSelection(x, y){
 function checkLineSelection(x, y){
     //console.log("\n\n\n\n\n\n\n\n\n\n\n");
     //console.log("--------");
-    for(let i=0; i<metaroomWalls.length; i++){
+    for(let i=0; i<dataStructures.walls.length; i++){
         //console.log("\n\n");
         //console.log(i);
-        if(isClickOnLine(x, y, metaroomWalls[i])){
+        if(isClickOnLine(x, y, dataStructures.walls[i])){
             selected.selectedType = "wall";
             selected.selectedId = i;
             break;
         }
     }
     //console.log("--------");
-    for(let i=0; i<metaroomDoors.length; i++){
+    for(let i=0; i<dataStructures.doors.length; i++){
         //console.log("\n\n");
         //console.log(i);
-        if(isClickOnLine(x, y, metaroomDoors[i])){
+        if(isClickOnLine(x, y, dataStructures.doors[i])){
             selected.selectedType = "door";
             selected.selectedId = i;
             break;
@@ -92,10 +92,10 @@ function checkLineSelection(x, y){
 function checkRoomSelection(x, y){
     //console.log("\n\n\n\n\n\n\n\n\n\n\n");
     //console.log("--------");
-    for(let i=0; i<metaroom.rooms.length; i++){
+    for(let i=0; i<dataStructures.metaroomDisk.rooms.length; i++){
         //console.log("\n\n");
         //console.log(i);
-        if(isClickInRoom(x, y, metaroom.rooms[i])){
+        if(isClickInRoom(x, y, dataStructures.metaroomDisk.rooms[i])){
             selected.selectedType = "room";
             selected.selectedId = i;
             break;

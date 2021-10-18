@@ -336,26 +336,27 @@ async function wildSelection(){
 //wall
 //corner
 //point
-async function redrawSelection(){
-    redrawPasties();
-    selectionCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+async function redrawSelection(pastiesCtx, dataStructures, selected){
+    //console.log(selected);
+    redrawPasties(pastiesCtx, dataStructures.points, dataStructures.metaroomDisk);
+    selectionCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
     //wildSelection();
 //  return;
     //console.log(selectedType);
     //console.log((selectedId));
     if (selected.selectedType === "point" || selected.selectedType === "corner") {
-        let selectedPoint = metaroomPoints[selected.selectedId];
+        let selectedPoint = dataStructures.points[selected.selectedId];
         drawSelectionSquare(selectedPoint.x, selectedPoint.y);
     } else if (selected.selectedType === "door" || selected.selectedType === "wall") {
         let selectedSide = null;
         if (selected.selectedType === "door") {
-            selectedSide = metaroomDoors[selected.selectedId];
+            selectedSide = dataStructures.doors[selected.selectedId];
         } else {
-            selectedSide = metaroomWalls[selected.selectedId];
+            selectedSide = dataStructures.walls[selected.selectedId];
         }
         drawSelectionLine(selectedSide);
     } else if (selected.selectedType === "room") {
-        drawSelectionRoom(metaroom.rooms[selected.selectedId]);
+        drawSelectionRoom(dataStructures.metaroomDisk.rooms[selected.selectedId]);
     }
 }
 
