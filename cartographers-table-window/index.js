@@ -362,19 +362,20 @@ function shiftKeyUp(event){
   shiftKeyIsDown = false;
 }
 
-
+let isMouseButtonDown = false;
 
 let isDragging = false;
 let whatDragging = "";
 let idDragging = -1;
 
-let startDraggingX = -1;
-let startDraggingY = -1;
+let startDragging = null;
+let stopDragging = null;
 
 function handleMouseDown(e){
     // tell the browser we're handling this event
     e.preventDefault();
     e.stopPropagation();
+    isMouseButtonDown = true;
     startX=parseInt(e.offsetX);
     startY=parseInt(e.offsetY);
 
@@ -382,23 +383,12 @@ function handleMouseDown(e){
     let wasSelectedId = selected.selectedId;
 
     selectionChecker.checkSelection(startX, startY, dataStructures);
-
-    if (
-      wasSelectedType === selected.selectedType
-      && wasSelectedId === selected.selectedId
-    ) {
-        if (selected.selectedType === "wall") {
-            isDragging = true;
-            whatDragging = "wall"
-            idDragging = selected.selectedId;
-            startDraggingX = startX;
-            startDraggingY = startY;
-        }
-    }
 }
 
 function handleMouseUp(e){
-
+    e.preventDefault();
+    e.stopPropagation();
+    isMouseButtonDown = false;
 }
 
 function handleMouseOut(e){
@@ -415,8 +405,24 @@ function handleMouseMove(e){
   e.preventDefault();
   e.stopPropagation();
   // calculate the current mouse position
-  startX=parseInt(e.offsetX);
-  startY=parseInt(e.offsetY);
+  endX=parseInt(e.offsetX);
+  endY=parseInt(e.offsetY);
+
+  if (isMouseButtonDown) {
+      if (!isDragging) {
+          if (selected.selectedType === "wall") {
+              isDragging = true;
+              whatDragging = "wall"
+              idDragging = selected.selectedId;
+              startDragging = {x: startX, y: startY};
+              stopDragging = {x: endX, y: endY};
+          }
+      }
+      if (isDragging) {
+          stopDragging = {x: endX, y: endY};
+      }
+  }
+
 
   //checkSelection(startX, startY);
 }
@@ -467,6 +473,7 @@ async function redrawMetaroom(roomCtx, pastiesCtx, doors, walls, points, metaroo
 
 async function redrawRooms(roomCtx, pastiesCtx, doors, walls, points, metaroom){
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     walls.concat(doors)
         .forEach((side, i) => {
             if (side.permeability < 0) {
@@ -490,7 +497,6 @@ async function redrawRooms(roomCtx, pastiesCtx, doors, walls, points, metaroom){
 const roomLineThickness = 2;
 
 async function redrawPasties(pastiesCtx, points, metaroom){
-    pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     points
         .forEach((point, i) => {
             if ( ((selected.selectedType === "point") || (selected.selectedType === "corner")) && (selected.selectedId === i)) {
@@ -514,13 +520,84 @@ async function redrawPasties(pastiesCtx, points, metaroom){
         });
 }
 
-async function redrawPotential(){
-    potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+function roomFromPoint(point, rooms) {
+    return -1;
+}
 
+async function redrawPotential(startPoint, endPoint, dataStructures, selected) {
+    if (isDragging) {
+        if (selected.selectedType === "point" || selected.selectedType === "corner") {
+            Function.prototype();
+
+        } else if (selected.selectedType === "door") {
+            Function.prototype();
+
+        } else if (selected.selectedType === "wall") {
+            redrawPotentialFromWall(startPoint, endPoint, dataStructures, selected);
+
+        } else if (selected.selectedType === "room") {
+            Function.prototype();
+        }
+    }
+}
+
+async function redrawPotentialFromWall(startPoint, endPoint, dataStructures, selected) {
+
+    if (roomFromPoint(endPoint) === -1) {
+        let selectedLine = dataStructures.walls[selected.selectedId];
+
+        let potentialRooms = null;
+        let potentialPerms = null;
+
+        // Vertical
+        if (selectedLine.start.x === selectedLine.end.x) {
+            let deltaX = endPoint.x - startPoint.x;
+
+            if (Math.abs(deltaX) < 5) {
+                return;
+            }
+
+            if (deltaX > 0) {
+                potentialRoom = {
+                    leftX: selectedLine.start.x,
+                    rightX: selectedLine.start.x + deltaX,
+                    leftCeilingY: selectedLine.start.y,
+                    rightCeilingY: selectedLine.start.y,
+                    leftFloorY: selectedLine.end.y,
+                    rightFloorY: selectedLine.end.y,
+                };
+            } else {
+                potentialRoom = {
+                    leftX: selectedLine.start.x + deltaX,
+                    rightX: selectedLine.start.x,
+                    leftCeilingY: selectedLine.start.y,
+                    rightCeilingY: selectedLine.start.y,
+                    leftFloorY: selectedLine.end.y,
+                    rightFloorY: selectedLine.end.y,
+                };
+            }
+            potentialPerms = [];
+        // Horizontal
+        } else {
+            console.log("ehat");
+        }
+
+        potentialRooms = [potentialRoom];
+
+        let wallsOverreach = dataStructureFactory.getWallsFromRooms(potentialRooms).filter(function(val) {return val});
+        let doors = dataStructureFactory.getDoorsFromRooms(potentialRooms, potentialPerms).filter(function(val) {return val});
+        let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
+        let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
+
+        potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+        redrawRooms(potentialCtx, potentialCtx, doors, walls, points, metaroom);
+
+    }
 }
 
 async function redrawSelection(){
     selectionRenderer.redrawSelection(pastiesCtx, dataStructures, selected);
+    redrawPotential(startDragging, stopDragging, dataStructures, selected);
 }
 
 loadMetaroom(
