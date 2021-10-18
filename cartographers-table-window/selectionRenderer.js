@@ -46,14 +46,14 @@ const purple = {
 }
 
 function getSelectionMultiplier() {
-    return shiftKeyIsDown ? 1.75 : 1;
+    return shiftKeyIsDown ? 1.375 : 1;
 }
 
 function drawSelectionSquare(x, y) {
     //console.log(x);
     //console.log(y);
     let myWidth = selctionSquareWidth * getSelectionMultiplier();
-    selectionCtx.lineWidth = roomLineThickness;
+    selectionCtx.lineWidth = roomLineThickness * getSelectionMultiplier();
     selectionCtx.strokeStyle = "white";
     selectionCtx.fillStyle = "black";
     selectionCtx.beginPath();
@@ -68,7 +68,7 @@ const selectionCircleRotationsPerSecond = 3/4;
 
 function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
     let time = new Date();
-    selectionCtx.lineWidth = "2.5";
+    selectionCtx.lineWidth = 2.5 * getSelectionMultiplier();
 
     let resolution =  6*5;
 
@@ -132,7 +132,7 @@ function colorPercentage(percentage, colorA, colorB) {
 function drawSelectionCirclePortion(x, y, theta0, theta1, color) {
     selectionCtx.strokeStyle = color;
     selectionCtx.beginPath();
-    selectionCtx.arc(x, y, selctionCircleWidth, theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
+    selectionCtx.arc(x, y, selctionCircleWidth * getSelectionMultiplier(), theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
     selectionCtx.stroke();
 }
 
@@ -207,16 +207,18 @@ function drawSelectionLine(selected) {
 
 function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, startPercent, stopPercent, lineColor) {
 
+    let lineWidthToUse = selectionLineWidth * getSelectionMultiplier()* getSelectionMultiplier();
+
     let percentageAverage = (startPercent + stopPercent)/2;
     let distancePercentFromEnd = 0.5 - Math.abs(0.5 - percentageAverage);
     let distanceActualFromEnd = distancePercentFromEnd * lineLength;
 
     let lineWidth = 0;
-    if (distanceActualFromEnd >= selectionLineWidth) {
-        lineWidth = selectionLineWidth;
+    if (distanceActualFromEnd >= lineWidthToUse) {
+        lineWidth = lineWidthToUse;
     } else {
-        let dist =  1 - distanceActualFromEnd/selectionLineWidth;
-        lineWidth = Math.sqrt(1 - dist * dist) * selectionLineWidth;
+        let dist =  1 - distanceActualFromEnd/lineWidthToUse;
+        lineWidth = Math.sqrt(1 - dist * dist) * lineWidthToUse;
     }
 
     drawSeclectionLineSegmentAtWidth(
@@ -282,7 +284,7 @@ function drawSelectionRoom(selected) {
         }
 
         pctx.strokeStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${aplaha})`;
-        pctx.lineWidth = thickness/1.5;
+        pctx.lineWidth = thickness * getSelectionMultiplier()*getSelectionMultiplier()/1.5;
 
         let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
         let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);

@@ -39,6 +39,10 @@ window.onkeyup = userTextKeyUp;
 let selectionCheckMargin = 6;
 const selctionSquareWidth = selectionCheckMargin * 4/3;
 
+function getSelectionMultiplier() {
+    return shiftKeyIsDown ? 1.375 : 1;
+}
+
 let _undoList = [];
 let _redoList = [];
 
@@ -311,7 +315,6 @@ function userTextKeyDown(event){
 }
 
 function userTextKeyUp(event){
-  console.log(event);
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
   }
@@ -357,7 +360,8 @@ function shiftKeyUp(event){
 
 
 
-
+let isDragging = false;
+let whatDragging = "";
 
 function handleMouseDown(e){
     //console.log(e);
@@ -367,7 +371,21 @@ function handleMouseDown(e){
     startX=parseInt(e.offsetX);
     startY=parseInt(e.offsetY);
 
+    let wasSelectedType = selected.selectedType;
+    let wasSelectedId = selected.selectedId;
+
     selectionChecker.checkSelection(startX, startY);
+
+    if (
+      wasSelectedType === selected.selectedType;
+      && wasSelectedId === selected.selectedId;
+    ) {
+        if (selected.selectedType === "wall") {
+            isDragging = true;
+            whatDragging = "wall"
+            idDragging = selected.selectedId;
+        }
+    }
 }
 
 function handleMouseUp(e){
@@ -453,14 +471,14 @@ async function redrawPasties(){
     metaroomPoints
         .forEach((point, i) => {
             if ( ((selected.selectedType === "point") || (selected.selectedType === "corner")) && (selected.selectedId === i)) {
-                radius = selctionSquareWidth/2;
+                selctionSquareWidthToUse = selctionSquareWidth * getSelectionMultiplier();
                 pastiesCtx.fillStyle = 'rgb(0, 0, 0)';
                 pastiesCtx.beginPath();
                 pastiesCtx.rect(
-                  point.x-selctionSquareWidth/2 + roomLineThickness/2,
-                  point.y-selctionSquareWidth/2 + roomLineThickness/2,
-                  selctionSquareWidth - roomLineThickness,
-                  selctionSquareWidth - roomLineThickness
+                  point.x-selctionSquareWidthToUse/2 + roomLineThickness/2,
+                  point.y-selctionSquareWidthToUse/2 + roomLineThickness/2,
+                  selctionSquareWidthToUse - roomLineThickness,
+                  selctionSquareWidthToUse - roomLineThickness
                 );
                 pastiesCtx.fill();
             } else {
