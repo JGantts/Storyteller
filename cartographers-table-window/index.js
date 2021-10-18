@@ -528,11 +528,33 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
               rightFloorY: selectedLine.end.y,
           };
       }
-      potentialPerms = [];
   // Horizontal
   } else {
-      console.log("ehat");
-      return null;
+      let deltaY = endPoint.y - startPoint.y;
+
+      if (Math.abs(deltaY) < 5) {
+          return null;
+      }
+
+      if (deltaY > 0) {
+          return {
+              leftX: selectedLine.start.x,
+              rightX: selectedLine.end.x,
+              leftCeilingY: selectedLine.start.y,
+              rightCeilingY: selectedLine.end.y,
+              leftFloorY: selectedLine.start.y + deltaY,
+              rightFloorY: selectedLine.end.y + deltaY,
+          };
+      } else {
+          return {
+            leftX: selectedLine.start.x,
+            rightX: selectedLine.end.x,
+            leftCeilingY: selectedLine.start.y + deltaY,
+            rightCeilingY: selectedLine.end.y + deltaY,
+            leftFloorY: selectedLine.start.y,
+            rightFloorY: selectedLine.end.y,
+          };
+      }
   }
 }
 

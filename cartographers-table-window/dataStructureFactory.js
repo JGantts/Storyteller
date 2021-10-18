@@ -884,8 +884,8 @@ function getDoorsFromRooms(rooms, perms) {
           );
           continue;
       }
+      console.log(`Rooms don't actually touch...:\n${JSON.stringify(perm)}\nA: ${JSON.stringify(roomA)}\nB: ${JSON.stringify(roomB)}\n\n`);
       console.log(new Error().stack);
-      console.log(`Rooms don't actually touch...\n: ${JSON.stringify(roomA)}, ${JSON.stringify(roomB)}\n${JSON.stringify(perm)}\n\n`);
   }
   //console.log(doors);
   return doors;
