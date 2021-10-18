@@ -1228,6 +1228,8 @@ function subtractDoorsFromWall(wall, doors){
 }
 
 function recurseSubtractionUntilNoChange(wall, doors) {
+    //console.log(wall);
+    //console.log(doors);
     if (wall) {
         let newWalls1 = subtractDoorsFromWall(wall, doors);
         if (newWalls1.changed) {
@@ -1235,7 +1237,8 @@ function recurseSubtractionUntilNoChange(wall, doors) {
             for(let i = 0; i < newWalls1.segments.length; i++) {
                 newWalls2.push(recurseSubtractionUntilNoChange(newWalls1.segments[i], doors));
             }
-            assert(newWalls2.length <= 1, `newWalls2.length: ${newWalls2.length}`);
+            //console.log(newWalls1);
+            assert(newWalls2.length <= 1, `newWalls2.length: ${newWalls2.length}\n${JSON.stringify(newWalls2)}`);
             return newWalls2[0];
         } else {
             return newWalls1.segments;
