@@ -392,6 +392,8 @@ function handleMouseUp(e){
     e.stopPropagation();
     isMouseButtonDown = false;
 
+    tryCreateRoom();
+
     isDragging = false;
     whatDragging = "";
     idDragging = -1;
@@ -435,6 +437,51 @@ function handleMouseMove(e){
 
 
   //checkSelection(startX, startY);
+}
+
+function tryCreateRoom() {
+
+    if (!isDragging || !shiftKeyIsDown) {
+        return;
+    }
+
+    if (selected.selectedType === "point" || selected.selectedType === "corner") {
+        Function.prototype();
+
+    } else if (selected.selectedType === "door") {
+        Function.prototype();
+
+    } else if (selected.selectedType === "wall") {
+        let selectedLine = dataStructures.walls[selected.selectedId];
+
+        let newRoom = getPotentialRoom(startDragging, stopDragging, dataStructures, selectedLine);
+        let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
+
+        console.log(newRoom);
+
+        metaroom.rooms.push(newRoom);
+        metaroom.perms = metaroom.perms.concat(newPerms);
+
+        console.log(newPerms);
+
+        let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
+        let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
+        let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
+        let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
+
+        dataStructures = {
+            metaroomDisk: metaroom,
+            points: points,
+            walls: walls,
+            doors: doors
+        };
+
+
+        redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
+
+    } else if (selected.selectedType === "room") {
+        Function.prototype();
+    }
 }
 
 function getPotentiaLinesPoints(startPoint, endPoint, dataStructures, selectedLine) {
@@ -622,7 +669,7 @@ async function redrawPotentialFromWall(startPoint, endPoint, dataStructures, sel
         let linesPoints =  getPotentiaLinesPoints(startPoint, endPoint, dataStructures, selectedLine);
 
         if (linesPoints) {
-            console.log(linesPoints);
+            //console.log(linesPoints);
             redrawRooms(potentialCtx, potentialCtx, linesPoints.lines, linesPoints.points, metaroom);
         }
 
