@@ -25,13 +25,15 @@ let selectionCanvasElement = document.getElementById('selectionCanvas');
 let roomCanvasElement = document.getElementById('roomCanvas');
 let pastiesCanvasElement = document.getElementById('pastiesCanvas');
 let potentialCanvasElement = document.getElementById('potentialCanvas');
+let sandwichCanvasElement = document.getElementById('sandwichCanvas');
 let backgroundCtx = setupCanvas(backgroundCanvasElement, backgroundCanvasElement.getBoundingClientRect());
 let selectionCtx = setupCanvas(selectionCanvasElement, selectionCanvasElement.getBoundingClientRect());
 let roomCtx = setupCanvas(roomCanvasElement, roomCanvasElement.getBoundingClientRect());
 let pastiesCtx = setupCanvas(pastiesCanvasElement, pastiesCanvasElement.getBoundingClientRect());
 let potentialCtx = setupCanvas(potentialCanvasElement, potentialCanvasElement.getBoundingClientRect());
+let sandwichCtx = setupCanvas(sandwichCanvasElement, sandwichCanvasElement.getBoundingClientRect());
 
-let topCanvasElement = potentialCanvasElement;
+let topCanvasElement = sandwichCanvasElement;
 topCanvasElement.onmousedown=handleMouseDown;
 topCanvasElement.onmousemove=handleMouseMove;
 topCanvasElement.onmouseup=handleMouseUp;
@@ -389,15 +391,23 @@ function handleMouseUp(e){
     e.preventDefault();
     e.stopPropagation();
     isMouseButtonDown = false;
+
+    isDragging = false;
+    whatDragging = "";
+    idDragging = -1;
+    startDragging = null;
+    stopDragging = null;
 }
 
 function handleMouseOut(e){
     // return if we're not dragging
+    isMouseButtonDown = false;
+
     isDragging = false;
     whatDragging = "";
     idDragging = -1;
-    startDraggingX = -1;
-    startDraggingY = -1;
+    startDragging = null;
+    stopDragging = null;
 }
 
 function handleMouseMove(e){
@@ -429,7 +439,7 @@ function handleMouseMove(e){
 
 
 
-function loadMetaroom(canvasElements, canvasContexts, pastiesCtx, metaroom){
+function loadMetaroom(canvasElements, canvasContexts, metaroom){
 
     let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
     let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
@@ -444,20 +454,29 @@ function loadMetaroom(canvasElements, canvasContexts, pastiesCtx, metaroom){
 
     canvasElements.background.width =  metaroom.width;
     canvasElements.background.height =  metaroom.height;
-    backgroundCtx = setupCanvas(canvasElements.background, metaroom);
+    canvasContexts.background = setupCanvas(canvasElements.background, metaroom);
+
     canvasElements.room.width =  metaroom.width;
     canvasElements.room.height =  metaroom.height;
     canvasContexts.room = setupCanvas(canvasElements.room, metaroom);
+
     canvasContexts.room.lineWidth = 2;
     canvasElements.selection.width =  metaroom.width;
     canvasElements.selection.height =  metaroom.height;
     canvasContexts.selection = setupCanvas(canvasElements.selection, metaroom);
+
     canvasElements.pasties.width =  metaroom.width;
     canvasElements.pasties.height =  metaroom.height;
     canvasContexts.pasties = setupCanvas(canvasElements.pasties, metaroom);
+
     canvasElements.potential.width =  metaroom.width;
     canvasElements.potential.height =  metaroom.height;
-    potentialCtx = setupCanvas(canvasElements.potential, metaroom);
+    canvasContexts.potential = setupCanvas(canvasElements.potential, metaroom);
+
+    canvasElements.sandwich.width =  metaroom.width;
+    canvasElements.sandwich.height =  metaroom.height;
+    canvasContexts.sandwich = setupCanvas(canvasElements.sandwich, metaroom);
+
     redrawMetaroom(canvasContexts.room, canvasContexts.pasties, doors, walls, points, metaroom)
 }
 
@@ -497,6 +516,8 @@ async function redrawRooms(roomCtx, pastiesCtx, doors, walls, points, metaroom){
 const roomLineThickness = 2;
 
 async function redrawPasties(pastiesCtx, points, metaroom){
+    //console.log(points);
+    //console.log(new Error().stack);
     points
         .forEach((point, i) => {
             if ( ((selected.selectedType === "point") || (selected.selectedType === "corner")) && (selected.selectedId === i)) {
@@ -525,6 +546,7 @@ function roomFromPoint(point, rooms) {
 }
 
 async function redrawPotential(startPoint, endPoint, dataStructures, selected) {
+    potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     if (isDragging) {
         if (selected.selectedType === "point" || selected.selectedType === "corner") {
             Function.prototype();
@@ -533,7 +555,9 @@ async function redrawPotential(startPoint, endPoint, dataStructures, selected) {
             Function.prototype();
 
         } else if (selected.selectedType === "wall") {
-            redrawPotentialFromWall(startPoint, endPoint, dataStructures, selected);
+            if (shiftKeyIsDown) {
+                redrawPotentialFromWall(startPoint, endPoint, dataStructures, selected);
+            }
 
         } else if (selected.selectedType === "room") {
             Function.prototype();
@@ -589,14 +613,15 @@ async function redrawPotentialFromWall(startPoint, endPoint, dataStructures, sel
         let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
         let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
 
-        potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
         redrawRooms(potentialCtx, potentialCtx, doors, walls, points, metaroom);
 
     }
 }
 
 async function redrawSelection(){
-    selectionRenderer.redrawSelection(pastiesCtx, dataStructures, selected);
+    //console.log(dataStructures);
+    sandwichCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    selectionRenderer.redrawSelection(selectionCtx, sandwichCtx, dataStructures, selected);
     redrawPotential(startDragging, stopDragging, dataStructures, selected);
 }
 
@@ -606,16 +631,17 @@ loadMetaroom(
         selection: selectionCanvasElement,
         room: roomCanvasElement,
         pasties: pastiesCanvasElement,
-        potential: potentialCanvasElement
+        potential: potentialCanvasElement,
+        sandwich: sandwichCanvasElement
     },
     {
         background: backgroundCtx,
         selection: selectionCtx,
         room: roomCtx,
         pasties: pastiesCtx,
-        potential: potentialCtx
+        potential: potentialCtx,
+        sandwich: sandwichCtx
     },
-    pastiesCtx,
     metaroom
 );
 

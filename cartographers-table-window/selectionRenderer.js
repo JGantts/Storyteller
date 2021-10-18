@@ -336,8 +336,9 @@ async function wildSelection(){
 //wall
 //corner
 //point
-async function redrawSelection(pastiesCtx, dataStructures, selected){
+async function redrawSelection(selectionCtx, pastiesCtx, dataStructures, selected){
     //console.log(selected);
+    //console.log(dataStructures);
     redrawPasties(pastiesCtx, dataStructures.points, dataStructures.metaroomDisk);
     selectionCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
     //wildSelection();
