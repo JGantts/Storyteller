@@ -33,6 +33,8 @@ topCanvasElement.onmousemove=handleMouseMove;
 topCanvasElement.onmouseup=handleMouseUp;
 topCanvasElement.onmouseout=handleMouseOut;
 
+window.onkeydown = userTextKeyDown;
+window.onkeyup = userTextKeyUp;
 
 let selectionCheckMargin = 6;
 const selctionSquareWidth = selectionCheckMargin * 4/3;
@@ -268,7 +270,9 @@ function userTextKeyDown(event){
   event.preventDefault();
 
   if (event.altKey || event.ctrlKey || event.metaKey){
-    controlKey(event);
+    controlKeyDown(event);
+  } else if (event.shiftKey){
+    shiftKeyDown(event);
   }else{
     switch (event.key){
       case 'ArrowDown':
@@ -306,7 +310,26 @@ function userTextKeyDown(event){
   }
 }
 
-function controlKey(event){
+function userTextKeyUp(event){
+  console.log(event);
+  if (event.defaultPrevented) {
+    return; // Do nothing if the event was already processed
+  }
+  event.preventDefault();
+
+  if (event.key === "control" || event.key === "Meta"){
+    controlKeyUp(event);
+  } else if (event.key === "Shift"){
+    shiftKeyUp(event);
+  }
+}
+
+let ctrlKeyIsDown = false;
+let shiftKeyIsDown = false;
+
+function controlKeyDown(event){
+  console.log("what?");
+  ctrlKeyIsDown = true;
   if (event.ctrlKey && event.key === 'v'){
     paste();
   }else if (event.ctrlKey && event.key === 'c'){
@@ -318,6 +341,18 @@ function controlKey(event){
   }else if (event.ctrlKey && event.key === 'y'){
     redo();
   }
+}
+
+function controlKeyUp(event){
+  ctrlKeyIsDown = false;
+}
+
+function shiftKeyDown(event){
+  shiftKeyIsDown = true;
+}
+
+function shiftKeyUp(event){
+  shiftKeyIsDown = false;
 }
 
 

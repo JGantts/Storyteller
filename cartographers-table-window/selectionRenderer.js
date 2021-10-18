@@ -45,15 +45,19 @@ const purple = {
   blue: 135
 }
 
+function getSelectionMultiplier() {
+    return shiftKeyIsDown ? 1.75 : 1;
+}
 
 function drawSelectionSquare(x, y) {
     //console.log(x);
     //console.log(y);
+    let myWidth = selctionSquareWidth * getSelectionMultiplier();
     selectionCtx.lineWidth = roomLineThickness;
     selectionCtx.strokeStyle = "white";
     selectionCtx.fillStyle = "black";
     selectionCtx.beginPath();
-    selectionCtx.rect(x-selctionSquareWidth/2, y-selctionSquareWidth/2, selctionSquareWidth, selctionSquareWidth);
+    selectionCtx.rect(x-myWidth/2, y-myWidth/2, myWidth, myWidth);
     selectionCtx.fill();
     selectionCtx.stroke();
     drawSelectionCircle(x, y, 0.0, 1.0);
