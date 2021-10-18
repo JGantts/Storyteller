@@ -457,12 +457,12 @@ function tryCreateRoom() {
         let newRoom = getPotentialRoom(startDragging, stopDragging, dataStructures, selectedLine);
         let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
 
-        console.log(newRoom);
+        //console.log(newRoom);
 
         metaroom.rooms.push(newRoom);
         metaroom.perms = metaroom.perms.concat(newPerms);
 
-        console.log(newPerms);
+        //console.log(newPerms);
 
         let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
         let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});

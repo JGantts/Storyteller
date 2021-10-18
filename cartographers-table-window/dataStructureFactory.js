@@ -10,10 +10,10 @@ rightFloorY: 300,
 function getPermsFromRoomPotential(roomPotential, dataStructures) {
     let perms = [];
     let sides = getWallsFromRoom(roomPotential);
-    console.log(sides);
+    //console.log(sides);
     for (let i = 0; i < sides.length; i++) {
-        console.log("\n\n\n\n");
-        console.log(`side: ${i}`);
+        //console.log("\n\n\n\n");
+        //console.log(`side: ${i}`);
         let side = sides[i];
         let sideMinX = Math.min(side.start.x, side.end.x);
         let sideMaxX = Math.max(side.start.x, side.end.x);
@@ -49,14 +49,14 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                         return false;
                     }
                 );*/
-            console.log(wallsWithId);
+            //console.log(wallsWithId);
 
 
             for (let k=0; k < wallsWithId.length; k++) {
                 let wallWithId = wallsWithId[k];
-                if (wallWithId.id === 4) {
+                /*if (wallWithId.id === 4) {
                     console.log(side, wallWithId);
-                }
+                }*/
                 let wallMinX = Math.min(wallWithId.wall.start.x, wallWithId.wall.end.x);
                 let wallMaxX = Math.max(wallWithId.wall.start.x, wallWithId.wall.end.x);
                 let wallMinY = Math.min(wallWithId.wall.start.y, wallWithId.wall.end.y);
@@ -78,21 +78,21 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                             ) {
                                 sideHandled = true;
 
-                                console.log(side, wallWithId);
+                                //console.log(side, wallWithId);
 
                                 //well, "overlap"
                                 if (
                                     wallMaxY === sideMinY
                                     || wallMinY === sideMaxY
                                 ) {
-                                    console.log("-9");
+                                    //console.log("-9");
                                     Function.prototype();
 
                                 //overlap with upper-left and lower-right tails
                                 } else if (
                                     wallMinY < sideMinY
                                 ) {
-                                    console.log("-8");
+                                    //console.log("-8");
                                     perms = perms.concat(
                                         {
                                             rooms:
@@ -108,7 +108,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                     wallMinY === sideMinY
                                     && wallMaxY < sideMaxY
                                 ) {
-                                    console.log("-7");
+                                    //console.log("-7");
                                     perms = perms.concat(
                                         {
                                             rooms:
@@ -125,7 +125,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                     wallMinY > sideMinY
                                     && wallMaxY < sideMaxY
                                 ) {
-                                    console.log("-6");
+                                    //console.log("-6");
                                     perms = perms.concat(
                                         {
                                             rooms:
@@ -142,7 +142,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                     wallMinY === sideMinY
                                     && wallMaxY === sideMaxY
                                 ) {
-                                    console.log("-5");
+                                    //console.log("-5");
                                     perms = perms.concat(
                                         {
                                             rooms:
@@ -159,7 +159,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                     wallMinY < sideMinY
                                     && wallMaxY > sideMaxY
                                 ) {
-                                    console.log("-4");
+                                    //console.log("-4");
                                     perms = perms.concat(
                                         {
                                             rooms:
@@ -176,7 +176,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                     wallMinY < sideMinY
                                     && wallMaxY === sideMaxY
                                 ) {
-                                    console.log("-3");
+                                    //console.log("-3");
                                     perms = perms.concat(
                                         {
                                             rooms:
@@ -192,7 +192,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                     wallMinY === sideMinY
                                     && wallMaxY > sideMaxY
                                 ) {
-                                    console.log("-2");
+                                    //console.log("-2");
                                     perms = perms.concat(
                                         {
                                             rooms:
@@ -209,7 +209,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                     wallMinY > sideMinY
                                     && wallMaxY === sideMaxY
                                 ) {
-                                    console.log("-1");
+                                    //console.log("-1");
                                     perms = perms.concat(
                                         {
                                             rooms:
@@ -271,21 +271,21 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                 ) {
                                     sideHandled = true;
 
-                                    console.log(side, wallWithId);
+                                    //console.log(side, wallWithId);
 
                                     //well, "overlap"
                                     if (
                                         wallMaxX === sideMinX
                                         || wallMinX === sideMaxX
                                     ) {
-                                        console.log("1");
+                                        //console.log("1");
                                         Function.prototype();
 
                                     //overlap with left-wall and right-side tails
                                     } else if (
                                         wallMinX < sideMinX
                                     ) {
-                                        console.log("2");
+                                        //console.log("2");
                                         perms = perms.concat(
                                             {
                                                 rooms:
@@ -302,7 +302,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                         wallMinX === sideMinX
                                         && wallMaxX < sideMaxX
                                     ) {
-                                        console.log("3");
+                                        //console.log("3");
                                         perms = perms.concat(
                                             {
                                                 rooms:
@@ -319,7 +319,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                         wallMinX > sideMinX
                                         && wallMaxX < sideMaxX
                                     ) {
-                                        console.log("4");
+                                        //console.log("4");
                                         perms = perms.concat(
                                             {
                                                 rooms:
@@ -336,7 +336,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                         wallMinX === sideMinX
                                         && wallMaxX === sideMaxX
                                     ) {
-                                        console.log("5");
+                                        //console.log("5");
                                         perms = perms.concat(
                                             {
                                                 rooms:
@@ -353,7 +353,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                         wallMinX < sideMinX
                                         && wallMaxX > sideMaxX
                                     ) {
-                                        console.log("6");
+                                        //console.log("6");
                                         perms = perms.concat(
                                             {
                                                 rooms:
@@ -370,7 +370,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                         wallMinX < sideMinX
                                         && wallMaxX === sideMaxX
                                     ) {
-                                        console.log("7");
+                                        //console.log("7");
                                         perms = perms.concat(
                                             {
                                                 rooms:
@@ -387,7 +387,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                         wallMinX === sideMinX
                                         && wallMaxX > sideMaxX
                                     ) {
-                                        console.log("8");
+                                        //console.log("8");
                                         perms = perms.concat(
                                             {
                                                 rooms:
@@ -398,7 +398,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                                 "permeability": 1.0
                                             }
                                         );
-                                        console.log(perms);
+                                        //console.log(perms);
 
 
                                     //overlap with left-side tail
@@ -406,7 +406,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                         wallMinX > sideMinX
                                         && wallMaxX === sideMaxX
                                     ) {
-                                        console.log("9");
+                                        //console.log("9");
                                         perms = perms.concat(
                                             {
                                                 rooms:
