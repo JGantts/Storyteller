@@ -698,7 +698,6 @@ function slicePotentialSideIntoPotentialLinesFromActualWall(side, walls){
                                     let newSegmentB = geometry.getSortedDoor(wall.end.x, wall.end.y, side.end.x, side.end.y, side.permeability);
                                     let newSegmmentsB = recurseSubtractionUntilNoChange(newSegmentB, wallsToPassDown);
                                     lines = lines.concat(newSegmmentsB);
-
                                     sideChanged = true;
 
                             //overlap with left- and right-side tails
@@ -789,7 +788,6 @@ function slicePotentialSideIntoPotentialLinesFromActualWall(side, walls){
                         }
                     }
                 }
-
             }
             //not a match
         }
@@ -1238,8 +1236,13 @@ function recurseSubtractionUntilNoChange(wall, doors) {
                 newWalls2.push(recurseSubtractionUntilNoChange(newWalls1.segments[i], doors));
             }
             //console.log(newWalls1);
-            assert(newWalls2.length <= 1, `newWalls2.length: ${newWalls2.length}\n${JSON.stringify(newWalls2)}`);
-            return newWalls2[0];
+            if (newWalls2.length === 0) {
+                return [];
+            } else if (newWalls2.length === 1) {
+                return newWalls2[0];
+            } else {
+                assert(false, `newWalls2.length: ${newWalls2.length}\n${JSON.stringify(newWalls2)}`);
+            }
         } else {
             return newWalls1.segments;
         }
