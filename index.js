@@ -35,6 +35,7 @@ function createStorytellerWindow () {
     frame: false,
     resizable: false,
     webPreferences: {
+        enableRemoteModule: true,
       nodeIntegration: true
     }
   })
@@ -51,6 +52,7 @@ function createSorcerersTableWindow() {
     height: 600,
     backgroundColor: '#353D53',
     webPreferences: {
+        enableRemoteModule: true,
       nodeIntegration: true
     }
   })
@@ -67,6 +69,7 @@ function createDesignersTableWindow() {
     height: 600,
     backgroundColor: '#233D43',
     webPreferences: {
+        enableRemoteModule: true,
       nodeIntegration: true,
       webviewTag: true,
     }
@@ -84,6 +87,7 @@ function createCartographersTableWindow() {
     height: 600,
     backgroundColor: '#503642',
     webPreferences: {
+        enableRemoteModule: true,
       nodeIntegration: true
     }
   })
