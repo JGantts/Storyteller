@@ -3,6 +3,10 @@ const assert = require('assert');
 const { clipboard, remote } = require('electron');
 const dialog = remote.dialog;
 const fs = require('fs');
+const crypto = require('crypto');
+console.log("hi");
+console.log(crypto);
+console.log(process.versions);
 //const path = require("path");
 const WIN = remote.getCurrentWindow();
 
@@ -11,6 +15,10 @@ const { geometry } = require('./geometryHelper.js');
 const { selectionRenderer } = require('./selectionRenderer.js');
 const { selected, selectionChecker } = require('./selectionChecker.js');
 const { dataStructureFactory } = require('./dataStructureFactory.js');
+
+let zoom = 1;
+let posX = 0;
+let posY = 0;
 
 /*let metaroomWalls = [];
 let metaroomDoors = [];
@@ -38,6 +46,7 @@ topCanvasElement.onmousedown=handleMouseDown;
 topCanvasElement.onmousemove=handleMouseMove;
 topCanvasElement.onmouseup=handleMouseUp;
 topCanvasElement.onmouseout=handleMouseOut;
+topCanvasElement.onwheel = handleWheel;
 
 window.onkeydown = userTextKeyDown;
 window.onkeyup = userTextKeyUp;
@@ -80,7 +89,8 @@ class Command{
 
 function setupCanvas(canvas, rect) {
   // Get the device pixel ratio, falling back to 1.
-  let dpr = window.devicePixelRatio || 1;
+  //let dpr = window.devicePixelRatio || 1;
+  let dpr = 1 * zoom;
   // Get the size of the canvas in CSS pixels.
   //let rect = canvas.getBoundingClientRect();
   // Give the canvas pixel dimensions of their CSS
@@ -378,8 +388,8 @@ function handleMouseDown(e){
     e.preventDefault();
     e.stopPropagation();
     isMouseButtonDown = true;
-    startX=parseInt(e.offsetX);
-    startY=parseInt(e.offsetY);
+    startX=parseInt(e.offsetX)/zoom;
+    startY=parseInt(e.offsetY)/zoom;
 
     let wasSelectedType = selected.selectedType;
     let wasSelectedId = selected.selectedId;
@@ -417,8 +427,8 @@ function handleMouseMove(e){
   e.preventDefault();
   e.stopPropagation();
   // calculate the current mouse position
-  endX=parseInt(e.offsetX);
-  endY=parseInt(e.offsetY);
+  endX=parseInt(e.offsetX)/zoom;
+  endY=parseInt(e.offsetY)/zoom;
 
   if (isMouseButtonDown) {
       if (!isDragging) {
@@ -439,6 +449,41 @@ function handleMouseMove(e){
   //checkSelection(startX, startY);
 }
 
+function handleWheel(e) {
+    //e.preventDefault();
+
+
+    if (e.ctrlKey) {
+        zoom -= e.deltaY * 0.01;
+        loadMetaroom(
+            {
+                background: backgroundCanvasElement,
+                selection: selectionCanvasElement,
+                room: roomCanvasElement,
+                pasties: pastiesCanvasElement,
+                potential: potentialCanvasElement,
+                sandwich: sandwichCanvasElement
+            },
+            {
+                background: backgroundCtx,
+                selection: selectionCtx,
+                room: roomCtx,
+                pasties: pastiesCtx,
+                potential: potentialCtx,
+                sandwich: sandwichCtx
+            },
+            metaroom
+        );
+    } else {
+
+        console.log(document.getElementById("canvasHolder"));
+        console.log(document.getElementById("canvasHolder").scrollTop);
+
+        posX -= e.deltaX * 2;
+        posY += e.deltaY * 2;
+    }
+}
+
 function tryCreateRoom() {
 
     if (!isDragging || !shiftKeyIsDown) {
@@ -455,29 +500,33 @@ function tryCreateRoom() {
         let selectedLine = dataStructures.walls[selected.selectedId];
 
         let newRoom = getPotentialRoom(startDragging, stopDragging, dataStructures, selectedLine);
-        let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
+        if (newRoom) {
+            //newRoom.id = crypto.randomUUID();
+            console.log(newRoom);
+            let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
 
-        //console.log(newRoom);
+            //console.log(newRoom);
 
-        metaroom.rooms.push(newRoom);
-        metaroom.perms = metaroom.perms.concat(newPerms);
+            metaroom.rooms.push(newRoom);
+            metaroom.perms = metaroom.perms.concat(newPerms);
 
-        //console.log(newPerms);
+            //console.log(newPerms);
 
-        let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
-        let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
-        let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
-        let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
+            let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
+            let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
+            let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
+            let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
 
-        dataStructures = {
-            metaroomDisk: metaroom,
-            points: points,
-            walls: walls,
-            doors: doors
-        };
+            dataStructures = {
+                metaroomDisk: metaroom,
+                points: points,
+                walls: walls,
+                doors: doors
+            };
 
 
-        redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
+            redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
+        }
 
     } else if (selected.selectedType === "room") {
         Function.prototype();
@@ -511,6 +560,7 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
 
       if (deltaX > 0) {
           return {
+              id: null,
               leftX: selectedLine.start.x,
               rightX: selectedLine.start.x + deltaX,
               leftCeilingY: selectedLine.start.y,
@@ -520,6 +570,7 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
           };
       } else {
           return {
+              id: null,
               leftX: selectedLine.start.x + deltaX,
               rightX: selectedLine.start.x,
               leftCeilingY: selectedLine.start.y,
@@ -538,6 +589,7 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
 
       if (deltaY > 0) {
           return {
+              id: null,
               leftX: selectedLine.start.x,
               rightX: selectedLine.end.x,
               leftCeilingY: selectedLine.start.y,
@@ -547,6 +599,7 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
           };
       } else {
           return {
+            id: null,
             leftX: selectedLine.start.x,
             rightX: selectedLine.end.x,
             leftCeilingY: selectedLine.start.y + deltaY,
