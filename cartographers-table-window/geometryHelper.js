@@ -59,7 +59,16 @@ function getSortedLine(aX, aY, bX, bY) {
                 }
             };
         } else {
-            return null;
+            return {
+                start: {
+                  x: aX,
+                  y: aY
+                },
+                end: {
+                  x: bX,
+                  y: bY
+                }
+            };
         }
     }
 }
@@ -97,6 +106,7 @@ function getSlope(a, b) {
 module.exports = {
     geometry: {
         getSortedDoor: getSortedDoor,
+        getSortedLine: getSortedLine,
         getRoomCeiling: getRoomCeiling,
         getRoomFloor: getRoomFloor,
         getSlope: getSlope

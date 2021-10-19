@@ -450,6 +450,15 @@ function handleMouseMove(e){
               idDragging = selected.selectedId;
               startDragging = {x: startX, y: startY};
               stopDragging = {x: endX, y: endY};
+          } else if (
+            selected.selectedType === "point"
+            || selected.selectedType === "corner"
+          ) {
+              isDragging = true;
+              whatDragging = "point"
+              idDragging = selected.selectedId;
+              startDragging = {x: startX, y: startY};
+              stopDragging = {x: endX, y: endY};
           }
       }
       if (isDragging) {
@@ -548,8 +557,8 @@ function tryCreateRoom() {
     }
 }
 
-function getPotentiaLinesPoints(startPoint, endPoint, dataStructures, selectedLine) {
-      let room = getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine);
+function getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine) {
+      let room = getPotentialRoomFromLine(startPoint, endPoint, dataStructures, selectedLine);
 
       if (!room) {
           return null;
@@ -564,16 +573,16 @@ function getPotentiaLinesPoints(startPoint, endPoint, dataStructures, selectedLi
       }
 }
 
-function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
+function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
   // Vertical
-  if (selectedLine.start.x === selectedLine.end.x) {
+  if (line.start.x === line.end.x) {
       let deltaX = endPoint.x - startPoint.x;
 
       if (Math.abs(deltaX) < 5) {
           return null;
       }
 
-      let xToConsider = selectedLine.start.x + deltaX;
+      let xToConsider = line.start.x + deltaX;
 
       let closestPointsX = -1;
       for (let i=0; i<dataStructures.pointsSortedX.length; i++) {
@@ -595,22 +604,22 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
       if (deltaX > 0) {
           return {
               id: null,
-              leftX: selectedLine.start.x,
+              leftX: line.start.x,
               rightX: xToUse,
-              leftCeilingY: selectedLine.start.y,
-              rightCeilingY: selectedLine.start.y,
-              leftFloorY: selectedLine.end.y,
-              rightFloorY: selectedLine.end.y,
+              leftCeilingY: line.start.y,
+              rightCeilingY: line.start.y,
+              leftFloorY: line.end.y,
+              rightFloorY: line.end.y,
           };
       } else {
           return {
               id: null,
               leftX: xToUse,
-              rightX: selectedLine.start.x,
-              leftCeilingY: selectedLine.start.y,
-              rightCeilingY: selectedLine.start.y,
-              leftFloorY: selectedLine.end.y,
-              rightFloorY: selectedLine.end.y,
+              rightX: line.start.x,
+              leftCeilingY: line.start.y,
+              rightCeilingY: line.start.y,
+              leftFloorY: line.end.y,
+              rightFloorY: line.end.y,
           };
       }
   // Horizontal
@@ -621,8 +630,8 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
           return null;
       }
 
-      let yToConsiderA = selectedLine.start.y + deltaY;
-      let yToConsiderB = selectedLine.end.y + deltaY;
+      let yToConsiderA = line.start.y + deltaY;
+      let yToConsiderB = line.end.y + deltaY;
 
       let closestPointAsY = -1;
       for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
@@ -646,9 +655,9 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
 
       let deltaYToUse = -1;
       if (Math.abs(yToConsiderA - closestPointAsY) < 5) {
-          deltaYToUse = closestPointAsY - selectedLine.start.y;
+          deltaYToUse = closestPointAsY - line.start.y;
       } else if (Math.abs(yToConsiderB - closestPointBsY) < 5) {
-          deltaYToUse = closestPointBsY - selectedLine.end.y;
+          deltaYToUse = closestPointBsY - line.end.y;
       } else {
           deltaYToUse = deltaY;
       }
@@ -656,25 +665,155 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
       if (deltaY > 0) {
           return {
               id: null,
-              leftX: selectedLine.start.x,
-              rightX: selectedLine.end.x,
-              leftCeilingY: selectedLine.start.y,
-              rightCeilingY: selectedLine.end.y,
-              leftFloorY: selectedLine.start.y + deltaYToUse,
-              rightFloorY: selectedLine.end.y + deltaYToUse,
+              leftX: line.start.x,
+              rightX: line.end.x,
+              leftCeilingY: line.start.y,
+              rightCeilingY: line.end.y,
+              leftFloorY: line.start.y + deltaYToUse,
+              rightFloorY: line.end.y + deltaYToUse,
           };
       } else {
           return {
             id: null,
-            leftX: selectedLine.start.x,
-            rightX: selectedLine.end.x,
-            leftCeilingY: selectedLine.start.y + deltaYToUse,
-            rightCeilingY: selectedLine.end.y + deltaYToUse,
-            leftFloorY: selectedLine.start.y,
-            rightFloorY: selectedLine.end.y,
+            leftX: line.start.x,
+            rightX: line.end.x,
+            leftCeilingY: line.start.y + deltaYToUse,
+            rightCeilingY: line.end.y + deltaYToUse,
+            leftFloorY: line.start.y,
+            rightFloorY: line.end.y,
           };
       }
   }
+}
+
+function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
+
+      let deltaX = endPoint.x - startPoint.x;
+
+      if (Math.abs(deltaX) < 5) {
+          return null;
+      }
+
+      let deltaY = endPoint.y - startPoint.y;
+
+      if (Math.abs(deltaY) < 5) {
+          return null;
+      }
+
+      console.log("\n\n\n\n\n\n\n\n");
+      console.log(deltaX);
+      console.log(deltaY);
+
+      let xToConsider = deltaX;
+
+      let closestPointsX = -1;
+      for (let i=0; i<dataStructures.pointsSortedX.length; i++) {
+          if (
+            Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
+            < Math.abs(closestPointsX - xToConsider)
+          ) {
+              closestPointsX = dataStructures.pointsSortedX[i].x;
+          }
+      }
+
+      let deltaXToUse = -1;
+      if (Math.abs(xToConsider - closestPointsX) < 5) {
+          deltaXToUse = closestPointsX;
+      } else {
+          deltaXToUse = xToConsider;
+      }
+
+
+      let yToConsider = deltaY;
+
+      let closestPointsY = -1;
+      for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
+          if (
+            Math.abs(dataStructures.pointsSortedY[i].y - yToConsider)
+            < Math.abs(closestPointsY - yToConsider)
+          ) {
+              closestPointsY = dataStructures.pointsSortedY[i].y;
+          }
+      }
+
+      let deltaYToUse = -1;
+      if (Math.abs(yToConsider - closestPointsY) < 5) {
+          deltaYToUse = closestPointsY;
+      } else {
+          deltaYToUse = yToConsider;
+      }
+
+      console.log(deltaXToUse);
+      console.log(deltaYToUse);
+      if (deltaX > 0) {
+          if (deltaY > 0) {
+              return {
+                  id: null,
+                  leftX: startPoint.x,
+                  rightX: startPoint.x + deltaXToUse,
+                  leftCeilingY: startPoint.y + deltaYToUse,
+                  rightCeilingY: startPoint.y + deltaYToUse,
+                  leftFloorY: startPoint.y,
+                  rightFloorY: startPoint.y,
+              };
+          } else {
+              return {
+                id: null,
+                leftX: startPoint.x,
+                rightX: startPoint.x + deltaXToUse,
+                leftCeilingY: startPoint.y,
+                rightCeilingY: startPoint.y,
+                leftFloorY: startPoint.y + deltaYToUse,
+                rightFloorY: startPoint.y + deltaYToUse
+              };
+          }
+      } else {
+          if (deltaY > 0) {
+              return {
+                  id: null,
+                  leftX: startPoint.x + deltaXToUse,
+                  rightX: startPoint.x,
+                  leftCeilingY: startPoint.y + deltaYToUse,
+                  rightCeilingY: startPoint.y + deltaYToUse,
+                  leftFloorY: startPoint.y,
+                  rightFloorY: startPoint.y,
+              };
+          } else {
+              return {
+                id: null,
+                leftX: startPoint.x + deltaXToUse,
+                rightX: startPoint.x,
+                leftCeilingY: startPoint.y,
+                rightCeilingY: startPoint.y,
+                leftFloorY: startPoint.y + deltaYToUse,
+                rightFloorY: startPoint.y + deltaYToUse
+              };
+          }
+      }
+
+}
+
+function getPotentiaLinesPointsFromPoints(startPoint, endPoint, dataStructures) {
+      let room = getPotentialRoomFromPoints(
+        startPoint,
+        endPoint,
+        dataStructures,
+        geometry.getSortedLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y)
+      );
+
+      console.log(room);
+
+      if (!room) {
+          return null;
+      }
+
+      let doorWalls = dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(room, dataStructures);
+      let points = dataStructureFactory.getPointsFromRooms([room]);
+
+      return {
+          lines: doorWalls,
+          points: points
+      }
 }
 
 function loadMetaroom(canvasElements, canvasContexts, metaroom){
@@ -794,7 +933,9 @@ async function redrawPotential(startPoint, endPoint, dataStructures, selected) {
     potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     if (isDragging) {
         if (selected.selectedType === "point" || selected.selectedType === "corner") {
-            Function.prototype();
+          if (shiftKeyIsDown) {
+              redrawPotentialFromPoints(startPoint, endPoint, dataStructures, selected);
+          }
 
         } else if (selected.selectedType === "door") {
             Function.prototype();
@@ -814,7 +955,20 @@ async function redrawPotentialFromWall(startPoint, endPoint, dataStructures, sel
 
     if (roomFromPoint(endPoint) === -1) {
         let selectedLine = dataStructures.walls[selected.selectedId];
-        let linesPoints =  getPotentiaLinesPoints(startPoint, endPoint, dataStructures, selectedLine);
+        let linesPoints =  getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine);
+
+        if (linesPoints) {
+            //console.log(linesPoints);
+            redrawRooms(potentialCtx, potentialCtx, linesPoints.lines, linesPoints.points, metaroom);
+        }
+    }
+}
+
+async function redrawPotentialFromPoints(startPoint, endPoint, dataStructures, selected) {
+
+    if (roomFromPoint(endPoint) === -1) {
+        let selectedPoint = dataStructures.points[selected.selectedId];
+        let linesPoints =  getPotentiaLinesPointsFromPoints(selectedPoint, endPoint, dataStructures);
 
         if (linesPoints) {
             //console.log(linesPoints);
