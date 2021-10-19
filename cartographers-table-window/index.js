@@ -513,12 +513,18 @@ function tryCreateRoom() {
             let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
             let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
             let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
+            let pointsSortedX = points;
+            pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
+            let pointsSortedY = points;
+            pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
 
             dataStructures = {
                 metaroomDisk: metaroom,
                 points: points,
                 walls: walls,
-                doors: doors
+                doors: doors,
+                pointsSortedX: pointsSortedX,
+                pointsSortedY: pointsSortedY
             };
 
 
@@ -555,11 +561,30 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
           return null;
       }
 
+      let xToConsider = selectedLine.start.x + deltaX;
+
+      let closestPointsX = -1;
+      for (let i=0; i<dataStructures.pointsSortedX.length; i++) {
+          if (
+            Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
+            < Math.abs(closestPointsX - xToConsider)
+          ) {
+              closestPointsX = dataStructures.pointsSortedX[i].x;
+          }
+      }
+
+      let xToUse = -1;
+      if (Math.abs(xToConsider - closestPointsX) < 5) {
+          xToUse = closestPointsX
+      } else {
+          xToUse = xToConsider
+      }
+
       if (deltaX > 0) {
           return {
               id: null,
               leftX: selectedLine.start.x,
-              rightX: selectedLine.start.x + deltaX,
+              rightX: xToUse,
               leftCeilingY: selectedLine.start.y,
               rightCeilingY: selectedLine.start.y,
               leftFloorY: selectedLine.end.y,
@@ -568,7 +593,7 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
       } else {
           return {
               id: null,
-              leftX: selectedLine.start.x + deltaX,
+              leftX: xToUse,
               rightX: selectedLine.start.x,
               leftCeilingY: selectedLine.start.y,
               rightCeilingY: selectedLine.start.y,
@@ -582,6 +607,26 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
 
       if (Math.abs(deltaY) < 5) {
           return null;
+      }
+
+      let yToConsiderA = selectedLine.start.y + deltaY;
+      let yToConsideBA = selectedLine.end.y + deltaY;
+
+      let closestPointAsY = -1;
+      for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
+          if (
+            Math.abs(dataStructures.pointsSortedY[i].x - yToConsiderA)
+            < Math.abs(closestPointAsY - yToConsiderA)
+          ) {
+              closestPointAsY = dataStructures.pointsSortedY[i].x;
+          }
+      }
+
+      let deltaYToUse = -1;
+      if (Math.abs(xToConsider - closestPointsX) < 5) {
+          deltaYToUse = closestPointsX
+      } else {
+          deltaYToUse = xToConsider
       }
 
       if (deltaY > 0) {
@@ -614,11 +659,18 @@ function loadMetaroom(canvasElements, canvasContexts, metaroom){
     let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
     let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
     let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
+    let pointsSortedX = points;
+    pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
+    let pointsSortedY = points;
+    pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
+
     dataStructures = {
         metaroomDisk: metaroom,
         points: points,
         walls: walls,
-        doors: doors
+        doors: doors,
+        pointsSortedX: pointsSortedX,
+        pointsSortedY: pointsSortedY
     };
 
     canvasElements.background.width =  metaroom.width;
