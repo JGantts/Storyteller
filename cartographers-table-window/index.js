@@ -476,9 +476,6 @@ function handleWheel(e) {
         );
     } else {
 
-        console.log(document.getElementById("canvasHolder"));
-        console.log(document.getElementById("canvasHolder").scrollTop);
-
         posX -= e.deltaX * 2;
         posY += e.deltaY * 2;
     }
