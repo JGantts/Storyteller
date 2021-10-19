@@ -499,7 +499,7 @@ function tryCreateRoom() {
         let newRoom = getPotentialRoom(startDragging, stopDragging, dataStructures, selectedLine);
         if (newRoom) {
             //newRoom.id = crypto.randomUUID();
-            console.log(newRoom);
+            //console.log(newRoom);
             let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
 
             //console.log(newRoom);
