@@ -575,9 +575,9 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
 
       let xToUse = -1;
       if (Math.abs(xToConsider - closestPointsX) < 5) {
-          xToUse = closestPointsX
+          xToUse = closestPointsX;
       } else {
-          xToUse = xToConsider
+          xToUse = xToConsider;
       }
 
       if (deltaX > 0) {
@@ -610,23 +610,35 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
       }
 
       let yToConsiderA = selectedLine.start.y + deltaY;
-      let yToConsideBA = selectedLine.end.y + deltaY;
+      let yToConsiderB = selectedLine.end.y + deltaY;
 
       let closestPointAsY = -1;
       for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
           if (
-            Math.abs(dataStructures.pointsSortedY[i].x - yToConsiderA)
+            Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderA)
             < Math.abs(closestPointAsY - yToConsiderA)
           ) {
-              closestPointAsY = dataStructures.pointsSortedY[i].x;
+              closestPointAsY = dataStructures.pointsSortedY[i].y;
+          }
+      }
+
+      let closestPointBsY = -1;
+      for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
+          if (
+            Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderB)
+            < Math.abs(closestPointBsY - yToConsiderB)
+          ) {
+              closestPointBsY = dataStructures.pointsSortedY[i].y;
           }
       }
 
       let deltaYToUse = -1;
-      if (Math.abs(xToConsider - closestPointsX) < 5) {
-          deltaYToUse = closestPointsX
+      if (Math.abs(yToConsiderA - closestPointAsY) < 5) {
+          deltaYToUse = closestPointAsY - selectedLine.start.y;
+      } else if (Math.abs(yToConsiderB - closestPointBsY) < 5) {
+          deltaYToUse = closestPointBsY - selectedLine.end.y;
       } else {
-          deltaYToUse = xToConsider
+          deltaYToUse = deltaY;
       }
 
       if (deltaY > 0) {
@@ -636,16 +648,16 @@ function getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine) {
               rightX: selectedLine.end.x,
               leftCeilingY: selectedLine.start.y,
               rightCeilingY: selectedLine.end.y,
-              leftFloorY: selectedLine.start.y + deltaY,
-              rightFloorY: selectedLine.end.y + deltaY,
+              leftFloorY: selectedLine.start.y + deltaYToUse,
+              rightFloorY: selectedLine.end.y + deltaYToUse,
           };
       } else {
           return {
             id: null,
             leftX: selectedLine.start.x,
             rightX: selectedLine.end.x,
-            leftCeilingY: selectedLine.start.y + deltaY,
-            rightCeilingY: selectedLine.end.y + deltaY,
+            leftCeilingY: selectedLine.start.y + deltaYToUse,
+            rightCeilingY: selectedLine.end.y + deltaYToUse,
             leftFloorY: selectedLine.start.y,
             rightFloorY: selectedLine.end.y,
           };
