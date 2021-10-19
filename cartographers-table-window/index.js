@@ -509,7 +509,41 @@ function tryCreateRoom() {
     }
 
     if (selected.selectedType === "point" || selected.selectedType === "corner") {
-        Function.prototype();
+      let selectedPoint = dataStructures.points[selected.selectedId];
+
+      let newRoom = getPotentialRoomFromPoints(selectedPoint, stopDragging, dataStructures);
+      if (newRoom) {
+          //newRoom.id = crypto.randomUUID();
+          //console.log(newRoom);
+          let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
+
+          //console.log(newRoom);
+
+          metaroom.rooms.push(newRoom);
+          metaroom.perms = metaroom.perms.concat(newPerms);
+
+          //console.log(newPerms);
+
+          let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
+          let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
+          let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
+          let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
+          let pointsSortedX = points;
+          pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
+          let pointsSortedY = points;
+          pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
+
+          dataStructures = {
+              metaroomDisk: metaroom,
+              points: points,
+              walls: walls,
+              doors: doors,
+              pointsSortedX: pointsSortedX,
+              pointsSortedY: pointsSortedY
+          };
+
+          redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
+      }
 
     } else if (selected.selectedType === "door") {
         Function.prototype();
@@ -517,7 +551,7 @@ function tryCreateRoom() {
     } else if (selected.selectedType === "wall") {
         let selectedLine = dataStructures.walls[selected.selectedId];
 
-        let newRoom = getPotentialRoom(startDragging, stopDragging, dataStructures, selectedLine);
+        let newRoom = getPotentialRoomFromLine(startDragging, stopDragging, dataStructures, selectedLine);
         if (newRoom) {
             //newRoom.id = crypto.randomUUID();
             //console.log(newRoom);
@@ -547,7 +581,6 @@ function tryCreateRoom() {
                 pointsSortedX: pointsSortedX,
                 pointsSortedY: pointsSortedY
             };
-
 
             redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
         }
@@ -700,11 +733,9 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
           return null;
       }
 
-      console.log("\n\n\n\n\n\n\n\n");
-      console.log(deltaX);
-      console.log(deltaY);
 
-      let xToConsider = deltaX;
+
+      let xToConsider = endPoint.x;
 
       let closestPointsX = -1;
       for (let i=0; i<dataStructures.pointsSortedX.length; i++) {
@@ -716,15 +747,15 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
           }
       }
 
-      let deltaXToUse = -1;
+      let xToUse = -1;
       if (Math.abs(xToConsider - closestPointsX) < 5) {
-          deltaXToUse = closestPointsX;
+          xToUse = closestPointsX;
       } else {
-          deltaXToUse = xToConsider;
+          xToUse = xToConsider;
       }
 
 
-      let yToConsider = deltaY;
+      let yToConsider = endPoint.y;
 
       let closestPointsY = -1;
       for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
@@ -736,23 +767,22 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
           }
       }
 
-      let deltaYToUse = -1;
+      let yToUse = -1;
       if (Math.abs(yToConsider - closestPointsY) < 5) {
-          deltaYToUse = closestPointsY;
+          yToUse = closestPointsY;
       } else {
-          deltaYToUse = yToConsider;
+          yToUse = yToConsider;
       }
 
-      console.log(deltaXToUse);
-      console.log(deltaYToUse);
+
       if (deltaX > 0) {
           if (deltaY > 0) {
               return {
                   id: null,
                   leftX: startPoint.x,
-                  rightX: startPoint.x + deltaXToUse,
-                  leftCeilingY: startPoint.y + deltaYToUse,
-                  rightCeilingY: startPoint.y + deltaYToUse,
+                  rightX: xToUse,
+                  leftCeilingY: yToUse,
+                  rightCeilingY: yToUse,
                   leftFloorY: startPoint.y,
                   rightFloorY: startPoint.y,
               };
@@ -760,33 +790,33 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
               return {
                 id: null,
                 leftX: startPoint.x,
-                rightX: startPoint.x + deltaXToUse,
+                rightX: xToUse,
                 leftCeilingY: startPoint.y,
                 rightCeilingY: startPoint.y,
-                leftFloorY: startPoint.y + deltaYToUse,
-                rightFloorY: startPoint.y + deltaYToUse
+                leftFloorY: yToUse,
+                rightFloorY: yToUse
               };
           }
       } else {
           if (deltaY > 0) {
               return {
                   id: null,
-                  leftX: startPoint.x + deltaXToUse,
+                  leftX: xToUse,
                   rightX: startPoint.x,
-                  leftCeilingY: startPoint.y + deltaYToUse,
-                  rightCeilingY: startPoint.y + deltaYToUse,
+                  leftCeilingY: yToUse,
+                  rightCeilingY: yToUse,
                   leftFloorY: startPoint.y,
                   rightFloorY: startPoint.y,
               };
           } else {
               return {
                 id: null,
-                leftX: startPoint.x + deltaXToUse,
+                leftX: xToUse,
                 rightX: startPoint.x,
                 leftCeilingY: startPoint.y,
                 rightCeilingY: startPoint.y,
-                leftFloorY: startPoint.y + deltaYToUse,
-                rightFloorY: startPoint.y + deltaYToUse
+                leftFloorY: yToUse,
+                rightFloorY: yToUse
               };
           }
       }
@@ -800,8 +830,6 @@ function getPotentiaLinesPointsFromPoints(startPoint, endPoint, dataStructures) 
         dataStructures,
         geometry.getSortedLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y)
       );
-
-      console.log(room);
 
       if (!room) {
           return null;
