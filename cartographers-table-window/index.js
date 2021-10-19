@@ -454,7 +454,7 @@ function handleWheel(e) {
 
 
     if (e.ctrlKey) {
-        zoom -= e.deltaY * 0.01;
+        zoom -= e.deltaY * 0.0025;
         loadMetaroom(
             {
                 background: backgroundCanvasElement,
