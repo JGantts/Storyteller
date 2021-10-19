@@ -371,7 +371,19 @@ function shiftKeyDown(event){
 }
 
 function shiftKeyUp(event){
-  shiftKeyIsDown = false;
+    if (shiftKeyDown) {
+        shiftKeyIsDown = false;
+
+        if (isDragging) {
+            if (whatDragging === "wall") {
+                isDragging = false;
+                whatDragging = "";
+                idDragging = -1;
+                startDragging = null;
+                stopDragging = null;
+            }
+        }
+    }
 }
 
 let isMouseButtonDown = false;
@@ -808,20 +820,6 @@ async function redrawPotentialFromWall(startPoint, endPoint, dataStructures, sel
             //console.log(linesPoints);
             redrawRooms(potentialCtx, potentialCtx, linesPoints.lines, linesPoints.points, metaroom);
         }
-
-        /*let potentialRoom = getPotentialRoom(startPoint, endPoint, dataStructures, selectedLine);
-        let potentialRooms = [];
-        if (potentialRoom) {
-            potentialRooms.push(potentialRoom);
-            let potentialPerms = null;
-
-            let wallsOverreach = dataStructureFactory.getWallsFromRooms(potentialRooms).filter(function(val) {return val!==null});
-            let doors = dataStructureFactory.getDoorsFromRooms(potentialRooms, potentialPerms).filter(function(val) {return va!==nulll});
-            let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val!==null});
-            let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
-
-            redrawRooms(potentialCtx, potentialCtx, doors.concat(walls), points, metaroom);
-        }*/
     }
 }
 
