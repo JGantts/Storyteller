@@ -514,7 +514,6 @@ function tryCreateRoom() {
       let newRoom = getPotentialRoomFromPoints(selectedPoint, stopDragging, dataStructures);
       if (newRoom) {
           //newRoom.id = crypto.randomUUID();
-          //console.log(newRoom);
           let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
 
           //console.log(newRoom);
@@ -552,9 +551,9 @@ function tryCreateRoom() {
         let selectedLine = dataStructures.walls[selected.selectedId];
 
         let newRoom = getPotentialRoomFromLine(startDragging, stopDragging, dataStructures, selectedLine);
+        console.log(newRoom);
         if (newRoom) {
             //newRoom.id = crypto.randomUUID();
-            //console.log(newRoom);
             let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
 
             //console.log(newRoom);
@@ -592,6 +591,8 @@ function tryCreateRoom() {
 
 function getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine) {
       let room = getPotentialRoomFromLine(startPoint, endPoint, dataStructures, selectedLine);
+
+      console.log(room);
 
       if (!room) {
           return null;
@@ -695,27 +696,11 @@ function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
           deltaYToUse = deltaY;
       }
 
-      if (deltaY > 0) {
-          return {
-              id: null,
-              leftX: line.start.x,
-              rightX: line.end.x,
-              leftCeilingY: line.start.y,
-              rightCeilingY: line.end.y,
-              leftFloorY: line.start.y + deltaYToUse,
-              rightFloorY: line.end.y + deltaYToUse,
-          };
-      } else {
-          return {
-            id: null,
-            leftX: line.start.x,
-            rightX: line.end.x,
-            leftCeilingY: line.start.y + deltaYToUse,
-            rightCeilingY: line.end.y + deltaYToUse,
-            leftFloorY: line.start.y,
-            rightFloorY: line.end.y,
-          };
-      }
+      return (dataStructureFactory.getSortedRoomFromDimensions(
+          line.start.x, line.end.x,
+          line.start.y, line.end.y,
+          line.start.y + deltaYToUse, line.end.y + deltaYToUse
+      ));
   }
 }
 
@@ -776,49 +761,17 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
 
 
       if (deltaX > 0) {
-          if (deltaY > 0) {
-              return {
-                  id: null,
-                  leftX: startPoint.x,
-                  rightX: xToUse,
-                  leftCeilingY: yToUse,
-                  rightCeilingY: yToUse,
-                  leftFloorY: startPoint.y,
-                  rightFloorY: startPoint.y,
-              };
-          } else {
-              return {
-                id: null,
-                leftX: startPoint.x,
-                rightX: xToUse,
-                leftCeilingY: startPoint.y,
-                rightCeilingY: startPoint.y,
-                leftFloorY: yToUse,
-                rightFloorY: yToUse
-              };
-          }
+          return (dataStructureFactory.getSortedRoomFromDimensions(
+              startPoint.x, xToUse,
+              startPoint.y, startPoint.y,
+              yToUse, yToUse
+          ));
       } else {
-          if (deltaY > 0) {
-              return {
-                  id: null,
-                  leftX: xToUse,
-                  rightX: startPoint.x,
-                  leftCeilingY: yToUse,
-                  rightCeilingY: yToUse,
-                  leftFloorY: startPoint.y,
-                  rightFloorY: startPoint.y,
-              };
-          } else {
-              return {
-                id: null,
-                leftX: xToUse,
-                rightX: startPoint.x,
-                leftCeilingY: startPoint.y,
-                rightCeilingY: startPoint.y,
-                leftFloorY: yToUse,
-                rightFloorY: yToUse
-              };
-          }
+        return (dataStructureFactory.getSortedRoomFromDimensions(
+            xToUse, startPoint.x,
+            startPoint.y, startPoint.y,
+            yToUse, yToUse
+        ));
       }
 
 }

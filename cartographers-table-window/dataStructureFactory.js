@@ -7,6 +7,19 @@ leftFloorY: 300,
 rightFloorY: 300,
 */
 
+function getSortedRoomFromDimensions(leftX, rightX, leftYA, rightYA, leftYB, rightYB) {
+
+    return {
+        id: null,
+        leftX: leftX,
+        rightX: rightX,
+        leftCeilingY: Math.min(leftYA, leftYB),
+        rightCeilingY: Math.min(leftYA, leftYB),
+        leftFloorY: Math.max(rightYA, rightYB),
+        rightFloorY: Math.max(rightYA, rightYB)
+    };
+}
+
 function getPermsFromRoomPotential(roomPotential, dataStructures) {
     let perms = [];
     let sides = getWallsFromRoom(roomPotential);
@@ -1358,6 +1371,7 @@ module.exports = {
         getPointsFromRooms: getPointsFromRooms,
         subtractDoorsFromWalls: subtractDoorsFromWalls,
         getDoorsWallsPotentialFromRoomPotential: getDoorsWallsPotentialFromRoomPotential,
-        getPermsFromRoomPotential: getPermsFromRoomPotential
+        getPermsFromRoomPotential: getPermsFromRoomPotential,
+        getSortedRoomFromDimensions: getSortedRoomFromDimensions
     }
 }
