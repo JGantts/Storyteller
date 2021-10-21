@@ -592,7 +592,7 @@ function tryCreateRoom() {
 function getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine) {
       let room = getPotentialRoomFromLine(startPoint, endPoint, dataStructures, selectedLine);
 
-      console.log(room);
+      //console.log(room);
 
       if (!room) {
           return null;
