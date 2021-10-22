@@ -439,8 +439,10 @@ function handleMouseMove(e){
   e.preventDefault();
   e.stopPropagation();
   // calculate the current mouse position
-  endX=parseInt(e.offsetX)/zoom;
-  endY=parseInt(e.offsetY)/zoom;
+  currX=parseInt(e.offsetX)/zoom;
+  currY=parseInt(e.offsetY)/zoom;
+
+  console.log({});
 
   if (isMouseButtonDown) {
       if (!isDragging) {
@@ -448,21 +450,29 @@ function handleMouseMove(e){
               isDragging = true;
               whatDragging = "wall"
               idDragging = selected.selectedId;
-              startDragging = {x: startX, y: startY};
-              stopDragging = {x: endX, y: endY};
+              startDragging = {x: currX, y: currY};
+              stopDragging = {x: currX, y: currY};
           } else if (
             selected.selectedType === "point"
             || selected.selectedType === "corner"
           ) {
               isDragging = true;
-              whatDragging = "point"
+              whatDragging = "point";
               idDragging = selected.selectedId;
-              startDragging = {x: startX, y: startY};
-              stopDragging = {x: endX, y: endY};
+              pointStart = dataStructures.points[selected.selectedId];
+              startDragging = pointStart;
+              stopDragging = {x: currX, y: currY};
+          } else {
+              isDragging = true;
+              whatDragging = "point";
+              idDragging = null;
+              pointStart = dataStructures.points[selected.selectedId];
+              startDragging = {x: currX, y: currY};
+              stopDragging = {x: currX, y: currY};
           }
       }
       if (isDragging) {
-          stopDragging = {x: endX, y: endY};
+          stopDragging = {x: currX, y: currY};
       }
   }
 
@@ -856,6 +866,7 @@ async function redrawMetaroom(roomCtx, pastiesCtx, doors, walls, points, metaroo
 }
 
 async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
+    roomCtx.strokeWidth = 010;
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     lines
@@ -885,24 +896,10 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     //console.log(new Error().stack);
     points
         .forEach((point, i) => {
-            if ( ((selected.selectedType === "point") || (selected.selectedType === "corner")) && (selected.selectedId === i)) {
-                selctionSquareWidthToUse = selctionSquareWidth * getSelectionMultiplier();
-                pastiesCtx.fillStyle = 'rgb(0, 0, 0)';
-                pastiesCtx.beginPath();
-                pastiesCtx.rect(
-                  point.x-selctionSquareWidthToUse/2 + roomLineThickness/2,
-                  point.y-selctionSquareWidthToUse/2 + roomLineThickness/2,
-                  selctionSquareWidthToUse - roomLineThickness,
-                  selctionSquareWidthToUse - roomLineThickness
-                );
-                pastiesCtx.fill();
-            } else {
                 pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
                 pastiesCtx.beginPath();
                 pastiesCtx.arc(point.x, point.y, roomLineThickness, 0, 2 * Math.PI, true);
                 pastiesCtx.fill();
-            }
-
         });
 }
 
@@ -917,7 +914,6 @@ async function redrawPotential(startPoint, endPoint, dataStructures, selected) {
           if (shiftKeyIsDown) {
               redrawPotentialFromPoints(startPoint, endPoint, dataStructures, selected);
           }
-
         } else if (selected.selectedType === "door") {
             Function.prototype();
 

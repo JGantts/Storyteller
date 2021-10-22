@@ -49,11 +49,11 @@ function getSelectionMultiplier() {
     return shiftKeyIsDown ? 1.375 : 1;
 }
 
-function drawSelectionSquare(x, y) {
+function drawSelectionSquare(selectoionCtx, x, y) {
     //console.log(x);
     //console.log(y);
     let myWidth = selctionSquareWidth * getSelectionMultiplier();
-    selectionCtx.lineWidth = roomLineThickness * getSelectionMultiplier();
+    selectionCtx.lineWidth = roomLineThickness * getSelectionMultiplier() / 3;
     selectionCtx.strokeStyle = "white";
     selectionCtx.fillStyle = "black";
     selectionCtx.beginPath();
@@ -347,7 +347,7 @@ async function redrawSelection(selectionCtx, pastiesCtx, dataStructures, selecte
     //console.log((selectedId));
     if (selected.selectedType === "point" || selected.selectedType === "corner") {
         let selectedPoint = dataStructures.points[selected.selectedId];
-        drawSelectionSquare(selectedPoint.x, selectedPoint.y);
+        drawSelectionSquare(selectionCtx, selectedPoint.x, selectedPoint.y);
     } else if (selected.selectedType === "door" || selected.selectedType === "wall") {
         let selectedSide = null;
         if (selected.selectedType === "door") {
