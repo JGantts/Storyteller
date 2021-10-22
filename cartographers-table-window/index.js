@@ -442,7 +442,11 @@ function handleMouseMove(e){
   currX=parseInt(e.offsetX)/zoom;
   currY=parseInt(e.offsetY)/zoom;
 
-  console.log({});
+  console.log({
+    isMouseButtonDown: isMouseButtonDown,
+    isDragging: isDragging,
+    "selected.selectedType": selected.selectedType,
+  });
 
   if (isMouseButtonDown) {
       if (!isDragging) {
@@ -518,84 +522,56 @@ function tryCreateRoom() {
         return;
     }
 
+    let newRoom = null;
     if (selected.selectedType === "point" || selected.selectedType === "corner") {
-      let selectedPoint = dataStructures.points[selected.selectedId];
-
-      let newRoom = getPotentialRoomFromPoints(selectedPoint, stopDragging, dataStructures);
-      if (newRoom) {
-          //newRoom.id = crypto.randomUUID();
-          let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
-
-          //console.log(newRoom);
-
-          metaroom.rooms.push(newRoom);
-          metaroom.perms = metaroom.perms.concat(newPerms);
-
-          //console.log(newPerms);
-
-          let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
-          let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
-          let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
-          let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
-          let pointsSortedX = points;
-          pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
-          let pointsSortedY = points;
-          pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
-
-          dataStructures = {
-              metaroomDisk: metaroom,
-              points: points,
-              walls: walls,
-              doors: doors,
-              pointsSortedX: pointsSortedX,
-              pointsSortedY: pointsSortedY
-          };
-
-          redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
-      }
+        newRoom = getPotentialRoomFromPoints(startDragging, stopDragging, dataStructures);
 
     } else if (selected.selectedType === "door") {
         Function.prototype();
 
     } else if (selected.selectedType === "wall") {
-        let selectedLine = dataStructures.walls[selected.selectedId];
+        selectedLine = dataStructures.walls[selected.selectedId];
 
         let newRoom = getPotentialRoomFromLine(startDragging, stopDragging, dataStructures, selectedLine);
         console.log(newRoom);
-        if (newRoom) {
-            //newRoom.id = crypto.randomUUID();
-            let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
 
-            //console.log(newRoom);
-
-            metaroom.rooms.push(newRoom);
-            metaroom.perms = metaroom.perms.concat(newPerms);
-
-            //console.log(newPerms);
-
-            let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
-            let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
-            let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
-            let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
-            let pointsSortedX = points;
-            pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
-            let pointsSortedY = points;
-            pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
-
-            dataStructures = {
-                metaroomDisk: metaroom,
-                points: points,
-                walls: walls,
-                doors: doors,
-                pointsSortedX: pointsSortedX,
-                pointsSortedY: pointsSortedY
-            };
-
-            redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
-        }
 
     } else if (selected.selectedType === "room") {
         Function.prototype();
+    } else {
+        newRoom = getPotentialRoomFromPoints(startDragging, stopDragging, dataStructures);
+    }
+
+    if (newRoom) {
+        //newRoom.id = crypto.randomUUID();
+        let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
+
+        //console.log(newRoom);
+
+        metaroom.rooms.push(newRoom);
+        metaroom.perms = metaroom.perms.concat(newPerms);
+
+        //console.log(newPerms);
+
+        let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
+        let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
+        let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
+        let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
+        let pointsSortedX = points;
+        pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
+        let pointsSortedY = points;
+        pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
+
+        dataStructures = {
+            metaroomDisk: metaroom,
+            points: points,
+            walls: walls,
+            doors: doors,
+            pointsSortedX: pointsSortedX,
+            pointsSortedY: pointsSortedY
+        };
+
+        redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
     }
 }
 
@@ -924,6 +900,10 @@ async function redrawPotential(startPoint, endPoint, dataStructures, selected) {
 
         } else if (selected.selectedType === "room") {
             Function.prototype();
+        } else {
+            if (shiftKeyIsDown) {
+                redrawPotentialFromPoints(startPoint, endPoint, dataStructures, selected);
+            }
         }
     }
 }
@@ -941,11 +921,10 @@ async function redrawPotentialFromWall(startPoint, endPoint, dataStructures, sel
     }
 }
 
-async function redrawPotentialFromPoints(startPoint, endPoint, dataStructures, selected) {
+async function redrawPotentialFromPoints(startPoint, endPoint, dataStructures) {
 
     if (roomFromPoint(endPoint) === -1) {
-        let selectedPoint = dataStructures.points[selected.selectedId];
-        let linesPoints =  getPotentiaLinesPointsFromPoints(selectedPoint, endPoint, dataStructures);
+        let linesPoints =  getPotentiaLinesPointsFromPoints(startPoint, endPoint, dataStructures);
 
         if (linesPoints) {
             //console.log(linesPoints);
