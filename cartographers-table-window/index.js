@@ -442,11 +442,11 @@ function handleMouseMove(e){
   currX=parseInt(e.offsetX)/zoom;
   currY=parseInt(e.offsetY)/zoom;
 
-  console.log({
+  /*console.log({
     isMouseButtonDown: isMouseButtonDown,
     isDragging: isDragging,
     "selected.selectedType": selected.selectedType,
-  });
+  });*/
 
   if (isMouseButtonDown) {
       if (!isDragging) {
