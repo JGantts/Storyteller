@@ -49,26 +49,42 @@ function getSelectionMultiplier() {
     return shiftKeyIsDown ? 1.375 : 1;
 }
 
-function drawSelectionSquare(selectoionCtx, x, y) {
+function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, x, y) {
     //console.log(x);
     //console.log(y);
     let myWidth = selctionSquareWidth * getSelectionMultiplier();
-    selectionCtx.lineWidth = roomLineThickness * getSelectionMultiplier() / 3;
-    selectionCtx.strokeStyle = "white";
-    selectionCtx.fillStyle = "black";
-    selectionCtx.beginPath();
-    selectionCtx.rect(x-myWidth/2, y-myWidth/2, myWidth, myWidth);
-    selectionCtx.fill();
-    selectionCtx.stroke();
-    drawSelectionCircle(x, y, 0.0, 1.0);
+    selectionHighlightCtx.lineWidth = roomLineThickness * getSelectionMultiplier();
+    selectionHighlightCtx.strokeStyle = "white";
+    selectionHighlightCtx.fillStyle = "black";
+    selectionHighlightCtx.beginPath();
+    selectionHighlightCtx.roundedRect(x-myWidth/2, y-myWidth/2, myWidth, myWidth, myWidth/3);
+    selectionHighlightCtx.fill();
+    selectionHighlightCtx.stroke();
+    drawSelectionCircle(selectionRainbowCtx, x, y, 0.0, 1.0);
+}
+
+CanvasRenderingContext2D.prototype.roundedRect = function(x, y, width, height, radius) {
+  this.save();
+  this.translate(x, y);
+  this.moveTo(width / 2, 0);
+  this.arcTo(width, 0, width, height, Math.min(height / 2, radius));
+  this.arcTo(width, height, 0, height, Math.min(width / 2, radius));
+  this.arcTo(0, height, 0, 0, Math.min(height / 2, radius));
+  this.arcTo(0, 0, radius, 0, Math.min(width / 2, radius));
+
+  // Draw a line back to the start coordinates
+  this.lineTo(width / 2, 0);
+
+  // Restore the state of the canvas to as it was before the save()
+  this.restore();
 }
 
 const selctionCircleWidth = selectionCheckMargin * 2;
 const selectionCircleRotationsPerSecond = 3/4;
 
-function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
+function drawSelectionCircle(selectionRainbowCtx, x, y, thetaFull0, thetaFull1) {
     let time = new Date();
-    selectionCtx.lineWidth = 2.5 * getSelectionMultiplier();
+    selectionRainbowCtx.lineWidth = 2.5 * getSelectionMultiplier();
 
     let resolution =  6*5;
 
@@ -113,7 +129,7 @@ function drawSelectionCircle(x, y, thetaFull0, thetaFull1) {
             color = colorPercentage(twoColorGradientPercentage, purple, red);
         }
 
-        drawSelectionCirclePortion(x, y, thetaSection0Continuous, thetaSection1Continuous, `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`)
+        drawSelectionCirclePortion(selectionRainbowCtx, x, y, thetaSection0Continuous, thetaSection1Continuous, `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`)
     }
 }
 
@@ -129,11 +145,11 @@ function colorPercentage(percentage, colorA, colorB) {
     }
 }
 
-function drawSelectionCirclePortion(x, y, theta0, theta1, color) {
-    selectionCtx.strokeStyle = color;
-    selectionCtx.beginPath();
-    selectionCtx.arc(x, y, selctionCircleWidth * getSelectionMultiplier(), theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
-    selectionCtx.stroke();
+function drawSelectionCirclePortion(selectionRainbowCtx, x, y, theta0, theta1, color) {
+    selectionRainbowCtx.strokeStyle = color;
+    selectionRainbowCtx.beginPath();
+    selectionRainbowCtx.arc(x, y, selctionCircleWidth * getSelectionMultiplier(), theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
+    selectionRainbowCtx.stroke();
 }
 
 const selectionLineWidth = selectionCheckMargin;
@@ -235,12 +251,12 @@ function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, sta
 function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidth, lineColor) {
     //console.log(`${startPercent} ${stopPercent}`)
 
-    selectionCtx.lineWidth = lineWidth;
-    selectionCtx.strokeStyle = lineColor;
-    selectionCtx.beginPath();
-    selectionCtx.moveTo(lineStart.x + lineRun*startPercent, lineStart.y + lineRise*startPercent);
-    selectionCtx.lineTo(lineStart.x + lineRun*stopPercent, lineStart.y + lineRise*stopPercent);
-    selectionCtx.stroke();
+    selectionRainbowCtx.lineWidth = lineWidth;
+    selectionRainbowCtx.strokeStyle = lineColor;
+    selectionRainbowCtx.beginPath();
+    selectionRainbowCtx.moveTo(lineStart.x + lineRun*startPercent, lineStart.y + lineRise*startPercent);
+    selectionRainbowCtx.lineTo(lineStart.x + lineRun*stopPercent, lineStart.y + lineRise*stopPercent);
+    selectionRainbowCtx.stroke();
 }
 
 function drawSelectionRoom(selected) {
@@ -296,16 +312,16 @@ function drawSelectionRoom(selected) {
         pctx.stroke();
     }
 
-    let patternStyle = selectionCtx.createPattern(pattern, "repeat");
+    let patternStyle = selectionRainbowCtx.createPattern(pattern, "repeat");
 
-    selectionCtx.fillStyle = patternStyle;
-    selectionCtx.beginPath();
-    selectionCtx.moveTo(selected.leftX, selected.leftCeilingY);
-    selectionCtx.lineTo(selected.rightX, selected.rightCeilingY);
-    selectionCtx.lineTo(selected.rightX, selected.rightFloorY);
-    selectionCtx.lineTo(selected.leftX, selected.leftFloorY);
-    selectionCtx.closePath();
-    selectionCtx.fill();
+    selectionRainbowCtx.fillStyle = patternStyle;
+    selectionRainbowCtx.beginPath();
+    selectionRainbowCtx.moveTo(selected.leftX, selected.leftCeilingY);
+    selectionRainbowCtx.lineTo(selected.rightX, selected.rightCeilingY);
+    selectionRainbowCtx.lineTo(selected.rightX, selected.rightFloorY);
+    selectionRainbowCtx.lineTo(selected.leftX, selected.leftFloorY);
+    selectionRainbowCtx.closePath();
+    selectionRainbowCtx.fill();
 }
 
 async function wildSelection(){
@@ -336,18 +352,20 @@ async function wildSelection(){
 //wall
 //corner
 //point
-async function redrawSelection(selectionCtx, pastiesCtx, dataStructures, selected){
+async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selected){
     //console.log(selected);
     //console.log(dataStructures);
-    redrawPasties(pastiesCtx, dataStructures.points, dataStructures.metaroomDisk);
-    selectionCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+    //redrawPasties(pastiesCtx, dataStructures.points, dataStructures.metaroomDisk);
+    selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+    selectionHighlightCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+
     //wildSelection();
 //  return;
     //console.log(selectedType);
     //console.log((selectedId));
     if (selected.selectedType === "point" || selected.selectedType === "corner") {
         let selectedPoint = dataStructures.points[selected.selectedId];
-        drawSelectionSquare(selectionCtx, selectedPoint.x, selectedPoint.y);
+        drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint.x, selectedPoint.y);
     } else if (selected.selectedType === "door" || selected.selectedType === "wall") {
         let selectedSide = null;
         if (selected.selectedType === "door") {

@@ -29,19 +29,19 @@ let dataStructures = null;
 let currentFile = null;
 let currentFileNeedsSaving = false;
 let backgroundCanvasElement = document.getElementById('backgroundCanvas');
-let selectionCanvasElement = document.getElementById('selectionCanvas');
+let selectionRainbowCanvasElement = document.getElementById('selectionRainbowCanvas');
 let roomCanvasElement = document.getElementById('roomCanvas');
 let pastiesCanvasElement = document.getElementById('pastiesCanvas');
 let potentialCanvasElement = document.getElementById('potentialCanvas');
-let sandwichCanvasElement = document.getElementById('sandwichCanvas');
+let selectionHighlightCanvasElement = document.getElementById('selectionHighlightCanvas');
 let backgroundCtx = setupCanvas(backgroundCanvasElement, backgroundCanvasElement.getBoundingClientRect());
-let selectionCtx = setupCanvas(selectionCanvasElement, selectionCanvasElement.getBoundingClientRect());
+let selectionRainbowCtx = setupCanvas(selectionRainbowCanvasElement, selectionRainbowCanvasElement.getBoundingClientRect());
 let roomCtx = setupCanvas(roomCanvasElement, roomCanvasElement.getBoundingClientRect());
 let pastiesCtx = setupCanvas(pastiesCanvasElement, pastiesCanvasElement.getBoundingClientRect());
 let potentialCtx = setupCanvas(potentialCanvasElement, potentialCanvasElement.getBoundingClientRect());
-let sandwichCtx = setupCanvas(sandwichCanvasElement, sandwichCanvasElement.getBoundingClientRect());
+let selectionHighlightCtx = setupCanvas(selectionHighlightCanvasElement, selectionHighlightCanvasElement.getBoundingClientRect());
 
-let topCanvasElement = sandwichCanvasElement;
+let topCanvasElement = selectionHighlightCanvasElement;
 topCanvasElement.onmousedown=handleMouseDown;
 topCanvasElement.onmousemove=handleMouseMove;
 topCanvasElement.onmouseup=handleMouseUp;
@@ -530,19 +530,19 @@ function handleWheel(e) {
         loadMetaroom(
             {
                 background: backgroundCanvasElement,
-                selection: selectionCanvasElement,
+                selection: selectionRainbowCanvasElement,
                 room: roomCanvasElement,
                 pasties: pastiesCanvasElement,
                 potential: potentialCanvasElement,
-                sandwich: sandwichCanvasElement
+                sandwich: selectionHighlightCanvasElement
             },
             {
                 background: backgroundCtx,
-                selection: selectionCtx,
+                selection: selectionRainbowCtx,
                 room: roomCtx,
                 pasties: pastiesCtx,
                 potential: potentialCtx,
-                sandwich: sandwichCtx
+                sandwich: selectionHighlightCtx
             },
             metaroom
         );
@@ -569,16 +569,14 @@ function tryCreateRoom() {
     } else if (selected.selectedType === "wall") {
         selectedLine = dataStructures.walls[selected.selectedId];
 
-        let newRoom = getPotentialRoomFromLine(startDragging, stopDragging, dataStructures, selectedLine);
-        console.log(newRoom);
-
+        newRoom = getPotentialRoomFromLine(startDragging, stopDragging, dataStructures, selectedLine);
 
     } else if (selected.selectedType === "room") {
         Function.prototype();
     } else {
         newRoom = getPotentialRoomFromPoints(startDragging, stopDragging, dataStructures);
     }
-
+    console.log(newRoom);
     if (newRoom) {
         //newRoom.id = crypto.randomUUID();
         let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
@@ -975,27 +973,27 @@ async function redrawPotentialFromPoints(startPoint, endPoint, dataStructures) {
 
 async function redrawSelection(){
     //console.log(dataStructures);
-    sandwichCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    selectionRenderer.redrawSelection(selectionCtx, sandwichCtx, dataStructures, selected);
+    selectionHighlightCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selected);
     redrawPotential(startDragging, stopDragging, dataStructures, selected);
 }
 
 loadMetaroom(
     {
         background: backgroundCanvasElement,
-        selection: selectionCanvasElement,
+        selection: selectionRainbowCanvasElement,
         room: roomCanvasElement,
         pasties: pastiesCanvasElement,
         potential: potentialCanvasElement,
-        sandwich: sandwichCanvasElement
+        sandwich: selectionHighlightCanvasElement
     },
     {
         background: backgroundCtx,
-        selection: selectionCtx,
+        selection: selectionRainbowCtx,
         room: roomCtx,
         pasties: pastiesCtx,
         potential: potentialCtx,
-        sandwich: sandwichCtx
+        sandwich: selectionHighlightCtx
     },
     metaroom
 );
