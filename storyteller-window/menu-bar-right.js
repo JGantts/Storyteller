@@ -1,7 +1,4 @@
-const remote = require('electron').remote;
-
-const win = remote.getCurrentWindow(); /* Note this is different to the
-html global `window` variable */
+const { ipcRenderer } = require('electron');
 
 // When document has loaded, initialise
 document.onreadystatechange = (event) => {
@@ -20,10 +17,12 @@ window.onbeforeunload = (event) => {
 function handleWindowControls() {
     // Make minimise/maximise/restore/close buttons work when they are clicked
     document.getElementById('min-button').addEventListener("click", event => {
+        ipcRenderer.send('minimize', self);
         win.minimize();
     });
 
     document.getElementById('close-button').addEventListener("click", event => {
-        win.close();
+        ipcRenderer.send('close', self.window.location.pathname);
+        //win.close();
     });
 }

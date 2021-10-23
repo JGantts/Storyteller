@@ -1,5 +1,32 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');
-let settings;
+const assert = require('assert');
+
+//let settings;
+
+let storytellerWindow = null;
+
+ipcMain.on('minimize', (event, arg) => {
+  console.log(arg) // prints "ping"
+});
+
+ipcMain.on('close', (event, arg) => {
+  switch (getWindowName(arg)){
+    case 'storyteller-window':
+      storytellerWindow.close();
+      break;
+    default:
+      assert(false, "what?");
+      break;
+  }
+});
+
+function getWindowName(path) {
+    let lastIndex = path.lastIndexOf("/");
+    let secondTolastIndex = path.lastIndexOf("/", lastIndex-1);
+    assert(lastIndex != secondTolastIndex, "Couldn't find two '/'s");
+    let windowName = path.slice(secondTolastIndex+1, lastIndex);
+    return windowName;
+}
 
 ipcMain.on('createSorcerersTableWindow', (event, args) => {
   createSorcerersTableWindow();
@@ -35,12 +62,14 @@ function createStorytellerWindow () {
     frame: false,
     resizable: false,
     webPreferences: {
-        enableRemoteModule: true,
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   })
 
   win.setMenu(null)
+
+  storytellerWindow = win;
 
   loadWindow(win, 'storyteller-window/index.html')
 }
@@ -52,8 +81,8 @@ function createSorcerersTableWindow() {
     height: 600,
     backgroundColor: '#353D53',
     webPreferences: {
-        enableRemoteModule: true,
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   })
 
@@ -69,8 +98,8 @@ function createDesignersTableWindow() {
     height: 600,
     backgroundColor: '#233D43',
     webPreferences: {
-        enableRemoteModule: true,
       nodeIntegration: true,
+      contextIsolation: false,
       webviewTag: true,
     }
   })
@@ -87,8 +116,8 @@ function createCartographersTableWindow() {
     height: 600,
     backgroundColor: '#503642',
     webPreferences: {
-        enableRemoteModule: true,
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   })
 
