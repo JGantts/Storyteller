@@ -6,7 +6,14 @@ const assert = require('assert');
 let storytellerWindow = null;
 
 ipcMain.on('minimize', (event, arg) => {
-  console.log(arg) // prints "ping"
+  switch (getWindowName(arg)){
+    case 'storyteller-window':
+      storytellerWindow.minimize();
+      break;
+    default:
+      assert(false, "what?");
+      break;
+  }
 });
 
 ipcMain.on('close', (event, arg) => {

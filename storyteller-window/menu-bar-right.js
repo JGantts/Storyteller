@@ -17,8 +17,7 @@ window.onbeforeunload = (event) => {
 function handleWindowControls() {
     // Make minimise/maximise/restore/close buttons work when they are clicked
     document.getElementById('min-button').addEventListener("click", event => {
-        ipcRenderer.send('minimize', self);
-        win.minimize();
+        ipcRenderer.send('minimize', self.window.location.pathname);
     });
 
     document.getElementById('close-button').addEventListener("click", event => {
