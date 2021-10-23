@@ -305,7 +305,7 @@ function userTextKeyDown(event){
         break;
       case 'Backspace':
       case 'Delete':
-        editingKey(event);
+        editingKeyDown(event);
         break;
       case 'Tab':
         insertText('\t');
@@ -343,6 +343,15 @@ function userTextKeyUp(event){
   }
 }
 
+function editingKeyDown(event) {
+    switch (event.key) {
+        case 'Backspace':
+        case 'Delete':
+            tryDelete();
+            break;
+    }
+}
+
 let ctrlKeyIsDown = false;
 let shiftKeyIsDown = false;
 
@@ -360,6 +369,34 @@ function controlKeyDown(event){
   }else if (event.ctrlKey && event.key === 'y'){
     redo();
   }
+}
+
+function tryDelete() {
+  if (selected.selectedType === "wall") {
+      Function.prototype();
+  } else if (
+    selected.selectedType === "point"
+    || selected.selectedType === "corner"
+  ) {
+      Function.prototype();
+  } else if (selected.selectedType === "room") {
+      dataStructures.metaroomDisk.rooms.splice(selected.selectedId, 1);
+      dataStructures.metaroomDisk.perms =
+          dataStructures.metaroomDisk.perms
+              .filter((perm) =>
+              {
+                return (
+                  perm.rooms.a !== selected.selectedId
+                   && perm.rooms.b !== selected.selectedId
+                 );
+              });
+      console.log(selected.selectedType);
+      console.log(selected.selectedId);
+      console.log(dataStructures);
+      rebuildRedrawRooms();
+  }
+
+
 }
 
 function controlKeyUp(event){
@@ -551,28 +588,31 @@ function tryCreateRoom() {
         metaroom.rooms.push(newRoom);
         metaroom.perms = metaroom.perms.concat(newPerms);
 
-        //console.log(newPerms);
-
-        let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
-        let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
-        let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
-        let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
-        let pointsSortedX = points;
-        pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
-        let pointsSortedY = points;
-        pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
-
-        dataStructures = {
-            metaroomDisk: metaroom,
-            points: points,
-            walls: walls,
-            doors: doors,
-            pointsSortedX: pointsSortedX,
-            pointsSortedY: pointsSortedY
-        };
-
-        redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
+        rebuildRedrawRooms();
     }
+}
+
+function rebuildRedrawRooms() {
+     console.log(dataStructures);
+    let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
+    let doors = dataStructureFactory.getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms).filter(function(val) {return val});
+    let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
+    let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk.rooms);
+    let pointsSortedX = points;
+    pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
+    let pointsSortedY = points;
+    pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
+
+    dataStructures = {
+        metaroomDisk: metaroom,
+        points: points,
+        walls: walls,
+        doors: doors,
+        pointsSortedX: pointsSortedX,
+        pointsSortedY: pointsSortedY
+    };
+
+    redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
 }
 
 function getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine) {
