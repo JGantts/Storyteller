@@ -1,7 +1,7 @@
 $.getScript('../engine-api/CAOS.js');
 const assert = require('assert');
 const { Caos } = require('./parser/parser.js');
-const { clipboard, remote } = require('electron')
+const { clipboard } = require('electron')
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 const { KeyCapture } = require('./key-capture.js');
 const { TreeToText } = require('./tree-to-text.js');
@@ -20,10 +20,8 @@ const{
   GetCaretPositionOneLineDown,
   GetCaretPositionOneLineUp,
 } = require('./text-editing-helper.js');
-const dialog = remote.dialog;
 const fs = require('fs');
 //const path = require("path");
-const WIN = remote.getCurrentWindow();
 
 let currentFile = null;
 let currentFileNeedsSaving = false;

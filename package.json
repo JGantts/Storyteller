@@ -19,10 +19,5 @@
     "spectron": "^10.0.1"
   },
   "dependencies": {
-    "electron-edge-js": "^12.13.0",
-    "electron-settings": "^3.2.0",
-    "electron-tabs": "^0.15.0",
-    "jquery": "^3.5.1",
-    "remote": "^0.2.6"
   }
 }

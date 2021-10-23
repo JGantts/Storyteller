@@ -52,7 +52,6 @@ function launchApp(){
 }
 
 function loadSettings(then){
-  settings = require('electron-settings');
   let settingLoaderWin = new BrowserWindow({show: false})
   then();
   settingLoaderWin.once('ready-to-show', () => {
@@ -240,11 +239,11 @@ function createCartographersTableWindow() {
 }
 
 function loadWindow(browserWindow, loadFile){
-  if(!settings.get('development.javascript')){
-    browserWindow.loadFile(loadFile);
-  }else{
+  //if(!settings.get('development.javascript')){
+    //browserWindow.loadFile(loadFile);
+  //}else{
     loadWindowWithDevTools(browserWindow, loadFile);
-  }
+  //}
 }
 
 function loadWindowWithDevTools(browserWindow, loadFile){

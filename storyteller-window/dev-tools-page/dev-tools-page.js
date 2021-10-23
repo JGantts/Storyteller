@@ -1,5 +1,3 @@
-var { ipcRenderer } = require('electron');
-
 $.getScript('../engine-api/CAOS.js');
 
 function executeUserCode(){
@@ -10,7 +8,7 @@ function executeUserCode(){
   });
 }
 
-function launchSorcerersTable(){
+function launchSorcerersTable() {
   ipcRenderer.send('createSorcerersTableWindow', null)
 }
 

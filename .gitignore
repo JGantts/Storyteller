@@ -108,3 +108,7 @@ dist
 /python/
 
 Thumbs.db
+
+
+/js/
+package-lock.json

@@ -33,6 +33,4 @@ function loadDevToolsPage(clicked){
   document.getElementById(clicked).className += ' active';
 }
 
-$(function(){
-  loadLocalPage('nav-btn-local');
-});
+loadLocalPage('nav-btn-local');

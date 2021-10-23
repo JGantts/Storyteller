@@ -1,14 +1,12 @@
 //$.getScript('../engine-api/CAOS.js');
 const assert = require('assert');
-const { clipboard, remote } = require('electron');
-const dialog = remote.dialog;
+const { clipboard } = require('electron');
 const fs = require('fs');
 const crypto = require('crypto');
 console.log("hi");
 console.log(crypto);
 console.log(process.versions);
 //const path = require("path");
-const WIN = remote.getCurrentWindow();
 
 const { metaroom } = require('./dollhouse.js');
 const { geometry } = require('./geometryHelper.js');
