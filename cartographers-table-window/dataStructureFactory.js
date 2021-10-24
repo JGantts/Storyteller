@@ -25,7 +25,7 @@ function getSortedRoomFromDimensions(leftX, rightX, leftYA, rightYA, leftYB, rig
 function getPermsFromRoomPotential(roomPotential, dataStructures) {
     let perms = [];
     let sides = getWallsFromRoom(roomPotential);
-    //console.log(sides);
+    console.log(sides);
     for (let i = 0; i < sides.length; i++) {
         //console.log("\n\n\n\n");
         //console.log(`side: ${i}`);
@@ -36,14 +36,13 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
         let sideMaxY = Math.max(side.start.y, side.end.y);
         let sideHandled = false;
 
+        for (const key in dataStructures.metaroomDisk.rooms) {
 
-        for (let j=0; j < dataStructures.metaroomDisk.rooms.length; j++) {
-
-            let wallsWithId = getWallsFromRoom(dataStructures.metaroomDisk.rooms[j])
+            let wallsWithId = getWallsFromRoom(dataStructures.metaroomDisk.rooms[key])
                 .map(
                   (possibleWall, ii) => {
                       return {
-                        id: j,
+                        id: key,
                         wall: possibleWall
                       };
                   }
@@ -113,7 +112,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                             rooms:
                                             {
                                                 a: wallWithId.id,
-                                                b: dataStructures.metaroomDisk.rooms.length,
+                                                b: roomPotential.id,
                                             },
                                             "permeability": 1.0
                                         }
@@ -129,7 +128,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                             rooms:
                                             {
                                                 a: wallWithId.id,
-                                                b: dataStructures.metaroomDisk.rooms.length,
+                                                b: roomPotential.id,
                                             },
                                             "permeability": 1.0
                                         }
@@ -146,7 +145,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                             rooms:
                                             {
                                                 a: wallWithId.id,
-                                                b: dataStructures.metaroomDisk.rooms.length,
+                                                b: roomPotential.id,
                                             },
                                             "permeability": 1.0
                                         }
@@ -163,7 +162,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                             rooms:
                                             {
                                                 a: wallWithId.id,
-                                                b: dataStructures.metaroomDisk.rooms.length,
+                                                b: roomPotential.id,
                                             },
                                             "permeability": 1.0
                                         }
@@ -180,7 +179,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                             rooms:
                                             {
                                                 a: wallWithId.id,
-                                                b: dataStructures.metaroomDisk.rooms.length,
+                                                b: roomPotential.id,
                                             },
                                             "permeability": 1.0
                                         }
@@ -197,7 +196,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                             rooms:
                                             {
                                                 a: wallWithId.id,
-                                                b: dataStructures.metaroomDisk.rooms.length,
+                                                b: roomPotential.id,
                                             },
                                             "permeability": 1.0
                                         }
@@ -213,7 +212,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                             rooms:
                                             {
                                                 a: wallWithId.id,
-                                                b: dataStructures.metaroomDisk.rooms.length,
+                                                b: roomPotential.id,
                                             },
                                             "permeability": 1.0
                                         }
@@ -230,7 +229,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                             rooms:
                                             {
                                                 a: wallWithId.id,
-                                                b: dataStructures.metaroomDisk.rooms.length,
+                                                b: roomPotential.id,
                                             },
                                             "permeability": 1.0
                                         }
@@ -306,7 +305,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                                 rooms:
                                                 {
                                                     a: wallWithId.id,
-                                                    b: dataStructures.metaroomDisk.rooms.length,
+                                                    b: roomPotential.id,
                                                 },
                                                 "permeability": 1.0
                                             }
@@ -323,7 +322,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                                 rooms:
                                                 {
                                                     a: wallWithId.id,
-                                                    b: dataStructures.metaroomDisk.rooms.length,
+                                                    b: roomPotential.id,
                                                 },
                                                 "permeability": 1.0
                                             }
@@ -340,7 +339,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                                 rooms:
                                                 {
                                                     a: wallWithId.id,
-                                                    b: dataStructures.metaroomDisk.rooms.length,
+                                                    b: roomPotential.id,
                                                 },
                                                 "permeability": 1.0
                                             }
@@ -357,7 +356,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                                 rooms:
                                                 {
                                                     a: wallWithId.id,
-                                                    b: dataStructures.metaroomDisk.rooms.length,
+                                                    b: roomPotential.id,
                                                 },
                                                 "permeability": 1.0
                                             }
@@ -374,7 +373,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                                 rooms:
                                                 {
                                                     a: wallWithId.id,
-                                                    b: dataStructures.metaroomDisk.rooms.length,
+                                                    b: roomPotential.id,
                                                 },
                                                 "permeability": 1.0
                                             }
@@ -391,7 +390,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                                 rooms:
                                                 {
                                                     a: wallWithId.id,
-                                                    b: dataStructures.metaroomDisk.rooms.length,
+                                                    b: roomPotential.id,
                                                 },
                                                 "permeability": 1.0
                                             }
@@ -408,7 +407,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                                 rooms:
                                                 {
                                                     a: wallWithId.id,
-                                                    b: dataStructures.metaroomDisk.rooms.length,
+                                                    b: roomPotential.id,
                                                 },
                                                 "permeability": 1.0
                                             }
@@ -427,7 +426,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                                 rooms:
                                                 {
                                                     a: wallWithId.id,
-                                                    b: dataStructures.metaroomDisk.rooms.length,
+                                                    b: roomPotential.id,
                                                 },
                                                 "permeability": 1.0
                                             }
@@ -457,6 +456,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
             //perms.push(side);
         }
     }
+    console.log(perms);
     return perms;
 }
 

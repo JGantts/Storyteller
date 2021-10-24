@@ -478,28 +478,29 @@ function handleMouseMove(e){
   });*/
 
   if (isMouseButtonDown) {
+      let selection = selectionChecker.getSelection();
       if (!isDragging) {
-          if (selected.selectedType === "wall") {
+          if (selection.selectedType === "wall") {
               isDragging = true;
               whatDragging = "wall"
-              idDragging = selected.selectedId;
+              idDragging = selection.selectedId;
               startDragging = {x: currX, y: currY};
               stopDragging = {x: currX, y: currY};
           } else if (
-            selected.selectedType === "point"
-            || selected.selectedType === "corner"
+            selection.selectedType === "point"
+            || selection.selectedType === "corner"
           ) {
               isDragging = true;
               whatDragging = "point";
-              idDragging = selected.selectedId;
-              pointStart = dataStructures.points[selected.selectedId];
+              idDragging = selection.selectedId;
+              pointStart = dataStructures.points[selection.selectedId];
               startDragging = pointStart;
               stopDragging = {x: currX, y: currY};
           } else {
               isDragging = true;
               whatDragging = "point";
               idDragging = null;
-              pointStart = dataStructures.points[selected.selectedId];
+              pointStart = dataStructures.points[selection.selectedId];
               startDragging = {x: currX, y: currY};
               stopDragging = {x: currX, y: currY};
           }
@@ -551,31 +552,34 @@ function tryCreateRoom() {
         return;
     }
 
+    let selection = selectionChecker.getSelection();
+
     let newRoom = null;
-    if (selected.selectedType === "point" || selected.selectedType === "corner") {
+    if (selection.selectedType === "point" || selection.selectedType === "corner") {
         newRoom = getPotentialRoomFromPoints(startDragging, stopDragging, dataStructures);
 
-    } else if (selected.selectedType === "door") {
+    } else if (selection.selectedType === "door") {
         Function.prototype();
 
-    } else if (selected.selectedType === "wall") {
-        selectedLine = dataStructures.walls[selected.selectedId];
+    } else if (selection.selectedType === "wall") {
+        selectedLine = dataStructures.walls[selection.selectedId];
 
         newRoom = getPotentialRoomFromLine(startDragging, stopDragging, dataStructures, selectedLine);
 
-    } else if (selected.selectedType === "room") {
+    } else if (selection.selectedType === "room") {
         Function.prototype();
     } else {
         newRoom = getPotentialRoomFromPoints(startDragging, stopDragging, dataStructures);
     }
-    console.log(newRoom);
     if (newRoom) {
+        let newId = crypto.randomUUID();
+        newRoom.id = newId;
         //newRoom.id = crypto.randomUUID();
         let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
 
         //console.log(newRoom);
 
-        metaroom.rooms.push(newRoom);
+        metaroom.rooms[newId] = newRoom;
         metaroom.perms = metaroom.perms.concat(newPerms);
 
         rebuildRedrawRooms();
@@ -583,7 +587,6 @@ function tryCreateRoom() {
 }
 
 function rebuildRedrawRooms() {
-     console.log(dataStructures);
     let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
     let doors = dataStructureFactory.getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms).filter(function(val) {return val});
     let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
@@ -843,14 +846,14 @@ function loadMetaroom(canvasElements, canvasContexts, metaroom) {
          metaroomDisk: metaroom
      };
 
-    rebuildRedrawRooms();
+    redrawMetaroom();
 }
 
-async function redrawMetaroom(roomCtx, pastiesCtx, doors, walls, points, metaroom){
-    redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
-    backgroundCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+async function redrawMetaroom(){
+    rebuildRedrawRooms();
+    backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
     let img = new Image;
-    img.src = metaroom.background;
+    img.src = dataStructures.metaroomDisk.background;
     backgroundCtx.moveTo(0, 0);
     await img.decode();
     backgroundCtx.drawImage(img, 0, 0);

@@ -361,7 +361,7 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
 
     //wildSelection();
 //  return;
-    console.log(selected);
+    //console.log(selected);
     if (selected.selectedType === "point" || selected.selectedType === "corner") {
         let selectedPoint = dataStructures.points[selected.selectedId];
         drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint.x, selectedPoint.y);

@@ -10,7 +10,6 @@ let selected = {
 }
 
 function checkSelection(x, y, dataStructures ){
-  console.log(dataStructures);
     if (selected.selectedType === "room") {
         selected.selectedRoomId = selected.selectedId;
     } else {
@@ -31,9 +30,6 @@ function checkSelection(x, y, dataStructures ){
 }
 
 function checkPointSelection(x, y, dataStructures){
-    console.log("\n\n\n\n\n\n\n\n\n\n\n");
-    console.log("--------");
-
     for (const key in dataStructures.points) {
         if(isClickOnPoint(x, y, dataStructures.points[key])){
             //console.log(metaroomPoints[i]);
@@ -156,7 +152,6 @@ function isClickInRoom(mx, my, room){
 }
 
 function resetSelection() {
-    console.log("hi");
     selected = {
       selectedType : "",
       selectedRoomId: "",
