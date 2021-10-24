@@ -1,0 +1,23 @@
+#titlebar {
+  display: block;
+  position: fixed;
+  height: 32px;
+  width: calc(100% - 2px);
+  background-color: rgb(71,59,99);
+  z-index: 1;
+}
+
+#titlebar #drag-region {
+  width: 100%;
+  height: 100%;
+  -webkit-app-region: drag;
+}
+
+#titlebar {
+  color: #FFF;
+}
+
+#titlebar #drag-region {
+  display: grid;
+  grid-template-columns: auto 138px;
+}

@@ -6,8 +6,8 @@
 <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 <script>window.$ = window.jQuery = require('../js/jquery-3.6.0.min.js');</script>
 <link rel="stylesheet" type="text/css" href="index.css">
-<link rel="stylesheet" type="text/css" href="menu-bar-left.css">
-<link rel="stylesheet" type="text/css" href="menu-bar-right.css">
+<link rel="stylesheet" type="text/css" href="title-bar.css">
+<link rel="stylesheet" type="text/css" href="menu-bar.css">
 <link rel="stylesheet" type="text/css" href="scrollbar.css">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -15,67 +15,81 @@
 <body>
 <header id='titlebar'>
   <div id='drag-region'>
-    <div id="window-controls">
-          <div class="button" id="min-button">
-            <img class="icon" srcset="icons/min-w-10.png 1x, icons/min-w-12.png 1.25x, icons/min-w-15.png 1.5x, icons/min-w-15.png 1.75x, icons/min-w-20.png 2x, icons/min-w-20.png 2.25x, icons/min-w-24.png 2.5x, icons/min-w-30.png 3x, icons/min-w-30.png 3.5x" draggable="false" />
-          </div>
 
-          <div class="button" id="max-button">
-            <img class="icon" srcset="icons/max-w-10.png 1x, icons/max-w-12.png 1.25x, icons/max-w-15.png 1.5x, icons/max-w-15.png 1.75x, icons/max-w-20.png 2x, icons/max-w-20.png 2.25x, icons/max-w-24.png 2.5x, icons/max-w-30.png 3x, icons/max-w-30.png 3.5x" draggable="false" />
-          </div>
+    <div id='window-controls'></div>
 
-          <div class="button" id="close-button">
-            <img class="icon" srcset="icons/close-w-10.png 1x, icons/close-w-12.png 1.25x, icons/close-w-15.png 1.5x, icons/close-w-15.png 1.75x, icons/close-w-20.png 2x, icons/close-w-20.png 2.25x, icons/close-w-24.png 2.5x, icons/close-w-30.png 3x, icons/close-w-30.png 3.5x" draggable="false" />
-          </div>
-        </div>
-  </div>
-
-  <div id='menu-bar-left'>
-    <button id='nav-btn-settings' href='#' class='nav-btn icon' onclick='loadSettingsPage(this.id);' draggable='false'>
-      <span class='icon'>
-        <img class='icon' src="icons/settings.svg" height='10px' draggable="false"/>
-      </span>
-    </button>
-    <button id='nav-btn-local' href='#' class='nav-btn active' onclick='loadLocalPage(this.id);' draggable='false'>
-      <span class='icon'>
-        <img class='icon' src="icons/folder.svg" height='10px' draggable="false"/>
-      </span>
-      <span class='label'>
-        Home
-      </span>
-    </button>
-    <button id='nav-btn-server' href='#' class='nav-btn' onclick='loadServerPage(this.id);' draggable='false'>
-      <span class='icon'>
-        <img class='icon' src="icons/cloud.svg" height='10px' draggable="false"/>
-      </span>
-      <span class='label'>
-        History
-      </span>
-    </button>
-    <button id='nav-btn-eemfoo' href='#' class='nav-btn' onclick='loadEemFooPage(this.id);' draggable='false'>
-      <span class='icon'>
-        <img class='icon' src="icons/eem-foo.svg" height='10px' draggable="false"/>
-      </span>
-      <span class='label'>
-        Eem Foo
-      </span>
-    </button>
-    <button id='nav-btn-dev' href='#' class='nav-btn' onclick='loadDevToolsPage(this.id);' draggable='false'>
-      <span class='icon'>
-        <img class='icon' src="icons/wrench.svg" height='10px' draggable="false"/>
-      </span>
-      <span class='label'>
-        Dev Tools
-      </span>
-    </button>
+    <div id='menu-bar'>
+      <button id='nav-btn-settings' href='#' class='nav-btn icon' onclick='loadSettingsPage(this.id);' draggable='false'>
+        <span class='icon'>
+          <img class='icon' src="icons/settings.svg" height='10px' draggable="false"/>
+        </span>
+      </button>
+      <button id='nav-btn-local' href='#' class='nav-btn active' onclick='loadLocalPage(this.id);' draggable='false'>
+        <span class='icon'>
+          <img class='icon' src="icons/folder.svg" height='10px' draggable="false"/>
+        </span>
+        <span class='label'>
+          Home
+        </span>
+      </button>
+      <button id='nav-btn-server' href='#' class='nav-btn' onclick='loadServerPage(this.id);' draggable='false'>
+        <span class='icon'>
+          <img class='icon' src="icons/cloud.svg" height='10px' draggable="false"/>
+        </span>
+        <span class='label'>
+          History
+        </span>
+      </button>
+      <button id='nav-btn-eemfoo' href='#' class='nav-btn' onclick='loadEemFooPage(this.id);' draggable='false'>
+        <span class='icon'>
+          <img class='icon' src="icons/eem-foo.svg" height='10px' draggable="false"/>
+        </span>
+        <span class='label'>
+          Eem Foo
+        </span>
+      </button>
+      <button id='nav-btn-dev' href='#' class='nav-btn' onclick='loadDevToolsPage(this.id);' draggable='false'>
+        <span class='icon'>
+          <img class='icon' src="icons/wrench.svg" height='10px' draggable="false"/>
+        </span>
+        <span class='label'>
+          Dev Tools
+        </span>
+      </button>
+    </div>
   </div>
 </header>
 
 <div id='main'>
 </div>
 
-<script src="menu-bar-left.js" type="text/javascript"></script>
-<script src="menu-bar-right.js" type="text/javascript"></script>
+<template id='win-window-controls'>
+  <div id="window-controls">
+    <div class="button" id="min-button">
+      <img class="icon" srcset="icons/min-w-10.png 1x, icons/min-w-12.png 1.25x, icons/min-w-15.png 1.5x, icons/min-w-15.png 1.75x, icons/min-w-20.png 2x, icons/min-w-20.png 2.25x, icons/min-w-24.png 2.5x, icons/min-w-30.png 3x, icons/min-w-30.png 3.5x" draggable="false" />
+    </div>
+
+    <div class="button" id="max-button">
+      <img class="icon" srcset="icons/max-w-10.png 1x, icons/max-w-12.png 1.25x, icons/max-w-15.png 1.5x, icons/max-w-15.png 1.75x, icons/max-w-20.png 2x, icons/max-w-20.png 2.25x, icons/max-w-24.png 2.5x, icons/max-w-30.png 3x, icons/max-w-30.png 3.5x" draggable="false" />
+    </div>
+
+    <div class="button" id="close-button">
+      <img class="icon" srcset="icons/close-w-10.png 1x, icons/close-w-12.png 1.25x, icons/close-w-15.png 1.5x, icons/close-w-15.png 1.75x, icons/close-w-20.png 2x, icons/close-w-20.png 2.25x, icons/close-w-24.png 2.5x, icons/close-w-30.png 3x, icons/close-w-30.png 3.5x" draggable="false" />
+    </div>
+  </div>
+</template>
+<template id='mac-window-controls'>
+  <div class="focus">
+    <div class="traffic-lights">
+      <button class="traffic-light traffic-light-close" id="close-button"></button>
+      <button class="traffic-light traffic-light-minimize" id="min-button"></button>
+      <button class="traffic-light traffic-light-maximize" id="max-button"></button>
+    </div>
+  </div>
+</template>
+
+<script src="menu-bar.js" type="text/javascript"></script>
+<script src="window-controls.js" type="text/javascript"></script>
 
 </body>
 </html>
