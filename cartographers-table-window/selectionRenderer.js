@@ -259,7 +259,7 @@ function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPer
     selectionRainbowCtx.stroke();
 }
 
-function drawSelectionRoom(selected) {
+function drawSelectionRoom(selectedRoom) {
     let time = new Date();
     let pattern = document.createElement('canvas');
     pattern.width = 40;
@@ -316,10 +316,10 @@ function drawSelectionRoom(selected) {
 
     selectionRainbowCtx.fillStyle = patternStyle;
     selectionRainbowCtx.beginPath();
-    selectionRainbowCtx.moveTo(selected.leftX, selected.leftCeilingY);
-    selectionRainbowCtx.lineTo(selected.rightX, selected.rightCeilingY);
-    selectionRainbowCtx.lineTo(selected.rightX, selected.rightFloorY);
-    selectionRainbowCtx.lineTo(selected.leftX, selected.leftFloorY);
+    selectionRainbowCtx.moveTo(selectedRoom.leftX, selectedRoom.leftCeilingY);
+    selectionRainbowCtx.lineTo(selectedRoom.rightX, selectedRoom.rightCeilingY);
+    selectionRainbowCtx.lineTo(selectedRoom.rightX, selectedRoom.rightFloorY);
+    selectionRainbowCtx.lineTo(selectedRoom.leftX, selectedRoom.leftFloorY);
     selectionRainbowCtx.closePath();
     selectionRainbowCtx.fill();
 }
@@ -361,8 +361,7 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
 
     //wildSelection();
 //  return;
-    //console.log(selectedType);
-    //console.log((selectedId));
+    console.log(selected);
     if (selected.selectedType === "point" || selected.selectedType === "corner") {
         let selectedPoint = dataStructures.points[selected.selectedId];
         drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint.x, selectedPoint.y);

@@ -4,19 +4,20 @@
 //corner
 //point
 let selected = {
-  selectedType :"",
-  selectedRoomId: -1,
-  selectedId: -1
+  selectedType : "",
+  selectedRoomId: "",
+  selectedId: ""
 }
 
 function checkSelection(x, y, dataStructures ){
+  console.log(dataStructures);
     if (selected.selectedType === "room") {
         selected.selectedRoomId = selected.selectedId;
     } else {
-        selected.selectedRoomId = -1;
+        selected.selectedRoomId = "";
     }
     selected.selectedType = ""
-    selected.selectedId = -1;
+    selected.selectedId = "";
     if (selected.selectedType === "") {
         checkPointSelection(x, y, dataStructures);
     }
@@ -30,77 +31,48 @@ function checkSelection(x, y, dataStructures ){
 }
 
 function checkPointSelection(x, y, dataStructures){
-    //console.log("\n\n\n\n\n\n\n\n\n\n\n");
-    //console.log("--------");
-    for(let i=0; i<dataStructures.points.length; i++){
-        //console.log("\n\n");
-        //console.log(i);
-        if(isClickOnPoint(x, y, dataStructures.points[i])){
+    console.log("\n\n\n\n\n\n\n\n\n\n\n");
+    console.log("--------");
+
+    for (const key in dataStructures.points) {
+        if(isClickOnPoint(x, y, dataStructures.points[key])){
             //console.log(metaroomPoints[i]);
-            if (selected.selectedRoomId === -1){
+            if (selected.selectedRoomId === ""){
                 selected.selectedType = "point";
             } else {
                 selected.selectedType = "corner";
-                /*let seletedRoom = metaroom.rooms[selectedRoomId];
-                if (x === seletedRoom.leftX) {
-                    if (y === seletedRoom.leftCeilingY) {
-                        selectedId = 0;
-                    } else {
-                        assert(y === seletedRoom.leftFLoorY);
-                        selectedId = 3;
-                    }
-                } else {
-                    assert(x === seletedRoom.rightX);
-                    if (y === seletedRoom.rightCeilingY) {
-                        selectedId = 1;
-                    } else {
-                        assert(y === seletedRoom.rightFloorY);
-                        selectedId = 2;
-                    }
-                }*/
             }
-            selected.selectedId = i;
+            selected.selectedId = dataStructures.points[key].id;
             break;
         }
     }
 }
 
 function checkLineSelection(x, y){
-    //console.log("\n\n\n\n\n\n\n\n\n\n\n");
-    //console.log("--------");
-    for(let i=0; i<dataStructures.walls.length; i++){
-        //console.log("\n\n");
-        //console.log(i);
-        if(isClickOnLine(x, y, dataStructures.walls[i])){
+    for (const key in dataStructures.walls) {
+        if(isClickOnLine(x, y, dataStructures.walls[key])){
             selected.selectedType = "wall";
-            selected.selectedId = i;
+            selected.selectedId = key;
             break;
         }
     }
-    //console.log("--------");
-    for(let i=0; i<dataStructures.doors.length; i++){
-        //console.log("\n\n");
-        //console.log(i);
-        if(isClickOnLine(x, y, dataStructures.doors[i])){
+    for (const key in dataStructures.doors) {
+        if(isClickOnLine(x, y, dataStructures.doors[key])){
             selected.selectedType = "door";
-            selected.selectedId = i;
+            selected.selectedId = key;
             break;
         }
     }
 }
 
 function checkRoomSelection(x, y){
-    //console.log("\n\n\n\n\n\n\n\n\n\n\n");
-    //console.log("--------");
-    for(let i=0; i<dataStructures.metaroomDisk.rooms.length; i++){
-        //console.log("\n\n");
-        //console.log(i);
-        if(isClickInRoom(x, y, dataStructures.metaroomDisk.rooms[i])){
-            selected.selectedType = "room";
-            selected.selectedId = i;
-            break;
-        }
-    }
+  for (const key in dataStructures.metaroomDisk.rooms) {
+      if(isClickInRoom(x, y, dataStructures.metaroomDisk.rooms[key])){
+          selected.selectedType = "room";
+          selected.selectedId = key;
+          break;
+      }
+  }
 }
 
 /*
@@ -183,9 +155,23 @@ function isClickInRoom(mx, my, room){
     return true;
 }
 
+function resetSelection() {
+    console.log("hi");
+    selected = {
+      selectedType : "",
+      selectedRoomId: "",
+      selectedId: ""
+    }
+}
+
+function getSelection() {
+    return selected;
+}
+
 module.exports = {
-    selected: selected,
     selectionChecker: {
-        checkSelection: checkSelection
+        getSelection: getSelection,
+        checkSelection: checkSelection,
+        resetSelection: resetSelection
     }
 }

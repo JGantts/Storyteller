@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 /*
 leftX: 100,
 rightX: 200,
@@ -1273,59 +1275,37 @@ leftFloorY: 300,
 rightFloorY: 300,
 */
 
+function buildPoint(x, y) {
+  return {
+      id: "" + x + "-" + y,
+      x: x,
+      y: y
+  };
+}
+
 function getPointsFromRooms(rooms) {
-    let points = [];
-    rooms.forEach((room, i) => {
-        points.push(
-            {
-                x: rooms[i].leftX,
-                y: rooms[i].leftCeilingY
-            }
-        );
-        points.push(
-            {
-                x: rooms[i].rightX,
-                y: rooms[i].rightCeilingY
-            }
-        );
-        points.push(
-            {
-                x: rooms[i].rightX,
-                y: rooms[i].rightFloorY
-            }
-        );
-        points.push(
-            {
-                x: rooms[i].leftX,
-                y: rooms[i].leftFloorY
-            }
-        );
-    });
+    let points = Object();
+    for (const key in rooms) {
+        let point = buildPoint(rooms[key].leftX, rooms[key].leftCeilingY)
+        points[point.id] = point;
 
-    let filteredPoints = points.filter((point1, i1, arr) => {
-          let weAreTheFirst = true;
-          points.forEach((point2, i2) => {
-              if (
-                point1.x === point2.x
-                && point1.y === point2.y
-                && i1 > i2
-              ) {
-                  weAreTheFirst = false;
-              }
-          });
-          return weAreTheFirst;
-     });
+        point = buildPoint(rooms[key].rightX, rooms[key].rightCeilingY)
+        points[point.id] = point;
 
-    return Array.from(filteredPoints);
+        point = buildPoint(rooms[key].rightX, rooms[key].rightFloorY)
+        points[point.id] = point;
+
+        point = buildPoint(rooms[key].leftX, rooms[key].leftFloorY)
+        points[point.id] = point;
+    }
+    return points;
 }
 
 function getWallsFromRooms(rooms) {
   let doors = [];
-  rooms.forEach((room, i) => {
-
-    doors = doors.concat(getWallsFromRoom(room));
-
-  });
+  for (const key in rooms) {
+      doors = doors.concat(getWallsFromRoom(rooms[key]));
+  }
   return doors;
 }
 

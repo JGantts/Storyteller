@@ -3,15 +3,12 @@ const assert = require('assert');
 const { clipboard } = require('electron');
 const fs = require('fs');
 const crypto = require('crypto');
-console.log("hi");
-console.log(crypto);
-console.log(process.versions);
 //const path = require("path");
 
 const { metaroom } = require('./dollhouse.js');
 const { geometry } = require('./geometryHelper.js');
 const { selectionRenderer } = require('./selectionRenderer.js');
-const { selected, selectionChecker } = require('./selectionChecker.js');
+const { selectionChecker } = require('./selectionChecker.js');
 const { dataStructureFactory } = require('./dataStructureFactory.js');
 
 let zoom = 1;
@@ -370,31 +367,28 @@ function controlKeyDown(event){
 }
 
 function tryDelete() {
-  if (selected.selectedType === "wall") {
-      Function.prototype();
-  } else if (
-    selected.selectedType === "point"
-    || selected.selectedType === "corner"
-  ) {
-      Function.prototype();
-  } else if (selected.selectedType === "room") {
-      dataStructures.metaroomDisk.rooms.splice(selected.selectedId, 1);
-      dataStructures.metaroomDisk.perms =
-          dataStructures.metaroomDisk.perms
-              .filter((perm) =>
-              {
-                return (
-                  perm.rooms.a !== selected.selectedId
-                   && perm.rooms.b !== selected.selectedId
-                 );
-              });
-      console.log(selected.selectedType);
-      console.log(selected.selectedId);
-      console.log(dataStructures);
-      rebuildRedrawRooms();
-  }
-
-
+    let selection = selectionChecker.getSelection();
+    if (selection.selectedType === "wall") {
+        Function.prototype();
+    } else if (
+      selection.selectedType === "point"
+      || selection.selectedType === "corner"
+    ) {
+        Function.prototype();
+    } else if (selection.selectedType === "room") {
+        delete dataStructures.metaroomDisk.rooms[selection.selectedId];
+        dataStructures.metaroomDisk.perms =
+            dataStructures.metaroomDisk.perms
+                .filter((perm) =>
+                {
+                  return (
+                    perm.rooms.a !== selection.selectedId
+                     && perm.rooms.b !== selection.selectedId
+                   );
+                });
+        rebuildRedrawRooms();
+    }
+    selectionChecker.resetSelection();
 }
 
 function controlKeyUp(event){
@@ -438,8 +432,8 @@ function handleMouseDown(e){
     startX=parseInt(e.offsetX)/zoom;
     startY=parseInt(e.offsetY)/zoom;
 
-    let wasSelectedType = selected.selectedType;
-    let wasSelectedId = selected.selectedId;
+    let wasSelectedType = selectionChecker.getSelection().selectedType;
+    let wasSelectedId = selectionChecker.getSelection().selectedId;
 
     selectionChecker.checkSelection(startX, startY, dataStructures);
 }
@@ -594,9 +588,9 @@ function rebuildRedrawRooms() {
     let doors = dataStructureFactory.getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms).filter(function(val) {return val});
     let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
     let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk.rooms);
-    let pointsSortedX = points;
+    let pointsSortedX = Object.values(points);;
     pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
-    let pointsSortedY = points;
+    let pointsSortedY = Object.values(points);;
     pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
 
     dataStructures = {
@@ -819,26 +813,7 @@ function getPotentiaLinesPointsFromPoints(startPoint, endPoint, dataStructures) 
       }
 }
 
-function loadMetaroom(canvasElements, canvasContexts, metaroom){
-
-    let wallsOverreach = dataStructureFactory.getWallsFromRooms(metaroom.rooms).filter(function(val) {return val});
-    let doors = dataStructureFactory.getDoorsFromRooms(metaroom.rooms, metaroom.perms).filter(function(val) {return val});
-    let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
-    let points = dataStructureFactory.getPointsFromRooms(metaroom.rooms);
-    let pointsSortedX = points;
-    pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
-    let pointsSortedY = points;
-    pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
-
-    dataStructures = {
-        metaroomDisk: metaroom,
-        points: points,
-        walls: walls,
-        doors: doors,
-        pointsSortedX: pointsSortedX,
-        pointsSortedY: pointsSortedY
-    };
-
+function loadMetaroom(canvasElements, canvasContexts, metaroom) {
     canvasElements.background.width =  metaroom.width;
     canvasElements.background.height =  metaroom.height;
     canvasContexts.background = setupCanvas(canvasElements.background, metaroom);
@@ -864,7 +839,11 @@ function loadMetaroom(canvasElements, canvasContexts, metaroom){
     canvasElements.sandwich.height =  metaroom.height;
     canvasContexts.sandwich = setupCanvas(canvasElements.sandwich, metaroom);
 
-    redrawMetaroom(canvasContexts.room, canvasContexts.pasties, doors, walls, points, metaroom)
+    dataStructures = {
+         metaroomDisk: metaroom
+     };
+
+    rebuildRedrawRooms();
 }
 
 async function redrawMetaroom(roomCtx, pastiesCtx, doors, walls, points, metaroom){
@@ -906,13 +885,12 @@ const roomLineThickness = 2;
 async function redrawPasties(pastiesCtx, points, metaroom){
     //console.log(points);
     //console.log(new Error().stack);
-    points
-        .forEach((point, i) => {
-                pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
-                pastiesCtx.beginPath();
-                pastiesCtx.arc(point.x, point.y, roomLineThickness, 0, 2 * Math.PI, true);
-                pastiesCtx.fill();
-        });
+    pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
+    for (const key in points) {
+      pastiesCtx.beginPath();
+      pastiesCtx.arc(points[key].x, points[key].y, roomLineThickness, 0, 2 * Math.PI, true);
+      pastiesCtx.fill();
+    }
 }
 
 function roomFromPoint(point, rooms) {
@@ -971,9 +949,10 @@ async function redrawPotentialFromPoints(startPoint, endPoint, dataStructures) {
 
 async function redrawSelection(){
     //console.log(dataStructures);
+    let selection = selectionChecker.getSelection();
     selectionHighlightCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selected);
-    redrawPotential(startDragging, stopDragging, dataStructures, selected);
+    selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
+    redrawPotential(startDragging, stopDragging, dataStructures, selection);
 }
 
 loadMetaroom(
