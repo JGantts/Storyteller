@@ -11,7 +11,6 @@ const { selectionRenderer } = require('./selectionRenderer.js');
 const { selectionChecker } = require('./selectionChecker.js');
 const { dataStructureFactory } = require('./dataStructureFactory.js');
 const { potentialFactory } = require('./potentialFactory.js');
-const { potentialRenderer } = require('./potentialRenderer.js');
 
 let zoom = 1;
 let posX = 0;
@@ -698,8 +697,16 @@ async function redrawSelection(){
         selection,
         dataStructures
     );
+    redrawPotential(potentialRoom, dataStructures);
+}
+
+function redrawPotential(potentialRoom, dataStructures) {
+    potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     if (potentialRoom) {
-        potentialRenderer.redrawPotentialRoom(potentialRoom, dataStructures);
+        let doorsWalls = dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(potentialRoom, dataStructures);
+        let points = dataStructureFactory.getPointsFromRooms([potentialRoom]);
+
+        redrawRooms(potentialCtx, potentialCtx, doorsWalls, points, dataStructures.metaroomDisk);
     }
 }
 

@@ -1,21 +1,3 @@
-function getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine) {
-      let room = getPotentialRoomFromLine(startPoint, endPoint, dataStructures, selectedLine);
-
-      //console.log(room);
-
-      if (!room) {
-          return null;
-      }
-
-      let doorWalls = dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(room, dataStructures);
-      let points = dataStructureFactory.getPointsFromRooms([room]);
-
-      return {
-          lines: doorWalls,
-          points: points
-      }
-}
-
 function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
   // Vertical
   if (line.start.x === line.end.x) {
@@ -183,26 +165,6 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
         ));
       }
 
-}
-
-function getPotentiaLinesPointsFromPoints(startPoint, endPoint, dataStructures) {
-      let room = getPotentialRoomFromPoints(
-        startPoint,
-        endPoint,
-        dataStructures,
-      );
-
-      if (!room) {
-          return null;
-      }
-
-      let doorsWalls = dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(room, dataStructures);
-      let points = dataStructureFactory.getPointsFromRooms([room]);
-
-      return {
-          lines: doorWalls,
-          points: points
-      }
 }
 
 function roomOverlaps(linesPoints, dataStructures) {
