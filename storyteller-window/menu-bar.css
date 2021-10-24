@@ -1,8 +1,8 @@
 #menu-bar{
   position: absolute;
   top: 0;
-  left: 0;
-  padding-left: 41.5px;
+  right: 0;
+  padding-right: 41.5px;
   padding-top: 17px;
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto;

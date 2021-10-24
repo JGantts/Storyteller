@@ -1,5 +1,4 @@
 const { ipcRenderer } = require('electron');
-const os = require("os");
 
 
 // When document has loaded, initialise

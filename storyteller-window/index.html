@@ -18,47 +18,52 @@
 
     <div id='window-controls'></div>
 
-    <div id='menu-bar'>
-      <button id='nav-btn-settings' href='#' class='nav-btn icon' onclick='loadSettingsPage(this.id);' draggable='false'>
-        <span class='icon'>
-          <img class='icon' src="icons/settings.svg" height='10px' draggable="false"/>
-        </span>
-      </button>
-      <button id='nav-btn-local' href='#' class='nav-btn active' onclick='loadLocalPage(this.id);' draggable='false'>
-        <span class='icon'>
-          <img class='icon' src="icons/folder.svg" height='10px' draggable="false"/>
-        </span>
-        <span class='label'>
-          Home
-        </span>
-      </button>
-      <button id='nav-btn-server' href='#' class='nav-btn' onclick='loadServerPage(this.id);' draggable='false'>
-        <span class='icon'>
-          <img class='icon' src="icons/cloud.svg" height='10px' draggable="false"/>
-        </span>
-        <span class='label'>
-          History
-        </span>
-      </button>
-      <button id='nav-btn-eemfoo' href='#' class='nav-btn' onclick='loadEemFooPage(this.id);' draggable='false'>
-        <span class='icon'>
-          <img class='icon' src="icons/eem-foo.svg" height='10px' draggable="false"/>
-        </span>
-        <span class='label'>
-          Eem Foo
-        </span>
-      </button>
-      <button id='nav-btn-dev' href='#' class='nav-btn' onclick='loadDevToolsPage(this.id);' draggable='false'>
-        <span class='icon'>
-          <img class='icon' src="icons/wrench.svg" height='10px' draggable="false"/>
-        </span>
-        <span class='label'>
-          Dev Tools
-        </span>
-      </button>
-    </div>
+    <div id='menu-bar'></div>
   </div>
 </header>
+
+<template id="settings-button" >
+  <button id='nav-btn-settings' href='#' class='nav-btn icon' onclick='loadSettingsPage(this.id);' draggable='false'>
+    <span class='icon'>
+      <img class='icon' src="icons/settings.svg" height='10px' draggable="false"/>
+    </span>
+  </button>
+</template>
+
+<template id="rest-of-buttons" >
+    <button id='nav-btn-local' href='#' class='nav-btn active' onclick='loadLocalPage(this.id);' draggable='false'>
+      <span class='icon'>
+        <img class='icon' src="icons/folder.svg" height='10px' draggable="false"/>
+      </span>
+      <span class='label'>
+        Home
+      </span>
+    </button>
+    <button id='nav-btn-server' href='#' class='nav-btn' onclick='loadServerPage(this.id);' draggable='false'>
+      <span class='icon'>
+        <img class='icon' src="icons/cloud.svg" height='10px' draggable="false"/>
+      </span>
+      <span class='label'>
+        History
+      </span>
+    </button>
+    <button id='nav-btn-eemfoo' href='#' class='nav-btn' onclick='loadEemFooPage(this.id);' draggable='false'>
+      <span class='icon'>
+        <img class='icon' src="icons/eem-foo.svg" height='10px' draggable="false"/>
+      </span>
+      <span class='label'>
+        Eem Foo
+      </span>
+    </button>
+    <button id='nav-btn-dev' href='#' class='nav-btn' onclick='loadDevToolsPage(this.id);' draggable='false'>
+      <span class='icon'>
+        <img class='icon' src="icons/wrench.svg" height='10px' draggable="false"/>
+      </span>
+      <span class='label'>
+        Dev Tools
+      </span>
+    </button>
+</template>
 
 <div id='main'>
 </div>
