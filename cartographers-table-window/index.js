@@ -896,10 +896,6 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     }
 }
 
-function roomFromPoint(point, rooms) {
-    return -1;
-}
-
 async function redrawPotential(startPoint, endPoint, dataStructures, selected) {
     potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     if (isDragging) {
@@ -926,29 +922,32 @@ async function redrawPotential(startPoint, endPoint, dataStructures, selected) {
 }
 
 async function redrawPotentialFromWall(startPoint, endPoint, dataStructures, selected) {
+    let selectedLine = dataStructures.walls[selected.selectedId];
+    let linesPoints =  getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine);
 
-    if (roomFromPoint(endPoint) === -1) {
-        let selectedLine = dataStructures.walls[selected.selectedId];
-        let linesPoints =  getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine);
-
-        if (linesPoints) {
-            //console.log(linesPoints);
-            redrawRooms(potentialCtx, potentialCtx, linesPoints.lines, linesPoints.points, metaroom);
-        }
-    }
+    redrawPotentialRoom(linesPoints, dataStructures);
 }
 
 async function redrawPotentialFromPoints(startPoint, endPoint, dataStructures) {
+    let linesPoints =  getPotentiaLinesPointsFromPoints(startPoint, endPoint, dataStructures);
 
-    if (roomFromPoint(endPoint) === -1) {
-        let linesPoints =  getPotentiaLinesPointsFromPoints(startPoint, endPoint, dataStructures);
+    redrawPotentialRoom(linesPoints, dataStructures);
+}
 
-        if (linesPoints) {
-            //console.log(linesPoints);
-            redrawRooms(potentialCtx, potentialCtx, linesPoints.lines, linesPoints.points, metaroom);
+function redrawPotentialRoom(linesPoints, dataStructures) {
+    if (linesPoints) {
+        if (!roomOverlaps(linesPoints, dataStructures)) {
+            redrawRooms(potentialCtx, potentialCtx, linesPoints.lines, linesPoints.points, dataStructures.metaroomDisk);
         }
     }
 }
+
+function roomOverlaps(linesPoints, dataStructures) {
+
+    return false;
+}
+
+
 
 async function redrawSelection(){
     //console.log(dataStructures);
