@@ -10,6 +10,8 @@ const { geometry } = require('./geometryHelper.js');
 const { selectionRenderer } = require('./selectionRenderer.js');
 const { selectionChecker } = require('./selectionChecker.js');
 const { dataStructureFactory } = require('./dataStructureFactory.js');
+const { potentialFactory } = require('./potentialFactory.js');
+const { potentialRenderer } = require('./potentialRenderer.js');
 
 let zoom = 1;
 let posX = 0;
@@ -547,30 +549,20 @@ function handleWheel(e) {
 }
 
 function tryCreateRoom() {
-
-    if (!isDragging || !shiftKeyIsDown) {
-        return;
-    }
-
     let selection = selectionChecker.getSelection();
-
-    let newRoom = null;
-    if (selection.selectedType === "point" || selection.selectedType === "corner") {
-        newRoom = getPotentialRoomFromPoints(startDragging, stopDragging, dataStructures);
-
-    } else if (selection.selectedType === "door") {
-        Function.prototype();
-
-    } else if (selection.selectedType === "wall") {
-        selectedLine = dataStructures.walls[selection.selectedId];
-
-        newRoom = getPotentialRoomFromLine(startDragging, stopDragging, dataStructures, selectedLine);
-
-    } else if (selection.selectedType === "room") {
-        Function.prototype();
-    } else {
-        newRoom = getPotentialRoomFromPoints(startDragging, stopDragging, dataStructures);
-    }
+    let newRoom = potentialFactory.getPotentialRoom
+    (
+        {
+            dragging: {
+              isDragging: isDragging,
+              startDragging: startDragging,
+              stopDragging: stopDragging
+            },
+            shiftKeyIsDown: shiftKeyIsDown
+        },
+        selection,
+        dataStructures
+    );
     if (newRoom) {
         let newId = crypto.randomUUID();
         newRoom.id = newId;
@@ -606,214 +598,6 @@ function rebuildRedrawRooms() {
     };
 
     redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
-}
-
-function getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine) {
-      let room = getPotentialRoomFromLine(startPoint, endPoint, dataStructures, selectedLine);
-
-      //console.log(room);
-
-      if (!room) {
-          return null;
-      }
-
-      let doorWalls = dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(room, dataStructures);
-      let points = dataStructureFactory.getPointsFromRooms([room]);
-
-      return {
-          lines: doorWalls,
-          points: points
-      }
-}
-
-function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
-  // Vertical
-  if (line.start.x === line.end.x) {
-      let deltaX = endPoint.x - startPoint.x;
-
-      if (Math.abs(deltaX) < 5) {
-          return null;
-      }
-
-      let xToConsider = line.start.x + deltaX;
-
-      let closestPointsX = -1;
-      for (let i=0; i<dataStructures.pointsSortedX.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
-            < Math.abs(closestPointsX - xToConsider)
-          ) {
-              closestPointsX = dataStructures.pointsSortedX[i].x;
-          }
-      }
-
-      let xToUse = -1;
-      if (Math.abs(xToConsider - closestPointsX) < 5) {
-          xToUse = closestPointsX;
-      } else {
-          xToUse = xToConsider;
-      }
-
-      if (deltaX > 0) {
-          return {
-              id: null,
-              leftX: line.start.x,
-              rightX: xToUse,
-              leftCeilingY: line.start.y,
-              rightCeilingY: line.start.y,
-              leftFloorY: line.end.y,
-              rightFloorY: line.end.y,
-          };
-      } else {
-          return {
-              id: null,
-              leftX: xToUse,
-              rightX: line.start.x,
-              leftCeilingY: line.start.y,
-              rightCeilingY: line.start.y,
-              leftFloorY: line.end.y,
-              rightFloorY: line.end.y,
-          };
-      }
-  // Horizontal
-  } else {
-      let deltaY = endPoint.y - startPoint.y;
-
-      if (Math.abs(deltaY) < 5) {
-          return null;
-      }
-
-      let yToConsiderA = line.start.y + deltaY;
-      let yToConsiderB = line.end.y + deltaY;
-
-      let closestPointAsY = -1;
-      for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderA)
-            < Math.abs(closestPointAsY - yToConsiderA)
-          ) {
-              closestPointAsY = dataStructures.pointsSortedY[i].y;
-          }
-      }
-
-      let closestPointBsY = -1;
-      for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderB)
-            < Math.abs(closestPointBsY - yToConsiderB)
-          ) {
-              closestPointBsY = dataStructures.pointsSortedY[i].y;
-          }
-      }
-
-      let deltaYToUse = -1;
-      if (Math.abs(yToConsiderA - closestPointAsY) < 5) {
-          deltaYToUse = closestPointAsY - line.start.y;
-      } else if (Math.abs(yToConsiderB - closestPointBsY) < 5) {
-          deltaYToUse = closestPointBsY - line.end.y;
-      } else {
-          deltaYToUse = deltaY;
-      }
-
-      return (dataStructureFactory.getSortedRoomFromDimensions(
-          line.start.x, line.end.x,
-          line.start.y, line.end.y,
-          line.start.y + deltaYToUse, line.end.y + deltaYToUse
-      ));
-  }
-}
-
-function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
-
-      let deltaX = endPoint.x - startPoint.x;
-
-      if (Math.abs(deltaX) < 5) {
-          return null;
-      }
-
-      let deltaY = endPoint.y - startPoint.y;
-
-      if (Math.abs(deltaY) < 5) {
-          return null;
-      }
-
-
-
-      let xToConsider = endPoint.x;
-
-      let closestPointsX = -1;
-      for (let i=0; i<dataStructures.pointsSortedX.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
-            < Math.abs(closestPointsX - xToConsider)
-          ) {
-              closestPointsX = dataStructures.pointsSortedX[i].x;
-          }
-      }
-
-      let xToUse = -1;
-      if (Math.abs(xToConsider - closestPointsX) < 5) {
-          xToUse = closestPointsX;
-      } else {
-          xToUse = xToConsider;
-      }
-
-
-      let yToConsider = endPoint.y;
-
-      let closestPointsY = -1;
-      for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedY[i].y - yToConsider)
-            < Math.abs(closestPointsY - yToConsider)
-          ) {
-              closestPointsY = dataStructures.pointsSortedY[i].y;
-          }
-      }
-
-      let yToUse = -1;
-      if (Math.abs(yToConsider - closestPointsY) < 5) {
-          yToUse = closestPointsY;
-      } else {
-          yToUse = yToConsider;
-      }
-
-
-      if (deltaX > 0) {
-          return (dataStructureFactory.getSortedRoomFromDimensions(
-              startPoint.x, xToUse,
-              startPoint.y, startPoint.y,
-              yToUse, yToUse
-          ));
-      } else {
-        return (dataStructureFactory.getSortedRoomFromDimensions(
-            xToUse, startPoint.x,
-            startPoint.y, startPoint.y,
-            yToUse, yToUse
-        ));
-      }
-
-}
-
-function getPotentiaLinesPointsFromPoints(startPoint, endPoint, dataStructures) {
-      let room = getPotentialRoomFromPoints(
-        startPoint,
-        endPoint,
-        dataStructures,
-        geometry.getSortedLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y)
-      );
-
-      if (!room) {
-          return null;
-      }
-
-      let doorWalls = dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(room, dataStructures);
-      let points = dataStructureFactory.getPointsFromRooms([room]);
-
-      return {
-          lines: doorWalls,
-          points: points
-      }
 }
 
 function loadMetaroom(canvasElements, canvasContexts, metaroom) {
@@ -896,65 +680,27 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     }
 }
 
-async function redrawPotential(startPoint, endPoint, dataStructures, selected) {
-    potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    if (isDragging) {
-        if (selected.selectedType === "point" || selected.selectedType === "corner") {
-          if (shiftKeyIsDown) {
-              redrawPotentialFromPoints(startPoint, endPoint, dataStructures, selected);
-          }
-        } else if (selected.selectedType === "door") {
-            Function.prototype();
-
-        } else if (selected.selectedType === "wall") {
-            if (shiftKeyIsDown) {
-                redrawPotentialFromWall(startPoint, endPoint, dataStructures, selected);
-            }
-
-        } else if (selected.selectedType === "room") {
-            Function.prototype();
-        } else {
-            if (shiftKeyIsDown) {
-                redrawPotentialFromPoints(startPoint, endPoint, dataStructures, selected);
-            }
-        }
-    }
-}
-
-async function redrawPotentialFromWall(startPoint, endPoint, dataStructures, selected) {
-    let selectedLine = dataStructures.walls[selected.selectedId];
-    let linesPoints =  getPotentiaLinesPointsFromWall(startPoint, endPoint, dataStructures, selectedLine);
-
-    redrawPotentialRoom(linesPoints, dataStructures);
-}
-
-async function redrawPotentialFromPoints(startPoint, endPoint, dataStructures) {
-    let linesPoints =  getPotentiaLinesPointsFromPoints(startPoint, endPoint, dataStructures);
-
-    redrawPotentialRoom(linesPoints, dataStructures);
-}
-
-function redrawPotentialRoom(linesPoints, dataStructures) {
-    if (linesPoints) {
-        if (!roomOverlaps(linesPoints, dataStructures)) {
-            redrawRooms(potentialCtx, potentialCtx, linesPoints.lines, linesPoints.points, dataStructures.metaroomDisk);
-        }
-    }
-}
-
-function roomOverlaps(linesPoints, dataStructures) {
-
-    return false;
-}
-
-
-
 async function redrawSelection(){
     //console.log(dataStructures);
     let selection = selectionChecker.getSelection();
     selectionHighlightCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
-    redrawPotential(startDragging, stopDragging, dataStructures, selection);
+    let potentialRoom = potentialFactory.getPotentialRoom
+    (
+        {
+            dragging: {
+              isDragging: isDragging,
+              startDragging: startDragging,
+              stopDragging: stopDragging
+            },
+            shiftKeyIsDown: shiftKeyIsDown
+        },
+        selection,
+        dataStructures
+    );
+    if (potentialRoom) {
+        potentialRenderer.redrawPotentialRoom(potentialRoom, dataStructures);
+    }
 }
 
 loadMetaroom(
