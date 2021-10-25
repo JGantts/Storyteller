@@ -194,7 +194,21 @@ function roomOverlaps(room, dataStructures) {
     //  such that rooms are overlapping, not adjacent
     for (const roomkey in dataStructures.metaroomDisk.rooms) {
         let linesExisting = dataStructureFactory.getWallsFromRoom(dataStructures.metaroomDisk.rooms[roomkey]);
-        Function.prototype();
+        for (let i=0; i<4; i++) {
+            let shouldReturnTrue = false;
+            lineSegmentComparison(
+              lines[i],
+              linesExisting[i],
+              () => {},
+              () => {shouldReturnTrue = true;},
+              () => {},
+              () => {},
+              () => {}
+            );//(lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMade, handled)
+            if (shouldReturnTrue) {
+                return true;
+            }
+        }
     }
     //check if any potentialLine crosses any existing line
     for (const potentialLine of lines) {
