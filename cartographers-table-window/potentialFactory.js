@@ -167,19 +167,36 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
 
 }
 
-function roomOverlaps(linesPoints, dataStructures) {
-/*
-    for (const potentialLine of linesPoints.lines) {
-        //check if this potentialRoom contains any existing points
-        for (const pointKey in dataStructures.metaroomDisk.rooms) {
-
+function roomOverlaps(room, dataStructures) {
+    let lines = dataStructureFactory.getWallsFromRoom(room);
+    //check if this potentialRoom contains any existing points
+    for (const pointKey in dataStructures.points) {
+        let point = dataStructures.points[pointKey];
+        if (point.x <= room.leftX) {
+            continue;
         }
+        if (point.x >= room.rightX) {
+            continue;
+        }
+        let ceiling = lines[0];
+        ceiling.slope = (ceiling.end.y - ceiling.start.y)/(ceiling.end.x - ceiling.start.x);
+        if (((point.x - ceiling.start.x) * (ceiling.slope) + ceiling.start.y) >= point.y) {
+            continue;
+        }
+        let floor = lines[2];
+        floor.slope = (floor.end.y - floor.start.y)/(floor.end.x - floor.start.x);
+        if (((point.x - floor.start.x) * (floor.slope) + floor.start.y) <= point.y) {
+            continue;
+        }
+        return true;
+    }
+    for (const potentialLine of lines) {
         //check if any potentialLine crosses any existing line
         for (const lineKey in dataStructures.metaroomDisk.rooms) {
 
         }
     }
-*/
+
     return false;
 }
 
@@ -215,7 +232,15 @@ function getPotentialRoom(ui, selection, dataStructures) {
             }
         }
     }
-    return room;
+    if (room) {
+        if (roomOverlaps(room, dataStructures)) {
+            return null;
+        } else {
+            return room;
+        }
+    } else {
+        return null
+    }
 }
 
 module.exports = {

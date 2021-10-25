@@ -25,7 +25,6 @@ function getSortedRoomFromDimensions(leftX, rightX, leftYA, rightYA, leftYB, rig
 function getPermsFromRoomPotential(roomPotential, dataStructures) {
     let perms = [];
     let sides = getWallsFromRoom(roomPotential);
-    console.log(sides);
     for (let i = 0; i < sides.length; i++) {
         //console.log("\n\n\n\n");
         //console.log(`side: ${i}`);
@@ -456,7 +455,6 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
             //perms.push(side);
         }
     }
-    console.log(perms);
     return perms;
 }
 
@@ -1347,6 +1345,7 @@ function getWallsFromRoom(room) {
 module.exports = {
     dataStructureFactory: {
         getWallsFromRooms: getWallsFromRooms,
+        getWallsFromRoom: getWallsFromRoom,
         getDoorsFromRooms: getDoorsFromRooms,
         getPointsFromRooms: getPointsFromRooms,
         subtractDoorsFromWalls: subtractDoorsFromWalls,
