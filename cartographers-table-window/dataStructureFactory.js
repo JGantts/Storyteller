@@ -91,6 +91,7 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(sidesPotential, wal
 
 function slicePotentialSideIntoPotentialLinesFromActualWall(side, walls){
     let lines = [];
+    let sideHandled = false;
     let sideChanged = false;
     for (let j=0; j < walls.length; j++) {
         let wall = walls[j];
@@ -121,8 +122,15 @@ function slicePotentialSideIntoPotentialLinesFromActualWall(side, walls){
           () => {
               sideChanged = true;
           },
-          () => {}
+          () => {
+              sideHandled = true;
+          }
         )
+    }
+
+    if (!sideHandled) {
+          //console.log("lazy pos");
+          lines.push(side);
     }
 
     return {segments: lines, changed: sideChanged};
