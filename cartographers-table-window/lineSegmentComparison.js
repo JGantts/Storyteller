@@ -201,7 +201,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
 
                     //lines don't touch, lineA on left
                     if (
-                      lineBMaxX < lineAMinX
+                      lineAMaxX < lineBMinX
                     ) {
                         lineASlice(lineA.start, lineA.end);
                         lineBSlice(lineB.start, lineB.end);
