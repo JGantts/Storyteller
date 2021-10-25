@@ -11,6 +11,7 @@ const { selectionRenderer } = require('./selectionRenderer.js');
 const { selectionChecker } = require('./selectionChecker.js');
 const { dataStructureFactory } = require('./dataStructureFactory.js');
 const { potentialFactory } = require('./potentialFactory.js');
+const { lineSegmentComparison } = require('./lineSegmentComparison.js');
 
 let zoom = 1;
 let posX = 0;
