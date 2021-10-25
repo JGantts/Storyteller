@@ -7,16 +7,19 @@ switch (os.type()) {
     case "Darwin":
         $("#menu-bar")[0].appendChild(templateRestOfButtons);
         $("#menu-bar")[0].appendChild(templateSettingsButton);
+        $("#menu-bar").css("right", "0");
         break;
 
     case "Windows_NT":
         $("#menu-bar")[0].appendChild(templateSettingsButton);
         $("#menu-bar")[0].appendChild(templateRestOfButtons);
+        $("#menu-bar").css("left", "0");
         break;
 
     case "Linux":
         $("#menu-bar")[0].appendChild(templateSettingsButton);
         $("#menu-bar")[0].appendChild(templateRestOfButtons);
+        $("#menu-bar").css("left", "0");
         break;
 }
 

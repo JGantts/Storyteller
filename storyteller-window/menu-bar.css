@@ -1,7 +1,7 @@
 #menu-bar{
   position: absolute;
   top: 0;
-  right: 0;
+  padding-left: 41.5px;
   padding-right: 41.5px;
   padding-top: 17px;
   display: inline-grid;
