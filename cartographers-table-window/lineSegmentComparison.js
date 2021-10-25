@@ -1,4 +1,4 @@
-function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMade) {
+function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMade, finalCall) {
     assert(
       lineA.start.x !== lineA.end.x ||
       lineA.start.y !== lineA.end.y,

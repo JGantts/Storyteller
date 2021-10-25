@@ -62,6 +62,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                     );
                   },
                   () => {},
+                  () => {},
                   () => {}
                 )
             }
@@ -119,7 +120,8 @@ function slicePotentialSideIntoPotentialLinesFromActualWall(side, walls){
           },
           () => {
               sideChanged = true;
-          }
+          },
+          () => {}
         )
     }
 
