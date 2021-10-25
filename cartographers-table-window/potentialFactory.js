@@ -190,10 +190,16 @@ function roomOverlaps(room, dataStructures) {
         }
         return true;
     }
+    //check if potentialRoom overlaps exactly any existing room sides
+    //  such that rooms are overlapping, not adjacent
+    for (const roomkey in dataStructures.metaroomDisk.rooms) {
+        let linesExisting = dataStructureFactory.getWallsFromRoom(dataStructures.metaroomDisk.rooms[roomkey]);
+        Function.prototype();
+    }
+    //check if any potentialLine crosses any existing line
     for (const potentialLine of lines) {
-        //check if any potentialLine crosses any existing line
-        for (const lineKey in dataStructures.metaroomDisk.rooms) {
-
+        for (const existingLine of dataStructures.walls.concat(dataStructures.doors)) {
+        Function.prototype();
         }
     }
 
