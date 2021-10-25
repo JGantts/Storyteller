@@ -125,7 +125,7 @@ function slicePotentialSideIntoPotentialLinesFromActualWall(side, walls){
           () => {
               sideHandled = true;
           }
-        )
+        );
     }
 
     if (!sideHandled) {
