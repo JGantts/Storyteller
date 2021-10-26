@@ -118,7 +118,6 @@ function lineSegmentsIntersectAndCross(segmentA, segmentB) {
         let yIntersection = (c1*a2 - c2*a1) / determinant;
         let intersection = {x: xIntersection, y: yIntersection};
 
-
         //check if xInterrsection is in range of line segments
         if (
             xIntersection >= segmentA.start.x
@@ -128,10 +127,10 @@ function lineSegmentsIntersectAndCross(segmentA, segmentB) {
         ) {
             //check if yInterrsection is in range of line segments
             if (
-                yIntersection >= segmentA.start.y
-                && yIntersection <= segmentA.end.y
-                && yIntersection >= segmentB.start.y
-                && yIntersection <= segmentB.end.y
+                yIntersection >= Math.min(segmentA.start.y, segmentA.end.y)
+                && yIntersection <= Math.max(segmentA.start.y, segmentA.end.y)
+                && yIntersection >= Math.min(segmentB.start.y, segmentB.end.y)
+                && yIntersection <= Math.max(segmentB.start.y, segmentB.end.y)
             ) {
                 //check if intersection is endpoint of line
                 if (
