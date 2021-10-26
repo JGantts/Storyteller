@@ -132,7 +132,7 @@ function lineSegmentsIntersectAndCross(segmentA, segmentB) {
                 && yIntersection >= Math.min(segmentB.start.y, segmentB.end.y)
                 && yIntersection <= Math.max(segmentB.start.y, segmentB.end.y)
             ) {
-                //check if intersection is endpoint of line
+                //check if intersection is not endpoint of line
                 if (
                   !geometry.pointsEqual(intersection, segmentA.start)
                   && !geometry.pointsEqual(intersection, segmentA.end)
