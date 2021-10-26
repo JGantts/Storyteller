@@ -213,7 +213,9 @@ function roomOverlaps(room, dataStructures) {
     //check if any potentialLine crosses any existing line
     for (const potentialLine of lines) {
         for (const existingLine of dataStructures.walls.concat(dataStructures.doors)) {
-        Function.prototype();
+            if (geometry.lineSegmentsIntersectAndCross(potentialLine, existingLine)) {
+                return true;
+            }
         }
     }
 
