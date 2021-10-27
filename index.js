@@ -7,37 +7,15 @@ let storytellerWindow = null;
 let sorcerersTableWindow = null;
 
 ipcMain.on('minimize', (event, arg) => {
-  switch (getWindowName(arg.windowpathname)){
-    case 'storyteller-window':
-      storytellerWindow.minimize();
-      break;
-    default:
-      console.log("what?");
-      break;
-  }
+    getWindow(arg.windowpathname).minimize();
 });
 
 ipcMain.on('close', (event, arg) => {
-  switch (getWindowName(arg.windowpathname)){
-    case 'storyteller-window':
-      storytellerWindow.close();
-      break;
-    default:
-      console.log("what?");
-      break;
-  }
+    getWindow(arg.windowpathname).close();
 });
 
 ipcMain.on('open-files', (event, arg) => {
-    let theWindow = null;
-    switch (getWindowName(arg.windowpathname)){
-      case 'sorcerers-table-window':
-        theWindow = sorcerersTableWindow;
-        break;
-      default:
-        console.log("what?");
-        break;
-    }
+    let theWindow = getWindow(arg.windowpathname);
 
     let result = dialog.showOpenDialogSync(theWindow, arg.options)
     if (result === undefined){
@@ -47,13 +25,25 @@ ipcMain.on('open-files', (event, arg) => {
     }
 });
 
-function getWindowName(path) {
+function getWindow(path) {
     assert(typeof path === 'string', `Expected string, found ${typeof path} instead`)
     let lastIndex = path.lastIndexOf("/");
     let secondTolastIndex = path.lastIndexOf("/", lastIndex-1);
     assert(lastIndex != secondTolastIndex, "Couldn't find two '/'s");
     let windowName = path.slice(secondTolastIndex+1, lastIndex);
-    return windowName;
+    let theWindow = null;
+    switch (windowName){
+      case 'storyteller-window':
+        storytellerWindow.minimize();
+        break;
+      case 'sorcerers-table-window':
+        theWindow = sorcerersTableWindow;
+        break;
+      default:
+        console.log("what?");
+        break;
+    }
+    return theWindow;
 }
 
 ipcMain.on('createSorcerersTableWindow', (event, args) => {
