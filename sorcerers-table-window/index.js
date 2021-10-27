@@ -134,7 +134,8 @@ ipcRenderer.on('open-files', (event, arg) => {
       return;
   }
   try{
-      let fileContents = fs.readFileSync(arg.filePaths[0], 'utf-8');
+      currentFile = arg.filePaths[0];
+      let fileContents = fs.readFileSync(currentFile, 'utf-8');
       codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
       SetCaretPositionWithin(codeElement, 0);
       insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
@@ -210,7 +211,7 @@ async function displaySaveFileDialog(){
 function updateTitle(){
   let title = '';
   if (currentFile){
-    title += path.basename(currentFile) + ' ';
+    title += tileNameFromPath(currentFile) + ' ';
   }
   if (currentFileNeedsSaving){
     title += '* '
@@ -221,8 +222,18 @@ function updateTitle(){
   if (currentFile){
     title += '- ';
   }
-  title += 'CAOS Tool 2020';
+  title += 'Sorcerer\'s Table';
   document.title = title;
+}
+
+function tileNameFromPath(path) {
+    assert(typeof path === 'string', `Expected string, found ${typeof path} instead`)
+
+    let lastIndexOfSlash = path.lastIndexOf("/")
+    let secondTolastIndex = path.lastIndexOf("/", lastIndexOfSlash-1);
+    let lastIndexOfDot = path.lastIndexOf(".")
+    let fileName = "..." + path.slice(secondTolastIndex);
+    return fileName;
 }
 
 function updateUndoRedoButtons(){
