@@ -1,33 +1,54 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const assert = require('assert');
 
 //let settings;
 
 let storytellerWindow = null;
+let sorcerersTableWindow = null;
 
 ipcMain.on('minimize', (event, arg) => {
-  switch (getWindowName(arg)){
+  switch (getWindowName(arg.windowpathname)){
     case 'storyteller-window':
       storytellerWindow.minimize();
       break;
     default:
-      assert(false, "what?");
+      console.log("what?");
       break;
   }
 });
 
 ipcMain.on('close', (event, arg) => {
-  switch (getWindowName(arg)){
+  switch (getWindowName(arg.windowpathname)){
     case 'storyteller-window':
       storytellerWindow.close();
       break;
     default:
-      assert(false, "what?");
+      console.log("what?");
       break;
   }
 });
 
+ipcMain.on('open-files', (event, arg) => {
+    let theWindow = null;
+    switch (getWindowName(arg.windowpathname)){
+      case 'sorcerers-table-window':
+        theWindow = sorcerersTableWindow;
+        break;
+      default:
+        console.log("what?");
+        break;
+    }
+
+    let result = dialog.showOpenDialogSync(theWindow, arg.options)
+    if (result === undefined){
+        event.reply('open-files', {canceled: true, filePaths: []});
+    } else {
+        event.reply('open-files', {canceled: false, filePaths: result});
+    }
+});
+
 function getWindowName(path) {
+    assert(typeof path === 'string', `Expected string, found ${typeof path} instead`)
     let lastIndex = path.lastIndexOf("/");
     let secondTolastIndex = path.lastIndexOf("/", lastIndex-1);
     assert(lastIndex != secondTolastIndex, "Couldn't find two '/'s");
@@ -93,6 +114,8 @@ function createSorcerersTableWindow() {
   })
 
   win.setMenu(null)
+
+  sorcerersTableWindow = win;
 
   loadWindow(win, 'sorcerers-table-window/index.html')
 }

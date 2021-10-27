@@ -46,10 +46,10 @@ function handleWindowControls() {
       $("#window-controls")[0].appendChild(templateClone);
 
     document.getElementById('min-button').addEventListener("click", event => {
-        ipcRenderer.send('minimize', self.window.location.pathname);
+        ipcRenderer.send('minimize', {windowpathname: self.window.location.pathname});
     });
 
     document.getElementById('close-button').addEventListener("click", event => {
-        ipcRenderer.send('close', self.window.location.pathname);
+        ipcRenderer.send('close', {windowpathname: self.window.location.pathname});
     });
 }

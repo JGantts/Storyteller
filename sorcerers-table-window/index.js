@@ -1,7 +1,7 @@
 $.getScript('../engine-api/CAOS.js');
 const assert = require('assert');
 const { Caos } = require('./parser/parser.js');
-const { clipboard } = require('electron')
+const { clipboard, ipcRenderer } = require('electron')
 const highlighter = require('./syntax-highlighting/syntax-highlighting.js')
 const { KeyCapture } = require('./key-capture.js');
 const { TreeToText } = require('./tree-to-text.js');
@@ -83,63 +83,72 @@ function redoMultiCommand(subcommands){
 }
 
 async function newFile(){
-  if (currentFileNeedsSaving){
-    if (!await displaySaveFileReminderDialog()){
-      return;
+    if (currentFileNeedsSaving){
+      if (!await displaySaveFileReminderDialog()){
+        return;
+      }
     }
-  }
-  codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
-  SetCaretPositionWithin(codeElement, 0);
-  if (currentFileNeedsSaving){
-    currentFileNeedsSaving = false;
-  }
-  if (currentFile){
-    currentFile = null;
-  }
-  updateTitle();
-  _undoList = [];
-  _redoList = [];
-  updateUndoRedoButtons();
-}
-
-async function openFile(){
-  if (currentFileNeedsSaving){
-    if (!await displaySaveFileReminderDialog()){
-      return;
-    }
-  }
-
-  let options = {
-   title : 'Open CASO file',
-   defaultPath : '%HOMEPATH%/Documents/',
-   buttonLabel : 'Open',
-   filters :[
-    {name: 'CAOS', extensions: ['cos']},
-    {name: 'All Files', extensions: ['*']}
-   ],
-   properties: ['openFile']
-  }
-
-  let result = await dialog.showOpenDialog(WIN, options)
-  if (result.canceled){
-    return;
-  }
-  currentFile = result.filePaths[0];
-  try{
-    let fileContents = fs.readFileSync(currentFile, 'utf-8');
     codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
     SetCaretPositionWithin(codeElement, 0);
-    insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
-    currentFileNeedsSaving = false;
+    if (currentFileNeedsSaving){
+      currentFileNeedsSaving = false;
+    }
+    if (currentFile){
+      currentFile = null;
+    }
     updateTitle();
     _undoList = [];
     _redoList = [];
     updateUndoRedoButtons();
-  }catch (err){
-    console.log(err);
-    throw err;
-  }
 }
+
+async function openFile(){
+    if (currentFileNeedsSaving){
+      if (!await displaySaveFileReminderDialog()){
+        return;
+      }
+    }
+
+    let options = {
+     title : 'Open CASO file',
+     defaultPath : '%HOMEPATH%/Documents/',
+     buttonLabel : 'Open',
+     filters :[
+      {name: 'CAOS', extensions: ['cos']},
+      {name: 'All Files', extensions: ['*']}
+     ],
+     properties: ['openFile']
+    }
+
+    ipcRenderer.send(
+        'open-files',
+        {
+            windowpathname: self.window.location.pathname,
+            options: options
+        }
+    );
+}
+
+ipcRenderer.on('open-files', (event, arg) => {
+  if (arg.canceled) {
+      return;
+  }
+  try{
+      let fileContents = fs.readFileSync(arg.filePaths[0], 'utf-8');
+      codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
+      SetCaretPositionWithin(codeElement, 0);
+      insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
+      currentFileNeedsSaving = false;
+      updateTitle();
+      _undoList = [];
+      _redoList = [];
+      updateUndoRedoButtons();
+  }catch (err){
+      console.log(err);
+      throw err;
+  }
+});
+
 
 async function saveFile(){
   if (!currentFileNeedsSaving){

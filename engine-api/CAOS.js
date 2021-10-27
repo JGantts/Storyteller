@@ -1,10 +1,10 @@
-var edge = require('electron-edge-js');
+/*var edge = require('electron-edge-js');
 var path = require('path');
 
-/*
-#r "resources/app/engine-api/CAOS.dll"
-#r "engine-api/CAOS.dll"
-*/
+
+//#r "resources/app/engine-api/CAOS.dll"
+//#r "engine-api/CAOS.dll"
+
 
 var executeCaos = edge.func(`
 #r "engine-api/CAOS.dll"
@@ -83,4 +83,4 @@ async (dynamic input) => {
     return "Couldn't connect to game.";
   }
 }
-`);
+`);*/
