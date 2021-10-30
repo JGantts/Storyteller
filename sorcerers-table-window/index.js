@@ -20,11 +20,11 @@ const{
   GetCaretPositionOneLineDown,
   GetCaretPositionOneLineUp,
 } = require('./text-editing-helper.js');
-const fs = require('fs');
 //const path = require("path");
 
-let currentFile = null;
+let currentFileRef = null;
 let currentFileNeedsSaving = false;
+
 let codeElement = document.getElementById('caos-user-code');
 
 let _undoList = [];
@@ -82,33 +82,11 @@ function redoMultiCommand(subcommands){
     });
 }
 
-async function newFile(){
-    if (currentFileNeedsSaving){
-      if (!await displaySaveFileReminderDialog()){
-        return;
-      }
-    }
-    codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
-    SetCaretPositionWithin(codeElement, 0);
-    if (currentFileNeedsSaving){
-      currentFileNeedsSaving = false;
-    }
-    if (currentFile){
-      currentFile = null;
-    }
-    updateTitle();
-    _undoList = [];
-    _redoList = [];
-    updateUndoRedoButtons();
+function newFile() {
+    ipcRenderer.send('new-file');
 }
 
 async function openFile(){
-    if (currentFileNeedsSaving){
-      if (!await displaySaveFileReminderDialog()){
-        return;
-      }
-    }
-
     let options = {
      title : 'Open CASO file',
      defaultPath : '%HOMEPATH%/Documents/',
@@ -121,97 +99,68 @@ async function openFile(){
     }
 
     ipcRenderer.send(
-        'open-files',
-        {
-            windowpathname: self.window.location.pathname,
-            options: options
-        }
+        'open-files', {options: options}
     );
 }
 
 ipcRenderer.on('open-files', (event, arg) => {
-  if (arg.canceled) {
-      return;
-  }
-  try{
-      currentFile = arg.filePaths[0];
-      let fileContents = fs.readFileSync(currentFile, 'utf-8');
-      codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
-      SetCaretPositionWithin(codeElement, 0);
-      insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
-      currentFileNeedsSaving = false;
-      updateTitle();
-      _undoList = [];
-      _redoList = [];
-      updateUndoRedoButtons();
-  }catch (err){
-      console.log(err);
-      throw err;
-  }
+    if (arg.files.length === 0) { return; }
+    let file = arg.files[0];
+    //for(file in arg) {
+        currentFileRef = file.fileRef;
+        let fileContents = file.contents;
+        codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
+        SetCaretPositionWithin(codeElement, 0);
+        insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
+        currentFileNeedsSaving = false;
+        updateTitle();
+        _undoList = [];
+        _redoList = [];
+        updateUndoRedoButtons();
+    //}
 });
 
-
 async function saveFile(){
-  if (!currentFileNeedsSaving){
-    return;
-  }
-  if (!currentFile){
-    let result = await displaySaveFileDialog();
-    if (result.canceled){
-      return false;
+    if (!currentFileNeedsSaving){
+      return;
     }
-    currentFile = result.filePaths[0];
-  }
-  try{
-    await fs.writeFileSync(currentFile, GetVisibleTextInElement(codeElement), 'utf-8');
-    if (currentFileNeedsSaving){
-      currentFileNeedsSaving = false;
-      updateTitle();
+    let options = {
+        title: "Save CAOS file",
+        defaultPath : '%HOMEPATH%/Documents/',
+        buttonLabel : "Save",
+        filters :[
+            {name: 'CAOS', extensions: ['cos']},
+            {name: 'All Files', extensions: ['*']}
+        ]
     }
-    return true;
-  }catch (err){
-    console.log(err);
-    throw err;
-  }
+    ipcRenderer.send(
+        'open-files',
+        {
+            options: options,
+            fileRef: currentFileRef,
+            content: GetVisibleTextInElement(codeElement)
+        }
+    );
 }
+
+ipcRenderer.on('save-done', (event, arg) => {
+    if (arg.saved) {
+        currentFileNeedsSaving = false;
+        updateTitle();
+    } else {
+        alert(`Error while saving: ${arg.error}`);
+    }
+});
 
 function saveAllFiles(){
 
 }
 
-async function displaySaveFileReminderDialog(){
-  let options  = {
-   buttons: ['Save', 'Toss', 'Cancel'],
-   message: 'Do you want to save your work?'
-  }
-  let result = await dialog.showMessageBox(options);
-  if(result.response === 0){
-    await saveFile();
-    return true;
-  }else if (result.response === 1){
-    return true;
-  }else{
-    return false;
-  }
-}
-
-async function displaySaveFileDialog(){
-  let options = {
-    title: "Save CAOS file",
-    defaultPath : '%HOMEPATH%/Documents/',
-    buttonLabel : "Save",
-    filters :[
-      {name: 'CAOS', extensions: ['cos']},
-      {name: 'All Files', extensions: ['*']}
-    ]
-  }
-  return dialog.showSaveDialog(WIN, options);
-}
-
 function updateTitle(){
   let title = '';
-  if (currentFile){
-    title += tileNameFromPath(currentFile) + ' ';
+  if (currentFileRef){
+    console.log(currentFileRef)
+    title += tileNameFromPath(currentFileRef.path) + ' ';
   }
   if (currentFileNeedsSaving){
     title += '* '
@@ -219,7 +168,7 @@ function updateTitle(){
   }else{
     $('#save-file-img').css('opacity','0.4')
   }
-  if (currentFile){
+  if (currentFileRef){
     title += '- ';
   }
   title += 'Sorcerer\'s Table';
@@ -227,7 +176,14 @@ function updateTitle(){
 }
 
 function tileNameFromPath(path) {
-    assert(typeof path === 'string', `Expected string, found ${typeof path} instead`)
+    assert(
+      typeof path === 'string'
+      || typeof path === 'object',
+      `Expected string or NULL, instead found \{${JSON.stringify(path)}\}.`)
+
+    if (!path) {
+        return "Unsaved";
+    }
 
     let lastIndexOfSlash = path.lastIndexOf("/")
     let secondTolastIndex = path.lastIndexOf("/", lastIndexOfSlash-1);
