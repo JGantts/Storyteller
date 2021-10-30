@@ -191,36 +191,6 @@ ipcRenderer.on('executed-promise', (event, arg) => {
     }
 });
 
-async function saveFileReminder() {
-    /*if (!currentFileNeedsSaving){
-      return;
-    }*/
-
-    ipcRenderer.send(
-        'save-file-reminder',
-        {
-            options: options,
-            fileRef: currentFileRef,
-            content: GetVisibleTextInElement(codeElement)
-        }
-    );
-}
-
-let afterSave = () => {};
-
-ipcRenderer.on('save-done', (event, arg) => {
-    console.log("wut");
-        console.log(arg);
-    if (arg.userWantsToContinue) {
-        currentFileNeedsSaving = false;
-        updateTitle();
-        afterSave();
-        afterSave = () => {};
-    } else {
-        alert(`Error while saving: ${arg.error}`);
-    }
-});
-
 function saveAllFiles(){
 
 }
