@@ -27,7 +27,27 @@ function getWindowsFiles(browserWindow) {
     return files[windowType][browserWindow.id];
 }
 
-ipcMain.on('new-file', async (event, arg) => {
+ipcMain.on('filemanager-execute-promise', async (event, arg) => {
+    switch (arg.type) {
+      case "new-file":
+        fileManager_newFile(event, arg);
+        break;
+      case "open-file":
+        fileManager_openFile(event, arg);
+        break;
+      case "save-file":
+        fileManager_openFile(event, arg);
+        break;
+      case "save-file-reminder":
+        fileManager_openFile(event, arg);
+        break;
+      case "close-file":
+        fileManager_openFile(event, arg);
+        break;
+  }
+});
+
+function fileManager_newFile(event, arg) {
     let browserWindow = event.sender.getOwnerBrowserWindow();
     let windowsFiles = getWindowsFiles(browserWindow);
     let newFileId = crypto.randomUUID();
@@ -45,14 +65,17 @@ ipcMain.on('new-file', async (event, arg) => {
         contents: ""
     }];
     event.reply(
-        'open-files',
+        'executed-promise',
         {
-            files: newFiles
+            success: true,
+            args: {
+                files: newFiles
+            }
         }
     );
-});
+}
 
-ipcMain.on('open-files', async (event, arg) => {
+async function fileManager_openFile(event, arg) {
     let browserWindow = event.sender.getOwnerBrowserWindow();
     let windowsFiles = getWindowsFiles(browserWindow);
     try {
@@ -102,36 +125,65 @@ ipcMain.on('open-files', async (event, arg) => {
         console.log(err);
         alert(err);
     }
-})
+}
 
-ipcMain.on('save-file', async (event, arg) => {
+ipcMain.on('save-file-reminder', async (event, arg) => {
+    console.log(arg);
+    if (!arg.fileRef) {
+        event.reply(
+            'save-done',
+            {
+               userWantsToContinue: true,
+            }
+        );
+    }
+    console.log(arg);
+    let browserWindow = event.sender.getOwnerBrowserWindow();
+    let windowsFiles = getWindowsFiles(browserWindow);
+    let fileRef = windowsFiles[arg.fileRef.id];
+
+    let result = await dialog.showMessageBox(options);
+    let userWantsToContinue = false;
+    let error = null
+    if(result.response === 0){
+        userWantsToContinue = true;
+        try{
+            await fs.writeFileSync(fileRef.path, arg.content, 'utf-8');
+            userWantsToContinue = true;
+        }catch (err){
+            console.log(err);
+            userWantsToContinue = false;
+            error = err;
+        }
+    }else if (result.response === 1){
+        userWantsToContinue = true;
+    }else{
+        userWantsToContinue = false;
+        error = "User canceled";
+    }
+
+    event.reply(
+        'save-done',
+        {
+           userWantsToContinue: userWantsToContinue,
+        }
+  );
+});
+
+async function saveFile(event, arg) {
     let browserWindow = event.sender.getOwnerBrowserWindow();
     let windowsFiles = getWindowsFiles(browserWindow);
 
 
-    if (!windowsFiles[arg.fileId]){
-        let result = await dialog.showSaveDialog(
-            browserWindow,
-            arg.options
-        );
-        if (result.canceled) {
-            event.reply(
-                'save-done',
-                {
-                  saved: false,
-                  error: "User canceled"
-                }
-            );
-            return;
-        }
-        windowsFiles[arg.fileId] = result.filePath;
+    if (!windowsFiles[arg.fileRef.id].path){
+        saveFileReminder(event, arg);
     }
-    let fileRef = windowsFiles[arg.fileId];
+    let fileRef = windowsFiles[arg.fileRef.id];
     try{
       await fs.writeFileSync(fileRef.path, arg.content, 'utf-8');
       event.reply(
           'save-done',
-          { saved: true }
+          { userWantsToContinue: true }
       );
       return;
     }catch (err){
@@ -139,37 +191,38 @@ ipcMain.on('save-file', async (event, arg) => {
       event.reply(
           'save-done',
           {
-             saved: false,
+             userWantsToContinue: false,
              error: err
           }
       );
       return;
     }
+}
 
-});
-
-ipcMain.on('close-file', async (event, arg) => {
-
-});
-
-async function displaySaveFileDialog(browserWindow){
-
+async function saveFileReminder(event, arg) {
+    let result = await dialog.showSaveDialog(
+        browserWindow,
+        arg.options
+    );
+    if (result.canceled) {
+        event.reply(
+            'save-done',
+            {
+              userWantsToContinue: false,
+              error: "User canceled"
+            }
+        );
+        return {userWantsToContinue: false};
+    } else {
+        windowsFiles[arg.fileRef.id].path = result.filePath;
+        return {userWantsToContinue: true};
+    }
 }
 
 
-async function displaySaveFileReminderDialog(){
-    let options  = {
-      buttons: ['Save', 'Toss', 'Cancel'],
-      message: 'Do you want to save your work?'
-    }
-    let result = await dialog.showMessageBox(options);
-    if(result.response === 0){
-        return true;
-    }else if (result.response === 1){
-        return true;
-    }else{
-        return false;
-    }
+
+async function displaySaveFileDialog(browserWindow){
+
 }
 
 async function saveFile(){

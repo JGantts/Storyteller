@@ -7,6 +7,7 @@ const { KeyCapture } = require('./key-capture.js');
 const { TreeToText } = require('./tree-to-text.js');
 const { TreeToErrors } = require('./tree-to-errors.js');
 const { CheckCode } = require('./code-editing-helper.js');
+const crypto = require('crypto');
 const{
   GetCaretPositionWithin,
   SetCaretPositionWithin,
@@ -82,31 +83,153 @@ function redoMultiCommand(subcommands){
     });
 }
 
-function newFile() {
-    ipcRenderer.send('new-file');
+async function newFile() {
+    if (!await saveFileIfNeeded().continue) {
+        return;
+    }
+    let newFile = await newFilePromise();
+    displayFiles([newFile]);
 }
 
-async function openFile(){
-    let options = {
-     title : 'Open CASO file',
-     defaultPath : '%HOMEPATH%/Documents/',
-     buttonLabel : 'Open',
-     filters :[
-      {name: 'CAOS', extensions: ['cos']},
-      {name: 'All Files', extensions: ['*']}
-     ],
-     properties: ['openFile']
+async function openFile() {
+    if (!(await saveFileIfNeeded()).continue) {
+        return;
     }
+    let newFile = await openFilePromise();
+    displayFiles([newFile]);
+}
+
+async function saveFile() {
+    await saveFilePromise();
+}
+
+async function saveFileIfNeeded() {
+    if (currentFileNeedsSaving) {
+        let result = await saveFileReminderPromise();
+        if (result.canceled) {
+            return {continue: false};
+        }
+        if (!result.toss) {
+            await saveFilePromise();
+            await closeFilePromise();
+        }
+    }
+    return {continue: true};
+}
+
+let promiseDictionary = new Object();
+
+async function newFilePromise() {
+    return makeFileManagerPromise("new-file", new Object());
+}
+
+async function openFilePromise() {
+    return makeFileManagerPromise("open-file", new Object());
+}
+
+async function saveFilePromise() {
+    let options = {
+        title: "Save CAOS file",
+        defaultPath : '%HOMEPATH%/Documents/',
+        buttonLabel : "Save",
+        filters :[
+            {name: 'CAOS', extensions: ['cos']},
+            {name: 'All Files', extensions: ['*']}
+        ]
+    }
+    return makeFileManagerPromise("save-file", {
+        options: options,
+        fileRef: currentFileRef,
+        content: GetVisibleTextInElement(codeElement)
+    });
+}
+
+async function saveFileReminderPromise() {
+    let options  = {
+      buttons: ['Save', 'Toss', 'Cancel'],
+      message: 'Do you want to save your work?'
+    };
+    return makeFileManagerPromise("save-file-reminder", {
+        options: options,
+        fileRef: currentFileRef,
+        content: GetVisibleTextInElement(codeElement)
+    });
+}
+
+async function closeFilePromise() {
+    return makeFileManagerPromise("close-file", {
+        fileRef: currentFileRef
+    });
+}
+
+async function makeFileManagerPromise(promiseType, args) {
+  let promiseId = crypto.randomUUID();
+  return new Promise(function(resolve, reject) {
+      promiseDictionary[promiseId] = {
+          type: promiseType,
+          id: promiseId,
+          resolve: resolve,
+          reject: reject
+      };
+      ipcRenderer.send(
+          'filemanager-execute-promise',
+          {
+              type: promiseType,
+              id: promiseId,
+              args: args
+          }
+      );
+  });
+}
+
+ipcRenderer.on('executed-promise', (event, arg) => {
+    let promise = promiseDictionary[arg.id]
+    if (arg.success) {
+        promise.resolve(arg.args);
+    } else {
+        promise.reject(arg.args);
+    }
+});
+
+async function saveFileReminder() {
+    /*if (!currentFileNeedsSaving){
+      return;
+    }*/
 
     ipcRenderer.send(
-        'open-files', {options: options}
+        'save-file-reminder',
+        {
+            options: options,
+            fileRef: currentFileRef,
+            content: GetVisibleTextInElement(codeElement)
+        }
     );
 }
 
-ipcRenderer.on('open-files', (event, arg) => {
-    if (arg.files.length === 0) { return; }
-    let file = arg.files[0];
-    //for(file in arg) {
+let afterSave = () => {};
+
+ipcRenderer.on('save-done', (event, arg) => {
+    console.log("wut");
+        console.log(arg);
+    if (arg.userWantsToContinue) {
+        currentFileNeedsSaving = false;
+        updateTitle();
+        afterSave();
+        afterSave = () => {};
+    } else {
+        alert(`Error while saving: ${arg.error}`);
+    }
+});
+
+function saveAllFiles(){
+
+}
+
+function displayFiles(files){
+    if (!files) { return; }
+    if (files.length === 0) { return; }
+    let file = files[0];
+    //for(file in files) {
         currentFileRef = file.fileRef;
         let fileContents = file.contents;
         codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
@@ -118,48 +241,11 @@ ipcRenderer.on('open-files', (event, arg) => {
         _redoList = [];
         updateUndoRedoButtons();
     //}
-});
-
-async function saveFile(){
-    if (!currentFileNeedsSaving){
-      return;
-    }
-    let options = {
-        title: "Save CAOS file",
-        defaultPath : '%HOMEPATH%/Documents/',
-        buttonLabel : "Save",
-        filters :[
-            {name: 'CAOS', extensions: ['cos']},
-            {name: 'All Files', extensions: ['*']}
-        ]
-    }
-    ipcRenderer.send(
-        'open-files',
-        {
-            options: options,
-            fileRef: currentFileRef,
-            content: GetVisibleTextInElement(codeElement)
-        }
-    );
-}
-
-ipcRenderer.on('save-done', (event, arg) => {
-    if (arg.saved) {
-        currentFileNeedsSaving = false;
-        updateTitle();
-    } else {
-        alert(`Error while saving: ${arg.error}`);
-    }
-});
-
-function saveAllFiles(){
-
 }
 
 function updateTitle(){
   let title = '';
   if (currentFileRef){
-    console.log(currentFileRef)
     title += tileNameFromPath(currentFileRef.path) + ' ';
   }
   if (currentFileNeedsSaving){
@@ -544,3 +630,5 @@ function userTextOnClick(event){
   var caretPosition = GetCaretPositionWithin(codeElement);
   ResetIdealCaretDepth(caretPosition.end, codeText)
 }
+
+newFile();
