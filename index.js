@@ -36,14 +36,17 @@ ipcMain.on('filemanager-execute-promise', async (event, arg) => {
       case "open-files":
         fileManager_openFiles(event, arg.id, arg.args);
         break;
-      case "save-file":
-        fileManager_openFile(event, arg.id, arg.args);
+      case "get-new-save-file":
+        fileManager_getNewSaveFile(event, arg.id, arg.args);
         break;
       case "save-file-reminder":
-        fileManager_openFile(event, arg.id, arg.args);
+        fileManager_saveFileReminder(event, arg.id, arg.args);
+        break;
+      case "save-file":
+        fileManager_saveFile(event, arg.id, arg.args);
         break;
       case "close-file":
-        fileManager_openFile(event, arg.id, arg.args);
+        fileManager_closeFile(event, arg.id, arg.args);
         break;
   }
 });
@@ -54,51 +57,43 @@ function fileManager_newFile(event, id, args) {
     let newFileId = crypto.randomUUID();
     let newFilePath = null;
     let fileContents = "";
-    let newFile =
-    {
+    windowsFiles[newFileId] = {
         id: newFileId,
         path: newFilePath
     };
-    windowsFiles[newFileId] = newFile;
-    let newFiles =
-    [{
+    let newFile =
+    {
         fileRef: windowsFiles[newFileId],
         contents: ""
-    }];
+    };
     event.reply(
         'executed-promise',
         {
             id: id,
             success: true,
             args: {
-                files: newFiles
+                file: newFile
             }
         }
     );
 }
 
 async function fileManager_openFiles(event, id, args) {
-    console.log("about to open file");
     let browserWindow = event.sender.getOwnerBrowserWindow();
     let windowsFiles = getWindowsFiles(browserWindow);
-    console.log("about to try");
     try {
-        console.log("gonna try");
         let result = await dialog.showOpenDialog(
             browserWindow,
             args.options
         );
-        console.log("gotten result");
-        console.log(result);
-        if (result.canceled){
-          console.log(result);
+        if (result.canceled) {
           event.reply(
               'executed-promise',
               {
                   id: id,
                   success: true,
                   args: {
-                      files: null
+                      continue: false
                   }
               }
           );
@@ -141,6 +136,7 @@ async function fileManager_openFiles(event, id, args) {
                     id: id,
                     success: true,
                     args: {
+                        continue: true,
                         files: openedFiles
                     }
                 }
@@ -161,81 +157,172 @@ async function fileManager_openFiles(event, id, args) {
     }
 }
 
-async function saveFile(event, id, args) {
+async function fileManager_getNewSaveFile(event, id, args) {
+    let browserWindow = event.sender.getOwnerBrowserWindow();
+    let windowsFiles = getWindowsFiles(browserWindow);
+
+    let result = await dialog.showSaveDialog(browserWindow, args.options);
+
+    if (result.canceled) {
+        event.reply(
+            'executed-promise',
+            {
+                id: id,
+                success: true,
+                args: {
+                    continue: false
+                }
+            }
+        );
+        return;
+    }
+
+    windowsFiles[args.fileRef.id].path = result.filePath;
+
+    event.reply(
+        'executed-promise',
+        {
+            id: id,
+            success: true,
+            args: {
+                continue: true,
+                fileRef: windowsFiles[args.fileRef.id]
+            }
+        }
+    );
+    return;
+}
+
+async function fileManager_saveFileReminder(event, id, args) {
+    let browserWindow = event.sender.getOwnerBrowserWindow();
+    let windowsFiles = getWindowsFiles(browserWindow);
+
+    let result = await dialog.showMessageBox(
+        browserWindow,
+        args.options
+    );
+    switch (result.response) {
+      case 0:
+        event.reply(
+            'executed-promise',
+            {
+                id: id,
+                success: true,
+                args: {
+                    continue: true,
+                    toss: false
+                }
+            }
+        );
+        break;
+      case 1:
+        event.reply(
+            'executed-promise',
+            {
+                id: id,
+                success: true,
+                args: {
+                    continue: true,
+                    toss: true
+                }
+            }
+        );
+        break;
+      case 2:
+        event.reply(
+            'executed-promise',
+            {
+                id: id,
+                success: true,
+                args: {
+                    continue: false,
+                    toss: false
+                }
+            }
+        );
+        break;
+    }
+
+    if (result.canceled) {
+
+    } else {
+        windowsFiles[args.fileRef.id].path = result.filePath;
+        event.reply(
+            'executed-promise',
+            {
+                id: id,
+                success: true,
+                args: {
+                    continue: true,
+                    fileRef: windowsFiles[args.fileRef.id]
+                }
+            }
+        );
+    }
+}
+
+async function fileManager_saveFile(event, id, args) {
     let browserWindow = event.sender.getOwnerBrowserWindow();
     let windowsFiles = getWindowsFiles(browserWindow);
 
 
-    if (!windowsFiles[args.fileRef.id].path){
-        saveFileReminder(event, args);
-    }
     let fileRef = windowsFiles[args.fileRef.id];
-    try{
+    if (!fileRef.path){
+        event.reply(
+            'executed-promise',
+            {
+                id: id,
+                success: false,
+                args: {
+                    error: new Error("No file path found.")
+                }
+            }
+        );
+        return;
+    }
+    try {
       await fs.writeFileSync(fileRef.path, args.content, 'utf-8');
       event.reply(
-          'save-done',
-          { userWantsToContinue: true }
+          'executed-promise',
+          {
+              id: id,
+              success: true,
+              args: {
+                  continue: true
+              }
+          }
       );
       return;
-    }catch (err){
-      console.log(err);
+    } catch (err) {
       event.reply(
-          'save-done',
+          'executed-promise',
           {
-             userWantsToContinue: false,
-             error: err
+              id: id,
+              success: false,
+              args: {
+                  error: err
+              }
           }
       );
       return;
     }
 }
 
-async function saveFileReminder(event, id, args) {
-    let result = await dialog.showSaveDialog(
-        browserWindow,
-        args.options
-    );
-    if (result.canceled) {
-        event.reply(
-            'save-done',
-            {
-              userWantsToContinue: false,
-              error: "User canceled"
+async function fileManager_closeFile(event, id, args) {
+    let browserWindow = event.sender.getOwnerBrowserWindow();
+    let windowsFiles = getWindowsFiles(browserWindow);
+    delete windowsFiles[args.fileRef.id]
+    event.reply(
+        'executed-promise',
+        {
+            id: id,
+            success: true,
+            args: {
+                continue: true
             }
-        );
-        return {userWantsToContinue: false};
-    } else {
-        windowsFiles[args.fileRef.id].path = result.filePath;
-        return {userWantsToContinue: true};
-    }
-}
-
-
-
-async function displaySaveFileDialog(browserWindow){
-
-}
-
-async function saveFile(){
-
-  if (!currentFile){
-    let result = await displaySaveFileDialog();
-    if (result.canceled){
-      return false;
-    }
-    currentFile = result.filePaths[0];
-  }
-  try{
-    await fs.writeFileSync(currentFile, GetVisibleTextInElement(codeElement), 'utf-8');
-    if (currentFileNeedsSaving){
-      currentFileNeedsSaving = false;
-      updateTitle();
-    }
-    return true;
-  }catch (err){
-    console.log(err);
-    throw err;
-  }
+        }
+    );
+    return;
 }
 
 function getWindowType(browserWindow) {

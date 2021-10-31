@@ -84,10 +84,13 @@ function redoMultiCommand(subcommands){
 }
 
 async function newFile() {
-    if (!await saveFileIfNeeded().continue) {
+    if (!(await saveFileIfNeeded()).continue) {
         return;
     }
-    let newFile = await newFilePromise();
+    if (!(await closeFileIfNeeded()).continue) {
+        return;
+    }
+    let newFile = (await newFilePromise()).file;
     displayFiles([newFile]);
 }
 
@@ -95,24 +98,44 @@ async function openFile() {
     if (!(await saveFileIfNeeded()).continue) {
         return;
     }
-    let newFile = (await openFilePromise()).files[0];
+    if (!(await closeFileIfNeeded()).continue) {
+        return;
+    }
+    let newOpenFile = await openFilePromise();
+    if (!newOpenFile.continue) {
+        return;
+    }
+    let newFile = newOpenFile.files[0];
     displayFiles([newFile]);
 }
 
 async function saveFile() {
+    let newPath = await getNewSaveFilePromise().fileRef.path;
+    currentFileRef.path = newPath;
     await saveFilePromise();
+}
+
+async function closeFile() {
+    return await closeFilePromise();
 }
 
 async function saveFileIfNeeded() {
     if (currentFileNeedsSaving) {
         let result = await saveFileReminderPromise();
-        if (result.canceled) {
+        if (!result.continue) {
             return {continue: false};
         }
         if (!result.toss) {
             await saveFilePromise();
             await closeFilePromise();
         }
+    }
+    return {continue: true};
+}
+
+async function closeFileIfNeeded() {
+    if (currentFileRef) {
+        return await closeFile();
     }
     return {continue: true};
 }
@@ -127,7 +150,7 @@ async function openFilePromise() {
     return makeFileManagerPromise("open-files", new Object());
 }
 
-async function saveFilePromise() {
+async function getNewSaveFilePromise() {
     let options = {
         title: "Save CAOS file",
         defaultPath : '%HOMEPATH%/Documents/',
@@ -137,6 +160,14 @@ async function saveFilePromise() {
             {name: 'All Files', extensions: ['*']}
         ]
     }
+    return makeFileManagerPromise("get-new-save-file", {
+        options: options,
+        fileRef: currentFileRef,
+    });
+}
+
+async function saveFilePromise() {
+
     return makeFileManagerPromise("save-file", {
         options: options,
         fileRef: currentFileRef,
@@ -152,7 +183,6 @@ async function saveFileReminderPromise() {
     return makeFileManagerPromise("save-file-reminder", {
         options: options,
         fileRef: currentFileRef,
-        content: GetVisibleTextInElement(codeElement)
     });
 }
 
@@ -195,6 +225,7 @@ ipcRenderer.on('executed-promise', (event, args) => {
             console.log(args.args);
         }
     }
+    delete promiseDictionary[args.id];
 });
 
 function saveAllFiles(){
