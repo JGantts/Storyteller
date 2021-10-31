@@ -28,26 +28,27 @@ function getWindowsFiles(browserWindow) {
 }
 
 ipcMain.on('filemanager-execute-promise', async (event, arg) => {
+    console.log(arg);
     switch (arg.type) {
       case "new-file":
-        fileManager_newFile(event, arg);
+        fileManager_newFile(event, arg.id, arg.args);
         break;
-      case "open-file":
-        fileManager_openFile(event, arg);
+      case "open-files":
+        fileManager_openFiles(event, arg.id, arg.args);
         break;
       case "save-file":
-        fileManager_openFile(event, arg);
+        fileManager_openFile(event, arg.id, arg.args);
         break;
       case "save-file-reminder":
-        fileManager_openFile(event, arg);
+        fileManager_openFile(event, arg.id, arg.args);
         break;
       case "close-file":
-        fileManager_openFile(event, arg);
+        fileManager_openFile(event, arg.id, arg.args);
         break;
   }
 });
 
-function fileManager_newFile(event, arg) {
+function fileManager_newFile(event, id, args) {
     let browserWindow = event.sender.getOwnerBrowserWindow();
     let windowsFiles = getWindowsFiles(browserWindow);
     let newFileId = crypto.randomUUID();
@@ -67,6 +68,7 @@ function fileManager_newFile(event, arg) {
     event.reply(
         'executed-promise',
         {
+            id: id,
             success: true,
             args: {
                 files: newFiles
@@ -75,19 +77,29 @@ function fileManager_newFile(event, arg) {
     );
 }
 
-async function fileManager_openFile(event, arg) {
+async function fileManager_openFiles(event, id, args) {
+    console.log("about to open file");
     let browserWindow = event.sender.getOwnerBrowserWindow();
     let windowsFiles = getWindowsFiles(browserWindow);
+    console.log("about to try");
     try {
+        console.log("gonna try");
         let result = await dialog.showOpenDialog(
             browserWindow,
-            arg.options
+            args.options
         );
+        console.log("gotten result");
+        console.log(result);
         if (result.canceled){
+          console.log(result);
           event.reply(
-              'open-files',
+              'executed-promise',
               {
-                  files: []
+                  id: id,
+                  success: true,
+                  args: {
+                      files: null
+                  }
               }
           );
         } else {
@@ -104,8 +116,16 @@ async function fileManager_openFile(event, arg) {
                     fileContents = fs.readFileSync(path, 'utf-8');
                 } catch (err) {
                     console.log(err);
-                    fileRef.path = "";
-                    fileContents = err.message;
+                    event.reply(
+                        'executed-promise',
+                        {
+                            id: id,
+                            success: false,
+                            args: {
+                                error: err
+                            }
+                        }
+                    );
                 }
                 windowsFiles[fileId] = fileRef;
                 let openedFile = {
@@ -114,73 +134,44 @@ async function fileManager_openFile(event, arg) {
                 }
                 openedFiles.push(openedFile);
             }
+            console.log(openedFiles);
             event.reply(
-                'open-files',
+                'executed-promise',
                 {
-                    files: openedFiles
+                    id: id,
+                    success: true,
+                    args: {
+                        files: openedFiles
+                    }
                 }
             );
         }
     } catch(err) {
         console.log(err);
-        alert(err);
-    }
-}
-
-ipcMain.on('save-file-reminder', async (event, arg) => {
-    console.log(arg);
-    if (!arg.fileRef) {
         event.reply(
-            'save-done',
+            'executed-promise',
             {
-               userWantsToContinue: true,
+                id: id,
+                success: false,
+                args: {
+                    error: err
+                }
             }
         );
     }
-    console.log(arg);
-    let browserWindow = event.sender.getOwnerBrowserWindow();
-    let windowsFiles = getWindowsFiles(browserWindow);
-    let fileRef = windowsFiles[arg.fileRef.id];
+}
 
-    let result = await dialog.showMessageBox(options);
-    let userWantsToContinue = false;
-    let error = null
-    if(result.response === 0){
-        userWantsToContinue = true;
-        try{
-            await fs.writeFileSync(fileRef.path, arg.content, 'utf-8');
-            userWantsToContinue = true;
-        }catch (err){
-            console.log(err);
-            userWantsToContinue = false;
-            error = err;
-        }
-    }else if (result.response === 1){
-        userWantsToContinue = true;
-    }else{
-        userWantsToContinue = false;
-        error = "User canceled";
-    }
-
-    event.reply(
-        'save-done',
-        {
-           userWantsToContinue: userWantsToContinue,
-        }
-  );
-});
-
-async function saveFile(event, arg) {
+async function saveFile(event, id, args) {
     let browserWindow = event.sender.getOwnerBrowserWindow();
     let windowsFiles = getWindowsFiles(browserWindow);
 
 
-    if (!windowsFiles[arg.fileRef.id].path){
-        saveFileReminder(event, arg);
+    if (!windowsFiles[args.fileRef.id].path){
+        saveFileReminder(event, args);
     }
-    let fileRef = windowsFiles[arg.fileRef.id];
+    let fileRef = windowsFiles[args.fileRef.id];
     try{
-      await fs.writeFileSync(fileRef.path, arg.content, 'utf-8');
+      await fs.writeFileSync(fileRef.path, args.content, 'utf-8');
       event.reply(
           'save-done',
           { userWantsToContinue: true }
@@ -199,10 +190,10 @@ async function saveFile(event, arg) {
     }
 }
 
-async function saveFileReminder(event, arg) {
+async function saveFileReminder(event, id, args) {
     let result = await dialog.showSaveDialog(
         browserWindow,
-        arg.options
+        args.options
     );
     if (result.canceled) {
         event.reply(
@@ -214,7 +205,7 @@ async function saveFileReminder(event, arg) {
         );
         return {userWantsToContinue: false};
     } else {
-        windowsFiles[arg.fileRef.id].path = result.filePath;
+        windowsFiles[args.fileRef.id].path = result.filePath;
         return {userWantsToContinue: true};
     }
 }

@@ -95,7 +95,7 @@ async function openFile() {
     if (!(await saveFileIfNeeded()).continue) {
         return;
     }
-    let newFile = await openFilePromise();
+    let newFile = (await openFilePromise()).files[0];
     displayFiles([newFile]);
 }
 
@@ -124,7 +124,7 @@ async function newFilePromise() {
 }
 
 async function openFilePromise() {
-    return makeFileManagerPromise("open-file", new Object());
+    return makeFileManagerPromise("open-files", new Object());
 }
 
 async function saveFilePromise() {
@@ -182,12 +182,18 @@ async function makeFileManagerPromise(promiseType, args) {
   });
 }
 
-ipcRenderer.on('executed-promise', (event, arg) => {
-    let promise = promiseDictionary[arg.id]
-    if (arg.success) {
-        promise.resolve(arg.args);
+ipcRenderer.on('executed-promise', (event, args) => {
+    console.log("promise done");
+    console.log(args);
+    let promise = promiseDictionary[args.id]
+    if (args.success) {
+        promise.resolve(args.args);
     } else {
-        promise.reject(arg.args);
+        if (promise.reject) {
+            promise.reject(args.args);
+        } else {
+            console.log(args.args);
+        }
     }
 });
 
@@ -196,6 +202,7 @@ function saveAllFiles(){
 }
 
 function displayFiles(files){
+    console.log(files);
     if (!files) { return; }
     if (files.length === 0) { return; }
     let file = files[0];
