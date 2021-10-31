@@ -110,9 +110,13 @@ async function openFile() {
 }
 
 async function saveFile() {
-    let newPath = await getNewSaveFilePromise().fileRef.path;
+    let newPath = (await getNewSaveFilePromise()).fileRef.path;
     currentFileRef.path = newPath;
-    await saveFilePromise();
+    if (!(await saveFilePromise()).continue) {
+        return;
+    }
+    currentFileNeedsSaving = false;
+    updateTitle();
 }
 
 async function closeFile() {
