@@ -91,7 +91,8 @@ async function newFile() {
         return;
     }
     let newFile = (await newFilePromise()).file;
-    displayFiles([newFile]);
+    currentFileRef = newFile;
+    displayFiles([currentFileRef]);
 }
 
 async function openFile() {
@@ -106,7 +107,8 @@ async function openFile() {
         return;
     }
     let newFile = newOpenFile.files[0];
-    displayFiles([newFile]);
+    currentFileRef = newFile;
+    displayFiles([currentFileRef]);
 }
 
 async function saveFile() {
