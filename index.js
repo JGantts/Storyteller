@@ -28,7 +28,6 @@ function getWindowsFiles(browserWindow) {
 }
 
 ipcMain.on('filemanager-execute-promise', async (event, arg) => {
-    console.log(arg);
     switch (arg.type) {
       case "new-file":
         fileManager_newFile(event, arg.id, arg.args);
@@ -129,7 +128,6 @@ async function fileManager_openFiles(event, id, args) {
                 }
                 openedFiles.push(openedFile);
             }
-            console.log(openedFiles);
             event.reply(
                 'executed-promise',
                 {
@@ -241,23 +239,6 @@ async function fileManager_saveFileReminder(event, id, args) {
             }
         );
         break;
-    }
-
-    if (result.canceled) {
-
-    } else {
-        windowsFiles[args.fileRef.id].path = result.filePath;
-        event.reply(
-            'executed-promise',
-            {
-                id: id,
-                success: true,
-                args: {
-                    continue: true,
-                    fileRef: windowsFiles[args.fileRef.id]
-                }
-            }
-        );
     }
 }
 

@@ -167,9 +167,7 @@ async function getNewSaveFilePromise() {
 }
 
 async function saveFilePromise() {
-
     return makeFileManagerPromise("save-file", {
-        options: options,
         fileRef: currentFileRef,
         content: GetVisibleTextInElement(codeElement)
     });
@@ -213,8 +211,6 @@ async function makeFileManagerPromise(promiseType, args) {
 }
 
 ipcRenderer.on('executed-promise', (event, args) => {
-    console.log("promise done");
-    console.log(args);
     let promise = promiseDictionary[args.id]
     if (args.success) {
         promise.resolve(args.args);
@@ -232,8 +228,7 @@ function saveAllFiles(){
 
 }
 
-function displayFiles(files){
-    console.log(files);
+function displayFiles(files) {
     if (!files) { return; }
     if (files.length === 0) { return; }
     let file = files[0];
