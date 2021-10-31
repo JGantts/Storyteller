@@ -19,5 +19,6 @@
     "spectron": "^10.0.1"
   },
   "dependencies": {
+    "electron": "^15.3.0"
   }
 }
