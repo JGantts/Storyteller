@@ -117,10 +117,11 @@ async function saveFile() {
         currentFileRef.path = newPath;
     }
     if (!(await saveFilePromise()).continue) {
-        return;
+        return {continue: false};
     }
     currentFileNeedsSaving = false;
     updateTitle();
+    return {continue: true};
 }
 
 async function closeFile() {
@@ -134,14 +135,7 @@ async function saveFileIfNeeded() {
             return {continue: false};
         }
         if (!result.toss) {
-            let newPath = (await getNewSaveFilePromise()).fileRef.path;
-            if (!currentFileRef.path) {
-                let newPath = (await getNewSaveFilePromise()).fileRef.path;
-                currentFileRef.path = newPath;
-            }
-            if (!(await saveFilePromise()).continue) {
-                return {continue: false};
-            }
+            return (await saveFile());
         }
     }
     return {continue: true};
