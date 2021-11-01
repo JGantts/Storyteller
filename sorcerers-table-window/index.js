@@ -112,8 +112,10 @@ async function openFile() {
 }
 
 async function saveFile() {
-    let newPath = (await getNewSaveFilePromise()).fileRef.path;
-    currentFileRef.path = newPath;
+    if (!currentFileRef.path) {
+        let newPath = (await getNewSaveFilePromise()).fileRef.path;
+        currentFileRef.path = newPath;
+    }
     if (!(await saveFilePromise()).continue) {
         return;
     }
@@ -132,8 +134,14 @@ async function saveFileIfNeeded() {
             return {continue: false};
         }
         if (!result.toss) {
-            await saveFilePromise();
-            await closeFilePromise();
+            let newPath = (await getNewSaveFilePromise()).fileRef.path;
+            if (!currentFileRef.path) {
+                let newPath = (await getNewSaveFilePromise()).fileRef.path;
+                currentFileRef.path = newPath;
+            }
+            if (!(await saveFilePromise()).continue) {
+                return {continue: false};
+            }
         }
     }
     return {continue: true};
