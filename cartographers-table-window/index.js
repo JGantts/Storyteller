@@ -219,69 +219,7 @@ function setupCanvas(canvas, rect) {
   return ctx;
 }
 
-function buildMultiCommand(subcommands){
-  let subcommandsForwards = subcommands;
-  let subcommandsReversed = subcommands.slice();
-  subcommandsReversed.reverse();
-  return new Command(
-    undoMultiCommand,
-    subcommandsReversed,
-    redoMultiCommand,
-    subcommandsForwards,
-  );
-}
 
-function undoMultiCommand(subcommands){
-  subcommands
-    .forEach((subcommand, i) => {
-      subcommand.undo();
-    });
-}
-
-function redoMultiCommand(subcommands){
-  subcommands
-    .forEach((subcommand, i) => {
-      subcommand.redo();
-    });
-}
-
-
-
-async function newFile(){
-
-
-
-
-  /*if (currentFileNeedsSaving){
-    if (!await displaySaveFileReminderDialog()){
-      return;
-    }
-  }
-  codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
-  SetCaretPositionWithin(codeElement, 0);
-  if (currentFileNeedsSaving){
-    currentFileNeedsSaving = false;
-  }
-  if (currentFile){
-    currentFile = null;
-  }
-  updateTitle();
-  _undoList = [];
-  _redoList = [];
-  updateUndoRedoButtons();*/
-}
-
-async function openFile(){
-
-}
-
-async function saveFile(){
-
-}
-
-function saveAllFiles(){
-
-}
 
 async function displaySaveFileReminderDialog(){
   let options  = {
@@ -695,6 +633,7 @@ function tryCreateRoom() {
 }
 
 function rebuildRedrawRooms() {
+    console.log(dataStructures);
     let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
     let doors = dataStructureFactory.getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms).filter(function(val) {return val});
     let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
@@ -717,7 +656,8 @@ function rebuildRedrawRooms() {
 }
 
 function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
-    metaroom = metaroomIn
+
+    metaroom = JSON.parse(metaroomIn);
     canvasElements.background.width =  metaroom.width;
     canvasElements.background.height =  metaroom.height;
     canvasContexts.background = setupCanvas(canvasElements.background, metaroom);

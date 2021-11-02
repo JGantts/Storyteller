@@ -24,6 +24,11 @@
   z-index: 1;
 }
 
+.tooltip {
+  background-color: rgba(0,0,0,0.8);
+  color: #fff;
+}
+
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip-holder:hover .tooltip {
   visibility: visible;
