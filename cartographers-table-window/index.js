@@ -5,7 +5,8 @@ const fs = require('fs');
 const crypto = require('crypto');
 //const path = require("path");
 
-const { metaroom } = require('./dollhouse.js');
+const { FileHelper } = require('../render-helpers/file-helper.js');
+
 const { geometry } = require('./geometryHelper.js');
 const { selectionRenderer } = require('./selectionRenderer.js');
 const { selectionChecker } = require('./selectionChecker.js');
@@ -16,10 +17,6 @@ const { lineSegmentComparison } = require('./lineSegmentComparison.js');
 let zoom = 1;
 let posX = 0;
 let posY = 0;
-
-/*let metaroomWalls = [];
-let metaroomDoors = [];
-let metaroomPoints = [];*/
 
 let dataStructures = null;
 
@@ -51,9 +48,13 @@ window.onkeyup = userTextKeyUp;
 let selectionCheckMargin = 6;
 const selctionSquareWidth = selectionCheckMargin * 4/3;
 
+let fileHelper = new FileHelper(updateTitle, displayFiles, () => {return GetVisibleTextInElement(codeElement);});
+
 function getSelectionMultiplier() {
     return shiftKeyIsDown ? 1.375 : 1;
 }
+
+let metaroom = null;
 
 let _undoList = [];
 let _redoList = [];
@@ -82,6 +83,121 @@ class Command{
   undo(){
     this._undo(this._undoArgs);
   }
+}
+
+function buildMultiCommand(subcommands){
+  let subcommandsForwards = subcommands;
+  let subcommandsReversed = subcommands.slice();
+  subcommandsReversed.reverse();
+  return new Command(
+    undoMultiCommand,
+    subcommandsReversed,
+    redoMultiCommand,
+    subcommandsForwards,
+  );
+}
+
+function undoMultiCommand(subcommands){
+  subcommands
+    .forEach((subcommand, i) => {
+      subcommand.undo();
+    });
+}
+
+function redoMultiCommand(subcommands){
+  subcommands
+    .forEach((subcommand, i) => {
+      subcommand.redo();
+    });
+}
+
+async function newFile() {
+    fileHelper.newFile();
+}
+
+async function openFile() {
+    console.log("hi");
+    fileHelper.openFile();
+}
+
+async function saveFile() {
+    fileHelper.saveFile();
+}
+
+async function closeFile() {
+    fileHelper.closeFile();
+}
+
+function saveAllFiles(){
+    fileHelper.saveAllFiles();
+}
+
+function displayFiles(files) {
+    if (!files) { return; }
+    if (files.length === 0) { return; }
+    let file = files[0];
+    //for(file in files) {
+        let fileContents = file.contents;
+        loadMetaroom(
+            {
+                background: backgroundCanvasElement,
+                selection: selectionRainbowCanvasElement,
+                room: roomCanvasElement,
+                pasties: pastiesCanvasElement,
+                potential: potentialCanvasElement,
+                sandwich: selectionHighlightCanvasElement
+            },
+            {
+                background: backgroundCtx,
+                selection: selectionRainbowCtx,
+                room: roomCtx,
+                pasties: pastiesCtx,
+                potential: potentialCtx,
+                sandwich: selectionHighlightCtx
+            },
+            fileContents
+        );
+        updateTitle();
+        _undoList = [];
+        _redoList = [];
+        updateUndoRedoButtons();
+    //}
+}
+
+function updateTitle(){
+  let title = '';
+  let currentFileRef = fileHelper.getCurrentFileRef();
+  if (currentFileRef){
+    title += tileNameFromPath(currentFileRef.path) + ' ';
+  }
+  if (fileHelper.getCurrentFileNeedsSavings()) {
+    title += '* '
+    $('#save-file-img').css('opacity','1')
+  }else{
+    $('#save-file-img').css('opacity','0.4')
+  }
+  if (currentFileRef){
+    title += '- ';
+  }
+  title += 'Cartographer\'s Table';
+  document.title = title;
+}
+
+function tileNameFromPath(path) {
+    assert(
+      typeof path === 'string'
+      || typeof path === 'object',
+      `Expected string or NULL, instead found \{${JSON.stringify(path)}\}.`)
+
+    if (!path) {
+        return "Unsaved";
+    }
+
+    let lastIndexOfSlash = path.lastIndexOf("/")
+    let secondTolastIndex = path.lastIndexOf("/", lastIndexOfSlash-1);
+    let lastIndexOfDot = path.lastIndexOf(".")
+    let fileName = "..." + path.slice(secondTolastIndex);
+    return fileName;
 }
 
 function setupCanvas(canvas, rect) {
@@ -600,7 +716,8 @@ function rebuildRedrawRooms() {
     redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
 }
 
-function loadMetaroom(canvasElements, canvasContexts, metaroom) {
+function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
+    metaroom = metaroomIn
     canvasElements.background.width =  metaroom.width;
     canvasElements.background.height =  metaroom.height;
     canvasContexts.background = setupCanvas(canvasElements.background, metaroom);
@@ -680,7 +797,10 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     }
 }
 
-async function redrawSelection(){
+async function redrawSelection() {
+    if (!metaroom) {
+        return;
+    }
     //console.log(dataStructures);
     let selection = selectionChecker.getSelection();
     selectionHighlightCtx.clearRect(0, 0, metaroom.width, metaroom.height);
@@ -710,25 +830,5 @@ function redrawPotential(potentialRoom, dataStructures) {
         redrawRooms(potentialCtx, potentialCtx, doorsWalls, points, dataStructures.metaroomDisk);
     }
 }
-
-loadMetaroom(
-    {
-        background: backgroundCanvasElement,
-        selection: selectionRainbowCanvasElement,
-        room: roomCanvasElement,
-        pasties: pastiesCanvasElement,
-        potential: potentialCanvasElement,
-        sandwich: selectionHighlightCanvasElement
-    },
-    {
-        background: backgroundCtx,
-        selection: selectionRainbowCtx,
-        room: roomCtx,
-        pasties: pastiesCtx,
-        potential: potentialCtx,
-        sandwich: selectionHighlightCtx
-    },
-    metaroom
-);
 
 setInterval(redrawSelection, 50);
