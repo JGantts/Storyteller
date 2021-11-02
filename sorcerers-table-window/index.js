@@ -21,10 +21,10 @@ const{
   GetCaretPositionOneLineDown,
   GetCaretPositionOneLineUp,
 } = require('./text-editing-helper.js');
+const { FileHelper } = require('../render-helpers/file-helper.js');
 //const path = require("path");
 
-let currentFileRef = null;
-let currentFileNeedsSaving = false;
+let fileHelper = new FileHelper(updateTitle, displayFiles, () => {return GetVisibleTextInElement(codeElement);});
 
 let codeElement = document.getElementById('caos-user-code');
 
@@ -84,156 +84,23 @@ function redoMultiCommand(subcommands){
 }
 
 async function newFile() {
-    if (!(await saveFileIfNeeded()).continue) {
-        return;
-    }
-    if (!(await closeFileIfNeeded()).continue) {
-        return;
-    }
-    let newFile = (await newFilePromise()).file;
-    currentFileRef = newFile;
-    displayFiles([currentFileRef]);
+    fileHelper.newFile();
 }
 
 async function openFile() {
-    if (!(await saveFileIfNeeded()).continue) {
-        return;
-    }
-    if (!(await closeFileIfNeeded()).continue) {
-        return;
-    }
-    let newOpenFile = await openFilePromise();
-    if (!newOpenFile.continue) {
-        return;
-    }
-    let newFile = newOpenFile.files[0];
-    currentFileRef = newFile;
-    displayFiles([currentFileRef]);
+    fileHelper.openFile();
 }
 
 async function saveFile() {
-    if (!currentFileRef.path) {
-        let newPath = (await getNewSaveFilePromise()).fileRef.path;
-        currentFileRef.path = newPath;
-    }
-    if (!(await saveFilePromise()).continue) {
-        return {continue: false};
-    }
-    currentFileNeedsSaving = false;
-    updateTitle();
-    return {continue: true};
+    fileHelper.saveFile();
 }
 
 async function closeFile() {
-    return await closeFilePromise();
+    fileHelper.closeFile();
 }
-
-async function saveFileIfNeeded() {
-    if (currentFileNeedsSaving) {
-        let result = await saveFileReminderPromise();
-        if (!result.continue) {
-            return {continue: false};
-        }
-        if (!result.toss) {
-            return (await saveFile());
-        }
-    }
-    return {continue: true};
-}
-
-async function closeFileIfNeeded() {
-    if (currentFileRef) {
-        return await closeFile();
-    }
-    return {continue: true};
-}
-
-let promiseDictionary = new Object();
-
-async function newFilePromise() {
-    return makeFileManagerPromise("new-file", new Object());
-}
-
-async function openFilePromise() {
-    return makeFileManagerPromise("open-files", new Object());
-}
-
-async function getNewSaveFilePromise() {
-    let options = {
-        title: "Save CAOS file",
-        defaultPath : '%HOMEPATH%/Documents/',
-        buttonLabel : "Save",
-        filters :[
-            {name: 'CAOS', extensions: ['cos']},
-            {name: 'All Files', extensions: ['*']}
-        ]
-    }
-    return makeFileManagerPromise("get-new-save-file", {
-        options: options,
-        fileRef: currentFileRef,
-    });
-}
-
-async function saveFilePromise() {
-    return makeFileManagerPromise("save-file", {
-        fileRef: currentFileRef,
-        content: GetVisibleTextInElement(codeElement)
-    });
-}
-
-async function saveFileReminderPromise() {
-    let options  = {
-      buttons: ['Save', 'Toss', 'Cancel'],
-      message: 'Do you want to save your work?'
-    };
-    return makeFileManagerPromise("save-file-reminder", {
-        options: options,
-        fileRef: currentFileRef,
-    });
-}
-
-async function closeFilePromise() {
-    return makeFileManagerPromise("close-file", {
-        fileRef: currentFileRef
-    });
-}
-
-async function makeFileManagerPromise(promiseType, args) {
-  let promiseId = crypto.randomUUID();
-  return new Promise(function(resolve, reject) {
-      promiseDictionary[promiseId] = {
-          type: promiseType,
-          id: promiseId,
-          resolve: resolve,
-          reject: reject
-      };
-      ipcRenderer.send(
-          'filemanager-execute-promise',
-          {
-              type: promiseType,
-              id: promiseId,
-              args: args
-          }
-      );
-  });
-}
-
-ipcRenderer.on('executed-promise', (event, args) => {
-    let promise = promiseDictionary[args.id]
-    if (args.success) {
-        promise.resolve(args.args);
-    } else {
-        if (promise.reject) {
-            promise.reject(args.args);
-        } else {
-            console.log(args.args);
-        }
-    }
-    delete promiseDictionary[args.id];
-});
 
 function saveAllFiles(){
-
+    fileHelper.saveAllFiles();
 }
 
 function displayFiles(files) {
@@ -241,12 +108,10 @@ function displayFiles(files) {
     if (files.length === 0) { return; }
     let file = files[0];
     //for(file in files) {
-        currentFileRef = file.fileRef;
         let fileContents = file.contents;
         codeElement.innerHTML = '<span class="syntax-whitespace"></span>';
         SetCaretPositionWithin(codeElement, 0);
-        insertText(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
-        currentFileNeedsSaving = false;
+        insertTextFromNewOrOpenedFile(fileContents.replace(/(?:\r\n|\r|\n)/g, '\n'));
         updateTitle();
         _undoList = [];
         _redoList = [];
@@ -256,10 +121,11 @@ function displayFiles(files) {
 
 function updateTitle(){
   let title = '';
+  let currentFileRef = fileHelper.getCurrentFileRef();
   if (currentFileRef){
     title += tileNameFromPath(currentFileRef.path) + ' ';
   }
-  if (currentFileNeedsSaving){
+  if (fileHelper.getCurrentFileNeedsSavings()) {
     title += '* '
     $('#save-file-img').css('opacity','1')
   }else{
@@ -610,7 +476,12 @@ function insertTextAbsolute({startIndex, text}){
     codeText.substring(0, startIndex)
       + text
       + codeText.substring(startIndex, codeText.length);
+  fileHelper.fileModified();
   CheckCode(codeElement, newCodeText, startIndex+text.length);
+}
+
+function insertTextFromNewOrOpenedFile(text) {
+  CheckCode(codeElement, text, 0);
 }
 
 function makeDeleteTextCommand(startIndex, length){
@@ -629,6 +500,7 @@ function deleteTextAbsolute({startIndex, text}){
   let newCodeText =
     codeText.substring(0, startIndex)
       + codeText.substring(startIndex + text.length, codeText.length);
+  fileHelper.fileModified();
   CheckCode(codeElement, newCodeText, startIndex);
 }
 

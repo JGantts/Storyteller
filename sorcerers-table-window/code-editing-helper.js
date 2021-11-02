@@ -10,10 +10,6 @@ const{
 } = require('./html-editing-helper.js');
 
 function checkCode(codeElement, codeText, caretPosition){
-  if (!currentFileNeedsSaving){
-    currentFileNeedsSaving = true;
-    updateTitle();
-  }
   $('#inprocessParse').text('');
   $('#highlighted').text('');
 
