@@ -3,13 +3,49 @@
 //wall
 //corner
 //point
-let selected = {
+let selectedHover = {
   selectedType : "",
   selectedRoomId: "",
   selectedId: ""
 }
 
-function checkSelection(x, y, dataStructures ){
+let selectedClick = {
+  selectedType : "",
+  selectedRoomId: "",
+  selectedId: ""
+}
+
+function checkSelectionHover(x, y, dataStructures ){
+    let selected = {
+      selectedType : "",
+      selectedRoomId: "",
+      selectedId: ""
+    }
+    if (selected.selectedType === "room") {
+        selected.selectedRoomId = selected.selectedId;
+    } else {
+        selected.selectedRoomId = "";
+    }
+    selected.selectedType = ""
+    selected.selectedId = "";
+    if (selected.selectedType === "") {
+        checkPointSelection(x, y, dataStructures);
+    }
+    if (selected.selectedType === "") {
+        checkLineSelection(x, y, dataStructures);
+    }
+    if (selected.selectedType === "") {
+        checkRoomSelection(x, y, dataStructures);
+    }
+    //redrawSelection();
+}
+
+function checkSelectionClick(x, y, dataStructures ){
+    let selected = {
+      selectedType : "",
+      selectedRoomId: "",
+      selectedId: ""
+    }
     if (selected.selectedType === "room") {
         selected.selectedRoomId = selected.selectedId;
     } else {
