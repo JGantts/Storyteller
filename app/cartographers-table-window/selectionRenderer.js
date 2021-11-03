@@ -91,25 +91,58 @@ function getCornerAngle(point, room) {
     }
     assert(cornerIndex !== -1, `Couldn't find cooresponding corner of room ${JSON.stringify(room)} to point ${JSON.stringify(point)}`);
 
+    let width = room.rightX-room.leftX;
+    let ceilingYDiff = Math.abs(room.leftCeilingY-room.rightCeilingY);
+    let floorYDiff = Math.abs(room.leftFloorY-room.rightFloorY);
     switch (cornerIndex) {
       case 0:
-        return {start: 0.75, end: 1.0};
+        if (room.leftCeilingY < room.rightCeilingY) {
+            return {
+              start: 0.75,
+              end: 0.75 + Math.atan(width/ceilingYDiff)/(2*Math.PI)
+            };
+        } else {
+            return {
+              start: -0.25,
+              end: Math.atan(ceilingYDiff/width)/(2*Math.PI)
+            };
+        }
 
       case 1:
-        return {start: 0.5, end: 0.75};
+        if (room.leftCeilingY < room.rightCeilingY) {
+            return {
+              start: 0.5 - Math.atan(ceilingYDiff/width)/(2*Math.PI),
+              end: 0.75
+            };
+        } else {
+            return {
+              start: 0.75 - Math.atan(width/ceilingYDiff)/(2*Math.PI),
+              end: 0.75
+            };
+        }
 
       case 2:
-        return {start: 0.25, end: 0.5};
+        if (room.leftFloorY > room.rightFloorY) {
+            return {
+              start: 0.25,
+              end: 0.5 + Math.atan(floorYDiff/width)/(2*Math.PI)
+            };
+        } else {
+            return {
+              start: 0.25,
+              end: 0.25 + Math.atan(width/floorYDiff)/(2*Math.PI)
+            };
+        }
 
       case 3:
         if (room.leftFloorY > room.rightFloorY) {
             return {
-              start: 0.25 - Math.atan((room.rightX-room.leftX)/(room.leftFloorY-room.rightFloorY))/(2*Math.PI),
+              start: 0.25 - Math.atan(width/floorYDiff)/(2*Math.PI),
               end: 0.25
             };
         } else {
             return {
-              start: -Math.atan((room.rightFloorY-room.leftFloorY)/(room.rightX-room.leftX))/(2*Math.PI),
+              start: -Math.atan(floorYDiff/width)/(2*Math.PI),
               end: 0.25
             };
         }
@@ -136,8 +169,6 @@ const selctionCircleWidth = selectionCheckMargin * 2;
 const selectionCircleRotationsPerSecond = 3/4;
 
 function drawSelectionCircle(selectionRainbowCtx, x, y, thetaIn0, thetaIn1) {
-    console.log({thetaIn0, thetaIn1});
-
     if (thetaIn0 >= 0) {
         let thetaFull0 = 1.0 - thetaIn1;
         let thetaFull1 = 1.0 - thetaIn0;
