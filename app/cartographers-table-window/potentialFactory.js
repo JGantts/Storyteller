@@ -244,6 +244,9 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
 }
 
 function roomOverlaps(room, dataStructures) {
+    if (!room) {
+        return false;
+    }
     let lines = dataStructureFactory.getWallsFromRoom(room);
     //check if this potentialRoom contains any existing points
     for (const pointKey in dataStructures.points) {
@@ -309,6 +312,10 @@ function getPotentialRoom(ui, selection, dataStructures) {
                   dataStructures,
                 );
             }
+            if (roomOverlaps(room, dataStructures)) {
+                room = null;
+            }
+
         } else if (selection.selectedType === "corner") {
           if (ui.ctrlKeyIsDown) {
               let selectedRoom = dataStructures.metaroomDisk.rooms[selection.selectedRoomId];
@@ -328,8 +335,13 @@ function getPotentialRoom(ui, selection, dataStructures) {
                 let selectedLine = dataStructures.walls[selection.selectedId];
                 room = getPotentialRoomFromLine(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedLine);
             }
+            if (roomOverlaps(room, dataStructures)) {
+                room = null;
+            }
+
         } else if (selection.selectedType === "room") {
             Function.prototype();
+
         } else {
             if (ui.shiftKeyIsDown) {
                 room = getPotentialRoomFromPoints(
@@ -338,17 +350,12 @@ function getPotentialRoom(ui, selection, dataStructures) {
                   dataStructures,
                 );
             }
+            if (roomOverlaps(room, dataStructures)) {
+                room = null;
+            }
         }
     }
-    if (room) {
-        if (roomOverlaps(room, dataStructures)) {
-            return null;
-        } else {
-            return room;
-        }
-    } else {
-        return null
-    }
+    return room;
 }
 
 module.exports = {

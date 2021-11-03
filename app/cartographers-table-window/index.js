@@ -605,6 +605,8 @@ function handleWheel(e) {
 
 function tryCreateRoom() {
     let selection = selectionChecker.getSelection();
+    let _shiftKeyIsDown = shiftKeyIsDown;
+    let _ctrlKeyIsDown = ctrlKeyIsDown;
     let newRoom = potentialFactory.getPotentialRoom
     (
         {
@@ -613,26 +615,28 @@ function tryCreateRoom() {
               startDragging: startDragging,
               stopDragging: stopDragging
             },
-            shiftKeyIsDown: shiftKeyIsDown,
-            ctrlKeyIsDown: ctrlKeyIsDown
+            shiftKeyIsDown: _shiftKeyIsDown,
+            ctrlKeyIsDown: _ctrlKeyIsDown
         },
         selection,
         dataStructures
     );
     if (newRoom) {
-        addRoom(newRoom);
+        let id = crypto.randomUUID();
+        newRoom.id = id;
+        let addCommand = makeAddRoomCommand(id, newRoom);
+        let finalCommand = null;
+        if (_ctrlKeyIsDown) {
+            let deleteCommand = makeDeleteRoomCommand(selection.selectedRoomId);
+            finalCommand = buildMultiCommand([addCommand, deleteCommand]);
+        } else {
+            finalCommand = addCommand;
+        }
+        _undoList.push(finalCommand);
+        finalCommand.do();
+        _redoList = [];
+        updateUndoRedoButtons();
     }
-}
-
-function addRoom(room){
-    let id = crypto.randomUUID();
-    room.id = id;
-
-    let addCommand = makeAddRoomCommand(id, room);
-    _undoList.push(addCommand);
-    addCommand.do();
-    _redoList = [];
-    updateUndoRedoButtons();
 }
 
 function makeAddRoomCommand(id, room){
@@ -652,15 +656,6 @@ function addRoomAbsolute({id, room}){
   fileHelper.fileModified();
 
   rebuildRedrawRooms();
-}
-
-function deleteRoom(id){
-    let deleteCommand = makeDeleteRoomCommand(id);
-    _undoList.push(deleteCommand);
-    deleteCommand.do();
-    _redoList = [];
-    updateUndoRedoButtons();
-
 }
 
 function makeDeleteRoomCommand(id){
