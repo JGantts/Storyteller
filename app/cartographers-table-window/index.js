@@ -122,7 +122,6 @@ async function newFile() {
 }
 
 async function openFile() {
-    console.log("hi");
     fileHelper.openFile();
 }
 
@@ -639,7 +638,6 @@ function tryCreateRoom() {
 }
 
 function rebuildRedrawRooms() {
-    console.log(dataStructures);
     let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
     let doors = dataStructureFactory.getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms).filter(function(val) {return val});
     let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
