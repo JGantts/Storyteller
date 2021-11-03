@@ -361,7 +361,7 @@ function createStorytellerWindow () {
 
   storytellerWindow = win;
 
-  loadWindow(win, 'storyteller-window/index.html')
+  loadWindow(win, './app/storyteller-window/index.html')
 }
 
 function createSorcerersTableWindow() {
@@ -380,7 +380,7 @@ function createSorcerersTableWindow() {
 
   sorcerersTableWindow = win;
 
-  loadWindow(win, 'sorcerers-table-window/index.html')
+  loadWindow(win, './sorcerers-table-window/index.html')
 }
 
 function createDesignersTableWindow() {
@@ -398,7 +398,7 @@ function createDesignersTableWindow() {
 
   win.setMenu(null)
 
-  loadWindow(win, 'designers-table-window/index.html')
+  loadWindow(win, './designers-table-window/index.html')
 }
 
 function createCartographersTableWindow() {
