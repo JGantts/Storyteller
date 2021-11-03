@@ -48,7 +48,13 @@ window.onkeyup = userTextKeyUp;
 let selectionCheckMargin = 6;
 const selctionSquareWidth = selectionCheckMargin * 4/3;
 
-let fileHelper = new FileHelper(updateTitle, displayFiles, () => {return GetVisibleTextInElement(codeElement);});
+let fileHelper = new FileHelper(
+    updateTitle,
+    displayFiles,
+    () => {
+        return JSON.stringify(dataStructures.metaroomDisk);
+    }
+);
 
 function getSelectionMultiplier() {
     return shiftKeyIsDown ? 1.375 : 1;
@@ -656,15 +662,15 @@ function rebuildRedrawRooms() {
 }
 
 let blankRoom = {
-  id: "",
-  name: "",
-  background: "",
-  x: 0,
-  y: 0,
-  width: 0,
-  height: 0,
-  rooms: {},
-  perms: []
+    id: "",
+    name: "",
+    background: "",
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    rooms: {},
+    perms: []
 };
 
 function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
