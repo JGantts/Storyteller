@@ -140,6 +140,9 @@ function saveAllFiles(){
 function displayFiles(files) {
     if (!files) { return; }
     if (files.length === 0) { return; }
+    zoom = 1.0;
+    posX = 0;
+    posY = 0;
     let file = files[0];
     //for(file in files) {
         let fileContents = file.contents;
@@ -442,6 +445,15 @@ function tryDelete() {
     selectionChecker.resetSelection();
 }
 
+
+function deleteRoom(id){
+    let deleteCommand = makeDeleteRoomCommand(id);
+    _undoList.push(deleteCommand);
+    deleteCommand.do();
+    _redoList = [];
+    updateUndoRedoButtons();
+}
+
 function controlKeyUp(event){
   ctrlKeyIsDown = false;
 }
@@ -728,8 +740,14 @@ let blankRoom = {
 
 function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
 
-    if (metaroomIn) {
-        metaroom = JSON.parse(metaroomIn);
+    if (typeof metaroomIn === "string") {
+        if (metaroomIn !== "") {
+            metaroom = JSON.parse(metaroomIn);
+        } else {
+            metaroom = blankRoom;
+        }
+    } else if (metaroomIn) {
+        metaroom = metaroomIn
     } else {
         metaroom = blankRoom;
     }
