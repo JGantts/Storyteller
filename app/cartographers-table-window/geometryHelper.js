@@ -1,4 +1,25 @@
-
+function getCorner(room, point) {
+    //0: top-left
+    //1: top-right
+    //2: bottom-right
+    //3: bottom-left
+    let cornerIndex = -1;
+    if (room.leftX === point.x) {
+        if (room.leftCeilingY === point.y) {
+            cornerIndex = 0;
+        } else if (room.leftFloorY === point.y) {
+            cornerIndex = 3;
+        }
+    } else if (room.rightX === point.x) {
+        if (room.rightCeilingY === point.y) {
+            cornerIndex = 1;
+        } else if (room.rightFloorY === point.y) {
+            cornerIndex = 2;
+        }
+    }
+    assert(cornerIndex !== -1, `Couldn't find cooresponding corner of room ${JSON.stringify(room)} to point ${JSON.stringify(point)}`);
+    return cornerIndex;
+}
 
 function getSortedDoor(aX, aY, bX, bY, perm) {
     let line = getSortedLine(aX, aY, bX, bY);
@@ -153,6 +174,7 @@ function pointsEqual(a, b) {
 
 module.exports = {
     geometry: {
+        getCorner: getCorner,
         getSortedDoor: getSortedDoor,
         getSortedLine: getSortedLine,
         getRoomCeiling: getRoomCeiling,

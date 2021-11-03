@@ -539,12 +539,16 @@ function handleMouseMove(e){
               idDragging = selection.selectedId;
               startDragging = {x: currX, y: currY};
               stopDragging = {x: currX, y: currY};
-          } else if (
-            selection.selectedType === "point"
-            || selection.selectedType === "corner"
-          ) {
+          } else if (selection.selectedType === "point") {
               isDragging = true;
               whatDragging = "point";
+              idDragging = selection.selectedId;
+              pointStart = dataStructures.points[selection.selectedId];
+              startDragging = pointStart;
+              stopDragging = {x: currX, y: currY};
+          } else if (selection.selectedType === "corner") {
+              isDragging = true;
+              whatDragging = "corner";
               idDragging = selection.selectedId;
               pointStart = dataStructures.points[selection.selectedId];
               startDragging = pointStart;
@@ -609,7 +613,8 @@ function tryCreateRoom() {
               startDragging: startDragging,
               stopDragging: stopDragging
             },
-            shiftKeyIsDown: shiftKeyIsDown
+            shiftKeyIsDown: shiftKeyIsDown,
+            ctrlKeyIsDown: ctrlKeyIsDown
         },
         selection,
         dataStructures
@@ -831,7 +836,8 @@ async function redrawSelection() {
               startDragging: startDragging,
               stopDragging: stopDragging
             },
-            shiftKeyIsDown: shiftKeyIsDown
+            shiftKeyIsDown: shiftKeyIsDown,
+            ctrlKeyIsDown: ctrlKeyIsDown
         },
         selection,
         dataStructures
