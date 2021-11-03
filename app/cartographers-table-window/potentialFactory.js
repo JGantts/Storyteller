@@ -317,15 +317,13 @@ function getPotentialRoom(ui, selection, dataStructures) {
             }
 
         } else if (selection.selectedType === "corner") {
-          if (ui.ctrlKeyIsDown) {
-              let selectedRoom = dataStructures.metaroomDisk.rooms[selection.selectedRoomId];
-              room = getPotentialRoomFromYChange(
-                ui.dragging.startDragging,
-                ui.dragging.stopDragging,
-                dataStructures,
-                selectedRoom
-              );
-          }
+          let selectedRoom = dataStructures.metaroomDisk.rooms[selection.selectedRoomId];
+          room = getPotentialRoomFromYChange(
+            ui.dragging.startDragging,
+            ui.dragging.stopDragging,
+            dataStructures,
+            selectedRoom
+          );
 
         } else if (selection.selectedType === "door") {
             Function.prototype();

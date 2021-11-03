@@ -57,7 +57,7 @@ let fileHelper = new FileHelper(
 );
 
 function getSelectionMultiplier() {
-    return (shiftKeyIsDown || ctrlKeyIsDown) ? 1.375 : 1;
+    return (shiftKeyIsDown) ? 1.375 : 1;
 }
 
 let metaroom = null;
@@ -324,7 +324,6 @@ function redo(){
   updateUndoRedoButtons();
 }
 
-let ctrlKeyIsDown = false;
 let shiftKeyIsDown = false;
 
 function userTextKeyDown(event){
@@ -405,7 +404,7 @@ function shiftKeyDown(event){
 }
 
 function controlKeyDown(event){
-  ctrlKeyIsDown = true;
+
 }
 
 function controlKeyComboDown(event){
@@ -421,17 +420,8 @@ function controlKeyComboDown(event){
     redo();
   }
 }
-
-function shiftKeyUp(event){
-  shiftKeyIsDown = false;
-}
-
-function controlKeyUp(event){
-  ctrlKeyIsDown = false;
-}
-
 function tryDelete() {
-    let selection = selectionChecker.getSelection();
+    let selection = selectionChecker.getSelectionClick();
     if (selection.selectedType === "wall") {
         Function.prototype();
     } else if (
@@ -455,7 +445,7 @@ function deleteRoom(id){
 }
 
 function controlKeyUp(event){
-  ctrlKeyIsDown = false;
+
 }
 
 function shiftKeyComboDown(event){
@@ -497,10 +487,7 @@ function handleMouseDown(e){
     startX=parseInt(e.offsetX)/zoom;
     startY=parseInt(e.offsetY)/zoom;
 
-    let wasSelectedType = selectionChecker.getSelection().selectedType;
-    let wasSelectedId = selectionChecker.getSelection().selectedId;
-
-    selectionChecker.checkSelectionC(startX, startY, dataStructures);
+    selectionChecker.checkSelectionClick(startX, startY, dataStructures);
 }
 
 function handleMouseUp(e){
@@ -545,7 +532,7 @@ function handleMouseMove(e){
   });*/
 
   if (isMouseButtonDown) {
-      let selection = selectionChecker.getSelection();
+      let selection = selectionChecker.getSelectionClick();
       if (!isDragging) {
           if (selection.selectedType === "wall") {
               isDragging = true;
@@ -620,9 +607,11 @@ function handleWheel(e) {
 }
 
 function tryCreateRoom() {
-    let selection = selectionChecker.getSelection();
+    let selection = selectionChecker.getSelectionHover();
+    if (selection.selectedType === "") {
+        selection = selectionChecker.getSelectionClick();
+    }
     let _shiftKeyIsDown = shiftKeyIsDown;
-    let _ctrlKeyIsDown = ctrlKeyIsDown;
     let newRoom = potentialFactory.getPotentialRoom
     (
         {
@@ -631,8 +620,7 @@ function tryCreateRoom() {
               startDragging: startDragging,
               stopDragging: stopDragging
             },
-            shiftKeyIsDown: _shiftKeyIsDown,
-            ctrlKeyIsDown: _ctrlKeyIsDown
+            shiftKeyIsDown: _shiftKeyIsDown
         },
         selection,
         dataStructures
@@ -642,7 +630,7 @@ function tryCreateRoom() {
         newRoom.id = id;
         let addCommand = makeAddRoomCommand(id, newRoom);
         let finalCommand = null;
-        if (_ctrlKeyIsDown) {
+        if (!_shiftKeyIsDown) {
             let deleteCommand = makeDeleteRoomCommand(selection.selectedRoomId);
             finalCommand = buildMultiCommand([addCommand, deleteCommand]);
         } else {
@@ -842,7 +830,10 @@ async function redrawSelection() {
         return;
     }
     //console.log(dataStructures);
-    let selection = selectionChecker.getSelection();
+    let selection = selectionChecker.getSelectionHover();
+    if (selection.selectedType === "") {
+        selection = selectionChecker.getSelectionClick();
+    }
     selectionHighlightCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
     let potentialRoom = potentialFactory.getPotentialRoom
@@ -853,8 +844,7 @@ async function redrawSelection() {
               startDragging: startDragging,
               stopDragging: stopDragging
             },
-            shiftKeyIsDown: shiftKeyIsDown,
-            ctrlKeyIsDown: ctrlKeyIsDown
+            shiftKeyIsDown: shiftKeyIsDown
         },
         selection,
         dataStructures

@@ -16,28 +16,24 @@ let selectedClick = {
 }
 
 function checkSelectionHover(x, y, dataStructures ){
+    if (selectedClick.selectedType !== "") {
+        return;
+    }
     let selected = {
       selectedType : "",
       selectedRoomId: "",
       selectedId: ""
     }
-    if (selected.selectedType === "room") {
-        selected.selectedRoomId = selected.selectedId;
-    } else {
-        selected.selectedRoomId = "";
-    }
-    selected.selectedType = ""
-    selected.selectedId = "";
     if (selected.selectedType === "") {
-        checkPointSelection(x, y, dataStructures);
+        selected = checkPointSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
-        checkLineSelection(x, y, dataStructures);
+        selected = checkLineSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
-        checkRoomSelection(x, y, dataStructures);
+        selected = checkRoomSelection(x, y, dataStructures);
     }
-    //redrawSelection();
+    selectedHover = selected;
 }
 
 function checkSelectionClick(x, y, dataStructures ){
@@ -46,26 +42,29 @@ function checkSelectionClick(x, y, dataStructures ){
       selectedRoomId: "",
       selectedId: ""
     }
-    if (selected.selectedType === "room") {
-        selected.selectedRoomId = selected.selectedId;
-    } else {
-        selected.selectedRoomId = "";
-    }
-    selected.selectedType = ""
-    selected.selectedId = "";
     if (selected.selectedType === "") {
-        checkPointSelection(x, y, dataStructures);
+        selected = checkPointSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
-        checkLineSelection(x, y, dataStructures);
+        selected = checkLineSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
-        checkRoomSelection(x, y, dataStructures);
+        selected = checkRoomSelection(x, y, dataStructures);
     }
-    //redrawSelection();
+    selectedClick = selected;
+    selectedHover = {
+      selectedType : "",
+      selectedRoomId: "",
+      selectedId: ""
+    }
 }
 
 function checkPointSelection(x, y, dataStructures){
+    let selected = {
+      selectedType : "",
+      selectedRoomId: "",
+      selectedId: ""
+    }
     for (const key in dataStructures.points) {
         if(isClickOnPoint(x, y, dataStructures.points[key])){
             //console.log(metaroomPoints[i]);
@@ -78,9 +77,15 @@ function checkPointSelection(x, y, dataStructures){
             break;
         }
     }
+    return selected;
 }
 
 function checkLineSelection(x, y){
+    let selected = {
+      selectedType : "",
+      selectedRoomId: "",
+      selectedId: ""
+    }
     for (const key in dataStructures.walls) {
         if(isClickOnLine(x, y, dataStructures.walls[key])){
             selected.selectedType = "wall";
@@ -95,16 +100,23 @@ function checkLineSelection(x, y){
             break;
         }
     }
+    return selected;
 }
 
 function checkRoomSelection(x, y){
-  for (const key in dataStructures.metaroomDisk.rooms) {
-      if(isClickInRoom(x, y, dataStructures.metaroomDisk.rooms[key])){
-          selected.selectedType = "room";
-          selected.selectedId = key;
-          break;
-      }
-  }
+    let selected = {
+      selectedType : "",
+      selectedRoomId: "",
+      selectedId: ""
+    }
+    for (const key in dataStructures.metaroomDisk.rooms) {
+        if(isClickInRoom(x, y, dataStructures.metaroomDisk.rooms[key])){
+            selected.selectedType = "room";
+            selected.selectedId = key;
+            break;
+        }
+    }
+    return selected;
 }
 
 /*
@@ -195,14 +207,20 @@ function resetSelection() {
     }
 }
 
-function getSelection() {
-    return selected;
+function getSelectionHover() {
+    return selectedHover;
+}
+
+function getSelectionClick() {
+    return selectedClick;
 }
 
 module.exports = {
     selectionChecker: {
-        getSelection: getSelection,
-        checkSelection: checkSelection,
-        resetSelection: resetSelection
+        checkSelectionHover,
+        checkSelectionClick,
+        getSelectionHover,
+        getSelectionClick,
+        resetSelection
     }
 }
