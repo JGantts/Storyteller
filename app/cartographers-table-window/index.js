@@ -255,24 +255,6 @@ async function displaySaveFileDialog(){
   return dialog.showSaveDialog(WIN, options);
 }
 
-function updateTitle(){
-  let title = '';
-  if (currentFile){
-    title += path.basename(currentFile) + ' ';
-  }
-  if (currentFileNeedsSaving){
-    title += '* '
-    $('#save-file-img').css('opacity','1')
-  }else{
-    $('#save-file-img').css('opacity','0.4')
-  }
-  if (currentFile){
-    title += '- ';
-  }
-  title += 'Map Editor 2020';
-  document.title = title;
-}
-
 function updateUndoRedoButtons(){
   if (_undoList.length === 0){
     $('#undo-button-img').css('opacity','0.4')
@@ -447,6 +429,7 @@ function tryDelete() {
                      && perm.rooms.b !== selection.selectedId
                    );
                 });
+        fileHelper.fileModified();
         rebuildRedrawRooms();
     }
     selectionChecker.resetSelection();
@@ -632,6 +615,7 @@ function tryCreateRoom() {
 
         metaroom.rooms[newId] = newRoom;
         metaroom.perms = metaroom.perms.concat(newPerms);
+        fileHelper.fileModified();
 
         rebuildRedrawRooms();
     }
