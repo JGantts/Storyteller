@@ -28,6 +28,9 @@ function checkSelectionHover(x, y, dataStructures ){
         selected = checkPointSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
+        selected = checkCornerSelection(x, y, dataStructures);
+    }
+    if (selected.selectedType === "") {
         selected = checkLineSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
@@ -44,6 +47,9 @@ function checkSelectionClick(x, y, dataStructures ){
     }
     if (selected.selectedType === "") {
         selected = checkPointSelection(x, y, dataStructures);
+    }
+    if (selected.selectedType === "") {
+        selected = checkCornerSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
         selected = checkLineSelection(x, y, dataStructures);
@@ -66,7 +72,7 @@ function checkPointSelection(x, y, dataStructures){
       selectedId: ""
     }
     for (const key in dataStructures.points) {
-        if(isClickOnPoint(x, y, dataStructures.points[key])){
+        if(isClickOnPoint(x, y, dataStructures.points[key], selectionCheckMargin)){
             //console.log(metaroomPoints[i]);
             if (selected.selectedRoomId === ""){
                 selected.selectedType = "point";
@@ -80,7 +86,29 @@ function checkPointSelection(x, y, dataStructures){
     return selected;
 }
 
-function checkLineSelection(x, y){
+function checkCornerSelection(x, y, dataStructures){
+    let selected = {
+      selectedType : "",
+      selectedRoomId: "",
+      selectedId: ""
+    }
+    for (const key in dataStructures.points) {
+        if(isClickOnPoint(x, y, dataStructures.points[key], selectionCheckMargin*2)){
+            //console.log(metaroomPoints[i]);
+            selected.selectedType = "corner";
+            selected.selectedId = dataStructures.points[key].id;
+            break;
+        }
+    }
+    if (selected.selectedType !== "") {
+        let roomSelection = checkRoomSelection(x, y, dataStructures);
+        selected.selectedRoomId = roomSelection.selectedId;
+        console.log(selected);
+    }
+    return selected;
+}
+
+function checkLineSelection(x, y, dataStructures){
     let selected = {
       selectedType : "",
       selectedRoomId: "",
@@ -103,7 +131,7 @@ function checkLineSelection(x, y){
     return selected;
 }
 
-function checkRoomSelection(x, y){
+function checkRoomSelection(x, y, dataStructures){
     let selected = {
       selectedType : "",
       selectedRoomId: "",
@@ -128,7 +156,7 @@ leftFloorY: 300,
 rightFloorY: 300,
 */
 
-function isClickOnPoint(mx, my, point){
+function isClickOnPoint(mx, my, point, selectionCheckMargin){
     //console.log(metaroomPoints);
     if (mx <= point.x - selectionCheckMargin) {
         return false;
