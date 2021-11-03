@@ -57,7 +57,7 @@ let fileHelper = new FileHelper(
 );
 
 function getSelectionMultiplier() {
-    return shiftKeyIsDown ? 1.375 : 1;
+    return (shiftKeyIsDown || ctrlKeyIsDown) ? 1.375 : 1;
 }
 
 let metaroom = null;
@@ -321,16 +321,23 @@ function redo(){
   updateUndoRedoButtons();
 }
 
+let ctrlKeyIsDown = false;
+let shiftKeyIsDown = false;
+
 function userTextKeyDown(event){
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
   }
   event.preventDefault();
 
-  if (event.altKey || event.ctrlKey || event.metaKey){
-    controlKeyDown(event);
+  if (event.key === "Shift") {
+    shiftKeyDown();
+  } else if (event.key === "Control") {
+    controlKeyDown();
+  } else if (event.altKey || event.ctrlKey || event.metaKey){
+    controlKeyComboDown(event);
   } else if (event.shiftKey){
-    shiftKeyDown(event);
+    shiftKeyComboDown(event);
   }else{
     switch (event.key){
       case 'ArrowDown':
@@ -369,16 +376,15 @@ function userTextKeyDown(event){
 }
 
 function userTextKeyUp(event){
-  if (event.defaultPrevented) {
-    return; // Do nothing if the event was already processed
-  }
-  event.preventDefault();
-
-  if (event.key === "control" || event.key === "Meta"){
-    controlKeyUp(event);
-  } else if (event.key === "Shift"){
-    shiftKeyUp(event);
-  }
+    if (event.defaultPrevented) {
+        return; // Do nothing if the event was already processed
+    }
+    event.preventDefault();
+    if (event.key === "Shift") {
+        shiftKeyUp(event);
+    } else if (event.key === "Control") {
+        controlKeyUp(event);
+    }
 }
 
 function editingKeyDown(event) {
@@ -390,23 +396,35 @@ function editingKeyDown(event) {
     }
 }
 
-let ctrlKeyIsDown = false;
-let shiftKeyIsDown = false;
+
+function shiftKeyDown(event){
+  shiftKeyIsDown = true;
+}
 
 function controlKeyDown(event){
-  console.log("what?");
   ctrlKeyIsDown = true;
-  if (event.ctrlKey && event.key === 'v'){
+}
+
+function controlKeyComboDown(event){
+  if (event.key === 'v'){
     paste();
-  }else if (event.ctrlKey && event.key === 'c'){
+  }else if (event.key === 'c'){
     copy();
-  }else if (event.ctrlKey && event.key === 'x'){
+  }else if (event.key === 'x'){
     cut();
-  }else if (event.ctrlKey && event.key === 'z'){
+  }else if (event.key === 'z'){
     undo();
-  }else if (event.ctrlKey && event.key === 'y'){
+  }else if (event.key === 'y'){
     redo();
   }
+}
+
+function shiftKeyUp(event){
+  shiftKeyIsDown = false;
+}
+
+function controlKeyUp(event){
+  ctrlKeyIsDown = false;
 }
 
 function tryDelete() {
@@ -428,8 +446,10 @@ function controlKeyUp(event){
   ctrlKeyIsDown = false;
 }
 
-function shiftKeyDown(event){
-  shiftKeyIsDown = true;
+function shiftKeyComboDown(event){
+    if (event.key === "Shift") {
+        shiftKeyIsDown = true;
+    }
 }
 
 function shiftKeyUp(event){
