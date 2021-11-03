@@ -419,18 +419,7 @@ function tryDelete() {
     ) {
         Function.prototype();
     } else if (selection.selectedType === "room") {
-        delete dataStructures.metaroomDisk.rooms[selection.selectedId];
-        dataStructures.metaroomDisk.perms =
-            dataStructures.metaroomDisk.perms
-                .filter((perm) =>
-                {
-                  return (
-                    perm.rooms.a !== selection.selectedId
-                     && perm.rooms.b !== selection.selectedId
-                   );
-                });
-        fileHelper.fileModified();
-        rebuildRedrawRooms();
+        deleteRoom(selection.selectedId);
     }
     selectionChecker.resetSelection();
 }
@@ -606,19 +595,81 @@ function tryCreateRoom() {
         dataStructures
     );
     if (newRoom) {
-        let newId = crypto.randomUUID();
-        newRoom.id = newId;
-        //newRoom.id = crypto.randomUUID();
-        let newPerms = dataStructureFactory.getPermsFromRoomPotential(newRoom, dataStructures);
-
-        //console.log(newRoom);
-
-        metaroom.rooms[newId] = newRoom;
-        metaroom.perms = metaroom.perms.concat(newPerms);
-        fileHelper.fileModified();
-
-        rebuildRedrawRooms();
+        addRoom(newRoom);
     }
+}
+
+function addRoom(room){
+    let id = crypto.randomUUID();
+    room.id = id;
+
+    let addCommand = makeAddRoomCommand(id, room);
+    _undoList.push(addCommand);
+    addCommand.do();
+    _redoList = [];
+    updateUndoRedoButtons();
+}
+
+function makeAddRoomCommand(id, room){
+  return new Command(
+    deleteRoomAbsolute,
+    {id},
+    addRoomAbsolute,
+    {id, room},
+  );
+}
+
+function addRoomAbsolute({id, room}){
+  let newPerms = dataStructureFactory.getPermsFromRoomPotential(room, dataStructures);
+
+  metaroom.rooms[id] = room;
+  metaroom.perms = metaroom.perms.concat(newPerms);
+  fileHelper.fileModified();
+
+  rebuildRedrawRooms();
+}
+
+function deleteRoom(id){
+    let deleteCommand = makeDeleteRoomCommand(id);
+    _undoList.push(deleteCommand);
+    deleteCommand.do();
+    _redoList = [];
+    updateUndoRedoButtons();
+
+}
+
+function makeDeleteRoomCommand(id){
+  let roomOriginal = dataStructures.metaroomDisk.rooms[id];
+  let room = {
+      id: roomOriginal.id,
+      leftX: roomOriginal.leftX,
+      rightX: roomOriginal.rightX,
+      leftCeilingY: roomOriginal.leftCeilingY,
+      rightCeilingY: roomOriginal.rightCeilingY,
+      leftFloorY: roomOriginal.leftFloorY,
+      rightFloorY: roomOriginal.rightFloorY
+  }
+  return new Command(
+      addRoomAbsolute,
+      {id, room},
+      deleteRoomAbsolute,
+      {id},
+  );
+}
+
+function deleteRoomAbsolute({id}){
+  delete dataStructures.metaroomDisk.rooms[id];
+  dataStructures.metaroomDisk.perms =
+      dataStructures.metaroomDisk.perms
+          .filter((perm) =>
+          {
+            return (
+              perm.rooms.a !== id
+               && perm.rooms.b !== id
+             );
+          });
+  fileHelper.fileModified();
+  rebuildRedrawRooms();
 }
 
 function rebuildRedrawRooms() {
@@ -779,3 +830,5 @@ function redrawPotential(potentialRoom, dataStructures) {
 }
 
 setInterval(redrawSelection, 50);
+
+newFile();
