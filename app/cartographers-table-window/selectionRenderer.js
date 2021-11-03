@@ -66,7 +66,7 @@ function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, 
         let angle = getCornerAngle(point, room);
         drawSelectionCircle(selectionRainbowCtx, point.x, point.y, angle.start, angle.end);
     } else {
-        drawSelectionCircle(selectionRainbowCtx, point.x, point.y, 0.0, 0.25);
+        drawSelectionCircle(selectionRainbowCtx, point.x, point.y, 0.0, 1.0);
     }
 }
 
@@ -89,7 +89,6 @@ function getCornerAngle(point, room) {
             cornerIndex = 2;
         }
     }
-    console.log(room)
     assert(cornerIndex !== -1, `Couldn't find cooresponding corner of room ${JSON.stringify(room)} to point ${JSON.stringify(point)}`);
 
     switch (cornerIndex) {
@@ -103,7 +102,17 @@ function getCornerAngle(point, room) {
         return {start: 0.25, end: 0.5};
 
       case 3:
-        return {start: 0.0, end: 0.25};
+        if (room.leftFloorY > room.rightFloorY) {
+            return {
+              start: 0.25 - Math.atan((room.rightX-room.leftX)/(room.leftFloorY-room.rightFloorY))/(2*Math.PI),
+              end: 0.25
+            };
+        } else {
+            return {
+              start: -Math.atan((room.rightFloorY-room.leftFloorY)/(room.rightX-room.leftX))/(2*Math.PI),
+              end: 0.25
+            };
+        }
     }
 }
 
@@ -127,10 +136,24 @@ const selctionCircleWidth = selectionCheckMargin * 2;
 const selectionCircleRotationsPerSecond = 3/4;
 
 function drawSelectionCircle(selectionRainbowCtx, x, y, thetaIn0, thetaIn1) {
+    console.log({thetaIn0, thetaIn1});
 
-    let thetaFull0 = 1.0 - thetaIn1;
-    let thetaFull1 = 1.0 - thetaIn0;
+    if (thetaIn0 >= 0) {
+        let thetaFull0 = 1.0 - thetaIn1;
+        let thetaFull1 = 1.0 - thetaIn0;
+        drawSelectionCircleHalf(selectionRainbowCtx, x, y, thetaFull0, thetaFull1);
+    } else {
+        let thetaFull0 = 1.0 - thetaIn1;
+        let thetaFull1 = 1.0;
+        let thetaFull2 = 0.0;
+        let thetaFull3 = -thetaIn0;
+        drawSelectionCircleHalf(selectionRainbowCtx, x, y, thetaFull0, thetaFull1);
+        drawSelectionCircleHalf(selectionRainbowCtx, x, y, thetaFull2, thetaFull3);
+    }
+}
 
+
+function drawSelectionCircleHalf(selectionRainbowCtx, x, y, thetaFull0, thetaFull1) {
     let time = new Date();
     selectionRainbowCtx.lineWidth = 2.5 * getSelectionMultiplier();
 
