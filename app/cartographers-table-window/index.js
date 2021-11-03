@@ -361,15 +361,19 @@ function userTextKeyDown(event){
         insertText('\n');
         break;
       case 'Shift':
-
         break
+
+      case 'Escape':
+        selectionChecker.checkSelectionClick(0, 0, dataStructures);
+        break;
+
       default:
         if (
           (event.keyCode >= 32 && event.keyCode <= 126)
           || event.keyCode >= 160
         ){
           insertText(event.key);
-        }else{
+        } else {
           assert(false, `key: ${event.key}, keyCode: ${event.keyCode}`)
         }
         break;
