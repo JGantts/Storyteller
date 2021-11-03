@@ -655,9 +655,26 @@ function rebuildRedrawRooms() {
     redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
 }
 
+let blankRoom = {
+  id: "",
+  name: "",
+  background: "",
+  x: 0,
+  y: 0,
+  width: 0,
+  height: 0,
+  rooms: {},
+  perms: []
+};
+
 function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
 
-    metaroom = JSON.parse(metaroomIn);
+    if (metaroomIn) {
+        metaroom = JSON.parse(metaroomIn);
+    } else {
+        metaroom = blankRoom;
+    }
+
     canvasElements.background.width =  metaroom.width;
     canvasElements.background.height =  metaroom.height;
     canvasContexts.background = setupCanvas(canvasElements.background, metaroom);
@@ -693,11 +710,13 @@ function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
 async function redrawMetaroom(){
     rebuildRedrawRooms();
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
-    let img = new Image;
-    img.src = dataStructures.metaroomDisk.background;
-    backgroundCtx.moveTo(0, 0);
-    await img.decode();
-    backgroundCtx.drawImage(img, 0, 0);
+    if (dataStructures.metaroomDisk.background) {
+        let img = new Image;
+        img.src = dataStructures.metaroomDisk.background;
+        backgroundCtx.moveTo(0, 0);
+        await img.decode();
+        backgroundCtx.drawImage(img, 0, 0);
+    }
 }
 
 async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
