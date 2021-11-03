@@ -1,3 +1,4 @@
+const assert = require('assert');
 //gay pride! That's right fuckers
 //red     RGB 228 003 003
 //orange  RGB 255 140 000
@@ -60,7 +61,50 @@ function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, 
     selectionHighlightCtx.roundedRect(point.x-myWidth/2, point.y-myWidth/2, myWidth, myWidth, myWidth/3);
     selectionHighlightCtx.fill();
     selectionHighlightCtx.stroke();
-    drawSelectionCircle(selectionRainbowCtx, point.x, point.y, 0.0, 1.0);
+
+    if (room) {
+        let angle = getCornerAngle(point, room);
+        drawSelectionCircle(selectionRainbowCtx, point.x, point.y, angle.start, angle.end);
+    } else {
+        drawSelectionCircle(selectionRainbowCtx, point.x, point.y, 0.0, 0.25);
+    }
+}
+
+function getCornerAngle(point, room) {
+    //0: top-left
+    //1: top-right
+    //2: bottom-right
+    //3: bottom-left
+    let cornerIndex = -1;
+    if (room.leftX === point.x) {
+        if (room.leftCeilingY === point.y) {
+            cornerIndex = 0;
+        } else if (room.leftFloorY === point.y) {
+            cornerIndex = 3;
+        }
+    } else if (room.rightX === point.x) {
+        if (room.rightCeilingY === point.y) {
+            cornerIndex = 1;
+        } else if (room.rightFloorY === point.y) {
+            cornerIndex = 2;
+        }
+    }
+    console.log(room)
+    assert(cornerIndex !== -1, `Couldn't find cooresponding corner of room ${JSON.stringify(room)} to point ${JSON.stringify(point)}`);
+
+    switch (cornerIndex) {
+      case 0:
+        return {start: 0.75, end: 1.0};
+
+      case 1:
+        return {start: 0.5, end: 0.75};
+
+      case 2:
+        return {start: 0.25, end: 0.5};
+
+      case 3:
+        return {start: 0.0, end: 0.25};
+    }
 }
 
 CanvasRenderingContext2D.prototype.roundedRect = function(x, y, width, height, radius) {
@@ -82,7 +126,11 @@ CanvasRenderingContext2D.prototype.roundedRect = function(x, y, width, height, r
 const selctionCircleWidth = selectionCheckMargin * 2;
 const selectionCircleRotationsPerSecond = 3/4;
 
-function drawSelectionCircle(selectionRainbowCtx, x, y, thetaFull0, thetaFull1) {
+function drawSelectionCircle(selectionRainbowCtx, x, y, thetaIn0, thetaIn1) {
+
+    let thetaFull0 = 1.0 - thetaIn1;
+    let thetaFull1 = 1.0 - thetaIn0;
+
     let time = new Date();
     selectionRainbowCtx.lineWidth = 2.5 * getSelectionMultiplier();
 
