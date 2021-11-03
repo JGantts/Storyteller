@@ -500,7 +500,7 @@ function handleMouseDown(e){
     let wasSelectedType = selectionChecker.getSelection().selectedType;
     let wasSelectedId = selectionChecker.getSelection().selectedId;
 
-    selectionChecker.checkSelection(startX, startY, dataStructures);
+    selectionChecker.checkSelectionC(startX, startY, dataStructures);
 }
 
 function handleMouseUp(e){
@@ -535,6 +535,8 @@ function handleMouseMove(e){
   // calculate the current mouse position
   currX=parseInt(e.offsetX)/zoom;
   currY=parseInt(e.offsetY)/zoom;
+
+  selectionChecker.checkSelectionHover(currX, currY, dataStructures);
 
   /*console.log({
     isMouseButtonDown: isMouseButtonDown,
