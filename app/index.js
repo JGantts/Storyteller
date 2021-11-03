@@ -380,7 +380,7 @@ function createSorcerersTableWindow() {
 
   sorcerersTableWindow = win;
 
-  loadWindow(win, './sorcerers-table-window/index.html')
+  loadWindow(win, './app/sorcerers-table-window/index.html')
 }
 
 function createDesignersTableWindow() {
@@ -398,7 +398,7 @@ function createDesignersTableWindow() {
 
   win.setMenu(null)
 
-  loadWindow(win, './designers-table-window/index.html')
+  loadWindow(win, './app/designers-table-window/index.html')
 }
 
 function createCartographersTableWindow() {
@@ -521,7 +521,7 @@ function createCartographersTableWindow() {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 
-  loadWindow(win, 'cartographers-table-window/index.html')
+  loadWindow(win, './app/cartographers-table-window/index.html')
 }
 
 function loadWindow(browserWindow, loadFile){
