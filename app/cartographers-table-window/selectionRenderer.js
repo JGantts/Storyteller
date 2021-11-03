@@ -49,7 +49,7 @@ function getSelectionMultiplier() {
     return shiftKeyIsDown ? 1.375 : 1;
 }
 
-function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, x, y) {
+function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, room) {
     //console.log(x);
     //console.log(y);
     let myWidth = selctionSquareWidth * getSelectionMultiplier();
@@ -57,10 +57,10 @@ function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, x, y) {
     selectionHighlightCtx.strokeStyle = "white";
     selectionHighlightCtx.fillStyle = "black";
     selectionHighlightCtx.beginPath();
-    selectionHighlightCtx.roundedRect(x-myWidth/2, y-myWidth/2, myWidth, myWidth, myWidth/3);
+    selectionHighlightCtx.roundedRect(point.x-myWidth/2, point.y-myWidth/2, myWidth, myWidth, myWidth/3);
     selectionHighlightCtx.fill();
     selectionHighlightCtx.stroke();
-    drawSelectionCircle(selectionRainbowCtx, x, y, 0.0, 1.0);
+    drawSelectionCircle(selectionRainbowCtx, point.x, point.y, 0.0, 1.0);
 }
 
 CanvasRenderingContext2D.prototype.roundedRect = function(x, y, width, height, radius) {
@@ -362,9 +362,13 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
     //wildSelection();
 //  return;
     //console.log(selected);
-    if (selected.selectedType === "point" || selected.selectedType === "corner") {
+    if (selected.selectedType === "point") {
         let selectedPoint = dataStructures.points[selected.selectedId];
-        drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint.x, selectedPoint.y);
+        drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint);
+    } else if (selected.selectedType === "corner") {
+        let selectedRoom = dataStructures.metaroomDisk.rooms[selected.selectedRoomId];
+        let selectedPoint = dataStructures.points[selected.selectedId];
+        drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint, selectedRoom);
     } else if (selected.selectedType === "door" || selected.selectedType === "wall") {
         let selectedSide = null;
         if (selected.selectedType === "door") {
