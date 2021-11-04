@@ -33,9 +33,9 @@ function checkSelectionHover(x, y, dataStructures ){
     if (selected.selectedType === "") {
         selected = checkLineSelection(x, y, dataStructures);
     }
-    if (selected.selectedType === "") {
+    /*if (selected.selectedType === "") {
         selected = checkRoomSelection(x, y, dataStructures);
-    }
+    }*/
     selectedHover = selected;
 }
 
