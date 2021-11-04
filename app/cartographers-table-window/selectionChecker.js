@@ -93,7 +93,7 @@ function checkCornerSelection(x, y, dataStructures){
       selectedId: ""
     }
     for (const key in dataStructures.points) {
-        if(isClickOnPoint(x, y, dataStructures.points[key], selectionCheckMargin*2)){
+        if(isClickOnPoint(x, y, dataStructures.points[key], selectionCheckMargin*2.5)){
             //console.log(metaroomPoints[i]);
             selected.selectedType = "corner";
             selected.selectedId = dataStructures.points[key].id;
