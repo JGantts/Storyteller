@@ -630,13 +630,18 @@ function tryCreateRoom() {
         dataStructures
     );
     if (newRoom) {
-        let id = crypto.randomUUID();
+        let id = "";
+        if (_shiftKeyIsDown) {
+            id = crypto.randomUUID();
+        } else {
+            id = selection.selectedRoomId;
+        }
         newRoom.id = id;
         let addCommand = makeAddRoomCommand(id, newRoom);
         let finalCommand = null;
         if (!_shiftKeyIsDown) {
             let deleteCommand = makeDeleteRoomCommand(selection.selectedRoomId);
-            finalCommand = buildMultiCommand([addCommand, deleteCommand]);
+            finalCommand = buildMultiCommand([deleteCommand, addCommand]);
         } else {
             finalCommand = addCommand;
         }
