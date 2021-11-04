@@ -103,7 +103,6 @@ function checkCornerSelection(x, y, dataStructures){
     if (selected.selectedType !== "") {
         let roomSelection = checkRoomSelection(x, y, dataStructures);
         selected.selectedRoomId = roomSelection.selectedId;
-        console.log(selected);
     }
     return selected;
 }

@@ -275,7 +275,6 @@ function getIntersectsFromOne(line, point){
 }
 
 function subtractDoorsFromWalls(wallsOverreach, doors){
-    console.log(wallsOverreach);
     assert(wallsOverreach, `Instead of UUID, found ${wallsOverreach}`);
     let walls = [];
     for (let i=0; i<wallsOverreach.length; i++ ){
