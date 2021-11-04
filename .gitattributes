@@ -1,6 +1,2 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-samples/*.png filter=lfs diff=lfs merge=lfs -text
-samples/*.blk filter=lfs diff=lfs merge=lfs -text
-samples/*.c16 filter=lfs diff=lfs merge=lfs -text
-samples/*.bmp filter=lfs diff=lfs merge=lfs -text
