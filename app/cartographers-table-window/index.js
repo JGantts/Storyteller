@@ -364,7 +364,7 @@ function userTextKeyDown(event){
         break
 
       case 'Escape':
-        selectionChecker.checkSelectionClick(0, 0, dataStructures);
+        selectionChecker.resetSelection();
         break;
 
       default:
@@ -657,13 +657,16 @@ function makeAddRoomCommand(id, room){
 }
 
 function addRoomAbsolute({id, room}){
+  assert(id && id !== "", `Instead of UUID, found ${id}`);
+  assert(room, `Instead of room, found ${room}`);
+  assert(room.leftX != room.rightX, `Instead of room, found ${JSON.stringify(room)}`);
   let newPerms = dataStructureFactory.getPermsFromRoomPotential(room, dataStructures);
 
   metaroom.rooms[id] = room;
   metaroom.perms = metaroom.perms.concat(newPerms);
   fileHelper.fileModified();
-
   rebuildRedrawRooms();
+  selectionChecker.resetSelection();
 }
 
 function makeDeleteRoomCommand(id){
@@ -698,11 +701,19 @@ function deleteRoomAbsolute({id}){
           });
   fileHelper.fileModified();
   rebuildRedrawRooms();
+  selectionChecker.resetSelection();
 }
 
 function rebuildRedrawRooms() {
     let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
-    let doors = dataStructureFactory.getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms).filter(function(val) {return val});
+    let doors =
+        dataStructureFactory
+            .getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms)
+            .filter(function(val) {return val})
+            .filter(val => {return (
+              val.start.x !== val.end.x ||
+              val.start.y !== val.end.y
+            );});
     let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
     let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk.rooms);
     let pointsSortedX = Object.values(points);;

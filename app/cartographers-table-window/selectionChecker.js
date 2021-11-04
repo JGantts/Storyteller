@@ -228,7 +228,13 @@ function isClickInRoom(mx, my, room){
 }
 
 function resetSelection() {
-    selected = {
+    selectedHover = {
+      selectedType : "",
+      selectedRoomId: "",
+      selectedId: ""
+    }
+
+    selectedClick = {
       selectedType : "",
       selectedRoomId: "",
       selectedId: ""

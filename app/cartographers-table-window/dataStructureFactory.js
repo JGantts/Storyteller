@@ -275,6 +275,8 @@ function getIntersectsFromOne(line, point){
 }
 
 function subtractDoorsFromWalls(wallsOverreach, doors){
+    console.log(wallsOverreach);
+    assert(wallsOverreach, `Instead of UUID, found ${wallsOverreach}`);
     let walls = [];
     for (let i=0; i<wallsOverreach.length; i++ ){
         let wall = wallsOverreach[i];
@@ -288,10 +290,6 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
 
 function subtractDoorsFromWall(wall, doors){
     let walls = [];
-    let wallMinX = Math.min(wall.start.x, wall.end.x);
-    let wallMaxX = Math.max(wall.start.x, wall.end.x);
-    let wallMinY = Math.min(wall.start.y, wall.end.y);
-    let wallMaxY = Math.max(wall.start.y, wall.end.y);
     let wallHandled = false;
     let wallChanged = false;
     for (let j=0; j < doors.length; j++) {
@@ -302,10 +300,18 @@ function subtractDoorsFromWall(wall, doors){
           ||val.end.x !== door.end.x
           ||val.end.y !== door.end.y
         )});
-        let doorMinX = Math.min(door.start.x, door.end.x);
-        let doorMaxX = Math.max(door.start.x, door.end.x);
-        let doorMinY = Math.min(door.start.y, door.end.y);
-        let doorMaxY = Math.max(door.start.y, door.end.y);
+
+        assert(
+          wall.start.x !== wall.end.x ||
+          wall.start.y !== wall.end.y,
+          `Wall has 0 length\n${JSON.stringify(wall)}`
+        );
+
+        assert(
+          door.start.x !== door.end.x ||
+          door.start.y !== door.end.y,
+          `Door has 0 length\n${JSON.stringify(door)}`
+        );
 
         lineSegmentComparison(
           wall,

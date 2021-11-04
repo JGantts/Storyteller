@@ -11,6 +11,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
       `LineB has 0 length\n${JSON.stringify(lineB)}`
     );
 
+    //console.log({lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMade, handled});
+
     let lineAMinX = Math.min(lineA.start.x, lineA.end.x);
     let lineAMaxX = Math.max(lineA.start.x, lineA.end.x);
     let lineAMinY = Math.min(lineA.start.y, lineA.end.y);
