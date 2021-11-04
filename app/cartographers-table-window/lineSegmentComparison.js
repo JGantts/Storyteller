@@ -296,8 +296,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                       lineAMinX < lineBMinX
                       && lineAMaxX === lineBMaxX
                     ) {
-                        lineASlice();
-                        lineABSlice();
+                        lineASlice(lineA.start, lineB.start);
+                        lineABSlice(lineB.start, lineB.end);
                         modificationWasMade();
                         handled();
 
@@ -307,9 +307,9 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                       && lineAMinX < lineBMaxX
                       && lineAMaxX > lineBMaxX
                     ) {
-                        lineASlice();
-                        lineABSlice();
-                        lineBSlice();
+                        lineBSlice(lineB.start, lineA.start);
+                        lineABSlice(lineA.start, lineB.end);
+                        lineASlice(lineB.end, lineA.end);
                         modificationWasMade();
                         handled();
 
