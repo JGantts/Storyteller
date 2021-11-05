@@ -405,7 +405,10 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         let selectedPoint = dataStructures.points[selected.selectedId];
         drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint);
     } else if (selected.selectedType === "corner") {
-        let selectedRoom = dataStructures.metaroomDisk.rooms[selected.selectedRoomId];
+        assert(selected.selectedRoomsIds.length === 1,
+            `Size was not 1: ${JSON.stringify(selected.selectedRoomsIds)}`)
+        let id = selected.selectedRoomsIds[0];
+        let selectedRoom = dataStructures.metaroomDisk.rooms[id];
         let selectedPoint = dataStructures.points[selected.selectedId];
         drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint, selectedRoom);
     } else if (selected.selectedType === "door" || selected.selectedType === "wall") {
@@ -417,7 +420,10 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         }
         drawSelectionLine(selectedSide, 0);
     } else if (selected.selectedType === "side") {
-        let selectedRoom = dataStructures.metaroomDisk.rooms[selected.selectedRoomId];
+        assert(selected.selectedRoomsIds.length === 1,
+            `Size was not 1: ${JSON.stringify(selected.selectedRoomsIds)}`)
+        let id = selected.selectedRoomsIds[0];
+        let selectedRoom = dataStructures.metaroomDisk.rooms[id];
         let selectedSide = dataStructureFactory.getWallsFromRoom(selectedRoom)[selected.selctedRoomPartId];
         let leftRight = 0;
         if (selected.selctedRoomPartId < 1 || selected.selctedRoomPartId > 2) {

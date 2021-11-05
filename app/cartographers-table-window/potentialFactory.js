@@ -467,7 +467,10 @@ function getPotentialRoom(ui, selection, dataStructures) {
                 Function.prototype();
 
             } else if (selection.selectedType === "corner") {
-              let selectedRoom = dataStructures.metaroomDisk.rooms[selection.selectedRoomId];
+              assert(selection.selectedRoomsIds.length === 1,
+                  `Size was not 1: ${JSON.stringify(selection.selectedRoomsIds)}`)
+              let id = selection.selectedRoomsIds[0];
+              let selectedRoom = dataStructures.metaroomDisk.rooms[id];
               room = getPotentialRoomFromYChange(
                 ui.dragging.startDragging,
                 ui.dragging.stopDragging,
@@ -486,7 +489,10 @@ function getPotentialRoom(ui, selection, dataStructures) {
 
 
             } else if (selection.selectedType === "side") {
-                let selectedRoom = dataStructures.metaroomDisk.rooms[selection.selectedRoomId];
+                assert(selection.selectedRoomsIds.length === 1,
+                    `Size was not 1: ${JSON.stringify(selection.selectedRoomsIds)}`)
+                let id = selection.selectedRoomsIds[0];
+                let selectedRoom = dataStructures.metaroomDisk.rooms[id];
                 let selectedSide = selection.selctedRoomPartId
                 room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
                 console.log(room);

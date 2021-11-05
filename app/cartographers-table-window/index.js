@@ -640,13 +640,15 @@ function tryCreateRoom() {
         if (_shiftKeyIsDown) {
             id = crypto.randomUUID();
         } else {
-            id = selection.selectedRoomId;
+            assert(selection.selectedRoomsIds.length === 1,
+                `Size was not 1: ${JSON.stringify(selection.selectedRoomsIds)}`)
+            id = selection.selectedRoomsIds[0];
         }
         newRoom.id = id;
         let addCommand = makeAddRoomCommand(id, newRoom);
         let finalCommand = null;
         if (!_shiftKeyIsDown) {
-            let deleteCommand = makeDeleteRoomCommand(selection.selectedRoomId);
+            let deleteCommand = makeDeleteRoomCommand(id);
             finalCommand = buildMultiCommand([deleteCommand, addCommand]);
         } else {
             finalCommand = addCommand;
