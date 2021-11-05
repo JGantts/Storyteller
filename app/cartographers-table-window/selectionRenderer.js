@@ -63,71 +63,10 @@ function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, 
     selectionHighlightCtx.stroke();
 
     if (room) {
-        let angle = getCornerAngle(point, room);
+        let angle = geometry.getCornerAngle(point, room);
         drawSelectionCircle(selectionRainbowCtx, point.x, point.y, angle.start, angle.end);
     } else {
         drawSelectionCircle(selectionRainbowCtx, point.x, point.y, 0.0, 1.0);
-    }
-}
-
-function getCornerAngle(point, room) {
-    let cornerIndex = geometry.getCorner(room, point);
-
-    let width = room.rightX-room.leftX;
-    let ceilingYDiff = Math.abs(room.leftCeilingY-room.rightCeilingY);
-    let floorYDiff = Math.abs(room.leftFloorY-room.rightFloorY);
-    switch (cornerIndex) {
-      case 0:
-        if (room.leftCeilingY < room.rightCeilingY) {
-            return {
-              start: 0.75,
-              end: 0.75 + Math.atan(width/ceilingYDiff)/(2*Math.PI)
-            };
-        } else {
-            return {
-              start: -0.25,
-              end: Math.atan(ceilingYDiff/width)/(2*Math.PI)
-            };
-        }
-
-      case 1:
-        if (room.leftCeilingY < room.rightCeilingY) {
-            return {
-              start: 0.5 - Math.atan(ceilingYDiff/width)/(2*Math.PI),
-              end: 0.75
-            };
-        } else {
-            return {
-              start: 0.75 - Math.atan(width/ceilingYDiff)/(2*Math.PI),
-              end: 0.75
-            };
-        }
-
-      case 2:
-        if (room.leftFloorY > room.rightFloorY) {
-            return {
-              start: 0.25,
-              end: 0.5 + Math.atan(floorYDiff/width)/(2*Math.PI)
-            };
-        } else {
-            return {
-              start: 0.25,
-              end: 0.25 + Math.atan(width/floorYDiff)/(2*Math.PI)
-            };
-        }
-
-      case 3:
-        if (room.leftFloorY > room.rightFloorY) {
-            return {
-              start: 0.25 - Math.atan(width/floorYDiff)/(2*Math.PI),
-              end: 0.25
-            };
-        } else {
-            return {
-              start: -Math.atan(floorYDiff/width)/(2*Math.PI),
-              end: 0.25
-            };
-        }
     }
 }
 
@@ -237,12 +176,41 @@ function drawSelectionCirclePortion(selectionRainbowCtx, x, y, theta0, theta1, c
 }
 
 const selectionLineWidth = selectionCheckMargin;
+const dashLength = selectionCheckMargin / 4;
 
-function drawSelectionLine(selected) {
-    let dashLength = selectionCheckMargin / 4;
+function drawSelectionLine(selectedLine, selectedRoom) {
 
-    let rise = selected.end.y - selected.start.y;
-    let run = selected.end.x - selected.start.x;
+    let start = null;
+    let end = null;
+    if (selectedRoom) {
+        let sides = dataStructureFactory.getWallsFromRoom(selectedRoom);
+        let intersectionSideIndex = -1;
+        for (let i=0; i<4; i++) {
+            lineSegmentComparison(
+                selectedLine,
+                sides[i],
+                ()=>{},
+                ()=>{
+                    intersectionSideIndex = i;
+                },
+                ()=>{},
+                ()=>{},
+                ()=>{}
+            )
+            if (intersectionSideIndex !== -1){
+                break;
+            }
+        }
+        assert(intersectionSideIndex !== -1, `Intersection not found: ${JSON.stringify(selectedLine)} ${JSON.stringify(selectedRoom)}`);
+        start = sides[intersectionSideIndex].start;
+        end = sides[intersectionSideIndex].end;
+    } else {
+        start = selectedLine.start;
+        end = selectedLine.end;
+    }
+
+    let rise = end.y - start.y;
+    let run = end.x - start.x;
     let lineLength = Math.sqrt(rise*rise+run*run);
 
     let dashCountFractional = lineLength / dashLength;
@@ -293,13 +261,14 @@ function drawSelectionLine(selected) {
         }
 
         drawSeclectionLineSegment(
-          selected.start,
+          start,
           rise,
           run,
           lineLength,
           startPercentActual,
           stopPercentActual,
           `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`
+
         )
     }
 
@@ -461,6 +430,15 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
             selectedSide = dataStructures.walls[selected.selectedId];
         }
         drawSelectionLine(selectedSide);
+    } else if (selected.selectedType === "side-door" || selected.selectedType === "side-wall") {
+        let selectedRoom = dataStructures.metaroomDisk.rooms[selected.selectedRoomId];
+        let selectedSide = null;
+        if (selected.selectedType === "side-door") {
+            selectedSide = dataStructures.doors[selected.selectedId];
+        } else {
+            selectedSide = dataStructures.walls[selected.selectedId];
+        }
+        drawSelectionLine(selectedSide, selectedRoom);
     } else if (selected.selectedType === "room") {
         drawSelectionRoom(dataStructures.metaroomDisk.rooms[selected.selectedId]);
     }

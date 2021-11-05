@@ -5,14 +5,16 @@
 //point
 let selectedHover = {
   selectedType : "",
+  selectedId: "",
   selectedRoomId: "",
-  selectedId: ""
+  selctedRoomPartId: -1
 }
 
 let selectedClick = {
   selectedType : "",
+  selectedId: "",
   selectedRoomId: "",
-  selectedId: ""
+  selctedRoomPartId: -1
 }
 
 function checkSelectionHover(x, y, dataStructures ){
@@ -21,8 +23,9 @@ function checkSelectionHover(x, y, dataStructures ){
     }
     let selected = {
       selectedType : "",
+      selectedId: "",
       selectedRoomId: "",
-      selectedId: ""
+      selctedRoomPartId: -1
     }
     if (selected.selectedType === "") {
         selected = checkPointSelection(x, y, dataStructures);
@@ -32,6 +35,9 @@ function checkSelectionHover(x, y, dataStructures ){
     }
     if (selected.selectedType === "") {
         selected = checkLineSelection(x, y, dataStructures);
+    }
+    if (selected.selectedType === "") {
+        selected = checkSideSelection(x, y, dataStructures);
     }
     /*if (selected.selectedType === "") {
         selected = checkRoomSelection(x, y, dataStructures);
@@ -42,8 +48,9 @@ function checkSelectionHover(x, y, dataStructures ){
 function checkSelectionClick(x, y, dataStructures ){
     let selected = {
       selectedType : "",
+      selectedId: "",
       selectedRoomId: "",
-      selectedId: ""
+      selctedRoomPartId: -1
     }
     if (selected.selectedType === "") {
         selected = checkPointSelection(x, y, dataStructures);
@@ -55,21 +62,26 @@ function checkSelectionClick(x, y, dataStructures ){
         selected = checkLineSelection(x, y, dataStructures);
     }
     if (selected.selectedType === "") {
+        selected = checkSideSelection(x, y, dataStructures);
+    }
+    if (selected.selectedType === "") {
         selected = checkRoomSelection(x, y, dataStructures);
     }
     selectedClick = selected;
     selectedHover = {
       selectedType : "",
+      selectedId: "",
       selectedRoomId: "",
-      selectedId: ""
+      selctedRoomPartId: -1
     }
 }
 
 function checkPointSelection(x, y, dataStructures){
     let selected = {
       selectedType : "",
+      selectedId: "",
       selectedRoomId: "",
-      selectedId: ""
+      selctedRoomPartId: -1
     }
     for (const key in dataStructures.points) {
         if(isClickOnPoint(x, y, dataStructures.points[key], selectionCheckMargin)){
@@ -89,8 +101,9 @@ function checkPointSelection(x, y, dataStructures){
 function checkCornerSelection(x, y, dataStructures){
     let selected = {
       selectedType : "",
+      selectedId: "",
       selectedRoomId: "",
-      selectedId: ""
+      selctedRoomPartId: -1
     }
     for (const key in dataStructures.points) {
         if(isClickOnPoint(x, y, dataStructures.points[key], selectionCheckMargin*2.5)){
@@ -110,18 +123,19 @@ function checkCornerSelection(x, y, dataStructures){
 function checkLineSelection(x, y, dataStructures){
     let selected = {
       selectedType : "",
+      selectedId: "",
       selectedRoomId: "",
-      selectedId: ""
+      selctedRoomPartId: -1
     }
     for (const key in dataStructures.walls) {
-        if(isClickOnLine(x, y, dataStructures.walls[key])){
+        if(isClickOnLine(x, y, dataStructures.walls[key], selectionCheckMargin)){
             selected.selectedType = "wall";
             selected.selectedId = key;
             break;
         }
     }
     for (const key in dataStructures.doors) {
-        if(isClickOnLine(x, y, dataStructures.doors[key])){
+        if(isClickOnLine(x, y, dataStructures.doors[key], selectionCheckMargin)){
             selected.selectedType = "door";
             selected.selectedId = key;
             break;
@@ -130,11 +144,70 @@ function checkLineSelection(x, y, dataStructures){
     return selected;
 }
 
+function checkSideSelection(x, y, dataStructures){
+    let selected = {
+      selectedType : "",
+      selectedId: "",
+      selectedRoomId: "",
+      selctedRoomPartId: -1
+    }
+    let selectedLine = null;
+    let selectedRoom = null;
+    for (const key in dataStructures.walls) {
+        if(isClickOnLine(x, y, dataStructures.walls[key], selectionCheckMargin*2.5)){
+            selected.selectedType = "side-wall";
+            selected.selectedId = key;
+            selectedLine = dataStructures.walls[key];
+            break;
+        }
+    }
+    if (selected.selectedType === "") {
+        for (const key in dataStructures.doors) {
+            if(isClickOnLine(x, y, dataStructures.doors[key], selectionCheckMargin*2.5)){
+                selected.selectedType = "side-door";
+                selected.selectedId = key;
+                selectedLine = dataStructures.doors[key];
+                break;
+            }
+        }
+    }
+    if (selected.selectedType !== "") {
+        let roomSelection = checkRoomSelection(x, y, dataStructures);
+        selected.selectedRoomId = roomSelection.selectedId;
+
+        let selectedRoom = dataStructures.metaroomDisk.rooms[selected.selectedRoomId];
+
+        let sides = dataStructureFactory.getWallsFromRoom(selectedRoom);
+        let intersectionSideIndex = -1;
+        for (let i=0; i<4; i++) {
+            lineSegmentComparison(
+                selectedLine,
+                sides[i],
+                ()=>{},
+                ()=>{
+                    intersectionSideIndex = i;
+                },
+                ()=>{},
+                ()=>{},
+                ()=>{}
+            )
+            if (intersectionSideIndex !== -1){
+                break;
+            }
+        }
+        assert(intersectionSideIndex !== -1, `Intersection not found: ${JSON.stringify(selectedLine)} ${JSON.stringify(selectedRoom)}`);
+        selected.selctedRoomPartId = intersectionSideIndex;
+    }
+
+    return selected;
+}
+
 function checkRoomSelection(x, y, dataStructures){
     let selected = {
       selectedType : "",
+      selectedId: "",
       selectedRoomId: "",
-      selectedId: ""
+      selctedRoomPartId: -1
     }
     for (const key in dataStructures.metaroomDisk.rooms) {
         if(isClickInRoom(x, y, dataStructures.metaroomDisk.rooms[key])){
@@ -174,7 +247,7 @@ function isClickOnPoint(mx, my, point, selectionCheckMargin){
     return true;
 }
 
-function isClickOnLine(mx, my, line){
+function isClickOnLine(mx, my, line, selectionCheckMargin){
 
 
     if (mx <= Math.min(line.start.x, line.end.x) - selectionCheckMargin) {
@@ -229,14 +302,16 @@ function isClickInRoom(mx, my, room){
 function resetSelection() {
     selectedHover = {
       selectedType : "",
+      selectedId: "",
       selectedRoomId: "",
-      selectedId: ""
+      selctedRoomPartId: -1
     }
 
     selectedClick = {
       selectedType : "",
+      selectedId: "",
       selectedRoomId: "",
-      selectedId: ""
+      selctedRoomPartId: -1
     }
 }
 
