@@ -146,10 +146,10 @@ function checkLineSelection(x, y, dataStructures){
 
 function checkSideSelection(x, y, dataStructures){
     let selected = {
-      selectedType : "",
-      selectedId: "",
-      selectedRoomId: "",
-      selctedRoomPartId: -1
+        selectedType : "",
+        selectedId: "",
+        selectedRoomId: "",
+        selctedRoomPartId: -1
     }
     let selectedLine = null;
     let selectedRoom = null;
@@ -173,8 +173,15 @@ function checkSideSelection(x, y, dataStructures){
     }
     if (selected.selectedType !== "") {
         let roomSelection = checkRoomSelection(x, y, dataStructures);
+        if (roomSelection.selectedId === "") {
+            return {
+                selectedType : "",
+                selectedId: "",
+                selectedRoomId: "",
+                selctedRoomPartId: -1
+            }
+        }
         selected.selectedRoomId = roomSelection.selectedId;
-
         let selectedRoom = dataStructures.metaroomDisk.rooms[selected.selectedRoomId];
 
         let sides = dataStructureFactory.getWallsFromRoom(selectedRoom);
