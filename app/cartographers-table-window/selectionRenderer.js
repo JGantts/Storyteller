@@ -178,36 +178,10 @@ function drawSelectionCirclePortion(selectionRainbowCtx, x, y, theta0, theta1, c
 const selectionLineWidth = selectionCheckMargin;
 const dashLength = selectionCheckMargin / 4;
 
-function drawSelectionLine(selectedLine, selectedRoom) {
+function drawSelectionLine(selectedLine, leftRight) {
 
-    let start = null;
-    let end = null;
-    if (selectedRoom) {
-        let sides = dataStructureFactory.getWallsFromRoom(selectedRoom);
-        let intersectionSideIndex = -1;
-        for (let i=0; i<4; i++) {
-            lineSegmentComparison(
-                selectedLine,
-                sides[i],
-                ()=>{},
-                ()=>{
-                    intersectionSideIndex = i;
-                },
-                ()=>{},
-                ()=>{},
-                ()=>{}
-            )
-            if (intersectionSideIndex !== -1){
-                break;
-            }
-        }
-        assert(intersectionSideIndex !== -1, `Intersection not found: ${JSON.stringify(selectedLine)} ${JSON.stringify(selectedRoom)}`);
-        start = sides[intersectionSideIndex].start;
-        end = sides[intersectionSideIndex].end;
-    } else {
-        start = selectedLine.start;
-        end = selectedLine.end;
-    }
+    let start = selectedLine.start;
+    let end = selectedLine.end;
 
     let rise = end.y - start.y;
     let run = end.x - start.x;
@@ -267,14 +241,14 @@ function drawSelectionLine(selectedLine, selectedRoom) {
           lineLength,
           startPercentActual,
           stopPercentActual,
-          `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`
-
+          `rgb(${Math.floor(color.red)}, ${Math.floor(color.green)}, ${Math.floor(color.blue)})`,
+          leftRight
         )
     }
 
 }
 
-function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, startPercent, stopPercent, lineColor) {
+function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, startPercent, stopPercent, lineColor, leftRight) {
 
     let lineWidthToUse = selectionLineWidth * getSelectionMultiplier()* getSelectionMultiplier();
 
@@ -297,18 +271,24 @@ function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, sta
       startPercent,
       stopPercent,
       lineWidth,
-      lineColor
+      lineColor,
+      leftRight
     )
 }
 
-function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidth, lineColor) {
-    //console.log(`${startPercent} ${stopPercent}`)
+function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidth, lineColor, leftRight) {
 
     selectionRainbowCtx.lineWidth = lineWidth;
     selectionRainbowCtx.strokeStyle = lineColor;
     selectionRainbowCtx.beginPath();
-    selectionRainbowCtx.moveTo(lineStart.x + lineRun*startPercent, lineStart.y + lineRise*startPercent);
-    selectionRainbowCtx.lineTo(lineStart.x + lineRun*stopPercent, lineStart.y + lineRise*stopPercent);
+    selectionRainbowCtx.moveTo(
+      lineStart.x + lineRun*startPercent,
+      lineStart.y + lineRise*startPercent
+    );
+    selectionRainbowCtx.lineTo(
+      lineStart.x + lineRun*stopPercent,
+      lineStart.y + lineRise*stopPercent
+    );
     selectionRainbowCtx.stroke();
 }
 
@@ -429,16 +409,17 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         } else {
             selectedSide = dataStructures.walls[selected.selectedId];
         }
-        drawSelectionLine(selectedSide);
+        drawSelectionLine(selectedSide, 0);
     } else if (selected.selectedType === "side-door" || selected.selectedType === "side-wall") {
         let selectedRoom = dataStructures.metaroomDisk.rooms[selected.selectedRoomId];
-        let selectedSide = null;
-        if (selected.selectedType === "side-door") {
-            selectedSide = dataStructures.doors[selected.selectedId];
+        let selectedSide = dataStructureFactory.getWallsFromRoom(selectedRoom)[selected.selctedRoomPartId];
+        let leftRight = 0;
+        if (selected.selctedRoomPartId < 2) {
+            leftRight = 1;
         } else {
-            selectedSide = dataStructures.walls[selected.selectedId];
+            leftRight = -1;
         }
-        drawSelectionLine(selectedSide, selectedRoom);
+        drawSelectionLine(selectedSide, leftRight);
     } else if (selected.selectedType === "room") {
         drawSelectionRoom(dataStructures.metaroomDisk.rooms[selected.selectedId]);
     }
