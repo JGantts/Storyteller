@@ -276,14 +276,15 @@ function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, sta
     )
 }
 
-function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidth, lineColor, leftRight) {
+function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidthIn, lineColor, leftRight) {
 
-    selectionRainbowCtx.lineWidth = lineWidth / (Math.abs(leftRight) + 1);
+    let lineWidth = lineWidthIn / (Math.abs(leftRight) + 1)
+    selectionRainbowCtx.lineWidth = lineWidth;
     selectionRainbowCtx.strokeStyle = lineColor;
 
     let hypotenuse = Math.sqrt(lineRise*lineRise + lineRun*lineRun);
-    let xDiff = leftRight * lineRise / hypotenuse;
-    let yDiff = leftRight * lineRun / hypotenuse;
+    let xDiff = lineWidth * leftRight * lineRise / hypotenuse;
+    let yDiff = lineWidth * leftRight * lineRun / hypotenuse;
 
     selectionRainbowCtx.beginPath();
     selectionRainbowCtx.moveTo(
