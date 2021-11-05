@@ -18,9 +18,6 @@ let selectedClick = {
 }
 
 function checkSelectionHover(x, y, dataStructures ){
-    if (selectedClick.selectedType !== "") {
-        return;
-    }
     let selected = {
       selectedType : "",
       selectedId: "",
