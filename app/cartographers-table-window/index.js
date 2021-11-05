@@ -548,21 +548,18 @@ function handleMouseMove(e){
               isDragging = true;
               whatDragging = "point";
               idDragging = selection.selectedId;
-              pointStart = dataStructures.points[selection.selectedId];
-              startDragging = pointStart;
+              startDragging = dataStructures.points[selection.selectedId];
               stopDragging = {x: currX, y: currY};
           } else if (selection.selectedType === "corner") {
               isDragging = true;
               whatDragging = "corner";
               idDragging = selection.selectedId;
-              pointStart = dataStructures.points[selection.selectedId];
-              startDragging = pointStart;
+              startDragging = dataStructures.points[selection.selectedId];
               stopDragging = {x: currX, y: currY};
           } else {
               isDragging = true;
               whatDragging = "point";
               idDragging = null;
-              pointStart = dataStructures.points[selection.selectedId];
               startDragging = {x: currX, y: currY};
               stopDragging = {x: currX, y: currY};
           }
