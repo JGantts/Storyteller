@@ -172,7 +172,7 @@ function checkSideSelection(x, y, dataStructures){
     let selectedRoom = null;
     for (const key in dataStructures.walls) {
         if(isClickOnLine(x, y, dataStructures.walls[key], selectionCheckMargin*2.5)){
-            selected.selectedType = "side-wall";
+            selected.selectedType = "side";
             selected.selectedId = key;
             selectedLine = dataStructures.walls[key];
             break;
@@ -181,7 +181,7 @@ function checkSideSelection(x, y, dataStructures){
     if (selected.selectedType === "") {
         for (const key in dataStructures.doors) {
             if(isClickOnLine(x, y, dataStructures.doors[key], selectionCheckMargin*2.5)){
-                selected.selectedType = "side-door";
+                selected.selectedType = "side";
                 selected.selectedId = key;
                 selectedLine = dataStructures.doors[key];
                 break;

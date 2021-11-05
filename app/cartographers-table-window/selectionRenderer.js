@@ -416,7 +416,7 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
             selectedSide = dataStructures.walls[selected.selectedId];
         }
         drawSelectionLine(selectedSide, 0);
-    } else if (selected.selectedType === "side-door" || selected.selectedType === "side-wall") {
+    } else if (selected.selectedType === "side") {
         let selectedRoom = dataStructures.metaroomDisk.rooms[selected.selectedRoomId];
         let selectedSide = dataStructureFactory.getWallsFromRoom(selectedRoom)[selected.selctedRoomPartId];
         let leftRight = 0;
