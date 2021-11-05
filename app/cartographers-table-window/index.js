@@ -509,6 +509,7 @@ function handleMouseUp(e){
 }
 
 function handleMouseOut(e){
+    shiftKeyIsDown = false;
     // return if we're not dragging
     /*isMouseButtonDown = false;
 
