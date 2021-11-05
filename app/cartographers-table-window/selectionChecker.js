@@ -115,7 +115,24 @@ function checkCornerSelection(x, y, dataStructures){
     }
     if (selected.selectedType !== "") {
         let roomSelection = checkRoomSelection(x, y, dataStructures);
+        if (roomSelection.selectedType === "") {
+            return {
+              selectedType : "",
+              selectedId: "",
+              selectedRoomId: "",
+              selctedRoomPartId: -1
+            }
+        }
         selected.selectedRoomId = roomSelection.selectedId;
+        let corner = geometry.tryGetCorner(dataStructures.metaroomDisk.rooms[selected.selectedRoomId], dataStructures.points[selected.selectedId]);
+        if (corner === -1) {
+            return {
+              selectedType : "",
+              selectedId: "",
+              selectedRoomId: "",
+              selctedRoomPartId: -1
+            }
+        }
     }
     return selected;
 }
@@ -202,7 +219,14 @@ function checkSideSelection(x, y, dataStructures){
                 break;
             }
         }
-        assert(intersectionSideIndex !== -1, `Intersection not found: ${JSON.stringify(selectedLine)} ${JSON.stringify(selectedRoom)}`);
+        if (intersectionSideIndex === -1) {
+            return {
+                selectedType : "",
+                selectedId: "",
+                selectedRoomId: "",
+                selctedRoomPartId: -1
+            };
+        }
         selected.selctedRoomPartId = intersectionSideIndex;
     }
 

@@ -3,6 +3,16 @@ function getCorner(room, point) {
     //1: top-right
     //2: bottom-right
     //3: bottom-left
+    let cornerIndex = tryGetCorner(room, point);
+    assert(cornerIndex !== -1, `Couldn't find cooresponding corner of room ${JSON.stringify(room)} to point ${JSON.stringify(point)}`);
+    return cornerIndex;
+}
+
+function tryGetCorner(room, point) {
+    //0: top-left
+    //1: top-right
+    //2: bottom-right
+    //3: bottom-left
     let cornerIndex = -1;
     if (room.leftX === point.x) {
         if (room.leftCeilingY === point.y) {
@@ -17,7 +27,6 @@ function getCorner(room, point) {
             cornerIndex = 2;
         }
     }
-    assert(cornerIndex !== -1, `Couldn't find cooresponding corner of room ${JSON.stringify(room)} to point ${JSON.stringify(point)}`);
     return cornerIndex;
 }
 
@@ -236,6 +245,7 @@ function getCornerAngle(point, room) {
 module.exports = {
     geometry: {
         getCorner,
+        tryGetCorner,
         getSortedDoor,
         getSortedLine,
         getRoomCeiling,
