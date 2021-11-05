@@ -278,16 +278,21 @@ function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, sta
 
 function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidth, lineColor, leftRight) {
 
-    selectionRainbowCtx.lineWidth = lineWidth;
+    selectionRainbowCtx.lineWidth = lineWidth / (Math.abs(leftRight) + 1);
     selectionRainbowCtx.strokeStyle = lineColor;
+
+    let hypotenuse = Math.sqrt(lineRise*lineRise + lineRun*lineRun);
+    let xDiff = leftRight * lineRise / hypotenuse;
+    let yDiff = leftRight * lineRun / hypotenuse;
+
     selectionRainbowCtx.beginPath();
     selectionRainbowCtx.moveTo(
-      lineStart.x + lineRun*startPercent,
-      lineStart.y + lineRise*startPercent
+      lineStart.x + lineRun*startPercent + xDiff,
+      lineStart.y + lineRise*startPercent + yDiff
     );
     selectionRainbowCtx.lineTo(
-      lineStart.x + lineRun*stopPercent,
-      lineStart.y + lineRise*stopPercent
+      lineStart.x + lineRun*stopPercent + xDiff,
+      lineStart.y + lineRise*stopPercent + yDiff
     );
     selectionRainbowCtx.stroke();
 }
@@ -414,7 +419,7 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         let selectedRoom = dataStructures.metaroomDisk.rooms[selected.selectedRoomId];
         let selectedSide = dataStructureFactory.getWallsFromRoom(selectedRoom)[selected.selctedRoomPartId];
         let leftRight = 0;
-        if (selected.selctedRoomPartId < 2) {
+        if (selected.selctedRoomPartId < 1 || selected.selctedRoomPartId > 2) {
             leftRight = 1;
         } else {
             leftRight = -1;
