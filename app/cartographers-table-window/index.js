@@ -556,6 +556,12 @@ function handleMouseMove(e){
               idDragging = selection.selectedId;
               startDragging = dataStructures.points[selection.selectedId];
               stopDragging = {x: currX, y: currY};
+          } else if (selection.selectedType === "side") {
+              isDragging = true;
+              whatDragging = "side";
+              idDragging = selection.selectedId;
+              startDragging = {x: currX, y: currY};
+              stopDragging = {x: currX, y: currY};
           } else {
               isDragging = true;
               whatDragging = "point";
