@@ -635,19 +635,18 @@ function tryCreateRoom() {
         selection,
         dataStructures
     );
-    if (newRooms.lenghth === 0) {
+    if (newRooms.length === 0) {
       return;
     }
     let commands = [];
-    for (room of newRooms) {
+    for (index in newRooms) {
         let id = "";
         if (_shiftKeyIsDown) {
             id = crypto.randomUUID();
         } else {
-            assert(selection.selectedRoomsIds.length === 1,
-                `Size was not 1: ${JSON.stringify(selection.selectedRoomsIds)}`)
-            id = selection.selectedRoomsIds[0];
+            id = selection.selectedRoomsIds[index];
         }
+        let room = newRooms[index];
         room.id = id;
         let addCommand = makeAddRoomCommand(id, room);
         if (!_shiftKeyIsDown) {

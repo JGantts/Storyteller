@@ -7,14 +7,14 @@ let selectedHover = {
   selectedType : "",
   selectedId: "",
   selectedRoomsIds: [],
-  selctedRoomPartId: -1
+  selctedRoomPartsIds: []
 }
 
 let selectedClick = {
   selectedType : "",
   selectedId: "",
   selectedRoomsIds: [],
-  selctedRoomPartId: -1
+  selctedRoomPartsIds: []
 }
 
 function checkSelectionHover(x, y, dataStructures ){
@@ -22,7 +22,7 @@ function checkSelectionHover(x, y, dataStructures ){
       selectedType : "",
       selectedId: "",
       selectedRoomsIds: [],
-      selctedRoomPartId: -1
+      selctedRoomPartsIds: []
     }
     if (selected.selectedType === "") {
         selected = checkPointSelection(x, y, dataStructures);
@@ -47,7 +47,7 @@ function checkSelectionClick(x, y, dataStructures ){
       selectedType : "",
       selectedId: "",
       selectedRoomsIds: [],
-      selctedRoomPartId: -1
+      selctedRoomPartsIds: []
     }
     if (selected.selectedType === "") {
         selected = checkPointSelection(x, y, dataStructures);
@@ -69,7 +69,7 @@ function checkSelectionClick(x, y, dataStructures ){
       selectedType : "",
       selectedId: "",
       selectedRoomsIds: [],
-      selctedRoomPartId: -1
+      selctedRoomPartsIds: []
     }
 }
 
@@ -78,28 +78,28 @@ function checkPointSelection(x, y, dataStructures){
       selectedType : "",
       selectedId: "",
       selectedRoomsIds: [],
-      selctedRoomPartId: -1
+      selctedRoomPartsIds: []
     }
     for (const key in dataStructures.points) {
         let point = dataStructures.points[key];
         if(isClickOnPoint(x, y, point, selectionCheckMargin)){
             //console.log(metaroomPoints[i]);
-            if (selected.selectedRoomsIds.length === 0){
-                selected.selectedType = "point";
-            } else {
-                selected.selectedType = "corner";
-            }
+            selected.selectedType = "point";
             selected.selectedId = dataStructures.points[key].id;
             for (const roomKey in dataStructures.metaroomDisk.rooms) {
                 let room = dataStructures.metaroomDisk.rooms[roomKey];
                 if (room.leftX===point.x && room.leftCeilingY===point.y) {
                     selected.selectedRoomsIds.push(roomKey);
+                    selected.selctedRoomPartsIds.push(0);
                 } else if (room.leftX===point.x && room.leftFloorY===point.y) {
                     selected.selectedRoomsIds.push(roomKey);
+                    selected.selctedRoomPartsIds.push(3);
                 } else if (room.rightX===point.x && room.rightCeilingY===point.y) {
                     selected.selectedRoomsIds.push(roomKey);
+                    selected.selctedRoomPartsIds.push(1);
                 } else if (room.rightX===point.x && room.rightFloorY===point.y) {
                     selected.selectedRoomsIds.push(roomKey);
+                    selected.selctedRoomPartsIds.push(2);
                 }
             }
             break;
@@ -113,7 +113,7 @@ function checkCornerSelection(x, y, dataStructures){
       selectedType : "",
       selectedId: "",
       selectedRoomsIds: [],
-      selctedRoomPartId: -1
+      selctedRoomPartsIds: []
     }
     for (const key in dataStructures.points) {
         if(isClickOnPoint(x, y, dataStructures.points[key], selectionCheckMargin*2.5)){
@@ -130,7 +130,7 @@ function checkCornerSelection(x, y, dataStructures){
               selectedType : "",
               selectedId: "",
               selectedRoomsIds: [],
-              selctedRoomPartId: -1
+              selctedRoomPartsIds: []
             }
         }
         selected.selectedRoomsIds = [roomSelection.selectedId];
@@ -140,7 +140,7 @@ function checkCornerSelection(x, y, dataStructures){
               selectedType : "",
               selectedId: "",
               selectedRoomsIds: [],
-              selctedRoomPartId: -1
+              selctedRoomPartsIds: []
             }
         }
     }
@@ -152,7 +152,7 @@ function checkLineSelection(x, y, dataStructures){
       selectedType : "",
       selectedId: "",
       selectedRoomsIds: [],
-      selctedRoomPartId: -1
+      selctedRoomPartsIds: []
     }
     for (const key in dataStructures.walls) {
         if(isClickOnLine(x, y, dataStructures.walls[key], selectionCheckMargin)){
@@ -176,7 +176,7 @@ function checkSideSelection(x, y, dataStructures){
         selectedType : "",
         selectedId: "",
         selectedRoomsIds: [],
-        selctedRoomPartId: -1
+        selctedRoomPartsIds: []
     }
     let selectedLine = null;
     let selectedRoom = null;
@@ -205,7 +205,7 @@ function checkSideSelection(x, y, dataStructures){
                 selectedType : "",
                 selectedId: "",
                 selectedRoomsIds: [],
-                selctedRoomPartId: -1
+                selctedRoomPartsIds: []
             }
         }
         selected.selectedRoomsIds = [roomSelection.selectedId];
@@ -234,10 +234,10 @@ function checkSideSelection(x, y, dataStructures){
                 selectedType : "",
                 selectedId: "",
                 selectedRoomsIds: [],
-                selctedRoomPartId: -1
+                selctedRoomPartsIds: []
             };
         }
-        selected.selctedRoomPartId = intersectionSideIndex;
+        selected.selctedRoomPartsIds = [intersectionSideIndex];
     }
 
     return selected;
@@ -248,7 +248,7 @@ function checkRoomSelection(x, y, dataStructures){
       selectedType : "",
       selectedId: "",
       selectedRoomsIds: [],
-      selctedRoomPartId: -1
+      selctedRoomPartsIds: []
     }
     for (const key in dataStructures.metaroomDisk.rooms) {
         if(isClickInRoom(x, y, dataStructures.metaroomDisk.rooms[key])){
@@ -345,14 +345,14 @@ function resetSelection() {
       selectedType : "",
       selectedId: "",
       selectedRoomsIds: [],
-      selctedRoomPartId: -1
+      selctedRoomPartsIds: []
     }
 
     selectedClick = {
       selectedType : "",
       selectedId: "",
       selectedRoomsIds: [],
-      selctedRoomPartId: -1
+      selctedRoomPartsIds: []
     }
 }
 

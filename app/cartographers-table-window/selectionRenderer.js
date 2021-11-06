@@ -424,9 +424,9 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
             `Size was not 1: ${JSON.stringify(selected.selectedRoomsIds)}`)
         let id = selected.selectedRoomsIds[0];
         let selectedRoom = dataStructures.metaroomDisk.rooms[id];
-        let selectedSide = dataStructureFactory.getWallsFromRoom(selectedRoom)[selected.selctedRoomPartId];
+        let selectedSide = dataStructureFactory.getWallsFromRoom(selectedRoom)[selected.selctedRoomPartsIds[0]];
         let leftRight = 0;
-        if (selected.selctedRoomPartId < 1 || selected.selctedRoomPartId > 2) {
+        if (selected.selctedRoomPartsIds[0] < 1 || selected.selctedRoomPartsIds[0] > 2) {
             leftRight = 1;
         } else {
             leftRight = -1;

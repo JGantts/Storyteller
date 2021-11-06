@@ -463,7 +463,19 @@ function getPotentialRooms(ui, selection, dataStructures) {
             }
         } else {
             if (selection.selectedType === "point") {
-                Function.prototype();
+              for (index in selection.selectedRoomsIds) {
+                  let id = selection.selectedRoomsIds[index];
+                  let selectedRoom = dataStructures.metaroomDisk.rooms[id];
+                  let room = getPotentialRoomFromYChange(
+                    ui.dragging.startDragging,
+                    ui.dragging.stopDragging,
+                    dataStructures,
+                    selectedRoom
+                  );
+                  if (room) {
+                      rooms.push(room);
+                  }
+              }
 
             } else if (selection.selectedType === "corner") {
               assert(selection.selectedRoomsIds.length === 1,
@@ -495,7 +507,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                     `Size was not 1: ${JSON.stringify(selection.selectedRoomsIds)}`)
                 let id = selection.selectedRoomsIds[0];
                 let selectedRoom = dataStructures.metaroomDisk.rooms[id];
-                let selectedSide = selection.selctedRoomPartId
+                let selectedSide = selection.selctedRoomPartsIds[0];
                 let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
                 if (room) {
                     rooms = [room];
