@@ -289,7 +289,6 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
 
         switch (selectedSide) {
           case 0:
-              console.log("here");
             return {
                 id: room.id,
                 leftX: room.leftX,
@@ -301,7 +300,6 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
             };
 
           case 2:
-              console.log("here");
             return {
                 id: room.id,
                 leftX: room.leftX,
@@ -316,7 +314,6 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
     } else {
         let deltaX = endPoint.x - startPoint.x;
         if (Math.abs(deltaX) < 5) {
-            console.log("here");
             return null;
         }
         let xToConsider = endPoint.x;
@@ -337,7 +334,6 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
         }
         switch (selectedSide) {
           case 1:
-              console.log("here");
             return {
                 id: room.id,
                 leftX: room.leftX,
@@ -349,7 +345,6 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
             };
 
           case 3:
-            console.log("here");
             let toReturn = {
                 id: room.id,
                 leftX: xToUse,
@@ -485,7 +480,6 @@ function getPotentialRooms(ui, selection, dataStructures) {
                     selectedRoom
                   );
                   if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
-                      console.log(room);
                       rooms.push(room);
                   }
               }
@@ -502,7 +496,6 @@ function getPotentialRooms(ui, selection, dataStructures) {
                 selectedRoom
               );
               if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
-                  console.log(room);
                   rooms = [room];
               }
 
@@ -514,9 +507,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                     let selectedRoom = dataStructures.metaroomDisk.rooms[id];
                     let selectedSide = selection.selctedRoomPartsIds[index];
                     let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
-                    console.log(room);
                     if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
-                        console.log(room);
                         rooms.push(room);
                     }
                 }
@@ -533,9 +524,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                 let selectedRoom = dataStructures.metaroomDisk.rooms[id];
                 let selectedSide = selection.selctedRoomPartsIds[0];
                 let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
-                console.log(room);
                 if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
-                    console.log(room);
                     rooms = [room];
                 }
 
@@ -544,8 +533,6 @@ function getPotentialRooms(ui, selection, dataStructures) {
             }
         }
     }
-    console.log(rooms);
-    console.log("wut");
     return rooms;
 }
 
