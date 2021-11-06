@@ -638,20 +638,16 @@ function tryCreateRoom() {
     if (newRooms.length === 0) {
       return;
     }
-    console.log(newRooms);
     let commands = [];
     for (index in newRooms) {
         let id = "";
         if (_shiftKeyIsDown) {
-            id = crypto.randomUUID();
-        } else {
-            id = selection.selectedRoomsIds[index];
+            room.id = crypto.randomUUID();
         }
         let room = newRooms[index];
-        room.id = id;
-        let addCommand = makeAddRoomCommand(id, room);
+        let addCommand = makeAddRoomCommand(room.id, room);
         if (!_shiftKeyIsDown) {
-            let deleteCommand = makeDeleteRoomCommand(id);
+            let deleteCommand = makeDeleteRoomCommand(room.id);
             commands.push(deleteCommand);
         }
         commands.push(addCommand);

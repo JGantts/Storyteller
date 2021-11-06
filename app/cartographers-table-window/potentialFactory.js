@@ -198,7 +198,7 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
     switch (cornerIndex) {
       case 0:
         return {
-            id: null,
+            id: room.id,
             leftX: room.leftX,
             rightX: room.rightX,
             leftCeilingY: yToUse,
@@ -209,7 +209,7 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
 
       case 1:
         return {
-            id: null,
+            id: room.id,
             leftX: room.leftX,
             rightX: room.rightX,
             leftCeilingY: room.leftCeilingY,
@@ -220,7 +220,7 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
 
       case 2:
         return {
-            id: null,
+            id: room.id,
             leftX: room.leftX,
             rightX: room.rightX,
             leftCeilingY: room.leftCeilingY,
@@ -231,7 +231,7 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
 
       case 3:
         return {
-            id: null,
+            id: room.id,
             leftX: room.leftX,
             rightX: room.rightX,
             leftCeilingY: room.leftCeilingY,
@@ -291,7 +291,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
           case 0:
               console.log("here");
             return {
-                id: null,
+                id: room.id,
                 leftX: room.leftX,
                 rightX: room.rightX,
                 leftCeilingY: room.leftCeilingY + deltaYToUse,
@@ -303,7 +303,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
           case 2:
               console.log("here");
             return {
-                id: null,
+                id: room.id,
                 leftX: room.leftX,
                 rightX: room.rightX,
                 leftCeilingY: room.leftCeilingY,
@@ -339,7 +339,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
           case 1:
               console.log("here");
             return {
-                id: null,
+                id: room.id,
                 leftX: room.leftX,
                 rightX: xToUse,
                 leftCeilingY: room.leftCeilingY,
@@ -349,9 +349,9 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
             };
 
           case 3:
-              console.log("here");
-            return {
-                id: null,
+            console.log("here");
+            let toReturn = {
+                id: room.id,
                 leftX: xToUse,
                 rightX: room.rightX,
                 leftCeilingY: room.leftCeilingY,
@@ -359,6 +359,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
                 leftFloorY: room.leftFloorY,
                 rightFloorY: room.rightFloorY
             };
+            return toReturn;
         }
 
     }
