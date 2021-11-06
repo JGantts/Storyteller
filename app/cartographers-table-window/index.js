@@ -638,6 +638,7 @@ function tryCreateRoom() {
     if (newRooms.length === 0) {
       return;
     }
+    console.log(newRooms);
     let commands = [];
     for (index in newRooms) {
         let id = "";

@@ -251,6 +251,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
         let deltaY = endPoint.y - startPoint.y;
 
         if (Math.abs(deltaY) < 5) {
+            console.log("here");
             return null;
         }
 
@@ -288,6 +289,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
 
         switch (selectedSide) {
           case 0:
+              console.log("here");
             return {
                 id: null,
                 leftX: room.leftX,
@@ -299,6 +301,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
             };
 
           case 2:
+              console.log("here");
             return {
                 id: null,
                 leftX: room.leftX,
@@ -313,6 +316,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
     } else {
         let deltaX = endPoint.x - startPoint.x;
         if (Math.abs(deltaX) < 5) {
+            console.log("here");
             return null;
         }
         let xToConsider = endPoint.x;
@@ -333,6 +337,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
         }
         switch (selectedSide) {
           case 1:
+              console.log("here");
             return {
                 id: null,
                 leftX: room.leftX,
@@ -344,6 +349,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
             };
 
           case 3:
+              console.log("here");
             return {
                 id: null,
                 leftX: xToUse,
@@ -358,7 +364,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
     }
 }
 
-function roomOverlaps(room, dataStructures) {
+function roomOverlaps(room, dataStructures, toExclude) {
     if (!room) {
         return false;
     }
@@ -386,8 +392,11 @@ function roomOverlaps(room, dataStructures) {
     }
     //check if potentialRoom overlaps exactly any existing room sides
     //  such that rooms are overlapping, not adjacent
-    for (const roomkey in dataStructures.metaroomDisk.rooms) {
-        let linesExisting = dataStructureFactory.getWallsFromRoom(dataStructures.metaroomDisk.rooms[roomkey]);
+    for (const roomKey in dataStructures.metaroomDisk.rooms) {
+        if (roomKey === toExclude.id){
+            continue;
+        }
+        let linesExisting = dataStructureFactory.getWallsFromRoom(dataStructures.metaroomDisk.rooms[roomKey]);
         for (let i=0; i<4; i++) {
             let shouldReturnTrue = false;
             lineSegmentComparison(
@@ -404,11 +413,13 @@ function roomOverlaps(room, dataStructures) {
             }
         }
     }
-    //check if any potentialLine crosses any existing line
-    for (const potentialLine of lines) {
-        for (const existingLine of dataStructures.walls.concat(dataStructures.doors)) {
-            if (geometry.lineSegmentsIntersectAndCross(potentialLine, existingLine)) {
-                return true;
+    if (!toExclude) {
+        //check if any potentialLine crosses any existing line
+        for (const potentialLine of lines) {
+            for (const existingLine of dataStructures.walls.concat(dataStructures.doors)) {
+                if (geometry.lineSegmentsIntersectAndCross(potentialLine, existingLine)) {
+                    return true;
+                }
             }
         }
     }
@@ -472,7 +483,8 @@ function getPotentialRooms(ui, selection, dataStructures) {
                     dataStructures,
                     selectedRoom
                   );
-                  if (room) {
+                  if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
+                      console.log(room);
                       rooms.push(room);
                   }
               }
@@ -488,7 +500,8 @@ function getPotentialRooms(ui, selection, dataStructures) {
                 dataStructures,
                 selectedRoom
               );
-              if (room) {
+              if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
+                  console.log(room);
                   rooms = [room];
               }
 
@@ -500,7 +513,9 @@ function getPotentialRooms(ui, selection, dataStructures) {
                     let selectedRoom = dataStructures.metaroomDisk.rooms[id];
                     let selectedSide = selection.selctedRoomPartsIds[index];
                     let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
-                    if (room) {
+                    console.log(room);
+                    if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
+                        console.log(room);
                         rooms.push(room);
                     }
                 }
@@ -517,7 +532,9 @@ function getPotentialRooms(ui, selection, dataStructures) {
                 let selectedRoom = dataStructures.metaroomDisk.rooms[id];
                 let selectedSide = selection.selctedRoomPartsIds[0];
                 let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
-                if (room) {
+                console.log(room);
+                if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
+                    console.log(room);
                     rooms = [room];
                 }
 
@@ -526,6 +543,8 @@ function getPotentialRooms(ui, selection, dataStructures) {
             }
         }
     }
+    console.log(rooms);
+    console.log("wut");
     return rooms;
 }
 
