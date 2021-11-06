@@ -154,8 +154,10 @@ function checkLineSelection(x, y, dataStructures){
       selectedRoomsIds: [],
       selctedRoomPartsIds: []
     }
+    let selectedLine = null;
     for (const key in dataStructures.walls) {
         if(isClickOnLine(x, y, dataStructures.walls[key], selectionCheckMargin)){
+            selectedLine = dataStructures.walls[key];
             selected.selectedType = "wall";
             selected.selectedId = key;
             break;
@@ -163,9 +165,59 @@ function checkLineSelection(x, y, dataStructures){
     }
     for (const key in dataStructures.doors) {
         if(isClickOnLine(x, y, dataStructures.doors[key], selectionCheckMargin)){
+            selectedLine = dataStructures.doors[key];
             selected.selectedType = "door";
             selected.selectedId = key;
             break;
+        }
+    }
+    if (selected.selectedType !== "") {
+        for (const roomKey in dataStructures.metaroomDisk.rooms) {
+            let room = dataStructures.metaroomDisk.rooms[roomKey];
+            let roomSides = dataStructureFactory.getWallsFromRoom(room);
+            if (selectedLine.start.x === selectedLine.end.x) {
+                lineSegmentComparison(
+                    selectedLine, roomSides[1],
+                    () => {},
+                    () => {
+                        selected.selectedRoomsIds.push(roomKey);
+                        selected.selctedRoomPartsIds.push(1);
+                    },
+                    () => {},
+                    () => {},
+                    () => {});
+                lineSegmentComparison(
+                    selectedLine, roomSides[3],
+                    () => {},
+                    () => {
+                        selected.selectedRoomsIds.push(roomKey);
+                        selected.selctedRoomPartsIds.push(3);
+                    },
+                    () => {},
+                    () => {},
+                    () => {});
+            } else {
+              lineSegmentComparison(
+                  selectedLine, roomSides[0],
+                  () => {},
+                  () => {
+                      selected.selectedRoomsIds.push(roomKey);
+                      selected.selctedRoomPartsIds.push(0);
+                  },
+                  () => {},
+                  () => {},
+                  () => {});
+              lineSegmentComparison(
+                  selectedLine, roomSides[2],
+                  () => {},
+                  () => {
+                      selected.selectedRoomsIds.push(roomKey);
+                      selected.selctedRoomPartsIds.push(2);
+                  },
+                  () => {},
+                  () => {},
+                  () => {});
+            }
         }
     }
     return selected;

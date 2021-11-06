@@ -492,11 +492,19 @@ function getPotentialRooms(ui, selection, dataStructures) {
                   rooms = [room];
               }
 
-            } else if (selection.selectedType === "door") {
-                Function.prototype();
+            } else if (selection.selectedType === "door"
+                || selection.selectedType === "wall"
+            ) {
+                for (index in selection.selectedRoomsIds) {
+                    let id = selection.selectedRoomsIds[index];
+                    let selectedRoom = dataStructures.metaroomDisk.rooms[id];
+                    let selectedSide = selection.selctedRoomPartsIds[index];
+                    let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
+                    if (room) {
+                        rooms.push(room);
+                    }
+                }
 
-            } else if (selection.selectedType === "wall") {
-                Function.prototype();
 
             } else if (selection.selectedType === "room") {
                 Function.prototype();
