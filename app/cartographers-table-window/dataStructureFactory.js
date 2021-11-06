@@ -450,13 +450,13 @@ function getWallsFromRoom(room) {
 
 module.exports = {
     dataStructureFactory: {
-        getWallsFromRooms: getWallsFromRooms,
-        getWallsFromRoom: getWallsFromRoom,
-        getDoorsFromRooms: getDoorsFromRooms,
-        getPointsFromRooms: getPointsFromRooms,
-        subtractDoorsFromWalls: subtractDoorsFromWalls,
-        getDoorsWallsPotentialFromRoomPotential: getDoorsWallsPotentialFromRoomPotential,
-        getPermsFromRoomPotential: getPermsFromRoomPotential,
-        getSortedRoomFromDimensions: getSortedRoomFromDimensions
+        getWallsFromRooms,
+        getWallsFromRoom,
+        getDoorsFromRooms,
+        getPointsFromRooms,
+        subtractDoorsFromWalls,
+        getDoorsWallsPotentialFromRoomPotential,
+        getPermsFromRoomPotential,
+        getSortedRoomFromDimensions
     }
 }

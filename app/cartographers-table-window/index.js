@@ -622,7 +622,7 @@ function tryCreateRoom() {
         selection = selectionChecker.getSelectionClick();
     }
     let _shiftKeyIsDown = shiftKeyIsDown;
-    let newRoom = potentialFactory.getPotentialRoom
+    let newRooms = potentialFactory.getPotentialRooms
     (
         {
             dragging: {
@@ -635,7 +635,11 @@ function tryCreateRoom() {
         selection,
         dataStructures
     );
-    if (newRoom) {
+    if (newRooms.lenghth === 0) {
+      return;
+    }
+    let commands = [];
+    for (room of newRooms) {
         let id = "";
         if (_shiftKeyIsDown) {
             id = crypto.randomUUID();
@@ -644,20 +648,19 @@ function tryCreateRoom() {
                 `Size was not 1: ${JSON.stringify(selection.selectedRoomsIds)}`)
             id = selection.selectedRoomsIds[0];
         }
-        newRoom.id = id;
-        let addCommand = makeAddRoomCommand(id, newRoom);
-        let finalCommand = null;
+        room.id = id;
+        let addCommand = makeAddRoomCommand(id, room);
         if (!_shiftKeyIsDown) {
             let deleteCommand = makeDeleteRoomCommand(id);
-            finalCommand = buildMultiCommand([deleteCommand, addCommand]);
-        } else {
-            finalCommand = addCommand;
+            commands.push(deleteCommand);
         }
-        _undoList.push(finalCommand);
-        finalCommand.do();
-        _redoList = [];
-        updateUndoRedoButtons();
+        commands.push(addCommand);
     }
+    let finalCommand = buildMultiCommand(commands);
+    _undoList.push(finalCommand);
+    finalCommand.do();
+    _redoList = [];
+    updateUndoRedoButtons();
 }
 
 function makeAddRoomCommand(id, room){
@@ -864,7 +867,7 @@ async function redrawSelection() {
     }
     selectionHighlightCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
-    let potentialRoom = potentialFactory.getPotentialRoom
+    let potentialRooms = potentialFactory.getPotentialRooms
     (
         {
             dragging: {
@@ -877,15 +880,17 @@ async function redrawSelection() {
         selection,
         dataStructures
     );
-    redrawPotential(potentialRoom, dataStructures);
+    redrawPotential(potentialRooms, dataStructures);
 }
 
-function redrawPotential(potentialRoom, dataStructures) {
+function redrawPotential(potentialRooms, dataStructures) {
     potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    if (potentialRoom) {
-        let doorsWalls = dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(potentialRoom, dataStructures);
-        let points = dataStructureFactory.getPointsFromRooms([potentialRoom]);
-
+    if (potentialRooms.length != 0) {
+        let doorsWalls = [];
+        for (potentialRoom of potentialRooms) {
+            doorsWalls = doorsWalls.concat(dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(potentialRoom, dataStructures));
+        }
+        let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
         redrawRooms(potentialCtx, potentialCtx, doorsWalls, points, dataStructures.metaroomDisk);
     }
 }

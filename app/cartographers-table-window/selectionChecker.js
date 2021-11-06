@@ -81,7 +81,8 @@ function checkPointSelection(x, y, dataStructures){
       selctedRoomPartId: -1
     }
     for (const key in dataStructures.points) {
-        if(isClickOnPoint(x, y, dataStructures.points[key], selectionCheckMargin)){
+        let point = dataStructures.points[key];
+        if(isClickOnPoint(x, y, point, selectionCheckMargin)){
             //console.log(metaroomPoints[i]);
             if (selected.selectedRoomsIds.length === 0){
                 selected.selectedType = "point";
@@ -89,6 +90,18 @@ function checkPointSelection(x, y, dataStructures){
                 selected.selectedType = "corner";
             }
             selected.selectedId = dataStructures.points[key].id;
+            for (const roomKey in dataStructures.metaroomDisk.rooms) {
+                let room = dataStructures.metaroomDisk.rooms[roomKey];
+                if (room.leftX===point.x && room.leftCeilingY===point.y) {
+                    selected.selectedRoomsIds.push(roomKey);
+                } else if (room.leftX===point.x && room.leftFloorY===point.y) {
+                    selected.selectedRoomsIds.push(roomKey);
+                } else if (room.rightX===point.x && room.rightCeilingY===point.y) {
+                    selected.selectedRoomsIds.push(roomKey);
+                } else if (room.rightX===point.x && room.rightFloorY===point.y) {
+                    selected.selectedRoomsIds.push(roomKey);
+                }
+            }
             break;
         }
     }

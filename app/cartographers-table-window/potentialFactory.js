@@ -244,8 +244,6 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
 }
 
 function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selectedRoom, selectedSide) {
-    console.log(selectedRoom);
-    console.log(selectedSide);
     let room = selectedRoom;
     let side = dataStructureFactory.getWallsFromRoom(room)[selectedSide];
     assert(selectedSide !== -1)
@@ -418,19 +416,20 @@ function roomOverlaps(room, dataStructures) {
     return false;
 }
 
-function getPotentialRoom(ui, selection, dataStructures) {
-    let room = null;
+function getPotentialRooms(ui, selection, dataStructures) {
+    let rooms = [];
     if (ui.dragging.isDragging) {
         if (ui.shiftKeyIsDown) {
             if (selection.selectedType === "point") {
-                room = getPotentialRoomFromPoints(
+                let room = [getPotentialRoomFromPoints(
                   ui.dragging.startDragging,
                   ui.dragging.stopDragging,
                   dataStructures,
-                );
-                if (roomOverlaps(room, dataStructures)) {
-                    room = null;
+                )];
+                if (room && !roomOverlaps(room, dataStructures)) {
+                    rooms = [room];
                 }
+
 
             } else if (selection.selectedType === "corner") {
                 Function.prototype();
@@ -440,9 +439,9 @@ function getPotentialRoom(ui, selection, dataStructures) {
 
             } else if (selection.selectedType === "wall") {
                 let selectedLine = dataStructures.walls[selection.selectedId];
-                room = getPotentialRoomFromLine(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedLine);
-                if (roomOverlaps(room, dataStructures)) {
-                    room = null;
+                let room = getPotentialRoomFromLine(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedLine);
+                if (room && !roomOverlaps(room, dataStructures)) {
+                    rooms = [room];
                 }
 
             } else if (selection.selectedType === "room") {
@@ -453,13 +452,13 @@ function getPotentialRoom(ui, selection, dataStructures) {
                 Function.prototype();
 
             } else {
-                room = getPotentialRoomFromPoints(
+                let room = getPotentialRoomFromPoints(
                   ui.dragging.startDragging,
                   ui.dragging.stopDragging,
                   dataStructures,
                 );
-                if (roomOverlaps(room, dataStructures)) {
-                    room = null;
+                if (room && !roomOverlaps(room, dataStructures)) {
+                    rooms = [room];
                 }
             }
         } else {
@@ -471,12 +470,15 @@ function getPotentialRoom(ui, selection, dataStructures) {
                   `Size was not 1: ${JSON.stringify(selection.selectedRoomsIds)}`)
               let id = selection.selectedRoomsIds[0];
               let selectedRoom = dataStructures.metaroomDisk.rooms[id];
-              room = getPotentialRoomFromYChange(
+              let room = getPotentialRoomFromYChange(
                 ui.dragging.startDragging,
                 ui.dragging.stopDragging,
                 dataStructures,
                 selectedRoom
               );
+              if (room) {
+                  rooms = [room];
+              }
 
             } else if (selection.selectedType === "door") {
                 Function.prototype();
@@ -494,19 +496,21 @@ function getPotentialRoom(ui, selection, dataStructures) {
                 let id = selection.selectedRoomsIds[0];
                 let selectedRoom = dataStructures.metaroomDisk.rooms[id];
                 let selectedSide = selection.selctedRoomPartId
-                room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
-                console.log(room);
+                let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
+                if (room) {
+                    rooms = [room];
+                }
 
             } else {
                 Function.prototype();
             }
         }
     }
-    return room;
+    return rooms;
 }
 
 module.exports = {
     potentialFactory: {
-        getPotentialRoom: getPotentialRoom
+        getPotentialRooms
     }
 }
