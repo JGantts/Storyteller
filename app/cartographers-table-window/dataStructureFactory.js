@@ -382,10 +382,10 @@ rightFloorY: 300,
 function buildInsertPoint(points, roomKey, x, y) {
     let id = "" + x + "-" + y;
     if (!points[id]) {
-        let roomIds = [];
-        points[id] = {x, y, roomIds};
+        let roomKeys = [];
+        points[id] = {x, y, roomKeys};
     }
-    points[id].roomIds.push(roomKey);
+    points[id].roomKeys.push(roomKey);
 }
 
 function getPointsFromRooms(rooms) {
