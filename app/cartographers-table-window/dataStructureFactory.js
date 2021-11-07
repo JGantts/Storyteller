@@ -379,28 +379,22 @@ leftFloorY: 300,
 rightFloorY: 300,
 */
 
-function buildPoint(x, y) {
-  return {
-      id: "" + x + "-" + y,
-      x: x,
-      y: y
-  };
+function buildInsertPoint(points, roomKey, x, y) {
+    let id = "" + x + "-" + y;
+    if (!points[id]) {
+        let roomIds = [];
+        points[id] = {x, y, roomIds};
+    }
+    points[id].roomIds.push(roomKey);
 }
 
 function getPointsFromRooms(rooms) {
     let points = Object();
     for (const key in rooms) {
-        let point = buildPoint(rooms[key].leftX, rooms[key].leftCeilingY)
-        points[point.id] = point;
-
-        point = buildPoint(rooms[key].rightX, rooms[key].rightCeilingY)
-        points[point.id] = point;
-
-        point = buildPoint(rooms[key].rightX, rooms[key].rightFloorY)
-        points[point.id] = point;
-
-        point = buildPoint(rooms[key].leftX, rooms[key].leftFloorY)
-        points[point.id] = point;
+        buildInsertPoint(points, key, rooms[key].leftX, rooms[key].leftCeilingY);
+        buildInsertPoint(points, key, rooms[key].rightX, rooms[key].rightCeilingY);
+        buildInsertPoint(points, key, rooms[key].rightX, rooms[key].rightFloorY);
+        buildInsertPoint(points, key, rooms[key].leftX, rooms[key].leftFloorY);
     }
     return points;
 }
