@@ -342,26 +342,10 @@ function userTextKeyDown(event){
     shiftKeyComboDown(event);
   }else{
     switch (event.key){
-      case 'ArrowDown':
-      case 'ArrowLeft':
-      case 'ArrowRight':
-      case 'ArrowUp':
-      case 'End':
-      case 'Home':
-        caretKey(event);
-        break;
       case 'Backspace':
       case 'Delete':
         editingKeyDown(event);
         break;
-      case 'Tab':
-        insertText('\t');
-        break;
-      case 'Enter':
-        insertText('\n');
-        break;
-      case 'Shift':
-        break
 
       case 'Escape':
         selectionChecker.resetSelection();
