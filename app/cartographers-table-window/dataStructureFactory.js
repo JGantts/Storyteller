@@ -383,7 +383,7 @@ function buildInsertPoint(points, roomKey, x, y) {
     let id = "" + x + "-" + y;
     if (!points[id]) {
         let roomKeys = [];
-        points[id] = {x, y, roomKeys};
+        points[id] = {id, x, y, roomKeys};
     }
     points[id].roomKeys.push(roomKey);
 }
