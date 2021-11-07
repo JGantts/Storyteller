@@ -363,6 +363,14 @@ function roomOverlaps(room, dataStructures, idsToDelete) {
     if (!room) {
         return false;
     }
+    if (room.leftX >= room.rightX
+    || room.leftCeilingY >= room. leftFloorY
+    || room.rightCeilingY >= room.rightFloorY) {
+      return true;
+    }
+
+
+
     let lines = dataStructureFactory.getWallsFromRoom(room);
     //check if this potentialRoom contains any existing points
     for (const pointKey in dataStructures.points) {
