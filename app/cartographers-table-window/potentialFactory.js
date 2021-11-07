@@ -251,7 +251,6 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
         let deltaY = endPoint.y - startPoint.y;
 
         if (Math.abs(deltaY) < 5) {
-            console.log("here");
             return null;
         }
 
@@ -280,9 +279,9 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
 
         let deltaYToUse = -1;
         if (Math.abs(yToConsiderA - closestPointAsY) < 5) {
-            deltaYToUse = closestPointAsY - line.start.y;
+            deltaYToUse = closestPointAsY - side.start.y;
         } else if (Math.abs(yToConsiderB - closestPointBsY) < 5) {
-            deltaYToUse = closestPointBsY - line.end.y;
+            deltaYToUse = closestPointBsY - side.end.y;
         } else {
             deltaYToUse = deltaY;
         }
@@ -389,7 +388,7 @@ function roomOverlaps(room, dataStructures, toExclude) {
     //check if potentialRoom overlaps exactly any existing room sides
     //  such that rooms are overlapping, not adjacent
     for (const roomKey in dataStructures.metaroomDisk.rooms) {
-        if (roomKey === toExclude.id){
+        if (roomKey === toExclude?.id){
             continue;
         }
         let linesExisting = dataStructureFactory.getWallsFromRoom(dataStructures.metaroomDisk.rooms[roomKey]);
@@ -470,8 +469,9 @@ function getPotentialRooms(ui, selection, dataStructures) {
             }
         } else {
             if (selection.selectedType === "point") {
-              for (index in selection.selectedRoomsIds) {
-                  let id = selection.selectedRoomsIds[index];
+              for (index in selection.selectedRoomsIdsPartsIds) {
+                  let roomIdPartId = selection.selectedRoomsIdsPartsIds[index];
+                  let id = roomIdPartId.roomId;
                   let selectedRoom = dataStructures.metaroomDisk.rooms[id];
                   let room = getPotentialRoomFromYChange(
                     ui.dragging.startDragging,
@@ -485,9 +485,10 @@ function getPotentialRooms(ui, selection, dataStructures) {
               }
 
             } else if (selection.selectedType === "corner") {
-              assert(selection.selectedRoomsIds.length === 1,
-                  `Size was not 1: ${JSON.stringify(selection.selectedRoomsIds)}`)
-              let id = selection.selectedRoomsIds[0];
+              assert(selection.selectedRoomsIdsPartsIds.length === 1,
+                  `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`);
+              let roomIdPartId = selection.selectedRoomsIdsPartsIds[0];
+              let id = roomIdPartId.roomId;
               let selectedRoom = dataStructures.metaroomDisk.rooms[id];
               let room = getPotentialRoomFromYChange(
                 ui.dragging.startDragging,
@@ -502,10 +503,11 @@ function getPotentialRooms(ui, selection, dataStructures) {
             } else if (selection.selectedType === "door"
                 || selection.selectedType === "wall"
             ) {
-                for (index in selection.selectedRoomsIds) {
-                    let id = selection.selectedRoomsIds[index];
+                for (index in selection.selectedRoomsIdsPartsIds) {
+                    let selectedRoomIdPartId = selection.selectedRoomsIdsPartsIds[index];
+                    let id = selectedRoomIdPartId.roomId;
                     let selectedRoom = dataStructures.metaroomDisk.rooms[id];
-                    let selectedSide = selection.selctedRoomPartsIds[index];
+                    let selectedSide = selectedRoomIdPartId.partId;
                     let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
                     if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
                         rooms.push(room);
@@ -518,11 +520,12 @@ function getPotentialRooms(ui, selection, dataStructures) {
 
 
             } else if (selection.selectedType === "side") {
-                assert(selection.selectedRoomsIds.length === 1,
-                    `Size was not 1: ${JSON.stringify(selection.selectedRoomsIds)}`)
-                let id = selection.selectedRoomsIds[0];
+                assert(selection.selectedRoomsIdsPartsIds.length === 1,
+                    `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`)
+                let roomIdPartId = selection.selectedRoomsIdsPartsIds[0];
+                let id = roomIdPartId.roomId;
                 let selectedRoom = dataStructures.metaroomDisk.rooms[id];
-                let selectedSide = selection.selctedRoomPartsIds[0];
+                let selectedSide = roomIdPartId.partId;
                 let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
                 if (room && !roomOverlaps(room, dataStructures, selectedRoom)) {
                     rooms = [room];

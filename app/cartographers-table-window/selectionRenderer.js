@@ -405,9 +405,9 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         let selectedPoint = dataStructures.points[selected.selectedId];
         drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint);
     } else if (selected.selectedType === "corner") {
-        assert(selected.selectedRoomsIds.length === 1,
-            `Size was not 1: ${JSON.stringify(selected.selectedRoomsIds)}`)
-        let id = selected.selectedRoomsIds[0];
+        assert(selected.selectedRoomsIdsPartsIds.length === 1,
+            `Size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`)
+        let id = selected.selectedRoomsIdsPartsIds[0].roomId;
         let selectedRoom = dataStructures.metaroomDisk.rooms[id];
         let selectedPoint = dataStructures.points[selected.selectedId];
         drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint, selectedRoom);
@@ -420,13 +420,14 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         }
         drawSelectionLine(selectedSide, 0);
     } else if (selected.selectedType === "side") {
-        assert(selected.selectedRoomsIds.length === 1,
-            `Size was not 1: ${JSON.stringify(selected.selectedRoomsIds)}`)
-        let id = selected.selectedRoomsIds[0];
+        assert(selected.selectedRoomsIdsPartsIds.length === 1,
+            `Size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`)
+        let selectedRoomIdPartId = selected.selectedRoomsIdsPartsIds[0];
+        let id = selectedRoomIdPartId.roomId;
         let selectedRoom = dataStructures.metaroomDisk.rooms[id];
-        let selectedSide = dataStructureFactory.getWallsFromRoom(selectedRoom)[selected.selctedRoomPartsIds[0]];
+        let selectedSide = dataStructureFactory.getWallsFromRoom(selectedRoom)[selectedRoomIdPartId.partId];
         let leftRight = 0;
-        if (selected.selctedRoomPartsIds[0] < 1 || selected.selctedRoomPartsIds[0] > 2) {
+        if (selectedRoomIdPartId.partId < 1 || selectedRoomIdPartId.partId > 2) {
             leftRight = 1;
         } else {
             leftRight = -1;

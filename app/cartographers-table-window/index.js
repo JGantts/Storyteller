@@ -640,11 +640,10 @@ function tryCreateRoom() {
     }
     let commands = [];
     for (index in newRooms) {
-        let id = "";
+        let room = newRooms[index];
         if (_shiftKeyIsDown) {
             room.id = crypto.randomUUID();
         }
-        let room = newRooms[index];
         let addCommand = makeAddRoomCommand(room.id, room);
         if (!_shiftKeyIsDown) {
             let deleteCommand = makeDeleteRoomCommand(room.id);
