@@ -368,7 +368,6 @@ function roomOverlaps(room, dataStructures, idsToDelete) {
     for (const pointKey in dataStructures.points) {
         let point = dataStructures.points[pointKey];
         if (point.roomKeys.every(key => idsToDelete.some(idToDelete => idToDelete === key))) {
-            console.log("yo yo");
             continue;
         }
         if (point.x <= room.leftX) {
