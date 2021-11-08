@@ -260,7 +260,6 @@ function checkSideSelection(x, y, dataStructures){
                 break;
             }
         }
-        console.log(selected);
     }
 
     return selected;
