@@ -107,12 +107,12 @@ function slicePotentialSideIntoPotentialLinesFromActualWall(side, walls){
           side,
           wall,
           (start, end) => {
-              let newSegmmeent = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1.0)
+              let newSegmmeent = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1.0, side.roomKeys)
               let newSegmments = recurseSubtractionUntilNoChange(newSegmmeent, wallsToPassDown);
               lines = lines.concat(newSegmments);
           },
           (start, end) => {
-              let newSegmmeent = geometry.getSortedDoor(start.x, start.y, end.x, end.y, 1.0)
+              let newSegmmeent = geometry.getSortedDoor(start.x, start.y, end.x, end.y, 1.0, [...side.roomKeys, ...wall.roomKeys])
               let newSegmments = recurseSubtractionUntilNoChange(newSegmmeent, wallsToPassDown);
               lines = lines.concat(newSegmments);
           },
@@ -157,7 +157,8 @@ function getDoorsFromRooms(rooms, perms) {
               geometry.getSortedDoor(
                   roomA.leftX, middleTwo.high,
                   roomA.leftX, middleTwo.low,
-                  perm.permeability
+                  perm.permeability,
+                  [perm.rooms.a, perm.rooms.b]
               )
           );
           continue;
@@ -170,7 +171,8 @@ function getDoorsFromRooms(rooms, perms) {
             geometry.getSortedDoor(
                 roomB.leftX, middleTwo.high,
                 roomB.leftX, middleTwo.low,
-                perm.permeability
+                perm.permeability,
+                [perm.rooms.a, perm.rooms.b]
             )
         );
         continue;
@@ -198,7 +200,8 @@ function getDoorsFromRooms(rooms, perms) {
               geometry.getSortedDoor(
                   ourPoints.high.x, ourPoints.high.y,
                   ourPoints.low.x, ourPoints.low.y,
-                  perm.permeability
+                  perm.permeability,
+                  [perm.rooms.a, perm.rooms.b]
               )
           );
           continue;
@@ -214,7 +217,8 @@ function getDoorsFromRooms(rooms, perms) {
               geometry.getSortedDoor(
                   ourPoints.high.x, ourPoints.high.y,
                   ourPoints.low.x, ourPoints.low.y,
-                  perm.permeability
+                  perm.permeability,
+                  [perm.rooms.a, perm.rooms.b]
               )
           );
           continue;
@@ -316,7 +320,7 @@ function subtractDoorsFromWall(wall, doors){
           wall,
           door,
           (start, end) => {
-              let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1);
+              let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1, wall.roomKeys);
               let newSegmments = recurseSubtractionUntilNoChange(newSegment, doorsToPassDown);
               walls = walls.concat(newSegmments);
           },
@@ -414,28 +418,32 @@ function getWallsFromRoom(room) {
         geometry.getSortedDoor(
             room.leftX, room.leftCeilingY,
             room.rightX, room.rightCeilingY,
-            -1
+            -1,
+            [room.id]
         )
     );
     doors.push(
       geometry.getSortedDoor(
             room.rightX, room.rightCeilingY,
             room.rightX, room.rightFloorY,
-            -1
+            -1,
+            [room.id]
         )
     );
     doors.push(
         geometry.getSortedDoor(
             room.rightX, room.rightFloorY,
             room.leftX, room.leftFloorY,
-            -1
+            -1,
+            [room.id]
         )
     );
     doors.push(
         geometry.getSortedDoor(
             room.leftX, room.leftFloorY,
             room.leftX, room.leftCeilingY,
-            -1
+            -1,
+            [room.id]
         )
     );
 

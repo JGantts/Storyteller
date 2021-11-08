@@ -30,13 +30,14 @@ function tryGetCorner(room, point) {
     return cornerIndex;
 }
 
-function getSortedDoor(aX, aY, bX, bY, perm) {
+function getSortedDoor(aX, aY, bX, bY, permeability, roomKeys) {
     let line = getSortedLine(aX, aY, bX, bY);
     if (line) {
         return {
-            permeability: perm,
+            permeability,
             start: line.start,
-            end: line.end
+            end: line.end,
+            roomKeys
         }
     }
     return null;
