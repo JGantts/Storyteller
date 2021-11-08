@@ -1,4 +1,4 @@
-function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMade, handled) {
+function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMadeToLineA, lineBHandled) {
     assert(
       lineA.start.x !== lineA.end.x ||
       lineA.start.y !== lineA.end.y,
@@ -11,7 +11,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
       `LineB has 0 length\n${JSON.stringify(lineB)}`
     );
 
-    //console.log({lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMade, handled});
+    //console.log({lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMadeToLineA, lineBHandled});
 
     let lineAMinX = Math.min(lineA.start.x, lineA.end.x);
     let lineAMaxX = Math.max(lineA.start.x, lineA.end.x);
@@ -38,6 +38,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                 ) {
                     lineASlice(lineA.start, lineA.end);
                     lineBSlice(lineB.start, lineB.end);
+                    lineBHandled();
 
                 //lines touch, no overlap, lineA on top
                 } else if (
@@ -45,6 +46,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                 ) {
                     lineASlice(lineA.start, lineA.end);
                     lineBSlice(lineB.start, lineB.end);
+                    lineBHandled();
 
                 //overlap with upper-lineA and lower-lineB tails
                 } else if (
@@ -55,8 +57,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     lineASlice(lineA.start, lineB.start);
                     lineABSlice(lineB.start, lineA.end);
                     lineBSlice(lineA.end, lineB.end);
-                    modificationWasMade();
-                    handled();
+                    modificationWasMadeToLineA();
+                    lineBHandled();
 
                 //overlap with lower-lineB tail
                 } else if (
@@ -66,8 +68,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                 ) {
                     lineABSlice(lineA.start, lineA.end);
                     lineBSlice(lineA.end, lineB.end);
-                    modificationWasMade();
-                    handled();
+                    modificationWasMadeToLineA();
+                    lineBHandled();
 
                 //overlap with upper-lineB tail
                 } else if (
@@ -77,8 +79,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                 ) {
                     lineBSlice(lineB.start, lineA.start);
                     lineABSlice(lineA.start, lineA.end);
-                    modificationWasMade();
-                    handled();
+                    modificationWasMadeToLineA();
+                    lineBHandled();
 
                 //overlap with upper-lineB and lower-lineB tails
                 } else if (
@@ -89,8 +91,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     lineASlice(lineB.start, lineA.start);
                     lineABSlice(lineA.start, lineA.end);
                     lineBSlice(lineA.end, lineB.end);
-                    modificationWasMade();
-                    handled();
+                    modificationWasMadeToLineA();
+                    lineBHandled();
 
 
                 //overlap with no tails
@@ -99,8 +101,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                   && lineAMaxY === lineBMaxY
                 ) {
                     lineABSlice(lineA.start, lineA.end);
-                    modificationWasMade();
-                    handled();
+                    modificationWasMadeToLineA();
+                    lineBHandled();
 
                 //overlap with upper-lineA and lower-lineA tails
                 } else if (
@@ -110,8 +112,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     lineASlice(lineA.start, lineB.start);
                     lineABSlice(lineB.start, lineB.end);
                     lineASlice(lineB.end, lineA.end);
-                    modificationWasMade();
-                    handled();
+                    modificationWasMadeToLineA();
+                    lineBHandled();
 
                 //overlap with lower-lineA tail
                 } else if (
@@ -120,8 +122,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                 ) {
                     lineABSlice(lineB.start, lineB.end);
                     lineASlice(lineB.end, lineA.end);
-                    modificationWasMade();
-                    handled();
+                    modificationWasMadeToLineA();
+                    lineBHandled();
 
                 //overlap with upper-lineA tail
                 } else if (
@@ -130,8 +132,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                 ) {
                     lineASlice(lineA.start, lineB.start);
                     lineABSlice(lineB.start, lineB.end);
-                    modificationWasMade();
-                    handled();
+                    modificationWasMadeToLineA();
+                    lineBHandled();
 
                 //overlap with lower-lineA and upper-lineB tails
                 } else if (
@@ -142,8 +144,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     lineBSlice(lineB.start, lineA.start);
                     lineABSlice(lineA.start, lineB.end);
                     lineASlice(lineB.end, lineA.end);
-                    modificationWasMade();
-                    handled();
+                    modificationWasMadeToLineA();
+                    lineBHandled();
 
                 //lines touch, lineA on bottom
                 } else if (
@@ -207,6 +209,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     ) {
                         lineASlice(lineA.start, lineA.end);
                         lineBSlice(lineB.start, lineB.end);
+                        lineBHandled();
 
                     //lines touch, no overlap, lineA on left
                     } else if (
@@ -214,6 +217,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     ) {
                         lineASlice(lineA.start, lineA.end);
                         lineBSlice(lineB.start, lineB.end);
+                        lineBHandled();
 
                     //overlap with left-lineA and right-lineB tails
                     } else if (
@@ -224,8 +228,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                         lineASlice(lineA.start, lineB.start);
                         lineABSlice(lineB.start, lineA.end);
                         lineBSlice(lineA.end, lineB.end);
-                        modificationWasMade();
-                        handled();
+                        modificationWasMadeToLineA();
+                        lineBHandled();
 
                     //overlap with right-lineB tail
                     } else if (
@@ -236,8 +240,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     ) {
                         lineABSlice(lineA.start, lineA.end);
                         lineBSlice(lineA.end, lineB.end);
-                        modificationWasMade();
-                        handled();
+                        modificationWasMadeToLineA();
+                        lineBHandled();
 
                     //overlap with left-lineB tail
                     } else if (
@@ -247,8 +251,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     ) {
                         lineBSlice(lineB.start, lineA.start);
                         lineABSlice(lineA.start, lineA.end);
-                        modificationWasMade();
-                        handled();
+                        modificationWasMadeToLineA();
+                        lineBHandled();
 
                     //overlap with left-lineB and right-lineB tails
                     } else if (
@@ -259,7 +263,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                         lineASlice(lineB.start, lineA.start);
                         lineABSlice(lineA.start, lineA.end);
                         lineBSlice(lineA.end, lineB.end);
-                        modificationWasMade();
+                        modificationWasMadeToLineA();
 
                     //overlap with no tails
                     } else if (
@@ -267,8 +271,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                       && lineAMaxX === lineBMaxX
                     ) {
                         lineABSlice(lineA.start, lineA.end);
-                        modificationWasMade();
-                        handled();
+                        modificationWasMadeToLineA();
+                        lineBHandled();
 
                     //overlap with left-lineA and right-lineA tails
                     } else if (
@@ -278,8 +282,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                         lineASlice(lineA.start, lineB.start);
                         lineABSlice(lineB.start, lineB.end);
                         lineASlice(lineB.end, lineA.end);
-                        modificationWasMade();
-                        handled();
+                        modificationWasMadeToLineA();
+                        lineBHandled();
 
                     //overlap with right-lineA tail
                     } else if (
@@ -288,8 +292,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     ) {
                         lineABSlice(lineB.start, lineB.end);
                         lineASlice(lineB.end, lineA.end);
-                        modificationWasMade();
-                        handled();
+                        modificationWasMadeToLineA();
+                        lineBHandled();
 
                     //overlap with left-lineA tail
                     } else if (
@@ -298,8 +302,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     ) {
                         lineASlice(lineA.start, lineB.start);
                         lineABSlice(lineB.start, lineB.end);
-                        modificationWasMade();
-                        handled();
+                        modificationWasMadeToLineA();
+                        lineBHandled();
 
                     //overlap with right-lineA and left-lineB tails
                     } else if (
@@ -310,8 +314,8 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                         lineBSlice(lineB.start, lineA.start);
                         lineABSlice(lineA.start, lineB.end);
                         lineASlice(lineB.end, lineA.end);
-                        modificationWasMade();
-                        handled();
+                        modificationWasMadeToLineA();
+                        lineBHandled();
 
                     //lines touch, lineA on right
                     } else if (
@@ -319,6 +323,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     ) {
                         lineBSlice(lineB.start, lineB.end);
                         lineASlice(lineA.start, lineA.end);
+                        lineBHandled();
 
                     //lines don't touch, lineA on right
                     } else if (
@@ -326,6 +331,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     ) {
                         lineBSlice(lineB.start, lineB.end);
                         lineASlice(lineA.start, lineA.end);
+                        lineBHandled();
 
                     } else {
                         console.log("wtf?");
