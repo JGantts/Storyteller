@@ -7,3 +7,20 @@
 	padding-top: 10px;
 	padding-botton: 10px;
 }
+
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: rgba(255, 0, 0, 0.2);
+   color: white;
+}
+
+.footer .version {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: auto;
+  text-align: right;
+}
