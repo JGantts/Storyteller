@@ -371,7 +371,8 @@ function roomOverlaps(room, dataStructures, idsToDelete) {
 
     let lines = dataStructureFactory.getWallsFromRoom(room);
 
-    //check if this potentialRoom contains any existing points
+    //check if this potentialRoom contains any existing points.
+    //    exclude all points which exist only on rooms which we're modifying.
     for (const pointKey in dataStructures.points) {
         let point = dataStructures.points[pointKey];
         if (point.roomKeys.every(key => idsToDelete?.some(idToDelete => idToDelete.id === key))) {
@@ -397,7 +398,8 @@ function roomOverlaps(room, dataStructures, idsToDelete) {
     }
 
     //check if potentialRoom overlaps exactly any existing room sides
-    //  such that rooms are overlapping, not adjacent
+    //    such that rooms are overlapping, not adjacent.
+    //    exclude all rooms which we're modifying.
     for (const roomKey in dataStructures.metaroomDisk.rooms) {
         if (idsToDelete?.some(idToDelete => roomKey === idToDelete.id)) {
             continue;
@@ -421,8 +423,12 @@ function roomOverlaps(room, dataStructures, idsToDelete) {
     }
 
     //check if any potentialLine crosses any existing line
+    //    exclude all lines which exist only on rooms we're modifying
     for (const potentialLine of lines) {
         for (const existingLine of dataStructures.walls.concat(dataStructures.doors)) {
+            if (existingLine.roomKeys.every(roomKey => idsToDelete?.some(idToDelete => idToDelete.id === roomKey))) {
+                continue;
+            }
             if (geometry.lineSegmentsIntersectAndCross(potentialLine, existingLine)) {
                 return true;
             }
