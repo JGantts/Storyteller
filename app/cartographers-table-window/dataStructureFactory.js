@@ -91,46 +91,26 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(sidesPotential, wal
 
 function slicePotentialSideIntoPotentialLinesFromActualWalls(side, walls){
     let lines = [];
-    let sideHandled = false;
     let sideChanged = false;
     for (let j=0; j < walls.length; j++) {
         let wall = walls[j];
-        let wallsToPassDown =  walls.filter(function(val) {return (
-          val.start.x !== wall.start.x
-          ||val.start.y !== wall.start.y
-          ||val.end.x !== wall.end.x
-          ||val.end.y !== wall.end.y
-        )});
-
 
         lineSegmentComparison(
           side,
           wall,
           (start, end) => {
-              let newSegmmeent = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1.0, side.roomKeys)
-              let newSegmments = subtractSegmentsFromSegment(newSegmmeent, wallsToPassDown);
-              lines = lines.concat(newSegmments);
+              let newSegmment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1.0, side.roomKeys)
+              lines.push(newSegmment);
           },
           (start, end) => {
-              let newSegmmeent = geometry.getSortedDoor(start.x, start.y, end.x, end.y, 1.0, [...side.roomKeys, ...wall.roomKeys])
-              let newSegmments = subtractSegmentsFromSegment(newSegmmeent, wallsToPassDown);
-              lines = lines.concat(newSegmments);
-          },
-          (start, end) => {
-              Function.prototype();
-          },
-          () => {
+              let newSegmment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, 1.0, [...side.roomKeys, ...wall.roomKeys])
+              lines.push(newSegmment);
               sideChanged = true;
           },
-          () => {
-              sideHandled = true;
-          }
+          () => {},
+          () => {},
+          () => {}
         );
-    }
-
-    if (!sideHandled) {
-          //console.log("lazy pos");
-          lines.push(side);
     }
 
     return {segments: lines, changed: sideChanged};
