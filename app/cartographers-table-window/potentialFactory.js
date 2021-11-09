@@ -412,8 +412,6 @@ function roomOverlaps(room, dataStructures, idsToDelete) {
               linesExisting[i],
               () => {},
               () => {shouldReturnTrue = true;},
-              () => {},
-              () => {},
               () => {}
             );//(lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMade, handled)
             if (shouldReturnTrue) {

@@ -61,8 +61,6 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                         }
                     );
                   },
-                  () => {},
-                  () => {},
                   () => {}
                 )
             }
@@ -126,8 +124,6 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, a
                     newDefendingSegments2 = [...newDefendingSegments2, newSegment];
                     defendingSegmentChanged = true;
                 },
-                () => {},
-                () => {},
                 () => {}
             );
             thisDefendingSegmement = newDefendingSegments1.pop();
@@ -331,8 +327,6 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
                 () => {
                     defendingSegmentChanged = true;
                 },
-                () => {},
-                () => {},
                 () => {}
             );
             thisDefendingSegmement = newDefendingSegments1.pop();

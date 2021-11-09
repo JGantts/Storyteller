@@ -168,8 +168,6 @@ function checkLineSelection(x, y, dataStructures){
                     () => {
                         selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 1});
                     },
-                    () => {},
-                    () => {},
                     () => {});
                 lineSegmentComparison(
                     selectedLine, roomSides[3],
@@ -177,8 +175,6 @@ function checkLineSelection(x, y, dataStructures){
                     () => {
                         selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 3});
                     },
-                    () => {},
-                    () => {},
                     () => {});
             } else {
               lineSegmentComparison(
@@ -187,8 +183,6 @@ function checkLineSelection(x, y, dataStructures){
                   () => {
                       selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 0});
                   },
-                  () => {},
-                  () => {},
                   () => {});
               lineSegmentComparison(
                   selectedLine, roomSides[2],
@@ -196,8 +190,6 @@ function checkLineSelection(x, y, dataStructures){
                   () => {
                       selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 2});
                   },
-                  () => {},
-                  () => {},
                   () => {});
             }
         }
@@ -252,8 +244,6 @@ function checkSideSelection(x, y, dataStructures){
                 ()=>{
                     selected.selectedRoomsIdsPartsIds.push({roomId: roomSelection.selectedId, partId: i});
                 },
-                ()=>{},
-                ()=>{},
                 ()=>{}
             )
             if (intersectionSideIndex !== -1){
