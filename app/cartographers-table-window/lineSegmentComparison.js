@@ -11,8 +11,6 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
       `LineB has 0 length\n${JSON.stringify(lineB)}`
     );
 
-    //console.log({lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMadeToLineA, lineBHandled});
-
     let lineAMinX = Math.min(lineA.start.x, lineA.end.x);
     let lineAMaxX = Math.max(lineA.start.x, lineA.end.x);
     let lineAMinY = Math.min(lineA.start.y, lineA.end.y);
@@ -162,12 +160,15 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     console.log(lineA);
                     console.log(lineB);
                 }
+            } else {
+                lineASlice(lineA.start, lineA.end);
+                lineBSlice(lineB.start, lineB.end);
             }
 
         //not a match
         } else {
-            //lineASlice(lineA.start, lineA.end);
-            //lineBSlice(lineB.start, lineB.end);
+            lineASlice(lineA.start, lineA.end);
+            lineBSlice(lineB.start, lineB.end);
         }
 
     //horizontal lineA
@@ -335,14 +336,20 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                         console.log(lineA);
                         console.log(lineB);
                     }
+                } else {
+                    lineASlice(lineA.start, lineA.end);
+                    lineBSlice(lineB.start, lineB.end);
                 }
+            } else {
+                lineASlice(lineA.start, lineA.end);
+                lineBSlice(lineB.start, lineB.end);
             }
         //not a match
-         } else {
-            //lineASlice(lineA.start, lineA.end);
-            //lineBSlice(lineB.start, lineB.end);
+        } else {
+              lineASlice(lineA.start, lineA.end);
+              lineBSlice(lineB.start, lineB.end);
         }
-    }
+     }
 }
 
 module.exports = {
