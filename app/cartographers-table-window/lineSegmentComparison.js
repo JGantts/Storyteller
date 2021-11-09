@@ -68,7 +68,6 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                 ) {
                     lineABSlice(lineA.start, lineA.end);
                     lineBSlice(lineA.end, lineB.end);
-                    modificationWasMadeToLineA();
                     lineBHandled();
 
                 //overlap with upper-lineB tail
@@ -79,7 +78,6 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                 ) {
                     lineBSlice(lineB.start, lineA.start);
                     lineABSlice(lineA.start, lineA.end);
-                    modificationWasMadeToLineA();
                     lineBHandled();
 
                 //overlap with upper-lineB and lower-lineB tails
@@ -88,10 +86,9 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                   && lineBMinY < lineAMaxY
                   && lineAMaxY < lineBMaxY
                 ) {
-                    lineASlice(lineB.start, lineA.start);
+                    lineBSlice(lineB.start, lineA.start);
                     lineABSlice(lineA.start, lineA.end);
                     lineBSlice(lineA.end, lineB.end);
-                    modificationWasMadeToLineA();
                     lineBHandled();
 
 
@@ -101,7 +98,6 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                   && lineAMaxY === lineBMaxY
                 ) {
                     lineABSlice(lineA.start, lineA.end);
-                    modificationWasMadeToLineA();
                     lineBHandled();
 
                 //overlap with upper-lineA and lower-lineA tails

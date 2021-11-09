@@ -701,6 +701,7 @@ function deleteRoomAbsolute({id}){
 
 function rebuildRedrawRooms() {
     let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
+    console.log(dataStructures.metaroomDisk.perms);
     let doors =
         dataStructureFactory
             .getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms)

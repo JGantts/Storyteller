@@ -283,7 +283,7 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
     let walls = [];
     for (let i=0; i<wallsOverreach.length; i++ ){
         let wall = wallsOverreach[i];
-        let wallSegments = subtractDoorsFromWall(wall, doors).segments;
+        let wallSegments = subtractSegmentsFromSegment(wall, doors).segments;
         assert(!wallSegments.changed);
         //console.log(wallSegments);
         walls = walls.concat(wallSegments.filter(function(val) {return val !== null}));
@@ -291,79 +291,82 @@ function subtractDoorsFromWalls(wallsOverreach, doors){
     return walls;
 }
 
-function subtractDoorsFromWall(wall, doors){
-    let walls = [];
-    let wallHandled = false;
-    let wallChanged = false;
-    for (let j=0; j < doors.length; j++) {
-        let door = doors[j];
-        let doorsToPassDown =  doors.filter(function(val) {return (
-          val.start.x !== door.start.x
-          ||val.start.y !== door.start.y
-          ||val.end.x !== door.end.x
-          ||val.end.y !== door.end.y
+function subtractSegmentsFromSegment(defendingSegment, attackingSegments){
+    let defendingSegments = [];
+    let defendingSegmentHandled = false;
+    let defendingSegmentChanged = false;
+    console.log(attackingSegments.length);
+    console.log(new Error().stack);
+    console.log(attackingSegments);
+    for (let j=0; j < attackingSegments.length; j++) {
+        let attackingSegment = attackingSegments[j];
+        let attackingSegmentsToPassDown =  attackingSegments.filter(function(val) {return (
+          val.start.x !== attackingSegment.start.x
+          ||val.start.y !== attackingSegment.start.y
+          ||val.end.x !== attackingSegment.end.x
+          ||val.end.y !== attackingSegment.end.y
         )});
 
         assert(
-          wall.start.x !== wall.end.x ||
-          wall.start.y !== wall.end.y,
-          `Wall has 0 length\n${JSON.stringify(wall)}`
+          defendingSegment.start.x !== defendingSegment.end.x ||
+          defendingSegment.start.y !== defendingSegment.end.y,
+          `DefendingSegment has 0 length\n${JSON.stringify(defendingSegment)}`
         );
 
         assert(
-          door.start.x !== door.end.x ||
-          door.start.y !== door.end.y,
-          `Door has 0 length\n${JSON.stringify(door)}`
+          attackingSegment.start.x !== attackingSegment.end.x ||
+          attackingSegment.start.y !== attackingSegment.end.y,
+          `AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`
         );
 
         lineSegmentComparison(
-          wall,
-          door,
+          defendingSegment,
+          attackingSegment,
           (start, end) => {
-              let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1, wall.roomKeys);
-              let newSegmments = recurseSubtractionUntilNoChange(newSegment, doorsToPassDown);
-              walls = walls.concat(newSegmments);
+              let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1, defendingSegment.roomKeys);
+              let newSegmments = recurseSubtractionUntilNoChange(newSegment, attackingSegmentsToPassDown);
+              defendingSegments = defendingSegments.concat(newSegmments);
           },
           () => {},
           () => {},
           () => {
-              sideChanged = true;
+              defendingSegmentChanged = true;
           },
           () => {
-              wallHandled = true;
+              defendingSegmentHandled = true;
           }
         )
     }
 
-    if (!wallHandled) {
+    if (!defendingSegmentHandled) {
         //console.log("lazy pos");
-        walls.push(wall);
+        defendingSegments.push(defendingSegment);
     }
 
-    return {segments: walls, changed: wallChanged};
+    return {segments: defendingSegments, changed: defendingSegmentChanged};
 }
 
-function recurseSubtractionUntilNoChange(wall, doors) {
-    //console.log(wall);
+function recurseSubtractionUntilNoChange(defendingSegment, attackingSegments) {
+    //console.log(defendingSegment);
     //console.log(doors);
 
-    if (wall) {
-        let newWalls1 = subtractDoorsFromWall(wall, doors);
-        if (newWalls1.changed) {
-            let newWalls2 = [];
-            for(let i = 0; i < newWalls1.segments.length; i++) {
-                newWalls2.push(recurseSubtractionUntilNoChange(newWalls1.segments[i], doors));
+    if (defendingSegment) {
+        let newDefendingSegments1 = subtractSegmentsFromSegment(defendingSegment, attackingSegments);
+        if (newDefendingSegments1.changed) {
+            let newDefendingSegments2 = [];
+            for(let i = 0; i < newDefendingSegments1.segments.length; i++) {
+                newDefendingSegments2.push(recurseSubtractionUntilNoChange(newDefendingSegments1.segments[i], attackingSegments));
             }
             //console.log(newWalls1);
-            if (newWalls2.length === 0) {
+            if (newDefendingSegments2.length === 0) {
                 return [];
-            } else if (newWalls2.length === 1) {
-                return newWalls2[0];
+            } else if (newDefendingSegments2.length === 1) {
+                return newDefendingSegments2[0];
             } else {
-                assert(false, `newWalls2.length: ${newWalls2.length}\n${JSON.stringify(newWalls2)}`);
+                assert(false, `newWalls2.length: ${newDefendingSegments2.length}\n${JSON.stringify(newDefendingSegments2)}`);
             }
         } else {
-            return newWalls1.segments;
+            return newDefendingSegments1.segments;
         }
     } else {
         return [];
