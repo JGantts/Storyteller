@@ -89,32 +89,57 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(sidesPotential, wal
     return linesPotential;
 }
 
-function slicePotentialSideIntoPotentialLinesFromActualWalls(side, walls){
-    let lines = [];
-    let sideChanged = false;
-    for (let j=0; j < walls.length; j++) {
-        let wall = walls[j];
+function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, attackingSegmentsIn){
+    assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
+    assert(
+      defendingSegment.start.x !== defendingSegment.end.x ||
+      defendingSegment.start.y !== defendingSegment.end.y,
+      `DefendingSegment has 0 length\n${JSON.stringify(defendingSegment)}`
+    );
+    let attackingSegments = [...attackingSegmentsIn];
 
-        lineSegmentComparison(
-          side,
-          wall,
-          (start, end) => {
-              let newSegmment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1.0, side.roomKeys)
-              lines.push(newSegmment);
-          },
-          (start, end) => {
-              let newSegmment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, 1.0, [...side.roomKeys, ...wall.roomKeys])
-              lines.push(newSegmment);
-              sideChanged = true;
-          },
-          () => {},
-          () => {},
-          () => {}
-        );
+    let newDefendingSegments1 = [defendingSegment];
+    let defendingSegmentChanged = false;
+    let attackingSegment = attackingSegments.pop();
+    if (!attackingSegment) {
+        return {segments: [defendingSegment], changed: false};
     }
+    do {
+        assert(
+          attackingSegment.start.x !== attackingSegment.end.x ||
+          attackingSegment.start.y !== attackingSegment.end.y,
+          `AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`
+        );
 
-    return {segments: lines, changed: sideChanged};
+        let newDefendingSegments2 = [];
+        let thisDefendingSegmement = newDefendingSegments1.pop()
+        while (thisDefendingSegmement) {
+            lineSegmentComparison(
+                thisDefendingSegmement,
+                attackingSegment,
+                (start, end) => {
+                    let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, thisDefendingSegmement.permeability, thisDefendingSegmement.roomKeys);
+                    newDefendingSegments2 = [...newDefendingSegments2, newSegment];
+                },
+                (start, end) => {
+                    let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, 1.0, [...thisDefendingSegmement.roomKeys, ...attackingSegment.roomKeys]);
+                    newDefendingSegments2 = [...newDefendingSegments2, newSegment];
+                    defendingSegmentChanged = true;
+                },
+                () => {},
+                () => {},
+                () => {}
+            );
+            thisDefendingSegmement = newDefendingSegments1.pop();
+        }
+        newDefendingSegments1 = [...newDefendingSegments2];
+        attackingSegment = attackingSegments.pop();
+    } while (attackingSegment);
+    return {segments: newDefendingSegments1, changed: defendingSegmentChanged};
 }
+
+
+
 
 function getDoorsFromRooms(rooms, perms) {
   let doors = [];
