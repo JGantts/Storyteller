@@ -292,7 +292,6 @@ function subtractSegmentsFromSegments(defendingSegments, attackingSegments){
 }
 
 function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
-    console.log("subtractSegmentsFromSegment");
     assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
     assert(
       defendingSegment.start.x !== defendingSegment.end.x ||
@@ -321,15 +320,12 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
         let newDefendingSegments2 = [];
         do {
             let thisDefendingSegmement = newDefendingSegments1.pop()
-            console.log(thisDefendingSegmement);
-            console.log(attackingSegment);
             lineSegmentComparison(
                 thisDefendingSegmement,
                 attackingSegment,
                 (start, end) => {
                     let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1, thisDefendingSegmement.roomKeys);
                     let newSegmments = subtractSegmentsFromSegment(newSegment, attackingSegments);
-                    console.log(newSegmments);
                     newDefendingSegments2 = [...newDefendingSegments2, ...newSegmments.segments];
                 },
                 () => {
@@ -340,7 +336,6 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
                 () => {}
             );
         } while (newDefendingSegments1.length > 0);
-        console.log(newDefendingSegments2);
         newDefendingSegment1 = newDefendingSegments2;
         attackingSegment = attackingSegments.pop();
     } while (attackingSegment && newDefendingSegments1.length > 0);
