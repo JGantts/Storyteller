@@ -167,8 +167,12 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     console.log(lineB);
                 }
             }
-        }
+
         //not a match
+        } else {
+            //lineASlice(lineA.start, lineA.end);
+            //lineBSlice(lineB.start, lineB.end);
+        }
 
     //horizontal lineA
     } else {
@@ -340,6 +344,10 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     }
                 }
             }
+        //not a match
+         } else {
+            //lineASlice(lineA.start, lineA.end);
+            //lineBSlice(lineB.start, lineB.end);
         }
     }
 }

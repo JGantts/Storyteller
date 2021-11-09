@@ -81,7 +81,7 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(sidesPotential, wal
     let linesPotential = [];
     for (let i=0; i<sidesPotential.length; i++ ){
         let sidePotential = sidesPotential[i];
-        let lineSegmentsNew = slicePotentialSideIntoPotentialLinesFromActualWall(sidePotential, wallsActual).segments;
+        let lineSegmentsNew = slicePotentialSideIntoPotentialLinesFromActualWalls(sidePotential, wallsActual).segments;
         assert(!lineSegmentsNew.changed);
         //console.log(wallSegments);
         linesPotential = linesPotential.concat(lineSegmentsNew.filter(function(val) {return val !== null}));
@@ -89,7 +89,7 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(sidesPotential, wal
     return linesPotential;
 }
 
-function slicePotentialSideIntoPotentialLinesFromActualWall(side, walls){
+function slicePotentialSideIntoPotentialLinesFromActualWalls(side, walls){
     let lines = [];
     let sideHandled = false;
     let sideChanged = false;
