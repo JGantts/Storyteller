@@ -278,26 +278,26 @@ function getIntersectsFromOne(line, point){
     return null;
 }
 
-function subtractDoorsFromWalls(wallsOverreach, doors){
-    assert(wallsOverreach, `Instead of UUID, found ${wallsOverreach}`);
-    let walls = [];
-    for (let i=0; i<wallsOverreach.length; i++ ){
-        let wall = wallsOverreach[i];
-        let wallSegments = subtractSegmentsFromSegment(wall, doors).segments;
+function subtractSegmentsFromSegments(defendingSegments, attackingSegments){
+    assert(defendingSegments, `Instead of UUID, found ${defendingSegments}`);
+    let newDefendingSegments = [];
+    for (let i=0; i<defendingSegments.length; i++ ){
+        let defendingSegment = defendingSegments[i];
+        let wallSegments = subtractSegmentsFromSegment(defendingSegment, attackingSegments).segments;
         assert(!wallSegments.changed);
         //console.log(wallSegments);
-        walls = walls.concat(wallSegments.filter(function(val) {return val !== null}));
+        newDefendingSegments = newDefendingSegments.concat(wallSegments.filter(function(val) {return val !== null}));
     }
-    return walls;
+    return newDefendingSegments;
 }
 
 function subtractSegmentsFromSegment(defendingSegment, attackingSegments){
-    let defendingSegments = [];
+    let newDefendingSegments = [];
     let defendingSegmentHandled = false;
     let defendingSegmentChanged = false;
-    console.log(attackingSegments.length);
-    console.log(new Error().stack);
-    console.log(attackingSegments);
+    //console.log(attackingSegments.length);
+    //console.log(new Error().stack);
+    //console.log(attackingSegments);
     for (let j=0; j < attackingSegments.length; j++) {
         let attackingSegment = attackingSegments[j];
         let attackingSegmentsToPassDown =  attackingSegments.filter(function(val) {return (
@@ -325,7 +325,7 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegments){
           (start, end) => {
               let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1, defendingSegment.roomKeys);
               let newSegmments = recurseSubtractionUntilNoChange(newSegment, attackingSegmentsToPassDown);
-              defendingSegments = defendingSegments.concat(newSegmments);
+              newDefendingSegments = newDefendingSegments.concat(newSegmments);
           },
           () => {},
           () => {},
@@ -340,10 +340,10 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegments){
 
     if (!defendingSegmentHandled) {
         //console.log("lazy pos");
-        defendingSegments.push(defendingSegment);
+        newDefendingSegments.push(defendingSegment);
     }
 
-    return {segments: defendingSegments, changed: defendingSegmentChanged};
+    return {segments: newDefendingSegments, changed: defendingSegmentChanged};
 }
 
 function recurseSubtractionUntilNoChange(defendingSegment, attackingSegments) {
@@ -355,7 +355,16 @@ function recurseSubtractionUntilNoChange(defendingSegment, attackingSegments) {
         if (newDefendingSegments1.changed) {
             let newDefendingSegments2 = [];
             for(let i = 0; i < newDefendingSegments1.segments.length; i++) {
-                newDefendingSegments2.push(recurseSubtractionUntilNoChange(newDefendingSegments1.segments[i], attackingSegments));
+                let newDefendingSegment1 = newDefendingSegments1.segments[i];
+
+                let attackingSegmentsToPassDown =  attackingSegments.filter(function(val) {return (
+                  val.start.x !== newDefendingSegment1.start.x
+                  ||val.start.y !== newDefendingSegment1.start.y
+                  ||val.end.x !== newDefendingSegment1.end.x
+                  ||val.end.y !== newDefendingSegment1.end.y
+                )});
+
+                newDefendingSegments2.push(recurseSubtractionUntilNoChange(newDefendingSegment1, attackingSegmentsToPassDown));
             }
             //console.log(newWalls1);
             if (newDefendingSegments2.length === 0) {
@@ -455,7 +464,7 @@ module.exports = {
         getWallsFromRoom,
         getDoorsFromRooms,
         getPointsFromRooms,
-        subtractDoorsFromWalls,
+        subtractSegmentsFromSegments,
         getDoorsWallsPotentialFromRoomPotential,
         getPermsFromRoomPotential,
         getSortedRoomFromDimensions

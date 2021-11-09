@@ -701,7 +701,7 @@ function deleteRoomAbsolute({id}){
 
 function rebuildRedrawRooms() {
     let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
-    console.log(dataStructures.metaroomDisk.perms);
+    //console.log(dataStructures.metaroomDisk.perms);
     let doors =
         dataStructureFactory
             .getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms)
@@ -710,7 +710,7 @@ function rebuildRedrawRooms() {
               val.start.x !== val.end.x ||
               val.start.y !== val.end.y
             );});
-    let walls = dataStructureFactory.subtractDoorsFromWalls(wallsOverreach, doors).filter(function(val) {return val});
+    let walls = dataStructureFactory.subtractSegmentsFromSegments(wallsOverreach, doors).filter(function(val) {return val});
     let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk.rooms);
     let pointsSortedX = Object.values(points);;
     pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
@@ -860,7 +860,7 @@ async function redrawSelection() {
         selection,
         dataStructures
     );
-    redrawPotential(potentialRooms, dataStructures);
+    //redrawPotential(potentialRooms, dataStructures);
 }
 
 function redrawPotential(potentialRooms, dataStructures) {
