@@ -860,7 +860,7 @@ async function redrawSelection() {
         selection,
         dataStructures
     );
-    redrawPotential(potentialRooms, dataStructures);
+    //redrawPotential(potentialRooms, dataStructures);
 }
 
 function redrawPotential(potentialRooms, dataStructures) {
