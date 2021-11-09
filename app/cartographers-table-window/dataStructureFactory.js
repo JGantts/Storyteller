@@ -321,8 +321,7 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
                 attackingSegment,
                 (start, end) => {
                     let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1, thisDefendingSegmement.roomKeys);
-                    let newSegmments = subtractSegmentsFromSegment(newSegment, attackingSegments);
-                    newDefendingSegments2 = [...newDefendingSegments2, ...newSegmments.segments];
+                    newDefendingSegments2 = [...newDefendingSegments2, newSegment];
                 },
                 () => {
                     defendingSegmentChanged = true;
