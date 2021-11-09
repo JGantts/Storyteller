@@ -324,12 +324,8 @@ function subtractDoorsFromWall(wall, doors){
               let newSegmments = recurseSubtractionUntilNoChange(newSegment, doorsToPassDown);
               walls = walls.concat(newSegmments);
           },
-          (start, end) => {
-              Function.prototype();
-          },
-          (start, end) => {
-              Function.prototype();
-          },
+          () => {},
+          () => {},
           () => {
               sideChanged = true;
           },
