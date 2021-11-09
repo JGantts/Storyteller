@@ -282,7 +282,7 @@ function subtractSegmentsFromSegments(defendingSegments, attackingSegments){
     assert(defendingSegments, `Instead of UUID, found ${defendingSegments}`);
     let newDefendingSegments1 = [];
     for (let i=0; i<defendingSegments.length; i++ ){
-        let defendingSegment = defendingSegments[i];]
+        let defendingSegment = defendingSegments[i];
         let newDefendingSegments2 = subtractSegmentsFromSegment(defendingSegment, attackingSegments).segments;
         assert(!newDefendingSegments2.changed);
         newDefendingSegments1 = newDefendingSegments1.concat(newDefendingSegments2.filter(function(val) {return val !== null}));
