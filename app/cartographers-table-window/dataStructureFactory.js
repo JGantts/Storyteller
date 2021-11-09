@@ -347,42 +347,6 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
     return {segments: newDefendingSegments1, changed: defendingSegmentChanged};
 }
 
-function recurseSubtractionUntilNoChange(defendingSegment, attackingSegments) {
-    //console.log(defendingSegment);
-    //console.log(doors);
-
-    if (defendingSegment) {
-        let newDefendingSegments1 = subtractSegmentsFromSegment(defendingSegment, attackingSegments);
-        if (newDefendingSegments1.changed) {
-            let newDefendingSegments2 = [];
-            for(let i = 0; i < newDefendingSegments1.segments.length; i++) {
-                let newDefendingSegment1 = newDefendingSegments1.segments[i];
-
-                let attackingSegmentsToPassDown =  attackingSegments.filter(function(val) {return (
-                  val.start.x !== newDefendingSegment1.start.x
-                  ||val.start.y !== newDefendingSegment1.start.y
-                  ||val.end.x !== newDefendingSegment1.end.x
-                  ||val.end.y !== newDefendingSegment1.end.y
-                )});
-
-                newDefendingSegments2.push(recurseSubtractionUntilNoChange(newDefendingSegment1, attackingSegmentsToPassDown));
-            }
-            //console.log(newWalls1);
-            if (newDefendingSegments2.length === 0) {
-                return [];
-            } else if (newDefendingSegments2.length === 1) {
-                return newDefendingSegments2[0];
-            } else {
-                assert(false, `newWalls2.length: ${newDefendingSegments2.length}\n${JSON.stringify(newDefendingSegments2)}`);
-            }
-        } else {
-            return newDefendingSegments1.segments;
-        }
-    } else {
-        return [];
-    }
-}
-
 /*
 leftX: 100,
 rightX: 200,
