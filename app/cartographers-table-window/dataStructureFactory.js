@@ -280,15 +280,14 @@ function getIntersectsFromOne(line, point){
 
 function subtractSegmentsFromSegments(defendingSegments, attackingSegments){
     assert(defendingSegments, `Instead of UUID, found ${defendingSegments}`);
-    let newDefendingSegments = [];
+    let newDefendingSegments1 = [];
     for (let i=0; i<defendingSegments.length; i++ ){
-        let defendingSegment = defendingSegments[i];
-        let wallSegments = subtractSegmentsFromSegment(defendingSegment, attackingSegments).segments;
-        assert(!wallSegments.changed);
-        //console.log(wallSegments);
-        newDefendingSegments = newDefendingSegments.concat(wallSegments.filter(function(val) {return val !== null}));
+        let defendingSegment = defendingSegments[i];]
+        let newDefendingSegments2 = subtractSegmentsFromSegment(defendingSegment, attackingSegments).segments;
+        assert(!newDefendingSegments2.changed);
+        newDefendingSegments1 = newDefendingSegments1.concat(newDefendingSegments2.filter(function(val) {return val !== null}));
     }
-    return newDefendingSegments;
+    return newDefendingSegments1;
 }
 
 function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
@@ -302,14 +301,10 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
 
     let newDefendingSegments1 = [defendingSegment];
     let defendingSegmentChanged = false;
-    //console.log(attackingSegments.length);
-    //console.log(new Error().stack);
-    //console.log(attackingSegments);{
     let attackingSegment = attackingSegments.pop();
     if (!attackingSegment) {
         return {segments: [defendingSegment], changed: false};
     }
-    //assert(attackingSegment, `attackingSegmentsIn was empty: ${JSON.stringify(attackingSegmentsIn)}`);
     do {
         assert(
           attackingSegment.start.x !== attackingSegment.end.x ||
@@ -318,8 +313,8 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
         );
 
         let newDefendingSegments2 = [];
-        do {
-            let thisDefendingSegmement = newDefendingSegments1.pop()
+        let thisDefendingSegmement = newDefendingSegments1.pop()
+        while (thisDefendingSegmement) {
             lineSegmentComparison(
                 thisDefendingSegmement,
                 attackingSegment,
@@ -335,10 +330,11 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
                 () => {},
                 () => {}
             );
-        } while (newDefendingSegments1.length > 0);
-        newDefendingSegment1 = newDefendingSegments2;
+            thisDefendingSegmement = newDefendingSegments1.pop();
+        }
+        newDefendingSegments1 = [...newDefendingSegments2];
         attackingSegment = attackingSegments.pop();
-    } while (attackingSegment && newDefendingSegments1.length > 0);
+    } while (attackingSegment);
     return {segments: newDefendingSegments1, changed: defendingSegmentChanged};
 }
 
