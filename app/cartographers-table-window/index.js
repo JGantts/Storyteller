@@ -623,17 +623,21 @@ function tryCreateRoom() {
       return;
     }
     let commands = [];
-    for (index in newRooms) {
-        let room = newRooms[index];
-        if (_shiftKeyIsDown) {
+    if (_shiftKeyIsDown) {
+        for (index in newRooms) {
+            let room = newRooms[index];
             room.id = crypto.randomUUID();
+            let addCommand = makeAddRoomCommand(room.id, room);
+            commands.push(addCommand);
         }
-        let addCommand = makeAddRoomCommand(room.id, room);
-        if (!_shiftKeyIsDown) {
+    } else {
+        for (index in newRooms) {
+            let room = newRooms[index];
+            let addCommand = makeAddRoomCommand(room.id, room);
             let deleteCommand = makeDeleteRoomCommand(room.id);
             commands.push(deleteCommand);
+            commands.push(addCommand);
         }
-        commands.push(addCommand);
     }
     let finalCommand = buildMultiCommand(commands);
     _undoList.push(finalCommand);
