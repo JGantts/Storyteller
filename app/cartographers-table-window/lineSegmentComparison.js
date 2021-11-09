@@ -11,6 +11,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
       `LineB has 0 length\n${JSON.stringify(lineB)}`
     );
 
+
     let lineAMinX = Math.min(lineA.start.x, lineA.end.x);
     let lineAMaxX = Math.max(lineA.start.x, lineA.end.x);
     let lineAMinY = Math.min(lineA.start.y, lineA.end.y);
@@ -89,7 +90,6 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     lineBSlice(lineA.end, lineB.end);
                     lineBHandled();
 
-
                 //overlap with no tails
                 } else if (
                   lineAMinY === lineBMinY
@@ -148,6 +148,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                     lineBSlice(lineB.start, lineB.end);
                     lineASlice(lineA.start, lineA.end);
 
+
                 //lines don't touch, lineA on bottom
                 } else if (
                   lineAMinY > lineBMaxY
@@ -163,14 +164,14 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
             } else {
                 lineASlice(lineA.start, lineA.end);
                 lineBSlice(lineB.start, lineB.end);
-            }
 
+            }
         //not a match
         } else {
             lineASlice(lineA.start, lineA.end);
             lineBSlice(lineB.start, lineB.end);
-        }
 
+        }
     //horizontal lineA
     } else {
 
@@ -181,7 +182,6 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
             let lineASlope = (lineA.end.y - lineA.start.y)/(lineA.end.x - lineA.start.x)
             let lineBSlope = (lineB.end.y - lineB.start.y)/(lineB.end.x - lineB.start.x)
             if (lineASlope === lineBSlope) {
-
 
                 let lineSegmentsIntersect = false;
 
@@ -202,8 +202,6 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
 
                 //on same line
                 if (lineSegmentsIntersect) {
-
-
                     //lines don't touch, lineA on left
                     if (
                       lineAMaxX < lineBMinX
@@ -259,7 +257,7 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                       && lineBMinX < lineAMaxX
                       && lineAMaxX < lineBMaxX
                     ) {
-                        lineASlice(lineB.start, lineA.start);
+                        lineBSlice(lineB.start, lineA.start);
                         lineABSlice(lineA.start, lineA.end);
                         lineBSlice(lineA.end, lineB.end);
                         modificationWasMadeToLineA();
@@ -339,10 +337,12 @@ function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice
                 } else {
                     lineASlice(lineA.start, lineA.end);
                     lineBSlice(lineB.start, lineB.end);
+
                 }
             } else {
                 lineASlice(lineA.start, lineA.end);
                 lineBSlice(lineB.start, lineB.end);
+
             }
         //not a match
         } else {
