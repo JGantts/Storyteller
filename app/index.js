@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const assert = require('assert');
 const crypto = require('crypto');
 const fs = require('fs');
+const pathModule = require('path');
 
 //let settings;
 
@@ -58,7 +59,8 @@ function fileManager_newFile(event, id, args) {
     let fileContents = "";
     windowsFiles[newFileId] = {
         id: newFileId,
-        path: newFilePath
+        path: newFilePath,
+        type: pathModule.extname(newFilePath)
     };
     let newFile =
     {
@@ -103,7 +105,8 @@ async function fileManager_openFiles(event, id, args) {
                 let fileRef =
                 {
                     id: fileId,
-                    path: path
+                    path: path,
+                    type: pathModule.extname(path)
                 };
                 let fileContents
                 try {
@@ -176,6 +179,7 @@ async function fileManager_getNewSaveFile(event, id, args) {
     }
 
     windowsFiles[args.fileRef.id].path = result.filePath;
+    windowsFiles[args.fileRef.id].type = path.extname(result.filePath);
 
     event.reply(
         'executed-promise',

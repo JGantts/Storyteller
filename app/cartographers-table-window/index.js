@@ -149,7 +149,18 @@ function displayFiles(files) {
     posY = 0;
     let file = files[0];
     //for(file in files) {
-        let fileContents = file.contents;
+        let fileContents = null;
+        switch (file.fileRef.type) {
+          case ".cart":
+            fileContents = file.contents;
+            break;
+          case ".cos":
+            fileContents = parseCaosForMetaroom(file.contents);
+            braek;
+          default:
+            throw new Error(`Unknown file type: ${file.fileref}`);
+        }
+
         loadMetaroom(
             {
                 background: backgroundCanvasElement,
