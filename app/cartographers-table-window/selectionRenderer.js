@@ -169,7 +169,6 @@ function drawSelectionCirclePortion(selectionRainbowCtx, x, y, theta0, theta1, c
     selectionRainbowCtx.lineWidth = getRoomLineThickness();
     selectionRainbowCtx.strokeStyle = color;
     selectionRainbowCtx.beginPath();
-    console.log(getSelectionCheckMargin());
     selectionRainbowCtx.arc(x, y, getSelectionCheckMargin() * 2 * getSelectionMultiplier(), theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
     selectionRainbowCtx.stroke();
 }
