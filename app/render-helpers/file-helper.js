@@ -53,14 +53,62 @@ class FileHelper {
       this._displayFiles([newFile]);
   }
 
-  async openFile() {
+  async openCaosFile() {
+      let options = {
+          title: "Open CAOS file",
+          defaultPath : '%HOMEPATH%/Documents/',
+          buttonLabel : "Open",
+          filters :[
+              {name: 'CAOS', extensions: ['cos']}
+          ]
+      };
+      this._openFile(options);
+  }
+
+  async openCartFile() {
+      let options = {
+          title: "Open Cartographer file",
+          defaultPath : '%HOMEPATH%/Documents/',
+          buttonLabel : "Save",
+          filters :[
+              {name: 'Cartographer', extensions: ['cart']}
+          ]
+      };
+      this._openFile(options);
+  }
+
+  async saveCaosFile() {
+      let options = {
+          title: "Save CAOS file",
+          defaultPath : '%HOMEPATH%/Documents/',
+          buttonLabel : "Save",
+          filters :[
+              {name: 'CAOS', extensions: ['cos']}
+          ]
+      };
+      this._saveFile(options);
+  }
+
+  async saveCartFile() {
+      let options = {
+          title: "Save CAOS file",
+          defaultPath : '%HOMEPATH%/Documents/',
+          buttonLabel : "Save",
+          filters :[
+              {name: 'Cartographer', extensions: ['cart']}
+          ]
+      };
+      this._saveFile(options);
+  }
+
+  async _openFile(options) {
       if (!(await this.saveFileIfNeeded()).continue) {
           return;
       }
       if (!(await this.closeFileIfNeeded()).continue) {
           return;
       }
-      let newOpenFile = await this.openFilePromise();
+      let newOpenFile = await this.openFilePromise(options);
       if (!newOpenFile.continue) {
           return;
       }
@@ -70,9 +118,9 @@ class FileHelper {
       this._displayFiles([newFile]);
   }
 
-  async saveFile() {
+  async _saveFile(options) {
       if (!this._currentFileRef.path) {
-          let newPath = (await this.getNewSaveFilePromise()).fileRef.path;
+          let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
           this._currentFileRef.path = newPath;
       }
       if (!(await this.saveFilePromise()).continue) {
@@ -111,20 +159,13 @@ class FileHelper {
       return this.makeFileManagerPromise("new-file", new Object());
   }
 
-  async openFilePromise() {
-      return this.makeFileManagerPromise("open-files", new Object());
+  async openFilePromise(options) {
+      return this.makeFileManagerPromise("open-files", {
+          options: options
+      });
   }
 
-  async getNewSaveFilePromise() {
-      let options = {
-          title: "Save CAOS file",
-          defaultPath : '%HOMEPATH%/Documents/',
-          buttonLabel : "Save",
-          filters :[
-              {name: 'CAOS', extensions: ['cos']},
-              {name: 'All Files', extensions: ['*']}
-          ]
-      }
+  async getNewSaveFilePromise(options) {
       return this.makeFileManagerPromise("get-new-save-file", {
           options: options,
           fileRef: this._currentFileRef,

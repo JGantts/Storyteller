@@ -88,11 +88,11 @@ async function newFile() {
 }
 
 async function openFile() {
-    fileHelper.openFile();
+    fileHelper.openCaosFile();
 }
 
 async function saveFile() {
-    fileHelper.saveFile();
+    fileHelper.saveCaosFile();
 }
 
 async function closeFile() {

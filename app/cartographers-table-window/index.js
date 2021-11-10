@@ -122,11 +122,11 @@ async function newFile() {
 }
 
 async function openFile() {
-    fileHelper.openFile();
+    fileHelper.openCartFile();
 }
 
 async function saveFile() {
-    fileHelper.saveFile();
+    fileHelper.saveCartFile();
 }
 
 async function closeFile() {
@@ -135,6 +135,10 @@ async function closeFile() {
 
 function saveAllFiles(){
     fileHelper.saveAllFiles();
+}
+
+async function importFromCaos() {
+    fileHelper.openFile();
 }
 
 function displayFiles(files) {
