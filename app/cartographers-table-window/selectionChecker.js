@@ -76,7 +76,7 @@ function checkPointSelection(x, y, dataStructures){
     }
     for (const key in dataStructures.points) {
         let point = dataStructures.points[key];
-        if(isClickOnPoint(x, y, point, selectionCheckMargin)){
+        if(isClickOnPoint(x, y, point, getSelectionCheckMargin())){
             //console.log(metaroomPoints[i]);
             selected.selectedType = "point";
             selected.selectedId = dataStructures.points[key].id;
@@ -105,7 +105,7 @@ function checkCornerSelection(x, y, dataStructures){
       selectedRoomsIdsPartsIds: [],
     }
     for (const key in dataStructures.points) {
-        if(isClickOnPoint(x, y, dataStructures.points[key], selectionCheckMargin*2.5)){
+        if(isClickOnPoint(x, y, dataStructures.points[key], getSelectionCheckMargin()*2.5)){
             //console.log(metaroomPoints[i]);
             selected.selectedType = "corner";
             selected.selectedId = dataStructures.points[key].id;
@@ -142,7 +142,7 @@ function checkLineSelection(x, y, dataStructures){
     }
     let selectedLine = null;
     for (const key in dataStructures.walls) {
-        if(isClickOnLine(x, y, dataStructures.walls[key], selectionCheckMargin)){
+        if(isClickOnLine(x, y, dataStructures.walls[key], getSelectionCheckMargin())){
             selectedLine = dataStructures.walls[key];
             selected.selectedType = "wall";
             selected.selectedId = key;
@@ -150,7 +150,7 @@ function checkLineSelection(x, y, dataStructures){
         }
     }
     for (const key in dataStructures.doors) {
-        if(isClickOnLine(x, y, dataStructures.doors[key], selectionCheckMargin)){
+        if(isClickOnLine(x, y, dataStructures.doors[key], getSelectionCheckMargin())){
             selectedLine = dataStructures.doors[key];
             selected.selectedType = "door";
             selected.selectedId = key;
@@ -206,7 +206,7 @@ function checkSideSelection(x, y, dataStructures){
     let selectedLine = null;
     let selectedRoom = null;
     for (const key in dataStructures.walls) {
-        if(isClickOnLine(x, y, dataStructures.walls[key], selectionCheckMargin*2.5)){
+        if(isClickOnLine(x, y, dataStructures.walls[key], getSelectionCheckMargin()*2.5)){
             selected.selectedType = "side";
             selected.selectedId = key;
             selectedLine = dataStructures.walls[key];
@@ -215,7 +215,7 @@ function checkSideSelection(x, y, dataStructures){
     }
     if (selected.selectedType === "") {
         for (const key in dataStructures.doors) {
-            if(isClickOnLine(x, y, dataStructures.doors[key], selectionCheckMargin*2.5)){
+            if(isClickOnLine(x, y, dataStructures.doors[key], getSelectionCheckMargin()*2.5)){
                 selected.selectedType = "side";
                 selected.selectedId = key;
                 selectedLine = dataStructures.doors[key];
@@ -320,10 +320,10 @@ function isClickOnLine(mx, my, line, selectionCheckMargin){
         return true;
     } else {
         let slope = geometry.getSlope(line.start, line.end);
-        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) >= my + selectionCheckMargin) {
+        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) >= my + getSelectionCheckMargin()) {
             return false;
         }
-        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) <= my - selectionCheckMargin) {
+        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) <= my - getSelectionCheckMargin()) {
             return false;
         }
         return true;

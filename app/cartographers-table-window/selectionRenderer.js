@@ -7,8 +7,6 @@ const assert = require('assert');
 //blue    RGB 000 077 255
 //purple  RGB 117 007 135
 
-let selectionCheckMargin = 6;
-const selctionSquareWidth = selectionCheckMargin * 4/3;
 
 const red = {
   red: 228,
@@ -53,8 +51,8 @@ function getSelectionMultiplier() {
 function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, room) {
     //console.log(x);
     //console.log(y);
-    let myWidth = selctionSquareWidth * getSelectionMultiplier();
-    selectionHighlightCtx.lineWidth = roomLineThickness * getSelectionMultiplier();
+    let myWidth = getSelectionSquareWidth() * getSelectionMultiplier();
+    selectionHighlightCtx.lineWidth = getRoomLineThickness() * getSelectionMultiplier();
     selectionHighlightCtx.strokeStyle = "white";
     selectionHighlightCtx.fillStyle = "black";
     selectionHighlightCtx.beginPath();
@@ -86,7 +84,6 @@ CanvasRenderingContext2D.prototype.roundedRect = function(x, y, width, height, r
   this.restore();
 }
 
-const selctionCircleWidth = selectionCheckMargin * 2;
 const selectionCircleRotationsPerSecond = 3/4;
 
 function drawSelectionCircle(selectionRainbowCtx, x, y, thetaIn0, thetaIn1) {
@@ -169,14 +166,13 @@ function colorPercentage(percentage, colorA, colorB) {
 }
 
 function drawSelectionCirclePortion(selectionRainbowCtx, x, y, theta0, theta1, color) {
+    selectionRainbowCtx.lineWidth = getRoomLineThickness();
     selectionRainbowCtx.strokeStyle = color;
     selectionRainbowCtx.beginPath();
-    selectionRainbowCtx.arc(x, y, selctionCircleWidth * getSelectionMultiplier(), theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
+    console.log(getSelectionCheckMargin());
+    selectionRainbowCtx.arc(x, y, getSelectionCheckMargin() * 2 * getSelectionMultiplier(), theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
     selectionRainbowCtx.stroke();
 }
-
-const selectionLineWidth = selectionCheckMargin;
-const dashLength = selectionCheckMargin / 4;
 
 function drawSelectionLine(selectedLine, leftRight) {
 
@@ -187,7 +183,7 @@ function drawSelectionLine(selectedLine, leftRight) {
     let run = end.x - start.x;
     let lineLength = Math.sqrt(rise*rise+run*run);
 
-    let dashCountFractional = lineLength / dashLength;
+    let dashCountFractional = lineLength / (getSelectionCheckMargin() / 4);
     let dashCountRemainder = dashCountFractional - Math.floor(dashCountFractional);
     let dashCountWhole = Math.ceil(dashCountFractional);
 
@@ -250,7 +246,7 @@ function drawSelectionLine(selectedLine, leftRight) {
 
 function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, startPercent, stopPercent, lineColor, leftRight) {
 
-    let lineWidthToUse = selectionLineWidth * getSelectionMultiplier()* getSelectionMultiplier();
+    let lineWidthToUse = getSelectionCheckMargin() * getSelectionMultiplier()* getSelectionMultiplier();
 
     let percentageAverage = (startPercent + stopPercent)/2;
     let distancePercentFromEnd = 0.5 - Math.abs(0.5 - percentageAverage);

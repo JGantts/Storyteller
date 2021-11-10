@@ -46,8 +46,17 @@ topCanvasElement.onwheel = handleWheel;
 window.onkeydown = userTextKeyDown;
 window.onkeyup = userTextKeyUp;
 
-let selectionCheckMargin = 6;
-const selctionSquareWidth = selectionCheckMargin * 4/3;
+function getSelectionCheckMargin() {
+    return 6/zoom;
+}
+
+function getSelectionSquareWidth() {
+    return getSelectionCheckMargin() * 4/3;
+}
+
+function getRoomLineThickness() {
+    return 2/zoom;
+}
 
 let fileHelper = new FileHelper(
     updateTitle,
@@ -863,9 +872,9 @@ async function redrawMetaroom(){
 }
 
 async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
-    roomCtx.strokeWidth = 010;
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    roomCtx.lineWidth = getRoomLineThickness();
     lines
         .forEach((line, i) => {
             if (line.permeability < 0) {
@@ -886,15 +895,13 @@ async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
     //redrawSelection();
 }
 
-const roomLineThickness = 2;
-
 async function redrawPasties(pastiesCtx, points, metaroom){
     //console.log(points);
     //console.log(new Error().stack);
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
       pastiesCtx.beginPath();
-      pastiesCtx.arc(points[key].x, points[key].y, roomLineThickness, 0, 2 * Math.PI, true);
+      pastiesCtx.arc(points[key].x, points[key].y, getRoomLineThickness() * 1.5, 0, 2 * Math.PI, true);
       pastiesCtx.fill();
     }
 }
