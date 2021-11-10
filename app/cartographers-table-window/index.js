@@ -311,6 +311,9 @@ function undo(){
   }
   command.undo()
   _redoList.push(command);
+  fileHelper.fileModified();
+  rebuildRedrawRooms();
+  selectionChecker.resetSelection();
   updateUndoRedoButtons();
 }
 
@@ -321,6 +324,9 @@ function redo(){
   }
   command.redo()
   _undoList.push(command);
+  fileHelper.fileModified();
+  rebuildRedrawRooms();
+  selectionChecker.resetSelection();
   updateUndoRedoButtons();
 }
 
@@ -425,10 +431,15 @@ function tryDelete() {
 
 
 function deleteRoom(id){
+    let permsStorageCommand = makePermsStorageCommand([id]);
     let deleteCommand = makeDeleteRoomCommand(id);
-    _undoList.push(deleteCommand);
-    deleteCommand.do();
+    let finalCommand = buildMultiCommand([permsStorageCommand, deleteCommand]);
+    _undoList.push(finalCommand);
+    finalCommand.do();
     _redoList = [];
+    fileHelper.fileModified();
+    rebuildRedrawRooms();
+    selectionChecker.resetSelection();
     updateUndoRedoButtons();
 }
 
@@ -631,18 +642,26 @@ function tryCreateRoom() {
             commands.push(addCommand);
         }
     } else {
+        let permsStorageCommand = makePermsStorageCommand(newRooms.map(newRoom => newRoom.id));
+        commands.push(permsStorageCommand);
         for (index in newRooms) {
             let room = newRooms[index];
             let addCommand = makeAddRoomCommand(room.id, room);
             let deleteCommand = makeDeleteRoomCommand(room.id);
+            commands.push(permsStorageCommand);
             commands.push(deleteCommand);
             commands.push(addCommand);
+            commands.push(permsStorageCommand);
         }
+        commands.push(permsStorageCommand);
     }
     let finalCommand = buildMultiCommand(commands);
     _undoList.push(finalCommand);
     finalCommand.do();
     _redoList = [];
+    fileHelper.fileModified();
+    rebuildRedrawRooms();
+    selectionChecker.resetSelection();
     updateUndoRedoButtons();
 }
 
@@ -663,9 +682,6 @@ function addRoomAbsolute({id, room}){
 
   metaroom.rooms[id] = room;
   metaroom.perms = metaroom.perms.concat(newPerms);
-  fileHelper.fileModified();
-  rebuildRedrawRooms();
-  selectionChecker.resetSelection();
 }
 
 function makeDeleteRoomCommand(id){
@@ -698,9 +714,36 @@ function deleteRoomAbsolute({id}){
                && perm.rooms.b !== id
              );
           });
-  fileHelper.fileModified();
-  rebuildRedrawRooms();
-  selectionChecker.resetSelection();
+}
+
+function makePermsStorageCommand(ids){
+    let toStore =
+        dataStructures.metaroomDisk.perms
+            .filter(perm =>
+                ids.some(id =>
+                    (id === perm.rooms.a
+                        || id === perm.rooms.b)
+                )
+            )
+    return new Command(
+        permsStorageAbsolute,
+        {toStore},
+        permsStorageAbsolute,
+        {toStore},
+    );
+}
+
+function permsStorageAbsolute({toStore}){
+    for (stored of toStore) {
+        let existing = dataStructures.metaroomDisk.perms
+            .filter(existingPermVal =>
+                (existingPermVal.rooms.a === stored.rooms.a && existingPermVal.rooms.b === stored.rooms.b)
+                || (existingPermVal.rooms.a === stored.rooms.b && existingPermVal.rooms.b === stored.rooms.a)
+            )[0];
+        if (existing) {
+            existing.permeability = stored.permeability;
+        }
+    }
 }
 
 function rebuildRedrawRooms() {
