@@ -36,6 +36,24 @@
     <div class='banner-divider'></div>
 
     <div class='banner-button tooltip-holder'>
+      <button id='execute' onclick='importFromCaos()'>
+        <img src='icons/import-caos.svg' width='25rem' height='25rem' style='opacity: 1.0;' />
+      </button>
+      <span class='tooltip'>Import from CAOS</span>
+    </div>
+
+    <div class='banner-divider'></div>
+
+   <div class='banner-button tooltip-holder'>
+      <button id='execute' onclick='saveAllFiles()'>
+        <img src='icons/export-caos.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
+      </button>
+      <span class='tooltip'>Export to CAOS</span>
+    </div>
+
+    <div class='banner-divider'></div>
+
+    <div class='banner-button tooltip-holder'>
       <button onclick='undo()'>
         <img id='undo-button-img' src='icons/CAOS Icons_Undo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>

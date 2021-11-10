@@ -138,7 +138,7 @@ function saveAllFiles(){
 }
 
 async function importFromCaos() {
-    fileHelper.openFile();
+    fileHelper.openCaosFile();
 }
 
 function displayFiles(files) {
