@@ -600,7 +600,7 @@ function handleWheel(e) {
     if (e.ctrlKey) {
         zoom -= e.deltaY * 0.0025;
         zoom = Math.min(zoom, 2);
-        zoom = Math.max(zoom, 0.01);
+        zoom = Math.max(zoom, 0.1);
         loadMetaroom(
             {
                 background: backgroundCanvasElement,
