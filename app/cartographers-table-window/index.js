@@ -7,6 +7,7 @@ const crypto = require('crypto');
 
 const { FileHelper } = require('../render-helpers/file-helper.js');
 
+const { parseCaosForMetaroom } = require('./caos-to-metaroom-parser.js');
 const { geometry } = require('./geometryHelper.js');
 const { selectionRenderer } = require('./selectionRenderer.js');
 const { selectionChecker } = require('./selectionChecker.js');
@@ -156,7 +157,7 @@ function displayFiles(files) {
             break;
           case ".cos":
             fileContents = parseCaosForMetaroom(file.contents);
-            braek;
+            break;
           default:
             throw new Error(`Unknown file type: ${file.fileref}`);
         }
