@@ -859,14 +859,18 @@ function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
     redrawMetaroom();
 }
 
+let img = null
+
 async function redrawMetaroom(){
     rebuildRedrawRooms();
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
     if (dataStructures.metaroomDisk.background) {
-        let img = new Image;
-        img.src = dataStructures.metaroomDisk.background;
+        if (!img) {
+            img = new Image;
+            img.src = dataStructures.metaroomDisk.background;
+            await img.decode();
+        }
         backgroundCtx.moveTo(0, 0);
-        await img.decode();
         backgroundCtx.drawImage(img, 0, 0);
     }
 }
@@ -898,6 +902,7 @@ async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
 async function redrawPasties(pastiesCtx, points, metaroom){
     //console.log(points);
     //console.log(new Error().stack);
+    pastiesCtx.lineWidth = getRoomLineThickness();
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
       pastiesCtx.beginPath();
