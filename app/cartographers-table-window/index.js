@@ -627,6 +627,7 @@ function handleMouseMove(e){
   //checkSelection(startX, startY);
 }
 
+let rezoom = false;
 function handleWheel(e) {
     //e.preventDefault();
 
@@ -635,8 +636,7 @@ function handleWheel(e) {
         zoom -= e.deltaY * 0.0025;
         zoom = Math.min(zoom, 2);
         zoom = Math.max(zoom, 0.1);
-        resizeCanvases();
-        redrawMetaroom();
+        rezoom = true;
     } else {
 
         posX -= e.deltaX * 2;
@@ -943,6 +943,11 @@ async function redrawPasties(pastiesCtx, points, metaroom){
 async function redrawSelection() {
     if (!metaroom) {
         return;
+    }
+    if (rezoom) {
+      rezoom = false;
+      resizeCanvases();
+      redrawMetaroom();
     }
     //console.log(dataStructures);
     let selection = selectionChecker.getSelectionHover();
