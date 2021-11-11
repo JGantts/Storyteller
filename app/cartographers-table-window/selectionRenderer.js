@@ -334,7 +334,7 @@ function drawSelectionRoom(selectedRoom) {
         }
 
         pctx.strokeStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${aplaha})`;
-        pctx.lineWidth = thickness * getSelectionMultiplier()*getSelectionMultiplier()/1.5;
+        pctx.lineWidth = getRoomLineThickness() * getSelectionMultiplier()*getSelectionMultiplier()/1.5;
 
         let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
         let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
@@ -356,29 +356,6 @@ function drawSelectionRoom(selectedRoom) {
     selectionRainbowCtx.lineTo(selectedRoom.leftX, selectedRoom.leftFloorY);
     selectionRainbowCtx.closePath();
     selectionRainbowCtx.fill();
-}
-
-async function wildSelection(){
-
-    /*for (let i=0; i < metaroomPoints.length; i++){
-        let selected = metaroomPoints[i];
-        drawSelectionSquare(selected.x, selected.y);
-    }*/
-
-    for (let i=0; i < metaroomDoors.length; i++){
-        let selected = metaroomDoors[i];
-        drawSelectionLine(selected);
-    }
-
-    for (let i=0; i < metaroomWalls.length; i++){
-        let selected = metaroomWalls[i];
-        drawSelectionLine(selected);
-    }
-
-    /*for (let i=0; i < metaroom.rooms.length; i++){
-        let selected = metaroom.rooms[i];
-        drawSelectionRoom(selected);
-    }*/
 }
 
 //room
