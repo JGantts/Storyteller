@@ -320,10 +320,10 @@ function isClickOnLine(mx, my, line, selectionCheckMargin){
         return true;
     } else {
         let slope = geometry.getSlope(line.start, line.end);
-        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) >= my + getSelectionCheckMargin()) {
+        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) >= my + selectionCheckMargin) {
             return false;
         }
-        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) <= my - getSelectionCheckMargin()) {
+        if (((mx - slope.point.x) * (slope.slope) + slope.point.y) <= my - selectionCheckMargin) {
             return false;
         }
         return true;
