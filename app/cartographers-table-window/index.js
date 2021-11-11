@@ -151,6 +151,23 @@ async function importFromCaos() {
     fileHelper.openCaosFile();
 }
 
+let canvasElements = {
+    background: backgroundCanvasElement,
+    selection: selectionRainbowCanvasElement,
+    room: roomCanvasElement,
+    pasties: pastiesCanvasElement,
+    potential: potentialCanvasElement,
+    sandwich: selectionHighlightCanvasElement
+};
+let canvasContexts = {
+    background: backgroundCtx,
+    selection: selectionRainbowCtx,
+    room: roomCtx,
+    pasties: pastiesCtx,
+    potential: potentialCtx,
+    sandwich: selectionHighlightCtx
+};
+
 function displayFiles(files) {
     if (!files) { return; }
     if (files.length === 0) { return; }
@@ -172,22 +189,8 @@ function displayFiles(files) {
         }
 
         loadMetaroom(
-            {
-                background: backgroundCanvasElement,
-                selection: selectionRainbowCanvasElement,
-                room: roomCanvasElement,
-                pasties: pastiesCanvasElement,
-                potential: potentialCanvasElement,
-                sandwich: selectionHighlightCanvasElement
-            },
-            {
-                background: backgroundCtx,
-                selection: selectionRainbowCtx,
-                room: roomCtx,
-                pasties: pastiesCtx,
-                potential: potentialCtx,
-                sandwich: selectionHighlightCtx
-            },
+            canvasElements,
+            canvasContexts,
             fileContents
         );
         updateTitle();
@@ -337,7 +340,13 @@ function undo(){
   command.undo()
   _redoList.push(command);
   fileHelper.fileModified();
-  rebuildRedrawRooms();
+  rebuildRooms();
+  redrawRooms(
+    canvasContexts.room,
+    canvasContexts.pasties,
+    [...dataStructures.doors, ...dataStructures.walls],
+    dataStructures.points,
+    dataStructures.metaroomDisk);
   selectionChecker.resetSelection();
   updateUndoRedoButtons();
 }
@@ -350,7 +359,13 @@ function redo(){
   command.redo()
   _undoList.push(command);
   fileHelper.fileModified();
-  rebuildRedrawRooms();
+  rebuildRooms();
+  redrawRooms(
+    canvasContexts.room,
+    canvasContexts.pasties,
+    [...dataStructures.doors, ...dataStructures.walls],
+    dataStructures.points,
+    dataStructures.metaroomDisk);
   selectionChecker.resetSelection();
   updateUndoRedoButtons();
 }
@@ -463,7 +478,13 @@ function deleteRoom(id){
     finalCommand.do();
     _redoList = [];
     fileHelper.fileModified();
-    rebuildRedrawRooms();
+    rebuildRooms();
+    redrawRooms(
+      canvasContexts.room,
+      canvasContexts.pasties,
+      [...dataStructures.doors, ...dataStructures.walls],
+      dataStructures.points,
+      dataStructures.metaroomDisk);
     selectionChecker.resetSelection();
     updateUndoRedoButtons();
 }
@@ -614,25 +635,8 @@ function handleWheel(e) {
         zoom -= e.deltaY * 0.0025;
         zoom = Math.min(zoom, 2);
         zoom = Math.max(zoom, 0.1);
-        loadMetaroom(
-            {
-                background: backgroundCanvasElement,
-                selection: selectionRainbowCanvasElement,
-                room: roomCanvasElement,
-                pasties: pastiesCanvasElement,
-                potential: potentialCanvasElement,
-                sandwich: selectionHighlightCanvasElement
-            },
-            {
-                background: backgroundCtx,
-                selection: selectionRainbowCtx,
-                room: roomCtx,
-                pasties: pastiesCtx,
-                potential: potentialCtx,
-                sandwich: selectionHighlightCtx
-            },
-            metaroom
-        );
+        resizeCanvases();
+        redrawMetaroom();
     } else {
 
         posX -= e.deltaX * 2;
@@ -689,7 +693,13 @@ function tryCreateRoom() {
     finalCommand.do();
     _redoList = [];
     fileHelper.fileModified();
-    rebuildRedrawRooms();
+    rebuildRooms();
+    redrawRooms(
+      canvasContexts.room,
+      canvasContexts.pasties,
+      [...dataStructures.doors, ...dataStructures.walls],
+      dataStructures.points,
+      dataStructures.metaroomDisk);
     selectionChecker.resetSelection();
     updateUndoRedoButtons();
 }
@@ -775,7 +785,7 @@ function permsStorageAbsolute({toStore}){
     }
 }
 
-function rebuildRedrawRooms() {
+function rebuildRooms() {
     let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
     //console.log(dataStructures.metaroomDisk.perms);
     let doors =
@@ -801,8 +811,6 @@ function rebuildRedrawRooms() {
         pointsSortedX: pointsSortedX,
         pointsSortedY: pointsSortedY
     };
-
-    redrawRooms(roomCtx, pastiesCtx, doors.concat(walls), points, metaroom);
 }
 
 let blankRoom = {
@@ -831,6 +839,24 @@ function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
         metaroom = blankRoom;
     }
 
+
+    dataStructures = {
+         metaroomDisk: metaroom
+     };
+
+   resizeCanvases();
+
+   rebuildRooms();
+   redrawMetaroom();
+}
+
+function resizeCanvases(){
+    if (!dataStructures) {
+        return;
+    }
+
+    let metaroom = dataStructures.metaroomDisk;
+
     canvasElements.background.width =  metaroom.width;
     canvasElements.background.height =  metaroom.height;
     canvasContexts.background = setupCanvas(canvasElements.background, metaroom);
@@ -855,18 +881,17 @@ function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
     canvasElements.sandwich.width =  metaroom.width;
     canvasElements.sandwich.height =  metaroom.height;
     canvasContexts.sandwich = setupCanvas(canvasElements.sandwich, metaroom);
-
-    dataStructures = {
-         metaroomDisk: metaroom
-     };
-
-    redrawMetaroom();
 }
 
 let img = null
 
 async function redrawMetaroom(){
-    rebuildRedrawRooms();
+    redrawRooms(
+        canvasContexts.room,
+        canvasContexts.pasties,
+        [...dataStructures.doors, ...dataStructures.walls],
+        dataStructures.points,
+        dataStructures.metaroomDisk);
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
     if (dataStructures.metaroomDisk.background) {
         if (!img) {
