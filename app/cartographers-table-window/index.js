@@ -548,6 +548,10 @@ function handleMouseMove(e){
   currX=parseInt(e.offsetX)/zoom;
   currY=parseInt(e.offsetY)/zoom;
 
+  if (!dataStructures) {
+      return;
+  }
+
   if (!isDragging) {
       selectionChecker.checkSelectionHover(currX, currY, dataStructures);
   }
