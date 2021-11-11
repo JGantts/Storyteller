@@ -67,53 +67,63 @@
     </div>
 
   </div>
-  <div id='canvasHolder'
-   style='
-    padding: 5px;
-    border: 0;
-    overflow: scroll;
-    height: calc(100% - 25px - 50px - 10px);
-    width: calc(100% -10px);
-    background-color: rgba(0,0,0,0)
-  '>
-    <div
-      width: 100%
-      width: 100%
-      style='position: relative;'>
-      <canvas
-        id='backgroundCanvas'
-        style= 'position: absolute; z-index: 1'
-      >NOOOOO!</canvas>
-      <canvas
-        id='selectionRainbowCanvas'
-        style= 'position: absolute; z-index: 2'
-      >NOOOOO!</canvas>
-      <canvas
-        id='roomCanvas'
-        style= 'position: absolute; z-index: 3'
-      >NOOOOO!</canvas>
-      <canvas
-        id='potentialCanvas'
-        style= 'position: absolute; z-index: 4'
-      >NOOOOO!</canvas>
-      <canvas
-        id='pastiesCanvas'
-        style= 'position: absolute; z-index: 5'
-      >NOOOOO!</canvas>
-      <canvas
-        id='selectionHighlightCanvas'
-        style= 'position: absolute; z-index: 6'
-      >NOOOOO!</canvas>
+  <div
+  style='
+   border: 0;
+   height: calc(100% - 25px);
+   width: 100%;
+   overflow: auto;
+ '>
+    <div id='canvasHolder'
+     style='
+      padding: 0;
+      border: 0;
+      overflow: scroll;
+      height: calc(100%);
+      width: calc(100% - 150px);
+      background-color: rgba(0,0,0,0);
+      float: left;
+    '>
+      <div
+        width: 100%
+        width: 100%
+        style='position: relative;'>
+        <canvas
+          id='backgroundCanvas'
+          style= 'position: absolute; z-index: 1'
+        >NOOOOO!</canvas>
+        <canvas
+          id='selectionRainbowCanvas'
+          style= 'position: absolute; z-index: 2'
+        >NOOOOO!</canvas>
+        <canvas
+          id='roomCanvas'
+          style= 'position: absolute; z-index: 3'
+        >NOOOOO!</canvas>
+        <canvas
+          id='potentialCanvas'
+          style= 'position: absolute; z-index: 4'
+        >NOOOOO!</canvas>
+        <canvas
+          id='pastiesCanvas'
+          style= 'position: absolute; z-index: 5'
+        >NOOOOO!</canvas>
+        <canvas
+          id='selectionHighlightCanvas'
+          style= 'position: absolute; z-index: 6'
+        >NOOOOO!</canvas>
+      </div>
     </div>
-
+    <div style='
+      background-color: #3F2933;
+      color: white;
+      padding: 0;
+      overflow: auto;
+      height: 100%;
+      width: 150px;
+      float: left;
+    ' id='properties-panel'>Hi</div>
   </div>
-  <div style='
-    height: calc(50px - 10px);
-    background-color: #3F2933;
-    color: white;
-    padding: 5px;
-    overflow: auto;
-  ' id='caos-result'></div>
 </div>
 </body>
 
