@@ -7,12 +7,14 @@
 .column {
   flex-basis: 100%;
   text-align: center;
+  flex: 1;
+  border: 3px #0000 solid;
 }
 
-@media screen and (min-width: 800px) {
-  .column {
-    flex: 1;
-  }
+.column-padding {
+  flex-basis: 50%;
+  text-align: center;
+  flex: 1;
 }
 
 .code-decorator {
