@@ -31,17 +31,25 @@ function updatePropertiesPanel(panel, selection, dataStructures) {
       clone.querySelector("#property-right").innerHTML = room.rightX;
       clone.querySelector("#property-bottom-left").innerHTML = room.leftFloorY;
       clone.querySelector("#property-bottom-right").innerHTML = room.rightFloorY;
-
       break;
 
 
     case "door":
       clone = templates.door.content.firstElementChild.cloneNode(true);
+      let door = dataStructures.doors[selection.selectedId];
+      clone.querySelector("#property-id").innerHTML = selection.selectedId;
+      clone.querySelector("#property-start").innerHTML = `X: ${door.start.x} Y: ${door.start.y}`;
+      clone.querySelector("#property-end").innerHTML = `X: ${door.end.x} Y: ${door.end.y}`;
+      clone.querySelector("#property-permeability").innerHTML = door.permeability*100;
       break;
 
 
     case "wall":
       clone = templates.wall.content.firstElementChild.cloneNode(true);
+      let wall = dataStructures.walls[selection.selectedId];
+      clone.querySelector("#property-id").innerHTML = selection.selectedId;
+      clone.querySelector("#property-start").innerHTML = `X: ${wall.start.x} Y: ${wall.start.y}`;
+      clone.querySelector("#property-end").innerHTML = `X: ${wall.end.x} Y: ${wall.end.y}`;
       break;
 
 
@@ -52,11 +60,17 @@ function updatePropertiesPanel(panel, selection, dataStructures) {
 
     case "point":
       clone = templates.point.content.firstElementChild.cloneNode(true);
+      let point = dataStructures.points[selection.selectedId];
+      clone.querySelector("#property-id").innerHTML = selection.selectedId;
+      clone.querySelector("#property-location").innerHTML = `X: ${point.x} Y: ${point.y}`;
       break;
 
 
     case "corner":
       clone = templates.corner.content.firstElementChild.cloneNode(true);
+      let corner = dataStructures.points[selection.selectedId];
+      clone.querySelector("#property-id").innerHTML = selection.selectedId;
+      clone.querySelector("#property-location").innerHTML = `X: ${corner.x} Y: ${corner.y}`;
       break;
 
     default:
