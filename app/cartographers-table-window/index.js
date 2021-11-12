@@ -827,7 +827,6 @@ let blankRoom = {
 };
 
 function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
-
     if (typeof metaroomIn === "string") {
         if (metaroomIn !== "") {
             metaroom = JSON.parse(metaroomIn);
@@ -884,8 +883,8 @@ function resizeCanvases(){
     canvasContexts.sandwich = setupCanvas(canvasElements.sandwich, metaroom);
 }
 
-let img = null
-
+let imgPath = "";
+let img = null;
 async function redrawMetaroom(){
     redrawRooms(
         canvasContexts.room,
@@ -895,8 +894,9 @@ async function redrawMetaroom(){
         dataStructures.metaroomDisk);
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
     if (dataStructures.metaroomDisk.background) {
-        if (!img) {
+        if (!img || dataStructures.metaroomDisk.background !== imgPath) {
             img = new Image;
+            imgPath = dataStructures.metaroomDisk.background;
             img.src = dataStructures.metaroomDisk.background;
             await img.decode();
         }
