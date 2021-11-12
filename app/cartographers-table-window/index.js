@@ -14,6 +14,7 @@ const { selectionChecker } = require('./selectionChecker.js');
 const { dataStructureFactory } = require('./dataStructureFactory.js');
 const { potentialFactory } = require('./potentialFactory.js');
 const { lineSegmentComparison } = require('./lineSegmentComparison.js');
+const { updatePropertiesPanel } = require('./properties-panel-updater.js');
 
 let zoom = 1;
 let posX = 0;
@@ -940,6 +941,8 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     }
 }
 
+let previousSelectionId = null;
+
 async function redrawSelection() {
     if (!metaroom) {
         return;
@@ -970,6 +973,15 @@ async function redrawSelection() {
         dataStructures
     );
     redrawPotential(potentialRooms, dataStructures);
+
+    selection = selectionChecker.getSelectionClick()
+    if (previousSelectionId !== selection.selectedId) {
+        previousSelectionId = selection.selectedId;
+        updatePropertiesPanel(
+          document.getElementById("properties-panel"),
+          selection,
+          dataStructures);
+    }
 }
 
 function redrawPotential(potentialRooms, dataStructures) {

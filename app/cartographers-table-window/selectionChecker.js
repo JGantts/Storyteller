@@ -1,8 +1,9 @@
 //room
 //door
 //wall
-//corner
+//side
 //point
+//corner
 let selectedHover = {
   selectedType : "",
   selectedId: "",
