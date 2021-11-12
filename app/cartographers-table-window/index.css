@@ -1,3 +1,20 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.column {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+@media screen and (min-width: 800px) {
+  .column {
+    flex: 1;
+  }
+}
+
 .code-decorator {
   padding: 1px 5px;
   margin: -1px 0;

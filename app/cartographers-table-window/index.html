@@ -2,194 +2,201 @@
 <link rel='stylesheet' type='text/css' href='./index.css'>
 
 <head>
-<title>Cartographer's Table</title>
+  <title>Cartographer's Table</title>
 </head>
 <body style='margin: 0; background-color: #503642;'>
-<div style='height: 100%; background-color: rgba(0,0,0,0);' width: 100%;>
-  <div style='height: 25px; width: 100%; border: 0; margin: 0; padding: 0; background-color: #3F2933;'>
+  <div style='height: 100%; background-color: rgba(0,0,0,0);' width: 100%;>
+    <div style='height: 25px; width: 100%; border: 0; margin: 0; padding: 0; background-color: #3F2933;'>
 
-    <div class='banner-button tooltip-holder' class='tooltip-holder'>
-      <button id='execute' onclick='newFile()'>
-        <img src='icons/CAOS Icons_File.png' width='25rem' height='25rem'/>
-      </button>
-      <span class='tooltip'>New File</span>
-    </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='openFile()'>
-        <img src='icons/CAOS Icons_Open File.png' width='25rem' height='25rem' />
-      </button>
-      <span class='tooltip'>Open File</span>
-    </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='saveFile' onclick='saveFile()'>
-        <img id='save-file-img' src='icons/CAOS Icons_Save-03.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-      </button>
-      <span class='tooltip'>Save File</span>
-    </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='saveAllFiles()'>
-        <img src='icons/CAOS Icons_Save-04.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-      </button>
-      <span class='tooltip'>Save All Files</span>
-    </div>
+      <div class='banner-button tooltip-holder' class='tooltip-holder'>
+        <button id='execute' onclick='newFile()'>
+          <img src='icons/CAOS Icons_File.png' width='25rem' height='25rem'/>
+        </button>
+        <span class='tooltip'>New File</span>
+      </div>
+      <div class='banner-button tooltip-holder'>
+        <button id='execute' onclick='openFile()'>
+          <img src='icons/CAOS Icons_Open File.png' width='25rem' height='25rem' />
+        </button>
+        <span class='tooltip'>Open File</span>
+      </div>
+      <div class='banner-button tooltip-holder'>
+        <button id='saveFile' onclick='saveFile()'>
+          <img id='save-file-img' src='icons/CAOS Icons_Save-03.png' width='25rem' height='25rem' style='opacity: 0.4;' />
+        </button>
+        <span class='tooltip'>Save File</span>
+      </div>
+      <div class='banner-button tooltip-holder'>
+        <button id='execute' onclick='saveAllFiles()'>
+          <img src='icons/CAOS Icons_Save-04.png' width='25rem' height='25rem' style='opacity: 0.4;' />
+        </button>
+        <span class='tooltip'>Save All Files</span>
+      </div>
 
-    <div class='banner-divider'></div>
+      <div class='banner-divider'></div>
 
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='importFromCaos()'>
-        <img src='icons/import-caos.svg' width='25rem' height='25rem' style='opacity: 1.0;' />
-      </button>
-      <span class='tooltip'>Import from CAOS</span>
+      <div class='banner-button tooltip-holder'>
+        <button id='execute' onclick='importFromCaos()'>
+          <img src='icons/import-caos.svg' width='25rem' height='25rem' style='opacity: 1.0;' />
+        </button>
+        <span class='tooltip'>Import from CAOS</span>
+      </div>
+
+      <div class='banner-divider'></div>
+
+      <div class='banner-button tooltip-holder'>
+        <button id='execute' onclick='saveAllFiles()'>
+          <img src='icons/export-caos.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
+        </button>
+        <span class='tooltip'>Export to CAOS</span>
+      </div>
+
+      <div class='banner-divider'></div>
+
+      <div class='banner-button tooltip-holder'>
+        <button onclick='undo()'>
+          <img id='undo-button-img' src='icons/CAOS Icons_Undo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
+        </button>
+        <span class='tooltip'>Undo</span>
+      </div>
+      <div class='banner-button tooltip-holder'>
+        <button onclick='redo()'>
+          <img id='redo-button-img' src='icons/CAOS Icons_Redo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
+        </button>
+        <span class='tooltip'>Redo</span>
+      </div>
+
     </div>
-
-    <div class='banner-divider'></div>
-
-   <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='saveAllFiles()'>
-        <img src='icons/export-caos.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
-      </button>
-      <span class='tooltip'>Export to CAOS</span>
-    </div>
-
-    <div class='banner-divider'></div>
-
-    <div class='banner-button tooltip-holder'>
-      <button onclick='undo()'>
-        <img id='undo-button-img' src='icons/CAOS Icons_Undo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-      </button>
-      <span class='tooltip'>Undo</span>
-    </div>
-    <div class='banner-button tooltip-holder'>
-      <button onclick='redo()'>
-        <img id='redo-button-img' src='icons/CAOS Icons_Redo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-      </button>
-      <span class='tooltip'>Redo</span>
-    </div>
-
-  </div>
-  <div
-  style='
-   border: 0;
-   height: calc(100% - 25px);
-   width: 100%;
-   overflow: auto;
- '>
-    <div id='canvasHolder'
-     style='
-      padding: 0;
-      border: 0;
-      overflow: scroll;
-      height: calc(100%);
-      width: calc(100% - 150px);
-      background-color: rgba(0,0,0,0);
-      float: left;
+    <div
+    style='
+    border: 0;
+    height: calc(100% - 25px);
+    width: 100%;
+    overflow: auto;
     '>
-      <div
-        width: 100%
-        width: 100%
-        style='position: relative;'>
-        <canvas
-          id='backgroundCanvas'
-          style= 'position: absolute; z-index: 1'
-        >NOOOOO!</canvas>
-        <canvas
-          id='selectionRainbowCanvas'
-          style= 'position: absolute; z-index: 2'
-        >NOOOOO!</canvas>
-        <canvas
-          id='roomCanvas'
-          style= 'position: absolute; z-index: 3'
-        >NOOOOO!</canvas>
-        <canvas
-          id='potentialCanvas'
-          style= 'position: absolute; z-index: 4'
-        >NOOOOO!</canvas>
-        <canvas
-          id='pastiesCanvas'
-          style= 'position: absolute; z-index: 5'
-        >NOOOOO!</canvas>
-        <canvas
-          id='selectionHighlightCanvas'
-          style= 'position: absolute; z-index: 6'
-        >NOOOOO!</canvas>
-      </div>
-    </div>
-    <div style='
-      background-color: #3F2933;
-      color: white;
-      padding: 0;
-      overflow: auto;
-      height: 100%;
-      width: 150px;
-      float: left;
-    ' id='properties-panel'>
-    <div style="padding: 5px;">
-      <div style="padding: 3px;">
-        <img src="./icons/key.svg" width='20rem' height='20rem'
-          style="vertical-align: middle;"/>
-        <div style="font-size: 12; float: right;">
-          490d221f-7672-4d58-ac80-88f6764a8a27
-        </div>
-      </div>
-      <div style="padding: 3px;">
-        <img src="./icons/room-left.svg" width='20rem' height='20rem'
-          style="vertical-align: middle;"/>
-        <div style="font-size: 12; float: right;">
-          100
-        </div>
-      </div>
-      <div style="padding: 3px;">
-        <img src="./icons/room-right.svg" width='20rem' height='20rem'
-          style="vertical-align: middle;"/>
-        <div style="font-size: 12; float: right;">
-          200
-        </div>
-      </div>
-      <div style="padding: 3px;">
-        <img src="./icons/room-top-left.svg" width='20rem' height='20rem'
-          style="vertical-align: middle;"/>
-        <div style="font-size: 12; float: right;">
-          100
-        </div>
-      </div>
-      <div style="padding: 3px;">
-        <img src="./icons/room-top-right.svg" width='20rem' height='20rem'
-          style="vertical-align: middle;"/>
-        <div style="font-size: 12; float: right;">
-          100
-        </div>
-      </div>
-      <div style="padding: 3px;">
-        <img src="./icons/room-bottom-left.svg" width='20rem' height='20rem'
-          style="vertical-align: middle;"/>
-        <div style="font-size: 12; float: right;">
-          200
-        </div>
-      </div>
-      <div style="padding: 3px;">
-        <img src="./icons/room-bottom-right.svg" width='20rem' height='20rem'
-          style="vertical-align: middle;"/>
-        <div style="font-size: 12; float: right;">
-          200
-        </div>
-      </div>
-      <div style="padding: 3px;">
-        <img src="./icons/room-type.svg" width='20rem' height='20rem'
-          style="vertical-align: middle;"/>
-        <div style="font-size: 12; float: right;">
-          Salt Water
-        </div>
-      </div>
-      <div style="padding: 3px;">
-        <img src="./icons/ca.svg" width='20rem' height='20rem'
-          style="vertical-align: middle;"/>
-        <div style="font-size: 12; float: right;">
-          100
-        </div>
-      </div>
+    <div id='canvasHolder'
+    style='
+    padding: 0;
+    border: 0;
+    overflow: scroll;
+    height: calc(100%);
+    width: calc(100% - 150px);
+    background-color: rgba(0,0,0,0);
+    float: left;
+    '>
+    <div
+    width: 100%
+    width: 100%
+    style='position: relative;'>
+    <canvas
+    id='backgroundCanvas'
+    style= 'position: absolute; z-index: 1'
+    >NOOOOO!</canvas>
+    <canvas
+    id='selectionRainbowCanvas'
+    style= 'position: absolute; z-index: 2'
+    >NOOOOO!</canvas>
+    <canvas
+    id='roomCanvas'
+    style= 'position: absolute; z-index: 3'
+    >NOOOOO!</canvas>
+    <canvas
+    id='potentialCanvas'
+    style= 'position: absolute; z-index: 4'
+    >NOOOOO!</canvas>
+    <canvas
+    id='pastiesCanvas'
+    style= 'position: absolute; z-index: 5'
+    >NOOOOO!</canvas>
+    <canvas
+    id='selectionHighlightCanvas'
+    style= 'position: absolute; z-index: 6'
+    >NOOOOO!</canvas>
+  </div>
+</div>
+<div style='
+background-color: #3F2933;
+color: white;
+padding: 0;
+overflow: auto;
+height: 100%;
+width: 150px;
+float: left;
+font-size: 12;
+' id='properties-panel'>
+  <div style="padding: 3px; text-align: center;">
+    <img src="./icons/key.svg" width='20rem' height='20rem'/>
+    <div style="font-family: Courier;">
+      490d221f-7672-4d58-ac80-88f6764a8a27
     </div>
   </div>
+
+  <hr />
+
+  <div>
+    <div class="row">
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column">100</div>
+        <div class="column">100</div>
+        <div class="column"></div>
+        <div class="column"></div>
+    </div>
+
+    <div class="row">
+        <div class="column"></div>
+        <div class="column"></div>
+        <img class="column" src="./icons/room-top-left.svg" width='20rem' height='20rem' />
+        <img class="column" src="./icons/room-top-right.svg" width='20rem' height='20rem' />
+        <div class="column"></div>
+        <div class="column"></div>
+    </div>
+
+    <div class="row">
+        <div class="column"></div>
+        <div class="column">100</div>
+        <img class="column" src="./icons/room-left.svg" width='20rem' height='20rem' />
+        <img class="column" src="./icons/room-right.svg" width='20rem' height='20rem' />
+        <div class="column">200</div>
+        <div class="column"></div>
+    </div>
+
+    <div class="row">
+        <div class="column"></div>
+        <div class="column"></div>
+        <img class="column" src="./icons/room-bottom-left.svg" width='20rem' height='20rem' />
+        <img class="column" src="./icons/room-bottom-right.svg" width='20rem' height='20rem' />
+        <div class="column"></div>
+        <div class="column"></div>
+    </div>
+
+
+    <div class="row">
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column">200</div>
+        <div class="column">200</div>
+        <div class="column"></div>
+        <div class="column"></div>
+    </div>
   </div>
+
+    <hr />
+
+    <div style="padding: 3px;">
+      <img src="./icons/room-type.svg" width='20rem' height='20rem'
+      style="vertical-align: middle; float: left; padding-right: 5px"/>
+      <div style="font-size: 12;">
+        Salt Water
+      </div>
+    </div>
+    <div style="padding: 3px;">
+      <img src="./icons/ca.svg" width='20rem' height='20rem'
+      style="vertical-align: middle; float: left; padding-right: 5px"/>
+      <div style="font-size: 12;">
+        100
+      </div>
+    </div>
 </div>
 </body>
 
