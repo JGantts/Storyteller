@@ -18,7 +18,8 @@ function getSortedRoomFromDimensions(leftX, rightX, leftYA, rightYA, leftYB, rig
         leftCeilingY: Math.min(leftYA, leftYB),
         rightCeilingY: Math.min(rightYA, rightYB),
         leftFloorY: Math.max(leftYA, leftYB),
-        rightFloorY: Math.max(rightYA, rightYB)
+        rightFloorY: Math.max(rightYA, rightYB),
+        roomType: -1,
     };
 }
 

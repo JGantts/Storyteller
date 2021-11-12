@@ -31,6 +31,58 @@ function updatePropertiesPanel(panel, selection, dataStructures) {
       clone.querySelector("#property-right").innerHTML = room.rightX;
       clone.querySelector("#property-bottom-left").innerHTML = room.leftFloorY;
       clone.querySelector("#property-bottom-right").innerHTML = room.rightFloorY;
+      let roomTypeName = "";
+      switch (room.roomType) {
+        case -1:
+          roomTypeName = "Please add a type to this room.";
+          break;
+
+        case 0:
+          roomTypeName = "Atmosphere";
+          break;
+
+        case 1:
+          roomTypeName = "Wooden Walkway";
+          break;
+
+        case 2:
+          roomTypeName = "Concrete Walkway";
+          break;
+
+        case 3:
+          roomTypeName = "Indoor Corridor";
+          break;
+
+        case 4:
+          roomTypeName = "Outdoor Corridor";
+          break;
+
+        case 5:
+          roomTypeName = "Normal Soil";
+          break;
+
+        case 6:
+          roomTypeName = "Boggy Soil";
+          break;
+
+        case 7:
+          roomTypeName = "Drained Soil";
+          break;
+
+        case 8:
+          roomTypeName = "Fresh Water";
+          break;
+
+        case 9:
+          roomTypeName = "Salt Water";
+          break;
+
+        case 10:
+          roomTypeName = "Ettin Home";
+          break;
+
+      }
+      clone.querySelector("#property-room-type").innerHTML = roomTypeName;
       break;
 
 

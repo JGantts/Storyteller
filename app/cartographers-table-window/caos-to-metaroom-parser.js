@@ -88,6 +88,13 @@ function parseCaosForMetaroom(codeIn) {
 
                 }
                 break;
+
+              case "rtyp":
+                let rtypArgs = command.arguments;
+                assert(rtypArgs[0].name === "va00", `${JSON.stringify(rtypArgs[0])}`);
+                importedJson.rooms[va00Var].roomType = rtypArgs[1].value;
+                break;
+
               case "door":
                 let doorArgs = command.arguments;
                 assert(doorArgs.length === 3, `${JSON.stringify(command)}`);
@@ -108,7 +115,6 @@ function parseCaosForMetaroom(codeIn) {
             break;
         }
     }
-    console.log(importedJson);
 
     return importedJson;
 
