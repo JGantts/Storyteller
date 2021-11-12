@@ -941,7 +941,7 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     }
 }
 
-let previousSelectionId = null;
+let previousSelectionInstanceId = null;
 
 async function redrawSelection() {
     if (!metaroom) {
@@ -975,8 +975,9 @@ async function redrawSelection() {
     redrawPotential(potentialRooms, dataStructures);
 
     selection = selectionChecker.getSelectionClick()
-    if (previousSelectionId !== selection.selectedId) {
-        previousSelectionId = selection.selectedId;
+    if (previousSelectionInstanceId !== selection.selectionInstancedId
+    || previousSelectionInstanceId === null) {
+        previousSelectionInstanceId = selection.selectionInstancedId;
         updatePropertiesPanel(
           document.getElementById("properties-panel"),
           selection,

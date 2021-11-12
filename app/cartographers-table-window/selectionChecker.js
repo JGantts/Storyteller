@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 //room
 //door
 //wall
@@ -8,12 +10,14 @@ let selectedHover = {
   selectedType : "",
   selectedId: "",
   selectedRoomsIdsPartsIds: [],
+  selectionInstancedId: null,
 }
 
 let selectedClick = {
   selectedType : "",
   selectedId: "",
   selectedRoomsIdsPartsIds: [],
+  selectionInstancedId: null,
 }
 
 function checkSelectionHover(x, y, dataStructures ){
@@ -21,6 +25,7 @@ function checkSelectionHover(x, y, dataStructures ){
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
     }
     if (selected.selectedType === "") {
         selected = checkPointSelection(x, y, dataStructures);
@@ -45,6 +50,7 @@ function checkSelectionClick(x, y, dataStructures ){
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
     }
     if (selected.selectedType === "") {
         selected = checkPointSelection(x, y, dataStructures);
@@ -62,10 +68,14 @@ function checkSelectionClick(x, y, dataStructures ){
         selected = checkRoomSelection(x, y, dataStructures);
     }
     selectedClick = selected;
+    if (selectedClick.selectedType !== "") {
+      selectedClick.selectionInstancedId = crypto.randomUUID();
+    }
     selectedHover = {
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
     }
 }
 
@@ -74,6 +84,7 @@ function checkPointSelection(x, y, dataStructures){
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
     }
     for (const key in dataStructures.points) {
         let point = dataStructures.points[key];
@@ -104,6 +115,7 @@ function checkCornerSelection(x, y, dataStructures){
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
     }
     for (const key in dataStructures.points) {
         if(isClickOnPoint(x, y, dataStructures.points[key], getSelectionCheckMargin()*2.5)){
@@ -120,6 +132,7 @@ function checkCornerSelection(x, y, dataStructures){
               selectedType : "",
               selectedId: "",
               selectedRoomsIdsPartsIds: [],
+              selectionInstancedId: null,
             }
         }
         let corner = geometry.tryGetCorner(dataStructures.metaroomDisk.rooms[roomSelection.selectedId], dataStructures.points[selected.selectedId]);
@@ -128,6 +141,7 @@ function checkCornerSelection(x, y, dataStructures){
               selectedType : "",
               selectedId: "",
               selectedRoomsIdsPartsIds: [],
+              selectionInstancedId: null,
             }
         }
         selected.selectedRoomsIdsPartsIds = [{roomId: roomSelection.selectedId, partId: corner}];
@@ -140,6 +154,7 @@ function checkLineSelection(x, y, dataStructures){
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
     }
     let selectedLine = null;
     for (const key in dataStructures.walls) {
@@ -203,6 +218,7 @@ function checkSideSelection(x, y, dataStructures){
         selectedType : "",
         selectedId: "",
         selectedRoomsIdsPartsIds: [],
+        selectionInstancedId: null,
     }
     let selectedLine = null;
     let selectedRoom = null;
@@ -261,6 +277,7 @@ function checkRoomSelection(x, y, dataStructures){
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
     }
     for (const key in dataStructures.metaroomDisk.rooms) {
         if(isClickInRoom(x, y, dataStructures.metaroomDisk.rooms[key])){
@@ -357,12 +374,14 @@ function resetSelection() {
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
     }
 
     selectedClick = {
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
     }
 }
 
