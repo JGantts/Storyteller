@@ -52,7 +52,7 @@ function parseCaosForMetaroom(codeIn) {
                     importedJson.y = addmCommand.arguments[1].value;
                     importedJson.width = addmCommand.arguments[2].value;
                     importedJson.height = addmCommand.arguments[3].value;
-                    importedJson.background = addmCommand.arguments[4].value;
+                    importedJson.background = addmCommand.arguments[4].value + ".blk";
                     break;
                   }
 
