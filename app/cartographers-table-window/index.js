@@ -636,7 +636,7 @@ function handleMouseMove(e){
               isDragging = true;
               whatDragging = "point";
               idDragging = null;
-              startDragging = {x: currX, y: currY};
+              startDragging = {x: Math.round(currX), y: Math.round(currY)};
               stopDragging = {x: currX, y: currY};
           }
       }
