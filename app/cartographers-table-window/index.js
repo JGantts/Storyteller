@@ -319,6 +319,16 @@ function updateBarButtons(){
   }else{
     $('#view-edit-room-type-img').css('opacity','1')
   }
+  if (!currentFile || zoom === 1) {
+    $('#one-to-one-zoom-img').css('opacity','0.4')
+  }else{
+    $('#one-to-one-zoom-img').css('opacity','1')
+  }
+}
+
+function oneToOneZoom() {
+  zoom = 1;
+  rezoom = true;
 }
 
 function cut(){
@@ -997,6 +1007,7 @@ async function redrawSelection() {
       rezoom = false;
       resizeCanvases();
       redrawMetaroom();
+      updateBarButtons()
     }
     //console.log(dataStructures);
     let selection = selectionChecker.getSelectionHover();
