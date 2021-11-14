@@ -18,6 +18,12 @@ function updatePropertiesPanel(panel, selection, dataStructures) {
     case "":
       clone = templates.metaroom.content.firstElementChild.cloneNode(true);
       clone.querySelector("#property-id").innerHTML = dataStructures.metaroomDisk.id;
+      clone.querySelector("#property-name").innerHTML = dataStructures.metaroomDisk.name;
+      clone.querySelector("#property-x").innerHTML = dataStructures.metaroomDisk.x;
+      clone.querySelector("#property-y").innerHTML = dataStructures.metaroomDisk.y;
+      clone.querySelector("#property-width").innerHTML = dataStructures.metaroomDisk.width;
+      clone.querySelector("#property-height").innerHTML = dataStructures.metaroomDisk.height;
+      clone.querySelector("#property-background").innerHTML = dataStructures.metaroomDisk.background;
       break;
 
 
