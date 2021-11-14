@@ -458,7 +458,7 @@ function roomOverlapsOrCausesTooSmallDoor(room, dataStructures, idsToDelete) {
         if (Math.abs(potentialLine.start.y - potentialLine.end.y) >= 5) {
             continue;
         }
-        return truel
+        return true;
     }
 
     return false;
