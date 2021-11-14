@@ -393,6 +393,7 @@ function redo(){
 }
 
 let shiftKeyIsDown = false;
+let ctrlKeyIsDown = false;
 
 function userTextKeyDown(event){
   if (event.defaultPrevented) {
@@ -460,7 +461,7 @@ function shiftKeyDown(event){
 }
 
 function controlKeyDown(event){
-
+  ctrlKeyIsDown = true;
 }
 
 function controlKeyComboDown(event){
@@ -512,7 +513,17 @@ function deleteRoom(id){
 }
 
 function controlKeyUp(event){
+    if (ctrlKeyIsDown) {
+        ctrlKeyIsDown = false;
 
+        if (isDragging) {
+            isDragging = false;
+            whatDragging = "";
+            idDragging = -1;
+            startDragging = null;
+            stopDragging = null;
+        }
+    }
 }
 
 function shiftKeyComboDown(event){
@@ -526,13 +537,11 @@ function shiftKeyUp(event){
         shiftKeyIsDown = false;
 
         if (isDragging) {
-            if (whatDragging === "wall") {
-                isDragging = false;
-                whatDragging = "";
-                idDragging = -1;
-                startDragging = null;
-                stopDragging = null;
-            }
+            isDragging = false;
+            whatDragging = "";
+            idDragging = -1;
+            startDragging = null;
+            stopDragging = null;
         }
     }
 }
@@ -610,31 +619,31 @@ function handleMouseMove(e){
       if (!isDragging) {
           if (selection.selectedType === "wall") {
               isDragging = true;
-              whatDragging = "wall"
+              whatDragging = selection.selectedType;
               idDragging = selection.selectedId;
               startDragging = {x: currX, y: currY};
               stopDragging = {x: currX, y: currY};
           } else if (selection.selectedType === "point") {
               isDragging = true;
-              whatDragging = "point";
+              whatDragging = selection.selectedType;
               idDragging = selection.selectedId;
               startDragging = dataStructures.points[selection.selectedId];
               stopDragging = {x: currX, y: currY};
           } else if (selection.selectedType === "corner") {
               isDragging = true;
-              whatDragging = "corner";
+              whatDragging = selection.selectedType;
               idDragging = selection.selectedId;
               startDragging = dataStructures.points[selection.selectedId];
               stopDragging = {x: currX, y: currY};
           } else if (selection.selectedType === "side") {
               isDragging = true;
-              whatDragging = "side";
+              whatDragging = selection.selectedType;
               idDragging = selection.selectedId;
               startDragging = {x: currX, y: currY};
               stopDragging = {x: currX, y: currY};
           } else {
               isDragging = true;
-              whatDragging = "point";
+              whatDragging = "cursor_point";
               idDragging = null;
               startDragging = {x: Math.round(currX), y: Math.round(currY)};
               stopDragging = {x: currX, y: currY};
@@ -672,15 +681,18 @@ function tryCreateRoom() {
         selection = selectionChecker.getSelectionClick();
     }
     let _shiftKeyIsDown = shiftKeyIsDown;
+    let _ctrlKeyIsDown = ctrlKeyIsDown;
     let newRooms = potentialFactory.getPotentialRooms
     (
         {
             dragging: {
-              isDragging: isDragging,
-              startDragging: startDragging,
-              stopDragging: stopDragging
+              isDragging,
+              whatDragging,
+              startDragging,
+              stopDragging,
             },
-            shiftKeyIsDown: _shiftKeyIsDown
+            shiftKeyIsDown,
+            ctrlKeyIsDown,
         },
         selection,
         dataStructures
@@ -688,8 +700,9 @@ function tryCreateRoom() {
     if (newRooms.length === 0) {
       return;
     }
+    console.log(newRooms);
     let commands = [];
-    if (_shiftKeyIsDown) {
+    if (_shiftKeyIsDown || _ctrlKeyIsDown) {
         for (index in newRooms) {
             let room = newRooms[index];
             room.id = crypto.randomUUID();
@@ -985,11 +998,13 @@ async function redrawSelection() {
     (
         {
             dragging: {
-              isDragging: isDragging,
-              startDragging: startDragging,
-              stopDragging: stopDragging
+              isDragging,
+              whatDragging,
+              startDragging,
+              stopDragging,
             },
-            shiftKeyIsDown: shiftKeyIsDown
+            shiftKeyIsDown,
+            ctrlKeyIsDown,
         },
         selection,
         dataStructures

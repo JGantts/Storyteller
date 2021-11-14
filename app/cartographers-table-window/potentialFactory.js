@@ -457,7 +457,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
     let rooms = [];
     if (ui.dragging.isDragging) {
         if (ui.shiftKeyIsDown) {
-            if (selection.selectedType === "point") {
+            if (ui.dragging.whatDragging === "point") {
                 let room = [getPotentialRoomFromPoints(
                   ui.dragging.startDragging,
                   ui.dragging.stopDragging,
@@ -467,25 +467,19 @@ function getPotentialRooms(ui, selection, dataStructures) {
                     rooms = [room];
                 }
 
-
-            } else if (selection.selectedType === "corner") {
+            } else if (ui.dragging.whatDragging === "corner") {
                 Function.prototype();
 
-            } else if (selection.selectedType === "door") {
+            } else if (ui.dragging.whatDragging === "door") {
                 Function.prototype();
 
-            } else if (selection.selectedType === "wall") {
-                let selectedLine = dataStructures.walls[selection.selectedId];
-                let room = getPotentialRoomFromLine(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedLine);
-                if (room && !roomOverlaps(room, dataStructures)) {
-                    rooms = [room];
-                }
-
-            } else if (selection.selectedType === "room") {
+            } else if (ui.dragging.whatDragging === "wall") {
                 Function.prototype();
 
+            } else if (ui.dragging.whatDragging === "room") {
+                Function.prototype();
 
-            } else if (selection.selectedType === "side") {
+            } else if (ui.dragging.whatDragging === "side") {
                 Function.prototype();
 
             } else {
@@ -498,8 +492,41 @@ function getPotentialRooms(ui, selection, dataStructures) {
                     rooms = [room];
                 }
             }
+
+        } else if (ui.ctrlKeyIsDown) {
+          if (ui.dragging.whatDragging === "point"
+            || ui.dragging.whatDragging === "corner") {
+              let room = [getPotentialRoomFromPoints(
+                ui.dragging.startDragging,
+                ui.dragging.stopDragging,
+                dataStructures,
+              )];
+              if (room && !roomOverlaps(room, dataStructures)) {
+                  rooms = [room];
+              }
+
+          } else if (ui.dragging.whatDragging === "door") {
+              Function.prototype();
+
+          } else if (ui.dragging.whatDragging === "wall") {
+              let selectedLine = dataStructures.walls[selection.selectedId];
+              let room = getPotentialRoomFromLine(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedLine);
+              if (room && !roomOverlaps(room, dataStructures)) {
+                  rooms = [room];
+              }
+
+          } else if (ui.dragging.whatDragging === "room") {
+              Function.prototype();
+
+
+          } else if (ui.dragging.whatDragging === "side") {
+              Function.prototype();
+
+          } else {
+              Function.prototype();
+          }
         } else {
-            if (selection.selectedType === "point") {
+            if (ui.dragging.whatDragging === "point") {
               let newRooms = [];
               for (index in selection.selectedRoomsIdsPartsIds) {
                   let roomIdPartId = selection.selectedRoomsIdsPartsIds[index];
@@ -519,7 +546,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                   }
               }
 
-            } else if (selection.selectedType === "corner") {
+            } else if (ui.dragging.whatDragging === "corner") {
               assert(selection.selectedRoomsIdsPartsIds.length === 1,
                   `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`);
               let roomIdPartId = selection.selectedRoomsIdsPartsIds[0];
@@ -535,8 +562,8 @@ function getPotentialRooms(ui, selection, dataStructures) {
                   rooms = [room];
               }
 
-            } else if (selection.selectedType === "door"
-                || selection.selectedType === "wall"
+            } else if (ui.dragging.whatDragging === "door"
+                || ui.dragging.whatDragging === "wall"
             ) {
                 let newRooms = [];
                 for (index in selection.selectedRoomsIdsPartsIds) {
@@ -553,11 +580,11 @@ function getPotentialRooms(ui, selection, dataStructures) {
                     }
                 }
 
-            } else if (selection.selectedType === "room") {
+            } else if (ui.dragging.whatDragging === "room") {
                 Function.prototype();
 
 
-            } else if (selection.selectedType === "side") {
+            } else if (ui.dragging.whatDragging === "side") {
                 assert(selection.selectedRoomsIdsPartsIds.length === 1,
                     `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`)
                 let roomIdPartId = selection.selectedRoomsIdsPartsIds[0];
