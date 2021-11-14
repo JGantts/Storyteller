@@ -153,6 +153,10 @@ async function importFromCaos() {
     updateBarButtons()
 }
 
+async function viewEditRoomType() {
+
+}
+
 let canvasElements = {
     background: backgroundCanvasElement,
     selection: selectionRainbowCanvasElement,
