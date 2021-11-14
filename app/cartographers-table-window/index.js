@@ -750,7 +750,8 @@ function makeDeleteRoomCommand(id){
       leftCeilingY: roomOriginal.leftCeilingY,
       rightCeilingY: roomOriginal.rightCeilingY,
       leftFloorY: roomOriginal.leftFloorY,
-      rightFloorY: roomOriginal.rightFloorY
+      rightFloorY: roomOriginal.rightFloorY,
+      roomType: roomOriginal.roomType,
   }
   return new Command(
       addRoomAbsolute,

@@ -35,6 +35,7 @@ function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
               rightCeilingY: line.start.y,
               leftFloorY: line.end.y,
               rightFloorY: line.end.y,
+              roomType: -1,
           };
       } else {
           return {
@@ -45,6 +46,7 @@ function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
               rightCeilingY: line.start.y,
               leftFloorY: line.end.y,
               rightFloorY: line.end.y,
+              roomType: -1,
           };
       }
   // Horizontal
@@ -204,7 +206,8 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
             leftCeilingY: yToUse,
             rightCeilingY: room.rightCeilingY,
             leftFloorY: room.leftFloorY,
-            rightFloorY: room.rightFloorY
+            rightFloorY: room.rightFloorY,
+            roomType: room.roomType,
         };
 
       case 1:
@@ -215,7 +218,8 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
             leftCeilingY: room.leftCeilingY,
             rightCeilingY: yToUse,
             leftFloorY: room.leftFloorY,
-            rightFloorY: room.rightFloorY
+            rightFloorY: room.rightFloorY,
+            roomType: room.roomType,
         };
 
       case 2:
@@ -226,7 +230,8 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
             leftCeilingY: room.leftCeilingY,
             rightCeilingY: room.rightCeilingY,
             leftFloorY: room.leftFloorY,
-            rightFloorY: yToUse
+            rightFloorY: yToUse,
+            roomType: room.roomType,
         };
 
       case 3:
@@ -237,7 +242,8 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
             leftCeilingY: room.leftCeilingY,
             rightCeilingY: room.rightCeilingY,
             leftFloorY: yToUse,
-            rightFloorY: room.rightFloorY
+            rightFloorY: room.rightFloorY,
+            roomType: room.roomType,
       };
 
     }
@@ -295,7 +301,8 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
                 leftCeilingY: room.leftCeilingY + deltaYToUse,
                 rightCeilingY: room.rightCeilingY + deltaYToUse,
                 leftFloorY: room.leftFloorY,
-                rightFloorY: room.rightFloorY
+                rightFloorY: room.rightFloorY,
+                roomType: room.roomType,
             };
 
           case 2:
@@ -306,7 +313,8 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
                 leftCeilingY: room.leftCeilingY,
                 rightCeilingY: room.rightCeilingY,
                 leftFloorY: room.leftFloorY + deltaYToUse,
-                rightFloorY: room.rightFloorY + deltaYToUse
+                rightFloorY: room.rightFloorY + deltaYToUse,
+                roomType: room.roomType,
             };
         }
 
