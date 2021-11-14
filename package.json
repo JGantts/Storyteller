@@ -13,6 +13,7 @@
 
   },
   "dependencies": {
-    "electron": "^15.3.0"
+    "electron": "^15.3.0",
+    "jimp": "^0.10.3"
   }
 }

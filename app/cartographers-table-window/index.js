@@ -919,7 +919,7 @@ function resizeCanvases(){
     canvasContexts.sandwich = setupCanvas(canvasElements.sandwich, metaroom);
 }
 
-let imgPath = "";
+let imgPathRel = "";
 let img = null;
 async function redrawMetaroom(){
     redrawRooms(
@@ -930,12 +930,21 @@ async function redrawMetaroom(){
         dataStructures.metaroomDisk);
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
     if (dataStructures.metaroomDisk.background) {
-        if (!img || dataStructures.metaroomDisk.background !== imgPath) {
+        if (!img || dataStructures.metaroomDisk.background !== imgPathRel) {
             img = new Image;
-            imgPath = dataStructures.metaroomDisk.background;
+            imgPathRel = dataStructures.metaroomDisk.background;
+            imgPathAbsolute = path.join(path.dirname(fileHelper.getCurrentFileRef().path), imgPathRel);
 
-            img.src = path.join(path.dirname(fileHelper.getCurrentFileRef().path), imgPath);
-            await img.decode();
+            switch (path.extname(imgPathAbsolute)) {
+              case "blk":
+
+                break;
+
+              default:
+                img.src = imgPathAbsolute;
+                await img.decode();
+                break;
+            }
         }
         backgroundCtx.moveTo(0, 0);
         backgroundCtx.drawImage(img, 0, 0);
