@@ -3,7 +3,7 @@ const assert = require('assert');
 const { clipboard } = require('electron');
 const fs = require('fs');
 const crypto = require('crypto');
-//const path = require("path");
+const path = require("path");
 
 const { FileHelper } = require('../render-helpers/file-helper.js');
 
@@ -933,7 +933,9 @@ async function redrawMetaroom(){
         if (!img || dataStructures.metaroomDisk.background !== imgPath) {
             img = new Image;
             imgPath = dataStructures.metaroomDisk.background;
-            img.src = dataStructures.metaroomDisk.background;
+            console.log(fileHelper.getCurrentFileRef());
+
+            img.src = path.join(path.dirname(fileHelper.getCurrentFileRef().path), imgPath);
             await img.decode();
         }
         backgroundCtx.moveTo(0, 0);
