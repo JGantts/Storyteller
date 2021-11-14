@@ -700,7 +700,6 @@ function tryCreateRoom() {
     if (newRooms.length === 0) {
       return;
     }
-    console.log(newRooms);
     let commands = [];
     if (_shiftKeyIsDown || _ctrlKeyIsDown) {
         for (index in newRooms) {
