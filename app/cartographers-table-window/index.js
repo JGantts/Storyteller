@@ -933,7 +933,6 @@ async function redrawMetaroom(){
         if (!img || dataStructures.metaroomDisk.background !== imgPath) {
             img = new Image;
             imgPath = dataStructures.metaroomDisk.background;
-            console.log(fileHelper.getCurrentFileRef());
 
             img.src = path.join(path.dirname(fileHelper.getCurrentFileRef().path), imgPath);
             await img.decode();
