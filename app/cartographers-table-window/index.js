@@ -129,27 +129,28 @@ function redoMultiCommand(subcommands){
 }
 
 async function newFile() {
-    fileHelper.newFile();
+    await fileHelper.newFile();
+    updateBarButtons()
 }
 
 async function openFile() {
-    fileHelper.openCartFile();
+    await fileHelper.openCartFile();
+    updateBarButtons()
 }
 
 async function saveFile() {
-    fileHelper.saveCartFile();
+    await fileHelper.saveCartFile();
+    updateBarButtons()
 }
 
 async function closeFile() {
-    fileHelper.closeFile();
-}
-
-function saveAllFiles(){
-    fileHelper.saveAllFiles();
+    await fileHelper.closeFile();
+    updateBarButtons()
 }
 
 async function importFromCaos() {
-    fileHelper.openCaosFile();
+    await fileHelper.openCaosFile();
+    updateBarButtons()
 }
 
 let canvasElements = {
@@ -197,7 +198,7 @@ function displayFiles(files) {
         updateTitle();
         _undoList = [];
         _redoList = [];
-        updateUndoRedoButtons();
+        updateBarButtons();
     //}
 }
 
@@ -287,7 +288,18 @@ async function displaySaveFileDialog(){
   return dialog.showSaveDialog(WIN, options);
 }
 
-function updateUndoRedoButtons(){
+function updateBarButtons(){
+  let currentFile = fileHelper.getCurrentFileRef();
+  if (!currentFile) {
+    $('#save-file-img').css('opacity','0.4')
+  }else{
+    $('#save-file-img').css('opacity','1')
+  }
+  if (!currentFile) {
+    $('#export-caos-img').css('opacity','0.4')
+  }else{
+    $('#export-caos-img').css('opacity','1')
+  }
   if (_undoList.length === 0){
     $('#undo-button-img').css('opacity','0.4')
   }else{
@@ -297,6 +309,11 @@ function updateUndoRedoButtons(){
     $('#redo-button-img').css('opacity','0.4')
   }else{
     $('#redo-button-img').css('opacity','1')
+  }
+  if (!currentFile) {
+    $('#view-edit-room-type-img').css('opacity','0.4')
+  }else{
+    $('#view-edit-room-type-img').css('opacity','1')
   }
 }
 
@@ -349,7 +366,7 @@ function undo(){
     dataStructures.points,
     dataStructures.metaroomDisk);
   selectionChecker.resetSelection();
-  updateUndoRedoButtons();
+  updateBarButtons();
 }
 
 function redo(){
@@ -368,7 +385,7 @@ function redo(){
     dataStructures.points,
     dataStructures.metaroomDisk);
   selectionChecker.resetSelection();
-  updateUndoRedoButtons();
+  updateBarButtons();
 }
 
 let shiftKeyIsDown = false;
@@ -487,7 +504,7 @@ function deleteRoom(id){
       dataStructures.points,
       dataStructures.metaroomDisk);
     selectionChecker.resetSelection();
-    updateUndoRedoButtons();
+    updateBarButtons();
 }
 
 function controlKeyUp(event){
@@ -702,7 +719,7 @@ function tryCreateRoom() {
       dataStructures.points,
       dataStructures.metaroomDisk);
     selectionChecker.resetSelection();
-    updateUndoRedoButtons();
+    updateBarButtons();
 }
 
 function makeAddRoomCommand(id, room){

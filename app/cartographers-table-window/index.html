@@ -10,44 +10,36 @@
     <div style='height: 25px; width: 100%; border: 0; margin: 0; padding: 0; background-color: #3F2933;'>
 
       <div class='banner-button tooltip-holder' class='tooltip-holder'>
-        <button id='execute' onclick='newFile()'>
+        <button id='new-file' onclick='newFile()'>
           <img src='icons/CAOS Icons_File.png' width='25rem' height='25rem'/>
         </button>
         <span class='tooltip'>New File</span>
       </div>
       <div class='banner-button tooltip-holder'>
-        <button id='execute' onclick='openFile()'>
+        <button id='open-file' onclick='openFile()'>
           <img src='icons/CAOS Icons_Open File.png' width='25rem' height='25rem' />
         </button>
         <span class='tooltip'>Open File</span>
       </div>
       <div class='banner-button tooltip-holder'>
-        <button id='saveFile' onclick='saveFile()'>
-          <img id='save-file-img' src='icons/CAOS Icons_Save-03.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-        </button>
-        <span class='tooltip'>Save File</span>
-      </div>
-      <div class='banner-button tooltip-holder'>
-        <button id='execute' onclick='saveAllFiles()'>
-          <img src='icons/CAOS Icons_Save-04.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-        </button>
-        <span class='tooltip'>Save All Files</span>
-      </div>
-
-      <div class='banner-divider'></div>
-
-      <div class='banner-button tooltip-holder'>
-        <button id='execute' onclick='importFromCaos()'>
+        <button id='import-caos' onclick='importFromCaos()'>
           <img src='icons/import-caos.svg' width='25rem' height='25rem' style='opacity: 1.0;' />
         </button>
         <span class='tooltip'>Import from CAOS</span>
       </div>
 
+
       <div class='banner-divider'></div>
 
       <div class='banner-button tooltip-holder'>
-        <button id='execute' onclick='saveAllFiles()'>
-          <img src='icons/export-caos.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
+        <button id='save-file' onclick='saveFile()'>
+          <img id='save-file-img' src='icons/CAOS Icons_Save-03.png' width='25rem' height='25rem' style='opacity: 0.4;' />
+        </button>
+        <span class='tooltip'>Save File</span>
+      </div>
+      <div class='banner-button tooltip-holder'>
+        <button id='export-caos' onclick=''>
+          <img id='export-caos-img' src='icons/export-caos.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
         <span class='tooltip'>Export to CAOS</span>
       </div>
@@ -55,16 +47,25 @@
       <div class='banner-divider'></div>
 
       <div class='banner-button tooltip-holder'>
-        <button onclick='undo()'>
+        <button id='undo' onclick='undo()'>
           <img id='undo-button-img' src='icons/CAOS Icons_Undo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
         <span class='tooltip'>Undo</span>
       </div>
       <div class='banner-button tooltip-holder'>
-        <button onclick='redo()'>
+        <button id='redo' onclick='redo()'>
           <img id='redo-button-img' src='icons/CAOS Icons_Redo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
         <span class='tooltip'>Redo</span>
+      </div>
+
+      <div class='banner-divider'></div>
+
+      <div class='banner-button tooltip-holder'>
+        <button id='view-edit-room-type' onclick='viewEditRoomType()'>
+          <img id='view-edit-room-type-img' src='icons/edit-room-types.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
+        </button>
+        <span class='tooltip'>View/edit Room Types</span>
       </div>
     </div>
     <div
