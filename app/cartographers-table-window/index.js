@@ -617,7 +617,9 @@ function handleMouseMove(e){
   if (isMouseButtonDown) {
       let selection = selectionChecker.getSelectionClick();
       if (!isDragging) {
-          if (selection.selectedType === "wall") {
+          if (selection.selectedType === "wall"
+            || selection.selectedType === "door"
+          ) {
               isDragging = true;
               whatDragging = selection.selectedType;
               idDragging = selection.selectedId;
