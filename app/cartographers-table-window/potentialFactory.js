@@ -376,7 +376,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
     }
 }
 
-function roomOverlaps(room, dataStructures, idsToDelete) {
+function roomOverlapsOrCausesTooSmallDoor(room, dataStructures, idsToDelete) {
     if (!room) {
         return false;
     }
@@ -450,6 +450,17 @@ function roomOverlaps(room, dataStructures, idsToDelete) {
         }
     }
 
+    //check all doors/walls to for ones 5 units or smaller
+    for (const potentialLine of lines) {
+        if (Math.abs(potentialLine.start.x - potentialLine.end.x) >= 5) {
+            continue;
+        }
+        if (Math.abs(potentialLine.start.y - potentialLine.end.y) >= 5) {
+            continue;
+        }
+        return truel
+    }
+
     return false;
 }
 
@@ -463,7 +474,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                   ui.dragging.stopDragging,
                   dataStructures,
                 )];
-                if (room && !roomOverlaps(room, dataStructures)) {
+                if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
                     rooms = [room];
                 }
 
@@ -488,7 +499,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                   ui.dragging.stopDragging,
                   dataStructures,
                 );
-                if (room && !roomOverlaps(room, dataStructures)) {
+                if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
                     rooms = [room];
                 }
             }
@@ -501,7 +512,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                 ui.dragging.stopDragging,
                 dataStructures,
               )];
-              if (room && !roomOverlaps(room, dataStructures)) {
+              if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
                   rooms = [room];
               }
 
@@ -511,7 +522,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
           } else if (ui.dragging.whatDragging === "wall") {
               let selectedLine = dataStructures.walls[selection.selectedId];
               let room = getPotentialRoomFromLine(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedLine);
-              if (room && !roomOverlaps(room, dataStructures)) {
+              if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
                   rooms = [room];
               }
 
@@ -541,7 +552,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                   newRooms.push(room);
               }
               for (newRoom of newRooms) {
-                  if (newRoom && !roomOverlaps(newRoom, dataStructures, newRooms)) {
+                  if (newRoom && !roomOverlapsOrCausesTooSmallDoor(newRoom, dataStructures, newRooms)) {
                       rooms.push(newRoom);
                   }
               }
@@ -558,7 +569,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                 dataStructures,
                 selectedRoom
               );
-              if (room && !roomOverlaps(room, dataStructures, [selectedRoom])) {
+              if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures, [selectedRoom])) {
                   rooms = [room];
               }
 
@@ -575,7 +586,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                     newRooms.push(room);
                 }
                 for (newRoom of newRooms) {
-                    if (newRoom && !roomOverlaps(newRoom, dataStructures, newRooms)) {
+                    if (newRoom && !roomOverlapsOrCausesTooSmallDoor(newRoom, dataStructures, newRooms)) {
                         rooms.push(newRoom);
                     }
                 }
@@ -592,7 +603,7 @@ function getPotentialRooms(ui, selection, dataStructures) {
                 let selectedRoom = dataStructures.metaroomDisk.rooms[id];
                 let selectedSide = roomIdPartId.partId;
                 let room = getPotentialRoomFromSide(ui.dragging.startDragging, ui.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
-                if (room && !roomOverlaps(room, dataStructures, [selectedRoom])) {
+                if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures, [selectedRoom])) {
                     rooms = [room];
                 }
 
