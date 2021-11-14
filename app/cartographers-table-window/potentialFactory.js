@@ -23,8 +23,10 @@ function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
       if (Math.abs(xToConsider - closestPointsX) < 5) {
           xToUse = closestPointsX;
       } else {
-          xToUse = xToConsider;
+          xToUse =
+          xToConsider;
       }
+      xToUse = Math.round(xToUse);
 
       if (deltaX > 0) {
           return {
@@ -88,6 +90,7 @@ function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
       } else {
           deltaYToUse = deltaY;
       }
+      deltaYToUse = Math.round(deltaYToUse);
 
       return (dataStructureFactory.getSortedRoomFromDimensions(
           line.start.x, line.end.x,
@@ -131,6 +134,7 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
       } else {
           xToUse = xToConsider;
       }
+      xToUse = Math.round(xToUse);
 
 
       let yToConsider = endPoint.y;
@@ -151,6 +155,7 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
       } else {
           yToUse = yToConsider;
       }
+      yToUse = Math.round(yToUse);
 
 
       if (deltaX > 0) {
@@ -194,6 +199,7 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
     } else {
         yToUse = yToConsider;
     }
+    yToUse = Math.round(yToUse);
 
     let cornerIndex = geometry.getCorner(room, startPoint);
 
@@ -291,6 +297,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
         } else {
             deltaYToUse = deltaY;
         }
+        deltaYToUse = Math.round(deltaYToUse);
 
         switch (selectedSide) {
           case 0:
@@ -339,6 +346,8 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
         } else {
             xToUse = xToConsider;
         }
+        xToUse = Math.round(xToUse);
+
         switch (selectedSide) {
           case 1:
             return {
