@@ -1,6 +1,15 @@
 const assert = require('assert');
 const { ipcRenderer } = require('electron')
 
+const cartSaveOptions = {
+    title: "Save Cartographer file",
+    defaultPath : '%HOMEPATH%/Documents/',
+    buttonLabel : "Save",
+    filters :[
+        {name: 'Cartographer', extensions: ['cart']}
+    ]
+};
+
 class FileHelper {
   constructor(updateTitle, displayFiles, getText) {
       this._currentFileRef = null;
@@ -31,7 +40,7 @@ class FileHelper {
       return this._currentFileRef;
   }
 
-  getCurrentFileNeedsSavings() {
+  getCurrentFileNeedsSaving() {
       return this._currentFileNeedsSaving;
   }
 
@@ -90,15 +99,12 @@ class FileHelper {
   }
 
   async saveCartFile() {
-      let options = {
-          title: "Save CAOS file",
-          defaultPath : '%HOMEPATH%/Documents/',
-          buttonLabel : "Save",
-          filters :[
-              {name: 'Cartographer', extensions: ['cart']}
-          ]
-      };
-      this._saveFile(options);
+      this._saveFile(cartSaveOptions);
+  }
+
+  async saveCartFileAs() {
+      console.log("wut")
+      await this._saveFileAs(cartSaveOptions);
   }
 
   async _openFile(options) {
@@ -123,6 +129,20 @@ class FileHelper {
           let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
           this._currentFileRef.path = newPath;
       }
+      if (!(await this.saveFilePromise()).continue) {
+          return {continue: false};
+      }
+      this._currentFileNeedsSaving = false;
+      this._updateTitle();
+      return {continue: true};
+  }
+
+  async _saveFileAs(options) {
+    console.log("wut2");
+      let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
+      console.log("wut3");
+      this._currentFileRef.path = newPath;
+      console.log(newPath);
       if (!(await this.saveFilePromise()).continue) {
           return {continue: false};
       }
@@ -215,10 +235,6 @@ class FileHelper {
             }
         );
     });
-  }
-
-  saveAllFiles(){
-
   }
 }
 

@@ -179,7 +179,7 @@ async function fileManager_getNewSaveFile(event, id, args) {
     }
 
     windowsFiles[args.fileRef.id].path = result.filePath;
-    windowsFiles[args.fileRef.id].type = path.extname(result.filePath);
+    windowsFiles[args.fileRef.id].type = pathModule.extname(result.filePath);
 
     event.reply(
         'executed-promise',

@@ -143,6 +143,11 @@ async function saveFile() {
     updateBarButtons()
 }
 
+async function saveAs() {
+    await fileHelper.saveCartFileAs();
+    updateBarButtons()
+}
+
 async function closeFile() {
     await fileHelper.closeFile();
     updateBarButtons()
@@ -212,17 +217,16 @@ function updateTitle(){
   if (currentFileRef){
     title += tileNameFromPath(currentFileRef.path) + ' ';
   }
-  if (fileHelper.getCurrentFileNeedsSavings()) {
+  if (fileHelper.getCurrentFileNeedsSaving()) {
     title += '* '
-    $('#save-file-img').css('opacity','1')
   }else{
-    $('#save-file-img').css('opacity','0.4')
   }
   if (currentFileRef){
     title += '- ';
   }
   title += 'Cartographer\'s Table';
   document.title = title;
+  updateBarButtons();
 }
 
 function tileNameFromPath(path) {
@@ -294,10 +298,15 @@ async function displaySaveFileDialog(){
 
 function updateBarButtons(){
   let currentFile = fileHelper.getCurrentFileRef();
-  if (!currentFile) {
+  if (!currentFile || !fileHelper.getCurrentFileNeedsSaving()) {
     $('#save-file-img').css('opacity','0.4')
   }else{
     $('#save-file-img').css('opacity','1')
+  }
+  if (!currentFile) {
+    $('#save-as-img').css('opacity','0.4')
+  }else{
+    $('#save-as-img').css('opacity','1')
   }
   if (!currentFile) {
     $('#export-caos-img').css('opacity','0.4')
