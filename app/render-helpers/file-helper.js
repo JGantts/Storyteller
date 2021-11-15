@@ -103,7 +103,6 @@ class FileHelper {
   }
 
   async saveCartFileAs() {
-      console.log("wut")
       await this._saveFileAs(cartSaveOptions);
   }
 
@@ -138,9 +137,7 @@ class FileHelper {
   }
 
   async _saveFileAs(options) {
-    console.log("wut2");
       let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
-      console.log("wut3");
       this._currentFileRef.path = newPath;
       console.log(newPath);
       if (!(await this.saveFilePromise()).continue) {
