@@ -144,7 +144,6 @@ class FileHelper {
   async _saveFileAs(options) {
       let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
       this._currentFileRef.path = newPath;
-      console.log(newPath);
       if (!(await this.saveFilePromise()).continue) {
           return {continue: false};
       }
