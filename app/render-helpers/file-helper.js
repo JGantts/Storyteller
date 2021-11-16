@@ -10,6 +10,15 @@ const cartSaveOptions = {
     ]
 };
 
+const caosSaveOptions = {
+    title: "Save CAOS file",
+    defaultPath : '%HOMEPATH%/Documents/',
+    buttonLabel : "Save",
+    filters :[
+        {name: 'CAOS', extensions: ['cos']}
+    ]
+};
+
 class FileHelper {
   constructor(updateTitle, displayFiles, getText) {
       this._currentFileRef = null;
@@ -87,15 +96,11 @@ class FileHelper {
   }
 
   async saveCaosFile() {
-      let options = {
-          title: "Save CAOS file",
-          defaultPath : '%HOMEPATH%/Documents/',
-          buttonLabel : "Save",
-          filters :[
-              {name: 'CAOS', extensions: ['cos']}
-          ]
-      };
-      this._saveFile(options);
+      this._saveFile(caosSaveOptions);
+  }
+
+  async saveCaosFilAse() {
+      this._saveFileAs(caosSaveOptions);
   }
 
   async saveCartFile() {

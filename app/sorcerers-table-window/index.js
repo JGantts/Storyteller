@@ -95,6 +95,11 @@ async function saveFile() {
     fileHelper.saveCaosFile();
 }
 
+async function saveAs() {
+    await fileHelper.saveCaosFileAs();
+    updateBarButtons()
+}
+
 async function closeFile() {
     fileHelper.closeFile();
 }
