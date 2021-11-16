@@ -9,6 +9,7 @@ const { FileHelper } = require('../render-helpers/file-helper.js');
 
 const { parseCaosForMetaroom } = require('./caos-to-metaroom-parser.js');
 const { geometry } = require('./geometryHelper.js');
+const { roomtypeRenderer } = require('./roomtype-renderer.js');
 const { selectionRenderer } = require('./selectionRenderer.js');
 const { selectionChecker } = require('./selectionChecker.js');
 const { dataStructureFactory } = require('./dataStructureFactory.js');
@@ -158,8 +159,9 @@ async function importFromCaos() {
     updateBarButtons()
 }
 
+let isViewingRoomType = false;
 async function viewEditRoomType() {
-
+    isViewingRoomType = !isViewingRoomType;
 }
 
 let canvasElements = {
@@ -1018,6 +1020,13 @@ async function redrawSelection() {
       redrawMetaroom();
       updateBarButtons()
     }
+
+    if (isViewingRoomType) {
+      selectionRainbowCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+      roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
+      return
+    }
+
     //console.log(dataStructures);
     let selection = selectionChecker.getSelectionHover();
     if (selection.selectedType === "") {
