@@ -11,13 +11,13 @@
 
     <div class='banner-button tooltip-holder' class='tooltip-holder'>
       <button id='execute' onclick='newFile()'>
-        <img src='icons/CAOS Icons_File.png' width='25rem' height='25rem'/>
+        <img id='new-file-img' src='icons/CAOS Icons_File.png' width='25rem' height='25rem'/>
       </button>
       <span class='tooltip'>New File</span>
     </div>
     <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='openFile()'>
-        <img src='icons/CAOS Icons_Open File.png' width='25rem' height='25rem' />
+        <img id='open-file-img' src='icons/CAOS Icons_Open File.png' width='25rem' height='25rem' />
       </button>
       <span class='tooltip'>Open File</span>
     </div>
@@ -41,27 +41,21 @@
 
     <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='cut()'>
-        <img src='icons/CAOS Icons_Cut.png' width='25rem' height='25rem' />
+        <img id='cut-img' src='icons/CAOS Icons_Cut.png' width='25rem' height='25rem' />
       </button>
       <span class='tooltip'>Cut</span>
     </div>
     <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='copy()'>
-        <img src='icons/CAOS Icons_Paste-06.png' width='25rem' height='25rem' />
+        <img id='copy-img' src='icons/CAOS Icons_Paste-06.png' width='25rem' height='25rem' />
       </button>
       <span class='tooltip'>Copy</span>
     </div>
     <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='paste()'>
-        <img src='icons/CAOS Icons_Paste-07.png' width='25rem' height='25rem' />
+        <img id='paste-img' src='icons/CAOS Icons_Paste-07.png' width='25rem' height='25rem' />
       </button>
       <span class='tooltip'>Paste</span>
-    </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='find()'>
-        <img src='icons/CAOS Icons_Search.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-      </button>
-      <span class='tooltip'>Find</span>
     </div>
 
     <div class='banner-divider'></div>
@@ -79,50 +73,29 @@
       <span class='tooltip'>Redo</span>
     </div>
 
-    <div class='banner-divider tooltip-holder'></div>
-
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='comment()'>
-        <img src='icons/CAOS Icons_Redo Code.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-      </button>
-      <span class='tooltip'>Comment Selection</span>
-    </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='uncomment()'>
-        <img src='icons/CAOS Icons_Undo Code.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-      </button>
-      <span class='tooltip'>Uncomment Selection</span>
-    </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='autoFormat()'>
-        <img src='icons/CAOS Icons_Code-15.png' width='25rem' height='25rem' style='opacity: 0.4;' />
-      </button>
-      <span class='tooltip'>Auto Format</span>
-    </div>
-
     <div class='banner-divider'></div>
 
     <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='injectInstall()'>
-        <img src='icons/CAOS Icons_Code-16.png' width='25rem' height='25rem' />
+        <img id='install-script-img' src='icons/CAOS Icons_Code-16.png' width='25rem' height='25rem' />
       </button>
       <span class='tooltip'>Install Script</span>
     </div>
     <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='injectEvents()'>
-        <img src='icons/CAOS Icons_Code-17.png' width='25rem' height='25rem' />
+        <img id='events-scripts-img' src='icons/CAOS Icons_Code-17.png' width='25rem' height='25rem' />
       </button>
       <span class='tooltip'>Events Scripts</span>
     </div>
     <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='injectAll()'>
-        <img src='icons/CAOS Icons_Code-18.png' width='25rem' height='25rem' />
+        <img id='all-scripts-img' src='icons/CAOS Icons_Code-18.png' width='25rem' height='25rem' />
       </button>
       <span class='tooltip'>Remove, Events, Install</span>
     </div>
     <div class='banner-button tooltip-holder'>
       <button id='execute' onclick='injectRemove()'>
-        <img src='icons/CAOS Icons_Code-19.png' width='25rem' height='25rem' />
+        <img id='remove-script-img' src='icons/CAOS Icons_Code-19.png' width='25rem' height='25rem' />
       </button>
       <span class='tooltip'>Remove Script</span>
     </div>

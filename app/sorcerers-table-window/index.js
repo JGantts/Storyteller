@@ -120,7 +120,7 @@ function displayFiles(files) {
         updateTitle();
         _undoList = [];
         _redoList = [];
-        updateUndoRedoButtons();
+        updateBarButtons();
     //}
 }
 
@@ -130,17 +130,67 @@ function updateTitle(){
   if (currentFileRef){
     title += tileNameFromPath(currentFileRef.path) + ' ';
   }
-  if (fileHelper.getCurrentFileNeedsSaving()) {
-    title += '* '
-    $('#save-file-img').css('opacity','1')
-  }else{
-    $('#save-file-img').css('opacity','0.4')
-  }
   if (currentFileRef){
     title += '- ';
   }
   title += 'Sorcerer\'s Table';
   document.title = title;
+  updateBarButtons();
+}
+
+function updateBarButtons(){
+  let currentFile = fileHelper.getCurrentFileRef();
+  if (!currentFile || !fileHelper.getCurrentFileNeedsSaving()) {
+    $('#save-file-img').css('opacity','0.4')
+  }else{
+    $('#save-file-img').css('opacity','1')
+  }
+  if (!currentFile) {
+    $('#save-as-img').css('opacity','0.4')
+  }else{
+    $('#save-as-img').css('opacity','1')
+  }
+
+  let caretPosition = GetCaretPositionWithin(codeElement);
+  if (caretPosition.start === caretPosition.end){
+    $('#cut-img').css('opacity','0.4')
+    $('#copy-img').css('opacity','0.4')
+  }else{
+    $('#cut-img').css('opacity','1')
+    $('#copy-img').css('opacity','1')
+  }
+
+  if (_undoList.length === 0){
+    $('#undo-button-img').css('opacity','0.4')
+  }else{
+    $('#undo-button-img').css('opacity','1')
+  }
+  if (_redoList.length === 0){
+    $('#redo-button-img').css('opacity','0.4')
+  }else{
+    $('#redo-button-img').css('opacity','1')
+  }
+
+  if (!currentFile){
+    $('#install-script-img').css('opacity','0.4')
+  }else{
+    $('#install-script-img').css('opacity','1')
+  }
+  if (!currentFile){
+    $('#events-scripts-img').css('opacity','0.4')
+  }else{
+    $('#events-scripts-img').css('opacity','1')
+  }
+  if (!currentFile){
+    $('#all-scripts-img').css('opacity','0.4')
+  }else{
+    $('#all-scripts-img').css('opacity','1')
+  }
+  if (!currentFile){
+    $('#remove-script-img').css('opacity','0.4')
+  }else{
+    $('#remove-script-img').css('opacity','1')
+  }
 }
 
 function tileNameFromPath(path) {
@@ -158,19 +208,6 @@ function tileNameFromPath(path) {
     let lastIndexOfDot = path.lastIndexOf(".")
     let fileName = "..." + path.slice(secondTolastIndex);
     return fileName;
-}
-
-function updateUndoRedoButtons(){
-  if (_undoList.length === 0){
-    $('#undo-button-img').css('opacity','0.4')
-  }else{
-    $('#undo-button-img').css('opacity','1')
-  }
-  if (_redoList.length === 0){
-    $('#redo-button-img').css('opacity','0.4')
-  }else{
-    $('#redo-button-img').css('opacity','1')
-  }
 }
 
 function cut(){
@@ -213,7 +250,7 @@ function undo(){
   }
   command.undo()
   _redoList.push(command);
-  updateUndoRedoButtons();
+  updateBarButtons();
 }
 
 function redo(){
@@ -223,7 +260,7 @@ function redo(){
   }
   command.redo()
   _undoList.push(command);
-  updateUndoRedoButtons();
+  updateBarButtons();
 }
 
 function comment(){
@@ -454,7 +491,7 @@ function insertText(text){
     _undoList.push(insertCommand);
     insertCommand.do();
     _redoList = [];
-    updateUndoRedoButtons();
+    updateBarButtons();
   }else{
     let deleteCommand = makeDeleteTextCommand(caretPosition.start, caretPosition.end - caretPosition.start);
     let insertCommand = makeInsertTextCommand(caretPosition.start, text);
@@ -462,7 +499,7 @@ function insertText(text){
     _undoList.push(multiCommand);
     multiCommand.do();
     _redoList = [];
-    updateUndoRedoButtons();
+    updateBarButtons();
   }
 }
 
