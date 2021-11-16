@@ -99,7 +99,7 @@ class FileHelper {
       this._saveFile(caosSaveOptions);
   }
 
-  async saveCaosFilAse() {
+  async saveCaosFilAs() {
       this._saveFileAs(caosSaveOptions);
   }
 
