@@ -130,7 +130,7 @@ function updateTitle(){
   if (currentFileRef){
     title += tileNameFromPath(currentFileRef.path) + ' ';
   }
-  if (fileHelper.getCurrentFileNeedsSavings()) {
+  if (fileHelper.getCurrentFileNeedsSaving()) {
     title += '* '
     $('#save-file-img').css('opacity','1')
   }else{
