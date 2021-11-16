@@ -96,7 +96,7 @@ class FileHelper {
   }
 
   async saveCaosFile() {
-      this._saveFile(caosSaveOptions);
+      await this._saveFile(caosSaveOptions);
   }
 
   async saveCaosFileAs() {
@@ -104,7 +104,7 @@ class FileHelper {
   }
 
   async saveCartFile() {
-      this._saveFile(cartSaveOptions);
+      await this._saveFile(cartSaveOptions);
   }
 
   async saveCartFileAs() {
