@@ -72,7 +72,6 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
       images = {
           checkerboard: new Image,
           chevronRight: new Image,
-          chevronUpsidedown: new Image,
           chevron: new Image,
           flatHor: new Image,
           flatVer: new Image,
@@ -82,7 +81,6 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
 
       images.checkerboard.src = "./other-images/checkerboard.svg";
       images.chevronRight.src = "./other-images/chevron-right.svg";
-      images.chevronUpsidedown.src = "./other-images/chevron-upsidedown.svg";
       images.chevron.src = "./other-images/chevron.svg";
       images.flatHor.src = "./other-images/flat-hor.svg";
       images.flatVer.src = "./other-images/flat-ver.svg";
@@ -94,8 +92,6 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
       images.checkerboard.height = 80;
       images.chevronRight.width = 80;
       images.chevronRight.height = 80;
-      images.chevronUpsidedown.width = 80;
-      images.chevronUpsidedown.height = 80;
       images.chevron.width = 80;
       images.chevron.height = 80;
       images.flatHor.width = 80;
@@ -109,7 +105,6 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
 
       await images.checkerboard.decode();
       await images.chevronRight.decode();
-      await images.chevronUpsidedown.decode();
       await images.chevron.decode();
       await images.flatHor.decode();
       await images.flatVer.decode();
