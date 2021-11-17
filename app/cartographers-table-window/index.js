@@ -1021,18 +1021,27 @@ async function redrawSelection() {
       updateBarButtons()
     }
 
+    let selection = selectionChecker.getSelectionHover();
+    if (selection.selectedType === "") {
+        selection = selectionChecker.getSelectionClick();
+    }
+    selectionHighlightCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+
+    if (previousSelectionInstanceId !== selection.selectionInstancedId
+    || previousSelectionInstanceId === null) {
+        previousSelectionInstanceId = selection.selectionInstancedId;
+        updatePropertiesPanel(
+          document.getElementById("properties-panel"),
+          selection,
+          dataStructures);
+    }
+
     if (isViewingRoomType) {
       selectionRainbowCtx.clearRect(0, 0, metaroom.width, metaroom.height);
       roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
       return
     }
 
-    //console.log(dataStructures);
-    let selection = selectionChecker.getSelectionHover();
-    if (selection.selectedType === "") {
-        selection = selectionChecker.getSelectionClick();
-    }
-    selectionHighlightCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
     let potentialRooms = potentialFactory.getPotentialRooms
     (
@@ -1052,14 +1061,7 @@ async function redrawSelection() {
     redrawPotential(potentialRooms, dataStructures);
 
     selection = selectionChecker.getSelectionClick()
-    if (previousSelectionInstanceId !== selection.selectionInstancedId
-    || previousSelectionInstanceId === null) {
-        previousSelectionInstanceId = selection.selectionInstancedId;
-        updatePropertiesPanel(
-          document.getElementById("properties-panel"),
-          selection,
-          dataStructures);
-    }
+
 }
 
 function redrawPotential(potentialRooms, dataStructures) {
