@@ -23,8 +23,32 @@ let posY = 0;
 
 let dataStructures = null;
 
-let currentFile = null;
-let currentFileNeedsSaving = false;
+let masterUiState = {
+    keys: {
+        shiftKeyIsDown: false,
+        ctrlKeyIsDown: false,
+    },
+
+    dragging: {
+        isMouseButtonDown: false,
+
+        isDragging: false,
+        whatDragging: "",
+        idDragging: -1,
+
+        startDragging: null,
+        stopDragging: null,
+    },
+
+    state: {
+        isViewingRoomType: false,
+    },
+
+    camera: {
+        rezoom: false,
+    }
+};
+
 let backgroundCanvasElement = document.getElementById('backgroundCanvas');
 let selectionRainbowCanvasElement = document.getElementById('selectionRainbowCanvas');
 let roomCanvasElement = document.getElementById('roomCanvas');
@@ -69,10 +93,8 @@ let fileHelper = new FileHelper(
 );
 
 function getSelectionMultiplier() {
-    return (shiftKeyIsDown) ? 1.375 : 1;
+    return (masterUiState.keys.shiftKeyIsDown) ? 1.375 : 1;
 }
-
-let metaroom = null;
 
 let _undoList = [];
 let _redoList = [];
@@ -339,7 +361,7 @@ function updateBarButtons(){
 
 function oneToOneZoom() {
   zoom = 1;
-  rezoom = true;
+  masterUiState.camera.rezoom = true;
 }
 
 function cut(){
@@ -413,9 +435,6 @@ function redo(){
   updateBarButtons();
 }
 
-let shiftKeyIsDown = false;
-let ctrlKeyIsDown = false;
-
 function userTextKeyDown(event){
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
@@ -478,11 +497,11 @@ function editingKeyDown(event) {
 
 
 function shiftKeyDown(event){
-  shiftKeyIsDown = true;
+  masterUiState.keys.shiftKeyIsDown = true;
 }
 
 function controlKeyDown(event){
-  ctrlKeyIsDown = true;
+  masterUiState.keys.ctrlKeyIsDown = true;
 }
 
 function controlKeyComboDown(event){
@@ -534,53 +553,54 @@ function deleteRoom(id){
 }
 
 function controlKeyUp(event){
-    if (ctrlKeyIsDown) {
-        ctrlKeyIsDown = false;
+    if (masterUiState.keys.ctrlKeyIsDown) {
+        masterUiState.keys.ctrlKeyIsDown = false;
 
-        if (isDragging) {
-            isDragging = false;
-            whatDragging = "";
-            idDragging = -1;
-            startDragging = null;
-            stopDragging = null;
+        if (masterUiState.dragging.isDragging) {
+            masterUiState.dragging = {
+                isMouseButtonDown: false,
+
+                isDragging: false,
+                whatDragging: "",
+                idDragging: -1,
+
+                startDragging: null,
+                stopDragging: null,
+            }
         }
     }
 }
 
 function shiftKeyComboDown(event){
     if (event.key === "Shift") {
-        shiftKeyIsDown = true;
+        masterUiState.keys.shiftKeyIsDown = true;
     }
 }
 
 function shiftKeyUp(event){
-    if (shiftKeyDown) {
-        shiftKeyIsDown = false;
+    if (masterUiState.keys.shiftKeyIsDown) {
+        masterUiState.keys.shiftKeyIsDown = false;
 
-        if (isDragging) {
-            isDragging = false;
-            whatDragging = "";
-            idDragging = -1;
-            startDragging = null;
-            stopDragging = null;
+        if (masterUiState.dragging.isDragging) {
+            masterUiState.dragging = {
+                isMouseButtonDown: false,
+
+                isDragging: false,
+                whatDragging: "",
+                idDragging: -1,
+
+                startDragging: null,
+                stopDragging: null,
+            }
         }
     }
 }
-
-let isMouseButtonDown = false;
-
-let isDragging = false;
-let whatDragging = "";
-let idDragging = -1;
-
-let startDragging = null;
-let stopDragging = null;
 
 function handleMouseDown(e){
     // tell the browser we're handling this event
     e.preventDefault();
     e.stopPropagation();
-    isMouseButtonDown = true;
+    masterUiState.dragging.isMouseButtonDown = true;
     startX=parseInt(e.offsetX)/zoom;
     startY=parseInt(e.offsetY)/zoom;
 
@@ -590,21 +610,26 @@ function handleMouseDown(e){
 function handleMouseUp(e){
     e.preventDefault();
     e.stopPropagation();
-    isMouseButtonDown = false;
+    masterUiState.dragging.isMouseButtonDown = false;
 
     tryCreateRoom();
 
-    isDragging = false;
-    whatDragging = "";
-    idDragging = -1;
-    startDragging = null;
-    stopDragging = null;
+    masterUiState.dragging = {
+        isMouseButtonDown: false,
+
+        isDragging: false,
+        whatDragging: "",
+        idDragging: -1,
+
+        startDragging: null,
+        stopDragging: null,
+    }
 }
 
 function handleMouseOut(e){
-    shiftKeyIsDown = false;
+    masterUiState.keys.shiftKeyIsDown = false;
     // return if we're not dragging
-    /*isMouseButtonDown = false;
+    /*masterUiState.dragging.isMouseButtonDown = false;
 
     isDragging = false;
     whatDragging = "";
@@ -625,55 +650,80 @@ function handleMouseMove(e){
       return;
   }
 
-  if (!isDragging) {
+  if (!masterUiState.dragging.isDragging) {
       selectionChecker.checkSelectionHover(currX, currY, dataStructures);
   }
 
   /*console.log({
-    isMouseButtonDown: isMouseButtonDown,
+    isMouseButtonDown: masterUiState.dragging.isMouseButtonDown,
     isDragging: isDragging,
     "selected.selectedType": selected.selectedType,
   });*/
 
-  if (isMouseButtonDown) {
+  if (masterUiState.dragging.isMouseButtonDown) {
       let selection = selectionChecker.getSelectionClick();
-      if (!isDragging) {
+      if (!masterUiState.dragging.isDragging) {
           if (selection.selectedType === "wall"
             || selection.selectedType === "door"
           ) {
-              isDragging = true;
-              whatDragging = selection.selectedType;
-              idDragging = selection.selectedId;
-              startDragging = {x: currX, y: currY};
-              stopDragging = {x: currX, y: currY};
+              masterUiState.dragging = {
+                  isMouseButtonDown: true,
+
+                  isDragging: true,
+                  whatDragging: selection.selectedType,
+                  idDragging: selection.selectedId,
+
+                  startDragging: {x: currX, y: currY},
+                  stopDragging: {x: currX, y: currY},
+              }
           } else if (selection.selectedType === "point") {
-              isDragging = true;
-              whatDragging = selection.selectedType;
-              idDragging = selection.selectedId;
-              startDragging = dataStructures.points[selection.selectedId];
-              stopDragging = {x: currX, y: currY};
+              masterUiState.dragging = {
+                  isMouseButtonDown: true,
+
+                  isDragging: true,
+                  whatDragging: selection.selectedType,
+                  idDragging: selection.selectedId,
+
+                  startDragging: dataStructures.points[selection.selectedId],
+                  stopDragging: {x: currX, y: currY},
+              }
           } else if (selection.selectedType === "corner") {
-              isDragging = true;
-              whatDragging = selection.selectedType;
-              idDragging = selection.selectedId;
-              startDragging = dataStructures.points[selection.selectedId];
-              stopDragging = {x: currX, y: currY};
+              masterUiState.dragging = {
+                  isMouseButtonDown: true,
+
+                  isDragging: true,
+                  whatDragging: selection.selectedType,
+                  idDragging: selection.selectedId,
+
+                  startDragging: dataStructures.points[selection.selectedId],
+                  stopDragging: {x: currX, y: currY},
+              }
           } else if (selection.selectedType === "side") {
-              isDragging = true;
-              whatDragging = selection.selectedType;
-              idDragging = selection.selectedId;
-              startDragging = {x: currX, y: currY};
-              stopDragging = {x: currX, y: currY};
+              masterUiState.dragging = {
+                  isMouseButtonDown: true,
+
+                  isDragging: true,
+                  whatDragging: selection.selectedType,
+                  idDragging: selection.selectedId,
+
+                  startDragging: {x: currX, y: currY},
+                  stopDragging: {x: currX, y: currY},
+              }
           } else {
-              isDragging = true;
-              whatDragging = "cursor_point";
-              idDragging = null;
-              startDragging = {x: Math.round(currX), y: Math.round(currY)};
-              stopDragging = {x: currX, y: currY};
+              masterUiState.dragging = {
+                  isMouseButtonDown: true,
+
+                  isDragging: true,
+                  whatDragging: "cursor_point",
+                  idDragging: null,
+
+                  startDragging: {x: Math.round(currX), y: Math.round(currY)},
+                  stopDragging: {x: currX, y: currY},
+              }
           }
       }
-      if (isDragging) {
-          stopDragging = {x: currX, y: currY};
+      if (masterUiState.dragging.isDragging) {
+          masterUiState.dragging.stopDragging = {x: currX, y: currY};
       }
   }
 
@@ -681,7 +731,6 @@ function handleMouseMove(e){
   //checkSelection(startX, startY);
 }
 
-let rezoom = false;
 function handleWheel(e) {
     //e.preventDefault();
 
@@ -690,7 +739,7 @@ function handleWheel(e) {
         zoom -= e.deltaY * 0.0025;
         zoom = Math.min(zoom, 2);
         zoom = Math.max(zoom, 0.1);
-        rezoom = true;
+        masterUiState.camera.rezoom = true;
     } else {
 
         posX -= e.deltaX * 2;
@@ -703,20 +752,11 @@ function tryCreateRoom() {
     if (selection.selectedType === "") {
         selection = selectionChecker.getSelectionClick();
     }
-    let _shiftKeyIsDown = shiftKeyIsDown;
-    let _ctrlKeyIsDown = ctrlKeyIsDown;
+    let _shiftKeyIsDown = masterUiState.keys.shiftKeyIsDown;
+    let _ctrlKeyIsDown = masterUiState.keys.ctrlKeyIsDown;
     let newRooms = potentialFactory.getPotentialRooms
     (
-        {
-            dragging: {
-              isDragging,
-              whatDragging,
-              startDragging,
-              stopDragging,
-            },
-            shiftKeyIsDown,
-            ctrlKeyIsDown,
-        },
+        masterUiState,
         selection,
         dataStructures
     );
@@ -1011,11 +1051,11 @@ async function redrawPasties(pastiesCtx, points, metaroom){
 let previousSelectionInstanceId = null;
 
 async function redrawSelection() {
-    if (!metaroom) {
+    if (!dataStructures?.metaroomDisk) {
         return;
     }
-    if (rezoom) {
-      rezoom = false;
+    if (masterUiState.camera.rezoom) {
+      masterUiState.camera.rezoom = false;
       resizeCanvases();
       redrawMetaroom();
       updateBarButtons()
@@ -1025,7 +1065,7 @@ async function redrawSelection() {
     if (selection.selectedType === "") {
         selection = selectionChecker.getSelectionClick();
     }
-    selectionHighlightCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    selectionHighlightCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
 
     if (previousSelectionInstanceId !== selection.selectionInstancedId
     || previousSelectionInstanceId === null) {
@@ -1037,7 +1077,7 @@ async function redrawSelection() {
     }
 
     if (isViewingRoomType) {
-      selectionRainbowCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+      selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
       roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
       return
     }
@@ -1045,16 +1085,7 @@ async function redrawSelection() {
     selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
     let potentialRooms = potentialFactory.getPotentialRooms
     (
-        {
-            dragging: {
-              isDragging,
-              whatDragging,
-              startDragging,
-              stopDragging,
-            },
-            shiftKeyIsDown,
-            ctrlKeyIsDown,
-        },
+        masterUiState,
         selection,
         dataStructures
     );

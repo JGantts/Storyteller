@@ -44,10 +44,6 @@ const purple = {
   blue: 135
 }
 
-function getSelectionMultiplier() {
-    return (shiftKeyIsDown) ? 1.375 : 1;
-}
-
 function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, room) {
     //console.log(x);
     //console.log(y);
