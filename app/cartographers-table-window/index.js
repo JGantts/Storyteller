@@ -1076,56 +1076,53 @@ async function redrawSelection(timestamp) {
         oldTimestamp = timestamp;
         fps = Math.round(1 / secondsPassed);
     }
-    //console.log(fps)
+    console.log(fps)
 
 
 
-    if (!dataStructures?.metaroomDisk) {
-        window.requestAnimationFrame(redrawSelection);
-        return;
+    if (dataStructures?.metaroomDisk) {
+        if (masterUiState.camera.rezoom
+            || masterUiState.camera.reposition
+        ) {
+          masterUiState.camera.rezoom = false;
+          masterUiState.camera.reposition = false;
+          resizeCanvases();
+          redrawMetaroom();
+          updateBarButtons()
+        }
+
+        let selection = selectionChecker.getSelectionHover();
+        if (selection.selectedType === "") {
+            selection = selectionChecker.getSelectionClick();
+        }
+        selectionHighlightCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+
+        if (previousSelectionInstanceId !== selection.selectionInstancedId
+        || previousSelectionInstanceId === null) {
+            previousSelectionInstanceId = selection.selectionInstancedId;
+            updatePropertiesPanel(
+              document.getElementById("properties-panel"),
+              selection,
+              dataStructures);
+        }
+
+        if (isViewingRoomType) {
+          selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+          roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
+        } else {
+
+            selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
+            let potentialRooms = potentialFactory.getPotentialRooms
+            (
+                masterUiState,
+                selection,
+                dataStructures
+            );
+            redrawPotential(potentialRooms, dataStructures);
+
+            selection = selectionChecker.getSelectionClick();
+        }
     }
-    if (masterUiState.camera.rezoom
-        || masterUiState.camera.reposition
-    ) {
-      masterUiState.camera.rezoom = false;
-      masterUiState.camera.reposition = false;
-      resizeCanvases();
-      redrawMetaroom();
-      updateBarButtons()
-    }
-
-    let selection = selectionChecker.getSelectionHover();
-    if (selection.selectedType === "") {
-        selection = selectionChecker.getSelectionClick();
-    }
-    selectionHighlightCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
-
-    if (previousSelectionInstanceId !== selection.selectionInstancedId
-    || previousSelectionInstanceId === null) {
-        previousSelectionInstanceId = selection.selectionInstancedId;
-        updatePropertiesPanel(
-          document.getElementById("properties-panel"),
-          selection,
-          dataStructures);
-    }
-
-    if (isViewingRoomType) {
-      selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
-      roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
-      window.requestAnimationFrame(redrawSelection);
-      return
-    }
-
-    selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
-    let potentialRooms = potentialFactory.getPotentialRooms
-    (
-        masterUiState,
-        selection,
-        dataStructures
-    );
-    redrawPotential(potentialRooms, dataStructures);
-
-    selection = selectionChecker.getSelectionClick()
     window.requestAnimationFrame(redrawSelection);
 }
 
