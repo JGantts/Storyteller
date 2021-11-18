@@ -46,8 +46,11 @@ let masterUiState = {
 
     camera: {
         rezoom: false,
+        reposition: false,
     }
 };
+
+let canvasHolder = document.getElementById('canvasHolder');
 
 let backgroundCanvasElement = document.getElementById('backgroundCanvas');
 let selectionRainbowCanvasElement = document.getElementById('selectionRainbowCanvas');
@@ -285,6 +288,7 @@ function setupCanvas(canvas, rect) {
   let ctx = canvas.getContext('2d');
   // Scale all drawing operations by the dpr, so you
   // don't have to worry about the difference.
+  ctx.translate(-posX, -posY);
   ctx.scale(dpr, dpr);
   return ctx;
 }
@@ -732,8 +736,7 @@ function handleMouseMove(e){
 }
 
 function handleWheel(e) {
-    //e.preventDefault();
-
+    e.preventDefault();
 
     if (e.ctrlKey) {
         zoom -= e.deltaY * 0.0025;
@@ -741,10 +744,20 @@ function handleWheel(e) {
         zoom = Math.max(zoom, 0.1);
         masterUiState.camera.rezoom = true;
     } else {
+        if (e.altKey) {
+            posX += e.deltaY * 2;
+        } else {
+            posX += e.deltaX * 2;
+            posY += e.deltaY * 2;
+        }
+        posX = Math.max(posX, 0);
+        posX = Math.min(posX, dataStructures.metaroomDisk.width - canvasHolder.clientWidth);
+        posY = Math.max(posY, 0);
+        posY = Math.min(posY, dataStructures.metaroomDisk.height - canvasHolder.clientHeight);
 
-        posX -= e.deltaX * 2;
-        posY += e.deltaY * 2;
+        masterUiState.camera.reposition = true;
     }
+
 }
 
 function tryCreateRoom() {
@@ -787,7 +800,7 @@ function tryCreateRoom() {
     }
     let finalCommand = buildMultiCommand(commands);
     _undoList.push(finalCommand);
-    finalCommand.do();
+    finalCommand.do();fg
     _redoList = [];
     fileHelper.fileModified();
     rebuildRooms();
@@ -1054,8 +1067,11 @@ async function redrawSelection() {
     if (!dataStructures?.metaroomDisk) {
         return;
     }
-    if (masterUiState.camera.rezoom) {
+    if (masterUiState.camera.rezoom
+        || masterUiState.camera.reposition
+    ) {
       masterUiState.camera.rezoom = false;
+      masterUiState.camera.reposition = false;
       resizeCanvases();
       redrawMetaroom();
       updateBarButtons()
