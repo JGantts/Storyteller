@@ -1064,7 +1064,7 @@ async function redrawPasties(pastiesCtx, points, metaroom){
 let previousSelectionInstanceId = null;
 
 let secondsPassed;
-let oldTimestamp = null;
+let oldTimestamp = "uninitialized";
 let fps;
 
 async function redrawSelection(timestamp) {
@@ -1098,7 +1098,7 @@ async function redrawSelection(timestamp) {
         selectionHighlightCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
 
         if (previousSelectionInstanceId !== selection.selectionInstancedId
-        || previousSelectionInstanceId === null) {
+        || previousSelectionInstanceId === "uninitialized") {
             previousSelectionInstanceId = selection.selectionInstancedId;
             updatePropertiesPanel(
               document.getElementById("properties-panel"),
@@ -1107,8 +1107,8 @@ async function redrawSelection(timestamp) {
         }
 
         if (isViewingRoomType) {
-          selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
-          roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
+            selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+            roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
         } else {
 
             selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
