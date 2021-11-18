@@ -605,8 +605,8 @@ function handleMouseDown(e){
     e.preventDefault();
     e.stopPropagation();
     masterUiState.dragging.isMouseButtonDown = true;
-    startX=parseInt(e.offsetX)/zoom;
-    startY=parseInt(e.offsetY)/zoom;
+    startX=parseInt(e.offsetX)/zoom + posX;
+    startY=parseInt(e.offsetY)/zoom + posY;
 
     selectionChecker.checkSelectionClick(startX, startY, dataStructures);
 }
@@ -647,8 +647,8 @@ function handleMouseMove(e){
   e.preventDefault();
   e.stopPropagation();
   // calculate the current mouse position
-  currX=parseInt(e.offsetX)/zoom;
-  currY=parseInt(e.offsetY)/zoom;
+  currX=parseInt(e.offsetX)/zoom + posX;
+  currY=parseInt(e.offsetY)/zoom + posY;
 
   if (!dataStructures) {
       return;
