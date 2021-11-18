@@ -1063,8 +1063,25 @@ async function redrawPasties(pastiesCtx, points, metaroom){
 
 let previousSelectionInstanceId = null;
 
-async function redrawSelection() {
+let secondsPassed;
+let oldTimestamp = null;
+let fps;
+
+async function redrawSelection(timestamp) {
+    if (!oldTimestamp) {
+        oldTimestamp = timestamp;
+        fps = 0;
+    } else {
+        secondsPassed = (timestamp - oldTimestamp) / 1000;
+        oldTimestamp = timestamp;
+        fps = Math.round(1 / secondsPassed);
+    }
+    //console.log(fps)
+
+
+
     if (!dataStructures?.metaroomDisk) {
+        window.requestAnimationFrame(redrawSelection);
         return;
     }
     if (masterUiState.camera.rezoom
@@ -1095,6 +1112,7 @@ async function redrawSelection() {
     if (isViewingRoomType) {
       selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
       roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
+      window.requestAnimationFrame(redrawSelection);
       return
     }
 
@@ -1108,7 +1126,7 @@ async function redrawSelection() {
     redrawPotential(potentialRooms, dataStructures);
 
     selection = selectionChecker.getSelectionClick()
-
+    window.requestAnimationFrame(redrawSelection);
 }
 
 function redrawPotential(potentialRooms, dataStructures) {
@@ -1123,6 +1141,6 @@ function redrawPotential(potentialRooms, dataStructures) {
     }
 }
 
-setInterval(redrawSelection, 50);
+window.requestAnimationFrame(redrawSelection);
 
 newFile();
