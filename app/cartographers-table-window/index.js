@@ -1095,7 +1095,6 @@ async function redrawSelection(timestamp) {
         if (selection.selectedType === "") {
             selection = selectionChecker.getSelectionClick();
         }
-        selectionHighlightCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
 
         if (previousSelectionInstanceId !== selection.selectionInstancedId
         || previousSelectionInstanceId === "uninitialized") {
@@ -1110,7 +1109,7 @@ async function redrawSelection(timestamp) {
             selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
             roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
         } else {
-
+            selectionHighlightCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
             selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
             let potentialRooms = potentialFactory.getPotentialRooms
             (
