@@ -1014,7 +1014,7 @@ async function redrawMetaroom(){
         [...dataStructures.doors, ...dataStructures.walls],
         dataStructures.points,
         dataStructures.metaroomDisk);
-    backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+    canvasContexts.background.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
     if (dataStructures.metaroomDisk.background) {
         if (!img || dataStructures.metaroomDisk.background !== imgPathRel) {
             img = new Image;
@@ -1032,15 +1032,15 @@ async function redrawMetaroom(){
                 break;
             }
         }
-        backgroundCtx.moveTo(0, 0);
-        backgroundCtx.drawImage(img, 0, 0);
+        canvasContexts.background.moveTo(0, 0);
+        canvasContexts.background.drawImage(img, 0, 0);
     }
 }
 
 async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
     console.log(new Error().stack);
-    console.log("redrawRooms");
-    console.log({roomCtx, pastiesCtx, lines, points, metaroom});
+    //console.log("redrawRooms");
+    //console.log({roomCtx, pastiesCtx, lines, points, metaroom});
 
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
@@ -1125,6 +1125,7 @@ async function redrawSelection(timestamp) {
             selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
             roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
         } else {
+            selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
             selectionHighlightCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
             selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
             let potentialRooms = potentialFactory.getPotentialRooms
