@@ -154,7 +154,7 @@ window.onkeydown = userTextKeyDown;
 window.onkeyup = userTextKeyUp;
 
 function getSelectionCheckMargin() {
-    return 6 * zoom;
+    return 6;
 }
 
 function getSelectionSquareWidth() {
@@ -162,7 +162,7 @@ function getSelectionSquareWidth() {
 }
 
 function getRoomLineThickness() {
-    return 2 * zoom;
+    return 2;
 }
 
 let fileHelper = new FileHelper(
