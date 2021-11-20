@@ -55,13 +55,6 @@ let canvasHolder = document.getElementById('canvasHolder');
 let renderCanvasElement = document.getElementById('renderCanvas');
 let renderCtx = renderCanvasElement.getContext('2d');
 
-let backgroundCanvasElement = document.createElement('canvas');
-let selectionRainbowCanvasElement = document.createElement('canvas');
-let roomCanvasElement = document.createElement('canvas');
-let pastiesCanvasElement = document.createElement('canvas');
-let potentialCanvasElement = document.createElement('canvas');
-let selectionHighlightCanvasElement = document.createElement('canvas');
-
 let canvasElements = null;
 let canvasContexts = null;
 
@@ -71,25 +64,31 @@ function rejiggerOnscreenCanvas(rectangle) {
     renderCtx = renderCanvasElement.getContext('2d');
 }
 
-function rejiggerOffscreenCanvases(rectangle) {
+function rejiggerOffscreenCanvases(rectangle) {let backgroundCanvasElement = document.createElement('canvas');
+    let selectionRainbowCanvasElement = document.createElement('canvas');
+    let roomCanvasElement = document.createElement('canvas');
+    let pastiesCanvasElement = document.createElement('canvas');
+    let potentialCanvasElement = document.createElement('canvas');
+    let selectionHighlightCanvasElement = document.createElement('canvas');
+
     backgroundCanvasElement.width = rectangle.width;
     backgroundCanvasElement.height = rectangle.height;
     let backgroundCtx = backgroundCanvasElement.getContext('2d');
     selectionRainbowCanvasElement.width = rectangle.width;
     selectionRainbowCanvasElement.height = rectangle.height;
-    let selectionRainbowCtx = backgroundCanvasElement.getContext('2d');
+    let selectionRainbowCtx = selectionRainbowCanvasElement.getContext('2d');
     roomCanvasElement.width = rectangle.width;
     roomCanvasElement.height = rectangle.height;
-    let roomCtx = backgroundCanvasElement.getContext('2d');
+    let roomCtx = roomCanvasElement.getContext('2d');
     pastiesCanvasElement.width = rectangle.width;
     pastiesCanvasElement.height = rectangle.height;
-    let pastiesCtx = backgroundCanvasElement.getContext('2d');
+    let pastiesCtx = pastiesCanvasElement.getContext('2d');
     potentialCanvasElement.width = rectangle.width;
     potentialCanvasElement.height = rectangle.height;
-    let potentialCtx = backgroundCanvasElement.getContext('2d');
+    let potentialCtx = potentialCanvasElement.getContext('2d');
     selectionHighlightCanvasElement.width = rectangle.width;
     selectionHighlightCanvasElement.height = rectangle.height;
-    let selectionHighlightCtx = backgroundCanvasElement.getContext('2d');
+    let selectionHighlightCtx = selectionHighlightCanvasElement.getContext('2d');
 
     canvasElements = {
         background: backgroundCanvasElement,
@@ -115,16 +114,6 @@ function copyOffscreenCanvasasToScreen() {
     }
 
 }
-
-let backgroundCtx = setupCanvas(backgroundCanvasElement, backgroundCanvasElement.getBoundingClientRect());
-let selectionRainbowCtx = setupCanvas(selectionRainbowCanvasElement, selectionRainbowCanvasElement.getBoundingClientRect());
-let roomCtx = setupCanvas(roomCanvasElement, roomCanvasElement.getBoundingClientRect());
-let pastiesCtx = setupCanvas(pastiesCanvasElement, pastiesCanvasElement.getBoundingClientRect());
-let potentialCtx = setupCanvas(potentialCanvasElement, potentialCanvasElement.getBoundingClientRect());
-let selectionHighlightCtx = setupCanvas(selectionHighlightCanvasElement, selectionHighlightCanvasElement.getBoundingClientRect());
-
-
-
 
 
 let topCanvasElement = renderCanvasElement;
@@ -1038,9 +1027,6 @@ async function redrawMetaroom(){
 }
 
 async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
-    console.log(new Error().stack);
-    //console.log("redrawRooms");
-    //console.log({roomCtx, pastiesCtx, lines, points, metaroom});
 
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
@@ -1122,12 +1108,12 @@ async function redrawSelection(timestamp) {
         }
 
         if (isViewingRoomType) {
-            selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
-            roomtypeRenderer.redrawRoomtypes(selectionRainbowCtx, dataStructures);
+            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+            roomtypeRenderer.redrawRoomtypes(canvasContexts.selection, dataStructures);
         } else {
-            selectionRainbowCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
-            selectionHighlightCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
-            selectionRenderer.redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataStructures, selection);
+            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+            canvasContexts.sandwich.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+            selectionRenderer.redrawSelection(canvasContexts.selection, canvasContexts.sandwich, dataStructures, selection);
             let potentialRooms = potentialFactory.getPotentialRooms
             (
                 masterUiState,
@@ -1144,14 +1130,14 @@ async function redrawSelection(timestamp) {
 }
 
 function redrawPotential(potentialRooms, dataStructures) {
-    potentialCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    canvasContexts.potential.clearRect(0, 0, metaroom.width, metaroom.height);
     if (potentialRooms.length != 0) {
         let doorsWalls = [];
         for (potentialRoom of potentialRooms) {
             doorsWalls = doorsWalls.concat(dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(potentialRoom, dataStructures));
         }
         let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
-        redrawRooms(potentialCtx, potentialCtx, doorsWalls, points, dataStructures.metaroomDisk);
+        redrawRooms(canvasContexts.potential, canvasContexts.potential, doorsWalls, points, dataStructures.metaroomDisk);
     }
 }
 

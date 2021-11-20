@@ -169,7 +169,7 @@ function drawSelectionCirclePortion(selectionRainbowCtx, x, y, theta0, theta1, c
     selectionRainbowCtx.stroke();
 }
 
-function drawSelectionLine(selectedLine, leftRight) {
+function drawSelectionLine(selectionRainbowCtx, selectedLine, leftRight) {
 
     let start = selectedLine.start;
     let end = selectedLine.end;
@@ -226,6 +226,7 @@ function drawSelectionLine(selectedLine, leftRight) {
         }
 
         drawSeclectionLineSegment(
+          selectionRainbowCtx,
           start,
           rise,
           run,
@@ -239,7 +240,7 @@ function drawSelectionLine(selectedLine, leftRight) {
 
 }
 
-function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, startPercent, stopPercent, lineColor, leftRight) {
+function drawSeclectionLineSegment(selectionRainbowCtx, lineStart, lineRise, lineRun, lineLength, startPercent, stopPercent, lineColor, leftRight) {
 
     let lineWidthToUse = getSelectionCheckMargin() * getSelectionMultiplier()* getSelectionMultiplier();
 
@@ -256,6 +257,7 @@ function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, sta
     }
 
     drawSeclectionLineSegmentAtWidth(
+      selectionRainbowCtx,
       lineStart,
       lineRise,
       lineRun,
@@ -267,7 +269,7 @@ function drawSeclectionLineSegment(lineStart, lineRise, lineRun, lineLength, sta
     )
 }
 
-function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidthIn, lineColor, leftRight) {
+function drawSeclectionLineSegmentAtWidth(selectionRainbowCtx, lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidthIn, lineColor, leftRight) {
 
     let lineWidth = lineWidthIn / (Math.abs(leftRight) + 1)
     selectionRainbowCtx.lineWidth = lineWidth;
@@ -289,7 +291,7 @@ function drawSeclectionLineSegmentAtWidth(lineStart, lineRise, lineRun, startPer
     selectionRainbowCtx.stroke();
 }
 
-function drawSelectionRoom(selectedRoom) {
+function drawSelectionRoom(selectionRainbowCtx, selectedRoom) {
     let time = new Date();
     let pattern = document.createElement('canvas');
     pattern.width = 40;
@@ -386,7 +388,7 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         } else {
             selectedSide = dataStructures.walls[selected.selectedId];
         }
-        drawSelectionLine(selectedSide, 0);
+        drawSelectionLine(selectionRainbowCtx, selectedSide, 0);
     } else if (selected.selectedType === "side") {
         assert(selected.selectedRoomsIdsPartsIds.length === 1,
             `Size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`)
@@ -400,9 +402,9 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         } else {
             leftRight = -1;
         }
-        drawSelectionLine(selectedSide, leftRight);
+        drawSelectionLine(selectionRainbowCtx, selectedSide, leftRight);
     } else if (selected.selectedType === "room") {
-        drawSelectionRoom(dataStructures.metaroomDisk.rooms[selected.selectedId]);
+        drawSelectionRoom(selectionRainbowCtx, dataStructures.metaroomDisk.rooms[selected.selectedId]);
     }
 }
 
