@@ -52,18 +52,72 @@ let masterUiState = {
 
 let canvasHolder = document.getElementById('canvasHolder');
 
-let backgroundCanvasElement = document.getElementById('backgroundCanvas');
-let selectionRainbowCanvasElement = document.getElementById('selectionRainbowCanvas');
-let roomCanvasElement = document.getElementById('roomCanvas');
-let pastiesCanvasElement = document.getElementById('pastiesCanvas');
-let potentialCanvasElement = document.getElementById('potentialCanvas');
-let selectionHighlightCanvasElement = document.getElementById('selectionHighlightCanvas');
+let renderCanvasElement = document.getElementById('renderCanvas');
+let renderCtx = renderCanvasElement.getContext('2d');
+
+let backgroundCanvasElement = document.createElement('canvas');
+let selectionRainbowCanvasElement = document.createElement('canvas');
+let roomCanvasElement = document.createElement('canvas');
+let pastiesCanvasElement = document.createElement('canvas');
+let potentialCanvasElement = document.createElement('canvas');
+let selectionHighlightCanvasElement = document.createElement('canvas');
+
+let canvasElements = null;
+let canvasContexts = null;
+
+
+function rejiggerOffscreenCanvaes(rectangle) {
+    backgroundCanvasElement.width = rectangle.width;
+    backgroundCanvasElement.height = rectangle.height;
+    let backgroundCtx = backgroundCanvasElement.getContext('2d');
+    selectionRainbowCanvasElement.width = rectangle.width;
+    selectionRainbowCanvasElement.height = rectangle.height;
+    let selectionRainbowCtx = backgroundCanvasElement.getContext('2d');
+    roomCanvasElement.width = rectangle.width;
+    roomCanvasElement.height = rectangle.height;
+    let roomCtx = backgroundCanvasElement.getContext('2d');
+    pastiesCanvasElement.width = rectangle.width;
+    pastiesCanvasElement.height = rectangle.height;
+    let pastiesCtx = backgroundCanvasElement.getContext('2d');
+    potentialCanvasElement.width = rectangle.width;
+    potentialCanvasElement.height = rectangle.height;
+    let potentialCtx = backgroundCanvasElement.getContext('2d');
+    selectionHighlightCanvasElement.width = rectangle.width;
+    selectionHighlightCanvasElement.height = rectangle.height;
+    let selectionHighlightCtx = backgroundCanvasElement.getContext('2d');
+
+    canvasElements = {
+        background: backgroundCanvasElement,
+        selection: selectionRainbowCanvasElement,
+        room: roomCanvasElement,
+        pasties: pastiesCanvasElement,
+        potential: potentialCanvasElement,
+        sandwich: selectionHighlightCanvasElement
+    };
+    canvasContexts = {
+        background: backgroundCtx,
+        selection: selectionRainbowCtx,
+        room: roomCtx,
+        pasties: pastiesCtx,
+        potential: potentialCtx,
+        sandwich: selectionHighlightCtx
+    };
+}
+
+function copyOffscreenCanvasasToScreen() {
+    renderCtx.drawImage(canvasElements.background, 0, 0);
+}
+
 let backgroundCtx = setupCanvas(backgroundCanvasElement, backgroundCanvasElement.getBoundingClientRect());
 let selectionRainbowCtx = setupCanvas(selectionRainbowCanvasElement, selectionRainbowCanvasElement.getBoundingClientRect());
 let roomCtx = setupCanvas(roomCanvasElement, roomCanvasElement.getBoundingClientRect());
 let pastiesCtx = setupCanvas(pastiesCanvasElement, pastiesCanvasElement.getBoundingClientRect());
 let potentialCtx = setupCanvas(potentialCanvasElement, potentialCanvasElement.getBoundingClientRect());
 let selectionHighlightCtx = setupCanvas(selectionHighlightCanvasElement, selectionHighlightCanvasElement.getBoundingClientRect());
+
+
+
+
 
 let topCanvasElement = selectionHighlightCanvasElement;
 topCanvasElement.onmousedown=handleMouseDown;
@@ -188,23 +242,6 @@ let isViewingRoomType = false;
 async function viewEditRoomType() {
     isViewingRoomType = !isViewingRoomType;
 }
-
-let canvasElements = {
-    background: backgroundCanvasElement,
-    selection: selectionRainbowCanvasElement,
-    room: roomCanvasElement,
-    pasties: pastiesCanvasElement,
-    potential: potentialCanvasElement,
-    sandwich: selectionHighlightCanvasElement
-};
-let canvasContexts = {
-    background: backgroundCtx,
-    selection: selectionRainbowCtx,
-    room: roomCtx,
-    pasties: pastiesCtx,
-    potential: potentialCtx,
-    sandwich: selectionHighlightCtx
-};
 
 function displayFiles(files) {
     if (!files) { return; }
@@ -1122,6 +1159,7 @@ async function redrawSelection(timestamp) {
             selection = selectionChecker.getSelectionClick();
         }
     }
+    copyOffscreenCanvasasToScreen();
     window.requestAnimationFrame(redrawSelection);
 }
 
@@ -1137,6 +1175,6 @@ function redrawPotential(potentialRooms, dataStructures) {
     }
 }
 
-window.requestAnimationFrame(redrawSelection);
-
+rejiggerOffscreenCanvaes({width: 10, height: 10});
 newFile();
+window.requestAnimationFrame(redrawSelection);
