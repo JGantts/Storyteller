@@ -55,25 +55,45 @@ let canvasHolder = document.getElementById('canvasHolder');
 let renderCanvasElement = document.getElementById('renderCanvas');
 let renderCtx = renderCanvasElement.getContext('2d');
 
-let canvasElements = null;
-let canvasContexts = null;
+let backgroundCanvasElement = document.createElement('canvas');
+let backgroundCtx = backgroundCanvasElement.getContext('2d');
+
+
+let selectionRainbowCanvasElement = document.createElement('canvas');
+let roomCanvasElement = document.createElement('canvas');
+let pastiesCanvasElement = document.createElement('canvas');
+let potentialCanvasElement = document.createElement('canvas');
+let selectionHighlightCanvasElement = document.createElement('canvas');
+
+let canvasElements = {
+    selection: selectionRainbowCanvasElement,
+    room: roomCanvasElement,
+    pasties: pastiesCanvasElement,
+    potential: potentialCanvasElement,
+    sandwich: selectionHighlightCanvasElement
+};
+
+let canvasContexts = {
+    selection: null,
+    room: null,
+    pasties: null,
+    potential: null,
+    sandwich: null
+};
 
 function rejiggerOnscreenCanvas(rectangle) {
-    renderCanvasElement.width = rectangle.width * zoom;
-    renderCanvasElement.height = rectangle.height * zoom;
+    renderCanvasElement.width = rectangle.width;
+    renderCanvasElement.height = rectangle.height;
     renderCtx = renderCanvasElement.getContext('2d');
 }
 
-function rejiggerOffscreenCanvases(rectangle) {let backgroundCanvasElement = document.createElement('canvas');
-    let selectionRainbowCanvasElement = document.createElement('canvas');
-    let roomCanvasElement = document.createElement('canvas');
-    let pastiesCanvasElement = document.createElement('canvas');
-    let potentialCanvasElement = document.createElement('canvas');
-    let selectionHighlightCanvasElement = document.createElement('canvas');
-
+function rejiggerBackgroundCanvase(rectangle) {
     backgroundCanvasElement.width = rectangle.width;
     backgroundCanvasElement.height = rectangle.height;
-    let backgroundCtx = backgroundCanvasElement.getContext('2d');
+    backgroundCtx = backgroundCanvasElement.getContext('2d');
+}
+
+function rejiggerOverlayCanvases(rectangle) {
     selectionRainbowCanvasElement.width = rectangle.width;
     selectionRainbowCanvasElement.height = rectangle.height;
     let selectionRainbowCtx = selectionRainbowCanvasElement.getContext('2d');
@@ -90,29 +110,23 @@ function rejiggerOffscreenCanvases(rectangle) {let backgroundCanvasElement = doc
     selectionHighlightCanvasElement.height = rectangle.height;
     let selectionHighlightCtx = selectionHighlightCanvasElement.getContext('2d');
 
-    canvasElements = {
-        background: backgroundCanvasElement,
-        selection: selectionRainbowCanvasElement,
-        room: roomCanvasElement,
-        pasties: pastiesCanvasElement,
-        potential: potentialCanvasElement,
-        sandwich: selectionHighlightCanvasElement
-    };
-    canvasContexts = {
-        background: backgroundCtx,
-        selection: selectionRainbowCtx,
-        room: roomCtx,
-        pasties: pastiesCtx,
-        potential: potentialCtx,
-        sandwich: selectionHighlightCtx
-    };
+    canvasContexts.selection = selectionRainbowCtx;
+    canvasContexts.room = roomCtx;
+    canvasContexts.pasties = pastiesCtx;
+    canvasContexts.potential = potentialCtx;
+    canvasContexts.sandwich = selectionHighlightCtx;
 }
 
 function copyOffscreenCanvasasToScreen() {
-    for (key in canvasElements) {
-        renderCtx.drawImage(canvasElements[key], -posX, -posY);
+    if (
+      backgroundCanvasElement.width !== 0
+      && canvasElements.selection.width !== 0
+   ) {
+        renderCtx.drawImage(backgroundCanvasElement, -posX, -posY);
+        for (key in canvasElements) {
+            renderCtx.drawImage(canvasElements[key], -posX, -posY);
+        }
     }
-
 }
 
 
@@ -988,7 +1002,8 @@ function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
          metaroomDisk: metaroom
      };
 
-   rejiggerOffscreenCanvases(dataStructures.metaroomDisk);
+   rejiggerBackgroundCanvase(dataStructures.metaroomDisk);
+   rejiggerOverlayCanvases(dataStructures.metaroomDisk);
    rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
    rebuildRooms();
    redrawMetaroom();
@@ -1003,7 +1018,7 @@ async function redrawMetaroom(){
         [...dataStructures.doors, ...dataStructures.walls],
         dataStructures.points,
         dataStructures.metaroomDisk);
-    canvasContexts.background.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+    backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
     if (dataStructures.metaroomDisk.background) {
         if (!img || dataStructures.metaroomDisk.background !== imgPathRel) {
             img = new Image;
@@ -1021,8 +1036,8 @@ async function redrawMetaroom(){
                 break;
             }
         }
-        canvasContexts.background.moveTo(0, 0);
-        canvasContexts.background.drawImage(img, 0, 0);
+        backgroundCtx.moveTo(0, 0);
+        backgroundCtx.drawImage(img, 0, 0);
     }
 }
 
@@ -1086,11 +1101,15 @@ async function redrawSelection(timestamp) {
         if (masterUiState.camera.rezoom
             || masterUiState.camera.reposition
         ) {
-          masterUiState.camera.rezoom = false;
-          masterUiState.camera.reposition = false;
-          rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
-          //redrawMetaroom();
-          updateBarButtons()
+            masterUiState.camera.rezoom = false;
+            masterUiState.camera.reposition = false;
+            zoom = 1;
+            /*
+            rejiggerOverlayCanvases(dataStructures.metaroomDisk);
+            rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
+            redrawMetaroom();
+            updateBarButtons()
+            */
         }
 
         let selection = selectionChecker.getSelectionHover();
@@ -1142,6 +1161,7 @@ function redrawPotential(potentialRooms, dataStructures) {
 }
 
 rejiggerOnscreenCanvas({width: 100, height: 100});
-rejiggerOffscreenCanvases({width: 100, height: 100});
+rejiggerBackgroundCanvase({width: 100, height: 100});
+rejiggerOverlayCanvases({width: 100, height: 100});
 newFile();
 window.requestAnimationFrame(redrawSelection);
