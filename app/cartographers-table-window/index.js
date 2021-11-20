@@ -121,10 +121,23 @@ function copyOffscreenCanvasasToScreen() {
     if (
       backgroundCanvasElement.width !== 0
       && canvasElements.selection.width !== 0
+      && dataStructures?.metaroomDisk
    ) {
-        renderCtx.drawImage(backgroundCanvasElement, -posX, -posY);
+        renderCtx.drawImage(
+            backgroundCanvasElement,
+            -posX,
+            -posY,
+            dataStructures.metaroomDisk.width / zoom,
+            dataStructures.metaroomDisk.height / zoom
+        );
         for (key in canvasElements) {
-            renderCtx.drawImage(canvasElements[key], -posX, -posY);
+            renderCtx.drawImage(
+              canvasElements[key],
+              -posX,
+              -posY,
+              dataStructures.metaroomDisk.width / zoom,
+              dataStructures.metaroomDisk.height / zoom
+            );
         }
     }
 }
@@ -141,7 +154,7 @@ window.onkeydown = userTextKeyDown;
 window.onkeyup = userTextKeyUp;
 
 function getSelectionCheckMargin() {
-    return 6/zoom;
+    return 6 * zoom;
 }
 
 function getSelectionSquareWidth() {
@@ -149,7 +162,7 @@ function getSelectionSquareWidth() {
 }
 
 function getRoomLineThickness() {
-    return 2/zoom;
+    return 2 * zoom;
 }
 
 let fileHelper = new FileHelper(
@@ -320,28 +333,6 @@ function tileNameFromPath(path) {
     let fileName = "..." + path.slice(secondTolastIndex);
     return fileName;
 }
-
-function setupCanvas(canvas, rect) {
-  // Get the device pixel ratio, falling back to 1.
-  //let dpr = window.devicePixelRatio || 1;
-  let dpr = 1 * zoom;
-  // Get the size of the canvas in CSS pixels.
-  //let rect = canvas.getBoundingClientRect();
-  // Give the canvas pixel dimensions of their CSS
-  // size * the device pixel ratio.
-  canvas.width = rect.width * dpr;
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  canvas.height = rect.height * dpr;
-  let ctx = canvas.getContext('2d');
-  // Scale all drawing operations by the dpr, so you
-  // don't have to worry about the difference.
-  ctx.translate(-posX, -posY);
-  ctx.scale(dpr, dpr);
-  return ctx;
-}
-
-
 
 async function displaySaveFileReminderDialog(){
   let options  = {
@@ -787,7 +778,7 @@ function handleWheel(e) {
     e.preventDefault();
 
     if (e.ctrlKey) {
-        zoom -= e.deltaY * 0.0025;
+        zoom += e.deltaY * 0.0025;
         zoom = Math.min(zoom, 2);
         zoom = Math.max(zoom, 0.1);
         masterUiState.camera.rezoom = true;
@@ -799,9 +790,9 @@ function handleWheel(e) {
             posY += e.deltaY * 2;
         }
         posX = Math.max(posX, 0);
-        posX = Math.min(posX, dataStructures.metaroomDisk.width - canvasHolder.clientWidth);
+        posX = Math.min(posX, dataStructures.metaroomDisk.width / zoom - canvasHolder.clientWidth);
         posY = Math.max(posY, 0);
-        posY = Math.min(posY, dataStructures.metaroomDisk.height - canvasHolder.clientHeight);
+        posY = Math.min(posY, dataStructures.metaroomDisk.height / zoom - canvasHolder.clientHeight);
 
         masterUiState.camera.reposition = true;
     }
@@ -1098,18 +1089,15 @@ async function redrawSelection(timestamp) {
 
 
     if (dataStructures?.metaroomDisk) {
-        if (masterUiState.camera.rezoom
-            || masterUiState.camera.reposition
-        ) {
+        if (masterUiState.camera.rezoom) {
             masterUiState.camera.rezoom = false;
-            masterUiState.camera.reposition = false;
-            zoom = 1;
-            /*
             rejiggerOverlayCanvases(dataStructures.metaroomDisk);
             rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
             redrawMetaroom();
-            updateBarButtons()
-            */
+            updateBarButtons();
+        }
+        if (masterUiState.camera.reposition) {
+            masterUiState.camera.reposition = false;
         }
 
         let selection = selectionChecker.getSelectionHover();
