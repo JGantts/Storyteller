@@ -106,7 +106,7 @@ function rejiggerOffscreenCanvaes(rectangle) {
 
 function copyOffscreenCanvasasToScreen() {
     for (key in canvasElements) {
-        renderCtx.drawImage(canvasElements[key], -400, -200);
+        renderCtx.drawImage(canvasElements[key], -posX, -posY);
     }
 
 }
@@ -122,7 +122,7 @@ let selectionHighlightCtx = setupCanvas(selectionHighlightCanvasElement, selecti
 
 
 
-let topCanvasElement = selectionHighlightCanvasElement;
+let topCanvasElement = renderCanvasElement;
 topCanvasElement.onmousedown=handleMouseDown;
 topCanvasElement.onmousemove=handleMouseMove;
 topCanvasElement.onmouseup=handleMouseUp;
