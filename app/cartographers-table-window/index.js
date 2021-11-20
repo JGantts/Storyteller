@@ -65,8 +65,13 @@ let selectionHighlightCanvasElement = document.createElement('canvas');
 let canvasElements = null;
 let canvasContexts = null;
 
+function rejiggerOnscreenCanvas(rectangle) {
+    renderCanvasElement.width = rectangle.width * zoom;
+    renderCanvasElement.height = rectangle.height * zoom;
+    renderCtx = renderCanvasElement.getContext('2d');
+}
 
-function rejiggerOffscreenCanvaes(rectangle) {
+function rejiggerOffscreenCanvases(rectangle) {
     backgroundCanvasElement.width = rectangle.width;
     backgroundCanvasElement.height = rectangle.height;
     let backgroundCtx = backgroundCanvasElement.getContext('2d');
@@ -840,7 +845,7 @@ function tryCreateRoom() {
     }
     let finalCommand = buildMultiCommand(commands);
     _undoList.push(finalCommand);
-    finalCommand.do();fg
+    finalCommand.do();
     _redoList = [];
     fileHelper.fileModified();
     rebuildRooms();
@@ -994,43 +999,10 @@ function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
          metaroomDisk: metaroom
      };
 
-   resizeCanvases();
-
+   rejiggerOffscreenCanvases(dataStructures.metaroomDisk);
+   rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
    rebuildRooms();
    redrawMetaroom();
-}
-
-function resizeCanvases(){
-    if (!dataStructures) {
-        return;
-    }
-
-    let metaroom = dataStructures.metaroomDisk;
-
-    canvasElements.background.width =  metaroom.width;
-    canvasElements.background.height =  metaroom.height;
-    canvasContexts.background = setupCanvas(canvasElements.background, metaroom);
-
-    canvasElements.room.width =  metaroom.width;
-    canvasElements.room.height =  metaroom.height;
-    canvasContexts.room = setupCanvas(canvasElements.room, metaroom);
-
-    canvasContexts.room.lineWidth = 2;
-    canvasElements.selection.width =  metaroom.width;
-    canvasElements.selection.height =  metaroom.height;
-    canvasContexts.selection = setupCanvas(canvasElements.selection, metaroom);
-
-    canvasElements.pasties.width =  metaroom.width;
-    canvasElements.pasties.height =  metaroom.height;
-    canvasContexts.pasties = setupCanvas(canvasElements.pasties, metaroom);
-
-    canvasElements.potential.width =  metaroom.width;
-    canvasElements.potential.height =  metaroom.height;
-    canvasContexts.potential = setupCanvas(canvasElements.potential, metaroom);
-
-    canvasElements.sandwich.width =  metaroom.width;
-    canvasElements.sandwich.height =  metaroom.height;
-    canvasContexts.sandwich = setupCanvas(canvasElements.sandwich, metaroom);
 }
 
 let imgPathRel = "";
@@ -1066,6 +1038,10 @@ async function redrawMetaroom(){
 }
 
 async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
+    console.log(new Error().stack);
+    console.log("redrawRooms");
+    console.log({roomCtx, pastiesCtx, lines, points, metaroom});
+
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     roomCtx.lineWidth = getRoomLineThickness();
@@ -1101,10 +1077,10 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     }
 }
 
-let previousSelectionInstanceId = null;
+let previousSelectionInstanceId = "uninitialized";
 
 let secondsPassed;
-let oldTimestamp = "uninitialized";
+let oldTimestamp = null;
 let fps;
 
 async function redrawSelection(timestamp) {
@@ -1126,8 +1102,8 @@ async function redrawSelection(timestamp) {
         ) {
           masterUiState.camera.rezoom = false;
           masterUiState.camera.reposition = false;
-          resizeCanvases();
-          redrawMetaroom();
+          rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
+          //redrawMetaroom();
           updateBarButtons()
         }
 
@@ -1178,6 +1154,7 @@ function redrawPotential(potentialRooms, dataStructures) {
     }
 }
 
-rejiggerOffscreenCanvaes({width: 100, height: 100});
+rejiggerOnscreenCanvas({width: 100, height: 100});
+rejiggerOffscreenCanvases({width: 100, height: 100});
 newFile();
 window.requestAnimationFrame(redrawSelection);
