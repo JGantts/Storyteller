@@ -105,7 +105,10 @@ function rejiggerOffscreenCanvaes(rectangle) {
 }
 
 function copyOffscreenCanvasasToScreen() {
-    renderCtx.drawImage(canvasElements.background, 0, 0);
+    for (key in canvasElements) {
+        renderCtx.drawImage(canvasElements[key], -400, -200);
+    }
+
 }
 
 let backgroundCtx = setupCanvas(backgroundCanvasElement, backgroundCanvasElement.getBoundingClientRect());
@@ -1175,6 +1178,6 @@ function redrawPotential(potentialRooms, dataStructures) {
     }
 }
 
-rejiggerOffscreenCanvaes({width: 10, height: 10});
+rejiggerOffscreenCanvaes({width: 100, height: 100});
 newFile();
 window.requestAnimationFrame(redrawSelection);
