@@ -174,27 +174,27 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
 
     let tempCanvas = document.createElement("canvas");
     let tCtx = tempCanvas.getContext("2d");
-    tempCanvas.width = 80;
-    tempCanvas.height = 80;
+    tempCanvas.width = img.width;
+    tempCanvas.height = img.width;
 
-    tCtx.drawImage(img,0,0,img.width,img.height,0,0,80,80);
+    tCtx.drawImage(img, 0, 0, img.width, img.width);
     tCtx.globalCompositeOperation = 'source-in';
     tCtx.fillStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${100})`;;
-    tCtx.fillRect(0, 0, 80, 80);
+    tCtx.fillRect(0, 0, img.width, img.width);
 
     let patternStyle = roomtypeCtx.createPattern(tempCanvas, "repeat");
     if (!patternStyle) {
       return;
     }
-    patternStyle.width = 80;
-    patternStyle.height = 80;
+    patternStyle.width = img.width;
+    patternStyle.height = img.width;
 
     roomtypeCtx.fillStyle = patternStyle;
     roomtypeCtx.beginPath();
-    roomtypeCtx.moveTo(selectedRoom.leftX, selectedRoom.leftCeilingY);
-    roomtypeCtx.lineTo(selectedRoom.rightX, selectedRoom.rightCeilingY);
-    roomtypeCtx.lineTo(selectedRoom.rightX, selectedRoom.rightFloorY);
-    roomtypeCtx.lineTo(selectedRoom.leftX, selectedRoom.leftFloorY);
+    roomtypeCtx.moveTo(selectedRoom.leftX * roomSizeBlurFix, selectedRoom.leftCeilingY * roomSizeBlurFix);
+    roomtypeCtx.lineTo(selectedRoom.rightX * roomSizeBlurFix, selectedRoom.rightCeilingY * roomSizeBlurFix);
+    roomtypeCtx.lineTo(selectedRoom.rightX * roomSizeBlurFix, selectedRoom.rightFloorY * roomSizeBlurFix);
+    roomtypeCtx.lineTo(selectedRoom.leftX * roomSizeBlurFix, selectedRoom.leftFloorY * roomSizeBlurFix);
     roomtypeCtx.closePath();
     roomtypeCtx.fill();
 }
