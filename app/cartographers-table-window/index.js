@@ -93,21 +93,23 @@ function rejiggerBackgroundCanvase(rectangle) {
     backgroundCtx = backgroundCanvasElement.getContext('2d');
 }
 
+let roomSizeBlurFix = 4;
+
 function rejiggerOverlayCanvases(rectangle) {
-    selectionRainbowCanvasElement.width = rectangle.width;
-    selectionRainbowCanvasElement.height = rectangle.height;
+    selectionRainbowCanvasElement.width = rectangle.width * roomSizeBlurFix;
+    selectionRainbowCanvasElement.height = rectangle.height * roomSizeBlurFix;
     let selectionRainbowCtx = selectionRainbowCanvasElement.getContext('2d');
-    roomCanvasElement.width = rectangle.width;
-    roomCanvasElement.height = rectangle.height;
+    roomCanvasElement.width = rectangle.width * roomSizeBlurFix;
+    roomCanvasElement.height = rectangle.height * roomSizeBlurFix;
     let roomCtx = roomCanvasElement.getContext('2d');
-    pastiesCanvasElement.width = rectangle.width;
-    pastiesCanvasElement.height = rectangle.height;
+    pastiesCanvasElement.width = rectangle.width * roomSizeBlurFix;
+    pastiesCanvasElement.height = rectangle.height * roomSizeBlurFix;
     let pastiesCtx = pastiesCanvasElement.getContext('2d');
-    potentialCanvasElement.width = rectangle.width;
-    potentialCanvasElement.height = rectangle.height;
+    potentialCanvasElement.width = rectangle.width * roomSizeBlurFix;
+    potentialCanvasElement.height = rectangle.height * roomSizeBlurFix;
     let potentialCtx = potentialCanvasElement.getContext('2d');
-    selectionHighlightCanvasElement.width = rectangle.width;
-    selectionHighlightCanvasElement.height = rectangle.height;
+    selectionHighlightCanvasElement.width = rectangle.width * roomSizeBlurFix;
+    selectionHighlightCanvasElement.height = rectangle.height * roomSizeBlurFix;
     let selectionHighlightCtx = selectionHighlightCanvasElement.getContext('2d');
 
     canvasContexts.selection = selectionRainbowCtx;
@@ -807,7 +809,7 @@ function handleWheel(e) {
 
 function constrainPositionZoom() {
     zoom = Math.min(zoom, 2);
-    zoom = Math.max(zoom, 0.1);
+    zoom = Math.max(zoom, 1/roomSizeBlurFix);
     posX = Math.min(posX, dataStructures.metaroomDisk.width / zoom - canvasHolder.clientWidth);
     posX = Math.max(posX, 0);
     posY = Math.min(posY, dataStructures.metaroomDisk.height / zoom - canvasHolder.clientHeight);
@@ -1051,7 +1053,7 @@ async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
 
     roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
     pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    roomCtx.lineWidth = getRoomLineThickness();
+    roomCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
     lines
         .forEach((line, i) => {
             if (line.permeability < 0) {
@@ -1064,8 +1066,8 @@ async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
               roomCtx.strokeStyle = 'rgb(172, 255, 083)';
             }
             roomCtx.beginPath();
-            roomCtx.moveTo(line.start.x, line.start.y);
-            roomCtx.lineTo(line.end.x, line.end.y);
+            roomCtx.moveTo(line.start.x * roomSizeBlurFix, line.start.y * roomSizeBlurFix);
+            roomCtx.lineTo(line.end.x * roomSizeBlurFix, line.end.y * roomSizeBlurFix);
             roomCtx.stroke();
         });
     redrawPasties(pastiesCtx, points, metaroom);
@@ -1075,11 +1077,11 @@ async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
 async function redrawPasties(pastiesCtx, points, metaroom){
     //console.log(points);
     //console.log(new Error().stack);
-    pastiesCtx.lineWidth = getRoomLineThickness();
+    pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
       pastiesCtx.beginPath();
-      pastiesCtx.arc(points[key].x, points[key].y, getRoomLineThickness() * 1.5, 0, 2 * Math.PI, true);
+      pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() * 1.5 * roomSizeBlurFix, 0, 2 * Math.PI, true);
       pastiesCtx.fill();
     }
 }

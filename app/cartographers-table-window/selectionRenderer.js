@@ -162,10 +162,10 @@ function colorPercentage(percentage, colorA, colorB) {
 }
 
 function drawSelectionCirclePortion(selectionRainbowCtx, x, y, theta0, theta1, color) {
-    selectionRainbowCtx.lineWidth = getRoomLineThickness();
+    selectionRainbowCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
     selectionRainbowCtx.strokeStyle = color;
     selectionRainbowCtx.beginPath();
-    selectionRainbowCtx.arc(x, y, getSelectionCheckMargin() * 2 * getSelectionMultiplier(), theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
+    selectionRainbowCtx.arc(x * roomSizeBlurFix, y * roomSizeBlurFix, getSelectionCheckMargin() * 2 * getSelectionMultiplier() * roomSizeBlurFix, theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
     selectionRainbowCtx.stroke();
 }
 
@@ -332,15 +332,15 @@ function drawSelectionRoom(selectionRainbowCtx, selectedRoom) {
         }
 
         pctx.strokeStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${aplaha})`;
-        pctx.lineWidth = getRoomLineThickness() * getSelectionMultiplier()*getSelectionMultiplier()/1.5;
+        pctx.lineWidth = getRoomLineThickness() * getSelectionMultiplier()*getSelectionMultiplier()/1.5 * roomSizeBlurFix;
 
         let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
         let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
 
         let animationOffset = 40*percentageAfterFrameStart;
         let lineAdustment = i*thickness + thickness/2 + animationOffset
-        pctx.moveTo(-5, -45 + lineAdustment);
-        pctx.lineTo(145, -195 + lineAdustment);
+        pctx.moveTo(-5 * roomSizeBlurFix, (-45 + lineAdustment) * roomSizeBlurFix);
+        pctx.lineTo(145 * roomSizeBlurFix, (-195 + lineAdustment) * roomSizeBlurFix);
         pctx.stroke();
     }
 
