@@ -154,7 +154,7 @@ window.onkeydown = userTextKeyDown;
 window.onkeyup = userTextKeyUp;
 
 function getSelectionCheckMargin() {
-    return 6;
+    return 6 * zoom;
 }
 
 function getSelectionSquareWidth() {
@@ -162,7 +162,7 @@ function getSelectionSquareWidth() {
 }
 
 function getRoomLineThickness() {
-    return 2;
+    return 2 * zoom;
 }
 
 let fileHelper = new FileHelper(
@@ -402,9 +402,16 @@ function updateBarButtons(){
   }
 }
 
-function oneToOneZoom() {
-  zoom = 1;
-  masterUiState.camera.rezoom = true;
+function oneToOneZoom(e) {
+      let zoomInitial = zoom;
+      zoom = 1;
+      constrainPositionZoom();
+      let zoomFinal = zoom;
+      masterUiState.camera.rezoom = true;
+
+      posX += (canvasHolder.clientWidth/2 + posX) * (zoomInitial/zoomFinal - 1);
+      posY += (canvasHolder.clientWidth/2 + posY) * (zoomInitial/zoomFinal - 1);
+      constrainPositionZoom();
 }
 
 function cut(){
@@ -775,14 +782,12 @@ function handleMouseMove(e){
 }
 
 function handleWheel(e) {
-    console.log(e);
     e.preventDefault();
 
     if (e.ctrlKey) {
         let zoomInitial = zoom;
         zoom += e.deltaY * 0.0025;
-        zoom = Math.min(zoom, 2);
-        zoom = Math.max(zoom, 0.1);
+        constrainPositionZoom();
         let zoomFinal = zoom;
         masterUiState.camera.rezoom = true;
 
@@ -797,6 +802,12 @@ function handleWheel(e) {
         }
         masterUiState.camera.reposition = true;
     }
+    constrainPositionZoom();
+}
+
+function constrainPositionZoom() {
+    zoom = Math.min(zoom, 2);
+    zoom = Math.max(zoom, 0.1);
     posX = Math.min(posX, dataStructures.metaroomDisk.width / zoom - canvasHolder.clientWidth);
     posX = Math.max(posX, 0);
     posY = Math.min(posY, dataStructures.metaroomDisk.height / zoom - canvasHolder.clientHeight);
