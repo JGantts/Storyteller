@@ -1101,7 +1101,7 @@ async function redrawSelection(timestamp) {
         oldTimestamp = timestamp;
         fps = Math.round(1 / secondsPassed);
     }
-    console.log(fps)
+    //console.log(fps)
 
 
 
