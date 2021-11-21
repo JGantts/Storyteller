@@ -775,13 +775,19 @@ function handleMouseMove(e){
 }
 
 function handleWheel(e) {
+    console.log(e);
     e.preventDefault();
 
     if (e.ctrlKey) {
+        let zoomInitial = zoom;
         zoom += e.deltaY * 0.0025;
         zoom = Math.min(zoom, 2);
         zoom = Math.max(zoom, 0.1);
+        let zoomFinal = zoom;
         masterUiState.camera.rezoom = true;
+
+        posX += (e.offsetX + posX) * (zoomInitial/zoomFinal - 1);
+        posY += (e.offsetY + posY) * (zoomInitial/zoomFinal - 1);
     } else {
         if (e.altKey) {
             posX += e.deltaY * 2;
@@ -789,14 +795,12 @@ function handleWheel(e) {
             posX += e.deltaX * 2;
             posY += e.deltaY * 2;
         }
-        posX = Math.max(posX, 0);
-        posX = Math.min(posX, dataStructures.metaroomDisk.width / zoom - canvasHolder.clientWidth);
-        posY = Math.max(posY, 0);
-        posY = Math.min(posY, dataStructures.metaroomDisk.height / zoom - canvasHolder.clientHeight);
-
         masterUiState.camera.reposition = true;
     }
-
+    posX = Math.min(posX, dataStructures.metaroomDisk.width / zoom - canvasHolder.clientWidth);
+    posX = Math.max(posX, 0);
+    posY = Math.min(posY, dataStructures.metaroomDisk.height / zoom - canvasHolder.clientHeight);
+    posY = Math.max(posY, 0);
 }
 
 function tryCreateRoom() {
