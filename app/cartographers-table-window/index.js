@@ -21,6 +21,11 @@ let zoom = 1;
 let posX = 0;
 let posY = 0;
 
+let zooomSettle = 1;
+
+let zoomPanSettleMilliseconds = 80;
+let zoomPanSettleTimestampLastChange = null;;
+
 let dataStructures = null;
 
 let masterUiState = {
@@ -407,6 +412,7 @@ function updateBarButtons(){
 function oneToOneZoom() {
       let zoomInitial = zoom;
       zoom = 1;
+      zooomSettle = 1;
       constrainPositionZoom();
       let zoomFinal = zoom;
       masterUiState.camera.rezoom = true;
@@ -783,6 +789,8 @@ function handleMouseMove(e){
   //checkSelection(startX, startY);
 }
 
+
+
 function handleWheel(e) {
     e.preventDefault();
 
@@ -1107,6 +1115,7 @@ async function redrawSelection(timestamp) {
 
     if (dataStructures?.metaroomDisk) {
         if (masterUiState.camera.rezoom) {
+            zoomPanSettleTimestampLastChange = timestamp;
             masterUiState.camera.rezoom = false;
             rejiggerOverlayCanvases(dataStructures.metaroomDisk);
             rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
@@ -1115,6 +1124,12 @@ async function redrawSelection(timestamp) {
         }
         if (masterUiState.camera.reposition) {
             masterUiState.camera.reposition = false;
+        }
+
+        if (zoomPanSettleTimestampLastChange
+            && (timestamp - zoomPanSettleTimestampLastChange) > zoomPanSettleMilliseconds) {
+            zoomPanSettleTimestampLastChange = null;
+            zooomSettle = zoom;
         }
 
         let selection = selectionChecker.getSelectionHover();
