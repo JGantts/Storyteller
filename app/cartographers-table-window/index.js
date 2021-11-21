@@ -402,7 +402,7 @@ function updateBarButtons(){
   }
 }
 
-function oneToOneZoom(e) {
+function oneToOneZoom() {
       let zoomInitial = zoom;
       zoom = 1;
       constrainPositionZoom();
