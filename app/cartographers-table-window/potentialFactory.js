@@ -467,7 +467,7 @@ function roomOverlapsOrCausesTooSmallDoor(room, dataStructures, idsToDelete) {
 function getPotentialRooms(masterUiState, selection, dataStructures) {
     let rooms = [];
     if (masterUiState.dragging.isDragging) {
-        if (masterUiState.shiftKeyIsDown) {
+        if (masterUiState.keys.shiftKeyIsDown) {
             if (masterUiState.dragging.whatDragging === "point") {
                 let room = [getPotentialRoomFromPoints(
                   masterUiState.dragging.startDragging,
@@ -504,7 +504,7 @@ function getPotentialRooms(masterUiState, selection, dataStructures) {
                 }
             }
 
-        } else if (masterUiState.ctrlKeyIsDown) {
+        } else if (masterUiState.keys.ctrlKeyIsDown) {
           if (masterUiState.dragging.whatDragging === "point"
             || masterUiState.dragging.whatDragging === "corner") {
               let room = [getPotentialRoomFromPoints(
