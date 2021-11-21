@@ -1026,7 +1026,7 @@ async function redrawMetaroom(){
         [...dataStructures.doors, ...dataStructures.walls],
         dataStructures.points,
         dataStructures.metaroomDisk);
-    backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+    backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
     if (dataStructures.metaroomDisk.background) {
         if (!img || dataStructures.metaroomDisk.background !== imgPathRel) {
             img = new Image;
@@ -1051,8 +1051,8 @@ async function redrawMetaroom(){
 
 async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
 
-    roomCtx.clearRect(0, 0, metaroom.width, metaroom.height);
-    pastiesCtx.clearRect(0, 0, metaroom.width, metaroom.height);
+    roomCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
+    pastiesCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
     roomCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
     lines
         .forEach((line, i) => {
@@ -1132,11 +1132,11 @@ async function redrawSelection(timestamp) {
         }
 
         if (isViewingRoomType) {
-            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
             roomtypeRenderer.redrawRoomtypes(canvasContexts.selection, dataStructures);
         } else {
-            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
-            canvasContexts.sandwich.clearRect(0, 0, dataStructures.metaroomDisk.width, dataStructures.metaroomDisk.height);
+            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+            canvasContexts.sandwich.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
             selectionRenderer.redrawSelection(canvasContexts.selection, canvasContexts.sandwich, dataStructures, selection);
             let potentialRooms = potentialFactory.getPotentialRooms
             (
@@ -1154,7 +1154,7 @@ async function redrawSelection(timestamp) {
 }
 
 function redrawPotential(potentialRooms, dataStructures) {
-    canvasContexts.potential.clearRect(0, 0, metaroom.width, metaroom.height);
+    canvasContexts.potential.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
     if (potentialRooms.length != 0) {
         let doorsWalls = [];
         for (potentialRoom of potentialRooms) {
