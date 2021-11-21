@@ -93,7 +93,7 @@ function rejiggerBackgroundCanvase(rectangle) {
     backgroundCtx = backgroundCanvasElement.getContext('2d');
 }
 
-let roomSizeBlurFix = 4;
+let roomSizeBlurFix = 2;
 
 function rejiggerOverlayCanvases(rectangle) {
     selectionRainbowCanvasElement.width = rectangle.width * roomSizeBlurFix;

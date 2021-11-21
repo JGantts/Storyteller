@@ -52,7 +52,12 @@ function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, 
     selectionHighlightCtx.strokeStyle = "white";
     selectionHighlightCtx.fillStyle = "black";
     selectionHighlightCtx.beginPath();
-    selectionHighlightCtx.roundedRect(point.x-myWidth/2, point.y-myWidth/2, myWidth, myWidth, myWidth/3);
+    selectionHighlightCtx.roundedRect(
+      (point.x-myWidth/2) * roomSizeBlurFix,
+      (point.y-myWidth/2) * roomSizeBlurFix,
+      myWidth * roomSizeBlurFix,
+      myWidth * roomSizeBlurFix,
+      myWidth * roomSizeBlurFix/3);
     selectionHighlightCtx.fill();
     selectionHighlightCtx.stroke();
 
@@ -271,7 +276,7 @@ function drawSeclectionLineSegment(selectionRainbowCtx, lineStart, lineRise, lin
 
 function drawSeclectionLineSegmentAtWidth(selectionRainbowCtx, lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidthIn, lineColor, leftRight) {
 
-    let lineWidth = lineWidthIn / (Math.abs(leftRight) + 1)
+    let lineWidth = lineWidthIn * roomSizeBlurFix / (Math.abs(leftRight) + 1)
     selectionRainbowCtx.lineWidth = lineWidth;
     selectionRainbowCtx.strokeStyle = lineColor;
 
@@ -281,12 +286,12 @@ function drawSeclectionLineSegmentAtWidth(selectionRainbowCtx, lineStart, lineRi
 
     selectionRainbowCtx.beginPath();
     selectionRainbowCtx.moveTo(
-      lineStart.x + lineRun*startPercent + xDiff,
-      lineStart.y + lineRise*startPercent + yDiff
+      (lineStart.x + lineRun*startPercent + xDiff) * roomSizeBlurFix,
+      (lineStart.y + lineRise*startPercent + yDiff) * roomSizeBlurFix
     );
     selectionRainbowCtx.lineTo(
-      lineStart.x + lineRun*stopPercent + xDiff,
-      lineStart.y + lineRise*stopPercent + yDiff
+      (lineStart.x + lineRun*stopPercent + xDiff) * roomSizeBlurFix,
+      (lineStart.y + lineRise*stopPercent + yDiff) * roomSizeBlurFix
     );
     selectionRainbowCtx.stroke();
 }
