@@ -174,20 +174,20 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
 
     let tempCanvas = document.createElement("canvas");
     let tCtx = tempCanvas.getContext("2d");
-    tempCanvas.width = img.width;
-    tempCanvas.height = img.width;
+    tempCanvas.width = img.width * zoom * 2;
+    tempCanvas.height = img.width * zoom * 2;
 
-    tCtx.drawImage(img, 0, 0, img.width, img.width);
+    tCtx.drawImage(img, 0, 0, img.width * zoom * 2, img.width * zoom * 2);
     tCtx.globalCompositeOperation = 'source-in';
     tCtx.fillStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${100})`;;
-    tCtx.fillRect(0, 0, img.width, img.width);
+    tCtx.fillRect(0, 0, img.width * zoom * 2, img.width * zoom * 2);
 
     let patternStyle = roomtypeCtx.createPattern(tempCanvas, "repeat");
     if (!patternStyle) {
       return;
     }
-    patternStyle.width = img.width;
-    patternStyle.height = img.width;
+    patternStyle.width = img.width * zoom * 2;
+    patternStyle.height = img.width * zoom * 2;
 
     roomtypeCtx.fillStyle = patternStyle;
     roomtypeCtx.beginPath();
