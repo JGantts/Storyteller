@@ -301,8 +301,8 @@ function drawSelectionRoom(selectionRainbowCtx, selectedRoom) {
     let color1 = "#0000"
     let color2 = "rgb(005, 170, 255)";
     let numberOfStripes = 24;
+    let thickness = 40 / numberOfStripes;
     for (let i=0; i < numberOfStripes*5; i++){
-        let thickness = 40 / numberOfStripes;
         pctx.beginPath();
 
 
