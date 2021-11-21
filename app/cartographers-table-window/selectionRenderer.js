@@ -332,15 +332,15 @@ function drawSelectionRoom(selectionRainbowCtx, selectedRoom) {
         }
 
         pctx.strokeStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${aplaha})`;
-        pctx.lineWidth = getRoomLineThickness() * getSelectionMultiplier()*getSelectionMultiplier()/1.5 * roomSizeBlurFix;
+        pctx.lineWidth = getRoomLineThickness() * getSelectionMultiplier()*getSelectionMultiplier()/1.5;
 
         let milisecondsAfteFrame = ((time.getSeconds()*1000 + time.getMilliseconds())%(1000/selectionCircleRotationsPerSecond));
         let percentageAfterFrameStart = milisecondsAfteFrame / (1000/selectionCircleRotationsPerSecond);
 
         let animationOffset = 40*percentageAfterFrameStart;
         let lineAdustment = i*thickness + thickness/2 + animationOffset
-        pctx.moveTo(-5 * roomSizeBlurFix, (-45 + lineAdustment) * roomSizeBlurFix);
-        pctx.lineTo(145 * roomSizeBlurFix, (-195 + lineAdustment) * roomSizeBlurFix);
+        pctx.moveTo(-5, (-45 + lineAdustment));
+        pctx.lineTo(145, (-195 + lineAdustment));
         pctx.stroke();
     }
 
@@ -348,10 +348,10 @@ function drawSelectionRoom(selectionRainbowCtx, selectedRoom) {
 
     selectionRainbowCtx.fillStyle = patternStyle;
     selectionRainbowCtx.beginPath();
-    selectionRainbowCtx.moveTo(selectedRoom.leftX, selectedRoom.leftCeilingY);
-    selectionRainbowCtx.lineTo(selectedRoom.rightX, selectedRoom.rightCeilingY);
-    selectionRainbowCtx.lineTo(selectedRoom.rightX, selectedRoom.rightFloorY);
-    selectionRainbowCtx.lineTo(selectedRoom.leftX, selectedRoom.leftFloorY);
+    selectionRainbowCtx.moveTo(selectedRoom.leftX * roomSizeBlurFix, selectedRoom.leftCeilingY * roomSizeBlurFix);
+    selectionRainbowCtx.lineTo(selectedRoom.rightX * roomSizeBlurFix, selectedRoom.rightCeilingY * roomSizeBlurFix);
+    selectionRainbowCtx.lineTo(selectedRoom.rightX * roomSizeBlurFix, selectedRoom.rightFloorY * roomSizeBlurFix);
+    selectionRainbowCtx.lineTo(selectedRoom.leftX * roomSizeBlurFix, selectedRoom.leftFloorY * roomSizeBlurFix);
     selectionRainbowCtx.closePath();
     selectionRainbowCtx.fill();
 }
