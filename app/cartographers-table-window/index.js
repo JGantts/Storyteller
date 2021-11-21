@@ -1184,9 +1184,6 @@ async function redrawSelection(timestamp) {
             canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
             roomtypeRenderer.redrawRoomtypes(canvasContexts.selection, dataStructures);
         } else {
-            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-            canvasContexts.sandwich.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-            selectionRenderer.redrawSelection(canvasContexts.selection, canvasContexts.sandwich, dataStructures, selection);
             let potentialRooms = potentialFactory.getPotentialRooms
             (
                 masterUiState,
@@ -1194,8 +1191,9 @@ async function redrawSelection(timestamp) {
                 dataStructures
             );
             redrawPotential(potentialRooms, dataStructures);
-
-            selection = selectionChecker.getSelectionClick();
+            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+            canvasContexts.sandwich.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+            selectionRenderer.redrawSelection(canvasContexts.selection, canvasContexts.sandwich, dataStructures, selection);
         }
     }
     copyOffscreenCanvasasToScreen();
