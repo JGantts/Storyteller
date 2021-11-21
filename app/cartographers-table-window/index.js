@@ -32,6 +32,7 @@ let masterUiState = {
     keys: {
         shiftKeyIsDown: false,
         ctrlKeyIsDown: false,
+        spacebarIsDown: false,
     },
 
     dragging: {
@@ -518,15 +519,13 @@ function userTextKeyDown(event){
         selectionChecker.resetSelection();
         break;
 
+      case ' ':
+        spacebarDown();
+        break;
+
       default:
-        if (
-          (event.keyCode >= 32 && event.keyCode <= 126)
-          || event.keyCode >= 160
-        ){
-          insertText(event.key);
-        } else {
-          assert(false, `key: ${event.key}, keyCode: ${event.keyCode}`)
-        }
+        console.log(event);
+        assert(false, `key: ${event.key}, keyCode: ${event.keyCode}`)
         break;
     }
   }
@@ -541,6 +540,8 @@ function userTextKeyUp(event){
         shiftKeyUp(event);
     } else if (event.key === "Control") {
         controlKeyUp(event);
+    } else if (event.key === " ") {
+        spacebarUp(event);
     }
 }
 
@@ -561,6 +562,12 @@ function shiftKeyDown(event){
 function controlKeyDown(event){
   masterUiState.keys.ctrlKeyIsDown = true;
 }
+
+function spacebarDown(event){
+  masterUiState.keys.spacebarIsDown = true;
+}
+
+
 
 function controlKeyComboDown(event){
   if (event.key === 'v'){
@@ -654,6 +661,25 @@ function shiftKeyUp(event){
     }
 }
 
+function spacebarUp(event){
+    if (masterUiState.keys.spacebarIsDown) {
+        masterUiState.keys.spacebarIsDown = false;
+
+        if (masterUiState.dragging.isDragging) {
+            masterUiState.dragging = {
+                isMouseButtonDown: false,
+
+                isDragging: false,
+                whatDragging: "",
+                idDragging: -1,
+
+                startDragging: null,
+                stopDragging: null,
+            }
+        }
+    }
+}
+
 function handleMouseDown(e){
     // tell the browser we're handling this event
     e.preventDefault();
@@ -719,64 +745,72 @@ function handleMouseMove(e){
   });*/
 
   if (masterUiState.dragging.isMouseButtonDown) {
-      let selection = selectionChecker.getSelectionClick();
-      if (!masterUiState.dragging.isDragging) {
-          if (selection.selectedType === "wall"
-            || selection.selectedType === "door"
-          ) {
-              masterUiState.dragging = {
-                  isMouseButtonDown: true,
+      if (masterUiState.keys.spacebarIsDown) {
+          console.log(event);
+          posX -= e.movementX;
+          posY -= e.movementY;
+          masterUiState.camera.reposition = true;
+          constrainPositionZoom();
+      } else {
+          let selection = selectionChecker.getSelectionClick();
+          if (!masterUiState.dragging.isDragging) {
+              if (selection.selectedType === "wall"
+                || selection.selectedType === "door"
+              ) {
+                  masterUiState.dragging = {
+                      isMouseButtonDown: true,
 
-                  isDragging: true,
-                  whatDragging: selection.selectedType,
-                  idDragging: selection.selectedId,
+                      isDragging: true,
+                      whatDragging: selection.selectedType,
+                      idDragging: selection.selectedId,
 
-                  startDragging: {x: currX, y: currY},
-                  stopDragging: {x: currX, y: currY},
-              }
-          } else if (selection.selectedType === "point") {
-              masterUiState.dragging = {
-                  isMouseButtonDown: true,
+                      startDragging: {x: currX, y: currY},
+                      stopDragging: {x: currX, y: currY},
+                  }
+              } else if (selection.selectedType === "point") {
+                  masterUiState.dragging = {
+                      isMouseButtonDown: true,
 
-                  isDragging: true,
-                  whatDragging: selection.selectedType,
-                  idDragging: selection.selectedId,
+                      isDragging: true,
+                      whatDragging: selection.selectedType,
+                      idDragging: selection.selectedId,
 
-                  startDragging: dataStructures.points[selection.selectedId],
-                  stopDragging: {x: currX, y: currY},
-              }
-          } else if (selection.selectedType === "corner") {
-              masterUiState.dragging = {
-                  isMouseButtonDown: true,
+                      startDragging: dataStructures.points[selection.selectedId],
+                      stopDragging: {x: currX, y: currY},
+                  }
+              } else if (selection.selectedType === "corner") {
+                  masterUiState.dragging = {
+                      isMouseButtonDown: true,
 
-                  isDragging: true,
-                  whatDragging: selection.selectedType,
-                  idDragging: selection.selectedId,
+                      isDragging: true,
+                      whatDragging: selection.selectedType,
+                      idDragging: selection.selectedId,
 
-                  startDragging: dataStructures.points[selection.selectedId],
-                  stopDragging: {x: currX, y: currY},
-              }
-          } else if (selection.selectedType === "side") {
-              masterUiState.dragging = {
-                  isMouseButtonDown: true,
+                      startDragging: dataStructures.points[selection.selectedId],
+                      stopDragging: {x: currX, y: currY},
+                  }
+              } else if (selection.selectedType === "side") {
+                  masterUiState.dragging = {
+                      isMouseButtonDown: true,
 
-                  isDragging: true,
-                  whatDragging: selection.selectedType,
-                  idDragging: selection.selectedId,
+                      isDragging: true,
+                      whatDragging: selection.selectedType,
+                      idDragging: selection.selectedId,
 
-                  startDragging: {x: currX, y: currY},
-                  stopDragging: {x: currX, y: currY},
-              }
-          } else {
-              masterUiState.dragging = {
-                  isMouseButtonDown: true,
+                      startDragging: {x: currX, y: currY},
+                      stopDragging: {x: currX, y: currY},
+                  }
+              } else {
+                  masterUiState.dragging = {
+                      isMouseButtonDown: true,
 
-                  isDragging: true,
-                  whatDragging: "cursor_point",
-                  idDragging: null,
+                      isDragging: true,
+                      whatDragging: "cursor_point",
+                      idDragging: null,
 
-                  startDragging: {x: Math.round(currX), y: Math.round(currY)},
-                  stopDragging: {x: currX, y: currY},
+                      startDragging: {x: Math.round(currX), y: Math.round(currY)},
+                      stopDragging: {x: currX, y: currY},
+                  }
               }
           }
       }
