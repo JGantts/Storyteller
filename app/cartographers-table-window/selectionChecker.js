@@ -1,3 +1,4 @@
+const assert = require('assert');
 const crypto = require('crypto');
 
 //room
@@ -20,55 +21,29 @@ let selectedClick = {
   selectionInstancedId: null,
 }
 
+let selectionRoomtypeHover = {
+  selectedType : "",
+  selectedId: "",
+  selectedRoomsIdsPartsIds: [],
+  selectionInstancedId: null,
+}
+
+let selectionRoomtypeClick = {
+  selectedType : "",
+  selectedId: "",
+  selectedRoomsIdsPartsIds: [],
+  selectionInstancedId: null,
+}
+
 function checkSelectionHover(x, y, dataStructures ){
-    let selected = {
-      selectedType : "",
-      selectedId: "",
-      selectedRoomsIdsPartsIds: [],
-      selectionInstancedId: null,
-    }
-    if (selected.selectedType === "") {
-        selected = checkPointSelection(x, y, dataStructures);
-    }
-    if (selected.selectedType === "") {
-        selected = checkCornerSelection(x, y, dataStructures);
-    }
-    if (selected.selectedType === "") {
-        selected = checkLineSelection(x, y, dataStructures);
-    }
-    if (selected.selectedType === "") {
-        selected = checkSideSelection(x, y, dataStructures);
-    }
-    /*if (selected.selectedType === "") {
-        selected = checkRoomSelection(x, y, dataStructures);
-    }*/
+    let selected = checkSelection(x, y, dataStructures, true, true, false);
     selectedHover = selected;
 }
 
 function checkSelectionClick(x, y, dataStructures ){
-    let selected = {
-      selectedType : "",
-      selectedId: "",
-      selectedRoomsIdsPartsIds: [],
-      selectionInstancedId: null,
-    }
-    if (selected.selectedType === "") {
-        selected = checkPointSelection(x, y, dataStructures);
-    }
-    if (selected.selectedType === "") {
-        selected = checkCornerSelection(x, y, dataStructures);
-    }
-    if (selected.selectedType === "") {
-        selected = checkLineSelection(x, y, dataStructures);
-    }
-    if (selected.selectedType === "") {
-        selected = checkSideSelection(x, y, dataStructures);
-    }
-    if (selected.selectedType === "") {
-        selected = checkRoomSelection(x, y, dataStructures);
-    }
+    let selected = checkSelection(x, y, dataStructures, true, true, true);
     selectedClick = selected;
-    if (selectedClick.selectedType !== "") {
+    if (selected.selectedType !== "") {
       selectedClick.selectionInstancedId = crypto.randomUUID();
     }
     selectedHover = {
@@ -78,6 +53,58 @@ function checkSelectionClick(x, y, dataStructures ){
       selectionInstancedId: null,
     }
 }
+
+function checkSelectionRoomtypeHover(x, y, dataStructures ){
+  let selected = checkSelection(x, y, dataStructures, false, false, true);
+  selectionRoomtypeHover = selected;
+}
+
+function checkSelectionRoomtypeClick(x, y, dataStructures ){
+    let selected = checkSelection(x, y, dataStructures, false, false, true);
+    selectionRoomtypeClick = selected;
+    if (selected.selectedType !== "") {
+      selectionRoomtypeClick.selectionInstancedId = crypto.randomUUID();
+    }
+    selectionRoomtypeHover = {
+      selectedType : "",
+      selectedId: "",
+      selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
+    }
+}
+
+function checkSelection(x, y, dataStructures, b_points, b_lines, b_rooms){
+    assert(b_points || b_lines || b_rooms, "wut?")
+    let selected = {
+      selectedType : "",
+      selectedId: "",
+      selectedRoomsIdsPartsIds: [],
+      selectionInstancedId: null,
+    }
+    if (b_points) {
+        if (selected.selectedType === "") {
+            selected = checkPointSelection(x, y, dataStructures);
+        }
+        if (selected.selectedType === "") {
+            selected = checkCornerSelection(x, y, dataStructures);
+        }
+    }
+    if (b_lines) {
+        if (selected.selectedType === "") {
+            selected = checkLineSelection(x, y, dataStructures);
+        }
+        if (selected.selectedType === "") {
+            selected = checkSideSelection(x, y, dataStructures);
+        }
+    }
+    if (b_rooms) {
+        if (selected.selectedType === "") {
+            selected = checkRoomSelection(x, y, dataStructures);
+        }
+    }
+    return selected;
+}
+
 
 function checkPointSelection(x, y, dataStructures){
     let selected = {
@@ -393,12 +420,24 @@ function getSelectionClick() {
     return selectedClick;
 }
 
+function getSelectionRoomtypeHover() {
+    return selectionRoomtypeHover;
+}
+
+function getSelectionRoomtypeClick() {
+    return selectionRoomtypeClick;
+}
+
 module.exports = {
     selectionChecker: {
         checkSelectionHover,
         checkSelectionClick,
+        checkSelectionRoomtypeHover,
+        checkSelectionRoomtypeClick,
         getSelectionHover,
         getSelectionClick,
-        resetSelection
+        getSelectionRoomtypeHover,
+        getSelectionRoomtypeClick,
+        resetSelection,
     }
 }

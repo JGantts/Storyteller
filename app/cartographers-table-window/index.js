@@ -270,9 +270,8 @@ async function importFromCaos() {
     updateBarButtons()
 }
 
-let isViewingRoomType = false;
 async function viewEditRoomType() {
-    isViewingRoomType = !isViewingRoomType;
+    masterUiState.state.isViewingRoomType = !masterUiState.state.isViewingRoomType;
 }
 
 function displayFiles(files) {
@@ -688,7 +687,11 @@ function handleMouseDown(e){
     startX = (parseInt(e.offsetX) + posX) * zoom;
     startY = (parseInt(e.offsetY) + posY) * zoom;
 
-    selectionChecker.checkSelectionClick(startX, startY, dataStructures);
+    if (masterUiState.state.isViewingRoomType) {
+        selectionChecker.checkSelectionRoomtypeClick(startX, startY, dataStructures);
+    } else {
+        selectionChecker.checkSelectionClick(startX, startY, dataStructures);
+    }
 }
 
 function handleMouseUp(e){
@@ -735,7 +738,11 @@ function handleMouseMove(e){
   }
 
   if (!masterUiState.dragging.isDragging) {
-      selectionChecker.checkSelectionHover(currX, currY, dataStructures);
+      if (masterUiState.state.isViewingRoomType) {
+          selectionChecker.checkSelectionRoomtypeHover(currX, currY, dataStructures);
+      } else {
+          selectionChecker.checkSelectionHover(currX, currY, dataStructures);
+      }
   }
 
   /*console.log({
@@ -1128,11 +1135,12 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     }
 }
 
-let previousSelectionInstanceId = "uninitialized";
-
 let secondsPassed;
 let oldTimestamp = null;
 let fps;
+
+let previousHoverSelectionInstanceId = "uninitialized";
+let previousSelectionInstanceId = "uninitialized";
 
 async function redrawSelection(timestamp) {
     if (!oldTimestamp) {
@@ -1166,24 +1174,38 @@ async function redrawSelection(timestamp) {
             zooomSettle = zoom;
         }
 
-        let selection = selectionChecker.getSelectionHover();
-        if (selection.selectedType === "") {
-            selection = selectionChecker.getSelectionClick();
-        }
+        if (masterUiState.state.isViewingRoomType) {
+            let selection = selectionChecker.getSelectionRoomtypeHover();
+            if (selection.selectedType === "") {
+                selection = selectionChecker.getSelectionRoomtypeClick();
+            }
 
-        if (previousSelectionInstanceId !== selection.selectionInstancedId
-        || previousSelectionInstanceId === "uninitialized") {
-            previousSelectionInstanceId = selection.selectionInstancedId;
-            updatePropertiesPanel(
-              document.getElementById("properties-panel"),
-              selection,
-              dataStructures);
-        }
+            if (previousHoverSelectionInstanceId !== selection.selectionInstancedId
+            || previousHoverSelectionInstanceId === "uninitialized") {
+                previousHoverSelectionInstanceId = selection.selectionInstancedId;
+                updatePropertiesPanel(
+                  document.getElementById("properties-panel"),
+                  selection,
+                  dataStructures);
+            }
 
-        if (isViewingRoomType) {
             canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
             roomtypeRenderer.redrawRoomtypes(canvasContexts.selection, dataStructures);
         } else {
+            let selection = selectionChecker.getSelectionHover();
+            if (selection.selectedType === "") {
+                selection = selectionChecker.getSelectionClick();
+            }
+
+            if (previousSelectionInstanceId !== selection.selectionInstancedId
+            || previousSelectionInstanceId === "uninitialized") {
+                previousSelectionInstanceId = selection.selectionInstancedId;
+                updatePropertiesPanel(
+                  document.getElementById("properties-panel"),
+                  selection,
+                  dataStructures);
+            }
+
             let potentialRooms = potentialFactory.getPotentialRooms
             (
                 masterUiState,
@@ -1195,6 +1217,7 @@ async function redrawSelection(timestamp) {
             canvasContexts.sandwich.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
             selectionRenderer.redrawSelection(canvasContexts.selection, canvasContexts.sandwich, dataStructures, selection);
         }
+
     }
     copyOffscreenCanvasasToScreen();
     window.requestAnimationFrame(redrawSelection);
