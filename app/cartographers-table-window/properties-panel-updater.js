@@ -142,79 +142,87 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
   if (!roomtypeTemplates) {
       roomtypeTemplates = {
           key: document.getElementById("roomtypes-panel-key"),
-          current: document.getElementById("roomtypes-panel-current"),
+          current: document.getElementById("properties-panel-room"),
       }
   }
   let keyClone = roomtypeTemplates.key.content.firstElementChild.cloneNode(true);
   let currentClone = roomtypeTemplates.current.content.firstElementChild.cloneNode(true);
 
-  clone = propertiesTemplates.room.content.firstElementChild.cloneNode(true);
-  let room = dataStructures.metaroomDisk.rooms[selection.selectedId];
-  clone.querySelector("#property-id").innerHTML = selection.selectedId;
-  clone.querySelector("#property-top-left").innerHTML = room.leftCeilingY;
-  clone.querySelector("#property-top-right").innerHTML = room.rightCeilingY;
-  clone.querySelector("#property-left").innerHTML = room.leftX;
-  clone.querySelector("#property-right").innerHTML = room.rightX;
-  clone.querySelector("#property-bottom-left").innerHTML = room.leftFloorY;
-  clone.querySelector("#property-bottom-right").innerHTML = room.rightFloorY;
-  let roomTypeName = "";
-  switch (room.roomType) {
-    case -1:
-      roomTypeName = "Please add a type to this room.";
-      break;
+  console.log(selection);
 
-    case 0:
-      roomTypeName = "Atmosphere";
-      break;
+  if (selection.selectedType !== "") {
+      currentClone = propertiesTemplates.room.content.firstElementChild.cloneNode(true);
+      let room = dataStructures.metaroomDisk.rooms[selection.selectedId];
+      currentClone.querySelector("#property-id").innerHTML = selection.selectedId;
+      currentClone.querySelector("#property-top-left").innerHTML = room.leftCeilingY;
+      currentClone.querySelector("#property-top-right").innerHTML = room.rightCeilingY;
+      currentClone.querySelector("#property-left").innerHTML = room.leftX;
+      currentClone.querySelector("#property-right").innerHTML = room.rightX;
+      currentClone.querySelector("#property-bottom-left").innerHTML = room.leftFloorY;
+      currentClone.querySelector("#property-bottom-right").innerHTML = room.rightFloorY;
+      let roomTypeName = "";
+      switch (room.roomType) {
+        case -1:
+          roomTypeName = "Please add a type to this room.";
+          break;
 
-    case 1:
-      roomTypeName = "Wooden Walkway";
-      break;
+        case 0:
+          roomTypeName = "Atmosphere";
+          break;
 
-    case 2:
-      roomTypeName = "Concrete Walkway";
-      break;
+        case 1:
+          roomTypeName = "Wooden Walkway";
+          break;
 
-    case 3:
-      roomTypeName = "Indoor Corridor";
-      break;
+        case 2:
+          roomTypeName = "Concrete Walkway";
+          break;
 
-    case 4:
-      roomTypeName = "Outdoor Corridor";
-      break;
+        case 3:
+          roomTypeName = "Indoor Corridor";
+          break;
 
-    case 5:
-      roomTypeName = "Normal Soil";
-      break;
+        case 4:
+          roomTypeName = "Outdoor Corridor";
+          break;
 
-    case 6:
-      roomTypeName = "Boggy Soil";
-      break;
+        case 5:
+          roomTypeName = "Normal Soil";
+          break;
 
-    case 7:
-      roomTypeName = "Drained Soil";
-      break;
+        case 6:
+          roomTypeName = "Boggy Soil";
+          break;
 
-    case 8:
-      roomTypeName = "Fresh Water";
-      break;
+        case 7:
+          roomTypeName = "Drained Soil";
+          break;
 
-    case 9:
-      roomTypeName = "Salt Water";
-      break;
+        case 8:
+          roomTypeName = "Fresh Water";
+          break;
 
-    case 10:
-      roomTypeName = "Ettin Home";
-      break;
+        case 9:
+          roomTypeName = "Salt Water";
+          break;
 
+        case 10:
+          roomTypeName = "Ettin Home";
+          break;
+
+        default:
+          assert(false, `${room.roomType}`);
+
+      }
+      currentClone.querySelector("#property-room-type").innerHTML = roomTypeName;
   }
-  clone.querySelector("#property-room-type").innerHTML = roomTypeName;
 
   panel.innerHTML = "";
-  panel.appendChild(keyClone);
   panel.appendChild(currentClone);
+  panel.appendChild(keyClone);
 }
 
 module.exports = {
-    updatePropertiesPanel
+    updatePropertiesPanel,
+    updateRoomtypePanel,
 }

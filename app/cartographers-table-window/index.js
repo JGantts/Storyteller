@@ -15,7 +15,7 @@ const { selectionChecker } = require('./selectionChecker.js');
 const { dataStructureFactory } = require('./dataStructureFactory.js');
 const { potentialFactory } = require('./potentialFactory.js');
 const { lineSegmentComparison } = require('./lineSegmentComparison.js');
-const { updatePropertiesPanel } = require('./properties-panel-updater.js');
+const { updatePropertiesPanel, updateRoomtypePanel } = require('./properties-panel-updater.js');
 
 let zoom = 1;
 let posX = 0;
@@ -1180,10 +1180,14 @@ async function redrawSelection(timestamp) {
                 selection = selectionChecker.getSelectionRoomtypeClick();
             }
 
+            console.log(selection);
+            console.log(previousHoverSelectionInstanceId);
+
             if (previousHoverSelectionInstanceId !== selection.selectionInstancedId
             || previousHoverSelectionInstanceId === "uninitialized") {
+                console.log("wtf");
                 previousHoverSelectionInstanceId = selection.selectionInstancedId;
-                updatePropertiesPanel(
+                updateRoomtypePanel(
                   document.getElementById("properties-panel"),
                   selection,
                   dataStructures);

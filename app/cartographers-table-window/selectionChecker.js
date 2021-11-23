@@ -56,6 +56,9 @@ function checkSelectionClick(x, y, dataStructures ){
 
 function checkSelectionRoomtypeHover(x, y, dataStructures ){
   let selected = checkSelection(x, y, dataStructures, false, false, true);
+  if (selected.selectedType !== "") {
+    selected.selectionInstancedId = crypto.randomUUID();
+  }
   selectionRoomtypeHover = selected;
 }
 
