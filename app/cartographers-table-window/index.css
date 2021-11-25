@@ -68,6 +68,22 @@
   padding: 0;
 }
 
+.standard-button button {
+  padding: 0;
+  border: 0;
+  background-color: rgba(0,0,0,0);
+  outline-color: white;
+  opacity: 1;
+}
+
+.standard-button button:hover {
+  filter: drop-shadow(4px 4px 3px rgba(0,0,0,1));
+}
+
+.standard-button button:active {
+  opacity: 0.75;
+}
+
 .banner-divider {
   display: inline;
   padding: 0.4rem;

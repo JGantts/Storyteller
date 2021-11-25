@@ -143,12 +143,13 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
       roomtypeTemplates = {
           key: document.getElementById("roomtypes-panel-key"),
           current: document.getElementById("properties-panel-room"),
+          editor: document.getElementById("roomtypes-panel-editor"),
       }
   }
+
   let keyClone = roomtypeTemplates.key.content.firstElementChild.cloneNode(true);
   let currentClone = roomtypeTemplates.current.content.firstElementChild.cloneNode(true);
-
-  console.log(selection);
+  let editorClone = roomtypeTemplates.editor.content.firstElementChild.cloneNode(true);
 
   if (selection.selectedType !== "") {
       currentClone = propertiesTemplates.room.content.firstElementChild.cloneNode(true);
@@ -220,6 +221,7 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
   panel.innerHTML = "";
   panel.appendChild(currentClone);
   panel.appendChild(keyClone);
+  panel.appendChild(editorClone);
 }
 
 module.exports = {

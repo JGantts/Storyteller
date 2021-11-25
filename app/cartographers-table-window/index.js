@@ -1180,12 +1180,8 @@ async function redrawSelection(timestamp) {
                 selection = selectionChecker.getSelectionRoomtypeClick();
             }
 
-            console.log(selection);
-            console.log(previousHoverSelectionInstanceId);
-
             if (previousHoverSelectionInstanceId !== selection.selectionInstancedId
             || previousHoverSelectionInstanceId === "uninitialized") {
-                console.log("wtf");
                 previousHoverSelectionInstanceId = selection.selectionInstancedId;
                 updateRoomtypePanel(
                   document.getElementById("properties-panel"),
