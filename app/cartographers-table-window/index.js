@@ -271,7 +271,21 @@ async function importFromCaos() {
 }
 
 async function viewEditRoomType() {
-    masterUiState.state.isViewingRoomType = !masterUiState.state.isViewingRoomType;
+    if (masterUiState.state.isViewingRoomType) {
+        masterUiState.state.isViewingRoomType = false;
+    } else {
+        masterUiState.state.isViewingRoomType = {
+            isViewingPalette: false,
+        }
+    }
+}
+
+async function editRoomtypes() {
+    assert(masterUiState.state.isViewingRoomType, "wut?");
+
+    masterUiState.state.isViewingRoomType.isViewingPalette =
+      !masterUiState.state.isViewingRoomType.isViewingPalette;
+
 }
 
 function displayFiles(files) {
