@@ -219,9 +219,9 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
   }
 
   panel.innerHTML = "";
-  panel.appendChild(currentClone);
-  panel.appendChild(keyClone);
   panel.appendChild(editorClone);
+  panel.appendChild(keyClone);
+  panel.appendChild(currentClone);
 }
 
 module.exports = {
