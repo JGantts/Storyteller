@@ -85,7 +85,7 @@
 }
 
 .standard-button button:hover {
-  filter: drop-shadow(4px 4px 3px rgba(0,0,0,1));
+  filter: drop-shadow(4px 4px 3px black);
 }
 
 .standard-button button:active {
