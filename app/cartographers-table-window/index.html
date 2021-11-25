@@ -93,7 +93,7 @@
       border: 0;
       overflow: hidden;
       height: calc(100%);
-      width: calc(100% - 150px);
+      width: calc(100% - 175px);
       background-color: rgba(0,0,0,0);
       float: left;
       '>
@@ -118,7 +118,7 @@
       padding: 0;
       overflow: auto;
       height: 100%;
-      width: 150px;
+      width: 175px;
       float: left;
       ' id='properties-panel'>
 
@@ -242,12 +242,17 @@
 
     <hr />
 
-    <div style="padding: 3px; height: 30px;">
-      <img src="./icons/room-type.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <div id="property-room-type" style="font-size: 12; vertical-align: middle;">
-
+    <div class="row">
+      <div class="column-static">
+        <img src="./icons/room-type.svg" width='20rem' height='20rem'
+          style='
+            padding: 0 6px;
+          '>
       </div>
+      <div id="property-room-type" class="column-fill"
+        style='
+          text-align: left;
+        '></div>
     </div>
   </div>
 </template>
