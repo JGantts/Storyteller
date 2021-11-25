@@ -282,10 +282,15 @@ async function viewEditRoomType() {
 
 async function editRoomtypes() {
     assert(masterUiState.state.isViewingRoomType, "wut?");
-
-    masterUiState.state.isViewingRoomType.isViewingPalette =
-      !masterUiState.state.isViewingRoomType.isViewingPalette;
-
+    if (masterUiState.state.isViewingRoomType.isViewingPalette) {
+        masterUiState.state.isViewingRoomType.isViewingPalette = false;
+        document.getElementById('roomtype-palette').style.height = "0";
+        document.getElementById('roomtype-palette').style.display = "none";
+    } else {
+        masterUiState.state.isViewingRoomType.isViewingPalette = true;
+        document.getElementById('roomtype-palette').style.height = "auto";
+        document.getElementById('roomtype-palette').style.display = "initial";
+    }
 }
 
 function displayFiles(files) {

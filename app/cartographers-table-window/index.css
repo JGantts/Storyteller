@@ -4,11 +4,15 @@
   flex-wrap: no-wrap;
 }
 
+.editor-row:last-child button {
+  padding: 0;
+}
+
 .column {
   flex-basis: 100%;
   text-align: center;
   flex: 1;
-  border: 3px #0000 solid;
+  border: 0;
 }
 
 .column-padding {
@@ -49,15 +53,32 @@
   margin-left: 10px;
   top: -5px;
   z-index: 100;
+
+  background-color: rgba(0,0,0,0.8);
+  color: #fff;
 }
 
-.tooltip {
+/* Tooltip text */
+.tooltip-left {
+  visibility: hidden;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+
+  position: absolute;
+  margin-left: -150%;
+  top: -5px;
+  z-index: 100;
+
   background-color: rgba(0,0,0,0.8);
   color: #fff;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip-holder:hover .tooltip {
+  visibility: visible;
+}
+.tooltip-holder:hover .tooltip-left {
   visibility: visible;
 }
 
@@ -90,6 +111,22 @@
 
 .standard-button button:active {
   opacity: 0.75;
+}
+
+.editor-button button {
+  padding: 0 12.5px 12.5px 0;
+  border: 0;
+  background-color: rgba(0,0,0,0);
+  outline-color: white;
+  opacity: 0.75;
+}
+
+.editor-button button:hover {
+  opacity: 1;
+}
+
+.editor-button button:active {
+  opacity: 0.5;
 }
 
 .banner-divider {
@@ -129,4 +166,48 @@
 }
 ::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+.filter-sky-blue {
+  filter: brightness(0) saturate(100%) invert(61%) sepia(7%) saturate(1828%) hue-rotate(154deg) brightness(89%) contrast(90%);
+}
+
+.filter-light-blue {
+  filter: brightness(0) saturate(100%) invert(51%) sepia(100%) saturate(351%) hue-rotate(164deg) brightness(84%) contrast(89%);
+}
+
+.filter-dark-blue {
+  filter: brightness(0) saturate(100%) invert(14%) sepia(13%) saturate(4355%) hue-rotate(176deg) brightness(98%) contrast(89%);
+}
+
+.filter-light-green {
+  filter: brightness(0) saturate(100%) invert(82%) sepia(21%) saturate(453%) hue-rotate(58deg) brightness(88%) contrast(89%);
+}
+
+.filter-green {
+  filter: brightness(0) saturate(100%) invert(65%) sepia(22%) saturate(1050%) hue-rotate(81deg) brightness(92%) contrast(89%);
+}
+
+.filter-dark-green {
+  filter: brightness(0) saturate(100%) invert(33%) sepia(60%) saturate(1152%) hue-rotate(86deg) brightness(93%) contrast(87%);
+}
+
+.filter-light-brown {
+  filter: brightness(0) saturate(100%) invert(98%) sepia(50%) saturate(325%) hue-rotate(320deg) brightness(102%) contrast(86%);
+}
+
+.filter-dark-brown {
+  filter: brightness(0) saturate(100%) invert(24%) sepia(3%) saturate(1457%) hue-rotate(360deg) brightness(95%) contrast(93%);
+}
+
+.filter-yellow {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(11%) saturate(2367%) hue-rotate(21deg) brightness(94%) contrast(80%);
+}
+
+.filter-burnt-orange {
+  filter: brightness(0) saturate(100%) invert(29%) sepia(99%) saturate(482%) hue-rotate(310deg) brightness(89%) contrast(93%);
+}
+
+.filter-black {
+  filter: brightness(0) saturate(100%);
 }

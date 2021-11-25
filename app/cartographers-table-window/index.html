@@ -116,7 +116,7 @@
       background-color: #3F2933;
       color: white;
       padding: 0;
-      overflow: auto;
+      overflow: hidden auto;
       height: 100%;
       width: 175px;
       float: left;
@@ -183,7 +183,7 @@
 </template>
 
 <template id="properties-panel-room">
-  <div style="font-size:12;">
+  <div style="font-size:12; transition:2s;">
     <div style="padding: 3px; text-align: center;">
       <img src="./icons/key.svg" width='20rem' height='20rem'/>
       <div id="property-id" style="font-family: Courier;">
@@ -353,6 +353,90 @@
       </div>
       <div class="column"></div>
       <div class="column-padding"></div>
+    </div>
+
+    <div id="roomtype-palette" style="height:0; display:none; transition:2s;">
+      <div class="row">
+        <div class='column editor-button  tooltip-holder'>
+          <button id='rooomtype-button-0' onclick="editingRoommtype()">
+            <img class = 'filter-sky-blue' src='other-images/wave-ver.svg' width='50px' height='50px'/>
+          </button>
+          <span class='tooltip'>Atmosphere</span>
+        </div>
+        <div class='column editor-button  tooltip-holder'>
+          <button id='rooomtype-button-1' onclick="editingRoommtype()">
+            <img class = 'filter-light-brown' src='other-images/flat-ver.svg' width='50rem' height='50rem'/>
+          </button>
+          <span class='tooltip'>Wooden Walkway</span>
+        </div>
+        <div class='column editor-button  tooltip-holder'>
+          <span class='tooltip-left'>Concrete Walkway</span>
+          <button id='rooomtype-button-2' onclick="editingRoommtype()" style='padding:0;'>
+            <img class = 'filter-yellow' src='other-images/flat-hor.svg' width='50rem' height='50rem'/>
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class='column editor-button  tooltip-holder'>
+          <button id='rooomtype-button-3' onclick="editingRoommtype()">
+            <img class = 'filter-burnt-orange' src='other-images/flat-hor.svg' width='50rem' height='50rem'/>
+          </button>
+          <span class='tooltip'>Indoor Corridor</span>
+        </div>
+        <div class='column editor-button  tooltip-holder'>
+          <button id='rooomtype-button-4' onclick="editingRoommtype()">
+            <img class = 'filter-dark-brown' src='other-images/flat-ver.svg' width='50rem' height='50rem'/>
+          </button>
+            <span class='tooltip'>Outdoor Corridor</span>
+        </div>
+        <div class='column editor-button  tooltip-holder'>
+          <span class='tooltip-left '>Normal Soil</span>
+          <button id='rooomtype-button-5' onclick="editingRoommtype()" style='padding:0;'>
+            <img class = 'filter-green' src='other-images/chevron-right.svg' width='50rem' height='50rem'/>
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class='column editor-button  tooltip-holder'>
+          <button id='rooomtype-button-6' onclick="editingRoommtype()">
+            <img class = 'filter-dark-green' src='other-images/chevron.svg' width='50rem' height='50rem'/>
+          </button>
+          <span class='tooltip'>Boggy Soil</span>
+        </div>
+        <div class='column editor-button  tooltip-holder'>
+          <button id='rooomtype-button-7' onclick="editingRoommtype()">
+            <img class = 'filter-light-green' src='other-images/chevron.svg' width='50rem' height='50rem'/>
+          </button>
+          <span class='tooltip'>Drained Soil</span>
+        </div>
+        <div class='column editor-button  tooltip-holder'>
+          <span class='tooltip-left'>Fresh Water</span>
+          <button id='rooomtype-button-8' onclick="editingRoommtype()" style='padding:0;'>
+            <img class = 'filter-sky-blue' src='other-images/wave-hor.svg' width='50rem' height='50rem'/>
+          </button>
+        </div>
+      </div>
+
+      <div class="row editor-row">
+        <div class='column editor-button  tooltip-holder'>
+          <button id='rooomtype-button-9' onclick="editingRoommtype()">
+            <img class = 'filter-dark-blue' src='other-images/wave-hor.svg' width='50rem' height='50rem'/>
+          </button>
+          <span class='tooltip'>Salt Water</span>
+        </div>
+        <div class='column editor-button  tooltip-holder'>
+          <button id='rooomtype-button-10' onclick="editingRoommtype()">
+            <img class = 'filter-black' src='other-images/checkerboard.svg' width='50rem' height='50rem'/>
+          </button>
+          <span class='tooltip'>Ettin Home</span>
+        </div>
+        <div class='column'>
+
+        </div>
+      </div>
+
     </div>
 
 

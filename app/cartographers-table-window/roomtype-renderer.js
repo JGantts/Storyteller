@@ -1,63 +1,74 @@
+//#6494aa
 const skyblue = {
   red: 100,
   green: 148,
   blue: 170
 }
 
+//#3e92cc
 const lightblue = {
   red: 62,
   green: 146,
   blue: 204
 }
 
+//#16324f
 const darkblue = {
   red: 22,
   green: 50,
   blue: 79
 }
 
+//#9fc490
 const lightgreen = {
   red: 159,
   green: 196,
   blue: 144
 }
 
+//#4cb963
 const green = {
   red: 76,
   green: 185,
   blue: 99
 }
 
+//#157f1f
 const darkgreen = {
   red: 21,
   green: 127,
   blue: 31
 }
 
+//#edebd7
 const lightbrown = {
   red: 237,
   green: 235,
   blue: 215
 }
 
+//#423e37
 const darkbrown = {
   red: 66,
   green: 62,
   blue: 55
 }
 
+//#b1b23c
 const yellow = {
-  red: 277,
+  red: 177,
   green: 178,
   blue: 60
 }
 
+//#a63d40
 const burntorange = {
   red: 166,
   green: 61,
   blue: 64
 }
 
+//#000000
 const black = {
   red: 0,
   green: 0,
