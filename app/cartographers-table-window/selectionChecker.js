@@ -435,9 +435,9 @@ function setSelectionRoomTypeHover(roomtype) {
     if (roomtype) {
         selectionRoomtypeHover = {
             selectedType : "roomtype",
-            selectedId: crypto.randomUUID(),
+            selectedId: roomtype,
             selectedRoomsIdsPartsIds: [],
-            selectionInstancedId: roomtype,
+            selectionInstancedId: crypto.randomUUID(),
         }
     } else {
         selectionRoomtypeHover = {

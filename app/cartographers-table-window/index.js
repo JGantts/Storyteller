@@ -298,7 +298,7 @@ async function editingRoomtype() {
 }
 
 async function roomtypeButtonMouseOver(param1) {
-    selectionChecker.setSelectionRoomTypeHover(param1.slice(-1));
+    selectionChecker.setSelectionRoomTypeHover(parseFloat(param1.slice(-1)));
 }
 
 async function roomtypeButtonMouseOut() {
