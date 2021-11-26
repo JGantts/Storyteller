@@ -488,7 +488,7 @@
 </template>
 
 <template id="roomtypes-panel-roomtype-ca">
-  <div id="roomtypes-panel-roomtype-ca-static" class="ca-table" style="font-size:12;">
+  <table id="roomtypes-panel-roomtype-ca-static" class="ca-table" style="font-size:12;">
     <div id="title" class="ca-table-header-title">Atmosphere</div>
 
     <div class="ca-table-row-header">
@@ -503,9 +503,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Sound</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">1.00</div>
-      <div class="ca-table-cell">2.00</div>
+      <div id="ca-0-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-0-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-0-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -513,9 +513,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Light</span>
       </div>
-      <div class="ca-table-cell">1.00</div>
-      <div class="ca-table-cell">2.00</div>
-      <div class="ca-table-cell">3.00</div>
+      <div id="ca-1-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-1-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-1-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -523,9 +523,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Heat</span>
       </div>
-      <div class="ca-table-cell">2.00</div>
-      <div class="ca-table-cell">3.00</div>
-      <div class="ca-table-cell">4.00</div>
+      <div id="ca-2-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-2-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-2-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -533,9 +533,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Water</span>
       </div>
-      <div class="ca-table-cell">3.00</div>
-      <div class="ca-table-cell">4.00</div>
-      <div class="ca-table-cell">5.00</div>
+      <div id="ca-3-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-3-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-3-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -543,9 +543,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Nutrient</span>
       </div>
-      <div class="ca-table-cell">4.00</div>
-      <div class="ca-table-cell">5.00</div>
-      <div class="ca-table-cell">6.00</div>
+      <div id="ca-4-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-4-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-4-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -553,9 +553,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Moisture</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-5-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-5-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-5-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -563,9 +563,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Protein</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-6-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-6-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-6-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -573,9 +573,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Carbs</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-7-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-7-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-7-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -583,9 +583,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Fat</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-8-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-8-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-8-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -593,9 +593,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Machinery</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-10-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-10-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-10-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -603,9 +603,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Eggs</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-11-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-11-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-11-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -613,9 +613,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Norn</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-12-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-12-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-12-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -623,9 +623,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Grendel</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-13-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-13-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-13-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -633,9 +633,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Ettin</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-14-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-14-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-14-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -643,9 +643,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Norn home</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-15-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-15-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-15-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -653,9 +653,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Grendle Home</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-16-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-16-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-16-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -663,9 +663,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Ettin Home</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-17-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-17-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-17-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -673,9 +673,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Gadgets</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div id="ca-18-gain" class="ca-table-cell">0.00</div>
+      <div id="ca-18-loss" class="ca-table-cell">1.00</div>
+      <div id="ca-18-diff" class="ca-table-cell">2.00</div>
     </div>
 
     <!--  <p>
@@ -701,7 +701,7 @@
       19	(unused)
       </p> -->
 
-  </div>
+  </table>
 </template>
 </div>
 

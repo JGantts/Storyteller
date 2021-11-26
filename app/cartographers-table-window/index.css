@@ -45,6 +45,8 @@ html {
 .ca-table-header-title {
   display: table-caption;
   text-align: center;
+  position: sticky;
+  top: 0;
 }
 
 .ca-table-row-header {
