@@ -4,10 +4,6 @@
   flex-wrap: no-wrap;
 }
 
-.editor-row:last-child button {
-  padding: 0;
-}
-
 .column {
   flex-basis: 100%;
   text-align: center;
@@ -113,9 +109,14 @@
   opacity: 0.75;
 }
 
+.editor-button img {
+  border-radius: 8px;
+  border: 2px solid blue;
+}
+
 .editor-button button {
-  padding: 0 12.5px 12.5px 0;
   border: 0;
+  padding: 2.1666667px;
   background-color: rgba(0,0,0,0);
   outline-color: white;
   opacity: 0.75;
