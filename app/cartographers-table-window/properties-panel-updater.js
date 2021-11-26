@@ -147,12 +147,24 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
       }
   }
 
-  let keyClone = roomtypeTemplates.key.content.firstElementChild.cloneNode(true);
-  let currentClone = roomtypeTemplates.current.content.firstElementChild.cloneNode(true);
-  let editorClone = roomtypeTemplates.editor.content.firstElementChild.cloneNode(true);
+  let currentRoomHolder = document.getElementById("properties-panel-room-section");
+
+  if (!currentRoomHolder) {
+    let editorClone = roomtypeTemplates.editor.content.firstElementChild.cloneNode(true);
+    let keyClone = roomtypeTemplates.key.content.firstElementChild.cloneNode(true);
+    currentRoomHolder = document.createElement("div");
+    currentRoomHolder.id = "properties-panel-room-section"
+
+    panel.innerHTML = "";
+    panel.appendChild(editorClone);
+    panel.appendChild(keyClone);
+    panel.appendChild(currentRoomHolder);
+  }
+
+  currentRoomHolder.innerHTML = "";
 
   if (selection.selectedType !== "") {
-      currentClone = propertiesTemplates.room.content.firstElementChild.cloneNode(true);
+      let currentClone = roomtypeTemplates.current.content.firstElementChild.cloneNode(true);
       let room = dataStructures.metaroomDisk.rooms[selection.selectedId];
       currentClone.querySelector("#property-id").innerHTML = selection.selectedId;
       currentClone.querySelector("#property-top-left").innerHTML = room.leftCeilingY;
@@ -213,15 +225,11 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
 
         default:
           assert(false, `${room.roomType}`);
-
       }
       currentClone.querySelector("#property-room-type").innerHTML = roomTypeName;
-  }
 
-  panel.innerHTML = "";
-  panel.appendChild(editorClone);
-  panel.appendChild(keyClone);
-  panel.appendChild(currentClone);
+      currentRoomHolder.appendChild(currentClone);
+  }
 }
 
 module.exports = {
