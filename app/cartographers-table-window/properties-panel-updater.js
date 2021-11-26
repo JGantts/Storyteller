@@ -141,7 +141,6 @@ let = roomtypeTemplates = null;
 function updateRoomtypePanel(panel, selection, dataStructures) {
   if (!roomtypeTemplates) {
       roomtypeTemplates = {
-          key: document.getElementById("roomtypes-panel-key"),
           current: document.getElementById("properties-panel-room"),
           editor: document.getElementById("roomtypes-panel-editor"),
           roomtype: document.getElementById("roomtypes-panel-roomtype-ca"),
@@ -152,13 +151,12 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
 
   if (!currentRoomHolder) {
     let editorClone = roomtypeTemplates.editor.content.firstElementChild.cloneNode(true);
-    let keyClone = roomtypeTemplates.key.content.firstElementChild.cloneNode(true);
     currentRoomHolder = document.createElement("div");
     currentRoomHolder.id = "properties-panel-room-section"
 
     panel.innerHTML = "";
     panel.appendChild(editorClone);
-    panel.appendChild(keyClone);
+    panel.appendChild(document.createElement("hr"));
     panel.appendChild(currentRoomHolder);
   }
 
