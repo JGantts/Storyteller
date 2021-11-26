@@ -127,7 +127,7 @@
   </div>
 </body>
 
-
+<div>
 <template id="properties-panel-metaroom">
   <div style="font-size:12;">
     <div style="padding: 3px; text-align: center; font-size 12;">
@@ -330,17 +330,8 @@
   </div>
 </template>
 
-<template id="roomtypes-panel-key">
-  <div style="font-size:12;">
-    <hr />
-    <!--Roomtype Key (like a map key)-->
-    <hr />
-  </div>
-</template>
-
 <template id="roomtypes-panel-editor">
-  <div style="font-size:12;">
-
+  <div style="font-size:12; position: sticky; top:0; background-color: #503642; z-index: 1">
     <div class="row">
       <div class="column-padding"></div>
       <div class="column">
@@ -491,10 +482,8 @@
 
         </div>
       </div>
-
+      <hr />
     </div>
-
-
   </div>
 </template>
 
@@ -502,7 +491,7 @@
   <div class="ca-table" style="font-size:12;">
     <div class="ca-table-header-title">Atmosphere</div>
 
-    <div class="ca-table-row">
+    <div class="ca-table-row-header">
       <div class="ca-table-cell">CA</div>
       <div class="ca-table-cell">Gain</div>
       <div class="ca-table-cell">Loss</div>
@@ -515,8 +504,8 @@
         <span class='tooltip'>Sound</span>
       </div>
       <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">1.00</div>
+      <div class="ca-table-cell">2.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -524,9 +513,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Light</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">1.00</div>
+      <div class="ca-table-cell">2.00</div>
+      <div class="ca-table-cell">3.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -534,9 +523,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Heat</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">2.00</div>
+      <div class="ca-table-cell">3.00</div>
+      <div class="ca-table-cell">4.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -544,9 +533,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Water</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">3.00</div>
+      <div class="ca-table-cell">4.00</div>
+      <div class="ca-table-cell">5.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -554,9 +543,9 @@
         <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
         <span class='tooltip'>Nutrient</span>
       </div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
-      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">4.00</div>
+      <div class="ca-table-cell">5.00</div>
+      <div class="ca-table-cell">6.00</div>
     </div>
 
     <div class="ca-table-row">
@@ -714,7 +703,7 @@
 
   </div>
 </template>
-
+</div>
 
 
 <script src='./index.js'></script>
