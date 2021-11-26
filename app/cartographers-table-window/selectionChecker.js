@@ -431,6 +431,24 @@ function getSelectionRoomtypeClick() {
     return selectionRoomtypeClick;
 }
 
+function setSelectionRoomTypeHover(roomtype) {
+    if (roomtype) {
+        selectionRoomtypeHover = {
+            selectedType : "roomtype",
+            selectedId: crypto.randomUUID(),
+            selectedRoomsIdsPartsIds: [],
+            selectionInstancedId: roomtype,
+        }
+    } else {
+        selectionRoomtypeHover = {
+            selectedType : "",
+            selectedId: "",
+            selectedRoomsIdsPartsIds: [],
+            selectionInstancedId: null,
+        }
+    }
+}
+
 module.exports = {
     selectionChecker: {
         checkSelectionHover,
@@ -441,6 +459,7 @@ module.exports = {
         getSelectionClick,
         getSelectionRoomtypeHover,
         getSelectionRoomtypeClick,
+        setSelectionRoomTypeHover,
         resetSelection,
     }
 }

@@ -293,6 +293,18 @@ async function editRoomtypes() {
     }
 }
 
+async function editingRoomtype() {
+
+}
+
+async function roomtypeButtonMouseOver(param1) {
+    selectionChecker.setSelectionRoomTypeHover(param1.slice(-1));
+}
+
+async function roomtypeButtonMouseOut() {
+    selectionChecker.setSelectionRoomTypeHover(null);
+}
+
 function displayFiles(files) {
     if (!files) { return; }
     if (files.length === 0) { return; }

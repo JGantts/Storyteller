@@ -144,6 +144,7 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
           key: document.getElementById("roomtypes-panel-key"),
           current: document.getElementById("properties-panel-room"),
           editor: document.getElementById("roomtypes-panel-editor"),
+          roomtype: document.getElementById("roomtypes-panel-roomtype-ca"),
       }
   }
 
@@ -163,72 +164,88 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
 
   currentRoomHolder.innerHTML = "";
 
+  console.log(selection.selectedType);
+
   if (selection.selectedType !== "") {
-      let currentClone = roomtypeTemplates.current.content.firstElementChild.cloneNode(true);
-      let room = dataStructures.metaroomDisk.rooms[selection.selectedId];
-      currentClone.querySelector("#property-id").innerHTML = selection.selectedId;
-      currentClone.querySelector("#property-top-left").innerHTML = room.leftCeilingY;
-      currentClone.querySelector("#property-top-right").innerHTML = room.rightCeilingY;
-      currentClone.querySelector("#property-left").innerHTML = room.leftX;
-      currentClone.querySelector("#property-right").innerHTML = room.rightX;
-      currentClone.querySelector("#property-bottom-left").innerHTML = room.leftFloorY;
-      currentClone.querySelector("#property-bottom-right").innerHTML = room.rightFloorY;
-      let roomTypeName = "";
-      switch (room.roomType) {
-        case -1:
-          roomTypeName = "Please add a type to this room.";
-          break;
+      let currentClone = null;
+      switch (selection.selectedType) {
+        case "room":
+          currentClone = roomtypeTemplates.current.content.firstElementChild.cloneNode(true);
+          let room = dataStructures.metaroomDisk.rooms[selection.selectedId];
+          currentClone.querySelector("#property-id").innerHTML = selection.selectedId;
+          currentClone.querySelector("#property-top-left").innerHTML = room.leftCeilingY;
+          currentClone.querySelector("#property-top-right").innerHTML = room.rightCeilingY;
+          currentClone.querySelector("#property-left").innerHTML = room.leftX;
+          currentClone.querySelector("#property-right").innerHTML = room.rightX;
+          currentClone.querySelector("#property-bottom-left").innerHTML = room.leftFloorY;
+          currentClone.querySelector("#property-bottom-right").innerHTML = room.rightFloorY;
+          let roomTypeName = "";
+          switch (room.roomType) {
+            case -1:
+              roomTypeName = "Please add a type to this room.";
+              break;
 
-        case 0:
-          roomTypeName = "Atmosphere";
-          break;
+            case 0:
+              roomTypeName = "Atmosphere";
+              break;
 
-        case 1:
-          roomTypeName = "Wooden Walkway";
-          break;
+            case 1:
+              roomTypeName = "Wooden Walkway";
+              break;
 
-        case 2:
-          roomTypeName = "Concrete Walkway";
-          break;
+            case 2:
+              roomTypeName = "Concrete Walkway";
+              break;
 
-        case 3:
-          roomTypeName = "Indoor Corridor";
-          break;
+            case 3:
+              roomTypeName = "Indoor Corridor";
+              break;
 
-        case 4:
-          roomTypeName = "Outdoor Corridor";
-          break;
+            case 4:
+              roomTypeName = "Outdoor Corridor";
+              break;
 
-        case 5:
-          roomTypeName = "Normal Soil";
-          break;
+            case 5:
+              roomTypeName = "Normal Soil";
+              break;
 
-        case 6:
-          roomTypeName = "Boggy Soil";
-          break;
+            case 6:
+              roomTypeName = "Boggy Soil";
+              break;
 
-        case 7:
-          roomTypeName = "Drained Soil";
-          break;
+            case 7:
+              roomTypeName = "Drained Soil";
+              break;
 
-        case 8:
-          roomTypeName = "Fresh Water";
-          break;
+            case 8:
+              roomTypeName = "Fresh Water";
+              break;
 
-        case 9:
-          roomTypeName = "Salt Water";
-          break;
+            case 9:
+              roomTypeName = "Salt Water";
+              break;
 
-        case 10:
-          roomTypeName = "Ettin Home";
+            case 10:
+              roomTypeName = "Ettin Home";
+              break;
+
+            default:
+              assert(false, `${room.roomType}`);
+          }
+          currentClone.querySelector("#property-room-type").innerHTML = roomTypeName;
+          break;
+        case "roomtype":
+          currentClone = roomtypeTemplates.roomtype.content.firstElementChild.cloneNode(true);
+
           break;
 
         default:
-          assert(false, `${room.roomType}`);
+          break;
       }
-      currentClone.querySelector("#property-room-type").innerHTML = roomTypeName;
 
-      currentRoomHolder.appendChild(currentClone);
+      if(currentClone) {
+          currentRoomHolder.appendChild(currentClone);
+      }
   }
 }
 

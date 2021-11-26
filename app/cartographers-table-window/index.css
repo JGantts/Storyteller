@@ -25,6 +25,34 @@
   flex: 1 0 0%;
 }
 
+.ca-table {
+  display: table;
+}
+
+.ca-table-header {
+  display: table-header-group;
+}
+
+.ca-table-header-title {
+  display: table-caption;
+  text-align: center;
+}
+
+.ca-table-row-header {
+  display: table-row;
+  text-align: center;
+}
+
+.ca-table-row {
+  display: table-row;
+}
+
+.ca-table-cell {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 5px;
+}
+
 .code-decorator {
   padding: 1px 5px;
   margin: -1px 0;
@@ -215,4 +243,8 @@
 
 .filter-black {
   filter: brightness(0) saturate(100%);
+}
+
+.filter-white {
+  filter: brightness(0) saturate(100%) invert(100%);
 }

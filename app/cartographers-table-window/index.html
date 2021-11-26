@@ -345,7 +345,7 @@
       <div class="column-padding"></div>
       <div class="column">
         <div class='standard-button tooltip-holder'>
-          <button id='import-caos' onclick="editRoomtypes()">
+          <button onclick="editRoomtypes()">
             <img src='icons/bucket.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Edit room type</span>
@@ -358,20 +358,35 @@
     <div id="roomtype-palette" style="height:0; display:none; transition:2s;">
       <div class="row editor-row">
         <div class='column editor-button  tooltip-holder'>
-          <button id='rooomtype-button-0' onclick="editingRoommtype()">
+          <button
+            id='rooomtype-button-0'
+            onclick="editingRoomtype(this.id)"
+            onmouseover="roomtypeButtonMouseOver(this.id)"
+            onmouseout="roomtypeButtonMouseOut(this.id)"
+          >
             <img class = 'filter-sky-blue' src='other-images/wave-ver.svg' width='50px' height='50px'/>
           </button>
           <span class='tooltip'>Atmosphere</span>
         </div>
         <div class='column editor-button  tooltip-holder'>
-          <button id='rooomtype-button-1' onclick="editingRoommtype()">
+          <button
+            id='rooomtype-button-1'
+            onclick="editingRoomtype(this.id)"
+            onmouseover="roomtypeButtonMouseOver(this.id)"
+            onmouseout="roomtypeButtonMouseOut(this.id)"
+          >
             <img class = 'filter-light-brown' src='other-images/flat-ver.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Wooden Walkway</span>
         </div>
         <div class='column editor-button  tooltip-holder'>
           <span class='tooltip-left'>Concrete Walkway</span>
-          <button id='rooomtype-button-2' onclick="editingRoommtype()">
+          <button
+            id='rooomtype-button-2'
+            onclick="editingRoomtype(this.id)"
+            onmouseover="roomtypeButtonMouseOver(this.id)"
+            onmouseout="roomtypeButtonMouseOut(this.id)"
+          >
             <img class = 'filter-yellow' src='other-images/flat-hor.svg' width='50rem' height='50rem'/>
           </button>
         </div>
@@ -379,20 +394,35 @@
 
       <div class="row editor-row">
         <div class='column editor-button  tooltip-holder'>
-          <button id='rooomtype-button-3' onclick="editingRoommtype()">
+          <button
+            id='rooomtype-button-3'
+            onclick="editingRoomtype(this.id)"
+            onmouseover="roomtypeButtonMouseOver(this.id)"
+            onmouseout="roomtypeButtonMouseOut(this.id)"
+          >
             <img class = 'filter-burnt-orange' src='other-images/flat-hor.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Indoor Corridor</span>
         </div>
         <div class='column editor-button  tooltip-holder'>
-          <button id='rooomtype-button-4' onclick="editingRoommtype()">
+          <button
+            id='rooomtype-button-4'
+            onclick="editingRoomtype(this.id)"
+            onmouseover="roomtypeButtonMouseOver(this.id)"
+            onmouseout="roomtypeButtonMouseOut(this.id)"
+          >
             <img class = 'filter-dark-brown' src='other-images/flat-ver.svg' width='50rem' height='50rem'/>
           </button>
             <span class='tooltip'>Outdoor Corridor</span>
         </div>
         <div class='column editor-button  tooltip-holder'>
           <span class='tooltip-left '>Normal Soil</span>
-          <button id='rooomtype-button-5' onclick="editingRoommtype()">
+          <button
+            id='rooomtype-button-5'
+            onclick="editingRoomtype(this.id)"
+            onmouseover="roomtypeButtonMouseOver(this.id)"
+            onmouseout="roomtypeButtonMouseOut(this.id)"
+          >
             <img class = 'filter-green' src='other-images/chevron-right.svg' width='50rem' height='50rem'/>
           </button>
         </div>
@@ -400,20 +430,35 @@
 
       <div class="row editor-row">
         <div class='column editor-button  tooltip-holder'>
-          <button id='rooomtype-button-6' onclick="editingRoommtype()">
+          <button
+             id='rooomtype-button-6'
+             onclick="editingRoomtype(this.id)"
+             onmouseover="roomtypeButtonMouseOver(this.id)"
+             onmouseout="roomtypeButtonMouseOut(this.id)"
+           >
             <img class = 'filter-dark-green' src='other-images/chevron.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Boggy Soil</span>
         </div>
         <div class='column editor-button  tooltip-holder'>
-          <button id='rooomtype-button-7' onclick="editingRoommtype()">
+          <button
+            id='rooomtype-button-7'
+            onclick="editingRoomtype(this.id)"
+            onmouseover="roomtypeButtonMouseOver(this.id)"
+            onmouseout="roomtypeButtonMouseOut(this.id)"
+          >
             <img class = 'filter-light-green' src='other-images/chevron.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Drained Soil</span>
         </div>
         <div class='column editor-button  tooltip-holder'>
           <span class='tooltip-left'>Fresh Water</span>
-          <button id='rooomtype-button-8' onclick="editingRoommtype()" >
+          <button
+            id='rooomtype-button-8'
+            onclick="editingRoomtype(this.id)"
+            onmouseover="roomtypeButtonMouseOver(this.id)"
+            onmouseout="roomtypeButtonMouseOut(this.id)"
+          >
             <img class = 'filter-sky-blue' src='other-images/wave-hor.svg' width='50rem' height='50rem'/>
           </button>
         </div>
@@ -421,13 +466,23 @@
 
       <div class="row editor-row">
         <div class='column editor-button  tooltip-holder'>
-          <button id='rooomtype-button-9' onclick="editingRoommtype()">
+          <button
+            id='rooomtype-button-9'
+            onclick="editingRoomtype(this.id)"
+            onmouseover="roomtypeButtonMouseOver(this.id)"
+            onmouseout="roomtypeButtonMouseOut(this.id)"
+          >
             <img class = 'filter-dark-blue' src='other-images/wave-hor.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Salt Water</span>
         </div>
-        <div class='column editor-button  tooltip-holder'>
-          <button id='rooomtype-button-10' onclick="editingRoommtype()">
+        <div class='column editor-button tooltip-holder'>
+          <button
+             id='rooomtype-button-10'
+             onclick="editingRoomtype(this.id)"
+             onmouseover="roomtypeButtonMouseOver(this.id)"
+             onmouseout="roomtypeButtonMouseOut(this.id)"
+           >
             <img class = 'filter-black' src='other-images/checkerboard.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Ettin Home</span>
@@ -439,6 +494,223 @@
 
     </div>
 
+
+  </div>
+</template>
+
+<template id="roomtypes-panel-roomtype-ca">
+  <div class="ca-table" style="font-size:12;">
+    <div class="ca-table-header-title">Atmosphere</div>
+
+    <div class="ca-table-row">
+      <div class="ca-table-cell">CA</div>
+      <div class="ca-table-cell">Gain</div>
+      <div class="ca-table-cell">Loss</div>
+      <div class="ca-table-cell">Diff</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Sound</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Light</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Heat</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Water</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Nutrient</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Moisture</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Protein</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Carbs</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Fat</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Machinery</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Eggs</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Norn</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Grendel</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Ettin</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Norn home</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Grendle Home</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Ettin Home</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <div class="ca-table-row">
+      <div class='ca-table-cell tooltip-holder'>
+        <img class='filter-white' src='./icons/ca.svg' width='32.5rem' height='32.5rem'/>
+        <span class='tooltip'>Gadgets</span>
+      </div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+      <div class="ca-table-cell">0.00</div>
+    </div>
+
+    <!--  <p>
+      0	Sound	See below
+      1	Light	--
+      2	Heat	--
+      3	Water (from the sky, often used by plants to grow)	--
+      4	Nutrient (used by plants to grow)	--
+      5	Water (bodies of)	--
+      6	Protein	Fruit
+      7	Carbohydrate	Seeds
+      8	Fat	Food
+      9	Flowers	See below
+      10	Machinery	Machinery
+      11	Creature egg smell	Creature Eggs
+      12	Norn	Norns
+      13	Grendel	Grendels
+      14	Ettin	Ettins
+      15	Norn home	Norn Home
+      16	Grendel home	Grendel Home
+      17	Ettin home	Ettin Home
+      18	Gadgets	Gadgets
+      19	(unused)
+      </p> -->
 
   </div>
 </template>
