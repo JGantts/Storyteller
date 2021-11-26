@@ -52,6 +52,8 @@
 
   background-color: rgba(0,0,0,0.8);
   color: #fff;
+
+  pointer-events: none;
 }
 
 /* Tooltip text */
@@ -68,6 +70,8 @@
 
   background-color: rgba(0,0,0,0.8);
   color: #fff;
+
+  pointer-events: none;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
