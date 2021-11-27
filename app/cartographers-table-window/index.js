@@ -302,6 +302,7 @@ async function editingRoomtype(param1) {
 
     for (element of document.getElementsByClassName("editor-button")) {
         element.style.animation="none";
+        element.style.borderColor="black";
     }
 
     if (masterUiState.state.isViewingRoomType.isEditingRoomtype
@@ -315,6 +316,7 @@ async function editingRoomtype(param1) {
         masterUiState.state.isViewingRoomType.isEditingRoomtype = true;
         canvasHolder.style.cursor = "url('./icons/bucket.png') 6 30, default";
         img.style.animation="spin 2s ease-out 0s infinite alternate";
+        element.style.borderColor="white";
     }
 }
 

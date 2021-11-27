@@ -7,12 +7,6 @@ html {
     background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
-/* The animation code */
-@keyframes spin {
-  from {border-color: black;}
-  to {border-color: white;}
-}
-
 .row {
   display: flex;
   flex-direction: row;
@@ -160,6 +154,11 @@ html {
 
 .standard-button button:active {
   opacity: 0.75;
+}
+
+@keyframes pulse-border {
+  from {border-width: 2px;}
+  to {border-width: 4px;}
 }
 
 .editor-button img {
