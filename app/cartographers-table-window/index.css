@@ -157,8 +157,8 @@ html {
 }
 
 @keyframes pulse-border {
-  from {border-width: 2px;}
-  to {border-width: 10px;}
+  from {border-color: white;}
+  to {border-color: black;}
 }
 
 .editor-button img {
@@ -167,7 +167,6 @@ html {
   border: 0;
   background-color: rgba(0,0,0,0);
   padding: 0;
-  border-radius: 6px;
 }
 
 .editor-button button {
@@ -188,6 +187,8 @@ html {
   border: 2px solid black;
   overflow: hidden;
   margin: 2.1666667px;
+  transition: border-radius 1.5s ease-in-out 0s;
+  animation-delay: 1.5s;
 }
 
 .editor-button:hover {
