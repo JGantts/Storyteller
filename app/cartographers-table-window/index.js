@@ -273,13 +273,13 @@ async function importFromCaos() {
 async function viewEditRoomType() {
     if (masterUiState.state.isViewingRoomType) {
         masterUiState.state.isViewingRoomType = false;
+        canvasHolder.style.cursor = "default";
     } else {
         selectionChecker.setSelectionRoomtypeClick(null);
         masterUiState.state.isViewingRoomType = {
             isViewingPalette: false,
             isEditingRoomtype: false,
         }
-        canvasHolder.style.cursor = "default";
     }
 }
 
