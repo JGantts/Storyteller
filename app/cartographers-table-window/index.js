@@ -315,7 +315,7 @@ async function editingRoomtype(param1) {
         selectionChecker.setSelectionRoomtypeClick(roomtype);
         masterUiState.state.isViewingRoomType.isEditingRoomtype = true;
         canvasHolder.style.cursor = "url('./icons/bucket.png') 6 30, default";
-        img.style.animation="spin 2s ease-out 0s infinite alternate";
+        img.style.animation="pulse-border 2s ease-out 0s infinite alternate";
         element.style.borderColor="white";
     }
 }
