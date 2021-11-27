@@ -296,11 +296,15 @@ async function editRoomtypes() {
     }
 }
 
+function pad2(number) {
+     return (number < 10 ? '0' : '') + number;
+}
+
 async function editingRoomtype(param1) {
     assert(masterUiState.state.isViewingRoomType, "wut?");
-    let roomtype = parseFloat(param1.slice(-1));
+    let roomtype = parseFloat(param1.slice(-2));
 
-    let img = document.getElementById(`rooomtype-button-img-${roomtype}`);
+    let img = document.getElementById(`rooomtype-button-img-${pad2(roomtype)}`);
 
     for (element of document.getElementsByClassName("editor-button")) {
         element.style.animation = "none";
@@ -325,7 +329,7 @@ async function editingRoomtype(param1) {
 }
 
 async function roomtypeButtonMouseOver(param1) {
-    selectionChecker.setSelectionRoomtypeHover(parseFloat(param1.slice(-1)));
+    selectionChecker.setSelectionRoomtypeHover(parseFloat(param1.slice(-2)));
 }
 
 async function roomtypeButtonMouseOut() {
