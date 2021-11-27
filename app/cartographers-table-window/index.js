@@ -315,7 +315,9 @@ async function editingRoomtype(param1) {
         canvasHolder.style.cursor = "default";
     } else {
         selectionChecker.setSelectionRoomtypeClick(roomtype);
-        masterUiState.state.isViewingRoomType.isEditingRoomtype = true;
+        masterUiState.state.isViewingRoomType.isEditingRoomtype = {
+            pickedRoomtype: roomtype,
+        };
         canvasHolder.style.cursor = "url('./icons/bucket.png') 6 30, default";
         img.style.animation="pulse-border 2s linear 0s infinite alternate";
         img.style.borderRadius = "32px";
@@ -745,6 +747,11 @@ function handleMouseDown(e){
 
     if (masterUiState.state.isViewingRoomType) {
         selectionChecker.checkSelectionRoomtypeClick(startX, startY, dataStructures);
+        if (masterUiState.state.isViewingRoomType.isEditingRoomtype) {
+            let clicked = selectionChecker.getSelectionRoomtypeClick().selectedId;
+            console.log(clicked);
+            console.log(masterUiState.state.isViewingRoomType.isEditingRoomtype.pickedRoomtype);
+        }
     } else {
         selectionChecker.checkSelectionClick(startX, startY, dataStructures);
     }
