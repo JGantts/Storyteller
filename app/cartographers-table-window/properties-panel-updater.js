@@ -886,11 +886,8 @@ function updateRoomtypePanel(panel, selection, dataStructures) {
   let currentClone = document.getElementById("roomtypes-panel-roomtype-ca-static");
 
   if (!currentClone) {
-    console.log("reinitialize current clone");
     let editorClone = roomtypeTemplates.editor.content.firstElementChild.cloneNode(true);
     currentClone = roomtypeTemplates.roomtype.content.firstElementChild.cloneNode(true);
-
-    console.log(currentClone);
 
     panel.innerHTML = "";
     panel.appendChild(editorClone);
