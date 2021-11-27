@@ -274,10 +274,12 @@ async function viewEditRoomType() {
     if (masterUiState.state.isViewingRoomType) {
         masterUiState.state.isViewingRoomType = false;
     } else {
+        selectionChecker.setSelectionRoomtypeClick(null);
         masterUiState.state.isViewingRoomType = {
             isViewingPalette: false,
             isEditingRoomtype: false,
         }
+        canvasHolder.style.cursor = "default";
     }
 }
 
