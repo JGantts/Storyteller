@@ -274,6 +274,8 @@ async function viewEditRoomType() {
     if (masterUiState.state.isViewingRoomType) {
         masterUiState.state.isViewingRoomType = false;
         canvasHolder.style.cursor = "default";
+        previousSelectionInstanceId = "uninitialized";
+        previousHoverSelectionInstanceId = "uninitialized";
     } else {
         selectionChecker.setSelectionRoomtypeClick(null);
         masterUiState.state.isViewingRoomType = {
