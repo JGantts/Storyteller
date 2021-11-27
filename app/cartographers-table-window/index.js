@@ -755,8 +755,7 @@ function handleMouseDown(e){
         selectionChecker.checkSelectionRoomtypeClick(startX, startY, dataStructures);
         if (masterUiState.state.isViewingRoomType.isEditingRoomtype) {
             let clicked = selectionChecker.getSelectionRoomtypeClick().selectedId;
-            console.log(clicked);
-            console.log(masterUiState.state.isViewingRoomType.isEditingRoomtype.pickedRoomtype);
+            retypeRoom(clicked, masterUiState.state.isViewingRoomType.isEditingRoomtype.pickedRoomtype);
         }
     } else {
         selectionChecker.checkSelectionClick(startX, startY, dataStructures);
@@ -1005,6 +1004,38 @@ function addRoomAbsolute({id, room}){
 
   metaroom.rooms[id] = room;
   metaroom.perms = metaroom.perms.concat(newPerms);
+}
+
+function retypeRoom(id, type) {
+    let myCommand = makeRetypeRoomCommand(id, type);
+    _undoList.push(myCommand);
+    myCommand.do();
+    _redoList = [];
+    fileHelper.fileModified();
+    rebuildRooms();
+    redrawRooms(
+      canvasContexts.room,
+      canvasContexts.pasties,
+      [...dataStructures.doors, ...dataStructures.walls],
+      dataStructures.points,
+      dataStructures.metaroomDisk);
+    selectionChecker.resetSelection();
+    updateBarButtons();
+}
+
+function makeRetypeRoomCommand(id, type){
+  let typeOriginal = dataStructures.metaroomDisk.rooms[id].roomType;
+  assert(typeOriginal, "");
+  return new Command(
+      retypeRoomAbsolute,
+      {id, type: typeOriginal},
+      retypeRoomAbsolute,
+      {id, type: type},
+  );
+}
+
+function retypeRoomAbsolute({id, type}){
+    dataStructures.metaroomDisk.rooms[id].roomType = type;
 }
 
 function makeDeleteRoomCommand(id){
