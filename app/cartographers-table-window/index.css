@@ -7,6 +7,12 @@ html {
     background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
+/* The animation code */
+@keyframes spin {
+  from {border-color: black;}
+  to {border-color: white;}
+}
+
 .row {
   display: flex;
   flex-direction: row;
@@ -157,19 +163,35 @@ html {
 }
 
 .editor-button img {
-  border-radius: 8px;
-  border: 2px solid blue;
+  width: 50px;
+  height: 50px;
+  border: 0;
+  background-color: rgba(0,0,0,0);
+  padding: 0;
+  border-radius: 6px;
 }
 
 .editor-button button {
+  width: 50px;
+  height: 50px;
   border: 0;
-  padding: 2.1666667px;
   background-color: rgba(0,0,0,0);
   outline-color: white;
-  opacity: 0.75;
+  padding: 0;
 }
 
-.editor-button button:hover {
+.editor-button {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0,0,0,0);
+  opacity: 0.75;
+  border-radius: 8px;
+  border: 2px solid black;
+  overflow: hidden;
+  margin: 2.1666667px;
+}
+
+.editor-button:hover {
   opacity: 1;
 }
 

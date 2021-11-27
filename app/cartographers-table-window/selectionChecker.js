@@ -431,7 +431,7 @@ function getSelectionRoomtypeClick() {
     return selectionRoomtypeClick;
 }
 
-function setSelectionRoomTypeHover(roomtype) {
+function setSelectionRoomtypeHover(roomtype) {
     if (roomtype) {
         selectionRoomtypeHover = {
             selectedType : "roomtype",
@@ -441,6 +441,24 @@ function setSelectionRoomTypeHover(roomtype) {
         }
     } else {
         selectionRoomtypeHover = {
+            selectedType : "",
+            selectedId: "",
+            selectedRoomsIdsPartsIds: [],
+            selectionInstancedId: null,
+        }
+    }
+}
+
+function setSelectionRoomtypeClick(roomtype) {
+    if (roomtype) {
+        selectionRoomtypeClick = {
+            selectedType : "roomtype",
+            selectedId: roomtype,
+            selectedRoomsIdsPartsIds: [],
+            selectionInstancedId: crypto.randomUUID(),
+        }
+    } else {
+        selectionRoomtypeClick = {
             selectedType : "",
             selectedId: "",
             selectedRoomsIdsPartsIds: [],
@@ -459,7 +477,8 @@ module.exports = {
         getSelectionClick,
         getSelectionRoomtypeHover,
         getSelectionRoomtypeClick,
-        setSelectionRoomTypeHover,
+        setSelectionRoomtypeHover,
+        setSelectionRoomtypeClick,
         resetSelection,
     }
 }

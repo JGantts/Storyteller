@@ -276,6 +276,7 @@ async function viewEditRoomType() {
     } else {
         masterUiState.state.isViewingRoomType = {
             isViewingPalette: false,
+            isEditingRoomtype: false,
         }
     }
 }
@@ -293,16 +294,36 @@ async function editRoomtypes() {
     }
 }
 
-async function editingRoomtype() {
+async function editingRoomtype(param1) {
+    assert(masterUiState.state.isViewingRoomType, "wut?");
+    let roomtype = parseFloat(param1.slice(-1));
 
+    let img = document.getElementById(`rooomtype-button-img-${roomtype}`);
+
+    for (element of document.getElementsByClassName("editor-button")) {
+        element.style.animation="none";
+    }
+
+    if (masterUiState.state.isViewingRoomType.isEditingRoomtype
+      && selectionChecker.getSelectionRoomtypeClick() === roomtype
+    ) {
+        selectionChecker.setSelectionRoomtypeClick(null);
+        masterUiState.state.isViewingRoomType.isEditingRoomtype = false;
+        canvasHolder.style.cursor = "default";
+    } else {
+        selectionChecker.setSelectionRoomtypeClick(roomtype);
+        masterUiState.state.isViewingRoomType.isEditingRoomtype = true;
+        canvasHolder.style.cursor = "url('./icons/bucket.png') 6 30, default";
+        img.style.animation="spin 2s ease-out 0s infinite alternate";
+    }
 }
 
 async function roomtypeButtonMouseOver(param1) {
-    selectionChecker.setSelectionRoomTypeHover(parseFloat(param1.slice(-1)));
+    selectionChecker.setSelectionRoomtypeHover(parseFloat(param1.slice(-1)));
 }
 
 async function roomtypeButtonMouseOut() {
-    selectionChecker.setSelectionRoomTypeHover(null);
+    selectionChecker.setSelectionRoomtypeHover(null);
 }
 
 function displayFiles(files) {

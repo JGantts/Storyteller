@@ -348,79 +348,84 @@
 
     <div id="roomtype-palette" style="height:0; display:none; transition:2s;">
       <div class="row editor-row">
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-0' class='column editor-button tooltip-holder'>
           <button
             id='rooomtype-button-0'
+            class="filter-sky-blue"
             onclick="editingRoomtype(this.id)"
             onmouseover="roomtypeButtonMouseOver(this.id)"
             onmouseout="roomtypeButtonMouseOut(this.id)"
           >
-            <img class = 'filter-sky-blue' src='other-images/wave-ver.svg' width='50px' height='50px'/>
+            <img src='other-images/wave-ver.svg' width='50px' height='50px'/>
           </button>
           <span class='tooltip'>Atmosphere</span>
         </div>
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-1' class='column editor-button  tooltip-holder'>
           <button
             id='rooomtype-button-1'
             onclick="editingRoomtype(this.id)"
             onmouseover="roomtypeButtonMouseOver(this.id)"
             onmouseout="roomtypeButtonMouseOut(this.id)"
           >
-            <img class = 'filter-light-brown' src='other-images/flat-ver.svg' width='50rem' height='50rem'/>
+            <img src='other-images/flat-ver.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Wooden Walkway</span>
         </div>
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-2' class='column editor-button  tooltip-holder'>
           <span class='tooltip-left'>Concrete Walkway</span>
           <button
             id='rooomtype-button-2'
+            class='filter-yellow'
             onclick="editingRoomtype(this.id)"
             onmouseover="roomtypeButtonMouseOver(this.id)"
             onmouseout="roomtypeButtonMouseOut(this.id)"
           >
-            <img class = 'filter-yellow' src='other-images/flat-hor.svg' width='50rem' height='50rem'/>
+            <img src='other-images/flat-hor.svg' width='50rem' height='50rem'/>
           </button>
         </div>
       </div>
 
       <div class="row editor-row">
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-3' class='column editor-button  tooltip-holder'>
           <button
             id='rooomtype-button-3'
+            class='filter-burnt-orange'
             onclick="editingRoomtype(this.id)"
             onmouseover="roomtypeButtonMouseOver(this.id)"
             onmouseout="roomtypeButtonMouseOut(this.id)"
           >
-            <img class = 'filter-burnt-orange' src='other-images/flat-hor.svg' width='50rem' height='50rem'/>
+            <img src='other-images/flat-hor.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Indoor Corridor</span>
         </div>
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-4' class='column editor-button tooltip-holder'>
           <button
             id='rooomtype-button-4'
+            class='filter-dark-brown'
             onclick="editingRoomtype(this.id)"
             onmouseover="roomtypeButtonMouseOver(this.id)"
             onmouseout="roomtypeButtonMouseOut(this.id)"
           >
-            <img class = 'filter-dark-brown' src='other-images/flat-ver.svg' width='50rem' height='50rem'/>
+            <img src='other-images/flat-ver.svg' width='50rem' height='50rem'/>
           </button>
             <span class='tooltip'>Outdoor Corridor</span>
         </div>
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-5' class='column editor-button  tooltip-holder'>
           <span class='tooltip-left '>Normal Soil</span>
           <button
             id='rooomtype-button-5'
+            class = 'filter-green'
             onclick="editingRoomtype(this.id)"
             onmouseover="roomtypeButtonMouseOver(this.id)"
             onmouseout="roomtypeButtonMouseOut(this.id)"
           >
-            <img class = 'filter-green' src='other-images/chevron-right.svg' width='50rem' height='50rem'/>
+            <img id='rooomtype-button-img-5' src='other-images/chevron-right.svg' width='50rem' height='50rem'/>
           </button>
         </div>
       </div>
 
       <div class="row editor-row">
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-6' class='column editor-button  tooltip-holder'>
           <button
              id='rooomtype-button-6'
              onclick="editingRoomtype(this.id)"
@@ -431,7 +436,7 @@
           </button>
           <span class='tooltip'>Boggy Soil</span>
         </div>
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-7' class='column editor-button  tooltip-holder'>
           <button
             id='rooomtype-button-7'
             onclick="editingRoomtype(this.id)"
@@ -442,7 +447,7 @@
           </button>
           <span class='tooltip'>Drained Soil</span>
         </div>
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-8' class='column editor-button  tooltip-holder'>
           <span class='tooltip-left'>Fresh Water</span>
           <button
             id='rooomtype-button-8'
@@ -456,7 +461,7 @@
       </div>
 
       <div class="row editor-row">
-        <div class='column editor-button  tooltip-holder'>
+        <div id='rooomtype-button-img-9' class='column editor-button  tooltip-holder'>
           <button
             id='rooomtype-button-9'
             onclick="editingRoomtype(this.id)"
@@ -467,7 +472,7 @@
           </button>
           <span class='tooltip'>Salt Water</span>
         </div>
-        <div class='column editor-button tooltip-holder'>
+        <div id='rooomtype-button-img-10' class='column editor-button tooltip-holder'>
           <button
              id='rooomtype-button-10'
              onclick="editingRoomtype(this.id)"
@@ -478,8 +483,7 @@
           </button>
           <span class='tooltip'>Ettin Home</span>
         </div>
-        <div class='column'>
-
+        <div class='colum-fill editor-button' style="border-width: 0; padding: 2px"> 
         </div>
       </div>
       <hr />
