@@ -183,7 +183,7 @@ html {
   height: 50px;
   background-color: rgba(0,0,0,0);
   opacity: 0.75;
-  border-radius: 32px;
+  border-radius: 8px;
   border: 2px solid black;
   overflow: hidden;
   margin: 2.1666667px;

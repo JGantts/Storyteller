@@ -304,7 +304,7 @@ async function editingRoomtype(param1) {
 
     for (element of document.getElementsByClassName("editor-button")) {
         element.style.animation = "none";
-        element.style.borderRadius = "32px";
+        element.style.borderRadius = "8px";
     }
 
     if (masterUiState.state.isViewingRoomType.isEditingRoomtype
@@ -318,7 +318,7 @@ async function editingRoomtype(param1) {
         masterUiState.state.isViewingRoomType.isEditingRoomtype = true;
         canvasHolder.style.cursor = "url('./icons/bucket.png') 6 30, default";
         img.style.animation="pulse-border 2s linear 0s infinite alternate";
-        img.style.borderRadius = "8px";
+        img.style.borderRadius = "32px";
     }
 }
 
