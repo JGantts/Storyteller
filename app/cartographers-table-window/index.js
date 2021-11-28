@@ -1024,11 +1024,11 @@ function retypeRoom(id, type) {
 }
 
 function makeRetypeRoomCommand(id, type){
-  let typeOriginal = dataStructures.metaroomDisk.rooms[id].roomType;
-  assert(typeOriginal, "");
+  let roomOriginal = dataStructures.metaroomDisk.rooms[id];
+  assert(roomOriginal, "");
   return new Command(
       retypeRoomAbsolute,
-      {id, type: typeOriginal},
+      {id, type: roomOriginal.roomType},
       retypeRoomAbsolute,
       {id, type: type},
   );
