@@ -1178,23 +1178,32 @@ async function redrawMetaroom(){
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
     if (dataStructures.metaroomDisk.background) {
         if (!img || dataStructures.metaroomDisk.background !== imgPathRel) {
-            img = new Image;
             imgPathRel = dataStructures.metaroomDisk.background;
             imgPathAbsolute = path.join(path.dirname(fileHelper.getCurrentFileRef().path), imgPathRel);
 
             switch (path.extname(imgPathAbsolute)) {
-              case "blk":
+              case ".blk":
+                console.log(imgPathAbsolute);
+                img = await clbTools.loadBackground(imgPathAbsolute);
+                console.log(img);
+                backgroundCtx.moveTo(0, 0);
+                backgroundCtx.putImageData(img, 0, 0);
+                break
 
+              case ".png":
+              case ".bmp":
+                img = new Image;
+                img.src = imgPathAbsolute;
+                await img.decode();
+                backgroundCtx.moveTo(0, 0);
+                backgroundCtx.drawImage(img, 0, 0);
                 break;
 
               default:
-                img.src = imgPathAbsolute;
-                await img.decode();
+                console.log(`Unsupported file type: ${path.extname(imgPathAbsolute)}`);
                 break;
             }
         }
-        backgroundCtx.moveTo(0, 0);
-        backgroundCtx.drawImage(img, 0, 0);
     }
 }
 
