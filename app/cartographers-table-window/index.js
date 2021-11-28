@@ -1186,7 +1186,7 @@ async function redrawMetaroom(){
                 img = await clbTools.loadBackground(imgPathAbsolute);
                 backgroundCtx.moveTo(0, 0);
                 backgroundCtx.putImageData(img, 0, 0);
-                break
+                break;
 
               case ".png":
               case ".bmp":
