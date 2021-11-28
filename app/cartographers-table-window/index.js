@@ -1183,9 +1183,7 @@ async function redrawMetaroom(){
 
             switch (path.extname(imgPathAbsolute)) {
               case ".blk":
-                console.log(imgPathAbsolute);
                 img = await clbTools.loadBackground(imgPathAbsolute);
-                console.log(img);
                 backgroundCtx.moveTo(0, 0);
                 backgroundCtx.putImageData(img, 0, 0);
                 break
