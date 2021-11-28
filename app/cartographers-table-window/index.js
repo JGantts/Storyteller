@@ -1238,88 +1238,92 @@ async function redrawPasties(pastiesCtx, points, metaroom){
 let secondsPassed;
 let oldTimestamp = null;
 let fps;
+let frameIndex = -1;
 
 let previousHoverSelectionInstanceId = "uninitialized";
 let previousSelectionInstanceId = "uninitialized";
 
 async function redrawSelection(timestamp) {
-    if (!oldTimestamp) {
-        oldTimestamp = timestamp;
-        fps = 0;
-    } else {
-        secondsPassed = (timestamp - oldTimestamp) / 1000;
-        oldTimestamp = timestamp;
-        fps = Math.round(1 / secondsPassed);
-    }
-    //console.log(fps)
+    frameIndex += 1;
+    if (frameIndex%3 === 0) {
+      if (!oldTimestamp) {
+          oldTimestamp = timestamp;
+          fps = 0;
+      } else {
+          secondsPassed = (timestamp - oldTimestamp) / 1000;
+          oldTimestamp = timestamp;
+          fps = Math.round(1 / secondsPassed);
+      }
+      //console.log(fps)
 
 
 
-    if (dataStructures?.metaroomDisk) {
-        if (masterUiState.camera.rezoom) {
-            zoomPanSettleTimestampLastChange = timestamp;
-            masterUiState.camera.rezoom = false;
-            rejiggerOverlayCanvases(dataStructures.metaroomDisk);
-            rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
-            redrawMetaroom();
-            updateBarButtons();
-        }
-        if (masterUiState.camera.reposition) {
-            masterUiState.camera.reposition = false;
-        }
+      if (dataStructures?.metaroomDisk) {
+          if (masterUiState.camera.rezoom) {
+              zoomPanSettleTimestampLastChange = timestamp;
+              masterUiState.camera.rezoom = false;
+              rejiggerOverlayCanvases(dataStructures.metaroomDisk);
+              rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
+              redrawMetaroom();
+              updateBarButtons();
+          }
+          if (masterUiState.camera.reposition) {
+              masterUiState.camera.reposition = false;
+          }
 
-        if (zoomPanSettleTimestampLastChange
-            && (timestamp - zoomPanSettleTimestampLastChange) > zoomPanSettleMilliseconds) {
-            zoomPanSettleTimestampLastChange = null;
-            zooomSettle = zoom;
-        }
+          if (zoomPanSettleTimestampLastChange
+              && (timestamp - zoomPanSettleTimestampLastChange) > zoomPanSettleMilliseconds) {
+              zoomPanSettleTimestampLastChange = null;
+              zooomSettle = zoom;
+          }
 
-        if (masterUiState.state.isViewingRoomType) {
-            let selection = selectionChecker.getSelectionRoomtypeHover();
-            if (selection.selectedType === "") {
-                selection = selectionChecker.getSelectionRoomtypeClick();
-            }
+          if (masterUiState.state.isViewingRoomType) {
+              let selection = selectionChecker.getSelectionRoomtypeHover();
+              if (selection.selectedType === "") {
+                  selection = selectionChecker.getSelectionRoomtypeClick();
+              }
 
-            if (previousHoverSelectionInstanceId !== selection.selectionInstancedId
-            || previousHoverSelectionInstanceId === "uninitialized") {
-                previousHoverSelectionInstanceId = selection.selectionInstancedId;
-                updateRoomtypePanel(
-                  document.getElementById("properties-panel"),
+              if (previousHoverSelectionInstanceId !== selection.selectionInstancedId
+              || previousHoverSelectionInstanceId === "uninitialized") {
+                  previousHoverSelectionInstanceId = selection.selectionInstancedId;
+                  updateRoomtypePanel(
+                    document.getElementById("properties-panel"),
+                    selection,
+                    dataStructures);
+              }
+
+              canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+              roomtypeRenderer.redrawRoomtypes(canvasContexts.selection, dataStructures);
+          } else {
+              let selection = selectionChecker.getSelectionHover();
+              if (selection.selectedType === "") {
+                  selection = selectionChecker.getSelectionClick();
+              }
+
+              if (previousSelectionInstanceId !== selection.selectionInstancedId
+              || previousSelectionInstanceId === "uninitialized") {
+                  previousSelectionInstanceId = selection.selectionInstancedId;
+                  updatePropertiesPanel(
+                    document.getElementById("properties-panel"),
+                    selection,
+                    dataStructures);
+              }
+
+              let potentialRooms = potentialFactory.getPotentialRooms
+              (
+                  masterUiState,
                   selection,
-                  dataStructures);
-            }
+                  dataStructures
+              );
+              redrawPotential(potentialRooms, dataStructures);
+              canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+              canvasContexts.sandwich.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+              selectionRenderer.redrawSelection(canvasContexts.selection, canvasContexts.sandwich, dataStructures, selection);
+          }
 
-            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-            roomtypeRenderer.redrawRoomtypes(canvasContexts.selection, dataStructures);
-        } else {
-            let selection = selectionChecker.getSelectionHover();
-            if (selection.selectedType === "") {
-                selection = selectionChecker.getSelectionClick();
-            }
-
-            if (previousSelectionInstanceId !== selection.selectionInstancedId
-            || previousSelectionInstanceId === "uninitialized") {
-                previousSelectionInstanceId = selection.selectionInstancedId;
-                updatePropertiesPanel(
-                  document.getElementById("properties-panel"),
-                  selection,
-                  dataStructures);
-            }
-
-            let potentialRooms = potentialFactory.getPotentialRooms
-            (
-                masterUiState,
-                selection,
-                dataStructures
-            );
-            redrawPotential(potentialRooms, dataStructures);
-            canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-            canvasContexts.sandwich.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-            selectionRenderer.redrawSelection(canvasContexts.selection, canvasContexts.sandwich, dataStructures, selection);
-        }
-
+      }
+      copyOffscreenCanvasasToScreen();
     }
-    copyOffscreenCanvasasToScreen();
     window.requestAnimationFrame(redrawSelection);
 }
 
