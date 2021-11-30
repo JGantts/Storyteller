@@ -128,7 +128,7 @@ function updatePropertiesPanel(panel, selection, dataStructures) {
       break;
 
     default:
-      assert("false", "lol, wut?");
+      assert(false, "lol, wut?");
 
   }
 
