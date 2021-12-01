@@ -330,6 +330,21 @@ async function editingRoomtype(param1) {
     }
 }
 
+async function permUp() {
+    permDiff(1)
+}
+
+async function permDown() {
+    permDiff(-1)
+}
+
+async function permDiff(diff) {
+    let door = dataStructures.doors[selectionChecker.getSelectionClick().selectedId];
+    let newPerm = door.permeability + (diff/100);
+    door.permeability = Math.min(Math.max(newPerm, 0), 1);
+    previousSelectionInstanceId = "uninitialized";
+}
+
 async function roomtypeButtonMouseOver(param1) {
     selectionChecker.setSelectionRoomtypeHover(parseFloat(param1.slice(-2)));
 }

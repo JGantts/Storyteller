@@ -140,19 +140,20 @@ html {
   padding: 0;
 }
 
-.standard-button button {
+.standard-button {
   padding: 0;
   border: 0;
+  color: white;
   background-color: rgba(0,0,0,0);
   outline-color: white;
   opacity: 1;
 }
 
-.standard-button button:hover {
+.standard-button:hover {
   filter: drop-shadow(4px 4px 3px black);
 }
 
-.standard-button button:active {
+.standard-button:active {
   opacity: 0.75;
 }
 

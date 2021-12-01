@@ -278,7 +278,20 @@
     <div style="padding: 3px;">
       <img src="./icons/ca.svg" width='20rem' height='20rem'
       style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <div id="property-permeability" style="font-size: 12;">
+      <div class="row">
+        <button class="standard-button column" onlcick="permUp()">
+          ^
+        </button>
+        <div class="column-padding"></div>
+        <!--<button class="standard-button">-->
+          <div id="property-permeability" class="column" style="font-size: 12;">
+          </div>
+        <!--</button>-->
+        <div class="column-padding"></div>
+        <button class="standard-button columnn" onclick="permDown()">
+          v
+        </button>
+        <div class="column-fill"></div>
       </div>
     </div>
   </div>
@@ -337,8 +350,8 @@
     <div class="row">
       <div class="column-padding"></div>
       <div class="column">
-        <div class='standard-button tooltip-holder'>
-          <button onclick="editRoomtypes()">
+        <div class='tooltip-holder'>
+          <button class="standard-button" onclick="editRoomtypes()">
             <img src='icons/bucket.svg' width='50rem' height='50rem'/>
           </button>
           <span class='tooltip'>Edit room type</span>
