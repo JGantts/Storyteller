@@ -330,21 +330,6 @@ async function editingRoomtype(param1) {
     }
 }
 
-async function permUp() {
-    permDiff(1)
-}
-
-async function permDown() {
-    permDiff(-1)
-}
-
-async function permDiff(diff) {
-    let door = dataStructures.doors[selectionChecker.getSelectionClick().selectedId];
-    let newPerm = door.permeability + (diff/100);
-    door.permeability = Math.min(Math.max(newPerm, 0), 1);
-    previousSelectionInstanceId = "uninitialized";
-}
-
 async function permChange(newPerm) {
   let door = dataStructures.doors[selectionChecker.getSelectionClick().selectedId];
   door.permeability = Math.min(Math.max(newPerm, 0), 100);
@@ -1059,8 +1044,20 @@ function retypeRoomAbsolute({id, type}){
     dataStructures.metaroomDisk.rooms[id].roomType = type;
 }
 
-function repermDoorsAbsolute({id, type}){
-    dataStructures.metaroomDisk.rooms[id].roomType = type;
+function makeRepermDoorsCommand(id, type){
+  let roomOriginal = dataStructures.metaroomDisk.rooms[id];
+  assert(roomOriginal, "");
+  return new Command(
+      repermDoorsAbsolute,
+      {id, type: roomOriginal.roomType},
+      repermDoorsAbsolute,
+      {id, type: type},
+  );
+}
+
+function repermDoorsAbsolute({id, perm}){
+    dataStructures.doors[id].permeability = perm;
+    //dataStructures.metaroomDisk.
 }
 
 function makeDeleteRoomCommand(id){
