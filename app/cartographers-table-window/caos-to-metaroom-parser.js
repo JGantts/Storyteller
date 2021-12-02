@@ -106,7 +106,7 @@ function parseCaosForMetaroom(codeIn) {
                         a: keyMap[gameVariableA.arguments[0].value],
                         b: keyMap[gameVariableB.arguments[0].value]
                     },
-                    permeability: doorArgs[2].value/100
+                    permeability: doorArgs[2].value
                 });
                 break;
 

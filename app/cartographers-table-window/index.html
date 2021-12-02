@@ -279,18 +279,22 @@
       <div class="row">
         <img src="./icons/ca.svg" width='20rem' height='20rem'
         style="vertical-align: middle; float: left; padding-right: 5px"/>
-        <button class="standard-button columnn" onclick="permDown()">
+        <!--<button class="standard-button columnn" onclick="permDown()">
           <img src="./icons/downsolid.svg" width='20rem' height='20rem'
           style="vertical-align: middle; float: left; padding-right: 5px"/>
-        </button>
-        <!--<button class="standard-button">-->
-          <div id="property-permeability" class="column" style="font-size: 12; padding: 0 4px">
-          </div>
-        <!--</button>-->
-        <button class="standard-button column" onclick="permUp()">
+        </button>-->
+        <input
+          id="property-permeability"
+          class="column"
+          style="font-size: 12; padding: 0 4px"
+          type="number"
+          name="quantity"
+          min="0" max="100"
+          oninput="permChange(this.value)">
+        <!--<button class="standard-button column" onclick="permUp()">
           <img src="./icons/upsolid.svg" width='20rem' height='20rem'
           style="vertical-align: middle; float: left; padding-right: 5px"/>
-        </button>
+        </button>-->
         <div class="column-fill"></div>
       </div>
     </div>

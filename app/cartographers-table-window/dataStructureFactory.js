@@ -58,7 +58,7 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                                 a: wallWithId.id,
                                 b: roomPotential.id,
                             },
-                            "permeability": 1.0
+                            "permeability": 100
                         }
                     );
                   },

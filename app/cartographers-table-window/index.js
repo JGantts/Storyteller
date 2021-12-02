@@ -345,6 +345,12 @@ async function permDiff(diff) {
     previousSelectionInstanceId = "uninitialized";
 }
 
+async function permChange(newPerm) {
+  let door = dataStructures.doors[selectionChecker.getSelectionClick().selectedId];
+  door.permeability = Math.min(Math.max(newPerm, 0), 100);
+  previousSelectionInstanceId = "uninitialized";
+}
+
 async function roomtypeButtonMouseOver(param1) {
     selectionChecker.setSelectionRoomtypeHover(parseFloat(param1.slice(-2)));
 }
@@ -1053,6 +1059,10 @@ function retypeRoomAbsolute({id, type}){
     dataStructures.metaroomDisk.rooms[id].roomType = type;
 }
 
+function repermDoorsAbsolute({id, type}){
+    dataStructures.metaroomDisk.rooms[id].roomType = type;
+}
+
 function makeDeleteRoomCommand(id){
   let roomOriginal = dataStructures.metaroomDisk.rooms[id];
   let room = {
@@ -1231,9 +1241,9 @@ async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
               roomCtx.strokeStyle = 'rgb(005, 170, 255)';
             } else if (line.permeability === 0) {
               roomCtx.strokeStyle = 'rgb(228, 000, 107)';
-            } else if (line.permeability < 1) {
+            } else if (line.permeability < 100) {
               roomCtx.strokeStyle = 'rgb(207, 140, 003)';
-            } else if (line.permeability === 1) {
+            } else if (line.permeability === 100) {
               roomCtx.strokeStyle = 'rgb(172, 255, 083)';
             }
             roomCtx.beginPath();
