@@ -339,9 +339,14 @@ async function editingRoomtype(param1) {
 }
 
 async function permChange(newPerm) {
-  let door = dataStructures.doors[selectionChecker.getSelectionClick().selectedId];
-  door.permeability = Math.min(Math.max(newPerm, 0), 100);
+  console.log(selectionChecker.getSelectionClick());
+  let door_refA = dataStructures.doors[selectionChecker.getSelectionClick().selectedId];
+  console.log(door_refA);
+  let door_refB = dataStructures.metaroomDisk.perms[getSortedId(door_refA.roomKeys[0], door_refA.roomKeys[1])];
+  door_refA.permeability = Math.min(Math.max(newPerm, 0), 100);
+  door_refB.permeability = Math.min(Math.max(newPerm, 0), 100);
   previousSelectionInstanceId = "uninitialized";
+  masterUiState.redraw = true;
 }
 
 async function roomtypeButtonMouseOver(param1) {
@@ -1133,7 +1138,7 @@ function permsStorageAbsolute({toStore}){
 function rebuildRooms() {
     let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
     //console.log(dataStructures.metaroomDisk.perms);
-    let doors =
+    let doorsArray =
         dataStructureFactory
             .getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms)
             .filter(function(val) {return val})
@@ -1141,18 +1146,23 @@ function rebuildRooms() {
               val.start.x !== val.end.x ||
               val.start.y !== val.end.y
             );});
-    let walls = dataStructureFactory.subtractSegmentsFromSegments(wallsOverreach, doors).filter(function(val) {return val});
+    let walls = dataStructureFactory.subtractSegmentsFromSegments(wallsOverreach, doorsArray).filter(function(val) {return val});
     let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk.rooms);
     let pointsSortedX = Object.values(points);;
     pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
     let pointsSortedY = Object.values(points);;
     pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
 
+    let doors = new Object();
+    for (door of doorsArray) {
+        doors[door.id] = door;
+    }
+
     dataStructures = {
         metaroomDisk: metaroom,
         points: points,
         walls: walls,
-        doors: doors,
+        doors: doorsArray,
         pointsSortedX: pointsSortedX,
         pointsSortedY: pointsSortedY
     };
@@ -1295,7 +1305,10 @@ async function redrawSelection(timestamp) {
 
 
       if (dataStructures?.metaroomDisk) {
-          if (masterUiState.camera.rezoom) {
+          if (
+              masterUiState.camera.rezoom
+              || masterUiState.redraw
+          ) {
               zoomPanSettleTimestampLastChange = timestamp;
               masterUiState.camera.rezoom = false;
               rejiggerOverlayCanvases(dataStructures.metaroomDisk);
