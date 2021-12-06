@@ -22,7 +22,7 @@ function parseCaosForMetaroom(codeIn) {
       width: null,
       height: null,
       rooms: [],
-      perms: []
+      perms: new Object()
     };
 
     let keyMap = new Object();
@@ -100,14 +100,18 @@ function parseCaosForMetaroom(codeIn) {
                 assert(doorArgs.length === 3, `${JSON.stringify(command)}`);
                 let gameVariableA = doorArgs[0];
                 let gameVariableB = doorArgs[1];
-                importedJson.perms.push({
+                let idA = keyMap[gameVariableA.arguments[0].value];
+                let idB = keyMap[gameVariableB.arguments[0].value];
+                let id = getSortedId(idA, idB);
+                importedJson.perms[id] = {
+                    id,
                     rooms:
                     {
-                        a: keyMap[gameVariableA.arguments[0].value],
-                        b: keyMap[gameVariableB.arguments[0].value]
+                        a: idA,
+                        b: idB
                     },
                     permeability: doorArgs[2].value
-                });
+                };
                 break;
 
 

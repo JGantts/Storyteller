@@ -24,7 +24,7 @@ function getSortedRoomFromDimensions(leftX, rightX, leftYA, rightYA, leftYB, rig
 }
 
 function getPermsFromRoomPotential(roomPotential, dataStructures) {
-    let perms = [];
+    let perms = new Object();
     let sides = getWallsFromRoom(roomPotential);
     for (let i = 0; i < sides.length; i++) {
         //console.log("\n\n\n\n");
@@ -51,18 +51,17 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                   wallWithId.wall,
                   () => {},
                   () => {
-                    let newId = getSortedId(wallWithId.id, roomPotential.id);
-                    perms = perms.concat(
-                    {
-                        id: newId,
-                        rooms:
-                        {
-                            a: wallWithId.id,
-                            b: roomPotential.id,
-                        },
-                        permeability: 100
-                      }
-                    );
+                      let newId = getSortedId(wallWithId.id, roomPotential.id);
+                      perms[newId] =
+                      {
+                          id: newId,
+                          rooms:
+                          {
+                              a: wallWithId.id,
+                              b: roomPotential.id,
+                          },
+                          permeability: 100
+                      };
                   },
                   () => {}
                 )
@@ -142,7 +141,8 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, a
 
 function getDoorsFromRooms(rooms, perms) {
   let doors = [];
-  for (const perm of perms) {
+  for (const permKey in perms) {
+      let perm = perms[permKey];
       //console.log(perm);
   //perms.forEach((perm, i) => {
       let roomA = rooms[perm.rooms.a];

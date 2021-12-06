@@ -1017,7 +1017,10 @@ function addRoomAbsolute({id, room}){
   let newPerms = dataStructureFactory.getPermsFromRoomPotential(room, dataStructures);
 
   metaroom.rooms[id] = room;
-  metaroom.perms = metaroom.perms.concat(newPerms);
+
+  for (const permKey in newPerms) {
+      metaroom.perms[newPerms[permKey].id] = newPerms[permKey];
+  }
 }
 
 function retypeRoom(id, type) {
@@ -1089,27 +1092,26 @@ function makeDeleteRoomCommand(id){
 }
 
 function deleteRoomAbsolute({id}){
-  delete dataStructures.metaroomDisk.rooms[id];
-  dataStructures.metaroomDisk.perms =
-      dataStructures.metaroomDisk.perms
-          .filter((perm) =>
-          {
-            return (
-              perm.rooms.a !== id
-               && perm.rooms.b !== id
-             );
-          });
+    delete dataStructures.metaroomDisk.rooms[id];
+    for (permKey in dataStructures.metaroomDisk.perms) {
+        let perm = dataStructures.metaroomDisk.perms[permKey];
+        if (perm.rooms.a === id || perm.rooms.b === id) {
+            delete dataStructures.metaroomDisk.perms[permKey];
+        }
+    }
 }
 
 function makePermsStorageCommand(ids){
-    let toStore =
-        dataStructures.metaroomDisk.perms
-            .filter(perm =>
-                ids.some(id =>
-                    (id === perm.rooms.a
-                        || id === perm.rooms.b)
-                )
-            )
+    let toStore = new Object();
+    for (permKey in dataStructures.metaroomDisk.perms) {
+        let perm = dataStructures.metaroomDisk.perms[permKey];
+        if (ids.some(id =>
+          (id === perm.rooms.a
+          || id === perm.rooms.b)
+        )) {
+          toStore[perm.id] = perm;
+        }
+    }
     return new Command(
         permsStorageAbsolute,
         {toStore},
@@ -1119,12 +1121,9 @@ function makePermsStorageCommand(ids){
 }
 
 function permsStorageAbsolute({toStore}){
-    for (stored of toStore) {
-        let existing = dataStructures.metaroomDisk.perms
-            .filter(existingPermVal =>
-                (existingPermVal.rooms.a === stored.rooms.a && existingPermVal.rooms.b === stored.rooms.b)
-                || (existingPermVal.rooms.a === stored.rooms.b && existingPermVal.rooms.b === stored.rooms.a)
-            )[0];
+    for (storedKey in toStore) {
+        let stored = toStore[storedKey];
+        let existing = dataStructures.metaroomDisk.perms[stored.id];
         if (existing) {
             existing.permeability = stored.permeability;
         }
@@ -1168,7 +1167,7 @@ let blankRoom = {
     width: 0,
     height: 0,
     rooms: {},
-    perms: []
+    perms: new Object()
 };
 
 function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
