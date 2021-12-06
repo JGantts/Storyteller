@@ -142,7 +142,6 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, a
 
 function getDoorsFromRooms(rooms, perms) {
   let doors = [];
-  console.log(perms);
   for (const perm of perms) {
       //console.log(perm);
   //perms.forEach((perm, i) => {
