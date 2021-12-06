@@ -161,6 +161,14 @@ topCanvasElement.onwheel = handleWheel;
 window.onkeydown = userTextKeyDown;
 window.onkeyup = userTextKeyUp;
 
+function getSortedId(idA, idB) {
+    if (idA > idB) {
+        return "" + idA + "-" + idB;
+    } else {
+        return "" + idB + "-" + idA;
+    }
+}
+
 function getSelectionCheckMargin() {
     return 6 * zoom;
 }

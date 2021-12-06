@@ -51,15 +51,17 @@ function getPermsFromRoomPotential(roomPotential, dataStructures) {
                   wallWithId.wall,
                   () => {},
                   () => {
+                    let newId = getSortedId(wallWithId.id, roomPotential.id);
                     perms = perms.concat(
+                    {
+                        id: newId,
+                        rooms:
                         {
-                            rooms:
-                            {
-                                a: wallWithId.id,
-                                b: roomPotential.id,
-                            },
-                            "permeability": 100
-                        }
+                            a: wallWithId.id,
+                            b: roomPotential.id,
+                        },
+                        permeability: 100
+                      }
                     );
                   },
                   () => {}
@@ -140,6 +142,7 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, a
 
 function getDoorsFromRooms(rooms, perms) {
   let doors = [];
+  console.log(perms);
   for (const perm of perms) {
       //console.log(perm);
   //perms.forEach((perm, i) => {

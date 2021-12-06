@@ -34,11 +34,12 @@ function getSortedDoor(aX, aY, bX, bY, permeability, roomKeys) {
     let line = getSortedLine(aX, aY, bX, bY);
     if (line) {
         return {
+            id: getSortedId(roomKeys.a, roomKeys.b),
             permeability,
             start: line.start,
             end: line.end,
             roomKeys
-        }
+        };
     }
     return null;
 }
