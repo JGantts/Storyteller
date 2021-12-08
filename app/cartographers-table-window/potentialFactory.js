@@ -440,7 +440,7 @@ function roomOverlapsOrCausesTooSmallDoor(room, dataStructures, idsToDelete) {
     //check if any potentialLine crosses any existing line
     //    exclude all lines which exist only on rooms we're modifying
     for (const potentialLine of lines) {
-        for (const existingLine of dataStructures.walls.concat(dataStructures.doors)) {
+        for (const existingLine of dataStructures.walls.concat(dataStructures.doorsArray)) {
             if (existingLine.roomKeys.every(roomKey => idsToDelete?.some(idToDelete => idToDelete.id === roomKey))) {
                 continue;
             }

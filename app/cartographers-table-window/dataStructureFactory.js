@@ -323,7 +323,7 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
                 thisDefendingSegmement,
                 attackingSegment,
                 (start, end) => {
-                    let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, -1, thisDefendingSegmement.roomKeys);
+                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, -1, thisDefendingSegmement.roomKeys);
                     newDefendingSegments2 = [...newDefendingSegments2, newSegment];
                 },
                 () => {
@@ -380,7 +380,7 @@ function getWallsFromRoom(room) {
     let doors = [];
 
     doors.push(
-        geometry.getSortedDoor(
+        geometry.getSortedLine(
             room.leftX, room.leftCeilingY,
             room.rightX, room.rightCeilingY,
             -1,
@@ -388,7 +388,7 @@ function getWallsFromRoom(room) {
         )
     );
     doors.push(
-      geometry.getSortedDoor(
+      geometry.getSortedLine(
             room.rightX, room.rightCeilingY,
             room.rightX, room.rightFloorY,
             -1,
@@ -396,7 +396,7 @@ function getWallsFromRoom(room) {
         )
     );
     doors.push(
-        geometry.getSortedDoor(
+        geometry.getSortedLine(
             room.rightX, room.rightFloorY,
             room.leftX, room.leftFloorY,
             -1,
@@ -404,7 +404,7 @@ function getWallsFromRoom(room) {
         )
     );
     doors.push(
-        geometry.getSortedDoor(
+        geometry.getSortedLine(
             room.leftX, room.leftFloorY,
             room.leftX, room.leftCeilingY,
             -1,

@@ -30,8 +30,8 @@ function tryGetCorner(room, point) {
     return cornerIndex;
 }
 
-function getSortedDoor(aX, aY, bX, bY, permeability, roomKeys) {
-    let line = getSortedLine(aX, aY, bX, bY);
+function getSortedLine(aX, aY, bX, bY, permeability, roomKeys) {
+    let line = _getSortedLine(aX, aY, bX, bY);
     if (line) {
         return {
             permeability,
@@ -43,7 +43,22 @@ function getSortedDoor(aX, aY, bX, bY, permeability, roomKeys) {
     return null;
 }
 
-function getSortedLine(aX, aY, bX, bY) {
+function getSortedDoor(aX, aY, bX, bY, permeability, roomKeys) {
+    assert(roomKeys.length === 2, JSON.stringify(roomKeys));
+    let line = _getSortedLine(aX, aY, bX, bY);
+    if (line) {
+        return {
+            id: getSortedId(roomKeys[0], roomKeys[1]),
+            permeability,
+            start: line.start,
+            end: line.end,
+            roomKeys
+        };
+    }
+    return null;
+}
+
+function _getSortedLine(aX, aY, bX, bY) {
     if (aX < bX) {
         return {
             start: {

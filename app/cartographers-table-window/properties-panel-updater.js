@@ -94,7 +94,7 @@ function updatePropertiesPanel(panel, selection, dataStructures) {
 
     case "door":
       clone = propertiesTemplates.door.content.firstElementChild.cloneNode(true);
-      let door = dataStructures.doors[selection.selectedId];
+      let door = dataStructures.doorsDict[selection.selectedId];
       clone.querySelector("#property-start").innerHTML = `X: ${door.start.x} Y: ${door.start.y}`;
       clone.querySelector("#property-end").innerHTML = `X: ${door.end.x} Y: ${door.end.y}`;
       clone.querySelector("#property-permeability").value = door.permeability;

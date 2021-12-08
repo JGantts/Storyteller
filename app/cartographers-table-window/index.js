@@ -339,9 +339,7 @@ async function editingRoomtype(param1) {
 }
 
 async function permChange(newPerm) {
-  console.log(selectionChecker.getSelectionClick());
-  let door_refA = dataStructures.doors[selectionChecker.getSelectionClick().selectedId];
-  console.log(door_refA);
+  let door_refA = dataStructures.doorsDict[selectionChecker.getSelectionClick().selectedId];
   let door_refB = dataStructures.metaroomDisk.perms[getSortedId(door_refA.roomKeys[0], door_refA.roomKeys[1])];
   door_refA.permeability = Math.min(Math.max(newPerm, 0), 100);
   door_refB.permeability = Math.min(Math.max(newPerm, 0), 100);
@@ -550,7 +548,7 @@ function undo(){
   redrawRooms(
     canvasContexts.room,
     canvasContexts.pasties,
-    [...dataStructures.doors, ...dataStructures.walls],
+    [...dataStructures.doorsArray, ...dataStructures.walls],
     dataStructures.points,
     dataStructures.metaroomDisk);
   selectionChecker.resetSelection();
@@ -569,7 +567,7 @@ function redo(){
   redrawRooms(
     canvasContexts.room,
     canvasContexts.pasties,
-    [...dataStructures.doors, ...dataStructures.walls],
+    [...dataStructures.doorsArray, ...dataStructures.walls],
     dataStructures.points,
     dataStructures.metaroomDisk);
   selectionChecker.resetSelection();
@@ -692,7 +690,7 @@ function deleteRoom(id){
     redrawRooms(
       canvasContexts.room,
       canvasContexts.pasties,
-      [...dataStructures.doors, ...dataStructures.walls],
+      [...dataStructures.doorsArray, ...dataStructures.walls],
       dataStructures.points,
       dataStructures.metaroomDisk);
     selectionChecker.resetSelection();
@@ -999,7 +997,7 @@ function tryCreateRoom() {
     redrawRooms(
       canvasContexts.room,
       canvasContexts.pasties,
-      [...dataStructures.doors, ...dataStructures.walls],
+      [...dataStructures.doorsArray, ...dataStructures.walls],
       dataStructures.points,
       dataStructures.metaroomDisk);
     selectionChecker.resetSelection();
@@ -1038,7 +1036,7 @@ function retypeRoom(id, type) {
     redrawRooms(
       canvasContexts.room,
       canvasContexts.pasties,
-      [...dataStructures.doors, ...dataStructures.walls],
+      [...dataStructures.doorsArray, ...dataStructures.walls],
       dataStructures.points,
       dataStructures.metaroomDisk);
     selectionChecker.resetSelection();
@@ -1072,7 +1070,7 @@ function makeRepermDoorsCommand(id, type){
 }
 
 function repermDoorsAbsolute({id, perm}){
-    dataStructures.doors[id].permeability = perm;
+    dataStructures.doorsDict[id].permeability = perm;
     //dataStructures.metaroomDisk.
 }
 
@@ -1148,23 +1146,24 @@ function rebuildRooms() {
             );});
     let walls = dataStructureFactory.subtractSegmentsFromSegments(wallsOverreach, doorsArray).filter(function(val) {return val});
     let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk.rooms);
-    let pointsSortedX = Object.values(points);;
+    let pointsSortedX = Object.values(points);
     pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
-    let pointsSortedY = Object.values(points);;
+    let pointsSortedY = Object.values(points);
     pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
 
-    let doors = new Object();
+    let doorsDict = new Object();
     for (door of doorsArray) {
-        doors[door.id] = door;
+        doorsDict[door.id] = door;
     }
 
     dataStructures = {
         metaroomDisk: metaroom,
-        points: points,
-        walls: walls,
-        doors: doorsArray,
-        pointsSortedX: pointsSortedX,
-        pointsSortedY: pointsSortedY
+        points,
+        walls,
+        doorsDict,
+        doorsArray,
+        pointsSortedX,
+        pointsSortedY
     };
 }
 
@@ -1211,7 +1210,7 @@ async function redrawMetaroom(){
     redrawRooms(
         canvasContexts.room,
         canvasContexts.pasties,
-        [...dataStructures.doors, ...dataStructures.walls],
+        [...dataStructures.doorsArray, ...dataStructures.walls],
         dataStructures.points,
         dataStructures.metaroomDisk);
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);

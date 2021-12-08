@@ -389,7 +389,7 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
     } else if (selected.selectedType === "door" || selected.selectedType === "wall") {
         let selectedSide = null;
         if (selected.selectedType === "door") {
-            selectedSide = dataStructures.doors[selected.selectedId];
+            selectedSide = dataStructures.doorsDict[selected.selectedId];
         } else {
             selectedSide = dataStructures.walls[selected.selectedId];
         }

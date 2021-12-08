@@ -195,9 +195,9 @@ function checkLineSelection(x, y, dataStructures){
             break;
         }
     }
-    for (const key in dataStructures.doors) {
-        if(isClickOnLine(x, y, dataStructures.doors[key], getSelectionCheckMargin())){
-            selectedLine = dataStructures.doors[key];
+    for (const key in dataStructures.doorsDict) {
+        if(isClickOnLine(x, y, dataStructures.doorsDict[key], getSelectionCheckMargin())){
+            selectedLine = dataStructures.doorsDict[key];
             selected.selectedType = "door";
             selected.selectedId = key;
             break;
@@ -261,11 +261,11 @@ function checkSideSelection(x, y, dataStructures){
         }
     }
     if (selected.selectedType === "") {
-        for (const key in dataStructures.doors) {
-            if(isClickOnLine(x, y, dataStructures.doors[key], getSelectionCheckMargin()*2.5)){
+        for (const key in dataStructures.doorsDict) {
+            if(isClickOnLine(x, y, dataStructures.doorsDict[key], getSelectionCheckMargin()*2.5)){
                 selected.selectedType = "side";
                 selected.selectedId = key;
-                selectedLine = dataStructures.doors[key];
+                selectedLine = dataStructures.doorsDict[key];
                 break;
             }
         }
