@@ -118,11 +118,11 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, a
                 thisDefendingSegmement,
                 attackingSegment,
                 (start, end) => {
-                    let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, thisDefendingSegmement.permeability, thisDefendingSegmement.roomKeys);
+                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, thisDefendingSegmement.permeability, thisDefendingSegmement.roomKeys);
                     newDefendingSegments2 = [...newDefendingSegments2, newSegment];
                 },
                 (start, end) => {
-                    let newSegment = geometry.getSortedDoor(start.x, start.y, end.x, end.y, 1.0, [...thisDefendingSegmement.roomKeys, ...attackingSegment.roomKeys]);
+                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, 1.0, [...thisDefendingSegmement.roomKeys, ...attackingSegment.roomKeys]);
                     newDefendingSegments2 = [...newDefendingSegments2, newSegment];
                     defendingSegmentChanged = true;
                 },
