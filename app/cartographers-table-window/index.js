@@ -1214,7 +1214,6 @@ async function redrawMetaroom(){
         dataStructures.points,
         dataStructures.metaroomDisk);
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-    console.log(dataStructures.metaroomDisk);
     if (dataStructures.metaroomDisk.background) {
         if (!img || dataStructures.metaroomDisk.background !== imgPathRel) {
             imgPathRel = dataStructures.metaroomDisk.background;
