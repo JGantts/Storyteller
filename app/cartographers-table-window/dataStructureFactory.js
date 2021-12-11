@@ -153,82 +153,95 @@ function getDoorsFromRooms(rooms, perms) {
 
       //First check the more performant opeeration: vertical doors
 
-      if (roomA.leftX === roomB.rightX) {
+      let sidesA = getWallsFromRoom(roomA);
+      let sidesB = getWallsFromRoom(roomB);
 
-          let middleTwo = getMiddleTwo(roomA.leftCeilingY, roomA.leftFloorY, roomB.rightCeilingY, roomB.rightFloorY);
+      let permHandled = false;
 
-          doors.push(
-              geometry.getSortedDoor(
-                  roomA.leftX, middleTwo.high,
-                  roomA.leftX, middleTwo.low,
-                  perm.permeability,
-                  [perm.rooms.a, perm.rooms.b]
-              )
+      if (!permHandled) {
+          lineSegmentComparison(
+              sidesA[3], sidesB[1],
+              () => {},
+              (start, end) => {
+                  doors.push(
+                      {
+                          id: getSortedId(roomA.id, roomB.id),
+                          permeability: perm.permeability,
+                          start,
+                          end,
+                          roomKeys: [roomA.id, roomB.id]
+                      }
+                  );
+                  permHandled = true;
+              },
+              () => {}
           );
-          continue;
-      }
-      if (roomA.rightX === roomB.leftX) {
-
-        let middleTwo = getMiddleTwo(roomA.rightCeilingY, roomA.rightFloorY, roomB.leftCeilingY, roomB.leftFloorY);
-
-        doors.push(
-            geometry.getSortedDoor(
-                roomB.leftX, middleTwo.high,
-                roomB.leftX, middleTwo.low,
-                perm.permeability,
-                [perm.rooms.a, perm.rooms.b]
-            )
-        );
-        continue;
-
       }
 
-      //Now check the less performant operation: horizontal floors/ceilings which can be slopped
-      let roomALineTop = geometry.getRoomCeiling(roomA);
-
-      let roomALineBottom = geometry.getRoomFloor(roomA);
-
-
-      let roomBLineTop = geometry.getRoomCeiling(roomB);
-
-      let roomBLineBottom = geometry.getRoomFloor(roomB);
-
-      if (getIntersectsFromFour(roomALineBottom, roomB)) {
-          let ourPoints = getMiddleTwoPointsConsideredHoizontally(
-              {x: roomA.leftX, y: roomA.leftFloorY},
-              {x: roomA.rightX, y: roomA.rightFloorY},
-              {x: roomB.leftX, y: roomB.leftCeilingY},
-              {x: roomB.rightX, y: roomB.rightCeilingY}
+      if (!permHandled) {
+          lineSegmentComparison(
+              sidesA[1], sidesB[3],
+              () => {},
+              (start, end) => {
+                  doors.push(
+                      {
+                          id: getSortedId(roomA.id, roomB.id),
+                          permeability: perm.permeability,
+                          start,
+                          end,
+                          roomKeys: [roomA.id, roomB.id]
+                      }
+                  );
+                  permHandled = true;
+              },
+              () => {}
           );
-          doors.push(
-              geometry.getSortedDoor(
-                  ourPoints.high.x, ourPoints.high.y,
-                  ourPoints.low.x, ourPoints.low.y,
-                  perm.permeability,
-                  [perm.rooms.a, perm.rooms.b]
-              )
-          );
-          continue;
       }
-      if (getIntersectsFromFour(roomBLineBottom, roomA)) {
-          let ourPoints = getMiddleTwoPointsConsideredHoizontally(
-              {x: roomA.leftX, y: roomA.leftCeilingY},
-              {x: roomA.rightX, y: roomA.rightCeilingY},
-              {x: roomB.leftX, y: roomB.leftFloorY},
-              {x: roomB.rightX, y: roomB.rightFloorY}
+
+      if (!permHandled) {
+          lineSegmentComparison(
+              sidesA[0], sidesB[2],
+              () => {},
+              (start, end) => {
+                  doors.push(
+                      {
+                          id: getSortedId(roomA.id, roomB.id),
+                          permeability: perm.permeability,
+                          start,
+                          end,
+                          roomKeys: [roomA.id, roomB.id]
+                      }
+                  );
+                  permHandled = true;
+              },
+              () => {}
           );
-          doors.push(
-              geometry.getSortedDoor(
-                  ourPoints.high.x, ourPoints.high.y,
-                  ourPoints.low.x, ourPoints.low.y,
-                  perm.permeability,
-                  [perm.rooms.a, perm.rooms.b]
-              )
-          );
-          continue;
       }
-      console.log(`Rooms don't actually touch...:\n${JSON.stringify(perm)}\nA: ${JSON.stringify(roomA)}\nB: ${JSON.stringify(roomB)}\n\n`);
-      console.log(new Error().stack);
+
+      if (!permHandled) {
+          lineSegmentComparison(
+              sidesA[2], sidesB[0],
+              () => {},
+              (start, end) => {
+                  doors.push(
+                      {
+                          id: getSortedId(roomA.id, roomB.id),
+                          permeability: perm.permeability,
+                          start,
+                          end,
+                          roomKeys: [roomA.id, roomB.id]
+                      }
+                  );
+                  permHandled = true;
+              },
+              () => {}
+          );
+      }
+
+      if (!permHandled) {
+        console.log(`Rooms don't actually touch...:\n${JSON.stringify(perm)}\nA: ${JSON.stringify(roomA)}\nB: ${JSON.stringify(roomB)}\n\n`);
+        console.log(new Error().stack);
+      }
   }
   //console.log(doors);
   return doors;
