@@ -432,7 +432,7 @@ function getSelectionRoomtypeClick() {
 }
 
 function setSelectionRoomtypeHover(roomtype) {
-    if (roomtype) {
+    if (roomtype !== null) {
         selectionRoomtypeHover = {
             selectedType : "roomtype",
             selectedId: roomtype,
