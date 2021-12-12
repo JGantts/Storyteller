@@ -613,7 +613,6 @@ function userTextKeyDown(event){
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
   }
-  event.preventDefault();
 
   if (event.key === "Shift") {
     shiftKeyDown();
@@ -628,7 +627,7 @@ function userTextKeyDown(event){
       case 'Backspace':
       case 'Delete':
         editingKeyDown(event);
-        break;
+        return;
 
       case 'Escape':
         selectionChecker.resetSelection();
@@ -639,11 +638,10 @@ function userTextKeyDown(event){
         break;
 
       default:
-        console.log(event);
-        assert(false, `key: ${event.key}, keyCode: ${event.keyCode}`)
-        break;
+        return;
     }
   }
+  event.preventDefault();
 }
 
 function userTextKeyUp(event){
@@ -664,7 +662,9 @@ function editingKeyDown(event) {
     switch (event.key) {
         case 'Backspace':
         case 'Delete':
-            tryDelete();
+            if (tryDelete()) {
+                event.preventDefault();
+            }
             break;
     }
 }
@@ -708,8 +708,9 @@ function tryDelete() {
         Function.prototype();
     } else if (selection.selectedType === "room") {
         deleteRoom(selection.selectedId);
+        selectionChecker.resetSelection();
+        return true;
     }
-    selectionChecker.resetSelection();
 }
 
 
