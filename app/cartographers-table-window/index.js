@@ -1,7 +1,7 @@
 //$.getScript('../engine-api/CAOS.js');
 const assert = require('assert');
 const { clipboard } = require('electron');
-const fs = require('fs');
+const fs = require('fs/promises');
 const crypto = require('crypto');
 const path = require("path");
 
@@ -286,12 +286,13 @@ async function openFile() {
 async function saveFile() {
     await fileHelper.saveCartFile();
     let workingBackgoundFile = dataStructures.backgroundFileAbsoluteWorking;
+    console.log(dataStructures);
     if (workingBackgoundFile) {
         newImgPathAbsolute = path.join(
           path.dirname(fileHelper.getCurrentFileRef().path),
           dataStructures.metaroomDisk.background
         );
-        await copyFile(workingBackgoundFile, newImgPathAbsolute);
+        await fs.copyFile(workingBackgoundFile, newImgPathAbsolute);
     }
     updateBarButtons()
 }
@@ -1191,6 +1192,7 @@ function rebuildRooms() {
 
     dataStructures = {
         metaroomDisk: metaroom,
+        backgroundFileAbsoluteWorking: dataStructures.backgroundFileAbsoluteWorking,
         points,
         walls,
         doorsDict,
