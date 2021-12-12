@@ -383,6 +383,14 @@ async function permChange(newPerm) {
   masterUiState.redraw = true;
 }
 
+async function xChange(value) {
+    dataStructures.metaroomDisk.x = value;
+}
+
+async function yChange(value) {
+    dataStructures.metaroomDisk.y = value;
+}
+
 async function musicChange(id, value) {
   switch (id) {
     case "property-metaroom-music":

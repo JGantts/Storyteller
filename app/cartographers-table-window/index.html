@@ -146,16 +146,26 @@
     <div style="padding: 3px;">
       <img src="./icons/location.svg" width='20rem' height='20rem'
       style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <div id="property-x" style="font-size: 12;">
-
-      </div>
+      <input
+        id="property-x"
+        class="column"
+        style="font-size: 12;"
+        size="18"
+        type="number"
+        min="0" max="100000"
+        oninput="xChange(this.value)">
     </div>
     <div style="padding: 3px;">
       <img src="./icons/location.svg" width='20rem' height='20rem'
       style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <div id="property-y" style="font-size: 12;">
-
-      </div>
+      <input
+        id="property-y"
+        class="column"
+        style="font-size: 12;"
+        size="18"
+        type="number"
+        min="0" max="100000"
+        oninput="yChange(this.value)">
     </div>
     <div style="padding: 3px;">
       <img src="./icons/ca.svg" width='20rem' height='20rem'
