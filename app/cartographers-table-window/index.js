@@ -377,7 +377,6 @@ async function permChange(newPerm) {
   let door_refB = dataStructures.metaroomDisk.perms[getSortedId(door_refA.roomKeys[0], door_refA.roomKeys[1])];
   door_refA.permeability = Math.min(Math.max(newPerm, 0), 100);
   door_refB.permeability = Math.min(Math.max(newPerm, 0), 100);
-  previousSelectionInstanceId = "uninitialized";
   masterUiState.redraw = true;
 }
 
