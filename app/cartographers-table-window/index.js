@@ -418,6 +418,7 @@ function displayFiles(files) {
         _undoList = [];
         _redoList = [];
         updateBarButtons();
+        masterUiState.redraw = true;
     //}
 }
 
