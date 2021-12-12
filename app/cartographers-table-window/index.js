@@ -252,7 +252,6 @@ async function newFile() {
     await fileHelper.newFile();
     let backgroundFile = await fileHelper.selectBackgroundFile();
     await reloadBackgroundFile(backgroundFile);
-    console.log(img);
 
     let fileContents =
     {
@@ -276,6 +275,7 @@ async function newFile() {
     _undoList = [];
     _redoList = [];
     updateBarButtons();
+    previousSelectionInstanceId = "uninitialized";
 }
 
 async function openFile() {
