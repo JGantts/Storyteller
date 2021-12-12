@@ -380,6 +380,21 @@ async function permChange(newPerm) {
   masterUiState.redraw = true;
 }
 
+async function musicChange(id, value) {
+  switch (id) {
+    case "property-metaroom-music":
+      dataStructures.metaroomDisk.music = value;
+      break;
+    case "property-room-music":
+      let room = dataStructures.metaroomDisk.rooms[selectionChecker.getSelectionClick().selectedId];
+      room.music = value;
+      break;
+    default:
+      console.log("internal error");
+      break;
+  }
+}
+
 async function roomtypeButtonMouseOver(param1) {
     selectionChecker.setSelectionRoomtypeHover(parseFloat(param1.slice(-2)));
 }

@@ -24,6 +24,7 @@ function updatePropertiesPanel(panel, selection, dataStructures) {
       clone.querySelector("#property-width").innerHTML = dataStructures.metaroomDisk.width;
       clone.querySelector("#property-height").innerHTML = dataStructures.metaroomDisk.height;
       clone.querySelector("#property-background").innerHTML = dataStructures.metaroomDisk.background;
+      clone.querySelector("#property-metaroom-music").value = dataStructures.metaroomDisk.music ?? "";
       break;
 
 
@@ -89,6 +90,8 @@ function updatePropertiesPanel(panel, selection, dataStructures) {
 
       }
       clone.querySelector("#property-room-type").innerHTML = roomTypeName;
+      clone.querySelector("#property-room-music").placeholder = dataStructures.metaroomDisk.music ?? "Music";
+      clone.querySelector("#property-room-music").value = room.music ?? "";
       break;
 
 
