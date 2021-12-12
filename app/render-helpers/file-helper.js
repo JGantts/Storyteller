@@ -87,7 +87,7 @@ class FileHelper {
       let options = {
           title: "Open Cartographer file",
           defaultPath : '%HOMEPATH%/Documents/',
-          buttonLabel : "Save",
+          buttonLabel : "Open",
           filters :[
               {name: 'Cartographer', extensions: ['cart']}
           ]
@@ -109,6 +109,27 @@ class FileHelper {
 
   async saveCartFileAs() {
       await this._saveFileAs(cartSaveOptions);
+  }
+
+  async selectBackgroundFile() {
+      let options = {
+          title: "Select background file",
+          defaultPath : '%HOMEPATH%/Documents/',
+          buttonLabel : "Select",
+          filters :[
+              {name: 'Background', extensions: ['png', 'bmp', 'jpg', 'blk']}
+          ]
+      };
+      return await this._selectFile(options);
+  }
+
+  async _selectFile(options) {
+      let newSelectedFile = await this.selectFilePromise(options);
+      if (!newSelectedFile.continue) {
+          return ;
+      }
+      let newFile = newSelectedFile.files[0];
+      return newFile;
   }
 
   async _openFile(options) {
@@ -182,6 +203,12 @@ class FileHelper {
 
   async openFilePromise(options) {
       return this.makeFileManagerPromise("open-files", {
+          options: options
+      });
+  }
+
+  async selectFilePromise(options) {
+      return this.makeFileManagerPromise("select-files", {
           options: options
       });
   }

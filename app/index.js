@@ -48,6 +48,12 @@ ipcMain.on('filemanager-execute-promise', async (event, arg) => {
       case "close-file":
         fileManager_closeFile(event, arg.id, arg.args);
         break;
+      case "select-files":
+        fileManager_selectFile(event, arg.id, arg.args);
+        break;
+      default:
+        throw new Error(`Internal Error. Reference data: ${JSON.stringify(arg)}`);
+        break;
   }
 });
 
@@ -60,7 +66,7 @@ function fileManager_newFile(event, id, args) {
     windowsFiles[newFileId] = {
         id: newFileId,
         path: newFilePath,
-        type: pathModule.extname(newFilePath)
+        type: newFilePath ? pathModule.extname(newFilePath) : ".cart"
     };
     let newFile =
     {
@@ -77,6 +83,52 @@ function fileManager_newFile(event, id, args) {
             }
         }
     );
+}
+
+async function fileManager_selectFile(event, id, args) {
+  let browserWindow = event.sender.getOwnerBrowserWindow();
+  try {
+      let result = await dialog.showOpenDialog(
+          browserWindow,
+          args.options
+      );
+      if (result.canceled) {
+        event.reply(
+            'executed-promise',
+            {
+                id: id,
+                success: true,
+                args: {
+                    continue: false
+                }
+            }
+        );
+      } else {
+          event.reply(
+              'executed-promise',
+              {
+                  id: id,
+                  success: true,
+                  args: {
+                      continue: true,
+                      files: result.filePaths
+                  }
+              }
+          );
+      }
+  } catch(err) {
+      console.log(err);
+      event.reply(
+          'executed-promise',
+          {
+              id: id,
+              success: false,
+              args: {
+                  error: err
+              }
+          }
+      );
+  }
 }
 
 async function fileManager_openFiles(event, id, args) {

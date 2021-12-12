@@ -251,6 +251,8 @@ function redoMultiCommand(subcommands){
 async function newFile() {
     await fileHelper.newFile();
     updateBarButtons()
+    let backgroundFile = await fileHelper.selectBackgroundFile();
+    console.log(backgroundFile);
 }
 
 async function openFile() {
@@ -1224,6 +1226,7 @@ async function redrawMetaroom(){
                 img = await clbTools.loadBackground(imgPathAbsolute);
                 break;
 
+              case ".jpg":
               case ".png":
               case ".bmp":
                 img = new Image;
@@ -1402,5 +1405,5 @@ function redrawPotential(potentialRooms, dataStructures) {
 rejiggerOnscreenCanvas({width: 100, height: 100});
 rejiggerBackgroundCanvase({width: 100, height: 100});
 rejiggerOverlayCanvases({width: 100, height: 100});
-newFile();
+//newFile();
 window.requestAnimationFrame(redrawSelection);
