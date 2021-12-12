@@ -161,6 +161,9 @@ topCanvasElement.onwheel = handleWheel;
 window.onkeydown = userTextKeyDown;
 window.onkeyup = userTextKeyUp;
 
+
+window.onmousedown=windowHandleMouseDown;
+
 function getSortedId(idA, idB) {
     if (idA > idB) {
         return "" + idA + "-" + idB;
@@ -624,6 +627,10 @@ function redo(){
 }
 
 function userTextKeyDown(event){
+  if (lastDownTarget !== topCanvasElement) {
+      return;
+  }
+
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
   }
@@ -810,10 +817,15 @@ function spacebarUp(event){
     }
 }
 
+function windowHandleMouseDown(e){
+    lastDownTarget = e.target;
+}
+
 function handleMouseDown(e){
     // tell the browser we're handling this event
     e.preventDefault();
     e.stopPropagation();
+    lastDownTarget = e.target;
     masterUiState.dragging.isMouseButtonDown = true;
     startX = (parseInt(e.offsetX) + posX) * zoom;
     startY = (parseInt(e.offsetY) + posY) * zoom;
