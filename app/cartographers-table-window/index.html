@@ -181,6 +181,31 @@
 
       </div>
     </div>
+
+    <div style="padding: 3px;">
+      <div class="row">
+        <img src="./icons/music.svg" width='20rem' height='20rem'
+        style="vertical-align: middle; float: left; padding-right: 5px"/>
+        <!--<button class="standard-button columnn" onclick="permDown()">
+          <img src="./icons/downsolid.svg" width='20rem' height='20rem'
+          style="vertical-align: middle; float: left; padding-right: 5px"/>
+        </button>-->
+        <input
+          id="property-metaroom-music"
+          class="column"
+          style="font-size: 12; padding: 0 4px"
+          type="text"
+          size="18"
+          maxlength="100"
+          placeholder="Music"
+          oninput="musicChange(this.id)">
+        <!--<button class="standard-button column" onclick="permUp()">
+          <img src="./icons/upsolid.svg" width='20rem' height='20rem'
+          style="vertical-align: middle; float: left; padding-right: 5px"/>
+        </button>-->
+        <div class="column-fill"></div>
+      </div>
+
   </div>
 </template>
 
@@ -256,6 +281,31 @@
           text-align: left;
         '></div>
     </div>
+
+    <div style="padding: 3px;">
+      <div class="row">
+        <img src="./icons/music.svg" width='20rem' height='20rem'
+        style="vertical-align: middle; float: left; padding-right: 5px"/>
+        <!--<button class="standard-button columnn" onclick="permDown()">
+          <img src="./icons/downsolid.svg" width='20rem' height='20rem'
+          style="vertical-align: middle; float: left; padding-right: 5px"/>
+        </button>-->
+        <input
+          id="property-room-music"
+          class="column"
+          style="font-size: 12; padding: 0 4px"
+          type="text"
+          size="18"
+          maxlength="100"
+          placeholder="Music"
+          oninput="musicChange(this.id)">
+        <!--<button class="standard-button column" onclick="permUp()">
+          <img src="./icons/upsolid.svg" width='20rem' height='20rem'
+          style="vertical-align: middle; float: left; padding-right: 5px"/>
+        </button>-->
+        <div class="column-fill"></div>
+      </div>
+
   </div>
 </template>
 
@@ -288,7 +338,6 @@
           class="column"
           style="font-size: 12; padding: 0 4px"
           type="number"
-          name="quantity"
           min="0" max="100"
           oninput="permChange(this.value)">
         <!--<button class="standard-button column" onclick="permUp()">
