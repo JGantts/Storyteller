@@ -250,9 +250,32 @@ function redoMultiCommand(subcommands){
 
 async function newFile() {
     await fileHelper.newFile();
-    updateBarButtons()
     let backgroundFile = await fileHelper.selectBackgroundFile();
-    console.log(backgroundFile);
+    await reloadBackgroundFile(backgroundFile);
+    console.log(img);
+
+    let fileContents =
+    {
+      "id": crypto.randomUUID(),
+      "name": "",
+      "background": path.basename(backgroundFile),
+      "x": 0,
+      "y": 0,
+      "width": img.width,
+      "height": img.height,
+      "rooms": {},
+      "perms": {}
+    };
+    loadMetaroom(
+        canvasElements,
+        canvasContexts,
+        fileContents,
+        backgroundFile
+    );
+    updateTitle();
+    _undoList = [];
+    _redoList = [];
+    updateBarButtons();
 }
 
 async function openFile() {
@@ -262,6 +285,14 @@ async function openFile() {
 
 async function saveFile() {
     await fileHelper.saveCartFile();
+    let workingBackgoundFile = dataStructures.backgroundFileAbsoluteWorking;
+    if (workingBackgoundFile) {
+        newImgPathAbsolute = path.join(
+          path.dirname(fileHelper.getCurrentFileRef().path),
+          dataStructures.metaroomDisk.background
+        );
+        await copyFile(workingBackgoundFile, newImgPathAbsolute);
+    }
     updateBarButtons()
 }
 
@@ -1181,7 +1212,7 @@ let blankRoom = {
     perms: new Object()
 };
 
-function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
+function loadMetaroom(canvasElements, canvasContexts, metaroomIn, additionalBackground) {
     if (typeof metaroomIn === "string") {
         if (metaroomIn !== "") {
             metaroom = JSON.parse(metaroomIn);
@@ -1196,8 +1227,15 @@ function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
 
 
     dataStructures = {
-         metaroomDisk: metaroom
-     };
+        metaroomDisk: metaroom
+    };
+
+    if (additionalBackground) {
+        dataStructures.backgroundFileAbsoluteWorking = additionalBackground;
+    } else {
+        //set img to null to retrigger its loading
+        img = null;
+    }
 
    rejiggerBackgroundCanvase(dataStructures.metaroomDisk);
    rejiggerOverlayCanvases(dataStructures.metaroomDisk);
@@ -1208,6 +1246,34 @@ function loadMetaroom(canvasElements, canvasContexts, metaroomIn) {
 
 let imgPathRel = "";
 let img = null;
+async function reloadBackgroundFile(backgroundFileAbsoluteWorking) {
+    let imgPathAbsolute =
+        backgroundFileAbsoluteWorking
+        ?? path.join(
+          path.dirname(fileHelper.getCurrentFileRef().path),
+          dataStructures.metaroomDisk.background
+        );
+
+    switch (path.extname(imgPathAbsolute)) {
+      case ".blk":
+        img = await clbTools.loadBackground(imgPathAbsolute);
+        break;
+
+      case ".jpg":
+      case ".png":
+      case ".bmp":
+        img = new Image;
+        img.src = imgPathAbsolute;
+        await img.decode();
+        break;
+
+      default:
+        console.log(`Unsupported file type: ${path.extname(imgPathAbsolute)}`);
+        break;
+    }
+}
+
+
 async function redrawMetaroom(){
     redrawRooms(
         canvasContexts.room,
@@ -1217,29 +1283,10 @@ async function redrawMetaroom(){
         dataStructures.metaroomDisk);
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
     if (dataStructures.metaroomDisk.background) {
-        if (!img || dataStructures.metaroomDisk.background !== imgPathRel) {
-            imgPathRel = dataStructures.metaroomDisk.background;
-            imgPathAbsolute = path.join(path.dirname(fileHelper.getCurrentFileRef().path), imgPathRel);
-
-            switch (path.extname(imgPathAbsolute)) {
-              case ".blk":
-                img = await clbTools.loadBackground(imgPathAbsolute);
-                break;
-
-              case ".jpg":
-              case ".png":
-              case ".bmp":
-                img = new Image;
-                img.src = imgPathAbsolute;
-                await img.decode();
-                break;
-
-              default:
-                console.log(`Unsupported file type: ${path.extname(imgPathAbsolute)}`);
-                break;
-            }
+        if (!img) {
+            reloadBackgroundFile();
         }
-        switch (path.extname(imgPathAbsolute)) {
+        switch (path.extname(dataStructures.metaroomDisk.background)) {
           case ".blk":
             backgroundCtx.moveTo(0, 0);
             backgroundCtx.putImageData(img, 0, 0);
