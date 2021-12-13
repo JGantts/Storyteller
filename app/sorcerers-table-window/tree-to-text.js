@@ -42,9 +42,6 @@ function _treeToText(codeTree, addNewlines){
     codeTree.arguments.forEach((arg, index) => {
       codeText += _treeToText(arg, addNewlines);
     });
-    if (addNewlines) {
-        codeText += "\n";
-    }
   }else if(['condition'].includes(codeTree.type)) {
     codeTree.condition.forEach((boolOrBoolop, index) => {
       codeText += _treeToText(boolOrBoolop, addNewlines);
@@ -75,6 +72,11 @@ function _treeToText(codeTree, addNewlines){
     throw new Error(codeTree.message);
   }else{
     codeText += codeTree.name + ' ';
+  }
+  if (['command'].includes(codeTree.type)){
+      if (addNewlines) {
+          codeText += "\n";
+      }
   }
   return codeText;
 }

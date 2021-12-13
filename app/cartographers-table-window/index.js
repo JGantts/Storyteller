@@ -192,7 +192,7 @@ let fileHelper = new FileHelper(
           case "json":
             return JSON.stringify(dataStructures.metaroomDisk);
           case "caos":
-            let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk);
+            let toReturn = parseMetaroomToCaos(dataStructures);
             console.log(toReturn);
             return toReturn;
         }

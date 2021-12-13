@@ -1,5 +1,6 @@
 const assert = require('assert');
 const crypto = require('crypto');
+const path = require("path");
 
 const { Caos } = require('../sorcerers-table-window/parser/parser.js');
 const { TreeToText } = require('../sorcerers-table-window/tree-to-text.js');
@@ -171,13 +172,13 @@ function breakOutLoops(commands) {
         );
 }
 
-function parseMetaroomToCaos(metaroomIn) {
+function parseMetaroomToCaos(dataStructures) {
     let newTree = [];
     newTree.push({
-        "type": "command",
-        "variant": "mapd",
-        "name": "mapd",
-        "arguments": [
+        type: "command",
+        variant: "mapd",
+        name: "mapd",
+        arguments: [
             {
               type: "literal",
               variant: "integer",
@@ -192,25 +193,101 @@ function parseMetaroomToCaos(metaroomIn) {
             }
         ]
     });
+    let backgroundName = path.parse(dataStructures.metaroomDisk.background).name;
     newTree.push({
-      "type": "command",
-      "variant": "mapd",
-      "name": "mapd",
-      "arguments": [
+        type: "command",
+        variant: "setv",
+        name: "setv",
+        arguments: [
+          {
+            type: "returning-command",
+            variant: "game",
+            name: "game",
+            arguments: [
+              {
+                type: "literal",
+                variant: "string",
+                name: `"${dataStructures.metaroomDisk.id}"`,
+                value: dataStructures.metaroomDisk.id
+              }
+            ]
+          },
+          {
+            type: "returning-command",
+            variant: "addm",
+            name: "addm",
+            arguments: [
+              {
+                type: "literal",
+                variant: "integer",
+                name: `${dataStructures.metaroomDisk.x}`,
+                value: dataStructures.metaroomDisk.x
+              },
+              {
+                type: "literal",
+                variant: "integer",
+                name: `${dataStructures.metaroomDisk.y}`,
+                value: dataStructures.metaroomDisk.y
+              },
+              {
+                type: "literal",
+                variant: "integer",
+                name: `${dataStructures.metaroomDisk.width}`,
+                value: dataStructures.metaroomDisk.width
+              },
+              {
+                type: "literal",
+                variant: "integer",
+                name: `${dataStructures.metaroomDisk.height}`,
+                value: dataStructures.metaroomDisk.height
+              },
+              {
+                type: "literal",
+                variant: "string",
+                name: `"${backgroundName}"`,
+                value: backgroundName
+              }
+            ]
+          }
+        ]
+    });
+    let metaroomCenterX =
+        dataStructures.metaroomDisk.x
+        + dataStructures.metaroomDisk.width/2;
+    let metaroomCenterY =
+        dataStructures.metaroomDisk.y
+        + dataStructures.metaroomDisk.height/2;
+    let music = dataStructures.metaroomDisk.music ?? "";
+    metaroomCenterX = Math.floor(metaroomCenterX);
+    metaroomCenterY = Math.floor(metaroomCenterY);
+    newTree.push({
+        "type": "command",
+        "variant": "mmsc",
+        "name": "mmsc",
+        "arguments": [
           {
             type: "literal",
             variant: "integer",
-            name: "100000",
-            value: 100000
+            name: `${metaroomCenterX}`,
+            value: metaroomCenterX
           },
           {
             type: "literal",
             variant: "integer",
-            name: "100000",
-            value: 100000
+            name: `${metaroomCenterY}`,
+            value: metaroomCenterY
+          },
+          {
+            type: "literal",
+            variant: "string",
+            name: `"${music}"`,
+            value: music
           }
-      ]
-    });
+        ]
+      });
+    for (roomKey in dataStructures.metaroomDisk.rooms) {
+        let room = dataStructures.metaroomDisk.rooms[roomKey]
+    }
     return TreeToText(newTree, true);
 }
 
