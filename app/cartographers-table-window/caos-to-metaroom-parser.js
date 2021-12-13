@@ -335,38 +335,38 @@ function parseMetaroomToCaos(metaroom) {
                   {
                     "type": "literal",
                     "variant": "integer",
-                    name: `${room.leftX}`,
-                    value: room.leftX
+                    name: `${room.leftX + metaroom.x}`,
+                    value: room.leftX + metaroom.x
                   },
                   {
                     "type": "literal",
                     "variant": "integer",
-                    name: `${room.rightX}`,
-                    value: room.rightX
+                    name: `${room.rightX + metaroom.x}`,
+                    value: room.rightX + metaroom.x
                   },
                   {
                     "type": "literal",
                     "variant": "integer",
-                    name: `${room.leftCeilingY}`,
-                    value: room.leftCeilingY
+                    name: `${room.leftCeilingY + metaroom.y}`,
+                    value: room.leftCeilingY + metaroom.y
                   },
                   {
                     "type": "literal",
                     "variant": "integer",
-                    name: `${room.rightCeilingY}`,
-                    value: room.rightCeilingY
+                    name: `${room.rightCeilingY + metaroom.y}`,
+                    value: room.rightCeilingY + metaroom.y
                   },
                   {
                     "type": "literal",
                     "variant": "integer",
-                    name: `${room.leftFloorY}`,
-                    value: room.leftFloorY
+                    name: `${room.leftFloorY + metaroom.y}`,
+                    value: room.leftFloorY + metaroom.y
                   },
                   {
                     "type": "literal",
                     "variant": "integer",
-                    name: `${room.rightFloorY}`,
-                    value: room.rightFloorY
+                    name: `${room.rightFloorY + metaroom.y}`,
+                    value: room.rightFloorY + metaroom.y
                   }
                 ]
               }
@@ -398,14 +398,14 @@ function parseMetaroomToCaos(metaroom) {
               {
                 "type": "literal",
                 "variant": "integer",
-                name: `${roomCenterX}`,
-                value: roomCenterX
+                name: `${roomCenterX + metaroom.x}`,
+                value: roomCenterX + metaroom.x
               },
               {
                 "type": "literal",
                 "variant": "integer",
-                name: `${roomCenterY}`,
-                value: roomCenterY
+                name: `${roomCenterY + metaroom.y}`,
+                value: roomCenterY + metaroom.y
               },
               {
                 "type": "literal",
