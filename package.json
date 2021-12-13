@@ -9,11 +9,9 @@
   },
   "author": "Jacob Gantt",
   "license": "ISC",
-  "devDependencies": {
-
-  },
   "dependencies": {
     "electron": "^15.3.0",
+    "iconv-lite": "^0.6.3",
     "jimp": "^0.10.3"
   }
 }
