@@ -7,7 +7,7 @@ const path = require("path");
 
 const { FileHelper } = require('../render-helpers/file-helper.js');
 
-const { parseCaosForMetaroom } = require('./caos-to-metaroom-parser.js');
+const { parseCaosForMetaroom, parseMetaroomToCaos } = require('./caos-to-metaroom-parser.js');
 const { geometry } = require('./geometryHelper.js');
 const { roomtypeRenderer } = require('./roomtype-renderer.js');
 const { selectionRenderer } = require('./selectionRenderer.js');
@@ -192,7 +192,9 @@ let fileHelper = new FileHelper(
           case "json":
             return JSON.stringify(dataStructures.metaroomDisk);
           case "caos":
-            return "It's a boy!";
+            let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk);
+            console.log(toReturn);
+            return toReturn;
         }
     }
 );

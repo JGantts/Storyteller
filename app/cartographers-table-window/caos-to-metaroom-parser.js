@@ -2,6 +2,7 @@ const assert = require('assert');
 const crypto = require('crypto');
 
 const { Caos } = require('../sorcerers-table-window/parser/parser.js');
+const { TreeToText } = require('../sorcerers-table-window/tree-to-text.js');
 
 function parseCaosForMetaroom(codeIn) {
     let tree = Caos(codeIn);
@@ -170,6 +171,51 @@ function breakOutLoops(commands) {
         );
 }
 
+function parseMetaroomToCaos(metaroomIn) {
+    let newTree = [];
+    newTree.push({
+        "type": "command",
+        "variant": "mapd",
+        "name": "mapd",
+        "arguments": [
+            {
+              type: "literal",
+              variant: "integer",
+              name: "100000",
+              value: 100000
+            },
+            {
+              type: "literal",
+              variant: "integer",
+              name: "100000",
+              value: 100000
+            }
+        ]
+    });
+    newTree.push({
+      "type": "command",
+      "variant": "mapd",
+      "name": "mapd",
+      "arguments": [
+          {
+            type: "literal",
+            variant: "integer",
+            name: "100000",
+            value: 100000
+          },
+          {
+            type: "literal",
+            variant: "integer",
+            name: "100000",
+            value: 100000
+          }
+      ]
+    });
+    return TreeToText(newTree, true);
+}
+
+
 module.exports = {
-    parseCaosForMetaroom
+    parseCaosForMetaroom,
+    parseMetaroomToCaos
 }
