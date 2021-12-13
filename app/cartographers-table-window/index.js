@@ -187,8 +187,13 @@ function getRoomLineThickness() {
 let fileHelper = new FileHelper(
     updateTitle,
     displayFiles,
-    () => {
-        return JSON.stringify(dataStructures.metaroomDisk);
+    (type) => {
+        switch (type) {
+          case "json":
+            return JSON.stringify(dataStructures.metaroomDisk);
+          case "caos":
+            return "It's a boy!";
+        }
     }
 );
 
@@ -297,22 +302,27 @@ async function saveFile() {
         );
         await fs.copyFile(workingBackgoundFile, newImgPathAbsolute);
     }
-    updateBarButtons()
+    updateBarButtons();
 }
 
 async function saveAs() {
     await fileHelper.saveCartFileAs();
-    updateBarButtons()
+    updateBarButtons();
 }
 
 async function closeFile() {
     await fileHelper.closeFile();
-    updateBarButtons()
+    updateBarButtons();
 }
 
 async function importFromCaos() {
     await fileHelper.openCaosFile();
-    updateBarButtons()
+    updateBarButtons();
+}
+
+async function exportToCaos() {
+    await fileHelper.exportToCaos();
+    updateBarButtons();
 }
 
 async function viewEditRoomType() {

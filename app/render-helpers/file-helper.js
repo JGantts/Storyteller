@@ -111,6 +111,17 @@ class FileHelper {
       await this._saveFileAs(cartSaveOptions);
   }
 
+  async exportToCaos() {
+      await this._saveFileAs({
+          title: "Export CAOS file",
+          defaultPath : '%HOMEPATH%/Documents/',
+          buttonLabel : "Export",
+          filters :[
+              {name: 'CAOS', extensions: ['cos']}
+          ]
+      });
+  }
+
   async selectBackgroundFile() {
       let options = {
           title: "Select background file",
@@ -154,7 +165,10 @@ class FileHelper {
           let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
           this._currentFileRef.path = newPath;
       }
-      if (!(await this.saveFilePromise()).continue) {
+      if (!(await this.saveFilePromise(
+          this._currentFileRef,
+          this._getText("json")
+        )).continue) {
           return {continue: false};
       }
       this._currentFileNeedsSaving = false;
@@ -163,13 +177,13 @@ class FileHelper {
   }
 
   async _saveFileAs(options) {
-      let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
-      this._currentFileRef.path = newPath;
-      if (!(await this.saveFilePromise()).continue) {
+      let fileRef = (await this.getNewSaveFilePromise(options)).fileRef;
+      if (!(await this.saveFilePromise(
+        fileRef,
+        this._getText("caos")
+      )).continue) {
           return {continue: false};
       }
-      this._currentFileNeedsSaving = false;
-      this._updateTitle();
       return {continue: true};
   }
 
@@ -216,14 +230,14 @@ class FileHelper {
   async getNewSaveFilePromise(options) {
       return this.makeFileManagerPromise("get-new-save-file", {
           options: options,
-          fileRef: this._currentFileRef,
+          fileRef: this._currentFileRef
       });
   }
 
-  async saveFilePromise() {
+  async saveFilePromise(fileRef, fileContents) {
       return this.makeFileManagerPromise("save-file", {
-          fileRef: this._currentFileRef,
-          content: this._getText()
+          fileRef: fileRef,
+          content: fileContents
       });
   }
 
@@ -234,7 +248,7 @@ class FileHelper {
       };
       return this.makeFileManagerPromise("save-file-reminder", {
           options: options,
-          fileRef: this._currentFileRef,
+          fileRef: this._currentFileRef
       });
   }
 
