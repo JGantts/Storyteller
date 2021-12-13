@@ -172,7 +172,7 @@ function breakOutLoops(commands) {
         );
 }
 
-function parseMetaroomToCaos(dataStructures) {
+function parseMetaroomToCaos(metaroom) {
     let newTree = [];
     newTree.push({
         type: "command",
@@ -193,7 +193,7 @@ function parseMetaroomToCaos(dataStructures) {
             }
         ]
     });
-    let backgroundName = path.parse(dataStructures.metaroomDisk.background).name;
+    let backgroundName = path.parse(metaroom.background).name;
     newTree.push({
         type: "command",
         variant: "setv",
@@ -207,8 +207,8 @@ function parseMetaroomToCaos(dataStructures) {
               {
                 type: "literal",
                 variant: "string",
-                name: `"${dataStructures.metaroomDisk.id}"`,
-                value: dataStructures.metaroomDisk.id
+                name: `"${metaroom.id}"`,
+                value: metaroom.id
               }
             ]
           },
@@ -220,26 +220,26 @@ function parseMetaroomToCaos(dataStructures) {
               {
                 type: "literal",
                 variant: "integer",
-                name: `${dataStructures.metaroomDisk.x}`,
-                value: dataStructures.metaroomDisk.x
+                name: `${metaroom.x}`,
+                value: metaroom.x
               },
               {
                 type: "literal",
                 variant: "integer",
-                name: `${dataStructures.metaroomDisk.y}`,
-                value: dataStructures.metaroomDisk.y
+                name: `${metaroom.y}`,
+                value: metaroom.y
               },
               {
                 type: "literal",
                 variant: "integer",
-                name: `${dataStructures.metaroomDisk.width}`,
-                value: dataStructures.metaroomDisk.width
+                name: `${metaroom.width}`,
+                value: metaroom.width
               },
               {
                 type: "literal",
                 variant: "integer",
-                name: `${dataStructures.metaroomDisk.height}`,
-                value: dataStructures.metaroomDisk.height
+                name: `${metaroom.height}`,
+                value: metaroom.height
               },
               {
                 type: "literal",
@@ -252,12 +252,12 @@ function parseMetaroomToCaos(dataStructures) {
         ]
     });
     let metaroomCenterX =
-        dataStructures.metaroomDisk.x
-        + dataStructures.metaroomDisk.width/2;
+        metaroom.x
+        + metaroom.width/2;
     let metaroomCenterY =
-        dataStructures.metaroomDisk.y
-        + dataStructures.metaroomDisk.height/2;
-    let music = dataStructures.metaroomDisk.music ?? "";
+        metaroom.y
+        + metaroom.height/2;
+    let music = metaroom.music ?? "";
     metaroomCenterX = Math.floor(metaroomCenterX);
     metaroomCenterY = Math.floor(metaroomCenterY);
     newTree.push({
@@ -285,11 +285,227 @@ function parseMetaroomToCaos(dataStructures) {
           }
         ]
       });
-    for (roomKey in dataStructures.metaroomDisk.rooms) {
-        let room = dataStructures.metaroomDisk.rooms[roomKey]
+    for (roomKey in metaroom.rooms) {
+        let room = metaroom.rooms[roomKey];
+        let roomCenterX =
+            (room.leftX + room.rightX)/2;
+        let roomCenterY =
+            (room.leftCeilingY + room.rightCeilingY + room.leftFloorY + room.rightFloorY)/4
+        roomCenterX = Math.floor(roomCenterX);
+        roomCenterY = Math.floor(roomCenterY);
+        let music = room.music ?? metaroom.music ?? "";
+
+//ADDR (integer)
+//  METAROOM_ID (integer)
+//  X_LEFT (integer)
+//  X_RIGHT (integer)
+//  Y_LEFT_CEILING (integer)
+//  Y_RIGHT_CEILING (integer)
+//  Y_LEFT_FLOOR (integer)
+//  Y_RIGHT_FLOOR (integer)
+        newTree = [...newTree,
+          {
+            "type": "command",
+            "variant": "setv",
+            "name": "setv",
+            "arguments": [
+              {
+                "type": "variable",
+                "variant": "va",
+                "name": "va00"
+              },
+              {
+                "type": "returning-command",
+                "variant": "addr",
+                "name": "addr",
+                "arguments": [
+                  {
+                    "type": "returning-command",
+                    "variant": "game",
+                    "name": "game",
+                    "arguments": [
+                      {
+                        "type": "literal",
+                        "variant": "string",
+                        name: `"${metaroom.id}"`,
+                        value: metaroom.id
+                      }
+                    ]
+                  },
+                  {
+                    "type": "literal",
+                    "variant": "integer",
+                    name: `${room.leftX}`,
+                    value: room.leftX
+                  },
+                  {
+                    "type": "literal",
+                    "variant": "integer",
+                    name: `${room.rightX}`,
+                    value: room.rightX
+                  },
+                  {
+                    "type": "literal",
+                    "variant": "integer",
+                    name: `${room.leftCeilingY}`,
+                    value: room.leftCeilingY
+                  },
+                  {
+                    "type": "literal",
+                    "variant": "integer",
+                    name: `${room.rightCeilingY}`,
+                    value: room.rightCeilingY
+                  },
+                  {
+                    "type": "literal",
+                    "variant": "integer",
+                    name: `${room.leftFloorY}`,
+                    value: room.leftFloorY
+                  },
+                  {
+                    "type": "literal",
+                    "variant": "integer",
+                    name: `${room.rightFloorY}`,
+                    value: room.rightFloorY
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "variant": "rtyp",
+            "name": "rtyp",
+            "arguments": [
+              {
+                "type": "variable",
+                "variant": "va",
+                "name": "va00"
+              },
+              {
+                "type": "literal",
+                "variant": "integer",
+                name: `${room.roomType}`,
+                value: room.roomType
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "variant": "rmsc",
+            "name": "rmsc",
+            "arguments": [
+              {
+                "type": "literal",
+                "variant": "integer",
+                name: `${roomCenterX}`,
+                value: roomCenterX
+              },
+              {
+                "type": "literal",
+                "variant": "integer",
+                name: `${roomCenterY}`,
+                value: roomCenterY
+              },
+              {
+                "type": "literal",
+                "variant": "string",
+                name: `"${music}"`,
+                value: music
+              }
+            ]
+          },
+          {
+            "type": "command",
+            "variant": "setv",
+            "name": "setv",
+            "arguments": [
+              {
+                "type": "returning-command",
+                "variant": "game",
+                "name": "game",
+                "arguments": [
+                  {
+                    "type": "literal",
+                    "variant": "string",
+                    name: `"${room.id}"`,
+                    value: room.id
+                  }
+                ]
+              },
+              {
+                "type": "variable",
+                "variant": "va",
+                "name": "va00"
+              }
+            ]
+          }
+        ]
     }
+    for (permKey in metaroom.perms) {
+      let perm = metaroom.perms[permKey];
+      newTree.push([
+          {
+            "type": "command",
+            "variant": "door",
+            "name": "door",
+            "arguments": [
+              {
+                "type": "returning-command",
+                "variant": "game",
+                "name": "game",
+                "arguments": [
+                  {
+                    "type": "literal",
+                    "variant": "string",
+                    name: `"${perm.rooms.a}"`,
+                    value: perm.rooms.a
+                  }
+                ]
+              },
+              {
+                "type": "returning-command",
+                "variant": "game",
+                "name": "game",
+                "arguments": [
+                  {
+                    "type": "literal",
+                    "variant": "string",
+                    name: `"${perm.rooms.b}"`,
+                    value: perm.rooms.b
+                  }
+                ]
+              },
+              {
+                "type": "literal",
+                "variant": "integer",
+                name: `${perm.permeability}`,
+                value: perm.permeability
+              }
+            ]
+          }
+        ]);
+    }
+    for (roomKey in metaroom.rooms) {
+        let room = metaroom.rooms[roomKey];
+        newTree.push({
+          "type": "command",
+          "variant": "delg",
+          "name": "delg",
+          "arguments": [
+            {
+              "type": "literal",
+              "variant": "string",
+              name: `"${room.id}"`,
+              value: room.id
+            }
+          ]
+        });
+    }
+
     return TreeToText(newTree, true);
 }
+
 
 
 module.exports = {
