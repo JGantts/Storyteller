@@ -80,7 +80,7 @@ class FileHelper {
               {name: 'CAOS', extensions: ['cos']}
           ]
       };
-      this._openFile(options);
+      this._openFile(options, "Latin1");
   }
 
   async openCartFile() {
@@ -92,23 +92,23 @@ class FileHelper {
               {name: 'Cartographer', extensions: ['cart']}
           ]
       };
-      this._openFile(options);
+      this._openFile(options, "utf-8");
   }
 
   async saveCaosFile() {
-      await this._saveFile(caosSaveOptions);
+      await this._saveFile(caosSaveOptions, "Latin1");
   }
 
   async saveCaosFileAs() {
-      await this._saveFileAs(caosSaveOptions);
+      await this._saveFileAs(caosSaveOptions, "Latin1");
   }
 
   async saveCartFile() {
-      await this._saveFile(cartSaveOptions);
+      await this._saveFile(cartSaveOptions, "utf-8");
   }
 
   async saveCartFileAs() {
-      await this._saveFileAs(cartSaveOptions);
+      await this._saveFileAs(cartSaveOptions, "utf-8");
   }
 
   async exportToCaos() {
@@ -143,14 +143,14 @@ class FileHelper {
       return newFile;
   }
 
-  async _openFile(options) {
+  async _openFile(options, encoding) {
       if (!(await this.saveFileIfNeeded()).continue) {
           return;
       }
       if (!(await this.closeFileIfNeeded()).continue) {
           return;
       }
-      let newOpenFile = await this.openFilePromise(options);
+      let newOpenFile = await this.openFilePromise(options, encoding);
       if (!newOpenFile.continue) {
           return;
       }
@@ -160,14 +160,15 @@ class FileHelper {
       this._displayFiles([newFile]);
   }
 
-  async _saveFile(options) {
+  async _saveFile(options, encoding) {
       if (!this._currentFileRef.path) {
           let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
           this._currentFileRef.path = newPath;
       }
       if (!(await this.saveFilePromise(
           this._currentFileRef,
-          this._getText("json")
+          this._getText("json"),
+          encoding
         )).continue) {
           return {continue: false};
       }
@@ -176,11 +177,12 @@ class FileHelper {
       return {continue: true};
   }
 
-  async _saveFileAs(options) {
+  async _saveFileAs(options, encoding) {
       let fileRef = (await this.getNewSaveFilePromise(options)).fileRef;
       if (!(await this.saveFilePromise(
         fileRef,
-        this._getText("caos")
+        this._getText("caos"),
+        encoding
       )).continue) {
           return {continue: false};
       }
@@ -215,9 +217,10 @@ class FileHelper {
       return this.makeFileManagerPromise("new-file", new Object());
   }
 
-  async openFilePromise(options) {
+  async openFilePromise(options, encoding) {
       return this.makeFileManagerPromise("open-files", {
-          options: options
+          options: options,
+          encoding
       });
   }
 
@@ -234,10 +237,11 @@ class FileHelper {
       });
   }
 
-  async saveFilePromise(fileRef, fileContents) {
+  async saveFilePromise(fileRef, fileContents, encoding) {
       return this.makeFileManagerPromise("save-file", {
-          fileRef: fileRef,
-          content: fileContents
+          fileRef,
+          content: fileContents,
+          encoding
       });
   }
 

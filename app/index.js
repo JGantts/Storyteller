@@ -3,6 +3,7 @@ const assert = require('assert');
 const crypto = require('crypto');
 const fs = require('fs');
 const pathModule = require('path');
+//var iconv = require('iconv-lite');
 
 //let settings;
 
@@ -162,7 +163,7 @@ async function fileManager_openFiles(event, id, args) {
                 };
                 let fileContents
                 try {
-                    fileContents = fs.readFileSync(path, 'utf-8');
+                    fileContents = fs.readFileSync(path, args.encoding);
                 } catch (err) {
                     console.log(err);
                     event.reply(
@@ -318,7 +319,7 @@ async function fileManager_saveFile(event, id, args) {
         return;
     }
     try {
-      await fs.writeFileSync(fileRef.path, args.content, 'utf-8');
+      await fs.writeFileSync(fileRef.path, args.content, args.encoding);
       event.reply(
           'executed-promise',
           {
