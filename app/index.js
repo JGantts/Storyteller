@@ -319,7 +319,7 @@ async function fileManager_saveFile(event, id, args) {
         return;
     }
     try {
-      await fs.writeFileSync(fileRef.path, args.content, args.encoding);
+      fs.writeFileSync(fileRef.path, args.content.replace(/\n/g, "\r\n"), args.encoding);
       event.reply(
           'executed-promise',
           {
