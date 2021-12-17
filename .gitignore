@@ -110,3 +110,5 @@ dist
 Thumbs.db
 
 package-lock.json
+
+out/*
