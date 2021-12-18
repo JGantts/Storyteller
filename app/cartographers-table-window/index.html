@@ -144,10 +144,12 @@
 
     <hr />
 
-    <div class=" tooltip-holder" style="padding: 3px;">
-      <img src="./icons/location.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>x Position (Horizontal)</span>
+    <div style="padding: 3px;">
+      <div class=" tooltip-holder">
+        <img src="./icons/location.svg" width='20rem' height='20rem'
+        style="vertical-align: middle; float: left; padding-right: 5px"/>
+        <span class='tooltip'>x Position (Horizontal)</span>
+      </div>
       <input
         id="property-x"
         class="column"
@@ -157,10 +159,12 @@
         min="0" max="100000"
         oninput="xChange(this.value)">
     </div>
-    <div class=" tooltip-holder" style="padding: 3px;">
-      <img src="./icons/location.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>y Position (Vertical)</span>
+    <div style="padding: 3px;">
+      <div class=" tooltip-holder">
+        <img src="./icons/location.svg" width='20rem' height='20rem'
+        style="vertical-align: middle; float: left; padding-right: 5px"/>
+        <span class='tooltip'>y Position (Vertical)</span>
+      </div>
       <input
         id="property-y"
         class="column"
@@ -170,18 +174,22 @@
         min="0" max="100000"
         oninput="yChange(this.value)">
     </div>
-    <div class=" tooltip-holder" style="padding: 3px;">
-      <img src="./icons/ca.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>Width</span>
+    <div style="padding: 3px;">
+      <div class=" tooltip-holder">
+        <img src="./icons/ca.svg" width='20rem' height='20rem'
+        style="vertical-align: middle; float: left; padding-right: 5px"/>
+        <span class='tooltip'>Width</span>
+      </div>
       <div id="property-width" style="font-size: 12;">
 
       </div>
     </div>
-    <div class=" tooltip-holder" style="padding: 3px;">
-      <img src="./icons/ca.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>Height</span>
+    <div style="padding: 3px;">
+      <div class=" tooltip-holder">
+        <img src="./icons/ca.svg" width='20rem' height='20rem'
+        style="vertical-align: middle; float: left; padding-right: 5px"/>
+        <span class='tooltip'>Height</span>
+      </div>
       <div id="property-height" style="font-size: 12;">
 
       </div>
@@ -189,20 +197,24 @@
 
     <hr />
 
-    <div class=" tooltip-holder" style="padding: 3px;">
-      <img src="./icons/background.svg" width='18rem' height='18rem'
-      style="float: left; padding-right: 5px"/>
-      <span class='tooltip'>Background</span>
+    <div style="padding: 3px;">
+      <div class=" tooltip-holder">
+        <img src="./icons/background.svg" width='18rem' height='18rem'
+        style="float: left; padding-right: 5px"/>
+        <span class='tooltip'>Background</span>
+      </div>
       <div id="property-background" style="font-size: 12; word-wrap: break-word">
 
       </div>
     </div>
 
     <div style="padding: 3px;">
-      <div class=" tooltip-holder" class="row">
-        <img src="./icons/music.svg" width='20rem' height='20rem'
-        style="vertical-align: middle; float: left; padding-right: 5px"/>
-        <span class='tooltip'>Music</span>
+      <div class="row">
+        <div class=" tooltip-holder">
+          <img src="./icons/music.svg" width='20rem' height='20rem'
+          style="vertical-align: middle; float: left; padding-right: 5px"/>
+          <span class='tooltip'>Music</span>
+        </div>
         <!--<button class="standard-button columnn" onclick="permDown()">
           <img src="./icons/downsolid.svg" width='20rem' height='20rem'
           style="vertical-align: middle; float: left; padding-right: 5px"/>
@@ -228,9 +240,11 @@
 
 <template id="properties-panel-room">
   <div style="font-size:12;">
-    <div class=" tooltip-holder" style="padding: 3px; text-align: center;">
-      <img src="./icons/key.svg" width='20rem' height='20rem'/>
-      <span class='tooltip'>Key</span>
+    <div style="padding: 3px; text-align: center;">
+      <div class=" tooltip-holder">
+        <img src="./icons/key.svg" width='20rem' height='20rem'/>
+        <szpan class='tooltip'>Key</span>
+      </div>
       <div id="property-id" style="font-family: Courier;">
       </div>
     </div>
@@ -288,12 +302,14 @@
     <hr />
 
     <div class="row">
-      <div class="column-static tooltip-holder">
-        <img src="./icons/room-type.svg" width='20rem' height='20rem'
-          style='
-            padding: 0 6px;
-          '>
+      <div class="column-static">
+        <div class=" tooltip-holder">
+          <img src="./icons/room-type.svg" width='20rem' height='20rem'
+            style='
+              padding: 0 6px;
+            '>
           <span class='tooltip'>Room Type</span>
+        </div>
       </div>
       <div id="property-room-type" class="column-fill"
         style='
@@ -302,10 +318,12 @@
     </div>
 
     <div style="padding: 3px;">
-      <div class="row tooltip-holder">
-        <img src="./icons/roommusic.svg" width='20rem' height='20rem'
-        style="vertical-align: middle; float: left; padding-right: 5px"/>
-        <span class='tooltip'>Room Music</span>
+      <div class="row">
+        <div class=" tooltip-holder">
+          <img src="./icons/roommusic.svg" width='20rem' height='20rem'
+          style="vertical-align: middle; float: left; padding-right: 5px"/>
+          <span class='tooltip'>Room Music</span>
+        </div>
         <!--<button class="standard-button columnn" onclick="permDown()">
           <img src="./icons/downsolid.svg" width='20rem' height='20rem'
           style="vertical-align: middle; float: left; padding-right: 5px"/>
@@ -348,10 +366,12 @@
       </div>
     </div>
     <div style="padding: 3px;">
-      <div class="row tooltip-holder">
+      <div class="row">
+        <div class=" tooltip-holder">
         <img src="./icons/ca.svg" width='20rem' height='20rem'
         style="vertical-align: middle; float: left; padding-right: 5px"/>
         <span class='tooltip'>Permeability</span>
+        </div>
         <!--<button class="standard-button columnn" onclick="permDown()">
           <img src="./icons/downsolid.svg" width='20rem' height='20rem'
           style="vertical-align: middle; float: left; padding-right: 5px"/>
