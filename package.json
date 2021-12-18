@@ -1,7 +1,7 @@
 {
-  "name": "StoryTeller",
-  "version": "1.0.0",
-  "description": "Displays and uploads world histories.",
+  "name": "Storyteller",
+  "version": "2.0.2",
+  "description": "Launcher for the game Creaetures. Includes a suite of mod develepment tools.",
   "main": "./app/index.js",
   "scripts": {
     "test": "mocha",
