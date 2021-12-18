@@ -25,7 +25,9 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "storyteller"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
