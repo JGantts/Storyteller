@@ -8,7 +8,7 @@ const fs = require('fs');
 function _c3Commands(){
   let namespaces = [];
 
-  let c3In = JSON.parse(fs.readFileSync('app/sorcerers-table-window/parser/commandinfo.json', 'utf8')).variants.c3;
+  let c3In = JSON.parse(fs.readFileSync('./resources/commandinfo.json', 'utf8')).variants.c3;
 
   for (var key in c3In) {
     if (c3In.hasOwnProperty(key)) {
