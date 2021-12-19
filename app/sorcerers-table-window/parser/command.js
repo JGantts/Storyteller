@@ -86,7 +86,6 @@ function _parsePossibleCommandByNameAndReturnType(name, returnType){
   let nsName;
   let cmdVariant;
   let cmdName;
-  console.log(_commands);
   if (!namespaceName){
     if (State.tokens.length < 1){
       return null;
