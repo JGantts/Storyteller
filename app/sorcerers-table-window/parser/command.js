@@ -30,7 +30,14 @@ const {
 const { PossibleVariable, Variable } = require('./variable.js');
 const { State } = require('./tokens.js');
 
-var _commands = C3Commands();
+let _commands = null;
+async function __commands() {
+    console.log(_commands);
+    _commands = await C3Commands();
+    console.log(_commands);
+}
+
+__commands();
 
 function _parseCommandByName(name){
   let possibleCommand = _parsePossibleCommandByName(name);
@@ -81,6 +88,7 @@ function _parsePossibleCommandByNameAndReturnType(name, returnType){
   let nsName;
   let cmdVariant;
   let cmdName;
+  console.log(_commands);
   if (!namespaceName){
     if (State.tokens.length < 1){
       return null;

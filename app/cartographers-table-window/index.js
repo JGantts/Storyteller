@@ -1,11 +1,12 @@
-//$.getScript('../engine-api/CAOS.js');
+//$.getScript('../engine-api/CAOS.js
+const { FileHelper } = require('../render-helpers/file-helper.js');
+Window.fileHelper = new FileHelper(updateTitle, displayFiles, () => {return GetVisibleTextInElement(codeElement);});
+
 const assert = require('assert');
 const { clipboard } = require('electron');
 const fs = require('fs/promises');
 const crypto = require('crypto');
 const path = require("path");
-
-const { FileHelper } = require('../render-helpers/file-helper.js');
 
 const { parseCaosForMetaroom, parseMetaroomToCaos } = require('./caos-to-metaroom-parser.js');
 const { geometry } = require('./geometryHelper.js');

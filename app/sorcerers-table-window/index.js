@@ -1,4 +1,6 @@
 $.getScript('../engine-api/CAOS.js');
+const { FileHelper } = require('../render-helpers/file-helper.js');
+Window.fileHelper = new FileHelper(updateTitle, displayFiles, () => {return GetVisibleTextInElement(codeElement);});
 const assert = require('assert');
 const { Caos } = require('./parser/parser.js');
 const { clipboard, ipcRenderer } = require('electron')
@@ -21,10 +23,8 @@ const{
   GetCaretPositionOneLineDown,
   GetCaretPositionOneLineUp,
 } = require('./text-editing-helper.js');
-const { FileHelper } = require('../render-helpers/file-helper.js');
 //const path = require("path");
 
-let fileHelper = new FileHelper(updateTitle, displayFiles, () => {return GetVisibleTextInElement(codeElement);});
 
 let codeElement = document.getElementById('caos-user-code');
 
@@ -84,28 +84,28 @@ function redoMultiCommand(subcommands){
 }
 
 async function newFile() {
-    fileHelper.newFile();
+    Window.fileHelper.newFile();
 }
 
 async function openFile() {
-    fileHelper.openCaosFile();
+    Window.fileHelper.openCaosFile();
 }
 
 async function saveFile() {
-    fileHelper.saveCaosFile();
+    Window.fileHelper.saveCaosFile();
 }
 
 async function saveAs() {
-    await fileHelper.saveCaosFileAs();
+    await Window.fileHelper.saveCaosFileAs();
     updateBarButtons()
 }
 
 async function closeFile() {
-    fileHelper.closeFile();
+    Window.fileHelper.closeFile();
 }
 
 function saveAllFiles(){
-    fileHelper.saveAllFiles();
+    Window.fileHelper.saveAllFiles();
 }
 
 function displayFiles(files) {
@@ -126,7 +126,7 @@ function displayFiles(files) {
 
 function updateTitle(){
   let title = '';
-  let currentFileRef = fileHelper.getCurrentFileRef();
+  let currentFileRef = Window.fileHelper.getCurrentFileRef();
   if (currentFileRef){
     title += tileNameFromPath(currentFileRef.path) + ' ';
   }
@@ -139,8 +139,8 @@ function updateTitle(){
 }
 
 function updateBarButtons(){
-  let currentFile = fileHelper.getCurrentFileRef();
-  if (!currentFile || !fileHelper.getCurrentFileNeedsSaving()) {
+  let currentFile = Window.fileHelper.getCurrentFileRef();
+  if (!currentFile || !Window.fileHelper.getCurrentFileNeedsSaving()) {
     $('#save-file-img').css('opacity','0.4')
   }else{
     $('#save-file-img').css('opacity','1')
@@ -512,14 +512,14 @@ function makeInsertTextCommand(startIndex, text){
   );
 }
 
-function insertTextAbsolute({startIndex, text}){
+async function insertTextAbsolute({startIndex, text}){
   let codeText = GetVisibleTextInElement(codeElement);
   let newCodeText =
     codeText.substring(0, startIndex)
       + text
       + codeText.substring(startIndex, codeText.length);
-  fileHelper.fileModified();
-  CheckCode(codeElement, newCodeText, startIndex+text.length);
+  Window.fileHelper.fileModified();
+  await CheckCode(codeElement, newCodeText, startIndex+text.length);
 }
 
 function insertTextFromNewOrOpenedFile(text) {
@@ -542,7 +542,7 @@ function deleteTextAbsolute({startIndex, text}){
   let newCodeText =
     codeText.substring(0, startIndex)
       + codeText.substring(startIndex + text.length, codeText.length);
-  fileHelper.fileModified();
+  Window.fileHelper.fileModified();
   CheckCode(codeElement, newCodeText, startIndex);
 }
 

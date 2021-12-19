@@ -5,10 +5,13 @@ module.exports = {
 const assert = require('assert');
 const fs = require('fs');
 
-function _c3Commands(){
-  let namespaces = [];
+async function _c3Commands(){
+  console.log("here");
+  let namespaces = new Object();
 
-  let c3In = JSON.parse(fs.readFileSync('./resources/commandinfo.json', 'utf8')).variants.c3;
+  let commandinfoPath = (await Window.fileHelper.getResourcePath('commandinfo.json')).path;
+
+  let c3In = JSON.parse(fs.readFileSync(commandinfoPath, 'utf8')).variants.c3;
 
   for (var key in c3In) {
     if (c3In.hasOwnProperty(key)) {
@@ -36,6 +39,6 @@ function _c3Commands(){
       );
     }
   }
-  //console.log(namespaces);
+  console.log(namespaces);
   return namespaces;
 }

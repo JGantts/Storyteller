@@ -52,6 +52,9 @@ ipcMain.on('filemanager-execute-promise', async (event, arg) => {
       case "select-files":
         fileManager_selectFile(event, arg.id, arg.args);
         break;
+      case "get-resource-path":
+        fileManager_getResourcePath(event, arg.id, arg.args);
+        break;
       default:
         throw new Error(`Internal Error. Reference data: ${JSON.stringify(arg)}`);
         break;
@@ -357,6 +360,21 @@ async function fileManager_closeFile(event, id, args) {
             success: true,
             args: {
                 continue: true
+            }
+        }
+    );
+    return;
+}
+
+async function fileManager_getResourcePath(event, id, args) {
+    event.reply(
+        'executed-promise',
+        {
+            id: id,
+            success: true,
+            args: {
+                continue: true,
+                path: pathModule.join(app.getAppPath(), "resources", args.resource)
             }
         }
     );

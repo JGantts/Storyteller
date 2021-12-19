@@ -1,5 +1,6 @@
 const assert = require('assert');
-const { ipcRenderer } = require('electron')
+const { ipcRenderer } = require('electron');
+const crypto = require('crypto');
 
 const cartSaveOptions = {
     title: "Save Cartographer file",
@@ -28,9 +29,14 @@ class FileHelper {
       this._displayFiles = displayFiles;
       this._getText = getText;
 
+      console.log("here");
+      console.log(new Error().stack);
+
       let dict = this._promiseDictionary;
 
       ipcRenderer.on('executed-promise', (event, args) => {
+          console.log(args);
+          console.log(dict);
           let promise = dict[args.id]
           if (args.success) {
               promise.resolve(args.args);
@@ -132,6 +138,12 @@ class FileHelper {
           ]
       };
       return await this._selectFile(options);
+  }
+
+  async getResourcePath(resource) {
+      console.log("here");
+      console.log(new Error().stack);
+      return await this.getResourcePathPromise(resource);
   }
 
   async _selectFile(options) {
@@ -262,8 +274,15 @@ class FileHelper {
       });
   }
 
-  async makeFileManagerPromise(promiseType, args) {
+  async getResourcePathPromise(resource) {
+      return this.makeFileManagerPromise("get-resource-path", {
+          resource
+      });
+  }
+
+  makeFileManagerPromise(promiseType, args) {
     let promiseId = crypto.randomUUID();
+    console.log(promiseId);
     let dict = this._promiseDictionary;
     return new Promise(function(resolve, reject) {
         dict[promiseId] = {
@@ -272,6 +291,9 @@ class FileHelper {
             resolve: resolve,
             reject: reject
         };
+        console.log("here");
+        console.log(promiseId);
+        console.log(dict);
         ipcRenderer.send(
             'filemanager-execute-promise',
             {

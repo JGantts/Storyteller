@@ -10,6 +10,7 @@ const{
 } = require('./html-editing-helper.js');
 
 function checkCode(codeElement, codeText, caretPosition){
+  console.log(new Error().stack);
   $('#inprocessParse').text('');
   $('#highlighted').text('');
 
