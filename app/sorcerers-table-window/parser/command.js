@@ -32,9 +32,7 @@ const { State } = require('./tokens.js');
 
 let _commands = null;
 async function __commands() {
-    console.log(_commands);
     _commands = await C3Commands();
-    console.log(_commands);
 }
 
 __commands();

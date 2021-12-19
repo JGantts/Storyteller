@@ -29,25 +29,24 @@ class FileHelper {
       this._displayFiles = displayFiles;
       this._getText = getText;
 
-      console.log("here");
-      console.log(new Error().stack);
-
       let dict = this._promiseDictionary;
 
       ipcRenderer.on('executed-promise', (event, args) => {
-          console.log(args);
-          console.log(dict);
           let promise = dict[args.id]
-          if (args.success) {
-              promise.resolve(args.args);
-          } else {
-              if (promise.reject) {
-                  promise.reject(args.args);
+          if (promise) {
+              if (args.success) {
+                  promise.resolve(args.args);
               } else {
-                  console.log(args.args);
+                  if (promise.reject) {
+                      promise.reject(args.args);
+                  } else {
+                      console.log(args.args);
+                  }
               }
+              delete dict[args.id];
+          } else {
+             console.log("You're killin me Smalls!");
           }
-          delete dict[args.id];
       });
   }
 
@@ -141,8 +140,6 @@ class FileHelper {
   }
 
   async getResourcePath(resource) {
-      console.log("here");
-      console.log(new Error().stack);
       return await this.getResourcePathPromise(resource);
   }
 
@@ -282,7 +279,6 @@ class FileHelper {
 
   makeFileManagerPromise(promiseType, args) {
     let promiseId = crypto.randomUUID();
-    console.log(promiseId);
     let dict = this._promiseDictionary;
     return new Promise(function(resolve, reject) {
         dict[promiseId] = {
@@ -291,9 +287,6 @@ class FileHelper {
             resolve: resolve,
             reject: reject
         };
-        console.log("here");
-        console.log(promiseId);
-        console.log(dict);
         ipcRenderer.send(
             'filemanager-execute-promise',
             {

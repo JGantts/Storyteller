@@ -6,7 +6,6 @@ const assert = require('assert');
 const fs = require('fs');
 
 async function _c3Commands(){
-  console.log("here");
   let namespaces = new Object();
 
   let commandinfoPath = (await Window.fileHelper.getResourcePath('commandinfo.json')).path;
@@ -39,6 +38,5 @@ async function _c3Commands(){
       );
     }
   }
-  console.log(namespaces);
   return namespaces;
 }
