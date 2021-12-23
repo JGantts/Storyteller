@@ -62,6 +62,7 @@ let canvasHolder = document.getElementById('canvasHolder');
 
 window.addEventListener('resize', () => {
     rejiggerOnscreenCanvas();
+    masterUiState.camera.redraw = true;
 });
 
 let renderCanvasElement = document.getElementById('renderCanvas');
