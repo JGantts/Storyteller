@@ -226,7 +226,7 @@ let fileHelper = new FileHelper(
     (type) => {
         switch (type) {
           case "json":
-            return JSON.stringify(dataStructures.metaroomDisk);
+            return JSON.stringify(dataStructures.metaroomDisk, null, " ").replace(/(\n|\r|\r\n)[\s]+/g, "\n");
           case "caos":
             let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk);
             return toReturn;
