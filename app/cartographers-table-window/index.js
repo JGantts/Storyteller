@@ -1368,7 +1368,7 @@ async function redrawMetaroom(){
     backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
     if (dataStructures.metaroomDisk.background) {
         if (!img) {
-            reloadBackgroundFile();
+            await reloadBackgroundFile();
         }
         switch (path.extname(dataStructures.metaroomDisk.background)) {
           case ".blk":
