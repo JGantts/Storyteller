@@ -1431,8 +1431,8 @@ async function redrawSelection(timestamp) {
                     dataStructures);
               }
 
-              onscreenCanvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-              roomtypeRenderer.redrawRoomtypes(onscreenCanvasContexts.selection, dataStructures);
+              onscreenCanvasContexts.selectionUnder.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
+              roomtypeRenderer.redrawRoomtypes(onscreenCanvasContexts.selectionUnder, dataStructures);
           } else {
               let selection = selectionChecker.getSelectionHover();
               if (selection.selectedType === "") {
