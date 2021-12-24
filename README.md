@@ -8,7 +8,7 @@ Intended to be a one-stop-shop for Creatures players and developers.
 - [ ] Creatures 2 launcher
 - [ ] Creatures 1 launcher
 ---
-- [X] CAOS Tool (Sorcerer's Kit)
+- [X] Sorcerer's Table (CAOS Tool)
   - [X] C3/DS Syntax
   - [X] C3/DS Injection
   - [ ] C2 Syntax
@@ -16,10 +16,16 @@ Intended to be a one-stop-shop for Creatures players and developers.
   - [ ] C1 Syntax
   - [ ] C1 Injection
   - [ ] DS CAOS Tutorial
-- [ ] Sprite Tool (Painters's Kit)
-- [ ] Map Tool (Cartographer's Kit)
-- [ ] Agent Builder (Architects Kit)
-- [ ] Breed Tool (Designer's Kit)
+- [ ] Sprite Tool (Painters's Table)
+- [ ] Cartographer's Table (Map Tool)
+  - [X] Load from existing CAOS file
+  - [X] Make new metaroom from background file
+  - [X] Modify metaroom
+  - [X] Export metaroom to CAOS file
+  - [ ] View CA levels
+  - [ ] Inject into game
+- [ ] Architects Table (Agent Builder)
+- [ ] Designer's Table (Breed Tool) 
   - [ ] Blender Script
   - [ ] PNG Crop Tool
   - [ ] PNG to c16 Tool
@@ -27,7 +33,7 @@ Intended to be a one-stop-shop for Creatures players and developers.
   - [ ] ATT Editor
   - [ ] Blender Script
   - [ ] Apperance Genetics Editor
-- [ ] Genetics Kit (Tailor's Kit)
+- [ ] Tailor's Table (Genetics Kit)
 ---
 - [ ] Creature Database
   - [X] Creature images
