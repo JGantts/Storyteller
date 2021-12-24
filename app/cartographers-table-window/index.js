@@ -226,10 +226,12 @@ class Command{
 
   redo(){
     this._redo(this._redoArgs);
+    masterUiState.camera.redraw = true;
   }
 
   undo(){
     this._undo(this._undoArgs);
+    masterUiState.camera.redraw = true;
   }
 }
 
