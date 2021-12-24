@@ -127,7 +127,7 @@ function copyOffscreenCanvasesToScreen(keys) {
             fs.writeFile(key + ".png", buf);*/
 
             let inContextRoomSizeBlurFix = roomSizeBlurFix;
-            if (key = "background") {
+            if (key === "background") {
                 inContextRoomSizeBlurFix = 1;
             }
 
