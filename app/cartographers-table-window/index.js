@@ -1387,6 +1387,43 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     }
 }
 
+async function redrawPotentialRooms(roomCtx, pastiesCtx, lines, points, metaroom){
+
+    roomCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
+    pastiesCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
+    roomCtx.lineWidth = getRoomLineThickness();
+    lines
+        .forEach((line, i) => {
+            if (line.permeability < 0) {
+              roomCtx.strokeStyle = 'rgb(005, 170, 255)';
+            } else if (line.permeability === 0) {
+              roomCtx.strokeStyle = 'rgb(228, 000, 107)';
+            } else if (line.permeability < 100) {
+              roomCtx.strokeStyle = 'rgb(207, 140, 003)';
+            } else if (line.permeability === 100) {
+              roomCtx.strokeStyle = 'rgb(172, 255, 083)';
+            }
+            roomCtx.beginPath();
+            roomCtx.moveTo(line.start.x - posX, line.start.y - posY);
+            roomCtx.lineTo(line.end.x - posX, line.end.y - posY);
+            roomCtx.stroke();
+        });
+    redrawPotentialPasties(pastiesCtx, points, metaroom);
+    //redrawSelection();
+}
+
+async function redrawPotentialPasties(pastiesCtx, points, metaroom){
+    //console.log(points);
+    //console.log(new Error().stack);
+    pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
+    pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
+    for (const key in points) {
+      pastiesCtx.beginPath();
+      pastiesCtx.arc(points[key].x - posX, points[key].y - posY, getRoomLineThickness() * 1.5, 0, 2 * Math.PI, true);
+      pastiesCtx.fill();
+    }
+}
+
 let secondsPassed;
 let oldTimestamp = null;
 let fps;
@@ -1503,7 +1540,7 @@ function redrawPotential(potentialRooms, dataStructures) {
             doorsWalls = doorsWalls.concat(dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(potentialRoom, dataStructures));
         }
         let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
-        redrawRooms(onscreenCanvasContexts.potential, onscreenCanvasContexts.potential, doorsWalls, points, dataStructures.metaroomDisk);
+        redrawPotentialRooms(onscreenCanvasContexts.potential, onscreenCanvasContexts.potential, doorsWalls, points, dataStructures.metaroomDisk);
     }
 }
 
