@@ -53,11 +53,11 @@ function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, 
     selectionHighlightCtx.fillStyle = "black";
     selectionHighlightCtx.beginPath();
     selectionHighlightCtx.roundedRect(
-      (point.x-myWidth/2) * roomSizeBlurFix,
-      (point.y-myWidth/2) * roomSizeBlurFix,
-      myWidth * roomSizeBlurFix,
-      myWidth * roomSizeBlurFix,
-      myWidth * roomSizeBlurFix/3);
+      (point.x-myWidth/2) - posX,
+      (point.y-myWidth/2) - posY,
+      myWidth,
+      myWidth,
+      myWidth * 1/3);
     selectionHighlightCtx.fill();
     selectionHighlightCtx.stroke();
 
@@ -167,10 +167,10 @@ function colorPercentage(percentage, colorA, colorB) {
 }
 
 function drawSelectionCirclePortion(selectionRainbowCtx, x, y, theta0, theta1, color) {
-    selectionRainbowCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
+    selectionRainbowCtx.lineWidth = getRoomLineThickness();
     selectionRainbowCtx.strokeStyle = color;
     selectionRainbowCtx.beginPath();
-    selectionRainbowCtx.arc(x * roomSizeBlurFix, y * roomSizeBlurFix, getSelectionCheckMargin() * 2 * getSelectionMultiplier() * roomSizeBlurFix, theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
+    selectionRainbowCtx.arc(x - posX, y - posY, getSelectionCheckMargin() * 2 * getSelectionMultiplier(), theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
     selectionRainbowCtx.stroke();
 }
 
@@ -276,7 +276,7 @@ function drawSeclectionLineSegment(selectionRainbowCtx, lineStart, lineRise, lin
 
 function drawSeclectionLineSegmentAtWidth(selectionRainbowCtx, lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidthIn, lineColor, leftRight) {
 
-    let lineWidth = lineWidthIn * roomSizeBlurFix / (Math.abs(leftRight) + 1)
+    let lineWidth = lineWidthIn / (Math.abs(leftRight) + 1)
     selectionRainbowCtx.lineWidth = lineWidth;
     selectionRainbowCtx.strokeStyle = lineColor;
 
@@ -286,12 +286,12 @@ function drawSeclectionLineSegmentAtWidth(selectionRainbowCtx, lineStart, lineRi
 
     selectionRainbowCtx.beginPath();
     selectionRainbowCtx.moveTo(
-      (lineStart.x + lineRun*startPercent + xDiff) * roomSizeBlurFix,
-      (lineStart.y + lineRise*startPercent + yDiff) * roomSizeBlurFix
+      (lineStart.x + lineRun*startPercent + xDiff) - posX,
+      (lineStart.y + lineRise*startPercent + yDiff) - posY
     );
     selectionRainbowCtx.lineTo(
-      (lineStart.x + lineRun*stopPercent + xDiff) * roomSizeBlurFix,
-      (lineStart.y + lineRise*stopPercent + yDiff) * roomSizeBlurFix
+      (lineStart.x + lineRun*stopPercent + xDiff) - posX,
+      (lineStart.y + lineRise*stopPercent + yDiff) - posY
     );
     selectionRainbowCtx.stroke();
 }
@@ -353,10 +353,10 @@ function drawSelectionRoom(selectionRainbowCtx, selectedRoom) {
 
     selectionRainbowCtx.fillStyle = patternStyle;
     selectionRainbowCtx.beginPath();
-    selectionRainbowCtx.moveTo(selectedRoom.leftX * roomSizeBlurFix, selectedRoom.leftCeilingY * roomSizeBlurFix);
-    selectionRainbowCtx.lineTo(selectedRoom.rightX * roomSizeBlurFix, selectedRoom.rightCeilingY * roomSizeBlurFix);
-    selectionRainbowCtx.lineTo(selectedRoom.rightX * roomSizeBlurFix, selectedRoom.rightFloorY * roomSizeBlurFix);
-    selectionRainbowCtx.lineTo(selectedRoom.leftX * roomSizeBlurFix, selectedRoom.leftFloorY * roomSizeBlurFix);
+    selectionRainbowCtx.moveTo(selectedRoom.leftX - posX, selectedRoom.leftCeilingY - posY);
+    selectionRainbowCtx.lineTo(selectedRoom.rightX - posX, selectedRoom.rightCeilingY - posY);
+    selectionRainbowCtx.lineTo(selectedRoom.rightX - posX, selectedRoom.rightFloorY - posY);
+    selectionRainbowCtx.lineTo(selectedRoom.leftX - posX, selectedRoom.leftFloorY - posY);
     selectionRainbowCtx.closePath();
     selectionRainbowCtx.fill();
 }
