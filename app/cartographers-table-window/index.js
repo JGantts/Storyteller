@@ -25,7 +25,7 @@ let posY = 0;
 let zooomSettle = 1;
 
 let zoomPanSettleMilliseconds = 80;
-let zoomPanSettleTimestampLastChange = null;;
+let zoomPanSettleTimestampLastChange = null;
 
 let dataStructures = null;
 
