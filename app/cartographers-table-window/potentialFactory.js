@@ -37,7 +37,7 @@ function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
               rightCeilingY: line.start.y,
               leftFloorY: line.end.y,
               rightFloorY: line.end.y,
-              roomType: -1,
+              roomType: 0,
           };
       } else {
           return {
@@ -48,7 +48,7 @@ function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
               rightCeilingY: line.start.y,
               leftFloorY: line.end.y,
               rightFloorY: line.end.y,
-              roomType: -1,
+              roomType: 0,
           };
       }
   // Horizontal
