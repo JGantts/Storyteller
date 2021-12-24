@@ -100,6 +100,8 @@ function resizeOnscreenCanvasElements() {
     }
 }
 
+let roomSizeBlurFix = 2;
+
 function resizeOffscreenCanvasElements(rectangle) {
     for (key in offscreenCanvasElements) {
         let inContextRoomSizeBlurFix = roomSizeBlurFix;
@@ -111,8 +113,6 @@ function resizeOffscreenCanvasElements(rectangle) {
         offscreenCanvasContexts[key] = offscreenCanvasElements[key].getContext('2d');
     }
 }
-
-let roomSizeBlurFix = 2;
 
 function copyOffscreenCanvasesToScreen(keys) {
     if (
@@ -135,12 +135,12 @@ function copyOffscreenCanvasesToScreen(keys) {
               offscreenCanvasElements[key],
               posX * inContextRoomSizeBlurFix,
               posY * inContextRoomSizeBlurFix,
-              canvasHolder.width * zoom * inContextRoomSizeBlurFix,
-              canvasHolder.height * zoom * inContextRoomSizeBlurFix,
+              canvasHolder.clientWidth * zoom * inContextRoomSizeBlurFix,
+              canvasHolder.clientHeight * zoom * inContextRoomSizeBlurFix,
               0,
               0,
-              canvasHolder.width,
-              canvasHolder.height
+              canvasHolder.clientWidth,
+              canvasHolder.clientHeight
             );
         }
     }
