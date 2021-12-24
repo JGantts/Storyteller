@@ -188,9 +188,14 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
     tempCanvas.width = img.width * zooomSettle;
     tempCanvas.height = img.width * zooomSettle;
 
-    tCtx.drawImage(img, 0, 0, img.width * zooomSettle, img.width * zooomSettle);
+    let imgWidth = img.width * zooomSettle
+    tCtx.translate(-(posX % imgWidth), -(posY % imgWidth));
+    tCtx.drawImage(img, 0, 0, imgWidth, imgWidth, 0, 0, imgWidth, imgWidth);
+    tCtx.drawImage(img, 0, 0, imgWidth, imgWidth, imgWidth, 0, imgWidth, imgWidth);
+    tCtx.drawImage(img, 0, 0, imgWidth, imgWidth, 0, imgWidth, imgWidth, imgWidth);
+    tCtx.drawImage(img, 0, 0, imgWidth, imgWidth, imgWidth, imgWidth, imgWidth, imgWidth);
     tCtx.globalCompositeOperation = 'source-in';
-    tCtx.fillStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${100})`;;
+    tCtx.fillStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${100})`;
     tCtx.fillRect(0, 0, img.width * zooomSettle * 2, img.width * zooomSettle * 2);
 
     let patternStyle = roomtypeCtx.createPattern(tempCanvas, "repeat");
