@@ -566,8 +566,8 @@ function oneToOneZoom() {
       let zoomFinal = zoom;
       masterUiState.camera.rezoom = true;
 
-      posX += (canvasHolder.clientWidth/2 + posX) * (zoomInitial/zoomFinal - 1);
-      posY += (canvasHolder.clientHeight/2 + posY) * (zoomInitial/zoomFinal - 1);
+      posX += (canvasHolder.clientWidth/2) * (zoomInitial/zoomFinal - 1);
+      posY += (canvasHolder.clientHeight/2) * (zoomInitial/zoomFinal - 1);
       constrainPositionZoom();
 }
 
@@ -1004,8 +1004,8 @@ function handleWheel(e) {
         let zoomFinal = zoom;
         masterUiState.camera.rezoom = true;
 
-        posX += (e.offsetX + posX) * (zoomInitial/zoomFinal - 1);
-        posY += (e.offsetY + posY) * (zoomInitial/zoomFinal - 1);
+        posX += (e.offsetX) * (zoomInitial/zoomFinal - 1);
+        posY += (e.offsetY) * (zoomInitial/zoomFinal - 1);
     } else {
         if (e.altKey) {
             posX += e.deltaY * 2;
