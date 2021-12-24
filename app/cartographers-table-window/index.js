@@ -126,6 +126,12 @@ function copyOffscreenCanvasesToScreen(keys) {
             const buf = Buffer.from(data, "base64");
             fs.writeFile(key + ".png", buf);*/
 
+            onscreenCanvasContexts[key].clearRect(
+              0, 0,
+              canvasHolder.clientWidth,
+              canvasHolder.clientHeight
+            );
+
             let inContextRoomSizeBlurFix = roomSizeBlurFix;
             if (key === "background") {
                 inContextRoomSizeBlurFix = 1;
