@@ -185,10 +185,10 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
 
     let tempCanvas = document.createElement("canvas");
     let tCtx = tempCanvas.getContext("2d");
-    tempCanvas.width = img.width * zooomSettle * 2;
-    tempCanvas.height = img.width * zooomSettle * 2;
+    tempCanvas.width = img.width * zooomSettle;
+    tempCanvas.height = img.width * zooomSettle;
 
-    tCtx.drawImage(img, 0, 0, img.width * zooomSettle * 2, img.width * zooomSettle * 2);
+    tCtx.drawImage(img, 0, 0, img.width * zooomSettle, img.width * zooomSettle);
     tCtx.globalCompositeOperation = 'source-in';
     tCtx.fillStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${100})`;;
     tCtx.fillRect(0, 0, img.width * zooomSettle * 2, img.width * zooomSettle * 2);
@@ -197,15 +197,15 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
     if (!patternStyle) {
       return;
     }
-    patternStyle.width = img.width * zooomSettle * 2;
-    patternStyle.height = img.width * zooomSettle * 2;
+    patternStyle.width = img.width * zooomSettle;
+    patternStyle.height = img.width * zooomSettle;
 
     roomtypeCtx.fillStyle = patternStyle;
     roomtypeCtx.beginPath();
-    roomtypeCtx.moveTo(selectedRoom.leftX * roomSizeBlurFix, selectedRoom.leftCeilingY * roomSizeBlurFix);
-    roomtypeCtx.lineTo(selectedRoom.rightX * roomSizeBlurFix, selectedRoom.rightCeilingY * roomSizeBlurFix);
-    roomtypeCtx.lineTo(selectedRoom.rightX * roomSizeBlurFix, selectedRoom.rightFloorY * roomSizeBlurFix);
-    roomtypeCtx.lineTo(selectedRoom.leftX * roomSizeBlurFix, selectedRoom.leftFloorY * roomSizeBlurFix);
+    roomtypeCtx.moveTo(selectedRoom.leftX - posX, selectedRoom.leftCeilingY - posY);
+    roomtypeCtx.lineTo(selectedRoom.rightX - posX, selectedRoom.rightCeilingY - posY);
+    roomtypeCtx.lineTo(selectedRoom.rightX - posX, selectedRoom.rightFloorY - posY);
+    roomtypeCtx.lineTo(selectedRoom.leftX - posX, selectedRoom.leftFloorY - posY);
     roomtypeCtx.closePath();
     roomtypeCtx.fill();
 }

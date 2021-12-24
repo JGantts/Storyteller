@@ -1417,22 +1417,24 @@ async function redrawSelection(timestamp) {
           }
 
           if (masterUiState.state.isViewingRoomType) {
-              let selection = selectionChecker.getSelectionRoomtypeHover();
-              if (selection.selectedType === "") {
-                  selection = selectionChecker.getSelectionRoomtypeClick();
-              }
+              if (true || zoomPanSettleTimestampLastChange === null) {
+                  let selection = selectionChecker.getSelectionRoomtypeHover();
+                  if (selection.selectedType === "") {
+                      selection = selectionChecker.getSelectionRoomtypeClick();
+                  }
 
-              if (previousHoverSelectionInstanceId !== selection.selectionInstancedId
-              || previousHoverSelectionInstanceId === "uninitialized") {
-                  previousHoverSelectionInstanceId = selection.selectionInstancedId;
-                  updateRoomtypePanel(
-                    document.getElementById("properties-panel"),
-                    selection,
-                    dataStructures);
-              }
+                  if (previousHoverSelectionInstanceId !== selection.selectionInstancedId
+                  || previousHoverSelectionInstanceId === "uninitialized") {
+                      previousHoverSelectionInstanceId = selection.selectionInstancedId;
+                      updateRoomtypePanel(
+                        document.getElementById("properties-panel"),
+                        selection,
+                        dataStructures);
+                  }
 
-              onscreenCanvasContexts.selectionUnder.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
-              roomtypeRenderer.redrawRoomtypes(onscreenCanvasContexts.selectionUnder, dataStructures);
+                  onscreenCanvasContexts.selectionUnder.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
+                  roomtypeRenderer.redrawRoomtypes(onscreenCanvasContexts.selectionUnder, dataStructures);
+              }
           } else {
               let selection = selectionChecker.getSelectionHover();
               if (selection.selectedType === "") {
