@@ -2,6 +2,13 @@
 
 Intended to be a one-stop-shop for Creatures players and developers.
 
+### Bug Reports? Suggestions? Please make an issue
+- New issues are more than welcome!
+- A member of our team can categorize the issue for you
+- Please do a search of open issues first to see if you might comment on an existing issue instead
+- Thank you!
+
+
 ### Features:
 - [X] Docking Station launcher
 - [ ] Creatures 3 launcher
