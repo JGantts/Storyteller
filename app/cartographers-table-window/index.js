@@ -1460,19 +1460,23 @@ async function redrawSelection(timestamp) {
               selectionRenderer.redrawSelection(onscreenCanvasContexts.selectionUnder, onscreenCanvasContexts.selectionOver, dataStructures, selection);
           }
 
+          masterUiState.camera.redraw =
+            masterUiState.camera.redraw ||
+            masterUiState.camera.rezoom ||
+            masterUiState.camera.reposition;
+
           if (
-              masterUiState.camera.rezoom
-              || masterUiState.camera.reposition
-              || masterUiState.camera.redraw
+              masterUiState.camera.rezoom ||
+              masterUiState.camera.reposition
           ) {
               zoomPanSettleTimestampLastChange = timestamp;
-              masterUiState.camera.rezoom = false;
-              resizeOffscreenCanvasElements(dataStructures.metaroomDisk);
-              redrawMetaroom();
+          }
+
+          if (masterUiState.camera.rezoom){
               updateBarButtons();
-              masterUiState.camera.rezoom = false;
-              masterUiState.camera.reposition = false;
-              masterUiState.camera.redraw = false;
+          }
+
+          if (masterUiState.camera.redraw) {
               copyOffscreenCanvasesToScreen(
                 [
                   "background",
@@ -1480,9 +1484,10 @@ async function redrawSelection(timestamp) {
                   "pasties",
                 ]
               );
-          } else {
           }
-
+          masterUiState.camera.redraw = false;
+          masterUiState.camera.rezoom = false;
+          masterUiState.camera.reposition = false;
       }
     }
     window.requestAnimationFrame(redrawSelection);
