@@ -61,133 +61,93 @@ let masterUiState = {
 let canvasHolder = document.getElementById('canvasHolder');
 
 window.addEventListener('resize', () => {
-    rejiggerOnscreenCanvas();
+    resizeOnscreenCanvasElements();
     masterUiState.camera.redraw = true;
 });
 
-let renderCanvasElement = document.getElementById('renderCanvas');
-let renderCtx = renderCanvasElement.getContext('2d');
-
-let backgroundCanvasElement = document.createElement('canvas');
-let backgroundCtx = backgroundCanvasElement.getContext('2d');
-
-
-let selectionRainbowCanvasElement = document.createElement('canvas');
-let roomCanvasElement = document.createElement('canvas');
-let pastiesCanvasElement = document.createElement('canvas');
-let potentialCanvasElement = document.createElement('canvas');
-let selectionHighlightCanvasElement = document.createElement('canvas');
-
-let canvasElements = {
-    selection: selectionRainbowCanvasElement,
-    room: roomCanvasElement,
-    pasties: pastiesCanvasElement,
-    potential: potentialCanvasElement,
-    sandwich: selectionHighlightCanvasElement
+/*
+backgroundRenderCanvas
+selectionUnderCanvas
+roomRenderCanvas
+potentialCanvas
+pastiesRenderCanvas
+selectionOverCanvas
+*/
+let onscreenCanvasElements = {
+    background: document.getElementById("backgroundRenderCanvas"),
+    selectionUnder: document.getElementById("selectionUnderCanvas"),
+    room: document.getElementById("roomRenderCanvas"),
+    potential: document.getElementById("potentialCanvas"),
+    pasties: document.getElementById("pastiesRenderCanvas"),
+    selectionOver: document.getElementById("selectionOverCanvas"),
 };
 
-let canvasContexts = {
-    selection: null,
-    room: null,
-    pasties: null,
-    potential: null,
-    sandwich: null
+let offscreenCanvasElements = {
+    background: document.createElement('canvas'),
+    room: document.createElement('canvas'),
+    pasties: document.createElement('canvas'),
 };
 
-function rejiggerOnscreenCanvas(rectangle) {
-    renderCanvasElement.width = canvasHolder.clientWidth;
-    renderCanvasElement.height = canvasHolder.clientHeight;
-    renderCtx = renderCanvasElement.getContext('2d');
+let onscreenCanvasContexts = new Object;
+
+let offscreenCanvasContexts = new Object;
+
+function resizeOnscreenCanvasElements() {
+    for (key in onscreenCanvasElements) {
+        onscreenCanvasElements[key].width = canvasHolder.clientWidth;
+        onscreenCanvasElements[key].height = canvasHolder.clientHeight;
+        onscreenCanvasContexts[key] = onscreenCanvasElements[key].getContext('2d');
+    }
 }
 
-function rejiggerBackgroundCanvase(rectangle) {
-    backgroundCanvasElement.width = rectangle.width;
-    backgroundCanvasElement.height = rectangle.height;
-    backgroundCtx = backgroundCanvasElement.getContext('2d');
+function resizeOffscreenCanvasElements(rectangle) {
+    for (key in offscreenCanvasElements) {
+        let inContextRoomSizeBlurFix = roomSizeBlurFix;
+        if (key === "background") {
+            inContextRoomSizeBlurFix = 1;
+        }
+        offscreenCanvasElements[key].width = rectangle.width * inContextRoomSizeBlurFix;
+        offscreenCanvasElements[key].height = rectangle.height * inContextRoomSizeBlurFix;
+        offscreenCanvasContexts[key] = offscreenCanvasElements[key].getContext('2d');
+    }
 }
 
 let roomSizeBlurFix = 2;
 
-function rejiggerOverlayCanvases(rectangle) {
-    selectionRainbowCanvasElement.width = rectangle.width * roomSizeBlurFix;
-    selectionRainbowCanvasElement.height = rectangle.height * roomSizeBlurFix;
-    let selectionRainbowCtx = selectionRainbowCanvasElement.getContext('2d');
-    roomCanvasElement.width = rectangle.width * roomSizeBlurFix;
-    roomCanvasElement.height = rectangle.height * roomSizeBlurFix;
-    let roomCtx = roomCanvasElement.getContext('2d');
-    pastiesCanvasElement.width = rectangle.width * roomSizeBlurFix;
-    pastiesCanvasElement.height = rectangle.height * roomSizeBlurFix;
-    let pastiesCtx = pastiesCanvasElement.getContext('2d');
-    potentialCanvasElement.width = rectangle.width * roomSizeBlurFix;
-    potentialCanvasElement.height = rectangle.height * roomSizeBlurFix;
-    let potentialCtx = potentialCanvasElement.getContext('2d');
-    selectionHighlightCanvasElement.width = rectangle.width * roomSizeBlurFix;
-    selectionHighlightCanvasElement.height = rectangle.height * roomSizeBlurFix;
-    let selectionHighlightCtx = selectionHighlightCanvasElement.getContext('2d');
-
-    canvasContexts.selection = selectionRainbowCtx;
-    canvasContexts.room = roomCtx;
-    canvasContexts.pasties = pastiesCtx;
-    canvasContexts.potential = potentialCtx;
-    canvasContexts.sandwich = selectionHighlightCtx;
-}
-
-function copyOffscreenBackgroundToScreen() {
-    if (
-      backgroundCanvasElement.width !== 0
-      && canvasElements.selection.width !== 0
-      && dataStructures?.metaroomDisk
-   ) {
-
-        /*var imgurl= backgroundCanvasElement.toDataURL();
-        const data = imgurl.replace(/^data:image\/\w+;base64,/, "");
-        const buf = Buffer.from(data, "base64");
-        fs.writeFile("image.png", buf);*/
-
-        renderCtx.drawImage(
-            backgroundCanvasElement,
-            posX,
-            posY,
-            renderCanvasElement.width * zoom,
-            renderCanvasElement.height * zoom,
-            0,
-            0,
-            renderCanvasElement.width,
-            renderCanvasElement.height
-        );
-    }
-}
-
 function copyOffscreenCanvasesToScreen(keys) {
     if (
-      backgroundCanvasElement.width !== 0
-      && canvasElements.selection.width !== 0
+      offscreenCanvasElements.background.width !== 0
+      && onscreenCanvasElements.selectionUnder.width !== 0
       && dataStructures?.metaroomDisk
    ) {
-
         for (key of keys) {
-            /*var imgurl= canvasElements[key].toDataURL();
+            /*var imgurl= offscreenCanvasElements[key].toDataURL();
             const data = imgurl.replace(/^data:image\/\w+;base64,/, "");
             const buf = Buffer.from(data, "base64");
             fs.writeFile(key + ".png", buf);*/
 
-            renderCtx.drawImage(
-              canvasElements[key],
-              posX * roomSizeBlurFix,
-              posY * roomSizeBlurFix,
-              renderCanvasElement.width * zoom * roomSizeBlurFix,
-              renderCanvasElement.height * zoom * roomSizeBlurFix,
+            let inContextRoomSizeBlurFix = roomSizeBlurFix;
+            if (key = "background") {
+                inContextRoomSizeBlurFix = 1;
+            }
+
+            onscreenCanvasContexts[key].drawImage(
+              offscreenCanvasElements[key],
+              posX * inContextRoomSizeBlurFix,
+              posY * inContextRoomSizeBlurFix,
+              canvasHolder.width * zoom * inContextRoomSizeBlurFix,
+              canvasHolder.height * zoom * inContextRoomSizeBlurFix,
               0,
               0,
-              renderCanvasElement.width,
-              renderCanvasElement.height
+              canvasHolder.width,
+              canvasHolder.height
             );
         }
     }
 }
 
 
-let topCanvasElement = renderCanvasElement;
+let topCanvasElement = onscreenCanvasElements["selectionOver"];
 topCanvasElement.onmousedown=handleMouseDown;
 topCanvasElement.onmousemove=handleMouseMove;
 topCanvasElement.onmouseup=handleMouseUp;
@@ -311,8 +271,6 @@ async function newFile() {
       "perms": {}
     };
     loadMetaroom(
-        canvasElements,
-        canvasContexts,
         fileContents,
         backgroundFile
     );
@@ -480,11 +438,7 @@ function displayFiles(files) {
             throw new Error(`Unknown file type: ${file.fileref}`);
         }
 
-        loadMetaroom(
-            canvasElements,
-            canvasContexts,
-            fileContents
-        );
+        loadMetaroom(fileContents);
         updateTitle();
         _undoList = [];
         _redoList = [];
@@ -652,8 +606,8 @@ function undo(){
   fileHelper.fileModified();
   rebuildRooms();
   redrawRooms(
-    canvasContexts.room,
-    canvasContexts.pasties,
+    offscreenCanvasContexts.room,
+    offscreenCanvasContexts.pasties,
     [...dataStructures.doorsArray, ...dataStructures.walls],
     dataStructures.points,
     dataStructures.metaroomDisk);
@@ -671,8 +625,8 @@ function redo(){
   fileHelper.fileModified();
   rebuildRooms();
   redrawRooms(
-    canvasContexts.room,
-    canvasContexts.pasties,
+    offscreenCanvasContexts.room,
+    offscreenCanvasContexts.pasties,
     [...dataStructures.doorsArray, ...dataStructures.walls],
     dataStructures.points,
     dataStructures.metaroomDisk);
@@ -799,8 +753,8 @@ function deleteRoom(id){
     fileHelper.fileModified();
     rebuildRooms();
     redrawRooms(
-      canvasContexts.room,
-      canvasContexts.pasties,
+      offscreenCanvasContexts.room,
+      offscreenCanvasContexts.pasties,
       [...dataStructures.doorsArray, ...dataStructures.walls],
       dataStructures.points,
       dataStructures.metaroomDisk);
@@ -1110,8 +1064,8 @@ function tryCreateRoom() {
     fileHelper.fileModified();
     rebuildRooms();
     redrawRooms(
-      canvasContexts.room,
-      canvasContexts.pasties,
+      offscreenCanvasContexts.room,
+      offscreenCanvasContexts.pasties,
       [...dataStructures.doorsArray, ...dataStructures.walls],
       dataStructures.points,
       dataStructures.metaroomDisk);
@@ -1149,8 +1103,8 @@ function retypeRoom(id, type) {
     fileHelper.fileModified();
     rebuildRooms();
     redrawRooms(
-      canvasContexts.room,
-      canvasContexts.pasties,
+      offscreenCanvasContexts.room,
+      offscreenCanvasContexts.pasties,
       [...dataStructures.doorsArray, ...dataStructures.walls],
       dataStructures.points,
       dataStructures.metaroomDisk);
@@ -1295,7 +1249,7 @@ let blankRoom = {
     perms: new Object()
 };
 
-function loadMetaroom(canvasElements, canvasContexts, metaroomIn, additionalBackground) {
+function loadMetaroom(metaroomIn, additionalBackground) {
     if (typeof metaroomIn === "string") {
         if (metaroomIn !== "") {
             metaroom = JSON.parse(metaroomIn);
@@ -1320,9 +1274,7 @@ function loadMetaroom(canvasElements, canvasContexts, metaroomIn, additionalBack
         img = null;
     }
 
-   rejiggerBackgroundCanvase(dataStructures.metaroomDisk);
-   rejiggerOverlayCanvases(dataStructures.metaroomDisk);
-   rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
+   resizeOffscreenCanvasElements(dataStructures.metaroomDisk);
    rebuildRooms();
    redrawMetaroom();
 }
@@ -1360,27 +1312,27 @@ async function reloadBackgroundFile(backgroundFileAbsoluteWorking) {
 
 async function redrawMetaroom(){
     redrawRooms(
-        canvasContexts.room,
-        canvasContexts.pasties,
+        offscreenCanvasContexts.room,
+        offscreenCanvasContexts.pasties,
         [...dataStructures.doorsArray, ...dataStructures.walls],
         dataStructures.points,
         dataStructures.metaroomDisk);
-    backgroundCtx.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+    offscreenCanvasContexts.background.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
     if (dataStructures.metaroomDisk.background) {
         if (!img) {
             await reloadBackgroundFile();
         }
         switch (path.extname(dataStructures.metaroomDisk.background)) {
           case ".blk":
-            backgroundCtx.moveTo(0, 0);
-            backgroundCtx.putImageData(img, 0, 0);
+            offscreenCanvasContexts.background.moveTo(0, 0);
+            offscreenCanvasContexts.background.putImageData(img, 0, 0);
             break;
 
           case ".jpg":
           case ".png":
           case ".bmp":
-            backgroundCtx.moveTo(0, 0);
-            backgroundCtx.drawImage(img, 0, 0);
+            offscreenCanvasContexts.background.moveTo(0, 0);
+            offscreenCanvasContexts.background.drawImage(img, 0, 0);
             break;
 
           default:
@@ -1471,8 +1423,8 @@ async function redrawSelection(timestamp) {
                     dataStructures);
               }
 
-              canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-              roomtypeRenderer.redrawRoomtypes(canvasContexts.selection, dataStructures);
+              onscreenCanvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+              roomtypeRenderer.redrawRoomtypes(onscreenCanvasContexts.selection, dataStructures);
           } else {
               let selection = selectionChecker.getSelectionHover();
               if (selection.selectedType === "") {
@@ -1495,9 +1447,9 @@ async function redrawSelection(timestamp) {
                   dataStructures
               );
               redrawPotential(potentialRooms, dataStructures);
-              canvasContexts.selection.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-              canvasContexts.sandwich.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-              selectionRenderer.redrawSelection(canvasContexts.selection, canvasContexts.sandwich, dataStructures, selection);
+              onscreenCanvasContexts.selectionUnder.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+              onscreenCanvasContexts.selectionOver.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+              selectionRenderer.redrawSelection(onscreenCanvasContexts.selectionUnder, onscreenCanvasContexts.selectionOver, dataStructures, selection);
           }
 
           if (
@@ -1507,29 +1459,20 @@ async function redrawSelection(timestamp) {
           ) {
               zoomPanSettleTimestampLastChange = timestamp;
               masterUiState.camera.rezoom = false;
-              rejiggerOverlayCanvases(dataStructures.metaroomDisk);
-              //rejiggerOnscreenCanvas(dataStructures.metaroomDisk);
+              resizeOffscreenCanvasElements(dataStructures.metaroomDisk);
               redrawMetaroom();
               updateBarButtons();
               masterUiState.camera.rezoom = false;
               masterUiState.camera.reposition = false;
               masterUiState.camera.redraw = false;
-              copyOffscreenBackgroundToScreen();
               copyOffscreenCanvasesToScreen(
                 [
-                  "selection",
+                  "background",
                   "room",
                   "pasties",
-                  "potential",
-                  "sandwich"
                 ]
               );
           } else {
-              copyOffscreenCanvasesToScreen(
-                [
-                  "selection",
-                ]
-              );
           }
 
       }
@@ -1538,19 +1481,18 @@ async function redrawSelection(timestamp) {
 }
 
 function redrawPotential(potentialRooms, dataStructures) {
-    canvasContexts.potential.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
+    onscreenCanvasContexts.potential.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
     if (potentialRooms.length != 0) {
         let doorsWalls = [];
         for (potentialRoom of potentialRooms) {
             doorsWalls = doorsWalls.concat(dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(potentialRoom, dataStructures));
         }
         let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
-        redrawRooms(canvasContexts.potential, canvasContexts.potential, doorsWalls, points, dataStructures.metaroomDisk);
+        redrawRooms(onscreenCanvasContexts.potential, onscreenCanvasContexts.potential, doorsWalls, points, dataStructures.metaroomDisk);
     }
 }
 
-rejiggerOnscreenCanvas({width: 100, height: 100});
-rejiggerBackgroundCanvase({width: 100, height: 100});
-rejiggerOverlayCanvases({width: 100, height: 100});
+resizeOnscreenCanvasElements({width: 100, height: 100});
+resizeOffscreenCanvasElements({width: 100, height: 100});
 //newFile();
 window.requestAnimationFrame(redrawSelection);

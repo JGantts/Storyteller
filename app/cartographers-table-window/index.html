@@ -98,15 +98,33 @@
       width: calc(100% - 175px);
       background-color: rgba(0,0,0,0);
       float: left;
+      position: relative;
       '>
           <canvas
-          id='renderCanvas'
-          style= '
-          position: relative;
-          z-index: 1;
-          '
+          id='backgroundRenderCanvas'
+          style= 'position: absolute; z-index: 1'
           >NOOOOO!</canvas>
-        </div>
+          <canvas
+          id='selectionUnderCanvas'
+          style= 'position: absolute; z-index: 2'
+          >NOOOOO!</canvas>
+          <canvas
+          id='roomRenderCanvas'
+          style= 'position: absolute; z-index: 3'
+          >NOOOOO!</canvas>
+          <canvas
+          id='potentialCanvas'
+          style= 'position: absolute; z-index: 4'
+          >NOOOOO!</canvas>
+          <canvas
+          id='pastiesRenderCanvas'
+          style= 'position: absolute; z-index: 5'
+          >NOOOOO!</canvas>
+          <canvas
+          id='selectionOverCanvas'
+          style= 'position: absolute; z-index: 6'
+          >NOOOOO!</canvas>
+      </div>
       <div style='
       background-color: #3F2933;
       color: white;
@@ -236,7 +254,7 @@
     <div style="padding: 3px; text-align: center;">
       <div class=" tooltip-holder">
         <img src="./icons/key.svg" width='20rem' height='20rem'/>
-        <szpan class='tooltip'>Key</span>
+        <span class='tooltip'>Key</span>
       </div>
       <div id="property-id" style="font-family: Courier;">
       </div>
