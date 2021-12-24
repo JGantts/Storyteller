@@ -567,7 +567,7 @@ function oneToOneZoom() {
       masterUiState.camera.rezoom = true;
 
       posX += (canvasHolder.clientWidth/2 + posX) * (zoomInitial/zoomFinal - 1);
-      posY += (canvasHolder.clientWidth/2 + posY) * (zoomInitial/zoomFinal - 1);
+      posY += (canvasHolder.clientHeight/2 + posY) * (zoomInitial/zoomFinal - 1);
       constrainPositionZoom();
 }
 
