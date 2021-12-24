@@ -201,7 +201,7 @@ let fileHelper = new FileHelper(
 );
 
 function getSelectionMultiplier() {
-    return (masterUiState.keys.shiftKeyIsDown) ? 1.375 : 1;
+    return (masterUiState.keys.ctrlKeyIsDown) ? 1.375 : 1;
 }
 
 let _undoList = [];
