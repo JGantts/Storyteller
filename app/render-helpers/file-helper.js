@@ -113,7 +113,7 @@ class FileHelper {
   }
 
   async saveCartFileAs() {
-      await this._saveFileAs(cartSaveOptions, "utf-8");
+      await this._saveFileAs(cartSaveOptions, "json", "utf-8");
   }
 
   async exportToCaos() {
@@ -124,7 +124,10 @@ class FileHelper {
           filters :[
               {name: 'CAOS', extensions: ['cos']}
           ]
-      });
+      },
+      "caos",
+      "Latin1"
+    );
   }
 
   async selectBackgroundFile() {
@@ -186,11 +189,11 @@ class FileHelper {
       return {continue: true};
   }
 
-  async _saveFileAs(options, encoding) {
+  async _saveFileAs(options, format, encoding) {
       let fileRef = (await this.getNewSaveFilePromise(options)).fileRef;
       if (!(await this.saveFilePromise(
         fileRef,
-        this._getText("caos"),
+        this._getText(format),
         encoding
       )).continue) {
           return {continue: false};
