@@ -722,15 +722,12 @@ function spacebarDown(event){
 
 
 function controlKeyComboDown(event){
-  if (event.key === 'v'){
-    paste();
-  }else if (event.key === 'c'){
-    copy();
-  }else if (event.key === 'x'){
-    cut();
-  }else if (event.key === 'z'){
+  if (event.key === 'z'){
     undo();
-  }else if (event.key === 'y'){
+  } else if (
+    event.key === 'y'
+    || (event.key === 'z' && event.shiftKey)
+ ){
     redo();
   }
 }
