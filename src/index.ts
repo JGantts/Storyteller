@@ -1,4 +1,8 @@
-const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
+export {};
+
+import electron = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = electron;
+
 const assert = require('assert');
 const crypto = require('crypto');
 const fs = require('fs');
@@ -7,29 +11,52 @@ const pathModule = require('path');
 
 //let settings;
 
-let files = new Object();
+type FileRef = {
+    id: string;
+    path: string;
+    type: string;
+}
+
+let files: {
+  [key: string]:
+  {
+    [key: string]:
+    {
+      [key: string]:
+        FileRef
+    }
+  };
+} = {};
+
+
 
 ipcMain.on('minimize', (event, arg) => {
-    event.sender.getOwnerBrowserWindow().minimize();
+    ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow).minimize();
 });
 
 ipcMain.on('close', (event, arg) => {
-    event.sender.getOwnerBrowserWindow().close();
+    ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow).close();
 });
 
-function getWindowsFiles(browserWindow) {
-    let windowType = getWindowType(browserWindow);
-    assert(typeof windowType === "string");
+function getWindowsFiles(browserWindow: Electron.BrowserWindow) {
+    let windowType: string = getWindowType(browserWindow);
     if (!files[windowType]) {
-        files[windowType] = new Object();
+        files[windowType] = { };
     }
     if (!files[windowType][browserWindow.id]) {
-        files[windowType][browserWindow.id] = new Object();
+        files[windowType][browserWindow.id] = { };
     }
     return files[windowType][browserWindow.id];
 }
 
-ipcMain.on('filemanager-execute-promise', async (event, arg) => {
+ipcMain.on('filemanager-execute-promise', async (
+  event: Electron.IpcMainEvent,
+  arg: {
+    type: string,
+    id: string,
+    args: any
+  }
+) => {
     switch (arg.type) {
       case "new-file":
         fileManager_newFile(event, arg.id, arg.args);
@@ -61,11 +88,11 @@ ipcMain.on('filemanager-execute-promise', async (event, arg) => {
   }
 });
 
-function fileManager_newFile(event, id, args) {
-    let browserWindow = event.sender.getOwnerBrowserWindow();
+function fileManager_newFile(event: Electron.IpcMainEvent, id: string, args: any) {
+    let browserWindow = ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow);
     let windowsFiles = getWindowsFiles(browserWindow);
     let newFileId = crypto.randomUUID();
-    let newFilePath = null;
+    let newFilePath = "";
     let fileContents = "";
     windowsFiles[newFileId] = {
         id: newFileId,
@@ -89,8 +116,8 @@ function fileManager_newFile(event, id, args) {
     );
 }
 
-async function fileManager_selectFile(event, id, args) {
-  let browserWindow = event.sender.getOwnerBrowserWindow();
+async function fileManager_selectFile(event: Electron.IpcMainEvent, id: string, args: any) {
+  let browserWindow = ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow);
   try {
       let result = await dialog.showOpenDialog(
           browserWindow,
@@ -135,8 +162,8 @@ async function fileManager_selectFile(event, id, args) {
   }
 }
 
-async function fileManager_openFiles(event, id, args) {
-    let browserWindow = event.sender.getOwnerBrowserWindow();
+async function fileManager_openFiles(event: Electron.IpcMainEvent, id: string, args: any) {
+    let browserWindow = ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow);
     let windowsFiles = getWindowsFiles(browserWindow);
     try {
         let result = await dialog.showOpenDialog(
@@ -156,7 +183,7 @@ async function fileManager_openFiles(event, id, args) {
           );
         } else {
             let openedFiles = [];
-            for (path of result.filePaths) {
+            for (let path of result.filePaths) {
                 let fileId = crypto.randomUUID();
                 let fileRef =
                 {
@@ -214,8 +241,8 @@ async function fileManager_openFiles(event, id, args) {
     }
 }
 
-async function fileManager_getNewSaveFile(event, id, args) {
-    let browserWindow = event.sender.getOwnerBrowserWindow();
+async function fileManager_getNewSaveFile(event: Electron.IpcMainEvent, id: string, args: any) {
+    let browserWindow = ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow);
     let windowsFiles = getWindowsFiles(browserWindow);
 
     let result = await dialog.showSaveDialog(browserWindow, args.options);
@@ -234,7 +261,7 @@ async function fileManager_getNewSaveFile(event, id, args) {
         return;
     }
 
-    windowsFiles[args.fileRef.id].path = result.filePath;
+    windowsFiles[args.fileRef.id].path = result.filePath ?? "";
     windowsFiles[args.fileRef.id].type = pathModule.extname(result.filePath);
 
     event.reply(
@@ -251,8 +278,8 @@ async function fileManager_getNewSaveFile(event, id, args) {
     return;
 }
 
-async function fileManager_saveFileReminder(event, id, args) {
-    let browserWindow = event.sender.getOwnerBrowserWindow();
+async function fileManager_saveFileReminder(event: Electron.IpcMainEvent, id: string, args: any) {
+    let browserWindow = ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow);
     let windowsFiles = getWindowsFiles(browserWindow);
 
     let result = await dialog.showMessageBox(
@@ -302,8 +329,8 @@ async function fileManager_saveFileReminder(event, id, args) {
     }
 }
 
-async function fileManager_saveFile(event, id, args) {
-    let browserWindow = event.sender.getOwnerBrowserWindow();
+async function fileManager_saveFile(event: Electron.IpcMainEvent, id: string, args: any) {
+    let browserWindow = ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow);
     let windowsFiles = getWindowsFiles(browserWindow);
 
 
@@ -349,8 +376,8 @@ async function fileManager_saveFile(event, id, args) {
     }
 }
 
-async function fileManager_closeFile(event, id, args) {
-    let browserWindow = event.sender.getOwnerBrowserWindow();
+async function fileManager_closeFile(event: Electron.IpcMainEvent, id: string, args: any) {
+    let browserWindow = ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow);
     let windowsFiles = getWindowsFiles(browserWindow);
     delete windowsFiles[args.fileRef.id]
     event.reply(
@@ -366,7 +393,7 @@ async function fileManager_closeFile(event, id, args) {
     return;
 }
 
-async function fileManager_getResourcePath(event, id, args) {
+async function fileManager_getResourcePath(event: Electron.IpcMainEvent, id: string, args: any) {
     event.reply(
         'executed-promise',
         {
@@ -381,7 +408,7 @@ async function fileManager_getResourcePath(event, id, args) {
     return;
 }
 
-function getWindowType(browserWindow) {
+function getWindowType(browserWindow: Electron.BrowserWindow) {
     assert(
         typeof browserWindow === 'object',
         `Expected browserWindow, found ${typeof browserWindow} instead`
@@ -410,7 +437,7 @@ function launchApp(){
   loadSettings(createStorytellerWindow);
 }
 
-function loadSettings(then){
+function loadSettings(then: any){
   let settingLoaderWin = new BrowserWindow({show: false})
   then();
   settingLoaderWin.once('ready-to-show', () => {
@@ -434,8 +461,6 @@ function createStorytellerWindow () {
 
   win.setMenu(null)
 
-  storytellerWindow = win;
-
   loadWindow(win, './app/storyteller-window/index.html')
 }
 
@@ -452,8 +477,6 @@ function createSorcerersTableWindow() {
   })
 
   win.setMenu(null)
-
-  sorcerersTableWindow = win;
 
   loadWindow(win, './app/sorcerers-table-window/index.html')
 }
@@ -488,7 +511,7 @@ function createCartographersTableWindow() {
     }
   })
 
-  const template =
+  const template: any =
    [
      {
         label: 'File',
@@ -599,7 +622,7 @@ function createCartographersTableWindow() {
   loadWindow(win, './app/cartographers-table-window/index.html')
 }
 
-function loadWindow(browserWindow, loadFile){
+function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any){
   //if(!settings.get('development.javascript')){
     //browserWindow.loadFile(loadFile);
   //}else{
@@ -607,7 +630,7 @@ function loadWindow(browserWindow, loadFile){
   //}
 }
 
-function loadWindowWithDevTools(browserWindow, loadFile){
+function loadWindowWithDevTools(browserWindow: Electron.BrowserWindow, loadFile: any){
   let devtools = new BrowserWindow({
     width: 800,
     height: 600,
