@@ -1297,7 +1297,9 @@ async function reloadBackgroundFile(backgroundFileAbsoluteWorking) {
     switch (path.extname(imgPathAbsolute)) {
       case ".blk":
         img = await clbTools.loadBackground(imgPathAbsolute);
-        break;
+        if (img !== null){
+          break;
+        }
 
       case ".jpg":
       case ".png":
