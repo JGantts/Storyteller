@@ -5,10 +5,11 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "mocha",
-    "start": "tsc && electron-forge start",
+    "start": "npm run compile && electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "compile": "tsc && copyfiles -f src/index.html build"
+    "compile": "npm run clean ; tsc && copyfiles -u 1 -e *.js src/**/* dist/",
+    "clean": "rm -r ./dist"
   },
   "author": "Jacob Gantt",
   "license": "ISC",
