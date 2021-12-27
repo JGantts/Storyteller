@@ -8,13 +8,6 @@ document.onreadystatechange = (event) => {
     }
 };
 
-window.onbeforeunload = (event) => {
-    /* If window is reloaded, remove win event listeners
-    (DOM element listeners get auto garbage collected but not
-    Electron win listeners as the win is not dereferenced unless closed) */
-    win.removeAllListeners();
-}
-
 function handleWindowControls() {
       let template = null;
       let cssFile = "";
@@ -45,11 +38,11 @@ function handleWindowControls() {
       let templateClone = template[0].content.cloneNode(true);
       $("#window-controls")[0].appendChild(templateClone);
 
-    document.getElementById('min-button').addEventListener("click", event => {
+    document.getElementById('min-button')!.addEventListener("click", event => {
         ipcRenderer.send('minimize');
     });
 
-    document.getElementById('close-button').addEventListener("click", event => {
+    document.getElementById('close-button')!.addEventListener("click", event => {
         ipcRenderer.send('close');
     });
 }
