@@ -461,7 +461,7 @@ function createStorytellerWindow () {
 
   win.setMenu(null)
 
-  loadWindow(win, './app/storyteller-window/index.html')
+  loadWindow(win, './dist/storyteller-window/index.html')
 }
 
 function createSorcerersTableWindow() {
@@ -478,7 +478,7 @@ function createSorcerersTableWindow() {
 
   win.setMenu(null)
 
-  loadWindow(win, './app/sorcerers-table-window/index.html')
+  loadWindow(win, './dist/sorcerers-table-window/index.html')
 }
 
 function createDesignersTableWindow() {
@@ -496,7 +496,7 @@ function createDesignersTableWindow() {
 
   win.setMenu(null)
 
-  loadWindow(win, './app/designers-table-window/index.html')
+  loadWindow(win, './dist/designers-table-window/index.html')
 }
 
 function createCartographersTableWindow() {
@@ -619,7 +619,7 @@ function createCartographersTableWindow() {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 
-  loadWindow(win, './app/cartographers-table-window/index.html')
+  loadWindow(win, './dist/cartographers-table-window/index.html')
 }
 
 function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any){
