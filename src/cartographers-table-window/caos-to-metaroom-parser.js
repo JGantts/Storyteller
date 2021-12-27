@@ -65,7 +65,7 @@ function parseCaosForMetaroom(codeIn) {
                     assert(va00Variable.name === "va00", `${JSON.stringify(va00Variable)}`);
                     assert(addrCommand.arguments.length === 7);
                     assert(addrCommand.arguments[0].variant === "game");
-                    assert(addrCommand.arguments[0].arguments[0].value === metaroomVar);
+                    assert(addrCommand.arguments[0].arguments[0].value === metaroomVar, JSON.stringify({addrCommand, metaroomVar}));
                     va00Var = crypto.randomUUID();
                     importedJson.rooms[va00Var] = {
                         id: va00Var,
