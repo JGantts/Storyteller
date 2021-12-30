@@ -1,7 +1,25 @@
-//$.getScript('../engine-api/CAOS.js
-const { FileHelper } = require('../render-helpers/file-helper.js');
-Window.fileHelper = new FileHelper(updateTitle, displayFiles, () => {return GetVisibleTextInElement(codeElement);});
+export {};
 
+declare global {
+  var fileHelper: typeof FileHelper;
+}
+
+//$.getScript('../engine-api/CAOS.js
+
+const { FileHelper } = require('../render-helpers/file-helper.js');
+globalThis.fileHelper = new FileHelper(
+    updateTitle,
+    displayFiles,
+    (type: string) => {
+        switch (type) {
+          case "json":
+            return JSON.stringify(dataStructures.metaroomDisk, null, " ").replace(/(\n|\r|\r\n)[\s]+/g, "\n");
+          case "caos":
+            let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk);
+            return toReturn;
+        }
+    }
+);
 const assert = require('assert');
 const { clipboard } = require('electron');
 const fs = require('fs/promises');
@@ -18,6 +36,8 @@ const { potentialFactory } = require('./potentialFactory.js');
 const { lineSegmentComparison } = require('./lineSegmentComparison.js');
 const { updatePropertiesPanel, updateRoomtypePanel } = require('./properties-panel-updater.js');
 
+import { clbTools } from '../../hard-dependencies/clb-tools'
+
 let zoom = 1;
 let posX = 0;
 let posY = 0;
@@ -25,9 +45,18 @@ let posY = 0;
 let zooomSettle = 1;
 
 let zoomPanSettleMilliseconds = 80;
-let zoomPanSettleTimestampLastChange = null;
+let zoomPanSettleTimestampLastChange: number | null = null;
 
-let dataStructures = null;
+let dataStructures: DataStructures = {
+  metaroomDisk: null,
+  backgroundFileAbsoluteWorking: null,
+  points: {},
+  walls: [],
+  doorsDict: {},
+  doorsArray: [],
+  pointsSortedX: [],
+  pointsSortedY: [],
+};
 
 let masterUiState = {
     keys: {
@@ -58,7 +87,7 @@ let masterUiState = {
     }
 };
 
-let canvasHolder = document.getElementById('canvasHolder');
+let canvasHolder = document.getElementById('canvasHolder')!;
 
 window.addEventListener('resize', () => {
     resizeOnscreenCanvasElements();
@@ -73,54 +102,54 @@ potentialCanvas
 pastiesRenderCanvas
 selectionOverCanvas
 */
-let onscreenCanvasElements = {
-    background: document.getElementById("backgroundRenderCanvas"),
-    selectionUnder: document.getElementById("selectionUnderCanvas"),
-    room: document.getElementById("roomRenderCanvas"),
-    potential: document.getElementById("potentialCanvas"),
-    pasties: document.getElementById("pastiesRenderCanvas"),
-    selectionOver: document.getElementById("selectionOverCanvas"),
+let onscreenCanvasElements: { [canvasName: string]: HTMLCanvasElement } = {
+    background: document.getElementById("backgroundRenderCanvas") as HTMLCanvasElement,
+    selectionUnder: document.getElementById("selectionUnderCanvas") as HTMLCanvasElement,
+    room: document.getElementById("roomRenderCanvas") as HTMLCanvasElement,
+    potential: document.getElementById("potentialCanvas") as HTMLCanvasElement,
+    pasties: document.getElementById("pastiesRenderCanvas") as HTMLCanvasElement,
+    selectionOver: document.getElementById("selectionOverCanvas") as HTMLCanvasElement,
 };
 
-let offscreenCanvasElements = {
-    background: document.createElement('canvas'),
-    room: document.createElement('canvas'),
-    pasties: document.createElement('canvas'),
+let offscreenCanvasElements: { [canvasName: string]: HTMLCanvasElement } = {
+    background: document.createElement('canvas') as HTMLCanvasElement,
+    room: document.createElement('canvas') as HTMLCanvasElement,
+    pasties: document.createElement('canvas') as HTMLCanvasElement,
 };
 
-let onscreenCanvasContexts = new Object;
+let onscreenCanvasContexts: { [canvasName: string]: CanvasRenderingContext2D } = { };
 
-let offscreenCanvasContexts = new Object;
+let offscreenCanvasContexts: { [canvasName: string]: CanvasRenderingContext2D } = { };
 
 function resizeOnscreenCanvasElements() {
-    for (key in onscreenCanvasElements) {
+    for (let key in onscreenCanvasElements) {
         onscreenCanvasElements[key].width = canvasHolder.clientWidth;
         onscreenCanvasElements[key].height = canvasHolder.clientHeight;
-        onscreenCanvasContexts[key] = onscreenCanvasElements[key].getContext('2d');
+        onscreenCanvasContexts[key] = onscreenCanvasElements[key].getContext('2d')!;
     }
 }
 
 let roomSizeBlurFix = 2;
 
-function resizeOffscreenCanvasElements(rectangle) {
-    for (key in offscreenCanvasElements) {
+function resizeOffscreenCanvasElements(rectangle: { width: number, height: number }) {
+    for (let key in offscreenCanvasElements) {
         let inContextRoomSizeBlurFix = roomSizeBlurFix;
         if (key === "background") {
             inContextRoomSizeBlurFix = 1;
         }
         offscreenCanvasElements[key].width = rectangle.width * inContextRoomSizeBlurFix;
         offscreenCanvasElements[key].height = rectangle.height * inContextRoomSizeBlurFix;
-        offscreenCanvasContexts[key] = offscreenCanvasElements[key].getContext('2d');
+        offscreenCanvasContexts[key] = offscreenCanvasElements[key].getContext('2d')!;
     }
 }
 
-function copyOffscreenCanvasesToScreen(keys) {
+function copyOffscreenCanvasesToScreen(keys: string[]) {
     if (
       offscreenCanvasElements.background.width !== 0
       && onscreenCanvasElements.selectionUnder.width !== 0
       && dataStructures?.metaroomDisk
    ) {
-        for (key of keys) {
+        for (let key of keys) {
             /*var imgurl= offscreenCanvasElements[key].toDataURL();
             const data = imgurl.replace(/^data:image\/\w+;base64,/, "");
             const buf = Buffer.from(data, "base64");
@@ -166,7 +195,7 @@ window.onkeyup = userTextKeyUp;
 
 window.onmousedown=windowHandleMouseDown;
 
-function getSortedId(idA, idB) {
+function getSortedId(idA: string, idB: string) {
     if (idA > idB) {
         return "" + idA + "-" + idB;
     } else {
@@ -186,33 +215,28 @@ function getRoomLineThickness() {
     return 2 * zoom;
 }
 
-let fileHelper = new FileHelper(
-    updateTitle,
-    displayFiles,
-    (type) => {
-        switch (type) {
-          case "json":
-            return JSON.stringify(dataStructures.metaroomDisk, null, " ").replace(/(\n|\r|\r\n)[\s]+/g, "\n");
-          case "caos":
-            let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk);
-            return toReturn;
-        }
-    }
-);
-
 function getSelectionMultiplier() {
     return (masterUiState.keys.ctrlKeyIsDown) ? 1.375 : 1;
 }
 
-let _undoList = [];
-let _redoList = [];
+let _undoList: Command[] = [];
+let _redoList: Command[] = [];
+
+//type CommandArgs = { [argKey: string]: any };
+type AbsoluteCommand = (arg0: any) => void;
 
 class Command{
+
+  _undo: AbsoluteCommand;
+  _undoArgs: any;
+  _redo: AbsoluteCommand;
+  _redoArgs: any;
+
   constructor(
-    undo,
-    undoArgs,
-    redo,
-    redoArgs
+    undo: AbsoluteCommand,
+    undoArgs: any,
+    redo: AbsoluteCommand,
+    redoArgs: any
   ) {
     this._undo = undo;
     this._undoArgs = undoArgs;
@@ -235,30 +259,28 @@ class Command{
   }
 }
 
-function buildMultiCommand(subcommands){
+function buildMultiCommand(subcommands: Command[]){
   let subcommandsForwards = subcommands;
   let subcommandsReversed = subcommands.slice();
   subcommandsReversed.reverse();
   return new Command(
     undoMultiCommand,
-    subcommandsReversed,
+    {subcommmands: subcommandsReversed},
     redoMultiCommand,
-    subcommandsForwards,
+    {subcommands: subcommandsForwards},
   );
 }
 
-function undoMultiCommand(subcommands){
-  subcommands
-    .forEach((subcommand, i) => {
+function undoMultiCommand({ subcommands }: { subcommands: Command[] }) {
+  for (let subcommand of subcommands) {
       subcommand.undo();
-    });
+  }
 }
 
-function redoMultiCommand(subcommands){
-  subcommands
-    .forEach((subcommand, i) => {
+function redoMultiCommand({ subcommands }: { subcommands: Command[] }){
+  for (let subcommand of subcommands) {
       subcommand.redo();
-    });
+  }
 }
 
 async function newFile() {
@@ -297,10 +319,11 @@ async function openFile() {
 async function saveFile() {
     await fileHelper.saveCartFile();
     let workingBackgoundFile = dataStructures.backgroundFileAbsoluteWorking;
+    let newImgPathAbsolute: string = "";
     if (workingBackgoundFile) {
         newImgPathAbsolute = path.join(
           path.dirname(fileHelper.getCurrentFileRef().path),
-          dataStructures.metaroomDisk.background
+          dataStructures!.metaroomDisk!.background
         );
         await fs.copyFile(workingBackgoundFile, newImgPathAbsolute);
     }
@@ -569,27 +592,6 @@ function oneToOneZoom() {
       posX += (canvasHolder.clientWidth/2) * (zoomInitial/zoomFinal - 1);
       posY += (canvasHolder.clientHeight/2) * (zoomInitial/zoomFinal - 1);
       constrainPositionZoom();
-}
-
-function cut(){
-  let codeText = GetVisibleTextInElement(codeElement);
-  let caretPosition = GetCaretPositionWithin(codeElement);
-  let toCopy = codeText.substring(caretPosition.start, caretPosition.end);
-  if (toCopy === ''){
-    return;
-  }
-  clipboard.writeText(toCopy);
-  insertText('');
-}
-
-function copy(){
-  let codeText = GetVisibleTextInElement(codeElement);
-  let caretPosition = GetCaretPositionWithin(codeElement);
-  let toCopy = codeText.substring(caretPosition.start, caretPosition.end);
-  if (toCopy === ''){
-    return;
-  }
-  clipboard.writeText(toCopy);
 }
 
 function paste(){
@@ -893,7 +895,7 @@ function handleMouseMove(e){
   currX=parseInt(e.offsetX + posX) * zoom;
   currY=parseInt(e.offsetY + posY) * zoom;
 
-  if (!dataStructures) {
+  if (!dataStructures.metaroomDisk) {
       return;
   }
 
@@ -1242,6 +1244,57 @@ function rebuildRooms() {
     };
 }
 
+type Point = {
+  id: string;
+  x: number;
+  y: number;
+  roomKeys: string[];
+}
+
+type Room = {
+  id: string;
+  leftX: number;
+  rightX: number;
+  leftCeilingY: number;
+  rightCeilingY: number;
+  leftFloorY: number;
+  rightFloorY: number;
+  roomType: number;
+}
+
+type Perm = {
+  id: string;
+  rooms: {
+    a: string;
+    b: string;
+  };
+  permeability: number;
+}
+
+type Metaroom = {
+  id: string;
+  name: string;
+  background: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rooms: { [key: string]: Room };
+  perms: { [key: string]: Perm };
+}
+
+type DataStructures = {
+    metaroomDisk: Metaroom | null;
+    backgroundFileAbsoluteWorking: string | null;
+    points: { [key: string]: Point };
+    walls: Line[];
+    doorsDict: { [key: string]: Door };
+    doorsArray: Door[];
+    pointsSortedX: Point[];
+    pointsSortedY: Point[];
+};
+
+
 let blankRoom = {
     id: "",
     name: "",
@@ -1285,7 +1338,7 @@ function loadMetaroom(metaroomIn, additionalBackground) {
 }
 
 let imgPathRel = "";
-let img = null;
+let img: null | Image = null;
 async function reloadBackgroundFile(backgroundFileAbsoluteWorking) {
     let imgPathAbsolute =
         backgroundFileAbsoluteWorking
@@ -1431,7 +1484,7 @@ let frameIndex = -1;
 let previousHoverSelectionInstanceId = "uninitialized";
 let previousSelectionInstanceId = "uninitialized";
 
-async function redrawSelection(timestamp) {
+async function redrawSelection(timestamp: number) {
     frameIndex += 1;
     if (frameIndex%3 === 0) {
       if (!oldTimestamp) {
