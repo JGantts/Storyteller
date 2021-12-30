@@ -55,7 +55,7 @@ let zooomSettle = 1;
 let zoomPanSettleMilliseconds = 80;
 let zoomPanSettleTimestampLastChange: number | null = null;
 
-type SimplePoint = {x: number, y: number}
+type SimplePoint = {x: number; y: number}
 
 let dataStructures: DataStructures = {
   metaroomDisk: null,
@@ -68,42 +68,38 @@ let dataStructures: DataStructures = {
   pointsSortedY: [],
 };
 
-type ViewingEditingRoomTypeeState = {
-    pickedRoomtype: number,
-};
-
 type ViewingRoomTypeState = {
   isViewingPalette: boolean;
-  isEditingRoomtype: false | ViewingEditingRoomTypeeState;
- }
+  isEditingRoomtype: false | { pickedRoomtype: number };
+}
 
 let masterUiState: {
   keys: {
-      shiftKeyIsDown: boolean,
-      ctrlKeyIsDown: boolean,
-      spacebarIsDown: boolean,
+      shiftKeyIsDown: boolean;
+      ctrlKeyIsDown: boolean;
+      spacebarIsDown: boolean;
   },
 
   dragging: {
-      isMouseButtonDown: boolean,
+      isMouseButtonDown: boolean;
 
-      isDragging: boolean,
-      whatDragging: string
-      idDragging: number,
+      isDragging: boolean;
+      whatDragging: string;
+      idDragging: null | number;
 
-      startDragging: null | SimplePoint,
-      stopDragging: null | SimplePoint,
-  },
+      startDragging: null | SimplePoint;
+      stopDragging: null | SimplePoint;
+  };
 
   state: {
       isViewingRoomType:
-        false | ViewingRoomTypeState,
-  },
+        false | ViewingRoomTypeState;
+  };
 
   camera: {
-      redraw: boolean,
-      rezoom: boolean,
-      reposition: boolean,
+      redraw: boolean;
+      rezoom: boolean;
+      reposition: boolean;
   }
 } = {
     keys: {
@@ -905,8 +901,8 @@ function handleMouseMove(event: any){
   event.preventDefault();
   event.stopPropagation();
   // calculate the current mouse position
-  currX=parseInt(e.offsetX + posX) * zoom;
-  currY=parseInt(e.offsetY + posY) * zoom;
+  let currX = parseInt(event.offsetX + posX) * zoom;
+  let currY = parseInt(event.offsetY + posY) * zoom;
 
   if (!dataStructures.metaroomDisk!) {
       return;
@@ -1021,7 +1017,7 @@ function handleWheel(event: any) {
         posX += (event.offsetX) * (zoomInitial/zoomFinal - 1);
         posY += (event.offsetY) * (zoomInitial/zoomFinal - 1);
     } else {
-        if (e.altKey) {
+        if (event.altKey) {
             posX += event.deltaY * 2;
         } else {
             posX += event.deltaX * 2;
@@ -1059,16 +1055,16 @@ function tryCreateRoom() {
     }
     let commands = [];
     if (_shiftKeyIsDown || _ctrlKeyIsDown) {
-        for (index in newRooms) {
+        for (let index in newRooms) {
             let room = newRooms[index];
             room.id = crypto.randomUUID();
             let addCommand = makeAddRoomCommand(room.id, room);
             commands.push(addCommand);
         }
     } else {
-        let permsStorageCommand = makePermsStorageCommand(newRooms.map(newRoom => newRoom.id));
+        let permsStorageCommand = makePermsStorageCommand(newRooms.map((newRoom: Room) => newRoom.id));
         commands.push(permsStorageCommand);
-        for (index in newRooms) {
+        for (let index in newRooms) {
             let room = newRooms[index];
             let addCommand = makeAddRoomCommand(room.id, room);
             let deleteCommand = makeDeleteRoomCommand(room.id);
@@ -1095,7 +1091,7 @@ function tryCreateRoom() {
     updateBarButtons();
 }
 
-function makeAddRoomCommand(id, room){
+function makeAddRoomCommand(id: string, room: Room){
   return new Command(
     deleteRoomAbsolute,
     {id},
@@ -1104,20 +1100,20 @@ function makeAddRoomCommand(id, room){
   );
 }
 
-function addRoomAbsolute({id, room}){
+function addRoomAbsolute({id, room}: {id: string, room: Room}){
   assert(id && id !== "", `Instead of UUID, found ${id}`);
   assert(room, `Instead of room, found ${room}`);
   assert(room.leftX != room.rightX, `Instead of room, found ${JSON.stringify(room)}`);
   let newPerms = dataStructureFactory.getPermsFromRoomPotential(room, dataStructures);
 
-  metaroom.rooms[id] = room;
+  dataStructures.metaroomDisk!.rooms[id] = room;
 
   for (const permKey in newPerms) {
-      metaroom.perms[newPerms[permKey].id] = newPerms[permKey];
+      dataStructures.metaroomDisk!.perms[newPerms[permKey].id] = newPerms[permKey];
   }
 }
 
-function retypeRoom(id, type) {
+function retypeRoom(id: string, type: number) {
     let myCommand = makeRetypeRoomCommand(id, type);
     _undoList.push(myCommand);
     myCommand.do();
@@ -1134,7 +1130,7 @@ function retypeRoom(id, type) {
     updateBarButtons();
 }
 
-function makeRetypeRoomCommand(id, type){
+function makeRetypeRoomCommand(id: string, type: number){
   let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
   assert(roomOriginal, "");
   return new Command(
@@ -1145,11 +1141,11 @@ function makeRetypeRoomCommand(id, type){
   );
 }
 
-function retypeRoomAbsolute({id, type}){
+function retypeRoomAbsolute({id, type}: { id: string, type: number }){
     dataStructures.metaroomDisk!.rooms[id].roomType = type;
 }
 
-function makeRepermDoorsCommand(id, type){
+function makeRepermDoorsCommand(id: string, type: number){
   let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
   assert(roomOriginal, "");
   return new Command(
@@ -1160,12 +1156,12 @@ function makeRepermDoorsCommand(id, type){
   );
 }
 
-function repermDoorsAbsolute({id, perm}){
+function repermDoorsAbsolute({id, perm}: { id: string, type: number }){
     dataStructures.doorsDict[id].permeability = perm;
     //dataStructures.metaroomDisk.
 }
 
-function makeDeleteRoomCommand(id){
+function makeDeleteRoomCommand(id: string){
   let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
   let room = {
       id: roomOriginal.id,
@@ -1185,7 +1181,7 @@ function makeDeleteRoomCommand(id){
   );
 }
 
-function deleteRoomAbsolute({id}){
+function deleteRoomAbsolute({id}: { id: string }){
     delete dataStructures.metaroomDisk!.rooms[id];
     for (permKey in dataStructures.metaroomDisk!.perms) {
         let perm = dataStructures.metaroomDisk!.perms[permKey];
@@ -1195,7 +1191,7 @@ function deleteRoomAbsolute({id}){
     }
 }
 
-function makePermsStorageCommand(ids){
+function makePermsStorageCommand(ids: string[]){
     let toStore = new Object();
     for (permKey in dataStructures.metaroomDisk!.perms) {
         let perm = dataStructures.metaroomDisk!.perms[permKey];
@@ -1214,7 +1210,7 @@ function makePermsStorageCommand(ids){
     );
 }
 
-function permsStorageAbsolute({toStore}){
+function permsStorageAbsolute({toStore}: { toStore: string[] }){
     for (storedKey in toStore) {
         let stored = toStore[storedKey];
         let existing = dataStructures.metaroomDisk!.perms[stored.id];
@@ -1312,7 +1308,7 @@ type DataStructures = {
 };
 
 
-let blankRoom = {
+let blankRoom: Metaroom = {
     id: "",
     name: "",
     background: "",
@@ -1322,10 +1318,12 @@ let blankRoom = {
     height: 0,
     music: "",
     rooms: {},
-    perms: new Object()
+    perms: {},
 };
 
-function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground: string = null) {
+function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground: null | string = null) {
+
+    let metaroom: Metaroom;
     if (typeof metaroomIn === "string") {
         if (metaroomIn !== "") {
             metaroom = JSON.parse(metaroomIn);
@@ -1357,7 +1355,7 @@ function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground: strin
 
 let imgPathRel = "";
 let img: null | Image = null;
-async function reloadBackgroundFile(backgroundFileAbsoluteWorking) {
+async function reloadBackgroundFile(backgroundFileAbsoluteWorking: string) {
     let imgPathAbsolute =
         backgroundFileAbsoluteWorking
         ?? path.join(
@@ -1420,7 +1418,21 @@ async function redrawMetaroom(){
     }
 }
 
-async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
+type Door = {
+  id: string;
+  roomKeys: string[];
+  permeability: number;
+  start: SimplePoint;
+  end: SimplePoint;
+}
+
+async function redrawRooms(
+  roomCtx: CanvasRenderingContext2D,
+  pastiesCtx: CanvasRenderingContext2D,
+  lines: Door[],
+  points: SimplePoint[],
+  metaroom: Metaroom
+){
 
     roomCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
     pastiesCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
@@ -1445,7 +1457,11 @@ async function redrawRooms(roomCtx, pastiesCtx, lines, points, metaroom){
     //redrawSelection();
 }
 
-async function redrawPasties(pastiesCtx, points, metaroom){
+async function redrawPasties(
+  pastiesCtx: CanvasRenderingContext2D,
+  points: SimplePoint[],
+  metaroom: Metaroom
+){
     //console.log(points);
     //console.log(new Error().stack);
     pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
@@ -1457,7 +1473,13 @@ async function redrawPasties(pastiesCtx, points, metaroom){
     }
 }
 
-async function redrawPotentialRooms(roomCtx, pastiesCtx, lines, points, metaroom){
+async function redrawPotentialRooms(
+  roomCtx: CanvasRenderingContext2D,
+  pastiesCtx: CanvasRenderingContext2D,
+  lines: Door[],
+  points: SimplePoint[],
+  metaroom: Metaroom
+){
 
     roomCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
     pastiesCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
@@ -1482,7 +1504,11 @@ async function redrawPotentialRooms(roomCtx, pastiesCtx, lines, points, metaroom
     //redrawSelection();
 }
 
-async function redrawPotentialPasties(pastiesCtx, points, metaroom){
+async function redrawPotentialPasties(
+  pastiesCtx: CanvasRenderingContext2D,
+  points: SimplePoint[],
+  metaroom: Metaroom
+){
     //console.log(points);
     //console.log(new Error().stack);
     pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
@@ -1602,7 +1628,10 @@ async function redrawSelection(timestamp: number) {
     window.requestAnimationFrame(redrawSelection);
 }
 
-function redrawPotential(potentialRooms, dataStructures) {
+function redrawPotential(
+  potentialRooms: { Room }[],
+  dataStructures: DataStructures
+) {
     onscreenCanvasContexts.potential.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
     if (potentialRooms.length != 0) {
         let doorsWalls = [];
