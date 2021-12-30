@@ -47,6 +47,8 @@ let zooomSettle = 1;
 let zoomPanSettleMilliseconds = 80;
 let zoomPanSettleTimestampLastChange: number | null = null;
 
+type SimplePoint = {x: number, y: number}
+
 let dataStructures: DataStructures = {
   metaroomDisk: null,
   backgroundFileAbsoluteWorking: null,
@@ -58,7 +60,42 @@ let dataStructures: DataStructures = {
   pointsSortedY: [],
 };
 
-let masterUiState = {
+type ViewingRoomTypeState = {
+  isViewingPalette: boolean;
+  isEditingRoomtype: boolean | {
+      pickedRoomtype: number,
+  };
+ }
+
+let masterUiState: {
+  keys: {
+      shiftKeyIsDown: boolean,
+      ctrlKeyIsDown: boolean,
+      spacebarIsDown: boolean,
+  },
+
+  dragging: {
+      isMouseButtonDown: boolean,
+
+      isDragging: boolean,
+      whatDragging: string
+      idDragging: number,
+
+      startDragging: null | SimplePoint,
+      stopDragging: null | SimplePoint,
+  },
+
+  state: {
+      isViewingRoomType:
+        boolean | ViewingRoomTypeState,
+  },
+
+  camera: {
+      redraw: boolean,
+      rezoom: boolean,
+      reposition: boolean,
+  }
+} = {
     keys: {
         shiftKeyIsDown: false,
         ctrlKeyIsDown: false,
@@ -366,42 +403,44 @@ async function viewEditRoomType() {
 }
 
 async function editRoomtypes() {
-    assert(masterUiState.state.isViewingRoomType, "wut?");
-    if (masterUiState.state.isViewingRoomType.isViewingPalette) {
-        masterUiState.state.isViewingRoomType.isViewingPalette = false;
-        document.getElementById('roomtype-palette').style.height = "0";
-        document.getElementById('roomtype-palette').style.display = "none";
+    let isViewingRoomType = masterUiState.state.isViewingRoomType as ViewingRoomTypeState;
+    assert(isViewingRoomType, "wut?");
+    if (isViewingRoomType.isViewingPalette) {
+        isViewingRoomType.isViewingPalette = false;
+        document.getElementById('roomtype-palette')!.style.height = "0";
+        document.getElementById('roomtype-palette')!.style.display = "none";
     } else {
-        masterUiState.state.isViewingRoomType.isViewingPalette = true;
-        document.getElementById('roomtype-palette').style.height = "auto";
-        document.getElementById('roomtype-palette').style.display = "initial";
+        isViewingRoomType.isViewingPalette = true;
+        document.getElementById('roomtype-palette')!.style.height = "auto";
+        document.getElementById('roomtype-palette')!.style.display = "initial";
     }
 }
 
-function pad2(number) {
+function pad2(number: number) {
      return (number < 10 ? '0' : '') + number;
 }
 
-async function editingRoomtype(param1) {
-    assert(masterUiState.state.isViewingRoomType, "wut?");
+async function editingRoomtype(param1: string) {
+    let isViewingRoomType = masterUiState.state.isViewingRoomType as ViewingRoomTypeState;
+    assert(isViewingRoomType, "wut?");
     let roomtype = parseFloat(param1.slice(-2));
 
-    let img = document.getElementById(`rooomtype-button-img-${pad2(roomtype)}`);
+    let img = document.getElementById(`rooomtype-button-img-${pad2(roomtype)}`)!;
 
-    for (element of document.getElementsByClassName("editor-button")) {
-        element.style.animation = "none";
-        element.style.borderRadius = "8px";
+    for (let element of document.getElementsByClassName("editor-button")) {
+        (element as HTMLElement).style.animation = "none";
+        (element as HTMLElement).style.borderRadius = "8px";
     }
 
-    if (masterUiState.state.isViewingRoomType.isEditingRoomtype
+    if (isViewingRoomType.isEditingRoomtype
       && selectionChecker.getSelectionRoomtypeClick() === roomtype
     ) {
         selectionChecker.setSelectionRoomtypeClick(null);
-        masterUiState.state.isViewingRoomType.isEditingRoomtype = false;
+        isViewingRoomType.isEditingRoomtype = false;
         canvasHolder.style.cursor = "default";
     } else {
         selectionChecker.setSelectionRoomtypeClick(roomtype);
-        masterUiState.state.isViewingRoomType.isEditingRoomtype = {
+        isViewingRoomType.isEditingRoomtype = {
             pickedRoomtype: roomtype,
         };
         canvasHolder.style.cursor = "url('./icons/bucket.png') 6 30, default";
@@ -410,23 +449,23 @@ async function editingRoomtype(param1) {
     }
 }
 
-async function permChange(newPerm) {
-  let door_refA = dataStructures.doorsDict[selectionChecker.getSelectionClick().selectedId];
-  let door_refB = dataStructures.metaroomDisk.perms[getSortedId(door_refA.roomKeys[0], door_refA.roomKeys[1])];
+async function permChange(newPerm: number) {
+  let door_refA = dataStructures.doorsDict[selectionChecker.getSelectionClick().selectedId]!;
+  let door_refB = dataStructures.metaroomDisk!.perms[getSortedId(door_refA.roomKeys[0], door_refA.roomKeys[1])]!;
   door_refA.permeability = Math.min(Math.max(newPerm, 0), 100);
   door_refB.permeability = Math.min(Math.max(newPerm, 0), 100);
   masterUiState.camera.redraw = true;
 }
 
-async function xChange(value) {
+async function xChange(value: number) {
     dataStructures.metaroomDisk.x = value;
 }
 
-async function yChange(value) {
+async function yChange(value: number) {
     dataStructures.metaroomDisk.y = value;
 }
 
-async function musicChange(id, value) {
+async function musicChange(id: string, value: number) {
   switch (id) {
     case "property-metaroom-music":
       dataStructures.metaroomDisk.music = value;
@@ -441,7 +480,7 @@ async function musicChange(id, value) {
   }
 }
 
-async function roomtypeButtonMouseOver(param1) {
+async function roomtypeButtonMouseOver(param1: string) {
     selectionChecker.setSelectionRoomtypeHover(parseFloat(param1.slice(-2)));
 }
 
