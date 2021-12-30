@@ -1,7 +1,15 @@
+/// <reference path="../index.ts" />
+
 export {};
 
 declare global {
   var fileHelper: typeof FileHelper;
+}
+
+type FileRef = {
+    id: string;
+    path: string;
+    type: string;
 }
 
 //$.getScript('../engine-api/CAOS.js
@@ -13,9 +21,9 @@ globalThis.fileHelper = new FileHelper(
     (type: string) => {
         switch (type) {
           case "json":
-            return JSON.stringify(dataStructures.metaroomDisk, null, " ").replace(/(\n|\r|\r\n)[\s]+/g, "\n");
+            return JSON.stringify(dataStructures.metaroomDisk!, null, " ").replace(/(\n|\r|\r\n)[\s]+/g, "\n");
           case "caos":
-            let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk);
+            let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk!);
             return toReturn;
         }
     }
@@ -60,11 +68,13 @@ let dataStructures: DataStructures = {
   pointsSortedY: [],
 };
 
+type ViewingEditingRoomTypeeState = {
+    pickedRoomtype: number,
+};
+
 type ViewingRoomTypeState = {
   isViewingPalette: boolean;
-  isEditingRoomtype: boolean | {
-      pickedRoomtype: number,
-  };
+  isEditingRoomtype: false | ViewingEditingRoomTypeeState;
  }
 
 let masterUiState: {
@@ -87,7 +97,7 @@ let masterUiState: {
 
   state: {
       isViewingRoomType:
-        boolean | ViewingRoomTypeState,
+        false | ViewingRoomTypeState,
   },
 
   camera: {
@@ -327,15 +337,16 @@ async function newFile() {
 
     let fileContents =
     {
-      "id": crypto.randomUUID(),
-      "name": "",
-      "background": path.basename(backgroundFile),
-      "x": 0,
-      "y": 0,
-      "width": img.width,
-      "height": img.height,
-      "rooms": {},
-      "perms": {}
+      id: crypto.randomUUID(),
+      name: "",
+      background: path.basename(backgroundFile),
+      music: "",
+      x: 0,
+      y: 0,
+      width: img.width,
+      height: img.height,
+      rooms: {},
+      perms: {}
     };
     loadMetaroom(
         fileContents,
@@ -458,20 +469,20 @@ async function permChange(newPerm: number) {
 }
 
 async function xChange(value: number) {
-    dataStructures.metaroomDisk.x = value;
+    dataStructures.metaroomDisk!.x = value;
 }
 
 async function yChange(value: number) {
-    dataStructures.metaroomDisk.y = value;
+    dataStructures.metaroomDisk!.y = value;
 }
 
-async function musicChange(id: string, value: number) {
+async function musicChange(id: string, value: string) {
   switch (id) {
     case "property-metaroom-music":
-      dataStructures.metaroomDisk.music = value;
+      dataStructures.metaroomDisk!.music = value;
       break;
     case "property-room-music":
-      let room = dataStructures.metaroomDisk.rooms[selectionChecker.getSelectionClick().selectedId];
+      let room = dataStructures.metaroomDisk!.rooms[selectionChecker.getSelectionClick().selectedId];
       room.music = value;
       break;
     default:
@@ -488,7 +499,7 @@ async function roomtypeButtonMouseOut() {
     selectionChecker.setSelectionRoomtypeHover(null);
 }
 
-function displayFiles(files) {
+function displayFiles(files: { fileRef: FileRef; contents: string }[]) {
     if (!files) { return; }
     if (files.length === 0) { return; }
     zoom = 1.0;
@@ -505,7 +516,7 @@ function displayFiles(files) {
             fileContents = parseCaosForMetaroom(file.contents);
             break;
           default:
-            throw new Error(`Unknown file type: ${file.fileref}`);
+            throw new Error(`Unknown file type: ${file.fileRef}`);
         }
 
         loadMetaroom(fileContents);
@@ -535,7 +546,7 @@ function updateTitle(){
   updateBarButtons();
 }
 
-function tileNameFromPath(path) {
+function tileNameFromPath(path: null | string) {
     assert(
       typeof path === 'string'
       || typeof path === 'object',
@@ -550,35 +561,6 @@ function tileNameFromPath(path) {
     let lastIndexOfDot = path.lastIndexOf(".")
     let fileName = "..." + path.slice(secondTolastIndex);
     return fileName;
-}
-
-async function displaySaveFileReminderDialog(){
-  let options  = {
-   buttons: ['Save', 'Toss', 'Cancel'],
-   message: 'Do you want to save your work?'
-  }
-  let result = await dialog.showMessageBox(options);
-  if(result.response === 0){
-    await saveFile();
-    return true;
-  }else if (result.response === 1){
-    return true;
-  }else{
-    return false;
-  }
-}
-
-async function displaySaveFileDialog(){
-  let options = {
-    title: "Save CAOS file",
-    defaultPath : '%HOMEPATH%/Documents/',
-    buttonLabel : "Save",
-    filters :[
-      {name: 'CAOS', extensions: ['cos']},
-      {name: 'All Files', extensions: ['*']}
-    ]
-  }
-  return dialog.showSaveDialog(WIN, options);
 }
 
 function updateBarButtons(){
@@ -633,18 +615,6 @@ function oneToOneZoom() {
       constrainPositionZoom();
 }
 
-function paste(){
-  let toInsert = clipboard.readText().replace(/(?:\r\n|\r|\n)/g, '\n')
-  if (toInsert === ''){
-    return;
-  }
-  insertText(toInsert);
-}
-
-function find(){
-
-}
-
 function undo(){
   let command = _undoList.pop();
   if (!command){
@@ -659,7 +629,7 @@ function undo(){
     offscreenCanvasContexts.pasties,
     [...dataStructures.doorsArray, ...dataStructures.walls],
     dataStructures.points,
-    dataStructures.metaroomDisk);
+    dataStructures.metaroomDisk!);
   selectionChecker.resetSelection();
   updateBarButtons();
 }
@@ -678,12 +648,14 @@ function redo(){
     offscreenCanvasContexts.pasties,
     [...dataStructures.doorsArray, ...dataStructures.walls],
     dataStructures.points,
-    dataStructures.metaroomDisk);
+    dataStructures.metaroomDisk!);
   selectionChecker.resetSelection();
   updateBarButtons();
 }
 
-function userTextKeyDown(event){
+let lastDownTarget: any = null;
+
+function userTextKeyDown(event: any){
   if (lastDownTarget !== topCanvasElement) {
       return;
   }
@@ -693,9 +665,9 @@ function userTextKeyDown(event){
   }
 
   if (event.key === "Shift") {
-    shiftKeyDown();
+    shiftKeyDown(event);
   } else if (event.key === "Control") {
-    controlKeyDown();
+    controlKeyDown(event);
   } else if (event.altKey || event.ctrlKey || event.metaKey){
     controlKeyComboDown(event);
   } else if (event.shiftKey){
@@ -712,7 +684,7 @@ function userTextKeyDown(event){
         break;
 
       case ' ':
-        spacebarDown();
+        spacebarDown(event);
         break;
 
       default:
@@ -722,7 +694,7 @@ function userTextKeyDown(event){
   event.preventDefault();
 }
 
-function userTextKeyUp(event){
+function userTextKeyUp(event: any){
     if (event.defaultPrevented) {
         return; // Do nothing if the event was already processed
     }
@@ -736,7 +708,7 @@ function userTextKeyUp(event){
     }
 }
 
-function editingKeyDown(event) {
+function editingKeyDown(event: any) {
     switch (event.key) {
         case 'Backspace':
         case 'Delete':
@@ -748,21 +720,21 @@ function editingKeyDown(event) {
 }
 
 
-function shiftKeyDown(event){
+function shiftKeyDown(event: any){
   masterUiState.keys.shiftKeyIsDown = true;
 }
 
-function controlKeyDown(event){
+function controlKeyDown(event: any){
   masterUiState.keys.ctrlKeyIsDown = true;
 }
 
-function spacebarDown(event){
+function spacebarDown(event: any){
   masterUiState.keys.spacebarIsDown = true;
 }
 
 
 
-function controlKeyComboDown(event){
+function controlKeyComboDown(event: any){
   if (event.key === 'z'){
     undo();
   } else if (
@@ -789,7 +761,7 @@ function tryDelete() {
 }
 
 
-function deleteRoom(id){
+function deleteRoom(id: string){
     let permsStorageCommand = makePermsStorageCommand([id]);
     let deleteCommand = makeDeleteRoomCommand(id);
     let finalCommand = buildMultiCommand([permsStorageCommand, deleteCommand]);
@@ -803,12 +775,12 @@ function deleteRoom(id){
       offscreenCanvasContexts.pasties,
       [...dataStructures.doorsArray, ...dataStructures.walls],
       dataStructures.points,
-      dataStructures.metaroomDisk);
+      dataStructures.metaroomDisk!);
     selectionChecker.resetSelection();
     updateBarButtons();
 }
 
-function controlKeyUp(event){
+function controlKeyUp(event: any){
     if (masterUiState.keys.ctrlKeyIsDown) {
         masterUiState.keys.ctrlKeyIsDown = false;
 
@@ -827,13 +799,13 @@ function controlKeyUp(event){
     }
 }
 
-function shiftKeyComboDown(event){
+function shiftKeyComboDown(event: any){
     if (event.key === "Shift") {
         masterUiState.keys.shiftKeyIsDown = true;
     }
 }
 
-function shiftKeyUp(event){
+function shiftKeyUp(event: any){
     if (masterUiState.keys.shiftKeyIsDown) {
         masterUiState.keys.shiftKeyIsDown = false;
 
@@ -852,7 +824,7 @@ function shiftKeyUp(event){
     }
 }
 
-function spacebarUp(event){
+function spacebarUp(event: any){
     if (masterUiState.keys.spacebarIsDown) {
         masterUiState.keys.spacebarIsDown = false;
 
@@ -871,33 +843,35 @@ function spacebarUp(event){
     }
 }
 
-function windowHandleMouseDown(e){
-    lastDownTarget = e.target;
+function windowHandleMouseDown(event: any){
+    lastDownTarget = event.target;
 }
 
-function handleMouseDown(e){
+function handleMouseDown(event: any){
     // tell the browser we're handling this event
-    e.preventDefault();
-    e.stopPropagation();
-    lastDownTarget = e.target;
+    event.preventDefault();
+    event.stopPropagation();
+    lastDownTarget = event.target;
     masterUiState.dragging.isMouseButtonDown = true;
-    startX = (parseInt(e.offsetX) + posX) * zoom;
-    startY = (parseInt(e.offsetY) + posY) * zoom;
+    let startX = (parseInt(event.offsetX) + posX) * zoom;
+    let startY = (parseInt(event.offsetY) + posY) * zoom;
 
-    if (masterUiState.state.isViewingRoomType) {
+    let isViewingRoomType = masterUiState.state.isViewingRoomType as ViewingRoomTypeState;
+
+    if (isViewingRoomType) {
         selectionChecker.checkSelectionRoomtypeClick(startX, startY, dataStructures);
-        if (masterUiState.state.isViewingRoomType.isEditingRoomtype) {
+        if (isViewingRoomType.isEditingRoomtype) {
             let clicked = selectionChecker.getSelectionRoomtypeClick().selectedId;
-            retypeRoom(clicked, masterUiState.state.isViewingRoomType.isEditingRoomtype.pickedRoomtype);
+            retypeRoom(clicked, isViewingRoomType.isEditingRoomtype.pickedRoomtype);
         }
     } else {
         selectionChecker.checkSelectionClick(startX, startY, dataStructures);
     }
 }
 
-function handleMouseUp(e){
-    e.preventDefault();
-    e.stopPropagation();
+function handleMouseUp(event: any){
+    event.preventDefault();
+    event.stopPropagation();
     masterUiState.dragging.isMouseButtonDown = false;
 
     tryCreateRoom();
@@ -914,7 +888,7 @@ function handleMouseUp(e){
     }
 }
 
-function handleMouseOut(e){
+function handleMouseOut(event: any){
     masterUiState.keys.shiftKeyIsDown = false;
     // return if we're not dragging
     /*masterUiState.dragging.isMouseButtonDown = false;
@@ -926,20 +900,22 @@ function handleMouseOut(e){
     stopDragging = null;*/
 }
 
-function handleMouseMove(e){
+function handleMouseMove(event: any){
   // tell the browser we're handling this event
-  e.preventDefault();
-  e.stopPropagation();
+  event.preventDefault();
+  event.stopPropagation();
   // calculate the current mouse position
   currX=parseInt(e.offsetX + posX) * zoom;
   currY=parseInt(e.offsetY + posY) * zoom;
 
-  if (!dataStructures.metaroomDisk) {
+  if (!dataStructures.metaroomDisk!) {
       return;
   }
 
+  let isViewingRoomType = masterUiState.state.isViewingRoomType as ViewingRoomTypeState;
+
   if (!masterUiState.dragging.isDragging) {
-      if (masterUiState.state.isViewingRoomType) {
+      if (isViewingRoomType) {
           selectionChecker.checkSelectionRoomtypeHover(currX, currY, dataStructures);
       } else {
           selectionChecker.checkSelectionHover(currX, currY, dataStructures);
@@ -954,8 +930,8 @@ function handleMouseMove(e){
 
   if (masterUiState.dragging.isMouseButtonDown) {
       if (masterUiState.keys.spacebarIsDown) {
-          posX -= e.movementX;
-          posY -= e.movementY;
+          posX -= event.movementX;
+          posY -= event.movementY;
           masterUiState.camera.reposition = true;
           constrainPositionZoom();
       } else {
@@ -1032,24 +1008,24 @@ function handleMouseMove(e){
 
 
 
-function handleWheel(e) {
-    e.preventDefault();
+function handleWheel(event: any) {
+    event.preventDefault();
 
-    if (e.ctrlKey) {
+    if (event.ctrlKey) {
         let zoomInitial = zoom;
-        zoom += e.deltaY * 0.0025;
+        zoom += event.deltaY * 0.0025;
         constrainPositionZoom();
         let zoomFinal = zoom;
         masterUiState.camera.rezoom = true;
 
-        posX += (e.offsetX) * (zoomInitial/zoomFinal - 1);
-        posY += (e.offsetY) * (zoomInitial/zoomFinal - 1);
+        posX += (event.offsetX) * (zoomInitial/zoomFinal - 1);
+        posY += (event.offsetY) * (zoomInitial/zoomFinal - 1);
     } else {
         if (e.altKey) {
-            posX += e.deltaY * 2;
+            posX += event.deltaY * 2;
         } else {
-            posX += e.deltaX * 2;
-            posY += e.deltaY * 2;
+            posX += event.deltaX * 2;
+            posY += event.deltaY * 2;
         }
         masterUiState.camera.reposition = true;
     }
@@ -1059,9 +1035,9 @@ function handleWheel(e) {
 function constrainPositionZoom() {
     zoom = Math.min(zoom, 2);
     zoom = Math.max(zoom, 1/roomSizeBlurFix);
-    posX = Math.min(posX, dataStructures.metaroomDisk.width / zoom - canvasHolder.clientWidth);
+    posX = Math.min(posX, dataStructures.metaroomDisk!.width / zoom - canvasHolder.clientWidth);
     posX = Math.max(posX, 0);
-    posY = Math.min(posY, dataStructures.metaroomDisk.height / zoom - canvasHolder.clientHeight);
+    posY = Math.min(posY, dataStructures.metaroomDisk!.height / zoom - canvasHolder.clientHeight);
     posY = Math.max(posY, 0);
 }
 
@@ -1114,7 +1090,7 @@ function tryCreateRoom() {
       offscreenCanvasContexts.pasties,
       [...dataStructures.doorsArray, ...dataStructures.walls],
       dataStructures.points,
-      dataStructures.metaroomDisk);
+      dataStructures.metaroomDisk!);
     selectionChecker.resetSelection();
     updateBarButtons();
 }
@@ -1153,13 +1129,13 @@ function retypeRoom(id, type) {
       offscreenCanvasContexts.pasties,
       [...dataStructures.doorsArray, ...dataStructures.walls],
       dataStructures.points,
-      dataStructures.metaroomDisk);
+      dataStructures.metaroomDisk!);
     selectionChecker.resetSelection();
     updateBarButtons();
 }
 
 function makeRetypeRoomCommand(id, type){
-  let roomOriginal = dataStructures.metaroomDisk.rooms[id];
+  let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
   assert(roomOriginal, "");
   return new Command(
       retypeRoomAbsolute,
@@ -1170,11 +1146,11 @@ function makeRetypeRoomCommand(id, type){
 }
 
 function retypeRoomAbsolute({id, type}){
-    dataStructures.metaroomDisk.rooms[id].roomType = type;
+    dataStructures.metaroomDisk!.rooms[id].roomType = type;
 }
 
 function makeRepermDoorsCommand(id, type){
-  let roomOriginal = dataStructures.metaroomDisk.rooms[id];
+  let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
   assert(roomOriginal, "");
   return new Command(
       repermDoorsAbsolute,
@@ -1190,7 +1166,7 @@ function repermDoorsAbsolute({id, perm}){
 }
 
 function makeDeleteRoomCommand(id){
-  let roomOriginal = dataStructures.metaroomDisk.rooms[id];
+  let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
   let room = {
       id: roomOriginal.id,
       leftX: roomOriginal.leftX,
@@ -1210,19 +1186,19 @@ function makeDeleteRoomCommand(id){
 }
 
 function deleteRoomAbsolute({id}){
-    delete dataStructures.metaroomDisk.rooms[id];
-    for (permKey in dataStructures.metaroomDisk.perms) {
-        let perm = dataStructures.metaroomDisk.perms[permKey];
+    delete dataStructures.metaroomDisk!.rooms[id];
+    for (permKey in dataStructures.metaroomDisk!.perms) {
+        let perm = dataStructures.metaroomDisk!.perms[permKey];
         if (perm.rooms.a === id || perm.rooms.b === id) {
-            delete dataStructures.metaroomDisk.perms[permKey];
+            delete dataStructures.metaroomDisk!.perms[permKey];
         }
     }
 }
 
 function makePermsStorageCommand(ids){
     let toStore = new Object();
-    for (permKey in dataStructures.metaroomDisk.perms) {
-        let perm = dataStructures.metaroomDisk.perms[permKey];
+    for (permKey in dataStructures.metaroomDisk!.perms) {
+        let perm = dataStructures.metaroomDisk!.perms[permKey];
         if (ids.some(id =>
           (id === perm.rooms.a
           || id === perm.rooms.b)
@@ -1241,7 +1217,7 @@ function makePermsStorageCommand(ids){
 function permsStorageAbsolute({toStore}){
     for (storedKey in toStore) {
         let stored = toStore[storedKey];
-        let existing = dataStructures.metaroomDisk.perms[stored.id];
+        let existing = dataStructures.metaroomDisk!.perms[stored.id];
         if (existing) {
             existing.permeability = stored.permeability;
         }
@@ -1249,18 +1225,18 @@ function permsStorageAbsolute({toStore}){
 }
 
 function rebuildRooms() {
-    let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk.rooms).filter(function(val) {return val});
+    let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk!.rooms).filter(function(val) {return val});
     //console.log(dataStructures.metaroomDisk.perms);
     let doorsArray =
         dataStructureFactory
-            .getDoorsFromRooms(dataStructures.metaroomDisk.rooms, dataStructures.metaroomDisk.perms)
+            .getDoorsFromRooms(dataStructures.metaroomDisk!.rooms, dataStructures.metaroomDisk!.perms)
             .filter(function(val) {return val})
             .filter(val => {return (
               val.start.x !== val.end.x ||
               val.start.y !== val.end.y
             );});
     let walls = dataStructureFactory.subtractSegmentsFromSegments(wallsOverreach, doorsArray).filter(function(val) {return val});
-    let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk.rooms);
+    let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk!.rooms);
     let pointsSortedX = Object.values(points);
     pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
     let pointsSortedY = Object.values(points);
@@ -1299,6 +1275,7 @@ type Room = {
   leftFloorY: number;
   rightFloorY: number;
   roomType: number;
+  music: null | string;
 }
 
 type Perm = {
@@ -1314,6 +1291,7 @@ type Metaroom = {
   id: string;
   name: string;
   background: string;
+  music: string;
   x: number;
   y: number;
   width: number;
@@ -1342,11 +1320,12 @@ let blankRoom = {
     y: 0,
     width: 0,
     height: 0,
+    music: "",
     rooms: {},
     perms: new Object()
 };
 
-function loadMetaroom(metaroomIn, additionalBackground) {
+function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground: string = null) {
     if (typeof metaroomIn === "string") {
         if (metaroomIn !== "") {
             metaroom = JSON.parse(metaroomIn);
@@ -1371,7 +1350,7 @@ function loadMetaroom(metaroomIn, additionalBackground) {
         img = null;
     }
 
-   resizeOffscreenCanvasElements(dataStructures.metaroomDisk);
+   resizeOffscreenCanvasElements(dataStructures.metaroomDisk!);
    rebuildRooms();
    redrawMetaroom();
 }
@@ -1383,7 +1362,7 @@ async function reloadBackgroundFile(backgroundFileAbsoluteWorking) {
         backgroundFileAbsoluteWorking
         ?? path.join(
           path.dirname(fileHelper.getCurrentFileRef().path),
-          dataStructures.metaroomDisk.background
+          dataStructures.metaroomDisk!.background
         );
 
     switch (path.extname(imgPathAbsolute)) {
@@ -1415,13 +1394,13 @@ async function redrawMetaroom(){
         offscreenCanvasContexts.pasties,
         [...dataStructures.doorsArray, ...dataStructures.walls],
         dataStructures.points,
-        dataStructures.metaroomDisk);
-    offscreenCanvasContexts.background.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-    if (dataStructures.metaroomDisk.background) {
+        dataStructures.metaroomDisk!);
+    offscreenCanvasContexts.background.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
+    if (dataStructures.metaroomDisk!.background) {
         if (!img) {
             await reloadBackgroundFile();
         }
-        switch (path.extname(dataStructures.metaroomDisk.background)) {
+        switch (path.extname(dataStructures.metaroomDisk!.background)) {
           case ".blk":
             offscreenCanvasContexts.background.moveTo(0, 0);
             offscreenCanvasContexts.background.putImageData(img, 0, 0);
@@ -1585,8 +1564,8 @@ async function redrawSelection(timestamp: number) {
                   dataStructures
               );
               redrawPotential(potentialRooms, dataStructures);
-              onscreenCanvasContexts.selectionUnder.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
-              onscreenCanvasContexts.selectionOver.clearRect(0, 0, dataStructures.metaroomDisk.width * roomSizeBlurFix, dataStructures.metaroomDisk.height * roomSizeBlurFix);
+              onscreenCanvasContexts.selectionUnder.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
+              onscreenCanvasContexts.selectionOver.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
               selectionRenderer.redrawSelection(onscreenCanvasContexts.selectionUnder, onscreenCanvasContexts.selectionOver, dataStructures, selection);
           }
 
@@ -1631,7 +1610,7 @@ function redrawPotential(potentialRooms, dataStructures) {
             doorsWalls = doorsWalls.concat(dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(potentialRoom, dataStructures));
         }
         let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
-        redrawPotentialRooms(onscreenCanvasContexts.potential, onscreenCanvasContexts.potential, doorsWalls, points, dataStructures.metaroomDisk);
+        redrawPotentialRooms(onscreenCanvasContexts.potential, onscreenCanvasContexts.potential, doorsWalls, points, dataStructures.metaroomDisk!);
     }
 }
 
