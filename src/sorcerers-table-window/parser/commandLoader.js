@@ -8,7 +8,7 @@ const fs = require('fs');
 async function _c3Commands(){
   let namespaces = new Object();
 
-  let commandinfoPath = (await Window.fileHelper.getResourcePath('commandinfo.json')).path;
+  let commandinfoPath = (await globalThis.fileHelper.getResourcePath('commandinfo.json')).path;
 
   let c3In = JSON.parse(fs.readFileSync(commandinfoPath, 'utf8')).variants.c3;
 

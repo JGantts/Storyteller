@@ -53,13 +53,13 @@ let posY = 0;
 let zooomSettle = 1;
 
 let zoomPanSettleMilliseconds = 80;
-let zoomPanSettleTimestampLastChange: number | null = null;
+let zoomPanSettleTimestampLastChange: number | null;
 
 type SimplePoint = {x: number; y: number}
 
 let dataStructures: DataStructures = {
-  metaroomDisk: null,
-  backgroundFileAbsoluteWorking: null,
+  metaroomDisk: undefined,
+  backgroundFileAbsoluteWorking: undefined,
   points: {},
   walls: [],
   doorsDict: {},
@@ -85,10 +85,10 @@ let masterUiState: {
 
       isDragging: boolean;
       whatDragging: string;
-      idDragging: null | number;
+      idDragging?: number;
 
-      startDragging: null | SimplePoint;
-      stopDragging: null | SimplePoint;
+      startDragging?: SimplePoint;
+      stopDragging?: SimplePoint;
   };
 
   state: {
@@ -115,8 +115,8 @@ let masterUiState: {
         whatDragging: "",
         idDragging: -1,
 
-        startDragging: null,
-        stopDragging: null,
+        startDragging: undefined,
+        stopDragging: undefined,
     },
 
     state: {
@@ -339,8 +339,8 @@ async function newFile() {
       music: "",
       x: 0,
       y: 0,
-      width: img.width,
-      height: img.height,
+      width: img!.width,
+      height: img!.height,
       rooms: {},
       perms: {}
     };
@@ -542,7 +542,7 @@ function updateTitle(){
   updateBarButtons();
 }
 
-function tileNameFromPath(path: null | string) {
+function tileNameFromPath(path?: string) {
     assert(
       typeof path === 'string'
       || typeof path === 'object',
@@ -788,8 +788,8 @@ function controlKeyUp(event: any){
                 whatDragging: "",
                 idDragging: -1,
 
-                startDragging: null,
-                stopDragging: null,
+                startDragging: undefined,
+                stopDragging: undefined,
             }
         }
     }
@@ -813,8 +813,8 @@ function shiftKeyUp(event: any){
                 whatDragging: "",
                 idDragging: -1,
 
-                startDragging: null,
-                stopDragging: null,
+                startDragging: undefined,
+                stopDragging: undefined,
             }
         }
     }
@@ -832,8 +832,8 @@ function spacebarUp(event: any){
                 whatDragging: "",
                 idDragging: -1,
 
-                startDragging: null,
-                stopDragging: null,
+                startDragging: undefined,
+                stopDragging: undefined,
             }
         }
     }
@@ -879,8 +879,8 @@ function handleMouseUp(event: any){
         whatDragging: "",
         idDragging: -1,
 
-        startDragging: null,
-        stopDragging: null,
+        startDragging: undefined,
+        stopDragging: undefined,
     }
 }
 
@@ -985,7 +985,7 @@ function handleMouseMove(event: any){
 
                       isDragging: true,
                       whatDragging: "cursor_point",
-                      idDragging: null,
+                      idDragging: undefined,
 
                       startDragging: {x: Math.round(currX), y: Math.round(currY)},
                       stopDragging: {x: currX, y: currY},
@@ -1156,7 +1156,7 @@ function makeRepermDoorsCommand(id: string, type: number){
   );
 }
 
-function repermDoorsAbsolute({id, perm}: { id: string, type: number }){
+function repermDoorsAbsolute({id, perm}: { id: string, perm: number }){
     dataStructures.doorsDict[id].permeability = perm;
     //dataStructures.metaroomDisk.
 }
@@ -1183,7 +1183,7 @@ function makeDeleteRoomCommand(id: string){
 
 function deleteRoomAbsolute({id}: { id: string }){
     delete dataStructures.metaroomDisk!.rooms[id];
-    for (permKey in dataStructures.metaroomDisk!.perms) {
+    for (let permKey in dataStructures.metaroomDisk!.perms) {
         let perm = dataStructures.metaroomDisk!.perms[permKey];
         if (perm.rooms.a === id || perm.rooms.b === id) {
             delete dataStructures.metaroomDisk!.perms[permKey];
@@ -1192,8 +1192,8 @@ function deleteRoomAbsolute({id}: { id: string }){
 }
 
 function makePermsStorageCommand(ids: string[]){
-    let toStore = new Object();
-    for (permKey in dataStructures.metaroomDisk!.perms) {
+    let toStore: { [keys: string]: Perm } = {};
+    for (let permKey in dataStructures.metaroomDisk!.perms) {
         let perm = dataStructures.metaroomDisk!.perms[permKey];
         if (ids.some(id =>
           (id === perm.rooms.a
@@ -1210,8 +1210,8 @@ function makePermsStorageCommand(ids: string[]){
     );
 }
 
-function permsStorageAbsolute({toStore}: { toStore: string[] }){
-    for (storedKey in toStore) {
+function permsStorageAbsolute({toStore}: any){
+    for (let storedKey in toStore) {
         let stored = toStore[storedKey];
         let existing = dataStructures.metaroomDisk!.perms[stored.id];
         if (existing) {
@@ -1221,37 +1221,37 @@ function permsStorageAbsolute({toStore}: { toStore: string[] }){
 }
 
 function rebuildRooms() {
-    let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk!.rooms).filter(function(val) {return val});
+    let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk!.rooms).filter((val: any) => {return val});
     //console.log(dataStructures.metaroomDisk.perms);
     let doorsArray =
         dataStructureFactory
             .getDoorsFromRooms(dataStructures.metaroomDisk!.rooms, dataStructures.metaroomDisk!.perms)
-            .filter(function(val) {return val})
-            .filter(val => {return (
+            .filter((val?: Door) => {return val})
+            .filter((val: Door) => {return (
               val.start.x !== val.end.x ||
               val.start.y !== val.end.y
             );});
-    let walls = dataStructureFactory.subtractSegmentsFromSegments(wallsOverreach, doorsArray).filter(function(val) {return val});
+    let walls = dataStructureFactory.subtractSegmentsFromSegments(wallsOverreach, doorsArray).filter((val: any) => {return val});
     let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk!.rooms);
     let pointsSortedX = Object.values(points);
-    pointsSortedX = pointsSortedX.sort((a, b) => a.x - b.x);
+    pointsSortedX = pointsSortedX.sort((a: any, b: any) => a.x - b.x);
     let pointsSortedY = Object.values(points);
-    pointsSortedY = pointsSortedY.sort((a, b) => a.y - b.y);
+    pointsSortedY = pointsSortedY.sort((a: any, b: any) => a.y - b.y);
 
-    let doorsDict = new Object();
-    for (door of doorsArray) {
+    let doorsDict: { [key: string]: Door } = {};
+    for (let door of doorsArray) {
         doorsDict[door.id] = door;
     }
 
     dataStructures = {
-        metaroomDisk: metaroom,
+        metaroomDisk: dataStructures.metaroomDisk,
         backgroundFileAbsoluteWorking: dataStructures.backgroundFileAbsoluteWorking,
         points,
         walls,
         doorsDict,
         doorsArray,
-        pointsSortedX,
-        pointsSortedY
+        pointsSortedX: (pointsSortedX as Point[]),
+        pointsSortedY: (pointsSortedY as Point[])
     };
 }
 
@@ -1271,7 +1271,7 @@ type Room = {
   leftFloorY: number;
   rightFloorY: number;
   roomType: number;
-  music: null | string;
+  music?: string;
 }
 
 type Perm = {
@@ -1297,10 +1297,10 @@ type Metaroom = {
 }
 
 type DataStructures = {
-    metaroomDisk: Metaroom | null;
-    backgroundFileAbsoluteWorking: string | null;
+    metaroomDisk?: Metaroom;
+    backgroundFileAbsoluteWorking?: string;
     points: { [key: string]: Point };
-    walls: Line[];
+    walls: Door[];
     doorsDict: { [key: string]: Door };
     doorsArray: Door[];
     pointsSortedX: Point[];
@@ -1321,7 +1321,7 @@ let blankRoom: Metaroom = {
     perms: {},
 };
 
-function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground: null | string = null) {
+function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground?: string) {
 
     let metaroom: Metaroom;
     if (typeof metaroomIn === "string") {
@@ -1338,8 +1338,15 @@ function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground: null 
 
 
     dataStructures = {
-        metaroomDisk: metaroom
-    };
+      metaroomDisk: metaroom,
+      backgroundFileAbsoluteWorking: undefined,
+      points: {},
+      walls: [],
+      doorsDict: {},
+      doorsArray: [],
+      pointsSortedX: [],
+      pointsSortedY: [],
+    } as DataStructures;
 
     if (additionalBackground) {
         dataStructures.backgroundFileAbsoluteWorking = additionalBackground;
@@ -1354,8 +1361,8 @@ function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground: null 
 }
 
 let imgPathRel = "";
-let img: null | Image = null;
-async function reloadBackgroundFile(backgroundFileAbsoluteWorking: string) {
+let img: (null | ImageData | HTMLImageElement);
+async function reloadBackgroundFile(backgroundFileAbsoluteWorking?: string) {
     let imgPathAbsolute =
         backgroundFileAbsoluteWorking
         ?? path.join(
@@ -1401,18 +1408,18 @@ async function redrawMetaroom(){
         switch (path.extname(dataStructures.metaroomDisk!.background)) {
           case ".blk":
             offscreenCanvasContexts.background.moveTo(0, 0);
-            offscreenCanvasContexts.background.putImageData(img, 0, 0);
+            offscreenCanvasContexts.background.putImageData(img as ImageData, 0, 0);
             break;
 
           case ".jpg":
           case ".png":
           case ".bmp":
             offscreenCanvasContexts.background.moveTo(0, 0);
-            offscreenCanvasContexts.background.drawImage(img, 0, 0);
+            offscreenCanvasContexts.background.drawImage(img as HTMLImageElement, 0, 0);
             break;
 
           default:
-            console.log(`Unsupported file type: ${path.extname(imgPathAbsolute)}`);
+            console.log(`Unsupported file type: ${path.extname(dataStructures.metaroomDisk!.background)}`);
             break;
         }
     }
@@ -1430,7 +1437,7 @@ async function redrawRooms(
   roomCtx: CanvasRenderingContext2D,
   pastiesCtx: CanvasRenderingContext2D,
   lines: Door[],
-  points: SimplePoint[],
+  points: { [key: string]: Point; },
   metaroom: Metaroom
 ){
 
@@ -1459,7 +1466,7 @@ async function redrawRooms(
 
 async function redrawPasties(
   pastiesCtx: CanvasRenderingContext2D,
-  points: SimplePoint[],
+  points: { [key: string]: Point; },
   metaroom: Metaroom
 ){
     //console.log(points);
@@ -1520,9 +1527,9 @@ async function redrawPotentialPasties(
     }
 }
 
-let secondsPassed;
-let oldTimestamp = null;
-let fps;
+let secondsPassed: number;
+let oldTimestamp: number;
+let fps: number;
 let frameIndex = -1;
 
 let previousHoverSelectionInstanceId = "uninitialized";
@@ -1629,13 +1636,16 @@ async function redrawSelection(timestamp: number) {
 }
 
 function redrawPotential(
-  potentialRooms: { Room }[],
+  potentialRooms: Room[],
   dataStructures: DataStructures
 ) {
-    onscreenCanvasContexts.potential.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
+    onscreenCanvasContexts.potential.clearRect(
+      0, 0,
+      dataStructures.metaroomDisk!.width * roomSizeBlurFix,
+      dataStructures.metaroomDisk!.height * roomSizeBlurFix);
     if (potentialRooms.length != 0) {
-        let doorsWalls = [];
-        for (potentialRoom of potentialRooms) {
+        let doorsWalls: Door[] = [];
+        for (let potentialRoom of potentialRooms) {
             doorsWalls = doorsWalls.concat(dataStructureFactory.getDoorsWallsPotentialFromRoomPotential(potentialRoom, dataStructures));
         }
         let points = dataStructureFactory.getPointsFromRooms(potentialRooms);
@@ -1643,7 +1653,7 @@ function redrawPotential(
     }
 }
 
-resizeOnscreenCanvasElements({width: 100, height: 100});
+resizeOnscreenCanvasElements();
 resizeOffscreenCanvasElements({width: 100, height: 100});
 //newFile();
 window.requestAnimationFrame(redrawSelection);
