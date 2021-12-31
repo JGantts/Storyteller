@@ -1,3 +1,7 @@
+/// <reference path="./commonTypes.ts" />
+
+export {};
+
 const crypto = require('crypto');
 
 /*
@@ -9,8 +13,14 @@ leftFloorY: 300,
 rightFloorY: 300,
 */
 
-function getSortedRoomFromDimensions(leftX, rightX, leftYA, rightYA, leftYB, rightYB) {
-
+function getSortedRoomFromDimensions(
+  leftX: number,
+  rightX: number,
+  leftYA: number,
+  rightYA: number,
+  leftYB: number,
+  rightYB: number
+) {
     return {
         id: null,
         leftX: leftX,
@@ -23,7 +33,10 @@ function getSortedRoomFromDimensions(leftX, rightX, leftYA, rightYA, leftYB, rig
     };
 }
 
-function getPermsFromRoomPotential(roomPotential, dataStructures) {
+function getPermsFromRoomPotential(
+  roomPotential: Room,
+  dataStructures: DataStructures
+) {
     let perms = new Object();
     let sides = getWallsFromRoom(roomPotential);
     for (let i = 0; i < sides.length; i++) {

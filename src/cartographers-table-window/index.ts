@@ -1,4 +1,4 @@
-/// <reference path="../index.ts" />
+/// <reference path="./commonTypes.ts" />
 
 export {};
 
@@ -55,8 +55,6 @@ let zooomSettle = 1;
 let zoomPanSettleMilliseconds = 80;
 let zoomPanSettleTimestampLastChange: number | null;
 
-type SimplePoint = {x: number; y: number}
-
 let dataStructures: DataStructures = {
   metaroomDisk: undefined,
   backgroundFileAbsoluteWorking: undefined,
@@ -68,40 +66,7 @@ let dataStructures: DataStructures = {
   pointsSortedY: [],
 };
 
-type ViewingRoomTypeState = {
-  isViewingPalette: boolean;
-  isEditingRoomtype: false | { pickedRoomtype: number };
-}
-
-let masterUiState: {
-  keys: {
-      shiftKeyIsDown: boolean;
-      ctrlKeyIsDown: boolean;
-      spacebarIsDown: boolean;
-  },
-
-  dragging: {
-      isMouseButtonDown: boolean;
-
-      isDragging: boolean;
-      whatDragging: string;
-      idDragging?: number;
-
-      startDragging?: SimplePoint;
-      stopDragging?: SimplePoint;
-  };
-
-  state: {
-      isViewingRoomType:
-        false | ViewingRoomTypeState;
-  };
-
-  camera: {
-      redraw: boolean;
-      rezoom: boolean;
-      reposition: boolean;
-  }
-} = {
+let masterUiState: MasterUiState = {
     keys: {
         shiftKeyIsDown: false,
         ctrlKeyIsDown: false,
@@ -1255,59 +1220,6 @@ function rebuildRooms() {
     };
 }
 
-type Point = {
-  id: string;
-  x: number;
-  y: number;
-  roomKeys: string[];
-}
-
-type Room = {
-  id: string;
-  leftX: number;
-  rightX: number;
-  leftCeilingY: number;
-  rightCeilingY: number;
-  leftFloorY: number;
-  rightFloorY: number;
-  roomType: number;
-  music?: string;
-}
-
-type Perm = {
-  id: string;
-  rooms: {
-    a: string;
-    b: string;
-  };
-  permeability: number;
-}
-
-type Metaroom = {
-  id: string;
-  name: string;
-  background: string;
-  music: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rooms: { [key: string]: Room };
-  perms: { [key: string]: Perm };
-}
-
-type DataStructures = {
-    metaroomDisk?: Metaroom;
-    backgroundFileAbsoluteWorking?: string;
-    points: { [key: string]: Point };
-    walls: Door[];
-    doorsDict: { [key: string]: Door };
-    doorsArray: Door[];
-    pointsSortedX: Point[];
-    pointsSortedY: Point[];
-};
-
-
 let blankRoom: Metaroom = {
     id: "",
     name: "",
@@ -1423,14 +1335,6 @@ async function redrawMetaroom(){
             break;
         }
     }
-}
-
-type Door = {
-  id: string;
-  roomKeys: string[];
-  permeability: number;
-  start: SimplePoint;
-  end: SimplePoint;
 }
 
 async function redrawRooms(
