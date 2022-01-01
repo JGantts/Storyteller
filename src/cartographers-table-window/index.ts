@@ -1,9 +1,11 @@
 /// <reference path="./commonTypes.ts" />
+/// <reference path="./commonFunctions.ts" />
 
 export {};
 
 declare global {
   var fileHelper: typeof FileHelper;
+  var geometry: typeof geometryHelper;
 }
 
 type FileRef = {
@@ -202,14 +204,6 @@ window.onkeyup = userTextKeyUp;
 
 
 window.onmousedown=windowHandleMouseDown;
-
-function getSortedId(idA: string, idB: string) {
-    if (idA > idB) {
-        return "" + idA + "-" + idB;
-    } else {
-        return "" + idB + "-" + idA;
-    }
-}
 
 function getSelectionCheckMargin() {
     return 6 * zoom;

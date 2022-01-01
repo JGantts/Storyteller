@@ -1,4 +1,19 @@
-function lineSegmentComparison(lineA, lineB, lineASlice, lineABSlice, lineBSlice) {
+/// <reference path="./commonTypes.ts" />
+
+const assert = require('assert');
+
+type LineSlice = (
+  start: SimplePoint,
+  end: SimplePoint,
+) => void
+
+function lineSegmentComparison(
+  lineA: SimpleLine,
+  lineB: SimpleLine,
+  lineASlice: LineSlice,
+  lineABSlice: LineSlice,
+  lineBSlice: LineSlice
+) {
     assert(
       lineA.start.x !== lineA.end.x ||
       lineA.start.y !== lineA.end.y,

@@ -1,4 +1,6 @@
 /// <reference path="./commonTypes.ts" />
+/// <reference path="./commonFunctions.ts" />
+/// <reference path="./lineSegmentComparison.ts" />
 
 export {};
 
@@ -37,16 +39,16 @@ function getPermsFromRoomPotential(
   roomPotential: Room,
   dataStructures: DataStructures
 ) {
-    let perms = new Object();
+    let perms: { [key: string]: Perm } = {};
     let sides = getWallsFromRoom(roomPotential);
     for (let i = 0; i < sides.length; i++) {
         //console.log("\n\n\n\n");
         //console.log(`side: ${i}`);
         let side = sides[i];
 
-        for (const key in dataStructures.metaroomDisk.rooms) {
+        for (const key in dataStructures.metaroomDisk!.rooms) {
 
-            let wallsWithId = getWallsFromRoom(dataStructures.metaroomDisk.rooms[key])
+            let wallsWithId = getWallsFromRoom(dataStructures.metaroomDisk!.rooms[key])
                 .map(
                   (possibleWall, ii) => {
                       return {
@@ -84,25 +86,34 @@ function getPermsFromRoomPotential(
     return perms;
 }
 
-function getDoorsWallsPotentialFromRoomPotential(roomPotential, dataStructuresActual) {
+function getDoorsWallsPotentialFromRoomPotential(
+  roomPotential: Room,
+  dataStructuresActual: DataStructures
+) {
     let wallsSimple = getWallsFromRooms([roomPotential]).filter(function(val) {return val});
     let doorsWalls = slicePotentialRoomIntoPotentialLinesFromActualWalls(wallsSimple, dataStructuresActual.walls);
     return doorsWalls;
 }
 
-function slicePotentialRoomIntoPotentialLinesFromActualWalls(sidesPotential, wallsActual){
-    let linesPotential = [];
+function slicePotentialRoomIntoPotentialLinesFromActualWalls(
+  sidesPotential: SimpleLine[],
+  wallsActual: Wall[]
+){
+    let linesPotential: SimpleLine[] = [];
     for (let i=0; i<sidesPotential.length; i++ ){
         let sidePotential = sidesPotential[i];
-        let lineSegmentsNew = slicePotentialSideIntoPotentialLinesFromActualWalls(sidePotential, wallsActual).segments;
+        let lineSegmentsNew = slicePotentialSideIntoPotentialLinesFromActualWalls(sidePotential, wallsActual);
         assert(!lineSegmentsNew.changed);
         //console.log(wallSegments);
-        linesPotential = linesPotential.concat(lineSegmentsNew.filter(function(val) {return val !== null}));
+        linesPotential = linesPotential.concat(lineSegmentsNew.segments.filter(function(val) {return val !== null}));
     }
     return linesPotential;
 }
 
-function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, attackingSegmentsIn){
+function slicePotentialSideIntoPotentialLinesFromActualWalls(
+  defendingSegment: SimpleLine,
+  attackingSegmentsIn: Wall[]
+){
     assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
     assert(
       defendingSegment.start.x !== defendingSegment.end.x ||
@@ -111,7 +122,7 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, a
     );
     let attackingSegments = [...attackingSegmentsIn];
 
-    let newDefendingSegments1 = [defendingSegment];
+    let newDefendingSegments1: SimpleLine[] = [defendingSegment];
     let defendingSegmentChanged = false;
     let attackingSegment = attackingSegments.pop();
     if (!attackingSegment) {
@@ -124,7 +135,7 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, a
           `AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`
         );
 
-        let newDefendingSegments2 = [];
+        let newDefendingSegments2: SimpleLine[] = [];
         let thisDefendingSegmement = newDefendingSegments1.pop()
         while (thisDefendingSegmement) {
             lineSegmentComparison(
@@ -152,7 +163,10 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(defendingSegment, a
 
 
 
-function getDoorsFromRooms(rooms, perms) {
+function getDoorsFromRooms(
+  rooms: Room[],
+  perms: Perm[]
+) {
   let doors = [];
   for (const permKey in perms) {
       let perm = perms[permKey];
@@ -260,41 +274,23 @@ function getDoorsFromRooms(rooms, perms) {
   return doors;
 }
 
-function getMiddleTwo(one, two, three, four){
-    let sorted = [one, two, three, four];
-    sorted.sort();
-    return {
-        high: sorted[2],
-        low: sorted[1]
-    }
-}
-
-function getMiddleTwoPointsConsideredHoizontally(one, two, three, four){
-    let sorted = [one, two, three, four];
-    sorted.sort((a, b) => {return a.x - b.x});
-    return {
-        high: sorted[2],
-        low: sorted[1]
-    }
-}
-
-function getPointOne(room){
+function getPointOne(room: Room){
     return {x: room.leftX, y: room.leftCeilingY};
 }
 
-function getPointTwo(room){
+function getPointTwo(room: Room){
     return {x: room.leftX, y: room.leftFloorY};
 }
 
-function getPointThree(room){
+function getPointThree(room: Room){
     return {x: room.rightX, y: room.rightFloorY};
 }
 
-function getPointFour(room){
+function getPointFour(room: Room){
     return {x: room.rightX, y: room.rightCeilingY};
 }
 
-function getIntersectsFromFour(line, room){
+function getIntersectsFromFour(line: SimpleLine, room: Room){
     return (getIntersectsFromOne(line, getPointOne(room)))
       ?? (getIntersectsFromOne(line, getPointTwo(room)))
       ?? (getIntersectsFromOne(line, getPointThree(room)))

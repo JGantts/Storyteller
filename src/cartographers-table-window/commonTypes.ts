@@ -1,5 +1,7 @@
 type SimplePoint = {x: number; y: number}
 
+type SimpleLine = {start: SimplePoint; end: SimplePoint}
+
 type ViewingRoomTypeState = {
   isViewingPalette: boolean;
   isEditingRoomtype: false | { pickedRoomtype: number };
@@ -94,4 +96,11 @@ type Door = {
   permeability: number;
   start: SimplePoint;
   end: SimplePoint;
-}
+};
+
+type Wall = {
+  id: string;
+  roomKeys: string[];
+  start: SimplePoint;
+  end: SimplePoint;
+};
