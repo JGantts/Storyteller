@@ -5,7 +5,6 @@ export {};
 
 declare global {
   var fileHelper: typeof FileHelper;
-  var geometry: typeof geometryHelper;
 }
 
 type FileRef = {

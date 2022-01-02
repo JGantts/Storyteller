@@ -4,6 +4,8 @@
 
 export {};
 
+
+const { geometry } = require('./geometryHelper.js');
 const crypto = require('crypto');
 
 /*
@@ -96,7 +98,7 @@ function getDoorsWallsPotentialFromRoomPotential(
 }
 
 function slicePotentialRoomIntoPotentialLinesFromActualWalls(
-  sidesPotential: SimpleLine[],
+  sidesPotential: Door[],
   wallsActual: Wall[]
 ){
     let linesPotential: SimpleLine[] = [];
@@ -111,7 +113,7 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(
 }
 
 function slicePotentialSideIntoPotentialLinesFromActualWalls(
-  defendingSegment: SimpleLine,
+  defendingSegment: Door,
   attackingSegmentsIn: Wall[]
 ){
     assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
@@ -122,7 +124,7 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(
     );
     let attackingSegments = [...attackingSegmentsIn];
 
-    let newDefendingSegments1: SimpleLine[] = [defendingSegment];
+    let newDefendingSegments1: Door[] = [defendingSegment];
     let defendingSegmentChanged = false;
     let attackingSegment = attackingSegments.pop();
     if (!attackingSegment) {
@@ -135,18 +137,18 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(
           `AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`
         );
 
-        let newDefendingSegments2: SimpleLine[] = [];
+        let newDefendingSegments2: Door[] = [];
         let thisDefendingSegmement = newDefendingSegments1.pop()
         while (thisDefendingSegmement) {
             lineSegmentComparison(
                 thisDefendingSegmement,
                 attackingSegment,
                 (start, end) => {
-                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, thisDefendingSegmement.permeability, thisDefendingSegmement.roomKeys);
+                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, thisDefendingSegmement!.permeability, thisDefendingSegmement!.roomKeys);
                     newDefendingSegments2 = [...newDefendingSegments2, newSegment];
                 },
                 (start, end) => {
-                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, 1.0, [...thisDefendingSegmement.roomKeys, ...attackingSegment.roomKeys]);
+                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, 1.0, [...thisDefendingSegmement!.roomKeys, ...attackingSegment!.roomKeys]);
                     newDefendingSegments2 = [...newDefendingSegments2, newSegment];
                     defendingSegmentChanged = true;
                 },
@@ -164,10 +166,10 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(
 
 
 function getDoorsFromRooms(
-  rooms: Room[],
-  perms: Perm[]
+  rooms: { [key: string]: Room },
+  perms: { [key: string]: Perm }
 ) {
-  let doors = [];
+  let doors: Door[] = [];
   for (const permKey in perms) {
       let perm = perms[permKey];
       //console.log(perm);
@@ -290,33 +292,19 @@ function getPointFour(room: Room){
     return {x: room.rightX, y: room.rightCeilingY};
 }
 
-function getIntersectsFromFour(line: SimpleLine, room: Room){
-    return (getIntersectsFromOne(line, getPointOne(room)))
-      ?? (getIntersectsFromOne(line, getPointTwo(room)))
-      ?? (getIntersectsFromOne(line, getPointThree(room)))
-      ?? (getIntersectsFromOne(line, getPointFour(room)));
-}
-
-function getIntersectsFromOne(line, point){
-    if (((point.x - line.point.x) * -(line.slope) + line.point.y) === point.y) {
-        return point;
-    }
-    return null;
-}
-
-function subtractSegmentsFromSegments(defendingSegments, attackingSegments){
+function subtractSegmentsFromSegments(defendingSegments: Door[], attackingSegments: SimpleLine[]){
     assert(defendingSegments, `Instead of UUID, found ${defendingSegments}`);
-    let newDefendingSegments1 = [];
+    let newDefendingSegments1: Door[] = [];
     for (let i=0; i<defendingSegments.length; i++ ){
         let defendingSegment = defendingSegments[i];
-        let newDefendingSegments2 = subtractSegmentsFromSegment(defendingSegment, attackingSegments).segments;
+        let newDefendingSegments2 = subtractSegmentsFromSegment(defendingSegment, attackingSegments);
         assert(!newDefendingSegments2.changed);
-        newDefendingSegments1 = newDefendingSegments1.concat(newDefendingSegments2.filter(function(val) {return val !== null}));
+        newDefendingSegments1 = newDefendingSegments1.concat(newDefendingSegments2.segments.filter(function(val) {return val !== null}));
     }
     return newDefendingSegments1;
 }
 
-function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
+function subtractSegmentsFromSegment(defendingSegment: Door, attackingSegmentsIn: SimpleLine[]){
     assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
     assert(
       defendingSegment.start.x !== defendingSegment.end.x ||
@@ -338,14 +326,14 @@ function subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn){
           `AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`
         );
 
-        let newDefendingSegments2 = [];
+        let newDefendingSegments2: Door[] = [];
         let thisDefendingSegmement = newDefendingSegments1.pop()
         while (thisDefendingSegmement) {
             lineSegmentComparison(
                 thisDefendingSegmement,
                 attackingSegment,
                 (start, end) => {
-                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, -1, thisDefendingSegmement.roomKeys);
+                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, -1, thisDefendingSegmement!.roomKeys);
                     newDefendingSegments2 = [...newDefendingSegments2, newSegment];
                 },
                 () => {
@@ -370,16 +358,16 @@ leftFloorY: 300,
 rightFloorY: 300,
 */
 
-function buildInsertPoint(points, roomKey, x, y) {
+function buildInsertPoint(points: { [key: string]: Point }, roomKey: string, x: number, y: number) {
     let id = "" + x + "-" + y;
     if (!points[id]) {
-        let roomKeys = [];
+        let roomKeys: string[] = [];
         points[id] = {id, x, y, roomKeys};
     }
     points[id].roomKeys.push(roomKey);
 }
 
-function getPointsFromRooms(rooms) {
+function getPointsFromRooms(rooms: { [key: string]: Room }) {
     let points = Object();
     for (const key in rooms) {
         buildInsertPoint(points, key, rooms[key].leftX, rooms[key].leftCeilingY);
@@ -390,15 +378,15 @@ function getPointsFromRooms(rooms) {
     return points;
 }
 
-function getWallsFromRooms(rooms) {
-  let doors = [];
+function getWallsFromRooms(rooms: Room[]) {
+  let doors: Door[] = [];
   for (const key in rooms) {
       doors = doors.concat(getWallsFromRoom(rooms[key]));
   }
   return doors;
 }
 
-function getWallsFromRoom(room) {
+function getWallsFromRoom(room: Room) {
     let doors = [];
 
     doors.push(
