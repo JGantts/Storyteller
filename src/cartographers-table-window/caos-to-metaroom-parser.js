@@ -2,6 +2,7 @@ const assert = require('assert');
 const crypto = require('crypto');
 const path = require("path");
 
+const { common } = require('./commonFunctions.js');
 const { Caos } = require('../sorcerers-table-window/parser/parser.js');
 const { TreeToText } = require('../sorcerers-table-window/tree-to-text.js');
 
@@ -104,7 +105,7 @@ function parseCaosForMetaroom(codeIn) {
                 let gameVariableB = doorArgs[1];
                 let idA = keyMap[gameVariableA.arguments[0].value];
                 let idB = keyMap[gameVariableB.arguments[0].value];
-                let id = getSortedId(idA, idB);
+                let id = common.getSortedId(idA, idB);
                 importedJson.perms[id] = {
                     id,
                     rooms:
