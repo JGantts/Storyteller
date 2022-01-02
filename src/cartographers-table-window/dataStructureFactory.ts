@@ -298,11 +298,28 @@ function subtractSegmentsFromSegments(defendingSegments: Door[], attackingSegmen
     let newDefendingSegments1: Door[] = [];
     for (let i=0; i<defendingSegments.length; i++ ){
         let defendingSegment = defendingSegments[i];
-        let newDefendingSegments2 = subtractSegmentsFromSegment(defendingSegment, attackingSegments);
+        let newDefendingSegments2 = subtractSegmentsFromSegmentUntilNoChange(defendingSegment, attackingSegments);
         assert(!newDefendingSegments2.changed, JSON.stringify(newDefendingSegments2));
         newDefendingSegments1 = newDefendingSegments1.concat(newDefendingSegments2.segments.filter(function(val) {return val !== null}));
     }
     return newDefendingSegments1;
+}
+
+
+
+function subtractSegmentsFromSegmentUntilNoChange(defendingSegment: Door, attackingSegmentsIn: SimpleLine[]){
+    let newDefendingSegments = subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn);
+    while (newDefendingSegments.changed) {
+        let newDefendingSegments2: Door[] = [];
+        let changed = false;
+        for (let newDefendingSegment of newDefendingSegments.segments) {
+            let newDefendingSegments3 = subtractSegmentsFromSegment(newDefendingSegment, attackingSegmentsIn);
+            newDefendingSegments2.concat(...newDefendingSegments3.segments);
+            changed = changed || newDefendingSegments3.changed;
+        }
+        newDefendingSegments = { segments: newDefendingSegments2, changed };
+    }
+    return newDefendingSegments;
 }
 
 function subtractSegmentsFromSegment(defendingSegment: Door, attackingSegmentsIn: SimpleLine[]){
