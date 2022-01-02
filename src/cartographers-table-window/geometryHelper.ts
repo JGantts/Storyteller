@@ -1,4 +1,7 @@
-function getCorner(room, point) {
+/// <reference path="./commonTypes.ts" />
+/// <reference path="./commonFunctions.ts" />
+
+function getCorner(room: Room, point: SimplePoint) {
     //0: top-left
     //1: top-right
     //2: bottom-right
@@ -8,7 +11,7 @@ function getCorner(room, point) {
     return cornerIndex;
 }
 
-function tryGetCorner(room, point) {
+function tryGetCorner(room: Room, point: SimplePoint) {
     //0: top-left
     //1: top-right
     //2: bottom-right
@@ -30,7 +33,11 @@ function tryGetCorner(room, point) {
     return cornerIndex;
 }
 
-function getSortedLine(aX, aY, bX, bY, permeability, roomKeys) {
+function getSortedLine(
+  aX: number, aY: number, bX: number, bY: number,
+  permeability: number,
+  roomKeys: string[]
+) {
     let line = _getSortedLine(aX, aY, bX, bY);
     if (line) {
         return {
@@ -43,7 +50,11 @@ function getSortedLine(aX, aY, bX, bY, permeability, roomKeys) {
     return null;
 }
 
-function getSortedDoor(aX, aY, bX, bY, permeability, roomKeys) {
+function getSortedDoor(
+  aX: number, aY: number, bX: number, bY: number,
+  permeability: number,
+  roomKeys: string[]
+) {
     assert(roomKeys.length === 2, JSON.stringify(roomKeys));
     let line = _getSortedLine(aX, aY, bX, bY);
     if (line) {
@@ -58,7 +69,7 @@ function getSortedDoor(aX, aY, bX, bY, permeability, roomKeys) {
     return null;
 }
 
-function _getSortedLine(aX, aY, bX, bY) {
+function _getSortedLine(aX: number, aY: number, bX: number, bY: number) {
     if (aX < bX) {
         return {
             start: {
@@ -119,7 +130,7 @@ function _getSortedLine(aX, aY, bX, bY) {
     }
 }
 
-function getRoomCeiling(room) {
+function getRoomCeiling(room: Room) {
     return {
       point: {
           x: room.leftX,
@@ -129,7 +140,7 @@ function getRoomCeiling(room) {
     };
 }
 
-function getRoomFloor(room) {
+function getRoomFloor(room: Room) {
     return {
       point: {
           x: room.leftX,
@@ -139,7 +150,7 @@ function getRoomFloor(room) {
     };
 }
 
-function getSlope(a, b) {
+function getSlope(a: SimplePoint, b: SimplePoint) {
     return {
       point: {
           x: a.x,
@@ -149,7 +160,7 @@ function getSlope(a, b) {
     };
 }
 
-function lineSegmentsIntersectAndCross(segmentA, segmentB) {
+function lineSegmentsIntersectAndCross(segmentA: SimpleLine, segmentB: SimpleLine) {
     let a1 = segmentA.start.y - segmentA.end.y;
     let b1 = segmentA.end.x - segmentA.start.x;
     let c1 = -b1 * segmentA.start.y + -a1 * segmentA.start.x;
@@ -180,10 +191,10 @@ function lineSegmentsIntersectAndCross(segmentA, segmentB) {
             ) {
                 //check if intersection is not endpoint of line
                 if (
-                  !geometry.pointsEqual(intersection, segmentA.start)
-                  && !geometry.pointsEqual(intersection, segmentA.end)
-                  && !geometry.pointsEqual(intersection, segmentB.start)
-                  && !geometry.pointsEqual(intersection, segmentB.end)
+                  !pointsEqual(intersection, segmentA.start)
+                  && !pointsEqual(intersection, segmentA.end)
+                  && !pointsEqual(intersection, segmentB.start)
+                  && !pointsEqual(intersection, segmentB.end)
                 ) {
                     return true;
                 }
@@ -193,12 +204,12 @@ function lineSegmentsIntersectAndCross(segmentA, segmentB) {
     return false;
 }
 
-function pointsEqual(a, b) {
+function pointsEqual(a: SimplePoint, b: SimplePoint) {
     return a.x === b.x && a.y === b.y;
 }
 
-function getCornerAngle(point, room) {
-    let cornerIndex = geometry.getCorner(room, point);
+function getCornerAngle(point: SimplePoint, room: Room) {
+    let cornerIndex = getCorner(room, point);
 
     let width = room.rightX-room.leftX;
     let ceilingYDiff = Math.abs(room.leftCeilingY-room.rightCeilingY);

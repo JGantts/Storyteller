@@ -7,3 +7,9 @@ function getSortedId(idA: string, idB: string) {
         return "" + idB + "-" + idA;
     }
 }
+
+module.exports = {
+    common: {
+        getSortedId,
+    },
+}

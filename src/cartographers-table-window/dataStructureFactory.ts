@@ -5,6 +5,7 @@
 export {};
 
 
+const { common } = require('./commonFunctions.js');
 const { geometry } = require('./geometryHelper.js');
 const crypto = require('crypto');
 
@@ -68,7 +69,7 @@ function getPermsFromRoomPotential(
                   wallWithId.wall,
                   () => {},
                   () => {
-                      let newId = getSortedId(wallWithId.id, roomPotential.id);
+                      let newId = common.getSortedId(wallWithId.id, roomPotential.id);
                       perms[newId] =
                       {
                           id: newId,
@@ -194,7 +195,7 @@ function getDoorsFromRooms(
               (start, end) => {
                   doors.push(
                       {
-                          id: getSortedId(roomA.id, roomB.id),
+                          id: common.getSortedId(roomA.id, roomB.id),
                           permeability: perm.permeability,
                           start,
                           end,
@@ -214,7 +215,7 @@ function getDoorsFromRooms(
               (start, end) => {
                   doors.push(
                       {
-                          id: getSortedId(roomA.id, roomB.id),
+                          id: common.getSortedId(roomA.id, roomB.id),
                           permeability: perm.permeability,
                           start,
                           end,
@@ -234,7 +235,7 @@ function getDoorsFromRooms(
               (start, end) => {
                   doors.push(
                       {
-                          id: getSortedId(roomA.id, roomB.id),
+                          id: common.getSortedId(roomA.id, roomB.id),
                           permeability: perm.permeability,
                           start,
                           end,
@@ -254,7 +255,7 @@ function getDoorsFromRooms(
               (start, end) => {
                   doors.push(
                       {
-                          id: getSortedId(roomA.id, roomB.id),
+                          id: common.getSortedId(roomA.id, roomB.id),
                           permeability: perm.permeability,
                           start,
                           end,
@@ -298,7 +299,7 @@ function subtractSegmentsFromSegments(defendingSegments: Door[], attackingSegmen
     for (let i=0; i<defendingSegments.length; i++ ){
         let defendingSegment = defendingSegments[i];
         let newDefendingSegments2 = subtractSegmentsFromSegment(defendingSegment, attackingSegments);
-        assert(!newDefendingSegments2.changed);
+        assert(!newDefendingSegments2.changed, JSON.stringify(newDefendingSegments2));
         newDefendingSegments1 = newDefendingSegments1.concat(newDefendingSegments2.segments.filter(function(val) {return val !== null}));
     }
     return newDefendingSegments1;
