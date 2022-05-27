@@ -24,7 +24,7 @@ function parseCaosForMetaroom(codeIn) {
       y: null,
       width: null,
       height: null,
-      rooms: [],
+      rooms: {},
       perms: new Object()
     };
 
