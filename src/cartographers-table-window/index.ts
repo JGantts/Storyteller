@@ -18,6 +18,22 @@ type FileRef = {
 
 const {FileHelper} = require('../render-helpers/file-helper.js');
 const {flashError} = require('./flashError.js');
+const ipcRenderer = require('electron').ipcRenderer;
+
+let closing = false;
+ipcRenderer.on('request-close', async (event, store)  => {
+    if (closing) {
+        return;
+    }
+    const result = await fileHelper.saveFileIfNeeded()
+    console.log('SaveIfNeeded: ', result);
+    if (!result.continue) {
+        return;
+    }
+    closing = true;
+    console.log('Should close');
+    ipcRenderer.send('should-close', true);
+});
 globalThis.fileHelper = new FileHelper(
     updateTitle,
     displayFiles,
@@ -33,6 +49,7 @@ globalThis.fileHelper = new FileHelper(
         }
     }
 );
+globalThis.fileHelper.saveFile = saveFile;
 const assert = require('assert');
 const {clipboard} = require('electron');
 const fs = require('fs/promises');
@@ -340,7 +357,7 @@ async function openFile() {
 }
 
 async function saveFile() {
-    await fileHelper.saveCartFile();
+    let result = await fileHelper.saveCartFile();
     let workingBackgroundFile = dataStructures.backgroundFileAbsoluteWorking;
     let newImgPathAbsolute: string = "";
     if (workingBackgroundFile) {
@@ -351,6 +368,7 @@ async function saveFile() {
         await fs.copyFile(workingBackgroundFile, newImgPathAbsolute);
     }
     updateBarButtons();
+    return result;
 }
 
 async function saveAs() {
@@ -452,6 +470,7 @@ async function permChange(newPerm: number) {
     door_refA.permeability = Math.min(Math.max(newPerm, 0), 100);
     door_refB.permeability = Math.min(Math.max(newPerm, 0), 100);
     masterUiState.camera.redraw = true;
+    redrawMetaroom();
 }
 
 async function xChange(value: number) {

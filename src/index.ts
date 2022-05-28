@@ -9,7 +9,9 @@ const fs = require('fs');
 const pathModule = require('path');
 //var iconv = require('iconv-lite');
 
+let mainWindow: Nullable<Electron.BrowserWindow> = null;
 //let settings;
+let handles = 0;
 
 type FileRef = {
     id: string;
@@ -35,7 +37,12 @@ ipcMain.on('minimize', (event, arg) => {
 });
 
 ipcMain.on('close', (event, arg) => {
-    ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow).close();
+    const browserWindow = ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow);
+    if (browserWindow == mainWindow) {
+        mainWindow.close();
+        handles--;
+        quitIfShould();
+    }
 });
 
 function getWindowsFiles(browserWindow: Electron.BrowserWindow) {
@@ -446,22 +453,34 @@ function loadSettings(then: any){
 }
 
 function createStorytellerWindow () {
-  // Create the browser window.
-  let win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    backgroundColor: '#332D53',
-    frame: false,
-    resizable: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
+    if (mainWindow != null) {
+        return;
     }
-  })
-
-  win.setMenu(null)
-
-  loadWindow(win, './dist/storyteller-window/index.html')
+    handles++;
+    // Create the browser window.
+    let win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        backgroundColor: '#332D53',
+        frame: false,
+        resizable: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
+    })
+    
+    win.setMenu(null)
+    win.on('closed', function () {
+        // Dereference the window object, usually you would store windows
+        // in an array if your app supports multi windows, this is the time
+        // when you should delete the corresponding element.
+        if (mainWindow == win) {
+            mainWindow = null;
+        }
+    });
+    loadWindow(win, './dist/storyteller-window/index.html');
+    mainWindow = win;
 }
 
 function createSorcerersTableWindow() {
@@ -620,34 +639,81 @@ function createCartographersTableWindow() {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 
-  loadWindow(win, './dist/cartographers-table-window/index.html')
+  loadWindow(win, './dist/cartographers-table-window/index.html', true);
 }
 
-function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any){
-  //if(!settings.get('development.javascript')){
-    //browserWindow.loadFile(loadFile);
-  //}else{
-    loadWindowWithDevTools(browserWindow, loadFile);
-  //}
+function isDev() {
+    return !process.defaultApp;
 }
 
-function loadWindowWithDevTools(browserWindow: Electron.BrowserWindow, loadFile: any){
-  let devtools = new BrowserWindow({
-    width: 800,
-    height: 600,
-  });
-  devtools.setBounds({ x: 0, y: 0,})
+ipcMain.on('should-close', (event) => {
+    const browserWindow = ((event.sender as any).getOwnerBrowserWindow() as Electron.BrowserWindow);
+    browserWindow.close();
+    browserWindow.destroy();
+    handles--;
+    quitIfShould();
+})
 
-  browserWindow.on('close', () => {
-    if(!devtools.isDestroyed()){
-      devtools.close()
+function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any, requestToClose: boolean = false) {
+    handles++;
+    browserWindow.on('close', (e) => {
+        e.preventDefault();
+        e.returnValue = false;
+        if (requestToClose) {
+            browserWindow.webContents.send('request-close');
+            return false;
+        } else {
+            handles--;
+            quitIfShould();
+            return browserWindow.destroy();
+        }
+    });
+    if (isDev()) {
+        browserWindow.loadFile(loadFile);
+    } else {
+        loadWindowWithDevTools(browserWindow, loadFile);
     }
-  })
-
-  browserWindow.loadFile(loadFile);
-
-  browserWindow.webContents.setDevToolsWebContents(devtools.webContents)
-  browserWindow.webContents.openDevTools()
 }
 
-app.whenReady().then(launchApp)
+function loadWindowWithDevTools(browserWindow: Electron.BrowserWindow, loadFile: any) {
+    let devtools = new BrowserWindow({
+        width: 800,
+        height: 600,
+    });
+    devtools.setBounds({x: 0, y: 0,})
+    
+    browserWindow.on('close', () => {
+        if (!devtools.isDestroyed()) {
+            devtools.close()
+        }
+    })
+    
+    browserWindow.loadFile(loadFile);
+    
+    browserWindow.webContents.setDevToolsWebContents(devtools.webContents)
+    browserWindow.webContents.openDevTools();
+}
+
+// Quit when all windows are closed.
+app.on('window-all-closed', function () {
+    quitIfShould(true);
+});
+
+function quitIfShould(noCheck: boolean = false) {
+    // On OS X it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform !== 'darwin' && (noCheck || handles === 0)) {
+        app.quit()
+    }
+}
+
+app.on('activate', function () {
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (mainWindow === null) {
+        createStorytellerWindow();
+    }
+})
+
+app.whenReady()
+    .then(launchApp)

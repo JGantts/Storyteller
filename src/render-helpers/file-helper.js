@@ -101,19 +101,19 @@ class FileHelper {
   }
 
   async saveCaosFile() {
-      await this._saveFile(caosSaveOptions, "Latin1");
+      return await this._saveFile(caosSaveOptions, "Latin1");
   }
 
   async saveCaosFileAs() {
-      await this._saveFileAs(caosSaveOptions, "Latin1");
+      return await this._saveFileAs(caosSaveOptions, "Latin1");
   }
 
   async saveCartFile() {
-      await this._saveFile(cartSaveOptions, "utf-8");
+      return await this._saveFile(cartSaveOptions, "utf-8");
   }
 
   async saveCartFileAs() {
-      await this._saveFileAs(cartSaveOptions, "json", "utf-8");
+      return await this._saveFileAs(cartSaveOptions, "json", "utf-8");
   }
 
   async exportToCaos() {
