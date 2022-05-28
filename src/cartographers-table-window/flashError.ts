@@ -1,8 +1,22 @@
 
+// Flash error init
 const animationName = 'flash-error-red-animation';
+const flashErrorElement = createFlashErrorElement();
 
-const style = document.createElement('style');
-style.innerText = `
+
+/**
+ * Creates the flash error animation
+ * This animation will run when a small error has occurred that has
+ * resulted in a no-op
+ */
+function createFlashAnimation() {
+    const styleName = animationName + '-generated-style';
+    if (document.getElementById(styleName) != null) {
+        return;
+    }
+    const style = document.createElement('style');
+    style.setAttribute('id', styleName);
+    style.innerText = `
     @keyframes ${animationName} {
         0% {
             opacity: 0;
@@ -32,13 +46,17 @@ style.innerText = `
         }
     }
 </style>`
+    
+    document.head.appendChild(style)
+}
 
-document.head.appendChild(style)
-
-const holder = createHolder();
-
-
-function createHolder(): HTMLElement {
+/**
+ * Creates the flash error element
+ * This element is responsible for flashing or displaying
+ * to the user that a slight error has occurred
+ */
+function createFlashErrorElement(): HTMLElement {
+    createFlashAnimation();
     const element = document.createElement('div');
     element.setAttribute('id', 'flash-error-border');
     element.style.top = "0";
@@ -61,8 +79,9 @@ function createHolder(): HTMLElement {
 }
 
 export function flashError() {
-    holder.style.animationName = animationName;
+    flashErrorElement.style.animationName = animationName;
 }
+
 
 module.exports = {
     flashError
