@@ -290,8 +290,8 @@
   DayOfWeek.prototype.constructor = DayOfWeek;
   English.prototype = Object.create(KlockLocale.prototype);
   English.prototype.constructor = English;
-  Companion_17.prototype = Object.create(English.prototype);
-  Companion_17.prototype.constructor = Companion_17;
+  Companion_18.prototype = Object.create(English.prototype);
+  Companion_18.prototype.constructor = Companion_18;
   RingBuffer.prototype = Object.create(ByteRingBuffer.prototype);
   RingBuffer.prototype.constructor = RingBuffer;
   FastArrayList.prototype = Object.create(AbstractMutableList.prototype);
@@ -308,8 +308,8 @@
   _no_name_provided__89.prototype.constructor = _no_name_provided__89;
   $flushCOROUTINE$11.prototype = Object.create(CoroutineImpl_0.prototype);
   $flushCOROUTINE$11.prototype.constructor = $flushCOROUTINE$11;
-  Companion_30.prototype = Object.create(DeflatePortable.prototype);
-  Companion_30.prototype.constructor = Companion_30;
+  Companion_31.prototype = Object.create(DeflatePortable.prototype);
+  Companion_31.prototype.constructor = Companion_31;
   $compressCOROUTINE$9.prototype = Object.create(CoroutineImpl_0.prototype);
   $compressCOROUTINE$9.prototype.constructor = $compressCOROUTINE$9;
   $uncompressCOROUTINE$10.prototype = Object.create(CoroutineImpl_0.prototype);
@@ -318,8 +318,8 @@
   $writeCOROUTINE$19.prototype.constructor = $writeCOROUTINE$19;
   $readCOROUTINE$20.prototype = Object.create(CoroutineImpl_0.prototype);
   $readCOROUTINE$20.prototype.constructor = $readCOROUTINE$20;
-  Companion_31.prototype = Object.create(ZLib.prototype);
-  Companion_31.prototype.constructor = Companion_31;
+  Companion_32.prototype = Object.create(ZLib.prototype);
+  Companion_32.prototype.constructor = Companion_32;
   $uncompressCOROUTINE$17.prototype = Object.create(CoroutineImpl_0.prototype);
   $uncompressCOROUTINE$17.prototype.constructor = $uncompressCOROUTINE$17;
   $compressCOROUTINE$18.prototype = Object.create(CoroutineImpl_0.prototype);
@@ -332,8 +332,8 @@
   $readCOROUTINE$24.prototype.constructor = $readCOROUTINE$24;
   $getLengthCOROUTINE$27.prototype = Object.create(CoroutineImpl_0.prototype);
   $getLengthCOROUTINE$27.prototype.constructor = $getLengthCOROUTINE$27;
-  Companion_33.prototype = Object.create(KDynamic.prototype);
-  Companion_33.prototype.constructor = Companion_33;
+  Companion_34.prototype = Object.create(KDynamic.prototype);
+  Companion_34.prototype.constructor = Companion_34;
   TypeContext.prototype = Object.create(KDynamic.prototype);
   TypeContext.prototype.constructor = TypeContext;
   Proxy.prototype = Object.create(Vfs.prototype);
@@ -418,12 +418,12 @@
   BitmapSlice.prototype.constructor = BitmapSlice;
   RGB.prototype = Object.create(ColorFormat24.prototype);
   RGB.prototype.constructor = RGB;
-  Companion_57.prototype = Object.create(RGB.prototype);
-  Companion_57.prototype.constructor = Companion_57;
+  Companion_58.prototype = Object.create(RGB.prototype);
+  Companion_58.prototype.constructor = Companion_58;
   BGR.prototype = Object.create(RGB.prototype);
   BGR.prototype.constructor = BGR;
-  Companion_59.prototype = Object.create(ColorFormat32.prototype);
-  Companion_59.prototype.constructor = Companion_59;
+  Companion_60.prototype = Object.create(ColorFormat32.prototype);
+  Companion_60.prototype.constructor = Companion_60;
   TtfNativeSystemFontProvider.prototype = Object.create(NativeSystemFontProvider.prototype);
   TtfNativeSystemFontProvider.prototype.constructor = TtfNativeSystemFontProvider;
   FallbackNativeSystemFontProvider.prototype = Object.create(TtfNativeSystemFontProvider.prototype);
@@ -488,8 +488,8 @@
   SprSpriteFile.prototype.constructor = SprSpriteFile;
   SprSpriteFrame.prototype = Object.create(SpriteFrame.prototype);
   SprSpriteFrame.prototype.constructor = SprSpriteFrame;
-  _no_name_provided__210.prototype = Object.create(CoroutineImpl_0.prototype);
-  _no_name_provided__210.prototype.constructor = _no_name_provided__210;
+  _no_name_provided__211.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__211.prototype.constructor = _no_name_provided__211;
   $framesAsyncCOROUTINE$0.prototype = Object.create(CoroutineImpl_0.prototype);
   $framesAsyncCOROUTINE$0.prototype.constructor = $framesAsyncCOROUTINE$0;
   $parseBLKAsyncCOROUTINE$1.prototype = Object.create(CoroutineImpl_0.prototype);
@@ -508,12 +508,12 @@
   SpriteType.prototype.constructor = SpriteType;
   InvalidSpriteTypeException.prototype = Object.create(Exception.prototype);
   InvalidSpriteTypeException.prototype.constructor = InvalidSpriteTypeException;
-  _no_name_provided__226.prototype = Object.create(CoroutineImpl_0.prototype);
-  _no_name_provided__226.prototype.constructor = _no_name_provided__226;
   _no_name_provided__227.prototype = Object.create(CoroutineImpl_0.prototype);
   _no_name_provided__227.prototype.constructor = _no_name_provided__227;
-  _no_name_provided__230.prototype = Object.create(CoroutineImpl_0.prototype);
-  _no_name_provided__230.prototype.constructor = _no_name_provided__230;
+  _no_name_provided__228.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__228.prototype.constructor = _no_name_provided__228;
+  _no_name_provided__231.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__231.prototype.constructor = _no_name_provided__231;
   function toList(_this_) {
     var tmp0_subject = _this_.length;
     switch (tmp0_subject) {
@@ -18533,8 +18533,9 @@
   }
   function Companion_14() {
     Companion_instance_13 = this;
-    var tmp0_serialDesc = new PluginGeneratedSerialDescriptor('bedalton.creatures.structs.Pointer', null, 1);
-    tmp0_serialDesc.addElement_5xhc52_k$('value', false);
+    var tmp0_serialDesc = new PluginGeneratedSerialDescriptor('tuple', null, 2);
+    tmp0_serialDesc.addElement_5xhc52_k$('first', false);
+    tmp0_serialDesc.addElement_5xhc52_k$('second', false);
     Companion_getInstance_13()._$cachedDescriptor = tmp0_serialDesc;
   }
   Companion_14.$metadata$ = {
@@ -18548,8 +18549,78 @@
       new Companion_14();
     return Companion_instance_13;
   }
-  function Pointer(value) {
+  function Tuple(first_1, second) {
     Companion_getInstance_13();
+    this._first_3 = first_1;
+    this._second_1 = second;
+  }
+  Tuple.prototype._get_first__0_k$ = function () {
+    return this._first_3;
+  };
+  Tuple.prototype._get_second__0_k$ = function () {
+    return this._second_1;
+  };
+  Tuple.prototype.component1_0_k$ = function () {
+    return this._first_3;
+  };
+  Tuple.prototype.component2_0_k$ = function () {
+    return this._second_1;
+  };
+  Tuple.prototype.toString = function () {
+    return '' + 'Tuple(first=' + this._first_3 + ', second=' + this._second_1 + ')';
+  };
+  Tuple.prototype.hashCode = function () {
+    var result = this._first_3 == null ? 0 : hashCode(this._first_3);
+    result = imul(result, 31) + (this._second_1 == null ? 0 : hashCode(this._second_1)) | 0;
+    return result;
+  };
+  Tuple.prototype.equals = function (other) {
+    if (this === other)
+      return true;
+    if (!(other instanceof Tuple))
+      return false;
+    else {
+    }
+    var tmp0_other_with_cast = other instanceof Tuple ? other : THROW_CCE();
+    if (!equals_1(this._first_3, tmp0_other_with_cast._first_3))
+      return false;
+    if (!equals_1(this._second_1, tmp0_other_with_cast._second_1))
+      return false;
+    return true;
+  };
+  Tuple.$metadata$ = {
+    simpleName: 'Tuple',
+    kind: 'class',
+    interfaces: [],
+    associatedObjects: {0: Companion_getInstance_13}
+  };
+  Object.defineProperty(Tuple.prototype, 'first', {
+    configurable: true,
+    get: Tuple.prototype._get_first__0_k$
+  });
+  Object.defineProperty(Tuple.prototype, 'second', {
+    configurable: true,
+    get: Tuple.prototype._get_second__0_k$
+  });
+  function Companion_15() {
+    Companion_instance_14 = this;
+    var tmp0_serialDesc = new PluginGeneratedSerialDescriptor('bedalton.creatures.structs.Pointer', null, 1);
+    tmp0_serialDesc.addElement_5xhc52_k$('value', false);
+    Companion_getInstance_14()._$cachedDescriptor_0 = tmp0_serialDesc;
+  }
+  Companion_15.$metadata$ = {
+    simpleName: 'Companion',
+    kind: 'object',
+    interfaces: [SerializerFactory]
+  };
+  var Companion_instance_14;
+  function Companion_getInstance_14() {
+    if (Companion_instance_14 == null)
+      new Companion_15();
+    return Companion_instance_14;
+  }
+  function Pointer(value) {
+    Companion_getInstance_14();
     this._value_7 = value;
     ensureNeverFrozen(this);
   }
@@ -18575,7 +18646,7 @@
     simpleName: 'Pointer',
     kind: 'class',
     interfaces: [],
-    associatedObjects: {0: Companion_getInstance_13}
+    associatedObjects: {0: Companion_getInstance_14}
   };
   function pathSeparator($this, path) {
     if (path == null ? true : isBlank(path)) {
@@ -19994,19 +20065,19 @@
   function compareTo_0(_this_, i) {
     return compareTo(numberToInt(_this_), i);
   }
-  function Companion_15() {
-    Companion_instance_14 = this;
+  function Companion_16() {
+    Companion_instance_15 = this;
   }
-  Companion_15.$metadata$ = {
+  Companion_16.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_14;
-  function Companion_getInstance_14() {
-    if (Companion_instance_14 == null)
-      new Companion_15();
-    return Companion_instance_14;
+  var Companion_instance_15;
+  function Companion_getInstance_15() {
+    if (Companion_instance_15 == null)
+      new Companion_16();
+    return Companion_instance_15;
   }
   function Choice(choices, toVariant, variantToString) {
     ArgType.call(this, true);
@@ -20057,7 +20128,7 @@
     interfaces: []
   };
   function ArgType(hasParameter) {
-    Companion_getInstance_14();
+    Companion_getInstance_15();
     this._hasParameter = hasParameter;
   }
   ArgType.$metadata$ = {
@@ -21544,22 +21615,22 @@
   var DayOfWeek_Thursday_instance;
   var DayOfWeek_Friday_instance;
   var DayOfWeek_Saturday_instance;
-  function Companion_16() {
-    Companion_instance_15 = this;
+  function Companion_17() {
+    Companion_instance_16 = this;
     this._serialVersionUID_3 = new Long(1, 0);
     this._Count = 7;
     this._BY_INDEX0 = values();
   }
-  Companion_16.$metadata$ = {
+  Companion_17.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_15;
-  function Companion_getInstance_15() {
-    if (Companion_instance_15 == null)
-      new Companion_16();
-    return Companion_instance_15;
+  var Companion_instance_16;
+  function Companion_getInstance_16() {
+    if (Companion_instance_16 == null)
+      new Companion_17();
+    return Companion_instance_16;
   }
   function values() {
     return [DayOfWeek_Sunday_getInstance(), DayOfWeek_Monday_getInstance(), DayOfWeek_Tuesday_getInstance(), DayOfWeek_Wednesday_getInstance(), DayOfWeek_Thursday_getInstance(), DayOfWeek_Friday_getInstance(), DayOfWeek_Saturday_getInstance()];
@@ -21576,7 +21647,7 @@
     DayOfWeek_Thursday_instance = new DayOfWeek('Thursday', 4, 4);
     DayOfWeek_Friday_instance = new DayOfWeek('Friday', 5, 5);
     DayOfWeek_Saturday_instance = new DayOfWeek('Saturday', 6, 6);
-    Companion_getInstance_15();
+    Companion_getInstance_16();
   }
   function DayOfWeek(name, ordinal, index0) {
     Enum.call(this, name, ordinal);
@@ -21616,23 +21687,9 @@
     return DayOfWeek_Saturday_instance;
   }
   var KlockLocale_default;
-  function Companion_17() {
-    Companion_instance_16 = this;
-    English.call(this);
-  }
-  Companion_17.$metadata$ = {
-    simpleName: 'Companion',
-    kind: 'object',
-    interfaces: []
-  };
-  var Companion_instance_16;
-  function Companion_getInstance_16() {
-    if (Companion_instance_16 == null)
-      new Companion_17();
-    return Companion_instance_16;
-  }
   function Companion_18() {
     Companion_instance_17 = this;
+    English.call(this);
   }
   Companion_18.$metadata$ = {
     simpleName: 'Companion',
@@ -21645,8 +21702,22 @@
       new Companion_18();
     return Companion_instance_17;
   }
+  function Companion_19() {
+    Companion_instance_18 = this;
+  }
+  Companion_19.$metadata$ = {
+    simpleName: 'Companion',
+    kind: 'object',
+    interfaces: []
+  };
+  var Companion_instance_18;
+  function Companion_getInstance_18() {
+    if (Companion_instance_18 == null)
+      new Companion_19();
+    return Companion_instance_18;
+  }
   function English() {
-    Companion_getInstance_16();
+    Companion_getInstance_17();
     KlockLocale.call(this);
     this._ISO639_1 = 'en';
     this._firstDayOfWeek = DayOfWeek_Sunday_getInstance();
@@ -21733,7 +21804,7 @@
     interfaces: []
   };
   function KlockLocale() {
-    Companion_getInstance_17();
+    Companion_getInstance_18();
     var tmp = this;
     tmp._monthsShort$delegate = klockLazyOrGet(_no_name_provided_$factory_63(this));
     var tmp_0 = this;
@@ -21838,39 +21909,11 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_19() {
-    Companion_instance_18 = this;
+  function Companion_20() {
+    Companion_instance_19 = this;
     this._serialVersionUID_4 = new Long(1, 0);
     this._DEFAULT = new Options(false);
     this._WITH_OPTIONAL = new Options(true);
-  }
-  Companion_19.$metadata$ = {
-    simpleName: 'Companion',
-    kind: 'object',
-    interfaces: []
-  };
-  var Companion_instance_18;
-  function Companion_getInstance_18() {
-    if (Companion_instance_18 == null)
-      new Companion_19();
-    return Companion_instance_18;
-  }
-  function PatternDateFormat_init_$Init$(format_0, locale, tzNames, options, $mask0, $marker, $this) {
-    if (!(($mask0 & 2) === 0))
-      locale = null;
-    if (!(($mask0 & 4) === 0))
-      tzNames = Companion_getInstance_22()._DEFAULT_0;
-    if (!(($mask0 & 8) === 0))
-      options = Companion_getInstance_18()._DEFAULT;
-    PatternDateFormat.call($this, format_0, locale, tzNames, options);
-    return $this;
-  }
-  function PatternDateFormat_init_$Create$(format_0, locale, tzNames, options, $mask0, $marker) {
-    return PatternDateFormat_init_$Init$(format_0, locale, tzNames, options, $mask0, $marker, Object.create(PatternDateFormat.prototype));
-  }
-  function Companion_20() {
-    Companion_instance_19 = this;
-    this._serialVersionUID_5 = new Long(1, 0);
   }
   Companion_20.$metadata$ = {
     simpleName: 'Companion',
@@ -21883,8 +21926,36 @@
       new Companion_20();
     return Companion_instance_19;
   }
+  function PatternDateFormat_init_$Init$(format_0, locale, tzNames, options, $mask0, $marker, $this) {
+    if (!(($mask0 & 2) === 0))
+      locale = null;
+    if (!(($mask0 & 4) === 0))
+      tzNames = Companion_getInstance_23()._DEFAULT_0;
+    if (!(($mask0 & 8) === 0))
+      options = Companion_getInstance_19()._DEFAULT;
+    PatternDateFormat.call($this, format_0, locale, tzNames, options);
+    return $this;
+  }
+  function PatternDateFormat_init_$Create$(format_0, locale, tzNames, options, $mask0, $marker) {
+    return PatternDateFormat_init_$Init$(format_0, locale, tzNames, options, $mask0, $marker, Object.create(PatternDateFormat.prototype));
+  }
+  function Companion_21() {
+    Companion_instance_20 = this;
+    this._serialVersionUID_5 = new Long(1, 0);
+  }
+  Companion_21.$metadata$ = {
+    simpleName: 'Companion',
+    kind: 'object',
+    interfaces: []
+  };
+  var Companion_instance_20;
+  function Companion_getInstance_20() {
+    if (Companion_instance_20 == null)
+      new Companion_21();
+    return Companion_instance_20;
+  }
   function Options(optionalSupport) {
-    Companion_getInstance_18();
+    Companion_getInstance_19();
     this._optionalSupport = optionalSupport;
   }
   Options.prototype.toString = function () {
@@ -21911,7 +21982,7 @@
     interfaces: [Serializable_0]
   };
   function PatternDateFormat(format_0, locale, tzNames, options) {
-    Companion_getInstance_19();
+    Companion_getInstance_20();
     this._format = format_0;
     this._locale = locale;
     this._tzNames = tzNames;
@@ -22335,19 +22406,19 @@
       new PerformanceCounter();
     return PerformanceCounter_instance;
   }
-  function Companion_21() {
-    Companion_instance_20 = this;
+  function Companion_22() {
+    Companion_instance_21 = this;
   }
-  Companion_21.$metadata$ = {
+  Companion_22.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: [TimeProvider]
   };
-  var Companion_instance_20;
-  function Companion_getInstance_20() {
-    if (Companion_instance_20 == null)
-      new Companion_21();
-    return Companion_instance_20;
+  var Companion_instance_21;
+  function Companion_getInstance_21() {
+    if (Companion_instance_21 == null)
+      new Companion_22();
+    return Companion_instance_21;
   }
   function TimeProvider() {
   }
@@ -22372,8 +22443,8 @@
   function TimeSpan__plus_impl(this_0, other) {
     return _TimeSpan___init__impl_(_TimeSpan___get_milliseconds__impl_(this_0) + _TimeSpan___get_milliseconds__impl_(other));
   }
-  function Companion_22() {
-    Companion_instance_21 = this;
+  function Companion_23() {
+    Companion_instance_22 = this;
     this._serialVersionUID_6 = new Long(1, 0);
     this._MILLIS_PER_MICROSECOND = 0.001;
     this._MILLIS_PER_NANOSECOND = 1.0E-6;
@@ -22383,32 +22454,32 @@
     tmp._NIL = _TimeSpan___init__impl_(NaN);
     this._timeSteps = listOf([60, 60, 24]);
   }
-  Companion_22.prototype.fromMilliseconds_ttklb2_k$ = function (ms) {
+  Companion_23.prototype.fromMilliseconds_ttklb2_k$ = function (ms) {
     var tmp0_subject = ms;
     return tmp0_subject === 0.0 ? this._ZERO : _TimeSpan___init__impl_(ms);
   };
-  Companion_22.prototype.fromMicroseconds_ttklb2_k$ = function (s) {
+  Companion_23.prototype.fromMicroseconds_ttklb2_k$ = function (s) {
     return this.fromMilliseconds_ttklb2_k$(s * 0.001);
   };
-  Companion_22.prototype.fromSeconds_ttklb2_k$ = function (s) {
+  Companion_23.prototype.fromSeconds_ttklb2_k$ = function (s) {
     return this.fromMilliseconds_ttklb2_k$(s * 1000);
   };
-  Companion_22.prototype.fromMinutes_ttklb2_k$ = function (s) {
+  Companion_23.prototype.fromMinutes_ttklb2_k$ = function (s) {
     return this.fromMilliseconds_ttklb2_k$(s * 60000);
   };
-  Companion_22.prototype.fromHours_ttklb2_k$ = function (s) {
+  Companion_23.prototype.fromHours_ttklb2_k$ = function (s) {
     return this.fromMilliseconds_ttklb2_k$(s * 3600000);
   };
-  Companion_22.$metadata$ = {
+  Companion_23.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_21;
-  function Companion_getInstance_21() {
-    if (Companion_instance_21 == null)
-      new Companion_22();
-    return Companion_instance_21;
+  var Companion_instance_22;
+  function Companion_getInstance_22() {
+    if (Companion_instance_22 == null)
+      new Companion_23();
+    return Companion_instance_22;
   }
   function TimeSpan__toString_impl(this_0) {
     return '' + _get_niceStr_(_TimeSpan___get_milliseconds__impl_(this_0)) + 'ms';
@@ -22427,7 +22498,7 @@
     return true;
   }
   function TimeSpan(milliseconds) {
-    Companion_getInstance_21();
+    Companion_getInstance_22();
     this._milliseconds = milliseconds;
   }
   TimeSpan.prototype.compareTo_wv9l0m_k$ = function (other) {
@@ -22457,48 +22528,48 @@
   function TimezoneNames_init_$Create$(tz) {
     return TimezoneNames_init_$Init$(tz, Object.create(TimezoneNames.prototype));
   }
-  function Companion_23() {
-    Companion_instance_22 = this;
+  function Companion_24() {
+    Companion_instance_23 = this;
     this._serialVersionUID_7 = new Long(1, 0);
     var tmp = this;
     var tmp$ret$0;
     $l$block: {
-      tmp$ret$0 = Companion_getInstance_21().fromHours_ttklb2_k$(-7.0);
+      tmp$ret$0 = Companion_getInstance_22().fromHours_ttklb2_k$(-7.0);
       break $l$block;
     }
     var tmp_0 = to('PDT', new TimeSpan(tmp$ret$0));
     var tmp$ret$1;
     $l$block_0: {
-      tmp$ret$1 = Companion_getInstance_21().fromHours_ttklb2_k$(-8.0);
+      tmp$ret$1 = Companion_getInstance_22().fromHours_ttklb2_k$(-8.0);
       break $l$block_0;
     }
     var tmp_1 = to('PST', new TimeSpan(tmp$ret$1));
     var tmp$ret$2;
     $l$block_1: {
-      tmp$ret$2 = Companion_getInstance_21().fromHours_ttklb2_k$(0.0);
+      tmp$ret$2 = Companion_getInstance_22().fromHours_ttklb2_k$(0.0);
       break $l$block_1;
     }
     var tmp_2 = to('GMT', new TimeSpan(tmp$ret$2));
     var tmp$ret$3;
     $l$block_2: {
-      tmp$ret$3 = Companion_getInstance_21().fromHours_ttklb2_k$(0.0);
+      tmp$ret$3 = Companion_getInstance_22().fromHours_ttklb2_k$(0.0);
       break $l$block_2;
     }
     tmp._DEFAULT_0 = TimezoneNames_init_$Create$([tmp_0, tmp_1, tmp_2, to('UTC', new TimeSpan(tmp$ret$3))]);
   }
-  Companion_23.$metadata$ = {
+  Companion_24.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_22;
-  function Companion_getInstance_22() {
-    if (Companion_instance_22 == null)
-      new Companion_23();
-    return Companion_instance_22;
+  var Companion_instance_23;
+  function Companion_getInstance_23() {
+    if (Companion_instance_23 == null)
+      new Companion_24();
+    return Companion_instance_23;
   }
   function TimezoneNames(namesToOffsets) {
-    Companion_getInstance_22();
+    Companion_getInstance_23();
     this._namesToOffsets = namesToOffsets;
   }
   TimezoneNames.prototype.toString = function () {
@@ -22530,38 +22601,38 @@
   function _HRTimeSpan___get_nanosecondsRaw__impl_(this_0) {
     return this_0;
   }
-  function Companion_24() {
-    Companion_instance_23 = this;
+  function Companion_25() {
+    Companion_instance_24 = this;
     this._ZERO_0 = _HRTimeSpan___init__impl_(0.0);
     var tmp = this;
     DoubleCompanionObject_getInstance();
     tmp._NIL_0 = _HRTimeSpan___init__impl_(NaN);
   }
-  Companion_24.prototype.fromSeconds_nj2146_k$ = function (value) {
+  Companion_25.prototype.fromSeconds_nj2146_k$ = function (value) {
     return _HRTimeSpan___init__impl_(round(value * 1000000000));
   };
-  Companion_24.prototype.fromMilliseconds_nj2146_k$ = function (value) {
+  Companion_25.prototype.fromMilliseconds_nj2146_k$ = function (value) {
     return _HRTimeSpan___init__impl_(round(value * 1000000));
   };
-  Companion_24.prototype.fromNanoseconds_nj2146_k$ = function (value) {
+  Companion_25.prototype.fromNanoseconds_nj2146_k$ = function (value) {
     return _HRTimeSpan___init__impl_(round(value));
   };
-  Companion_24.$metadata$ = {
+  Companion_25.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_23;
-  function Companion_getInstance_23() {
-    if (Companion_instance_23 == null)
-      new Companion_24();
-    return Companion_instance_23;
+  var Companion_instance_24;
+  function Companion_getInstance_24() {
+    if (Companion_instance_24 == null)
+      new Companion_25();
+    return Companion_instance_24;
   }
   function _HRTimeSpan___get_microsecondsDouble__impl_(this_0) {
     return _HRTimeSpan___get_nanosecondsRaw__impl_(this_0) / 1000;
   }
   function HRTimeSpan__plus_impl(this_0, other) {
-    return Companion_getInstance_23().fromNanoseconds_nj2146_k$(_HRTimeSpan___get_nanosecondsRaw__impl_(this_0) + _HRTimeSpan___get_nanosecondsRaw__impl_(other));
+    return Companion_getInstance_24().fromNanoseconds_nj2146_k$(_HRTimeSpan___get_nanosecondsRaw__impl_(this_0) + _HRTimeSpan___get_nanosecondsRaw__impl_(other));
   }
   function increment(_this_, key) {
     var tmp$ret$1;
@@ -22698,13 +22769,13 @@
   function utc(hours, minutes) {
     var tmp$ret$0;
     $l$block: {
-      tmp$ret$0 = Companion_getInstance_21().fromHours_ttklb2_k$(hours);
+      tmp$ret$0 = Companion_getInstance_22().fromHours_ttklb2_k$(hours);
       break $l$block;
     }
     var tmp = tmp$ret$0;
     var tmp$ret$1;
     $l$block_0: {
-      tmp$ret$1 = Companion_getInstance_21().fromMinutes_ttklb2_k$(minutes);
+      tmp$ret$1 = Companion_getInstance_22().fromMinutes_ttklb2_k$(minutes);
       break $l$block_0;
     }
     return TimeSpan__plus_impl(tmp, tmp$ret$1);
@@ -22956,9 +23027,9 @@
         break $l$block;
       }
       var result = tmp$ret$0;
-      tmp = HRTimeSpan__plus_impl(Companion_getInstance_23().fromSeconds_nj2146_k$(result[0]), Companion_getInstance_23().fromNanoseconds_nj2146_k$(result[1]));
+      tmp = HRTimeSpan__plus_impl(Companion_getInstance_24().fromSeconds_nj2146_k$(result[0]), Companion_getInstance_24().fromNanoseconds_nj2146_k$(result[1]));
     } else {
-      tmp = Companion_getInstance_23().fromMilliseconds_nj2146_k$(window.performance.now());
+      tmp = Companion_getInstance_24().fromMilliseconds_nj2146_k$(window.performance.now());
     }
     return tmp;
   };
@@ -23084,19 +23155,19 @@
   function DoubleArrayList_init_$Create$(capacity, $mask0, $marker) {
     return DoubleArrayList_init_$Init$(capacity, $mask0, $marker, Object.create(DoubleArrayList.prototype));
   }
-  function Companion_25() {
-    Companion_instance_24 = this;
+  function Companion_26() {
+    Companion_instance_25 = this;
   }
-  Companion_25.$metadata$ = {
+  Companion_26.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_24;
-  function Companion_getInstance_24() {
-    if (Companion_instance_24 == null)
-      new Companion_25();
-    return Companion_instance_24;
+  var Companion_instance_25;
+  function Companion_getInstance_25() {
+    if (Companion_instance_25 == null)
+      new Companion_26();
+    return Companion_instance_25;
   }
   function ensure_0($this, count) {
     if (($this._length + count | 0) > $this._data.length) {
@@ -23113,7 +23184,7 @@
       tmp._data = isDoubleArray(tmp_1) ? tmp_1 : THROW_CCE();
     }}
   function DoubleArrayList(capacity) {
-    Companion_getInstance_24();
+    Companion_getInstance_25();
     var tmp = this;
     var tmp_0 = new Float64Array(capacity);
     tmp._data = isDoubleArray(tmp_0) ? tmp_0 : THROW_CCE();
@@ -23317,22 +23388,22 @@
   function IntArrayList_init_$Create$(capacity, $mask0, $marker) {
     return IntArrayList_init_$Init$(capacity, $mask0, $marker, Object.create(IntArrayList.prototype));
   }
-  function Companion_26() {
-    Companion_instance_25 = this;
+  function Companion_27() {
+    Companion_instance_26 = this;
   }
-  Companion_26.$metadata$ = {
+  Companion_27.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_25;
-  function Companion_getInstance_25() {
-    if (Companion_instance_25 == null)
-      new Companion_26();
-    return Companion_instance_25;
+  var Companion_instance_26;
+  function Companion_getInstance_26() {
+    if (Companion_instance_26 == null)
+      new Companion_27();
+    return Companion_instance_26;
   }
   function IntArrayList(capacity) {
-    Companion_getInstance_25();
+    Companion_getInstance_26();
     var tmp = this;
     var tmp_0 = new Int32Array(capacity);
     tmp._data_0 = isIntArray(tmp_0) ? tmp_0 : THROW_CCE();
@@ -23539,22 +23610,22 @@
   function IntIntMap_init_$Create$(initialCapacity, loadFactor, $mask0, $marker) {
     return IntIntMap_init_$Init$_0(initialCapacity, loadFactor, $mask0, $marker, Object.create(IntIntMap.prototype));
   }
-  function Companion_27() {
-    Companion_instance_26 = this;
+  function Companion_28() {
+    Companion_instance_27 = this;
     this._EOF = 2147483646;
     this._ZERO_INDEX = 2147483647;
     this._EMPTY_1 = 0;
   }
-  Companion_27.$metadata$ = {
+  Companion_28.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_26;
-  function Companion_getInstance_26() {
-    if (Companion_instance_26 == null)
-      new Companion_27();
-    return Companion_instance_26;
+  var Companion_instance_27;
+  function Companion_getInstance_27() {
+    if (Companion_instance_27 == null)
+      new Companion_28();
+    return Companion_instance_27;
   }
   function _get_stashStart_($this) {
     return $this.__keys_1.length - $this._stashSize | 0;
@@ -23570,7 +23641,7 @@
         var n = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         var k = $this.__keys_1[n];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (!(k === 0)) {
           new_0.set_27zxwg_k$(k, $this.__values_1[n]);
           Unit_getInstance();
@@ -23595,7 +23666,7 @@
     if (key === 0) {
       var tmp;
       if ($this._hasZero) {
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         tmp = 2147483647;
       } else {
         tmp = -1;
@@ -23624,7 +23695,7 @@
   }
   function setEmptySlot($this, index, key, value) {
     var tmp = $this.__keys_1[index];
-    Companion_getInstance_26();
+    Companion_getInstance_27();
     if (!(tmp === 0))
       throw IllegalStateException_init_$Create$();
     else {
@@ -23647,7 +23718,7 @@
     return _hash3(key, $this._mask);
   }
   function IntIntMap(nbits, loadFactor, dummy) {
-    Companion_getInstance_26();
+    Companion_getInstance_27();
     this._nbits = nbits;
     this._loadFactor = loadFactor;
     this._capacity = 1 << this._nbits;
@@ -23670,7 +23741,7 @@
     var index = _getKeyIndex(this, key);
     if (index < 0)
       return 0;
-    Companion_getInstance_26();
+    Companion_getInstance_27();
     if (index === 2147483647)
       return this._zeroValue;
     else {
@@ -23693,21 +23764,21 @@
           grow(this);
         var index1 = hash1(this, key);
         var tmp = this.__keys_1[index1];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (tmp === 0)
           return setEmptySlot(this, index1, key, value);
         else {
         }
         var index2 = hash2(this, key);
         var tmp_0 = this.__keys_1[index2];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (tmp_0 === 0)
           return setEmptySlot(this, index2, key, value);
         else {
         }
         var index3 = hash3(this, key);
         var tmp_1 = this.__keys_1[index3];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (tmp_1 === 0)
           return setEmptySlot(this, index3, key, value);
         else {
@@ -23719,7 +23790,7 @@
             var n = inductionVariable;
             inductionVariable = inductionVariable + 1 | 0;
             var tmp_2 = this.__keys_1[n];
-            Companion_getInstance_26();
+            Companion_getInstance_27();
             if (tmp_2 === 0)
               return setEmptySlot(this, n, key, value);
             else {
@@ -23733,7 +23804,7 @@
         }
         continue retry;
       } else {
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (index === 2147483647) {
           var tmp$ret$0;
           $l$block: {
@@ -23774,14 +23845,14 @@
         var n = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         var tmp = keys[n];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (!(tmp === 0))
           return n;
         else {
         }
       }
        while (inductionVariable < last_0);
-    Companion_getInstance_26();
+    Companion_getInstance_27();
     return 2147483646;
   };
   IntIntMap.prototype.equals = function (other) {
@@ -23793,7 +23864,7 @@
       {
         var tmp;
         if (this._hasZero) {
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           tmp = 2147483647;
         } else {
           tmp = this.nextNonEmptyIndex_pb76ll_k$(this.__keys_1, 0);
@@ -23801,19 +23872,19 @@
         var index_1_1 = tmp;
         $l$break: while (true) {
           var tmp_0 = index_1_1;
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           if (!!(tmp_0 === 2147483646)) {
             break $l$break;
           }{
             var tmp0_subject_2_3 = index_1_1;
             var tmp_1;
             var tmp_2;
-            Companion_getInstance_27();
+            Companion_getInstance_28();
             if (tmp0_subject_2_3 === 2147483647) {
               tmp_2 = true;
             } else {
               {
-                Companion_getInstance_27();
+                Companion_getInstance_28();
                 tmp_2 = tmp0_subject_2_3 === 2147483646;
               }
             }
@@ -23834,7 +23905,7 @@
           var tmp_3 = this.__keys_1;
           var tmp_4;
           var tmp_5 = index_1_1;
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           if (tmp_5 === 2147483647) {
             tmp_4 = 0;
           } else {
@@ -23854,7 +23925,7 @@
       {
         var tmp;
         if (this._hasZero) {
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           tmp = 2147483647;
         } else {
           tmp = this.nextNonEmptyIndex_pb76ll_k$(this.__keys_1, 0);
@@ -23862,19 +23933,19 @@
         var index_1_1 = tmp;
         $l$break: while (true) {
           var tmp_0 = index_1_1;
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           if (!!(tmp_0 === 2147483646)) {
             break $l$break;
           }{
             var tmp0_subject_2_3 = index_1_1;
             var tmp_1;
             var tmp_2;
-            Companion_getInstance_27();
+            Companion_getInstance_28();
             if (tmp0_subject_2_3 === 2147483647) {
               tmp_2 = true;
             } else {
               {
-                Companion_getInstance_27();
+                Companion_getInstance_28();
                 tmp_2 = tmp0_subject_2_3 === 2147483646;
               }
             }
@@ -23894,7 +23965,7 @@
           var tmp_3 = this.__keys_1;
           var tmp_4;
           var tmp_5 = index_1_1;
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           if (tmp_5 === 2147483647) {
             tmp_4 = 0;
           } else {
@@ -23934,22 +24005,22 @@
   function IntMap_init_$Create$(initialCapacity, loadFactor, $mask0, $marker) {
     return IntMap_init_$Init$_0(initialCapacity, loadFactor, $mask0, $marker, Object.create(IntMap.prototype));
   }
-  function Companion_28() {
-    Companion_instance_27 = this;
+  function Companion_29() {
+    Companion_instance_28 = this;
     this._EOF_0 = 2147483646;
     this._ZERO_INDEX_0 = 2147483647;
     this._EMPTY_2 = 0;
   }
-  Companion_28.$metadata$ = {
+  Companion_29.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_27;
-  function Companion_getInstance_27() {
-    if (Companion_instance_27 == null)
-      new Companion_28();
-    return Companion_instance_27;
+  var Companion_instance_28;
+  function Companion_getInstance_28() {
+    if (Companion_instance_28 == null)
+      new Companion_29();
+    return Companion_instance_28;
   }
   function _get_stashStart__0($this) {
     return $this.__keys_2.length - $this._stashSize_0 | 0;
@@ -23965,7 +24036,7 @@
         var n = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         var k = $this.__keys_2[n];
-        Companion_getInstance_27();
+        Companion_getInstance_28();
         if (!(k === 0)) {
           new_0.set_bq5tp3_k$(k, $this.__values_2[n]);
           Unit_getInstance();
@@ -23990,7 +24061,7 @@
     if (key === 0) {
       var tmp;
       if ($this._hasZero_0) {
-        Companion_getInstance_27();
+        Companion_getInstance_28();
         tmp = 2147483647;
       } else {
         tmp = -1;
@@ -24019,7 +24090,7 @@
   }
   function setEmptySlot_0($this, index, key, value) {
     var tmp = $this.__keys_2[index];
-    Companion_getInstance_27();
+    Companion_getInstance_28();
     if (!(tmp === 0))
       throw IllegalStateException_init_$Create$();
     else {
@@ -24042,7 +24113,7 @@
     return _hash3(key, $this._mask_0);
   }
   function IntMap(nbits, loadFactor, dummy) {
-    Companion_getInstance_27();
+    Companion_getInstance_28();
     this._nbits_0 = nbits;
     this._loadFactor_0 = loadFactor;
     this._capacity_0 = 1 << this._nbits_0;
@@ -24070,7 +24141,7 @@
     var index = _getKeyIndex_0(this, key);
     if (index < 0)
       return null;
-    Companion_getInstance_27();
+    Companion_getInstance_28();
     if (index === 2147483647)
       return this._zeroValue_0;
     else {
@@ -24093,21 +24164,21 @@
           grow_0(this);
         var index1 = hash1_0(this, key);
         var tmp = this.__keys_2[index1];
-        Companion_getInstance_27();
+        Companion_getInstance_28();
         if (tmp === 0)
           return setEmptySlot_0(this, index1, key, value);
         else {
         }
         var index2 = hash2_0(this, key);
         var tmp_0 = this.__keys_2[index2];
-        Companion_getInstance_27();
+        Companion_getInstance_28();
         if (tmp_0 === 0)
           return setEmptySlot_0(this, index2, key, value);
         else {
         }
         var index3 = hash3_0(this, key);
         var tmp_1 = this.__keys_2[index3];
-        Companion_getInstance_27();
+        Companion_getInstance_28();
         if (tmp_1 === 0)
           return setEmptySlot_0(this, index3, key, value);
         else {
@@ -24119,7 +24190,7 @@
             var n = inductionVariable;
             inductionVariable = inductionVariable + 1 | 0;
             var tmp_2 = this.__keys_2[n];
-            Companion_getInstance_27();
+            Companion_getInstance_28();
             if (tmp_2 === 0)
               return setEmptySlot_0(this, n, key, value);
             else {
@@ -24133,7 +24204,7 @@
         }
         continue retry;
       } else {
-        Companion_getInstance_27();
+        Companion_getInstance_28();
         if (index === 2147483647) {
           var tmp$ret$0;
           $l$block: {
@@ -24174,14 +24245,14 @@
         var n = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         var tmp = keys[n];
-        Companion_getInstance_27();
+        Companion_getInstance_28();
         if (!(tmp === 0))
           return n;
         else {
         }
       }
        while (inductionVariable < last_0);
-    Companion_getInstance_27();
+    Companion_getInstance_28();
     return 2147483646;
   };
   IntMap.prototype.equals = function (other) {
@@ -24193,7 +24264,7 @@
       {
         var tmp;
         if (this._hasZero_0) {
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           tmp = 2147483647;
         } else {
           tmp = this.nextNonEmptyIndex_pb76ll_k$(this.__keys_2, 0);
@@ -24201,19 +24272,19 @@
         var index_1_1 = tmp;
         $l$break: while (true) {
           var tmp_0 = index_1_1;
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           if (!!(tmp_0 === 2147483646)) {
             break $l$break;
           }{
             var tmp0_subject_2_3 = index_1_1;
             var tmp_1;
             var tmp_2;
-            Companion_getInstance_27();
+            Companion_getInstance_28();
             if (tmp0_subject_2_3 === 2147483647) {
               tmp_2 = true;
             } else {
               {
-                Companion_getInstance_27();
+                Companion_getInstance_28();
                 tmp_2 = tmp0_subject_2_3 === 2147483646;
               }
             }
@@ -24234,7 +24305,7 @@
           var tmp_3 = this.__keys_2;
           var tmp_4;
           var tmp_5 = index_1_1;
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           if (tmp_5 === 2147483647) {
             tmp_4 = 0;
           } else {
@@ -24254,7 +24325,7 @@
       {
         var tmp;
         if (this._hasZero_0) {
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           tmp = 2147483647;
         } else {
           tmp = this.nextNonEmptyIndex_pb76ll_k$(this.__keys_2, 0);
@@ -24262,19 +24333,19 @@
         var index_1_1 = tmp;
         $l$break: while (true) {
           var tmp_0 = index_1_1;
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           if (!!(tmp_0 === 2147483646)) {
             break $l$break;
           }{
             var tmp0_subject_2_3 = index_1_1;
             var tmp_1;
             var tmp_2;
-            Companion_getInstance_27();
+            Companion_getInstance_28();
             if (tmp0_subject_2_3 === 2147483647) {
               tmp_2 = true;
             } else {
               {
-                Companion_getInstance_27();
+                Companion_getInstance_28();
                 tmp_2 = tmp0_subject_2_3 === 2147483646;
               }
             }
@@ -24303,7 +24374,7 @@
           var tmp_5 = this.__keys_2;
           var tmp_6;
           var tmp_7 = index_1_1;
-          Companion_getInstance_27();
+          Companion_getInstance_28();
           if (tmp_7 === 2147483647) {
             tmp_6 = 0;
           } else {
@@ -24345,19 +24416,19 @@
   function Pool_init_$Create$(reset, preallocate, gen, $mask0, $marker) {
     return Pool_init_$Init$(reset, preallocate, gen, $mask0, $marker, Object.create(Pool.prototype));
   }
-  function Companion_29() {
-    Companion_instance_28 = this;
+  function Companion_30() {
+    Companion_instance_29 = this;
   }
-  Companion_29.$metadata$ = {
+  Companion_30.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_28;
-  function Companion_getInstance_28() {
-    if (Companion_instance_28 == null)
-      new Companion_29();
-    return Companion_instance_28;
+  var Companion_instance_29;
+  function Companion_getInstance_29() {
+    if (Companion_instance_29 == null)
+      new Companion_30();
+    return Companion_instance_29;
   }
   function Pool_init_$Init$_0(preallocate, gen, $this) {
     Pool.call($this, _no_name_provided_$factory_67(), preallocate, gen);
@@ -24402,7 +24473,7 @@
     interfaces: []
   };
   function Pool(reset, preallocate, gen) {
-    Companion_getInstance_28();
+    Companion_getInstance_29();
     this._reset = reset;
     this._gen = gen;
     this._items = new TGenStack();
@@ -26020,7 +26091,7 @@
   function DEFAULT_SUSPEND_TEST_TIMEOUT$init$() {
     var tmp$ret$0;
     $l$block: {
-      tmp$ret$0 = Companion_getInstance_21().fromSeconds_ttklb2_k$(20.0);
+      tmp$ret$0 = Companion_getInstance_22().fromSeconds_ttklb2_k$(20.0);
       break $l$block;
     }
     return tmp$ret$0;
@@ -26559,8 +26630,8 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_30() {
-    Companion_instance_29 = this;
+  function Companion_31() {
+    Companion_instance_30 = this;
     DeflatePortable.call(this, 15);
     var tmp = this;
     var tmp_0 = new HuffmanTree();
@@ -26660,16 +26731,16 @@
     }
     tmp_12._HCLENPOS = tmp$ret$6;
   }
-  Companion_30.$metadata$ = {
+  Companion_31.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_29;
-  function Companion_getInstance_29() {
-    if (Companion_instance_29 == null)
-      new Companion_30();
-    return Companion_instance_29;
+  var Companion_instance_30;
+  function Companion_getInstance_30() {
+    if (Companion_instance_30 == null)
+      new Companion_31();
+    return Companion_instance_30;
   }
   function $compressCOROUTINE$9(_this_, i, o, context, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
@@ -26838,8 +26909,8 @@
               }continue $sm;
             } else {
               if (this._blockType6 === 1) {
-                this._tree11 = Companion_getInstance_29()._FIXED_TREE;
-                this._dist12 = Companion_getInstance_29()._FIXED_DIST;
+                this._tree11 = Companion_getInstance_30()._FIXED_TREE;
+                this._dist12 = Companion_getInstance_30()._FIXED_DIST;
               } else {
                 var hlit = this._reader_0.readBits_ha5a7z_k$(5) + 257 | 0;
                 var hdist = this._reader_0.readBits_ha5a7z_k$(5) + 1 | 0;
@@ -26851,7 +26922,7 @@
                   do {
                     var i = inductionVariable;
                     inductionVariable = inductionVariable + 1 | 0;
-                    this._codeLenCodeLen4[Companion_getInstance_29()._HCLENPOS[i]] = this._reader_0.readBits_ha5a7z_k$(3);
+                    this._codeLenCodeLen4[Companion_getInstance_30()._HCLENPOS[i]] = this._reader_0.readBits_ha5a7z_k$(3);
                   }
                    while (inductionVariable < hclen);
                 var codeLen = this._tempTree2.fromLengths$default_gakitm_k$(this._codeLenCodeLen4, 0, 0, 6, null);
@@ -26967,11 +27038,11 @@
             continue $sm;
           case 9:
             this._zlenof14 = this._value13 - 257 | 0;
-            this._lengthExtra15 = this._reader_0.readBits_ha5a7z_k$(Companion_getInstance_29()._LEN_EXTRA[this._zlenof14]);
+            this._lengthExtra15 = this._reader_0.readBits_ha5a7z_k$(Companion_getInstance_30()._LEN_EXTRA[this._zlenof14]);
             this._distanceData16 = read(this._reader_0, this.__this__2, this._dist12);
-            this._distanceExtra17 = this._reader_0.readBits_ha5a7z_k$(Companion_getInstance_29()._DIST_EXTRA[this._distanceData16]);
-            this._distance18 = Companion_getInstance_29()._DIST_BASE[this._distanceData16] + this._distanceExtra17 | 0;
-            this._length19 = Companion_getInstance_29()._LEN_BASE[this._zlenof14] + this._lengthExtra15 | 0;
+            this._distanceExtra17 = this._reader_0.readBits_ha5a7z_k$(Companion_getInstance_30()._DIST_EXTRA[this._distanceData16]);
+            this._distance18 = Companion_getInstance_30()._DIST_BASE[this._distanceData16] + this._distanceExtra17 | 0;
+            this._length19 = Companion_getInstance_30()._LEN_BASE[this._zlenof14] + this._lengthExtra15 | 0;
             this._sout0.getPutCopyOut_rvwcgf_k$(this._distance18, this._length19);
             this._state_0 = 10;
             continue $sm;
@@ -27042,7 +27113,7 @@
     interfaces: []
   };
   function DeflatePortable(windowBits) {
-    Companion_getInstance_29();
+    Companion_getInstance_30();
     this._windowBits = windowBits;
   }
   DeflatePortable.prototype.compress_ydifiq_k$ = function (i, o, context, $cont) {
@@ -27176,20 +27247,20 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_31() {
-    Companion_instance_30 = this;
+  function Companion_32() {
+    Companion_instance_31 = this;
     ZLib.call(this, _no_name_provided_$factory_73());
   }
-  Companion_31.$metadata$ = {
+  Companion_32.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_30;
-  function Companion_getInstance_30() {
-    if (Companion_instance_30 == null)
-      new Companion_31();
-    return Companion_instance_30;
+  var Companion_instance_31;
+  function Companion_getInstance_31() {
+    if (Companion_instance_31 == null)
+      new Companion_32();
+    return Companion_instance_31;
   }
   function _no_name_provided__92($o, $chash) {
     this._$o_1 = $o;
@@ -27409,7 +27480,7 @@
     interfaces: []
   };
   function ZLib(deflater) {
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     this._deflater = deflater;
   }
   ZLib.prototype.uncompress_hzt0ks_k$ = function (reader, out, $cont) {
@@ -27754,24 +27825,24 @@
     kind: 'class',
     interfaces: [AsyncInputStreamWithLength]
   };
-  function Companion_32() {
-    Companion_instance_31 = this;
+  function Companion_33() {
+    Companion_instance_32 = this;
     this._INVALID_VALUE = -1;
     this._NIL_1 = 1023;
     this._FAST_BITS = 9;
     this._MAX_LEN = 16;
     this._MAX_CODES = 288;
   }
-  Companion_32.$metadata$ = {
+  Companion_33.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_31;
-  function Companion_getInstance_31() {
-    if (Companion_instance_31 == null)
-      new Companion_32();
-    return Companion_instance_31;
+  var Companion_instance_32;
+  function Companion_getInstance_32() {
+    if (Companion_instance_32 == null)
+      new Companion_33();
+    return Companion_instance_32;
   }
   function resetAlloc($this) {
     $this._nodeOffset = 0;
@@ -27796,41 +27867,41 @@
     return tmp$ret$0;
   }
   function allocLeaf($this, value) {
-    Companion_getInstance_31();
-    Companion_getInstance_31();
+    Companion_getInstance_32();
+    Companion_getInstance_32();
     return alloc($this, value, 1023, 1023);
   }
   function allocNode($this, left, right) {
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     return alloc($this, -1, left, right);
   }
   function HuffmanTree() {
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     this._value_9 = new Int32Array(1024);
     this._left_0 = new Int32Array(1024);
     this._right = new Int32Array(1024);
     this._nodeOffset = 0;
     var tmp = this;
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     tmp._root = 1023;
     this._ncodes = 0;
     var tmp_0 = this;
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     tmp_0._COUNTS = new Int32Array(16 + 1 | 0);
     var tmp_1 = this;
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     tmp_1._OFFSETS = new Int32Array(16 + 1 | 0);
     var tmp_2 = this;
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     tmp_2._COFFSET = new Int32Array(16 + 1 | 0);
     var tmp_3 = this;
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     tmp_3._CODES = new Int32Array(288);
     var tmp_4 = this;
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     tmp_4._ENCODED_VAL = new Int32Array(288);
     var tmp_5 = this;
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     tmp_5._ENCODED_LEN = new Int8Array(288);
   }
   HuffmanTree.prototype.read_ifkopv_k$ = function (reader) {
@@ -27860,7 +27931,7 @@
        while (false);
       var tmp_0;
       var tmp_1 = node;
-      Companion_getInstance_31();
+      Companion_getInstance_32();
       if (!(tmp_1 === 1023)) {
         var tmp$ret$2;
         $l$block_1: {
@@ -27869,7 +27940,7 @@
           break $l$block_1;
         }
         var tmp_2 = tmp$ret$2;
-        Companion_getInstance_31();
+        Companion_getInstance_32();
         tmp_0 = tmp_2 === -1;
       } else {
         {
@@ -27906,7 +27977,7 @@
         var codeLen = codeLengths[n];
         var tmp;
         if (0 <= codeLen) {
-          Companion_getInstance_31();
+          Companion_getInstance_32();
           tmp = codeLen <= 16;
         } else {
           tmp = false;
@@ -27925,7 +27996,7 @@
        while (inductionVariable < end);
     var currentOffset = 0;
     var inductionVariable_0 = 0;
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     var last_0 = 16;
     if (inductionVariable_0 < last_0)
       do {
@@ -27950,7 +28021,7 @@
         this._CODES[tmp8] = n_1 - start | 0;
       }
        while (inductionVariable_1 < end);
-    Companion_getInstance_31();
+    Companion_getInstance_32();
     var inductionVariable_2 = 16;
     if (1 <= inductionVariable_2)
       do {
@@ -28303,23 +28374,23 @@
     kind: 'interface',
     interfaces: []
   };
-  function Companion_33() {
-    Companion_instance_32 = this;
+  function Companion_34() {
+    Companion_instance_33 = this;
     KDynamic.call(this);
   }
-  Companion_33.$metadata$ = {
+  Companion_34.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_32;
-  function Companion_getInstance_32() {
-    if (Companion_instance_32 == null)
-      new Companion_33();
-    return Companion_instance_32;
+  var Companion_instance_33;
+  function Companion_getInstance_33() {
+    if (Companion_instance_33 == null)
+      new Companion_34();
+    return Companion_instance_33;
   }
   function KDynamic() {
-    Companion_getInstance_32();
+    Companion_getInstance_33();
   }
   KDynamic.prototype._get_list__kajtkh_k$ = function (_this__0) {
     return _Dyn___get_listAny__impl_(_get_dyn_(_this__0));
@@ -29001,7 +29072,7 @@
   function MapLikeStorageVfs(storage) {
     VfsV2.call(this);
     this._storage = storage;
-    this._timeProvider = Companion_getInstance_20();
+    this._timeProvider = Companion_getInstance_21();
     var tmp = this;
     tmp._files = new StorageFiles(this._storage, _no_name_provided_$factory_86(this));
     this._initialized_0 = false;
@@ -29015,23 +29086,23 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_34() {
-    Companion_instance_33 = this;
+  function Companion_35() {
+    Companion_instance_34 = this;
     this._CHUNK_SIZE = 16384;
   }
-  Companion_34.$metadata$ = {
+  Companion_35.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_33;
-  function Companion_getInstance_33() {
-    if (Companion_instance_33 == null)
-      new Companion_34();
-    return Companion_instance_33;
+  var Companion_instance_34;
+  function Companion_getInstance_34() {
+    if (Companion_instance_34 == null)
+      new Companion_35();
+    return Companion_instance_34;
   }
   function StorageFiles(storage, timeProvider) {
-    Companion_getInstance_33();
+    Companion_getInstance_34();
     this._storage_0 = storage;
     this._timeProvider_0 = timeProvider;
   }
@@ -29394,7 +29465,7 @@
     interfaces: []
   };
   function UrlVfs_1(url, client, failFromStatus) {
-    return UrlVfs(Companion_getInstance_35().invoke_6wfw3l_k$(url), client, failFromStatus);
+    return UrlVfs(Companion_getInstance_36().invoke_6wfw3l_k$(url), client, failFromStatus);
   }
   function UrlVfs$default_0(url, client, failFromStatus, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
@@ -29624,10 +29695,10 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_35() {
-    Companion_instance_34 = this;
+  function Companion_36() {
+    Companion_instance_35 = this;
   }
-  Companion_35.prototype.appendCodePointV_ip6ytn_k$ = function (_this__0, codePoint) {
+  Companion_36.prototype.appendCodePointV_ip6ytn_k$ = function (_this__0, codePoint) {
     if ((55296 <= codePoint ? codePoint <= 57343 : false) ? true : codePoint > 65535) {
       var U0 = codePoint - 65536 | 0;
       var hs = extract(U0, 10, 10);
@@ -29641,19 +29712,19 @@
       Unit_getInstance();
     }
   };
-  Companion_35.$metadata$ = {
+  Companion_36.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_34;
-  function Companion_getInstance_34() {
-    if (Companion_instance_34 == null)
-      new Companion_35();
-    return Companion_instance_34;
+  var Companion_instance_35;
+  function Companion_getInstance_35() {
+    if (Companion_instance_35 == null)
+      new Companion_36();
+    return Companion_instance_35;
   }
   function Charset(name) {
-    Companion_getInstance_34();
+    Companion_getInstance_35();
     this._name_4 = name;
   }
   Charset.prototype.estimateNumberOfCharactersForBytes_ha5a7z_k$ = function (nbytes) {
@@ -29724,7 +29795,7 @@
   };
   UTC8CharsetBase.prototype.encode_kaapbp_k$ = function (out, src, start, end) {
     {
-      var tmp0_decodeCodePoints_0 = Companion_getInstance_34();
+      var tmp0_decodeCodePoints_0 = Companion_getInstance_35();
       var highSurrogate_1 = 0;
       var inductionVariable = start;
       if (inductionVariable < end)
@@ -29787,16 +29858,16 @@
       var c = src[i] & 255;
       var tmp0_subject = c >> 4;
       if (0 <= tmp0_subject ? tmp0_subject <= 7 : false) {
-        Companion_getInstance_34().appendCodePointV_ip6ytn_k$(out, c);
+        Companion_getInstance_35().appendCodePointV_ip6ytn_k$(out, c);
         i = i + 1 | 0;
       } else if (12 <= tmp0_subject ? tmp0_subject <= 13 : false) {
-        Companion_getInstance_34().appendCodePointV_ip6ytn_k$(out, (c & 31) << 6 | src[i + 1 | 0] & 63);
+        Companion_getInstance_35().appendCodePointV_ip6ytn_k$(out, (c & 31) << 6 | src[i + 1 | 0] & 63);
         i = i + 2 | 0;
       } else if (tmp0_subject === 14) {
-        Companion_getInstance_34().appendCodePointV_ip6ytn_k$(out, (c & 15) << 12 | (src[i + 1 | 0] & 63) << 6 | src[i + 2 | 0] & 63);
+        Companion_getInstance_35().appendCodePointV_ip6ytn_k$(out, (c & 15) << 12 | (src[i + 1 | 0] & 63) << 6 | src[i + 2 | 0] & 63);
         i = i + 3 | 0;
       } else if (tmp0_subject === 15) {
-        Companion_getInstance_34().appendCodePointV_ip6ytn_k$(out, insert(insert(insert(insert(0, extract(src[i + 0 | 0], 0, 3), 18, 3), extract(src[i + 1 | 0], 0, 6), 12, 6), extract(src[i + 2 | 0], 0, 6), 6, 6), extract(src[i + 3 | 0], 0, 6), 0, 6));
+        Companion_getInstance_35().appendCodePointV_ip6ytn_k$(out, insert(insert(insert(insert(0, extract(src[i + 0 | 0], 0, 3), 18, 3), extract(src[i + 1 | 0], 0, 6), 12, 6), extract(src[i + 2 | 0], 0, 6), 6, 6), extract(src[i + 3 | 0], 0, 6), 0, 6));
         i = i + 4 | 0;
       } else {
         out.append_wi8o78_k$(new Char(65533));
@@ -30159,8 +30230,8 @@
           var tmp1__anonymous__3 = tmp0_fastForEach_0.get_ha5a7z_k$(tmp0_2);
           var tmp_0 = charArrayOf([new Char(61)]);
           var parts_4 = split$default(tmp1__anonymous__3, tmp_0, false, 2, 2, null);
-          var key_5 = Companion_getInstance_35().decodeComponent_1d8j4y_k$(parts_4.get_ha5a7z_k$(0), UTF8, true);
-          var tmp_1 = Companion_getInstance_35();
+          var key_5 = Companion_getInstance_36().decodeComponent_1d8j4y_k$(parts_4.get_ha5a7z_k$(0), UTF8, true);
+          var tmp_1 = Companion_getInstance_36();
           var tmp$ret$2;
           $l$block_1: {
             var tmp_2;
@@ -30224,12 +30295,12 @@
       new QueryString();
     return QueryString_instance;
   }
-  function Companion_36() {
-    Companion_instance_35 = this;
+  function Companion_37() {
+    Companion_instance_36 = this;
     this._DEFAULT_PORT = 0;
     this._schemeRegex = Regex_init_$Create$_0('\\w+:');
   }
-  Companion_36.prototype.defaultPortForScheme_uch40_k$ = function (scheme) {
+  Companion_37.prototype.defaultPortForScheme_uch40_k$ = function (scheme) {
     var tmp0_subject = scheme;
     switch (tmp0_subject) {
       case 'ftp':
@@ -30245,17 +30316,17 @@
       default:return -1;
     }
   };
-  Companion_36.prototype.invoke_u5s38a_k$ = function (scheme, userInfo, host, path, query, fragment, opaque, port) {
+  Companion_37.prototype.invoke_u5s38a_k$ = function (scheme, userInfo, host, path, query, fragment, opaque, port) {
     return new URL_0(opaque, scheme, userInfo, host, path, query, fragment, port);
   };
-  Companion_36.prototype.invoke$default_bj3nqc_k$ = function (scheme, userInfo, host, path, query, fragment, opaque, port, $mask0, $handler) {
+  Companion_37.prototype.invoke$default_bj3nqc_k$ = function (scheme, userInfo, host, path, query, fragment, opaque, port, $mask0, $handler) {
     if (!(($mask0 & 64) === 0))
       opaque = false;
     if (!(($mask0 & 128) === 0))
       port = this._DEFAULT_PORT;
     return this.invoke_u5s38a_k$(scheme, userInfo, host, path, query, fragment, opaque, port);
   };
-  Companion_36.prototype.invoke_6wfw3l_k$ = function (url) {
+  Companion_37.prototype.invoke_6wfw3l_k$ = function (url) {
     var r = StrReader_init_$Create$(url, null, 0, 6, null);
     var schemeColon = r.tryRegex_x1socs_k$(this._schemeRegex);
     var tmp;
@@ -30309,7 +30380,7 @@
       var tmp0_safe_receiver = port;
       var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : toIntOrNull(tmp0_safe_receiver);
       var tmp5_port = tmp1_elvis_lhs == null ? this._DEFAULT_PORT : tmp1_elvis_lhs;
-      tmp = Companion_getInstance_35().invoke_u5s38a_k$(scheme, userInfo, tmp3_host, tmp4_path, query, fragment, tmp2_opaque, tmp5_port);
+      tmp = Companion_getInstance_36().invoke_u5s38a_k$(scheme, userInfo, tmp3_host, tmp4_path, query, fragment, tmp2_opaque, tmp5_port);
     } else {
       var tmp_6 = new Char(35);
       var nonFragment_0 = substringBefore$default(url, tmp_6, null, 2, null);
@@ -30317,12 +30388,12 @@
       var tmp_7 = new Char(63);
       var path_0 = substringBefore$default(nonFragment_0, tmp_7, null, 2, null);
       var query_0 = substringAfterOrNull(nonFragment_0, new Char(63));
-      var tmp_8 = Companion_getInstance_35();
+      var tmp_8 = Companion_getInstance_36();
       tmp = tmp_8.invoke$default_bj3nqc_k$(null, null, null, path_0, query_0, fragment_0, false, 0, 128, null);
     }
     return tmp;
   };
-  Companion_36.prototype.decodeComponent_1d8j4y_k$ = function (s, charset, formUrlEncoded) {
+  Companion_37.prototype.decodeComponent_1d8j4y_k$ = function (s, charset, formUrlEncoded) {
     var bos = ByteArrayBuilder_init_$Create$_1(0, 1, null);
     var len = s.length;
     var n = 0;
@@ -30351,16 +30422,16 @@
     }
     return toString_5(bos.toByteArray_0_k$(), charset);
   };
-  Companion_36.$metadata$ = {
+  Companion_37.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_35;
-  function Companion_getInstance_35() {
-    if (Companion_instance_35 == null)
-      new Companion_36();
-    return Companion_instance_35;
+  var Companion_instance_36;
+  function Companion_getInstance_36() {
+    if (Companion_instance_36 == null)
+      new Companion_37();
+    return Companion_instance_36;
   }
   function _no_name_provided__118(this$0) {
     this._this$0_24 = this$0;
@@ -30399,7 +30470,7 @@
     interfaces: []
   };
   function URL_0(isOpaque, scheme, userInfo, host, path, query, fragment, defaultPort) {
-    Companion_getInstance_35();
+    Companion_getInstance_36();
     this._isOpaque = isOpaque;
     this._scheme = scheme;
     this._userInfo = userInfo;
@@ -30416,10 +30487,10 @@
     tmp_1._pathWithQuery$delegate = lazy(_no_name_provided_$factory_98(this));
   }
   URL_0.prototype._get_defaultSchemePort__0_k$ = function () {
-    return Companion_getInstance_35().defaultPortForScheme_uch40_k$(this._scheme);
+    return Companion_getInstance_36().defaultPortForScheme_uch40_k$(this._scheme);
   };
   URL_0.prototype._get_port__0_k$ = function () {
-    return this._defaultPort === Companion_getInstance_35()._DEFAULT_PORT ? this._get_defaultSchemePort__0_k$() : this._defaultPort;
+    return this._defaultPort === Companion_getInstance_36()._DEFAULT_PORT ? this._get_defaultSchemePort__0_k$() : this._defaultPort;
   };
   URL_0.prototype._get_fullUrl__0_k$ = function () {
     var tmp$ret$0;
@@ -30443,7 +30514,7 @@
     }if (!(this._host == null)) {
       out.append_uch40_k$(this._host);
       Unit_getInstance();
-    }if (!(this._get_port__0_k$() === Companion_getInstance_35()._DEFAULT_PORT) ? !(this._get_port__0_k$() === this._get_defaultSchemePort__0_k$()) : false) {
+    }if (!(this._get_port__0_k$() === Companion_getInstance_36()._DEFAULT_PORT) ? !(this._get_port__0_k$() === this._get_defaultSchemePort__0_k$()) : false) {
       out.append_wi8o78_k$(new Char(58)).append_wi7j7l_k$(this._get_port__0_k$());
       Unit_getInstance();
     }out.append_uch40_k$(this._path_1);
@@ -30563,27 +30634,27 @@
     return tmp$ret$0;
   }
   var _defaultHttpFactory$delegate;
-  function Companion_37() {
-    Companion_instance_36 = this;
+  function Companion_38() {
+    Companion_instance_37 = this;
     this._DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36';
     this._DEFAULT_ACCEPT = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8';
     this._DEFAULT_LANGUAGE = 'en-us';
     this._DEFAULT_ENCODING = 'gzip, deflate';
     this._DEFAULT_CONNECTION = 'Close';
   }
-  Companion_37.$metadata$ = {
+  Companion_38.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_36;
-  function Companion_getInstance_36() {
-    if (Companion_instance_36 == null)
-      new Companion_37();
-    return Companion_instance_36;
+  var Companion_instance_37;
+  function Companion_getInstance_37() {
+    if (Companion_instance_37 == null)
+      new Companion_38();
+    return Companion_instance_37;
   }
   function HttpClient() {
-    Companion_getInstance_36();
+    Companion_getInstance_37();
     this._ignoreSslCertificates = false;
   }
   HttpClient.$metadata$ = {
@@ -32579,19 +32650,19 @@
   function StrReader_init_$Create$(str, file, pos, $mask0, $marker) {
     return StrReader_init_$Init$(str, file, pos, $mask0, $marker, Object.create(StrReader.prototype));
   }
-  function Companion_38() {
-    Companion_instance_37 = this;
+  function Companion_39() {
+    Companion_instance_38 = this;
   }
-  Companion_38.$metadata$ = {
+  Companion_39.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_37;
-  function Companion_getInstance_37() {
-    if (Companion_instance_37 == null)
-      new Companion_38();
-    return Companion_instance_37;
+  var Companion_instance_38;
+  function Companion_getInstance_38() {
+    if (Companion_instance_38 == null)
+      new Companion_39();
+    return Companion_instance_38;
   }
   function substr_2($this, pos, length) {
     var tmp$ret$3;
@@ -32623,7 +32694,7 @@
     return tmp$ret$3;
   }
   function StrReader(str, file, pos) {
-    Companion_getInstance_37();
+    Companion_getInstance_38();
     this._str_0 = str;
     this._file = file;
     this._pos_0 = pos;
@@ -32835,7 +32906,7 @@
             {
               var tmp$ret$0;
               $l$block: {
-                var tmp = Companion_getInstance_38()._BY_ID;
+                var tmp = Companion_getInstance_39()._BY_ID;
                 var tmp_0 = new Char(45);
                 tmp$ret$0 = tmp.get_2bw_k$(substringBefore$default(element_2_3, tmp_0, null, 2, null));
                 break $l$block;
@@ -32873,7 +32944,7 @@
   function _no_name_provided__135() {
   }
   _no_name_provided__135.prototype.invoke_0_k$ = function () {
-    var tmp0_elvis_lhs = firstOrNull(Companion_getInstance_38()._get_SYSTEM_LANGS__0_k$());
+    var tmp0_elvis_lhs = firstOrNull(Companion_getInstance_39()._get_SYSTEM_LANGS__0_k$());
     return tmp0_elvis_lhs == null ? Language_ENGLISH_getInstance() : tmp0_elvis_lhs;
   };
   _no_name_provided__135.$metadata$ = {
@@ -32891,8 +32962,8 @@
   var Language_RUSSIAN_instance;
   var Language_KOREAN_instance;
   var Language_CHINESE_instance;
-  function Companion_39() {
-    Companion_instance_38 = this;
+  function Companion_40() {
+    Companion_instance_39 = this;
     var tmp = this;
     var tmp$ret$4;
     $l$block_3: {
@@ -32991,7 +33062,7 @@
     var tmp_3 = this;
     tmp_3._SYSTEM$delegate = lazy(_no_name_provided_$factory_112());
   }
-  Companion_39.prototype._get_SYSTEM_LANGS__0_k$ = function () {
+  Companion_40.prototype._get_SYSTEM_LANGS__0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_getValue_0 = SYSTEM_LANGS$factory();
@@ -33000,7 +33071,7 @@
     }
     return tmp$ret$0;
   };
-  Companion_39.prototype._get_SYSTEM__0_k$ = function () {
+  Companion_40.prototype._get_SYSTEM__0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_getValue_0 = SYSTEM$factory();
@@ -33009,16 +33080,16 @@
     }
     return tmp$ret$0;
   };
-  Companion_39.$metadata$ = {
+  Companion_40.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_38;
-  function Companion_getInstance_38() {
-    if (Companion_instance_38 == null)
-      new Companion_39();
-    return Companion_instance_38;
+  var Companion_instance_39;
+  function Companion_getInstance_39() {
+    if (Companion_instance_39 == null)
+      new Companion_40();
+    return Companion_instance_39;
   }
   function values_0() {
     return [Language_JAPANESE_getInstance(), Language_ENGLISH_getInstance(), Language_FRENCH_getInstance(), Language_SPANISH_getInstance(), Language_GERMAN_getInstance(), Language_ITALIAN_getInstance(), Language_DUTCH_getInstance(), Language_PORTUGUESE_getInstance(), Language_RUSSIAN_getInstance(), Language_KOREAN_getInstance(), Language_CHINESE_getInstance()];
@@ -33039,7 +33110,7 @@
     Language_RUSSIAN_instance = new Language('RUSSIAN', 8, 'ru', 'rus');
     Language_KOREAN_instance = new Language('KOREAN', 9, 'ko', 'kor');
     Language_CHINESE_instance = new Language('CHINESE', 10, 'zh', 'zho');
-    Companion_getInstance_38();
+    Companion_getInstance_39();
   }
   function Language(name, ordinal, iso6391, iso6392) {
     Enum.call(this, name, ordinal);
@@ -33054,7 +33125,7 @@
   function _no_name_provided__136() {
   }
   _no_name_provided__136.prototype.invoke_0_k$ = function () {
-    return KorAtomicRef_0(Companion_getInstance_38()._get_SYSTEM__0_k$());
+    return KorAtomicRef_0(Companion_getInstance_39()._get_SYSTEM__0_k$());
   };
   _no_name_provided__136.$metadata$ = {
     kind: 'class',
@@ -34061,30 +34132,30 @@
       return i.invoke_0_k$();
     };
   }
-  function Companion_40() {
-    Companion_instance_39 = this;
+  function Companion_41() {
+    Companion_instance_40 = this;
     this._MIN = -Infinity;
     this._MAX = Infinity;
   }
-  Companion_40.$metadata$ = {
+  Companion_41.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_39;
-  function Companion_getInstance_39() {
-    if (Companion_instance_39 == null)
-      new Companion_40();
-    return Companion_instance_39;
+  var Companion_instance_40;
+  function Companion_getInstance_40() {
+    if (Companion_instance_40 == null)
+      new Companion_41();
+    return Companion_instance_40;
   }
   function BoundsBuilder() {
-    Companion_getInstance_39();
-    this._tempRect = Companion_getInstance_45().invoke_0_k$();
+    Companion_getInstance_40();
+    this._tempRect = Companion_getInstance_46().invoke_0_k$();
     this._npoints = 0;
-    this._xmin = Companion_getInstance_39()._MAX;
-    this._xmax = Companion_getInstance_39()._MIN;
-    this._ymin = Companion_getInstance_39()._MAX;
-    this._ymax = Companion_getInstance_39()._MIN;
+    this._xmin = Companion_getInstance_40()._MAX;
+    this._xmax = Companion_getInstance_40()._MIN;
+    this._ymin = Companion_getInstance_40()._MAX;
+    this._ymax = Companion_getInstance_40()._MIN;
   }
   BoundsBuilder.prototype.add_ngl742_k$ = function (x, y) {
     if (x < this._xmin)
@@ -34141,19 +34212,19 @@
   function Matrix_init_$Create$(a, b, c, d, tx, ty, $mask0, $marker) {
     return Matrix_init_$Init$(a, b, c, d, tx, ty, $mask0, $marker, Object.create(Matrix.prototype));
   }
-  function Companion_41() {
-    Companion_instance_40 = this;
+  function Companion_42() {
+    Companion_instance_41 = this;
   }
-  Companion_41.$metadata$ = {
+  Companion_42.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_40;
-  function Companion_getInstance_40() {
-    if (Companion_instance_40 == null)
-      new Companion_41();
-    return Companion_instance_40;
+  var Companion_instance_41;
+  function Companion_getInstance_41() {
+    if (Companion_instance_41 == null)
+      new Companion_42();
+    return Companion_instance_41;
   }
   function Type(name, ordinal, id, hasRotation, hasScale, hasTranslation) {
     Enum.call(this, name, ordinal);
@@ -34188,7 +34259,7 @@
     return Type_COMPLEX_instance;
   }
   function Matrix(a, b, c, d, tx, ty) {
-    Companion_getInstance_40();
+    Companion_getInstance_41();
     this._a = a;
     this._b = b;
     this._c = c;
@@ -34289,8 +34360,8 @@
   var tempVec2;
   var tempVec3;
   var tempMat1;
-  function Companion_42() {
-    Companion_instance_41 = this;
+  function Companion_43() {
+    Companion_instance_42 = this;
     this._M00 = 0;
     this._M10 = 1;
     this._M20 = 2;
@@ -34308,22 +34379,22 @@
     this._M23 = 14;
     this._M33 = 15;
   }
-  Companion_42.prototype.columnMajorIndex_27zxwg_k$ = function (row, column) {
+  Companion_43.prototype.columnMajorIndex_27zxwg_k$ = function (row, column) {
     return imul(column, 4) + row | 0;
   };
-  Companion_42.$metadata$ = {
+  Companion_43.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_41;
-  function Companion_getInstance_41() {
-    if (Companion_instance_41 == null)
-      new Companion_42();
-    return Companion_instance_41;
+  var Companion_instance_42;
+  function Companion_getInstance_42() {
+    if (Companion_instance_42 == null)
+      new Companion_43();
+    return Companion_instance_42;
   }
   function Matrix3D() {
-    Companion_getInstance_41();
+    Companion_getInstance_42();
     var tmp = this;
     var tmp$ret$0;
     $l$block: {
@@ -34333,7 +34404,7 @@
     tmp._data_5 = tmp$ret$0;
   }
   Matrix3D.prototype.get_27zxwg_k$ = function (row, column) {
-    return this._data_5[Companion_getInstance_41().columnMajorIndex_27zxwg_k$(row, column)];
+    return this._data_5[Companion_getInstance_42().columnMajorIndex_27zxwg_k$(row, column)];
   };
   Matrix3D.prototype.equals = function (other) {
     var tmp;
@@ -34414,22 +34485,22 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_43() {
-    Companion_instance_42 = this;
+  function Companion_44() {
+    Companion_instance_43 = this;
   }
-  Companion_43.prototype.invoke_ngl742_k$ = function (x, y) {
+  Companion_44.prototype.invoke_ngl742_k$ = function (x, y) {
     return new Point(x, y);
   };
-  Companion_43.$metadata$ = {
+  Companion_44.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_42;
-  function Companion_getInstance_42() {
-    if (Companion_instance_42 == null)
-      new Companion_43();
-    return Companion_instance_42;
+  var Companion_instance_43;
+  function Companion_getInstance_43() {
+    if (Companion_instance_43 == null)
+      new Companion_44();
+    return Companion_instance_43;
   }
   function IPoint_0() {
   }
@@ -34452,23 +34523,23 @@
   function Point_init_$Create$_0(x, y) {
     return Point_init_$Init$_0(x, y, Object.create(Point.prototype));
   }
-  function Companion_44() {
-    Companion_instance_43 = this;
-    this._Zero = Companion_getInstance_42().invoke_ngl742_k$(0.0, 0.0);
-    this._One = Companion_getInstance_42().invoke_ngl742_k$(1.0, 1.0);
-    this._Up = Companion_getInstance_42().invoke_ngl742_k$(0.0, 1.0);
-    this._Down = Companion_getInstance_42().invoke_ngl742_k$(0.0, -1.0);
-    this._Left = Companion_getInstance_42().invoke_ngl742_k$(-1.0, 0.0);
-    this._Right = Companion_getInstance_42().invoke_ngl742_k$(1.0, 0.0);
+  function Companion_45() {
+    Companion_instance_44 = this;
+    this._Zero = Companion_getInstance_43().invoke_ngl742_k$(0.0, 0.0);
+    this._One = Companion_getInstance_43().invoke_ngl742_k$(1.0, 1.0);
+    this._Up = Companion_getInstance_43().invoke_ngl742_k$(0.0, 1.0);
+    this._Down = Companion_getInstance_43().invoke_ngl742_k$(0.0, -1.0);
+    this._Left = Companion_getInstance_43().invoke_ngl742_k$(-1.0, 0.0);
+    this._Right = Companion_getInstance_43().invoke_ngl742_k$(1.0, 0.0);
   }
-  Companion_44.prototype.invoke_0_k$ = function () {
+  Companion_45.prototype.invoke_0_k$ = function () {
     return new Point(0.0, 0.0);
   };
-  Companion_44.prototype.compare_i6u10_k$ = function (lx, ly, rx, ry) {
+  Companion_45.prototype.compare_i6u10_k$ = function (lx, ly, rx, ry) {
     var ret = compareTo(ly, ry);
     return ret === 0 ? compareTo(lx, rx) : ret;
   };
-  Companion_44.prototype.distance_i6u10_k$ = function (x1, y1, x2, y2) {
+  Companion_45.prototype.distance_i6u10_k$ = function (x1, y1, x2, y2) {
     var tmp$ret$0;
     $l$block: {
       var tmp0_hypot_0 = x1 - x2;
@@ -34478,19 +34549,19 @@
     }
     return tmp$ret$0;
   };
-  Companion_44.$metadata$ = {
+  Companion_45.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_43;
-  function Companion_getInstance_43() {
-    if (Companion_instance_43 == null)
-      new Companion_44();
-    return Companion_instance_43;
+  var Companion_instance_44;
+  function Companion_getInstance_44() {
+    if (Companion_instance_44 == null)
+      new Companion_45();
+    return Companion_instance_44;
   }
   function Point(x, y) {
-    Companion_getInstance_43();
+    Companion_getInstance_44();
     this._x = x;
     this._y = y;
   }
@@ -34501,7 +34572,7 @@
     return this._y;
   };
   Point.prototype.compareTo_jr2uc6_k$ = function (other) {
-    return Companion_getInstance_43().compare_i6u10_k$(this._x, this._y, other._get_x__0_k$(), other._get_y__0_k$());
+    return Companion_getInstance_44().compare_i6u10_k$(this._x, this._y, other._get_x__0_k$(), other._get_y__0_k$());
   };
   Point.prototype.compareTo_2c5_k$ = function (other) {
     return this.compareTo_jr2uc6_k$((!(other == null) ? isInterface(other, IPoint_0) : false) ? other : THROW_CCE());
@@ -34556,22 +34627,22 @@
   function PointArrayList_init_$Create$(capacity, $mask0, $marker) {
     return PointArrayList_init_$Init$(capacity, $mask0, $marker, Object.create(PointArrayList.prototype));
   }
-  function Companion_45() {
-    Companion_instance_44 = this;
+  function Companion_46() {
+    Companion_instance_45 = this;
   }
-  Companion_45.$metadata$ = {
+  Companion_46.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_44;
-  function Companion_getInstance_44() {
-    if (Companion_instance_44 == null)
-      new Companion_45();
-    return Companion_instance_44;
+  var Companion_instance_45;
+  function Companion_getInstance_45() {
+    if (Companion_instance_45 == null)
+      new Companion_46();
+    return Companion_instance_45;
   }
   function PointArrayList(capacity) {
-    Companion_getInstance_44();
+    Companion_getInstance_45();
     this._xList = new DoubleArrayList(capacity);
     this._yList = new DoubleArrayList(capacity);
   }
@@ -34653,31 +34724,31 @@
     kind: 'interface',
     interfaces: []
   };
-  function Companion_46() {
-    Companion_instance_45 = this;
+  function Companion_47() {
+    Companion_instance_46 = this;
   }
-  Companion_46.prototype.invoke_0_k$ = function () {
+  Companion_47.prototype.invoke_0_k$ = function () {
     return new Rectangle(0.0, 0.0, 0.0, 0.0);
   };
-  Companion_46.prototype.invoke_w0xdj4_k$ = function (x, y, width, height) {
+  Companion_47.prototype.invoke_w0xdj4_k$ = function (x, y, width, height) {
     return new Rectangle(x, y, width, height);
   };
-  Companion_46.prototype.fromBounds_i6u10_k$ = function (left, top, right, bottom) {
-    return Companion_getInstance_45().invoke_0_k$().setBounds_i6u10_k$(left, top, right, bottom);
+  Companion_47.prototype.fromBounds_i6u10_k$ = function (left, top, right, bottom) {
+    return Companion_getInstance_46().invoke_0_k$().setBounds_i6u10_k$(left, top, right, bottom);
   };
-  Companion_46.$metadata$ = {
+  Companion_47.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_45;
-  function Companion_getInstance_45() {
-    if (Companion_instance_45 == null)
-      new Companion_46();
-    return Companion_instance_45;
+  var Companion_instance_46;
+  function Companion_getInstance_46() {
+    if (Companion_instance_46 == null)
+      new Companion_47();
+    return Companion_instance_46;
   }
   function Rectangle(x, y, width, height) {
-    Companion_getInstance_45();
+    Companion_getInstance_46();
     this._x_0 = x;
     this._y_0 = y;
     this._width = width;
@@ -34709,7 +34780,7 @@
     return '' + 'Rectangle(x=' + _get_niceStr__0(this._x_0) + ', y=' + _get_niceStr__0(this._y_0) + ', width=' + _get_niceStr__0(this._width) + ', height=' + _get_niceStr__0(this._height) + ')';
   };
   Rectangle.prototype.toInt_t4v1qq_k$ = function () {
-    return Companion_getInstance_46().invoke_x6iaui_k$(this._x_0, this._y_0, this._width, this._height);
+    return Companion_getInstance_47().invoke_x6iaui_k$(this._x_0, this._y_0, this._width, this._height);
   };
   Rectangle.prototype.hashCode = function () {
     var result = getNumberHashCode(this._x_0);
@@ -34778,25 +34849,25 @@
   function _RectangleInt___get_bottom__impl_(this_0) {
     return numberToInt(_RectangleInt___get_rect__impl_(this_0)._get_bottom__0_k$());
   }
-  function Companion_47() {
-    Companion_instance_46 = this;
+  function Companion_48() {
+    Companion_instance_47 = this;
   }
-  Companion_47.prototype.invoke_ihmn6a_k$ = function (x, y, width, height) {
-    return _RectangleInt___init__impl_(Companion_getInstance_45().invoke_w0xdj4_k$(x, y, width, height));
+  Companion_48.prototype.invoke_ihmn6a_k$ = function (x, y, width, height) {
+    return _RectangleInt___init__impl_(Companion_getInstance_46().invoke_w0xdj4_k$(x, y, width, height));
   };
-  Companion_47.prototype.invoke_x6iaui_k$ = function (x, y, width, height) {
+  Companion_48.prototype.invoke_x6iaui_k$ = function (x, y, width, height) {
     return _RectangleInt___init__impl_(new Rectangle(x, y, width, height));
   };
-  Companion_47.$metadata$ = {
+  Companion_48.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_46;
-  function Companion_getInstance_46() {
-    if (Companion_instance_46 == null)
-      new Companion_47();
-    return Companion_instance_46;
+  var Companion_instance_47;
+  function Companion_getInstance_47() {
+    if (Companion_instance_47 == null)
+      new Companion_48();
+    return Companion_instance_47;
   }
   function RectangleInt__toString_impl(this_0) {
     return '' + 'Rectangle(x=' + _RectangleInt___get_x__impl_(this_0) + ', y=' + _RectangleInt___get_y__impl_(this_0) + ', width=' + _RectangleInt___get_width__impl_(this_0) + ', height=' + _RectangleInt___get_height__impl_(this_0) + ')';
@@ -34815,7 +34886,7 @@
     return true;
   }
   function RectangleInt(rect) {
-    Companion_getInstance_46();
+    Companion_getInstance_47();
     this._rect = rect;
   }
   RectangleInt.prototype.toString = function () {
@@ -34859,22 +34930,22 @@
   function _Size___get_p__impl_(this_0) {
     return this_0;
   }
-  function Companion_48() {
-    Companion_instance_47 = this;
+  function Companion_49() {
+    Companion_instance_48 = this;
   }
-  Companion_48.prototype.invoke_5hnyrx_k$ = function (width, height) {
+  Companion_49.prototype.invoke_5hnyrx_k$ = function (width, height) {
     return _Size___init__impl_(Point_init_$Create$_0(width, height));
   };
-  Companion_48.$metadata$ = {
+  Companion_49.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_47;
-  function Companion_getInstance_47() {
-    if (Companion_instance_47 == null)
-      new Companion_48();
-    return Companion_instance_47;
+  var Companion_instance_48;
+  function Companion_getInstance_48() {
+    if (Companion_instance_48 == null)
+      new Companion_49();
+    return Companion_instance_48;
   }
   function _Size___get_width__impl_(this_0) {
     return _Size___get_p__impl_(this_0)._x;
@@ -34899,7 +34970,7 @@
     return true;
   }
   function Size(p) {
-    Companion_getInstance_47();
+    Companion_getInstance_48();
     this._p = p;
   }
   Size.prototype.toString = function () {
@@ -34923,22 +34994,22 @@
   function _SizeInt___get_size__impl_(this_0) {
     return this_0;
   }
-  function Companion_49() {
-    Companion_instance_48 = this;
+  function Companion_50() {
+    Companion_instance_49 = this;
   }
-  Companion_49.prototype.invoke_aaxa64_k$ = function (x, y) {
-    return _SizeInt___init__impl_(Companion_getInstance_47().invoke_5hnyrx_k$(x, y));
+  Companion_50.prototype.invoke_aaxa64_k$ = function (x, y) {
+    return _SizeInt___init__impl_(Companion_getInstance_48().invoke_5hnyrx_k$(x, y));
   };
-  Companion_49.$metadata$ = {
+  Companion_50.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_48;
-  function Companion_getInstance_48() {
-    if (Companion_instance_48 == null)
-      new Companion_49();
-    return Companion_instance_48;
+  var Companion_instance_49;
+  function Companion_getInstance_49() {
+    if (Companion_instance_49 == null)
+      new Companion_50();
+    return Companion_instance_49;
   }
   function _SizeInt___get_width__impl_(this_0) {
     return numberToInt(_Size___get_width__impl_(_SizeInt___get_size__impl_(this_0)));
@@ -34963,7 +35034,7 @@
     return true;
   }
   function SizeInt(size_0) {
-    Companion_getInstance_48();
+    Companion_getInstance_49();
     this._size_2 = size_0;
   }
   SizeInt.prototype.toString = function () {
@@ -34987,22 +35058,22 @@
     kind: 'interface',
     interfaces: []
   };
-  function Companion_50() {
-    Companion_instance_49 = this;
+  function Companion_51() {
+    Companion_instance_50 = this;
   }
-  Companion_50.$metadata$ = {
+  Companion_51.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_49;
-  function Companion_getInstance_49() {
-    if (Companion_instance_49 == null)
-      new Companion_50();
-    return Companion_instance_49;
+  var Companion_instance_50;
+  function Companion_getInstance_50() {
+    if (Companion_instance_50 == null)
+      new Companion_51();
+    return Companion_instance_50;
   }
   function Vector3D() {
-    Companion_getInstance_49();
+    Companion_getInstance_50();
     var tmp = this;
     var tmp$ret$0;
     $l$block: {
@@ -35073,30 +35144,16 @@
     this._tvalues = new Float64Array(6);
     this._xvalues = new Float64Array(8);
     this._yvalues = new Float64Array(8);
-    this._tpoint0 = Companion_getInstance_43().invoke_0_k$();
-    this._tpoint1 = Companion_getInstance_43().invoke_0_k$();
-    this._tpoint2 = Companion_getInstance_43().invoke_0_k$();
-    this._tpoint3 = Companion_getInstance_43().invoke_0_k$();
+    this._tpoint0 = Companion_getInstance_44().invoke_0_k$();
+    this._tpoint1 = Companion_getInstance_44().invoke_0_k$();
+    this._tpoint2 = Companion_getInstance_44().invoke_0_k$();
+    this._tpoint3 = Companion_getInstance_44().invoke_0_k$();
   }
   Temp.$metadata$ = {
     simpleName: 'Temp',
     kind: 'class',
     interfaces: []
   };
-  function Companion_51() {
-    Companion_instance_50 = this;
-  }
-  Companion_51.$metadata$ = {
-    simpleName: 'Companion',
-    kind: 'object',
-    interfaces: []
-  };
-  var Companion_instance_50;
-  function Companion_getInstance_50() {
-    if (Companion_instance_50 == null)
-      new Companion_51();
-    return Companion_instance_50;
-  }
   function Companion_52() {
     Companion_instance_51 = this;
   }
@@ -35111,8 +35168,22 @@
       new Companion_52();
     return Companion_instance_51;
   }
+  function Companion_53() {
+    Companion_instance_52 = this;
+  }
+  Companion_53.$metadata$ = {
+    simpleName: 'Companion',
+    kind: 'object',
+    interfaces: []
+  };
+  var Companion_instance_52;
+  function Companion_getInstance_52() {
+    if (Companion_instance_52 == null)
+      new Companion_53();
+    return Companion_instance_52;
+  }
   function Edge() {
-    Companion_getInstance_51();
+    Companion_getInstance_52();
     this._ax = 0;
     this._ay = 0;
     this._bx = 0;
@@ -35306,13 +35377,13 @@
     var tmp_0 = _no_name_provided_$factory_133();
     tmp._pool_0 = Pool_init_$Create$(tmp_0, 0, _no_name_provided_$factory_134(), 2, null);
     var tmp_1 = this;
-    Companion_getInstance_52();
+    Companion_getInstance_53();
     tmp_1._small = new Buckets(this._pool_0, 80);
     var tmp_2 = this;
-    Companion_getInstance_52();
+    Companion_getInstance_53();
     tmp_2._medium = new Buckets(this._pool_0, 320);
     var tmp_3 = this;
-    Companion_getInstance_52();
+    Companion_getInstance_53();
     tmp_3._big = new Buckets(this._pool_0, 1280);
   }
   AllBuckets.prototype.add_ekpeoo_k$ = function (edge) {
@@ -35515,7 +35586,7 @@
                     var tmp8_11_12_32 = n_1_7;
                     n_1_7 = tmp8_11_12_32 + 1 | 0;
                     var tmp9__anonymous__24_31 = path._data_7.get_ha5a7z_k$(tmp8_11_12_32);
-                    var sum_25_33 = Companion_getInstance_43().distance_i6u10_k$(lx_5._v, ly_6._v, tmp6__anonymous__24_25, tmp7__anonymous__24_27) + Companion_getInstance_43().distance_i6u10_k$(tmp6__anonymous__24_25, tmp7__anonymous__24_27, tmp8__anonymous__24_29, tmp9__anonymous__24_31);
+                    var sum_25_33 = Companion_getInstance_44().distance_i6u10_k$(lx_5._v, ly_6._v, tmp6__anonymous__24_25, tmp7__anonymous__24_27) + Companion_getInstance_44().distance_i6u10_k$(tmp6__anonymous__24_25, tmp7__anonymous__24_27, tmp8__anonymous__24_29, tmp9__anonymous__24_31);
                     {
                       var tmp0_approximateCurve_0_26_34 = numberToInt(sum_25_33);
                       var tmp$ret$5;
@@ -35533,7 +35604,7 @@
                       {
                         var tmp$ret$6;
                         $l$block_5: {
-                          var tmp0_quadCalc_0_16_34_42 = Companion_getInstance_50();
+                          var tmp0_quadCalc_0_16_34_42 = Companion_getInstance_51();
                           var tmp1_quadCalc_0_17_35_43 = lx_5._v;
                           var tmp2_quadCalc_0_18_36_44 = ly_6._v;
                           var t1_1_19_37_45 = 1.0;
@@ -35556,7 +35627,7 @@
                           {
                             var tmp$ret$8;
                             $l$block_7: {
-                              var tmp0_quadCalc_0_16_46_54 = Companion_getInstance_50();
+                              var tmp0_quadCalc_0_16_46_54 = Companion_getInstance_51();
                               var tmp1_quadCalc_0_17_47_55 = lx_5._v;
                               var tmp2_quadCalc_0_18_48_56 = ly_6._v;
                               var t1_1_19_49_57 = 1 - ratio_11_45_53;
@@ -35633,7 +35704,7 @@
                       var tmp14_17_18_76 = n_1_7;
                       n_1_7 = tmp14_17_18_76 + 1 | 0;
                       var tmp15__anonymous__57_75 = path._data_7.get_ha5a7z_k$(tmp14_17_18_76);
-                      var sum_58_77 = Companion_getInstance_43().distance_i6u10_k$(lx_5._v, ly_6._v, tmp10__anonymous__57_65, tmp11__anonymous__57_67) + Companion_getInstance_43().distance_i6u10_k$(tmp10__anonymous__57_65, tmp11__anonymous__57_67, tmp12__anonymous__57_69, tmp13__anonymous__57_71) + Companion_getInstance_43().distance_i6u10_k$(tmp12__anonymous__57_69, tmp13__anonymous__57_71, tmp14__anonymous__57_73, tmp15__anonymous__57_75);
+                      var sum_58_77 = Companion_getInstance_44().distance_i6u10_k$(lx_5._v, ly_6._v, tmp10__anonymous__57_65, tmp11__anonymous__57_67) + Companion_getInstance_44().distance_i6u10_k$(tmp10__anonymous__57_65, tmp11__anonymous__57_67, tmp12__anonymous__57_69, tmp13__anonymous__57_71) + Companion_getInstance_44().distance_i6u10_k$(tmp12__anonymous__57_69, tmp13__anonymous__57_71, tmp14__anonymous__57_73, tmp15__anonymous__57_75);
                       {
                         var tmp0_approximateCurve_0_59_78 = numberToInt(sum_58_77);
                         var tmp$ret$12;
@@ -35651,7 +35722,7 @@
                         {
                           var tmp$ret$13;
                           $l$block_12: {
-                            var tmp0_cubicCalc_0_16_67_86 = Companion_getInstance_50();
+                            var tmp0_cubicCalc_0_16_67_86 = Companion_getInstance_51();
                             var tmp1_cubicCalc_0_17_68_87 = lx_5._v;
                             var tmp2_cubicCalc_0_18_69_88 = ly_6._v;
                             var cx_1_19_70_89 = 3.0 * (tmp10__anonymous__57_65 - tmp1_cubicCalc_0_17_68_87);
@@ -35678,7 +35749,7 @@
                             {
                               var tmp$ret$15;
                               $l$block_14: {
-                                var tmp0_cubicCalc_0_16_83_102 = Companion_getInstance_50();
+                                var tmp0_cubicCalc_0_16_83_102 = Companion_getInstance_51();
                                 var tmp1_cubicCalc_0_17_84_103 = lx_5._v;
                                 var tmp2_cubicCalc_0_18_85_104 = ly_6._v;
                                 var cx_1_19_86_105 = 3.0 * (tmp10__anonymous__57_65 - tmp1_cubicCalc_0_17_84_103);
@@ -35781,34 +35852,34 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_53() {
-    Companion_instance_52 = this;
+  function Companion_54() {
+    Companion_instance_53 = this;
     this._RAST_FIXED_SCALE = 20;
     this._RAST_FIXED_SCALE_HALF = 0;
     this._RAST_SMALL_BUCKET_SIZE = 80;
     this._RAST_MEDIUM_BUCKET_SIZE = 320;
     this._RAST_BIG_BUCKET_SIZE = 1280;
   }
-  Companion_53.$metadata$ = {
+  Companion_54.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_52;
-  function Companion_getInstance_52() {
-    if (Companion_instance_52 == null)
-      new Companion_53();
-    return Companion_instance_52;
+  var Companion_instance_53;
+  function Companion_getInstance_53() {
+    if (Companion_instance_53 == null)
+      new Companion_54();
+    return Companion_instance_53;
   }
   function RastScale() {
-    Companion_getInstance_52();
+    Companion_getInstance_53();
   }
   RastScale.prototype._get_sscale__0_k$ = function () {
-    Companion_getInstance_52();
+    Companion_getInstance_53();
     return 20;
   };
   RastScale.prototype._get_hscale__0_k$ = function () {
-    Companion_getInstance_52();
+    Companion_getInstance_53();
     return 0;
   };
   RastScale.prototype._get_s__xaho5p_k$ = function (_this__0) {
@@ -35871,21 +35942,21 @@
   }
   var tempMatrix;
   var identityMatrix;
-  function Companion_54() {
-    Companion_instance_53 = this;
+  function Companion_55() {
+    Companion_instance_54 = this;
     var tmp = this;
     tmp._identityMatrix = Matrix_init_$Create$(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 63, null);
   }
-  Companion_54.$metadata$ = {
+  Companion_55.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_53;
-  function Companion_getInstance_53() {
-    if (Companion_instance_53 == null)
-      new Companion_54();
-    return Companion_instance_53;
+  var Companion_instance_54;
+  function Companion_getInstance_54() {
+    if (Companion_instance_54 == null)
+      new Companion_55();
+    return Companion_instance_54;
   }
   function ensureMoveTo($this, x, y) {
     if (isEmpty($this))
@@ -35933,7 +36004,7 @@
     interfaces: []
   };
   function VectorPath(commands, data, winding) {
-    Companion_getInstance_53();
+    Companion_getInstance_54();
     this._commands = commands;
     this._data_7 = data;
     this._winding_0 = winding;
@@ -36307,7 +36378,7 @@
     this._this$0_28 = this$0;
   }
   _no_name_provided__164.prototype.invoke_wd8tzq_k$ = function () {
-    return Companion_getInstance_57().invoke_spsmd3_k$(imul(this._this$0_28._width_0, 2));
+    return Companion_getInstance_58().invoke_spsmd3_k$(imul(this._this$0_28._width_0, 2));
   };
   _no_name_provided__164.prototype.invoke_0_k$ = function () {
     return new RgbaArray(this.invoke_wd8tzq_k$());
@@ -36456,7 +36527,7 @@
   }
   function Bitmap32_init_$Init$(width, height, data, premultiplied, $mask0, $marker, $this) {
     if (!(($mask0 & 4) === 0))
-      data = Companion_getInstance_57().invoke_spsmd3_k$(imul(width, height));
+      data = Companion_getInstance_58().invoke_spsmd3_k$(imul(width, height));
     if (!(($mask0 & 8) === 0))
       premultiplied = false;
     Bitmap32.call($this, width, height, data, premultiplied);
@@ -36465,36 +36536,36 @@
   function Bitmap32_init_$Create$(width, height, data, premultiplied, $mask0, $marker) {
     return Bitmap32_init_$Init$(width, height, data, premultiplied, $mask0, $marker, Object.create(Bitmap32.prototype));
   }
-  function Companion_55() {
-    Companion_instance_54 = this;
+  function Companion_56() {
+    Companion_instance_55 = this;
   }
-  Companion_55.$metadata$ = {
+  Companion_56.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_54;
-  function Companion_getInstance_54() {
-    if (Companion_instance_54 == null)
-      new Companion_55();
-    return Companion_instance_54;
+  var Companion_instance_55;
+  function Companion_getInstance_55() {
+    if (Companion_instance_55 == null)
+      new Companion_56();
+    return Companion_instance_55;
   }
   function Bitmap32(width, height, data, premultiplied) {
-    Companion_getInstance_54();
+    Companion_getInstance_55();
     Bitmap.call(this, width, height, 32, premultiplied, new RgbaArray(data));
     this._data_8 = data;
     this._dataPremult = _RgbaPremultipliedArray___init__impl_(_RgbaArray___get_ints__impl_(this._data_8));
     if (_RgbaArray___get_size__impl_(this._data_8) < imul(width, height))
       throw RuntimeException_init_$Create$('' + 'Bitmap data is too short: width=' + width + ', height=' + height + ', data=ByteArray(' + _RgbaArray___get_size__impl_(this._data_8) + '), area=' + imul(width, height));
     var tmp = this;
-    var tmp_0 = Companion_getInstance_57();
+    var tmp_0 = Companion_getInstance_58();
     var tmp$ret$0;
     $l$block: {
       tmp$ret$0 = Math.max(width, height);
       break $l$block;
     }
     tmp._temp_0 = tmp_0.invoke_spsmd3_k$(tmp$ret$0);
-    this._bounds = new RectangleInt(Companion_getInstance_46().invoke_ihmn6a_k$(0, 0, width, height));
+    this._bounds = new RectangleInt(Companion_getInstance_47().invoke_ihmn6a_k$(0, 0, width, height));
   }
   Bitmap32.prototype.set_5mmwyp_k$ = function (x, y, color) {
     RgbaArray__set_impl(this._data_8, this.index_27zxwg_k$(x, y), color);
@@ -36759,29 +36830,29 @@
     if (!(($mask0 & 4) === 0))
       data = new Int8Array(imul(width, height));
     if (!(($mask0 & 8) === 0))
-      palette = Companion_getInstance_57().invoke_spsmd3_k$(256);
+      palette = Companion_getInstance_58().invoke_spsmd3_k$(256);
     Bitmap8.call($this, width, height, data, palette);
     return $this;
   }
   function Bitmap8_init_$Create$(width, height, data, palette, $mask0, $marker) {
     return Bitmap8_init_$Init$(width, height, data, palette, $mask0, $marker, Object.create(Bitmap8.prototype));
   }
-  function Companion_56() {
-    Companion_instance_55 = this;
+  function Companion_57() {
+    Companion_instance_56 = this;
   }
-  Companion_56.$metadata$ = {
+  Companion_57.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_55;
-  function Companion_getInstance_55() {
-    if (Companion_instance_55 == null)
-      new Companion_56();
-    return Companion_instance_55;
+  var Companion_instance_56;
+  function Companion_getInstance_56() {
+    if (Companion_instance_56 == null)
+      new Companion_57();
+    return Companion_instance_56;
   }
   function Bitmap8(width, height, data, palette) {
-    Companion_getInstance_55();
+    Companion_getInstance_56();
     BitmapIndexed.call(this, 8, width, height, data, palette);
   }
   Bitmap8.prototype.setInt_zd700_k$ = function (x, y, color) {
@@ -36962,7 +37033,7 @@
     tmp._$$delegate_0_4 = Mixin_init_$Create$(null, 1, null);
   }
   BitmapSlice.prototype.toString = function () {
-    return '' + 'BitmapSlice(' + this._get_name__0_k$() + ':' + new SizeInt(Companion_getInstance_48().invoke_aaxa64_k$(_RectangleInt___get_width__impl_(this._get_bounds__t4v1qq_k$()), _RectangleInt___get_height__impl_(this._get_bounds__t4v1qq_k$()))) + ')';
+    return '' + 'BitmapSlice(' + this._get_name__0_k$() + ':' + new SizeInt(Companion_getInstance_49().invoke_aaxa64_k$(_RectangleInt___get_width__impl_(this._get_bounds__t4v1qq_k$()), _RectangleInt___get_height__impl_(this._get_bounds__t4v1qq_k$()))) + ')';
   };
   BitmapSlice.$metadata$ = {
     simpleName: 'BitmapSlice',
@@ -36974,7 +37045,7 @@
   }
   function slice$default(_this_, bounds, name, $mask0, $handler) {
     if (!(($mask0 & 1) === 0))
-      bounds = Companion_getInstance_46().invoke_ihmn6a_k$(0, 0, _this_._width_0, _this_._height_0);
+      bounds = Companion_getInstance_47().invoke_ihmn6a_k$(0, 0, _this_._width_0, _this_._height_0);
     if (!(($mask0 & 2) === 0))
       name = null;
     return slice(_this_, bounds, name);
@@ -37120,7 +37191,7 @@
   function Bitmaps_white$init$() {
     var tmp$ret$2;
     $l$block_1: {
-      var tmp1_invoke_0 = Companion_getInstance_57();
+      var tmp1_invoke_0 = Companion_getInstance_58();
       var tmp$ret$1;
       $l$block_0: {
         var tmp0_apply_0 = _RgbaArray___init__impl_(new Int32Array(1));
@@ -37289,7 +37360,7 @@
           io_1 = io_1 + Bpp_5 | 0;
           var tmp1_9 = oo_2;
           oo_2 = tmp1_9 + 1 | 0;
-          RgbaArray__set_impl(outdata_4, tmp1_9, Companion_getInstance_58().invoke_fnl2i9_k$(_this_.getR_ha5a7z_k$(c_8), _this_.getG_ha5a7z_k$(c_8), _this_.getB_ha5a7z_k$(c_8), _this_.getA_ha5a7z_k$(c_8)));
+          RgbaArray__set_impl(outdata_4, tmp1_9, Companion_getInstance_59().invoke_fnl2i9_k$(_this_.getR_ha5a7z_k$(c_8), _this_.getG_ha5a7z_k$(c_8), _this_.getB_ha5a7z_k$(c_8), _this_.getA_ha5a7z_k$(c_8)));
         }
          while (inductionVariable < size_0);
     }
@@ -37507,153 +37578,153 @@
   }
   function Colors() {
     Colors_instance = this;
-    this._WHITE = Companion_getInstance_58().invoke_fnl2i9_k$(255, 255, 255, 255);
-    this._BLACK = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255);
-    this._RED = Companion_getInstance_58().invoke_fnl2i9_k$(255, 0, 0, 255);
-    this._GREEN = Companion_getInstance_58().invoke_fnl2i9_k$(0, 255, 0, 255);
-    this._BLUE = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 255, 255);
-    this._TRANSPARENT_BLACK = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
-    this._TRANSPARENT_WHITE = Companion_getInstance_58().invoke_fnl2i9_k$(255, 255, 255, 0);
-    this._ALICEBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(240, 248, 255);
-    this._ANTIQUEWHITE = Companion_getInstance_58().invoke_6v5qfk_k$(250, 235, 215);
-    this._AQUA = Companion_getInstance_58().invoke_6v5qfk_k$(0, 255, 255);
-    this._AQUAMARINE = Companion_getInstance_58().invoke_6v5qfk_k$(127, 255, 212);
-    this._AZURE = Companion_getInstance_58().invoke_6v5qfk_k$(240, 255, 255);
-    this._BEIGE = Companion_getInstance_58().invoke_6v5qfk_k$(245, 245, 220);
-    this._BISQUE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 228, 196);
-    this._BLANCHEDALMOND = Companion_getInstance_58().invoke_6v5qfk_k$(255, 235, 205);
-    this._BLUEVIOLET = Companion_getInstance_58().invoke_6v5qfk_k$(138, 43, 226);
-    this._BROWN = Companion_getInstance_58().invoke_6v5qfk_k$(165, 42, 42);
-    this._BURLYWOOD = Companion_getInstance_58().invoke_6v5qfk_k$(222, 184, 135);
-    this._CADETBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(95, 158, 160);
-    this._CHARTREUSE = Companion_getInstance_58().invoke_6v5qfk_k$(127, 255, 0);
-    this._CHOCOLATE = Companion_getInstance_58().invoke_6v5qfk_k$(210, 105, 30);
-    this._CORAL = Companion_getInstance_58().invoke_6v5qfk_k$(255, 127, 80);
-    this._CORNFLOWERBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(100, 149, 237);
-    this._CORNSILK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 248, 220);
-    this._CRIMSON = Companion_getInstance_58().invoke_6v5qfk_k$(220, 20, 60);
-    this._DARKBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 139);
-    this._CYAN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 255, 255);
-    this._DARKCYAN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 139, 139);
-    this._DARKGOLDENROD = Companion_getInstance_58().invoke_6v5qfk_k$(184, 134, 11);
-    this._DARKGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(169, 169, 169);
-    this._DARKGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 100, 0);
-    this._DARKGREY = Companion_getInstance_58().invoke_6v5qfk_k$(169, 169, 169);
-    this._DARKKHAKI = Companion_getInstance_58().invoke_6v5qfk_k$(189, 183, 107);
-    this._MAGENTA = Companion_getInstance_58().invoke_6v5qfk_k$(255, 0, 255);
-    this._DARKMAGENTA = Companion_getInstance_58().invoke_6v5qfk_k$(139, 0, 139);
-    this._DARKOLIVEGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(85, 107, 47);
-    this._DARKORANGE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 140, 0);
-    this._DARKORCHID = Companion_getInstance_58().invoke_6v5qfk_k$(153, 50, 204);
-    this._DARKRED = Companion_getInstance_58().invoke_6v5qfk_k$(139, 0, 0);
-    this._DARKSALMON = Companion_getInstance_58().invoke_6v5qfk_k$(233, 150, 122);
-    this._DARKSEAGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(143, 188, 143);
-    this._DARKSLATEBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(72, 61, 139);
-    this._DARKSLATEGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(47, 79, 79);
-    this._DARKSLATEGREY = Companion_getInstance_58().invoke_6v5qfk_k$(47, 79, 79);
-    this._DARKTURQUOISE = Companion_getInstance_58().invoke_6v5qfk_k$(0, 206, 209);
-    this._DARKVIOLET = Companion_getInstance_58().invoke_6v5qfk_k$(148, 0, 211);
-    this._DEEPPINK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 20, 147);
-    this._DEEPSKYBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(0, 191, 255);
-    this._DIMGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(105, 105, 105);
-    this._DIMGREY = Companion_getInstance_58().invoke_6v5qfk_k$(105, 105, 105);
-    this._DODGERBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(30, 144, 255);
-    this._FIREBRICK = Companion_getInstance_58().invoke_6v5qfk_k$(178, 34, 34);
-    this._FLORALWHITE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 250, 240);
-    this._FORESTGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(34, 139, 34);
-    this._FUCHSIA = Companion_getInstance_58().invoke_6v5qfk_k$(255, 0, 255);
-    this._GAINSBORO = Companion_getInstance_58().invoke_6v5qfk_k$(220, 220, 220);
-    this._GHOSTWHITE = Companion_getInstance_58().invoke_6v5qfk_k$(248, 248, 255);
-    this._GOLD = Companion_getInstance_58().invoke_6v5qfk_k$(255, 215, 0);
-    this._GOLDENROD = Companion_getInstance_58().invoke_6v5qfk_k$(218, 165, 32);
-    this._GREENYELLOW = Companion_getInstance_58().invoke_6v5qfk_k$(173, 255, 47);
-    this._HONEYDEW = Companion_getInstance_58().invoke_6v5qfk_k$(240, 255, 240);
-    this._HOTPINK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 105, 180);
-    this._INDIANRED = Companion_getInstance_58().invoke_6v5qfk_k$(205, 92, 92);
-    this._INDIGO = Companion_getInstance_58().invoke_6v5qfk_k$(75, 0, 130);
-    this._IVORY = Companion_getInstance_58().invoke_6v5qfk_k$(255, 255, 240);
-    this._KHAKI = Companion_getInstance_58().invoke_6v5qfk_k$(240, 230, 140);
-    this._LAVENDER = Companion_getInstance_58().invoke_6v5qfk_k$(230, 230, 250);
-    this._LAVENDERBLUSH = Companion_getInstance_58().invoke_6v5qfk_k$(255, 240, 245);
-    this._LAWNGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(124, 252, 0);
-    this._LEMONCHIFFON = Companion_getInstance_58().invoke_6v5qfk_k$(255, 250, 205);
-    this._LIGHTBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(173, 216, 230);
-    this._LIGHTCORAL = Companion_getInstance_58().invoke_6v5qfk_k$(240, 128, 128);
-    this._LIGHTCYAN = Companion_getInstance_58().invoke_6v5qfk_k$(224, 255, 255);
-    this._LIGHTGOLDENRODYELLOW = Companion_getInstance_58().invoke_6v5qfk_k$(250, 250, 210);
-    this._LIGHTGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(211, 211, 211);
-    this._LIGHTGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(144, 238, 144);
-    this._LIGHTGREY = Companion_getInstance_58().invoke_6v5qfk_k$(211, 211, 211);
-    this._LIGHTPINK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 182, 193);
-    this._LIGHTSALMON = Companion_getInstance_58().invoke_6v5qfk_k$(255, 160, 122);
-    this._LIGHTSEAGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(32, 178, 170);
-    this._LIGHTSKYBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(135, 206, 250);
-    this._LIGHTSLATEGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(119, 136, 153);
-    this._LIGHTSLATEGREY = Companion_getInstance_58().invoke_6v5qfk_k$(119, 136, 153);
-    this._LIGHTSTEELBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(176, 196, 222);
-    this._LIGHTYELLOW = Companion_getInstance_58().invoke_6v5qfk_k$(255, 255, 224);
-    this._LIME = Companion_getInstance_58().invoke_6v5qfk_k$(0, 255, 0);
-    this._LIMEGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(50, 205, 50);
-    this._LINEN = Companion_getInstance_58().invoke_6v5qfk_k$(250, 240, 230);
-    this._MAROON = Companion_getInstance_58().invoke_6v5qfk_k$(128, 0, 0);
-    this._MEDIUMAQUAMARINE = Companion_getInstance_58().invoke_6v5qfk_k$(102, 205, 170);
-    this._MEDIUMBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 205);
-    this._MEDIUMORCHID = Companion_getInstance_58().invoke_6v5qfk_k$(186, 85, 211);
-    this._MEDIUMPURPLE = Companion_getInstance_58().invoke_6v5qfk_k$(147, 112, 219);
-    this._MEDIUMSEAGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(60, 179, 113);
-    this._MEDIUMSLATEBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(123, 104, 238);
-    this._MEDIUMSPRINGGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 250, 154);
-    this._MEDIUMTURQUOISE = Companion_getInstance_58().invoke_6v5qfk_k$(72, 209, 204);
-    this._MEDIUMVIOLETRED = Companion_getInstance_58().invoke_6v5qfk_k$(199, 21, 133);
-    this._MIDNIGHTBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(25, 25, 112);
-    this._MINTCREAM = Companion_getInstance_58().invoke_6v5qfk_k$(245, 255, 250);
-    this._MISTYROSE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 228, 225);
-    this._MOCCASIN = Companion_getInstance_58().invoke_6v5qfk_k$(255, 228, 181);
-    this._NAVAJOWHITE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 222, 173);
-    this._NAVY = Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 128);
-    this._OLDLACE = Companion_getInstance_58().invoke_6v5qfk_k$(253, 245, 230);
-    this._OLIVE = Companion_getInstance_58().invoke_6v5qfk_k$(128, 128, 0);
-    this._OLIVEDRAB = Companion_getInstance_58().invoke_6v5qfk_k$(107, 142, 35);
-    this._ORANGE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 165, 0);
-    this._ORANGERED = Companion_getInstance_58().invoke_6v5qfk_k$(255, 69, 0);
-    this._ORCHID = Companion_getInstance_58().invoke_6v5qfk_k$(218, 112, 214);
-    this._PALEGOLDENROD = Companion_getInstance_58().invoke_6v5qfk_k$(238, 232, 170);
-    this._PALEGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(152, 251, 152);
-    this._PALETURQUOISE = Companion_getInstance_58().invoke_6v5qfk_k$(175, 238, 238);
-    this._PALEVIOLETRED = Companion_getInstance_58().invoke_6v5qfk_k$(219, 112, 147);
-    this._PAPAYAWHIP = Companion_getInstance_58().invoke_6v5qfk_k$(255, 239, 213);
-    this._PEACHPUFF = Companion_getInstance_58().invoke_6v5qfk_k$(255, 218, 185);
-    this._PERU = Companion_getInstance_58().invoke_6v5qfk_k$(205, 133, 63);
-    this._PINK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 192, 203);
-    this._PLUM = Companion_getInstance_58().invoke_6v5qfk_k$(221, 160, 221);
-    this._POWDERBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(176, 224, 230);
-    this._PURPLE = Companion_getInstance_58().invoke_6v5qfk_k$(128, 0, 128);
-    this._ROSYBROWN = Companion_getInstance_58().invoke_6v5qfk_k$(188, 143, 143);
-    this._ROYALBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(65, 105, 225);
-    this._SADDLEBROWN = Companion_getInstance_58().invoke_6v5qfk_k$(139, 69, 19);
-    this._SALMON = Companion_getInstance_58().invoke_6v5qfk_k$(250, 128, 114);
-    this._SANDYBROWN = Companion_getInstance_58().invoke_6v5qfk_k$(244, 164, 96);
-    this._SEAGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(46, 139, 87);
-    this._SEASHELL = Companion_getInstance_58().invoke_6v5qfk_k$(255, 245, 238);
-    this._SIENNA = Companion_getInstance_58().invoke_6v5qfk_k$(160, 82, 45);
-    this._SILVER = Companion_getInstance_58().invoke_6v5qfk_k$(192, 192, 192);
-    this._SKYBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(135, 206, 235);
-    this._SLATEBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(106, 90, 205);
-    this._SLATEGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(112, 128, 144);
-    this._SLATEGREY = Companion_getInstance_58().invoke_6v5qfk_k$(112, 128, 144);
-    this._SNOW = Companion_getInstance_58().invoke_6v5qfk_k$(255, 250, 250);
-    this._SPRINGGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 255, 127);
-    this._STEELBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(70, 130, 180);
-    this._TAN = Companion_getInstance_58().invoke_6v5qfk_k$(210, 180, 140);
-    this._TEAL = Companion_getInstance_58().invoke_6v5qfk_k$(0, 128, 128);
-    this._THISTLE = Companion_getInstance_58().invoke_6v5qfk_k$(216, 191, 216);
-    this._TOMATO = Companion_getInstance_58().invoke_6v5qfk_k$(255, 99, 71);
-    this._TURQUOISE = Companion_getInstance_58().invoke_6v5qfk_k$(64, 224, 208);
-    this._VIOLET = Companion_getInstance_58().invoke_6v5qfk_k$(238, 130, 238);
-    this._WHEAT = Companion_getInstance_58().invoke_6v5qfk_k$(245, 222, 179);
-    this._WHITESMOKE = Companion_getInstance_58().invoke_6v5qfk_k$(245, 245, 245);
-    this._YELLOWGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(154, 205, 50);
-    this._YELLOW = Companion_getInstance_58().invoke_6v5qfk_k$(255, 255, 0);
+    this._WHITE = Companion_getInstance_59().invoke_fnl2i9_k$(255, 255, 255, 255);
+    this._BLACK = Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 255);
+    this._RED = Companion_getInstance_59().invoke_fnl2i9_k$(255, 0, 0, 255);
+    this._GREEN = Companion_getInstance_59().invoke_fnl2i9_k$(0, 255, 0, 255);
+    this._BLUE = Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 255, 255);
+    this._TRANSPARENT_BLACK = Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 0);
+    this._TRANSPARENT_WHITE = Companion_getInstance_59().invoke_fnl2i9_k$(255, 255, 255, 0);
+    this._ALICEBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(240, 248, 255);
+    this._ANTIQUEWHITE = Companion_getInstance_59().invoke_6v5qfk_k$(250, 235, 215);
+    this._AQUA = Companion_getInstance_59().invoke_6v5qfk_k$(0, 255, 255);
+    this._AQUAMARINE = Companion_getInstance_59().invoke_6v5qfk_k$(127, 255, 212);
+    this._AZURE = Companion_getInstance_59().invoke_6v5qfk_k$(240, 255, 255);
+    this._BEIGE = Companion_getInstance_59().invoke_6v5qfk_k$(245, 245, 220);
+    this._BISQUE = Companion_getInstance_59().invoke_6v5qfk_k$(255, 228, 196);
+    this._BLANCHEDALMOND = Companion_getInstance_59().invoke_6v5qfk_k$(255, 235, 205);
+    this._BLUEVIOLET = Companion_getInstance_59().invoke_6v5qfk_k$(138, 43, 226);
+    this._BROWN = Companion_getInstance_59().invoke_6v5qfk_k$(165, 42, 42);
+    this._BURLYWOOD = Companion_getInstance_59().invoke_6v5qfk_k$(222, 184, 135);
+    this._CADETBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(95, 158, 160);
+    this._CHARTREUSE = Companion_getInstance_59().invoke_6v5qfk_k$(127, 255, 0);
+    this._CHOCOLATE = Companion_getInstance_59().invoke_6v5qfk_k$(210, 105, 30);
+    this._CORAL = Companion_getInstance_59().invoke_6v5qfk_k$(255, 127, 80);
+    this._CORNFLOWERBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(100, 149, 237);
+    this._CORNSILK = Companion_getInstance_59().invoke_6v5qfk_k$(255, 248, 220);
+    this._CRIMSON = Companion_getInstance_59().invoke_6v5qfk_k$(220, 20, 60);
+    this._DARKBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(0, 0, 139);
+    this._CYAN = Companion_getInstance_59().invoke_6v5qfk_k$(0, 255, 255);
+    this._DARKCYAN = Companion_getInstance_59().invoke_6v5qfk_k$(0, 139, 139);
+    this._DARKGOLDENROD = Companion_getInstance_59().invoke_6v5qfk_k$(184, 134, 11);
+    this._DARKGRAY = Companion_getInstance_59().invoke_6v5qfk_k$(169, 169, 169);
+    this._DARKGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(0, 100, 0);
+    this._DARKGREY = Companion_getInstance_59().invoke_6v5qfk_k$(169, 169, 169);
+    this._DARKKHAKI = Companion_getInstance_59().invoke_6v5qfk_k$(189, 183, 107);
+    this._MAGENTA = Companion_getInstance_59().invoke_6v5qfk_k$(255, 0, 255);
+    this._DARKMAGENTA = Companion_getInstance_59().invoke_6v5qfk_k$(139, 0, 139);
+    this._DARKOLIVEGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(85, 107, 47);
+    this._DARKORANGE = Companion_getInstance_59().invoke_6v5qfk_k$(255, 140, 0);
+    this._DARKORCHID = Companion_getInstance_59().invoke_6v5qfk_k$(153, 50, 204);
+    this._DARKRED = Companion_getInstance_59().invoke_6v5qfk_k$(139, 0, 0);
+    this._DARKSALMON = Companion_getInstance_59().invoke_6v5qfk_k$(233, 150, 122);
+    this._DARKSEAGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(143, 188, 143);
+    this._DARKSLATEBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(72, 61, 139);
+    this._DARKSLATEGRAY = Companion_getInstance_59().invoke_6v5qfk_k$(47, 79, 79);
+    this._DARKSLATEGREY = Companion_getInstance_59().invoke_6v5qfk_k$(47, 79, 79);
+    this._DARKTURQUOISE = Companion_getInstance_59().invoke_6v5qfk_k$(0, 206, 209);
+    this._DARKVIOLET = Companion_getInstance_59().invoke_6v5qfk_k$(148, 0, 211);
+    this._DEEPPINK = Companion_getInstance_59().invoke_6v5qfk_k$(255, 20, 147);
+    this._DEEPSKYBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(0, 191, 255);
+    this._DIMGRAY = Companion_getInstance_59().invoke_6v5qfk_k$(105, 105, 105);
+    this._DIMGREY = Companion_getInstance_59().invoke_6v5qfk_k$(105, 105, 105);
+    this._DODGERBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(30, 144, 255);
+    this._FIREBRICK = Companion_getInstance_59().invoke_6v5qfk_k$(178, 34, 34);
+    this._FLORALWHITE = Companion_getInstance_59().invoke_6v5qfk_k$(255, 250, 240);
+    this._FORESTGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(34, 139, 34);
+    this._FUCHSIA = Companion_getInstance_59().invoke_6v5qfk_k$(255, 0, 255);
+    this._GAINSBORO = Companion_getInstance_59().invoke_6v5qfk_k$(220, 220, 220);
+    this._GHOSTWHITE = Companion_getInstance_59().invoke_6v5qfk_k$(248, 248, 255);
+    this._GOLD = Companion_getInstance_59().invoke_6v5qfk_k$(255, 215, 0);
+    this._GOLDENROD = Companion_getInstance_59().invoke_6v5qfk_k$(218, 165, 32);
+    this._GREENYELLOW = Companion_getInstance_59().invoke_6v5qfk_k$(173, 255, 47);
+    this._HONEYDEW = Companion_getInstance_59().invoke_6v5qfk_k$(240, 255, 240);
+    this._HOTPINK = Companion_getInstance_59().invoke_6v5qfk_k$(255, 105, 180);
+    this._INDIANRED = Companion_getInstance_59().invoke_6v5qfk_k$(205, 92, 92);
+    this._INDIGO = Companion_getInstance_59().invoke_6v5qfk_k$(75, 0, 130);
+    this._IVORY = Companion_getInstance_59().invoke_6v5qfk_k$(255, 255, 240);
+    this._KHAKI = Companion_getInstance_59().invoke_6v5qfk_k$(240, 230, 140);
+    this._LAVENDER = Companion_getInstance_59().invoke_6v5qfk_k$(230, 230, 250);
+    this._LAVENDERBLUSH = Companion_getInstance_59().invoke_6v5qfk_k$(255, 240, 245);
+    this._LAWNGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(124, 252, 0);
+    this._LEMONCHIFFON = Companion_getInstance_59().invoke_6v5qfk_k$(255, 250, 205);
+    this._LIGHTBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(173, 216, 230);
+    this._LIGHTCORAL = Companion_getInstance_59().invoke_6v5qfk_k$(240, 128, 128);
+    this._LIGHTCYAN = Companion_getInstance_59().invoke_6v5qfk_k$(224, 255, 255);
+    this._LIGHTGOLDENRODYELLOW = Companion_getInstance_59().invoke_6v5qfk_k$(250, 250, 210);
+    this._LIGHTGRAY = Companion_getInstance_59().invoke_6v5qfk_k$(211, 211, 211);
+    this._LIGHTGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(144, 238, 144);
+    this._LIGHTGREY = Companion_getInstance_59().invoke_6v5qfk_k$(211, 211, 211);
+    this._LIGHTPINK = Companion_getInstance_59().invoke_6v5qfk_k$(255, 182, 193);
+    this._LIGHTSALMON = Companion_getInstance_59().invoke_6v5qfk_k$(255, 160, 122);
+    this._LIGHTSEAGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(32, 178, 170);
+    this._LIGHTSKYBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(135, 206, 250);
+    this._LIGHTSLATEGRAY = Companion_getInstance_59().invoke_6v5qfk_k$(119, 136, 153);
+    this._LIGHTSLATEGREY = Companion_getInstance_59().invoke_6v5qfk_k$(119, 136, 153);
+    this._LIGHTSTEELBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(176, 196, 222);
+    this._LIGHTYELLOW = Companion_getInstance_59().invoke_6v5qfk_k$(255, 255, 224);
+    this._LIME = Companion_getInstance_59().invoke_6v5qfk_k$(0, 255, 0);
+    this._LIMEGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(50, 205, 50);
+    this._LINEN = Companion_getInstance_59().invoke_6v5qfk_k$(250, 240, 230);
+    this._MAROON = Companion_getInstance_59().invoke_6v5qfk_k$(128, 0, 0);
+    this._MEDIUMAQUAMARINE = Companion_getInstance_59().invoke_6v5qfk_k$(102, 205, 170);
+    this._MEDIUMBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(0, 0, 205);
+    this._MEDIUMORCHID = Companion_getInstance_59().invoke_6v5qfk_k$(186, 85, 211);
+    this._MEDIUMPURPLE = Companion_getInstance_59().invoke_6v5qfk_k$(147, 112, 219);
+    this._MEDIUMSEAGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(60, 179, 113);
+    this._MEDIUMSLATEBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(123, 104, 238);
+    this._MEDIUMSPRINGGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(0, 250, 154);
+    this._MEDIUMTURQUOISE = Companion_getInstance_59().invoke_6v5qfk_k$(72, 209, 204);
+    this._MEDIUMVIOLETRED = Companion_getInstance_59().invoke_6v5qfk_k$(199, 21, 133);
+    this._MIDNIGHTBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(25, 25, 112);
+    this._MINTCREAM = Companion_getInstance_59().invoke_6v5qfk_k$(245, 255, 250);
+    this._MISTYROSE = Companion_getInstance_59().invoke_6v5qfk_k$(255, 228, 225);
+    this._MOCCASIN = Companion_getInstance_59().invoke_6v5qfk_k$(255, 228, 181);
+    this._NAVAJOWHITE = Companion_getInstance_59().invoke_6v5qfk_k$(255, 222, 173);
+    this._NAVY = Companion_getInstance_59().invoke_6v5qfk_k$(0, 0, 128);
+    this._OLDLACE = Companion_getInstance_59().invoke_6v5qfk_k$(253, 245, 230);
+    this._OLIVE = Companion_getInstance_59().invoke_6v5qfk_k$(128, 128, 0);
+    this._OLIVEDRAB = Companion_getInstance_59().invoke_6v5qfk_k$(107, 142, 35);
+    this._ORANGE = Companion_getInstance_59().invoke_6v5qfk_k$(255, 165, 0);
+    this._ORANGERED = Companion_getInstance_59().invoke_6v5qfk_k$(255, 69, 0);
+    this._ORCHID = Companion_getInstance_59().invoke_6v5qfk_k$(218, 112, 214);
+    this._PALEGOLDENROD = Companion_getInstance_59().invoke_6v5qfk_k$(238, 232, 170);
+    this._PALEGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(152, 251, 152);
+    this._PALETURQUOISE = Companion_getInstance_59().invoke_6v5qfk_k$(175, 238, 238);
+    this._PALEVIOLETRED = Companion_getInstance_59().invoke_6v5qfk_k$(219, 112, 147);
+    this._PAPAYAWHIP = Companion_getInstance_59().invoke_6v5qfk_k$(255, 239, 213);
+    this._PEACHPUFF = Companion_getInstance_59().invoke_6v5qfk_k$(255, 218, 185);
+    this._PERU = Companion_getInstance_59().invoke_6v5qfk_k$(205, 133, 63);
+    this._PINK = Companion_getInstance_59().invoke_6v5qfk_k$(255, 192, 203);
+    this._PLUM = Companion_getInstance_59().invoke_6v5qfk_k$(221, 160, 221);
+    this._POWDERBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(176, 224, 230);
+    this._PURPLE = Companion_getInstance_59().invoke_6v5qfk_k$(128, 0, 128);
+    this._ROSYBROWN = Companion_getInstance_59().invoke_6v5qfk_k$(188, 143, 143);
+    this._ROYALBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(65, 105, 225);
+    this._SADDLEBROWN = Companion_getInstance_59().invoke_6v5qfk_k$(139, 69, 19);
+    this._SALMON = Companion_getInstance_59().invoke_6v5qfk_k$(250, 128, 114);
+    this._SANDYBROWN = Companion_getInstance_59().invoke_6v5qfk_k$(244, 164, 96);
+    this._SEAGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(46, 139, 87);
+    this._SEASHELL = Companion_getInstance_59().invoke_6v5qfk_k$(255, 245, 238);
+    this._SIENNA = Companion_getInstance_59().invoke_6v5qfk_k$(160, 82, 45);
+    this._SILVER = Companion_getInstance_59().invoke_6v5qfk_k$(192, 192, 192);
+    this._SKYBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(135, 206, 235);
+    this._SLATEBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(106, 90, 205);
+    this._SLATEGRAY = Companion_getInstance_59().invoke_6v5qfk_k$(112, 128, 144);
+    this._SLATEGREY = Companion_getInstance_59().invoke_6v5qfk_k$(112, 128, 144);
+    this._SNOW = Companion_getInstance_59().invoke_6v5qfk_k$(255, 250, 250);
+    this._SPRINGGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(0, 255, 127);
+    this._STEELBLUE = Companion_getInstance_59().invoke_6v5qfk_k$(70, 130, 180);
+    this._TAN = Companion_getInstance_59().invoke_6v5qfk_k$(210, 180, 140);
+    this._TEAL = Companion_getInstance_59().invoke_6v5qfk_k$(0, 128, 128);
+    this._THISTLE = Companion_getInstance_59().invoke_6v5qfk_k$(216, 191, 216);
+    this._TOMATO = Companion_getInstance_59().invoke_6v5qfk_k$(255, 99, 71);
+    this._TURQUOISE = Companion_getInstance_59().invoke_6v5qfk_k$(64, 224, 208);
+    this._VIOLET = Companion_getInstance_59().invoke_6v5qfk_k$(238, 130, 238);
+    this._WHEAT = Companion_getInstance_59().invoke_6v5qfk_k$(245, 222, 179);
+    this._WHITESMOKE = Companion_getInstance_59().invoke_6v5qfk_k$(245, 245, 245);
+    this._YELLOWGREEN = Companion_getInstance_59().invoke_6v5qfk_k$(154, 205, 50);
+    this._YELLOW = Companion_getInstance_59().invoke_6v5qfk_k$(255, 255, 0);
     this._colorsByName = mapOf([to('black', new RGBA(this._BLACK)), to('white', new RGBA(this._WHITE)), to('red', new RGBA(this._RED)), to('green', new RGBA(this._GREEN)), to('blue', new RGBA(this._BLUE)), to('aliceblue', new RGBA(this._ALICEBLUE)), to('antiquewhite', new RGBA(this._ANTIQUEWHITE)), to('aqua', new RGBA(this._AQUA)), to('aquamarine', new RGBA(this._AQUAMARINE)), to('azure', new RGBA(this._AZURE)), to('beige', new RGBA(this._BEIGE)), to('bisque', new RGBA(this._BISQUE)), to('blanchedalmond', new RGBA(this._BLANCHEDALMOND)), to('blueviolet', new RGBA(this._BLUEVIOLET)), to('brown', new RGBA(this._BROWN)), to('burlywood', new RGBA(this._BURLYWOOD)), to('cadetblue', new RGBA(this._CADETBLUE)), to('chartreuse', new RGBA(this._CHARTREUSE)), to('chocolate', new RGBA(this._CHOCOLATE)), to('coral', new RGBA(this._CORAL)), to('cornflowerblue', new RGBA(this._CORNFLOWERBLUE)), to('cornsilk', new RGBA(this._CORNSILK)), to('crimson', new RGBA(this._CRIMSON)), to('darkblue', new RGBA(this._DARKBLUE)), to('darkcyan', new RGBA(this._DARKCYAN)), to('darkgoldenrod', new RGBA(this._DARKGOLDENROD)), to('darkgray', new RGBA(this._DARKGRAY)), to('darkgreen', new RGBA(this._DARKGREEN)), to('darkgrey', new RGBA(this._DARKGREY)), to('darkkhaki', new RGBA(this._DARKKHAKI)), to('darkmagenta', new RGBA(this._DARKMAGENTA)), to('darkolivegreen', new RGBA(this._DARKOLIVEGREEN)), to('darkorange', new RGBA(this._DARKORANGE)), to('darkorchid', new RGBA(this._DARKORCHID)), to('darkred', new RGBA(this._DARKRED)), to('darksalmon', new RGBA(this._DARKSALMON)), to('darkseagreen', new RGBA(this._DARKSEAGREEN)), to('darkslateblue', new RGBA(this._DARKSLATEBLUE)), to('darkslategray', new RGBA(this._DARKSLATEGRAY)), to('darkslategrey', new RGBA(this._DARKSLATEGREY)), to('darkturquoise', new RGBA(this._DARKTURQUOISE)), to('darkviolet', new RGBA(this._DARKVIOLET)), to('deeppink', new RGBA(this._DEEPPINK)), to('deepskyblue', new RGBA(this._DEEPSKYBLUE)), to('dimgray', new RGBA(this._DIMGRAY)), to('dimgrey', new RGBA(this._DIMGREY)), to('dodgerblue', new RGBA(this._DODGERBLUE)), to('firebrick', new RGBA(this._FIREBRICK)), to('floralwhite', new RGBA(this._FLORALWHITE)), to('forestgreen', new RGBA(this._FORESTGREEN)), to('fuchsia', new RGBA(this._FUCHSIA)), to('gainsboro', new RGBA(this._GAINSBORO)), to('ghostwhite', new RGBA(this._GHOSTWHITE)), to('gold', new RGBA(this._GOLD)), to('goldenrod', new RGBA(this._GOLDENROD)), to('greenyellow', new RGBA(this._GREENYELLOW)), to('honeydew', new RGBA(this._HONEYDEW)), to('hotpink', new RGBA(this._HOTPINK)), to('indianred', new RGBA(this._INDIANRED)), to('indigo', new RGBA(this._INDIGO)), to('ivory', new RGBA(this._IVORY)), to('khaki', new RGBA(this._KHAKI)), to('lavender', new RGBA(this._LAVENDER)), to('lavenderblush', new RGBA(this._LAVENDERBLUSH)), to('lawngreen', new RGBA(this._LAWNGREEN)), to('lemonchiffon', new RGBA(this._LEMONCHIFFON)), to('lightblue', new RGBA(this._LIGHTBLUE)), to('lightcoral', new RGBA(this._LIGHTCORAL)), to('lightcyan', new RGBA(this._LIGHTCYAN)), to('lightgoldenrodyellow', new RGBA(this._LIGHTGOLDENRODYELLOW)), to('lightgray', new RGBA(this._LIGHTGRAY)), to('lightgreen', new RGBA(this._LIGHTGREEN)), to('lightgrey', new RGBA(this._LIGHTGREY)), to('lightpink', new RGBA(this._LIGHTPINK)), to('lightsalmon', new RGBA(this._LIGHTSALMON)), to('lightseagreen', new RGBA(this._LIGHTSEAGREEN)), to('lightskyblue', new RGBA(this._LIGHTSKYBLUE)), to('lightslategray', new RGBA(this._LIGHTSLATEGRAY)), to('lightslategrey', new RGBA(this._LIGHTSLATEGREY)), to('lightsteelblue', new RGBA(this._LIGHTSTEELBLUE)), to('lightyellow', new RGBA(this._LIGHTYELLOW)), to('lime', new RGBA(this._LIME)), to('limegreen', new RGBA(this._LIMEGREEN)), to('linen', new RGBA(this._LINEN)), to('maroon', new RGBA(this._MAROON)), to('mediumaquamarine', new RGBA(this._MEDIUMAQUAMARINE)), to('mediumblue', new RGBA(this._MEDIUMBLUE)), to('mediumorchid', new RGBA(this._MEDIUMORCHID)), to('mediumpurple', new RGBA(this._MEDIUMPURPLE)), to('mediumseagreen', new RGBA(this._MEDIUMSEAGREEN)), to('mediumslateblue', new RGBA(this._MEDIUMSLATEBLUE)), to('mediumspringgreen', new RGBA(this._MEDIUMSPRINGGREEN)), to('mediumturquoise', new RGBA(this._MEDIUMTURQUOISE)), to('mediumvioletred', new RGBA(this._MEDIUMVIOLETRED)), to('midnightblue', new RGBA(this._MIDNIGHTBLUE)), to('mintcream', new RGBA(this._MINTCREAM)), to('mistyrose', new RGBA(this._MISTYROSE)), to('moccasin', new RGBA(this._MOCCASIN)), to('navajowhite', new RGBA(this._NAVAJOWHITE)), to('navy', new RGBA(this._NAVY)), to('oldlace', new RGBA(this._OLDLACE)), to('olive', new RGBA(this._OLIVE)), to('olivedrab', new RGBA(this._OLIVEDRAB)), to('orange', new RGBA(this._ORANGE)), to('orangered', new RGBA(this._ORANGERED)), to('orchid', new RGBA(this._ORCHID)), to('palegoldenrod', new RGBA(this._PALEGOLDENROD)), to('palegreen', new RGBA(this._PALEGREEN)), to('paleturquoise', new RGBA(this._PALETURQUOISE)), to('palevioletred', new RGBA(this._PALEVIOLETRED)), to('papayawhip', new RGBA(this._PAPAYAWHIP)), to('peachpuff', new RGBA(this._PEACHPUFF)), to('peru', new RGBA(this._PERU)), to('pink', new RGBA(this._PINK)), to('plum', new RGBA(this._PLUM)), to('powderblue', new RGBA(this._POWDERBLUE)), to('purple', new RGBA(this._PURPLE)), to('rosybrown', new RGBA(this._ROSYBROWN)), to('royalblue', new RGBA(this._ROYALBLUE)), to('saddlebrown', new RGBA(this._SADDLEBROWN)), to('salmon', new RGBA(this._SALMON)), to('sandybrown', new RGBA(this._SANDYBROWN)), to('seagreen', new RGBA(this._SEAGREEN)), to('seashell', new RGBA(this._SEASHELL)), to('sienna', new RGBA(this._SIENNA)), to('silver', new RGBA(this._SILVER)), to('skyblue', new RGBA(this._SKYBLUE)), to('slateblue', new RGBA(this._SLATEBLUE)), to('slategray', new RGBA(this._SLATEGRAY)), to('slategrey', new RGBA(this._SLATEGREY)), to('snow', new RGBA(this._SNOW)), to('springgreen', new RGBA(this._SPRINGGREEN)), to('steelblue', new RGBA(this._STEELBLUE)), to('tan', new RGBA(this._TAN)), to('teal', new RGBA(this._TEAL)), to('thistle', new RGBA(this._THISTLE)), to('tomato', new RGBA(this._TOMATO)), to('turquoise', new RGBA(this._TURQUOISE)), to('violet', new RGBA(this._VIOLET)), to('wheat', new RGBA(this._WHEAT)), to('whitesmoke', new RGBA(this._WHITESMOKE)), to('yellowgreen', new RGBA(this._YELLOWGREEN)), to('yellow', new RGBA(this._YELLOW))]);
   }
   Colors.$metadata$ = {
@@ -37667,23 +37738,23 @@
       new Colors();
     return Colors_instance;
   }
-  function Companion_57() {
-    Companion_instance_56 = this;
+  function Companion_58() {
+    Companion_instance_57 = this;
     RGB.call(this, 0, 8, 16);
   }
-  Companion_57.$metadata$ = {
+  Companion_58.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_56;
-  function Companion_getInstance_56() {
-    if (Companion_instance_56 == null)
-      new Companion_57();
-    return Companion_instance_56;
+  var Companion_instance_57;
+  function Companion_getInstance_57() {
+    if (Companion_instance_57 == null)
+      new Companion_58();
+    return Companion_instance_57;
   }
   function RGB(rOffset, gOffset, bOffset) {
-    Companion_getInstance_56();
+    Companion_getInstance_57();
     ColorFormat24.call(this);
     this._rOffset_0 = rOffset;
     this._gOffset_0 = gOffset;
@@ -37730,22 +37801,22 @@
   function _RgbaArray___get_ints__impl_(this_0) {
     return this_0;
   }
-  function Companion_58() {
-    Companion_instance_57 = this;
+  function Companion_59() {
+    Companion_instance_58 = this;
   }
-  Companion_58.prototype.invoke_spsmd3_k$ = function (size_0) {
+  Companion_59.prototype.invoke_spsmd3_k$ = function (size_0) {
     return _RgbaArray___init__impl_(new Int32Array(size_0));
   };
-  Companion_58.$metadata$ = {
+  Companion_59.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_57;
-  function Companion_getInstance_57() {
-    if (Companion_instance_57 == null)
-      new Companion_58();
-    return Companion_instance_57;
+  var Companion_instance_58;
+  function Companion_getInstance_58() {
+    if (Companion_instance_58 == null)
+      new Companion_59();
+    return Companion_instance_58;
   }
   function RgbaArray__contains_impl(this_0, element) {
     return contains(_RgbaArray___get_ints__impl_(this_0), _RGBA___get_value__impl_(element));
@@ -37839,7 +37910,7 @@
     return true;
   }
   function RgbaArray(ints) {
-    Companion_getInstance_57();
+    Companion_getInstance_58();
     this._ints = ints;
   }
   RgbaArray.prototype.containsAll_qcv5i4_k$ = function (elements) {
@@ -37940,44 +38011,44 @@
     var G = imul(_RGBA___get_value__impl_(this_0) & 65280, A) >>> 8 & 65280;
     return _RGBAPremultiplied___init__impl_(_RGBA___get_value__impl_(this_0) & -16777216 | RB | G);
   }
-  function Companion_59() {
-    Companion_instance_58 = this;
+  function Companion_60() {
+    Companion_instance_59 = this;
     ColorFormat32.call(this);
   }
-  Companion_59.prototype.invoke_fnl2i9_k$ = function (r, g, b, a) {
+  Companion_60.prototype.invoke_fnl2i9_k$ = function (r, g, b, a) {
     return _RGBA___init__impl_(packIntClamped(r, g, b, a));
   };
-  Companion_59.prototype.invoke_6v5qfk_k$ = function (r, g, b) {
+  Companion_60.prototype.invoke_6v5qfk_k$ = function (r, g, b) {
     return _RGBA___init__impl_(packIntClamped(r, g, b, 255));
   };
-  Companion_59.prototype.invoke_aewswh_k$ = function (rgb, a) {
+  Companion_60.prototype.invoke_aewswh_k$ = function (rgb, a) {
     return _RGBA___init__impl_(rgb & 16777215 | a << 24);
   };
-  Companion_59.prototype.getR_ha5a7z_k$ = function (v) {
+  Companion_60.prototype.getR_ha5a7z_k$ = function (v) {
     return _RGBA___get_r__impl_(_RGBA___init__impl_(v));
   };
-  Companion_59.prototype.getG_ha5a7z_k$ = function (v) {
+  Companion_60.prototype.getG_ha5a7z_k$ = function (v) {
     return _RGBA___get_g__impl_(_RGBA___init__impl_(v));
   };
-  Companion_59.prototype.getB_ha5a7z_k$ = function (v) {
+  Companion_60.prototype.getB_ha5a7z_k$ = function (v) {
     return _RGBA___get_b__impl_(_RGBA___init__impl_(v));
   };
-  Companion_59.prototype.getA_ha5a7z_k$ = function (v) {
+  Companion_60.prototype.getA_ha5a7z_k$ = function (v) {
     return _RGBA___get_a__impl_(_RGBA___init__impl_(v));
   };
-  Companion_59.prototype.pack_w0xdj4_k$ = function (r, g, b, a) {
-    return _RGBA___get_value__impl_(Companion_getInstance_58().invoke_fnl2i9_k$(r, g, b, a));
+  Companion_60.prototype.pack_w0xdj4_k$ = function (r, g, b, a) {
+    return _RGBA___get_value__impl_(Companion_getInstance_59().invoke_fnl2i9_k$(r, g, b, a));
   };
-  Companion_59.$metadata$ = {
+  Companion_60.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_58;
-  function Companion_getInstance_58() {
-    if (Companion_instance_58 == null)
-      new Companion_59();
-    return Companion_instance_58;
+  var Companion_instance_59;
+  function Companion_getInstance_59() {
+    if (Companion_instance_59 == null)
+      new Companion_60();
+    return Companion_instance_59;
   }
   function RGBA__hashCode_impl(this_0) {
     return this_0;
@@ -37993,7 +38064,7 @@
     return true;
   }
   function RGBA(value) {
-    Companion_getInstance_58();
+    Companion_getInstance_59();
     this._value_12 = value;
   }
   RGBA.prototype.toString = function () {
@@ -38066,7 +38137,7 @@
     var R = numberToInt(_RGBAPremultiplied___get_r__impl_(this_0) * Af);
     var G = numberToInt(_RGBAPremultiplied___get_g__impl_(this_0) * Af);
     var B = numberToInt(_RGBAPremultiplied___get_b__impl_(this_0) * Af);
-    return Companion_getInstance_58().invoke_fnl2i9_k$(R, G, B, A);
+    return Companion_getInstance_59().invoke_fnl2i9_k$(R, G, B, A);
   }
   function asPremultiplied(_this_) {
     return _RGBAPremultiplied___init__impl_(_RGBA___get_value__impl_(_this_));
@@ -38114,7 +38185,7 @@
       var tmp$ret$1;
       $l$block_0: {
         var tmp0__get_microseconds__0_5 = end_3 - start_1;
-        tmp$ret$1 = Companion_getInstance_21().fromMicroseconds_ttklb2_k$(tmp0__get_microseconds__0_5);
+        tmp$ret$1 = Companion_getInstance_22().fromMicroseconds_ttklb2_k$(tmp0__get_microseconds__0_5);
         break $l$block_0;
       }
       var elapsed_4 = tmp$ret$1;
@@ -38141,7 +38212,7 @@
   }
   function DefaultTtfFontBytes$init$() {
     var tmp = fromBase64$default('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', false, 1, null);
-    var tmp_0 = Companion_getInstance_30();
+    var tmp_0 = Companion_getInstance_31();
     return uncompress$default(tmp, tmp_0, 0, 2, null);
   }
   function Font() {
@@ -39254,7 +39325,7 @@
       $l$block: {
         var size_2 = this._$this_11._unitsPerEm;
         var scale_3 = getTextScale(this._$this_11, size_2);
-        tmp$ret$0 = new GlyphMetrics(size_2, true, -1, Companion_getInstance_45().fromBounds_i6u10_k$(this._xMin * scale_3, this._yMin * scale_3, this._xMax * scale_3, this._yMax * scale_3), this._advanceWidth_0 * scale_3);
+        tmp$ret$0 = new GlyphMetrics(size_2, true, -1, Companion_getInstance_46().fromBounds_i6u10_k$(this._xMin * scale_3, this._yMin * scale_3, this._xMax * scale_3, this._yMax * scale_3), this._advanceWidth_0 * scale_3);
         break $l$block;
       }
       tmp$ret$1 = tmp$ret$0;
@@ -39692,7 +39763,7 @@
     this._maxSizeOfInstructions = 0;
     this._maxComponentElements = 0;
     this._maxComponentDepth = 0;
-    this._hheaVersion = Companion_getInstance_59().invoke_27zxwg_k$(0, 0);
+    this._hheaVersion = Companion_getInstance_60().invoke_27zxwg_k$(0, 0);
     this._ascender = 0;
     this._descender = 0;
     this._lineGap = 0;
@@ -39706,7 +39777,7 @@
     this._metricDataFormat = 0;
     this._numberOfHMetrics = 0;
     this._locs = new Int32Array(0);
-    this._fontRev = Companion_getInstance_59().invoke_27zxwg_k$(0, 0);
+    this._fontRev = Companion_getInstance_60().invoke_27zxwg_k$(0, 0);
     this._unitsPerEm = 128;
     this._xMin_0 = 0;
     this._yMin_0 = 0;
@@ -39775,7 +39846,7 @@
       break $l$block_2;
     }
     tmp_6._fontMetrics1px = tmp$ret$3;
-    this._nonExistantGlyphMetrics1px = new GlyphMetrics(1.0, false, 0, Companion_getInstance_45().invoke_0_k$(), 0.0);
+    this._nonExistantGlyphMetrics1px = new GlyphMetrics(1.0, false, 0, Companion_getInstance_46().invoke_0_k$(), 0.0);
   }
   TtfFont.prototype._get_ttfName__0_k$ = function () {
     var tmp0_elvis_lhs = this.getName_dde93m_k$(NameId_NAME_getInstance());
@@ -39790,7 +39861,7 @@
     return '' + 'TtfFont(name=' + this._get_name__0_k$() + ')';
   };
   TtfFont.prototype.readFixed_v83o64_k$ = function (_this__0) {
-    return Companion_getInstance_59().invoke_27zxwg_k$(_this__0.readS16LE_0_k$(), _this__0.readS16LE_0_k$());
+    return Companion_getInstance_60().invoke_27zxwg_k$(_this__0.readS16LE_0_k$(), _this__0.readS16LE_0_k$());
   };
   TtfFont.prototype.openTable_6wfw3l_k$ = function (name) {
     var tmp0_safe_receiver = this._tablesByName.get_2bw_k$(name);
@@ -39937,22 +40008,22 @@
     kind: 'class',
     interfaces: [VectorFont]
   };
-  function Companion_60() {
-    Companion_instance_59 = this;
+  function Companion_61() {
+    Companion_instance_60 = this;
   }
-  Companion_60.prototype.invoke_27zxwg_k$ = function (num, den) {
+  Companion_61.prototype.invoke_27zxwg_k$ = function (num, den) {
     return insert(insert(0, num, 0, 16), den, 16, 16);
   };
-  Companion_60.$metadata$ = {
+  Companion_61.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_59;
-  function Companion_getInstance_59() {
-    if (Companion_instance_59 == null)
-      new Companion_60();
-    return Companion_instance_59;
+  var Companion_instance_60;
+  function Companion_getInstance_60() {
+    if (Companion_instance_60 == null)
+      new Companion_61();
+    return Companion_instance_60;
   }
   function VectorFont() {
   }
@@ -40033,7 +40104,7 @@
           do {
             var n = inductionVariable;
             inductionVariable = inductionVariable + 1 | 0;
-            RgbaArray__set_impl(out._get_palette__wd8tzq_k$(), n, Companion_getInstance_58().invoke_aewswh_k$(readS32LE_0(s), 255));
+            RgbaArray__set_impl(out._get_palette__wd8tzq_k$(), n, Companion_getInstance_59().invoke_aewswh_k$(readS32LE_0(s), 255));
           }
            while (inductionVariable < 256);
         var inductionVariable_0 = 0;
@@ -40186,7 +40257,7 @@
       var tmp$ret$1;
       $l$block_0: {
         var tmp0__get_milliseconds__0 = imul(gif._gce._delay + 1 | 0, 10);
-        tmp$ret$1 = Companion_getInstance_21().fromMilliseconds_ttklb2_k$(tmp0__get_milliseconds__0);
+        tmp$ret$1 = Companion_getInstance_22().fromMilliseconds_ttklb2_k$(tmp0__get_milliseconds__0);
         break $l$block_0;
       }
       var time = tmp$ret$1;
@@ -40228,7 +40299,7 @@
     if (!(($mask0 & 1) === 0))
       size_0 = 0;
     if (!(($mask0 & 2) === 0))
-      colors = Companion_getInstance_57().invoke_spsmd3_k$(256);
+      colors = Companion_getInstance_58().invoke_spsmd3_k$(256);
     gd_Palette.call($this, size_0, colors);
     return $this;
   }
@@ -40288,7 +40359,7 @@
     if (!(($mask0 & 131072) === 0))
       bgindex = 0;
     if (!(($mask0 & 262144) === 0))
-      canvas = Companion_getInstance_57().invoke_spsmd3_k$(0);
+      canvas = Companion_getInstance_58().invoke_spsmd3_k$(0);
     if (!(($mask0 & 524288) === 0))
       frame = _UByteArray___init__impl__0(0);
     gd_GIF.call($this, fd, anim_start, width, height, depth, loop_count, gce, palette, lct, gct, plain_text, comment, application, fx, fy, fw, fh, bgindex, canvas, frame);
@@ -40501,7 +40572,7 @@
     var bgidx = readU8_1(fd);
     var aspect = readU8_1(fd);
     var tmp = new Long(0, 0);
-    var gif = gd_GIF_init_$Create$(fd, tmp, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, Companion_getInstance_57().invoke_spsmd3_k$(imul(width, height)), _UByteArray___init__impl__0(imul(width, height)), 262142, null);
+    var gif = gd_GIF_init_$Create$(fd, tmp, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, Companion_getInstance_58().invoke_spsmd3_k$(imul(width, height)), _UByteArray___init__impl__0(imul(width, height)), 262142, null);
     gif._fd = fd;
     gif._width_1 = width;
     gif._height_1 = height;
@@ -40516,7 +40587,7 @@
         var r = readU8_1(fd);
         var g = readU8_1(fd);
         var b = readU8_1(fd);
-        RgbaArray__set_impl(gif._gct._colors, n, Companion_getInstance_58().invoke_6v5qfk_k$(r, g, b));
+        RgbaArray__set_impl(gif._gct._colors, n, Companion_getInstance_59().invoke_6v5qfk_k$(r, g, b));
       }
        while (inductionVariable < last_0);
     gif._palette_0 = gif._gct;
@@ -40857,7 +40928,7 @@
           var r = readU8_1(gif._fd);
           var g = readU8_1(gif._fd);
           var b = readU8_1(gif._fd);
-          RgbaArray__set_impl(gif._lct._colors, n, Companion_getInstance_58().invoke_6v5qfk_k$(r, g, b));
+          RgbaArray__set_impl(gif._lct._colors, n, Companion_getInstance_59().invoke_6v5qfk_k$(r, g, b));
         }
          while (inductionVariable < last_0);
       gif._palette_0 = gif._lct;
@@ -41515,7 +41586,7 @@
       var tmp$ret$0;
       var tmp$ret$0_0;
       $l$block: {
-        tmp$ret$0 = Companion_getInstance_21().fromSeconds_ttklb2_k$(0.0);
+        tmp$ret$0 = Companion_getInstance_22().fromSeconds_ttklb2_k$(0.0);
         tmp$ret$0_0 = Unit_getInstance();
         break $l$block;
       }
@@ -41635,8 +41706,8 @@
   var Colorspace_INDEXED_instance;
   var Colorspace_GRAYSCALE_ALPHA_instance;
   var Colorspace_RGBA_instance;
-  function Companion_61() {
-    Companion_instance_60 = this;
+  function Companion_62() {
+    Companion_instance_61 = this;
     var tmp = this;
     var tmp$ret$2;
     $l$block_1: {
@@ -41667,16 +41738,16 @@
     }
     tmp._BY_ID_0 = tmp$ret$2;
   }
-  Companion_61.$metadata$ = {
+  Companion_62.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_60;
-  function Companion_getInstance_60() {
-    if (Companion_instance_60 == null)
-      new Companion_61();
-    return Companion_instance_60;
+  var Companion_instance_61;
+  function Companion_getInstance_61() {
+    if (Companion_instance_61 == null)
+      new Companion_62();
+    return Companion_instance_61;
   }
   function values_1() {
     return [Colorspace_GRAYSCALE_getInstance(), Colorspace_RGB_getInstance(), Colorspace_INDEXED_getInstance(), Colorspace_GRAYSCALE_ALPHA_getInstance(), Colorspace_RGBA_getInstance()];
@@ -41691,7 +41762,7 @@
     Colorspace_INDEXED_instance = new Colorspace('INDEXED', 2, 3);
     Colorspace_GRAYSCALE_ALPHA_instance = new Colorspace('GRAYSCALE_ALPHA', 3, 4);
     Colorspace_RGBA_instance = new Colorspace('RGBA', 4, 6);
-    Companion_getInstance_60();
+    Companion_getInstance_61();
   }
   function InterlacedPass(startingRow, startingCol, rowIncrement, colIncrement, blockHeight, blockWidth) {
     this._startingRow = startingRow;
@@ -41829,7 +41900,7 @@
     var height = header._height_5;
     var outputSizeHint = imul(imul(1 + width | 0, height), header._components);
     var tmp_4 = pngdata.toByteArray_0_k$();
-    var tmp_5 = Companion_getInstance_30();
+    var tmp_5 = Companion_getInstance_31();
     var databb = uncompress$default(tmp_4, tmp_5, 0, 2, null);
     var databbp = 0;
     var context = new DecodingContext(header);
@@ -41851,7 +41922,7 @@
               inductionVariable = inductionVariable + 1 | 0;
               var tmp$ret$1;
               $l$block_0: {
-                tmp$ret$1 = _RGBA___get_value__impl_(Companion_getInstance_58().invoke_fnl2i9_k$(UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 0 | 0), UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 1 | 0), UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 2 | 0), UByteArrayInt__get_impl(aPalette, item_2_3)));
+                tmp$ret$1 = _RGBA___get_value__impl_(Companion_getInstance_59().invoke_fnl2i9_k$(UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 0 | 0), UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 1 | 0), UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 2 | 0), UByteArrayInt__get_impl(aPalette, item_2_3)));
                 break $l$block_0;
               }
               tmp0_mapTo_0_1.add_2bq_k$(tmp$ret$1);
@@ -41963,12 +42034,12 @@
               var tmp10_subject = bpp;
               switch (tmp10_subject) {
                 case 3:
-                  var tmp_7 = Companion_getInstance_56();
+                  var tmp_7 = Companion_getInstance_57();
                   var tmp_8 = asByteArray(currentRow);
                   decode$default(tmp_7, tmp_8, 0, row32, 0, pixelsInThisRow, false, 32, null);
                   break;
                 case 4:
-                  var tmp_9 = Companion_getInstance_58();
+                  var tmp_9 = Companion_getInstance_59();
                   var tmp_10 = asByteArray(currentRow);
                   decode$default(tmp_9, tmp_10, 0, row32, 0, pixelsInThisRow, false, 32, null);
                   break;
@@ -41990,7 +42061,7 @@
     this._header = header;
     this._lastRow = UByteArrayInt(this._header._stride);
     this._currentRow = UByteArrayInt(this._header._stride);
-    this._row32 = Companion_getInstance_57().invoke_spsmd3_k$(this._header._width_5);
+    this._row32 = Companion_getInstance_58().invoke_spsmd3_k$(this._header._width_5);
   }
   DecodingContext.prototype.swapRows_sv8swh_k$ = function () {
     var temp = this._currentRow;
@@ -42017,7 +42088,7 @@
     write32BE_1($s, crc);
   }
   function writeImage$compress(level, data) {
-    var tmp = Companion_getInstance_30();
+    var tmp = Companion_getInstance_31();
     var tmp_0 = new CompressionContext(level);
     return compress$default(data, tmp, tmp_0, 0, 4, null);
   }
@@ -42054,7 +42125,7 @@
             var tmp = readS32BE_0(data);
             var tmp_0 = readS32BE_0(data);
             var tmp_1 = readU8_1(data);
-            var tmp0_elvis_lhs_2 = Companion_getInstance_60()._BY_ID_0.get_2bw_k$(readU8_1(data));
+            var tmp0_elvis_lhs_2 = Companion_getInstance_61()._BY_ID_0.get_2bw_k$(readU8_1(data));
             tmp$ret$0 = new Header(tmp, tmp_0, tmp_1, tmp0_elvis_lhs_2 == null ? Colorspace_RGBA_getInstance() : tmp0_elvis_lhs_2, readU8_1(data), readU8_1(data), readU8_1(data));
             break $l$block;
           }
@@ -42502,7 +42573,7 @@
               break $l$block_3;
             }
             var a = tmp$ret$4;
-            RgbaArray__set_impl(out._data_8, pos, Companion_getInstance_58().invoke_fnl2i9_k$(r, g, b, a));
+            RgbaArray__set_impl(out._data_8, pos, Companion_getInstance_59().invoke_fnl2i9_k$(r, g, b, a));
             var tmp6 = pos;
             pos = tmp6 + 1 | 0;
             Unit_getInstance();
@@ -42914,10 +42985,10 @@
     var tmp;
     switch (tmp0_subject) {
       case 24:
-        tmp = Companion_getInstance_56();
+        tmp = Companion_getInstance_57();
         break;
       case 32:
-        tmp = Companion_getInstance_58();
+        tmp = Companion_getInstance_59();
         break;
       default:throw new NotImplementedError('An operation is not implemented: Not a RGBA tga');
     }
@@ -43325,7 +43396,7 @@
   }
   function compileSprite($this, image, keepBlack, colorEncoding, callback) {
     var tmp0_elvis_lhs = colorEncoding;
-    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_70()._ENCODING_DEFAULT : tmp0_elvis_lhs;
+    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_71()._ENCODING_DEFAULT : tmp0_elvis_lhs;
     var imagesBytes = imul(imul(image._get_width__0_k$(), image._get_height__0_k$()), 2);
     var trueWidth = image._get_width__0_k$();
     var trueHeight = image._get_height__0_k$();
@@ -43424,7 +43495,7 @@
                   var index_2_5 = inductionVariable_1;
                   inductionVariable_1 = inductionVariable_1 + 1 | 0;
                   {
-                    writeCompiledSprite(BLKCompiler_getInstance(), image, trueWidth, trueHeight, index_2_0, index_2_5, buffer, Companion_getInstance_61().getBlack_vcj5fe_k$(keepBlack), encoding._get_toInt__0_k$());
+                    writeCompiledSprite(BLKCompiler_getInstance(), image, trueWidth, trueHeight, index_2_0, index_2_5, buffer, Companion_getInstance_62().getBlack_vcj5fe_k$(keepBlack), encoding._get_toInt__0_k$());
                     Unit_getInstance();
                     var tmp0_safe_receiver_4_6 = actualCallback;
                     if (tmp0_safe_receiver_4_6 == null)
@@ -43813,7 +43884,7 @@
   };
   C16Compiler.prototype.compileSpriteFromLoadedImages_kx4ton_k$ = function (images, keepBlack, colorEncoding, callback) {
     var tmp0_elvis_lhs = colorEncoding;
-    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_70()._ENCODING_DEFAULT : tmp0_elvis_lhs;
+    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_71()._ENCODING_DEFAULT : tmp0_elvis_lhs;
     var tmp$ret$1;
     $l$block_0: {
       var sum_1 = 0;
@@ -43876,7 +43947,7 @@
     else
       tmp3_safe_receiver(frame, total);
     Unit_getInstance();
-    var black = Companion_getInstance_61().getBlack_vcj5fe_k$(keepBlack);
+    var black = Companion_getInstance_62().getBlack_vcj5fe_k$(keepBlack);
     var tmp4_iterator = images.iterator_0_k$();
     while (tmp4_iterator.hasNext_0_k$()) {
       var image_0 = tmp4_iterator.next_0_k$();
@@ -44329,7 +44400,7 @@
   };
   S16Compiler.prototype.compileSpriteFromLoadedImages_kx4ton_k$ = function (images, keepBlack, colorEncoding, callback) {
     var tmp0_elvis_lhs = colorEncoding;
-    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_70()._ENCODING_DEFAULT : tmp0_elvis_lhs;
+    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_71()._ENCODING_DEFAULT : tmp0_elvis_lhs;
     var tmp$ret$1;
     $l$block_0: {
       var sum_1 = 0;
@@ -44356,7 +44427,7 @@
     Unit_getInstance();
     buffer.writeUInt16(images._get_size__0_k$());
     Unit_getInstance();
-    var black = Companion_getInstance_61().getBlack_vcj5fe_k$(keepBlack);
+    var black = Companion_getInstance_62().getBlack_vcj5fe_k$(keepBlack);
     var tmp1_iterator = images.iterator_0_k$();
     while (tmp1_iterator.hasNext_0_k$()) {
       var image = tmp1_iterator.next_0_k$();
@@ -44843,13 +44914,13 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_62() {
-    Companion_instance_61 = this;
+  function Companion_63() {
+    Companion_instance_62 = this;
     this._transparentBlack = 0;
     var tmp = this;
     tmp._solidBlack$delegate_0 = lazy(_no_name_provided_$factory_171());
   }
-  Companion_62.prototype.getBlack_vcj5fe_k$ = function (keepBlack) {
+  Companion_63.prototype.getBlack_vcj5fe_k$ = function (keepBlack) {
     var tmp;
     if (keepBlack) {
       tmp = _get_solidBlack__0(this);
@@ -44858,7 +44929,7 @@
     }
     return tmp;
   };
-  Companion_62.prototype.getCompiler_v3krwk_k$ = function (type) {
+  Companion_63.prototype.getCompiler_v3krwk_k$ = function (type) {
     var tmp0_subject = type;
     var tmp;
     if (tmp0_subject.equals(SpriteType_SPR_getInstance())) {
@@ -44874,16 +44945,16 @@
     }
     return tmp;
   };
-  Companion_62.$metadata$ = {
+  Companion_63.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_61;
-  function Companion_getInstance_61() {
-    if (Companion_instance_61 == null)
-      new Companion_62();
-    return Companion_instance_61;
+  var Companion_instance_62;
+  function Companion_getInstance_62() {
+    if (Companion_instance_62 == null)
+      new Companion_63();
+    return Companion_instance_62;
   }
   function SpriteCompiler() {
   }
@@ -44891,7 +44962,7 @@
     if (!(($mask0 & 2) === 0))
       keepBlack = false;
     if (!(($mask0 & 4) === 0))
-      colorEncoding = Companion_getInstance_70()._ENCODING_DEFAULT;
+      colorEncoding = Companion_getInstance_71()._ENCODING_DEFAULT;
     if (!(($mask0 & 8) === 0))
       callback = null;
     return $handler == null ? this.compileSpriteFromImageBytes_6zxs78_k$(images, keepBlack, colorEncoding, callback) : $handler(images, keepBlack, colorEncoding, callback);
@@ -44952,6 +45023,20 @@
       return i.invoke_0_k$();
     };
   }
+  function _no_name_provided__201() {
+  }
+  _no_name_provided__201.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
+    var cellsWide = _get_uInt16_($this$readAt);
+    var cellsHigh = _get_uInt16_($this$readAt);
+    return new Tuple(cellsWide, cellsHigh);
+  };
+  _no_name_provided__201.prototype.invoke_20e8_k$ = function (p1) {
+    return this.invoke_r02v3k_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
+  };
+  _no_name_provided__201.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
   function BlkSpriteFile_init_$Init$(bytesBuffer, progressChunkSize, progressCallback, $this) {
     BlkSpriteFile.call($this, bytesBuffer, false, progressChunkSize, progressCallback);
     return $this;
@@ -44997,26 +45082,26 @@
               var offsetForData_5 = tmp$ret$0;
               var tmp$ret$1;
               $l$block_0: {
-                Companion_getInstance_62();
+                Companion_getInstance_63();
                 var tmp1_plus_0_7 = 32768;
                 tmp$ret$1 = offsetForData_5.plus_wiekkq_k$(toLong(tmp1_plus_0_7));
                 break $l$block_0;
               }
               if (tmp$ret$1.compareTo_wiekkq_k$(toLong(totalBytes)) > 0) {
-                Companion_getInstance_62();
+                Companion_getInstance_63();
                 var tmp_1 = '' + 'Invalid byte offset[' + item_2_3 + ']. Expected < ' + (totalBytes - 32768 | 0) + '. Found: ' + offsetForData_5;
                 throw SpriteParserException_init_$Create$(tmp_1, null, 2, null);
               } else {
               }
               var width_8 = _get_uInt16_(_this_);
-              Companion_getInstance_62();
+              Companion_getInstance_63();
               if (!(width_8 === 128)) {
                 var tmp_2 = '' + 'BLK cell width invalid. Expected 128; Actual: ' + width_8;
                 throw SpriteParserException_init_$Create$(tmp_2, null, 2, null);
               } else {
               }
               var height_9 = _get_uInt16_(_this_);
-              Companion_getInstance_62();
+              Companion_getInstance_63();
               if (!(height_9 === 128)) {
                 var tmp_3 = '' + 'BLK cell height invalid. Expected 128; Actual: ' + height_9;
                 throw SpriteParserException_init_$Create$(tmp_3, null, 2, null);
@@ -45043,12 +45128,18 @@
     }
     $this._set_mFrames__7r1kda_k$(tmp$ret$4);
   }
-  function Companion_63() {
-    Companion_instance_62 = this;
+  function Companion_64() {
+    Companion_instance_63 = this;
     this._BLOCK_SIZE_0 = 128;
     this._CELL_BYTES_SIZE = 32768;
   }
-  Companion_63.prototype.getStitched_wb6cju_k$ = function (cellsWide, cellsHigh, frames, progressCallback) {
+  Companion_64.prototype.sizeInCells_r02v3k_k$ = function (byteReader) {
+    var totalBytes = byteReader.size;
+    if (totalBytes < 8) {
+      throw IOException_init_$Create$('Too few bytes to determine BLK size in cells', null, 2, null);
+    }return readAt(byteReader, 4, _no_name_provided_$factory_173());
+  };
+  Companion_64.prototype.getStitched_wb6cju_k$ = function (cellsWide, cellsHigh, frames, progressCallback) {
     var trueWidth = imul(cellsWide, 128);
     var trueHeight = imul(cellsHigh, 128);
     var totalCells = imul(cellsWide, cellsHigh);
@@ -45062,7 +45153,7 @@
           var index_2 = inductionVariable;
           inductionVariable = inductionVariable + 1 | 0;
           {
-            Companion_getInstance_62();
+            Companion_getInstance_63();
             var x_4 = imul(index_2, 128);
             {
               {
@@ -45080,7 +45171,7 @@
                     else
                       tmp0_safe_receiver_5_8(frame_4_7, totalCells);
                     Unit_getInstance();
-                    Companion_getInstance_62();
+                    Companion_getInstance_63();
                     var y_6_9 = imul(index_2_6, 128);
                     var cell_7_10 = frames.get_ha5a7z_k$(frame_4_7);
                     temp.draw_bvdyk7_k$(cell_7_10, x_4, y_6_9);
@@ -45094,33 +45185,33 @@
     }
     return temp;
   };
-  Companion_63.$metadata$ = {
+  Companion_64.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_62;
-  function Companion_getInstance_62() {
-    if (Companion_instance_62 == null)
-      new Companion_63();
-    return Companion_instance_62;
+  var Companion_instance_63;
+  function Companion_getInstance_63() {
+    if (Companion_instance_63 == null)
+      new Companion_64();
+    return Companion_instance_63;
   }
-  function _no_name_provided__201(this$0) {
+  function _no_name_provided__202(this$0) {
     this._this$0_29 = this$0;
   }
-  _no_name_provided__201.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
+  _no_name_provided__202.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
     initFrames($this$readAt, this._this$0_29);
   };
-  _no_name_provided__201.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__202.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_3p24ox_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__201.$metadata$ = {
+  _no_name_provided__202.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function BlkSpriteFile(bytesBuffer, async_0, progressChunkSize, progressCallback) {
-    Companion_getInstance_62();
+    Companion_getInstance_63();
     SpriteFile.call(this, SpriteType_BLK_getInstance(), progressChunkSize, progressCallback);
     this._async = async_0;
     this._mCellsWide = 0;
@@ -45176,12 +45267,12 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__202($width, $height, $encoding) {
+  function _no_name_provided__203($width, $height, $encoding) {
     this._$width_0 = $width;
     this._$height_0 = $height;
     this._$encoding = $encoding;
   }
-  _no_name_provided__202.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
+  _no_name_provided__203.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
     var image = Bitmap32_init_$Create$(this._$width_0, this._$height_0, null, false, 12, null);
     var toRgb = this._$encoding._get_toRgb__0_k$();
     var inductionVariable = 0;
@@ -45205,32 +45296,32 @@
        while (inductionVariable < last_0);
     return image;
   };
-  _no_name_provided__202.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__203.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_r02v3k_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__202.$metadata$ = {
+  _no_name_provided__203.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function Companion_64() {
-    Companion_instance_63 = this;
+  function Companion_65() {
+    Companion_instance_64 = this;
   }
-  Companion_64.prototype.parseFrame_mftphl_k$ = function (bytesBuffer, offset_0, width, height, encoding) {
-    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_173(width, height, encoding));
+  Companion_65.prototype.parseFrame_mftphl_k$ = function (bytesBuffer, offset_0, width, height, encoding) {
+    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_174(width, height, encoding));
   };
-  Companion_64.$metadata$ = {
+  Companion_65.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_63;
-  function Companion_getInstance_63() {
-    if (Companion_instance_63 == null)
-      new Companion_64();
-    return Companion_instance_63;
+  var Companion_instance_64;
+  function Companion_getInstance_64() {
+    if (Companion_instance_64 == null)
+      new Companion_65();
+    return Companion_instance_64;
   }
   function BlkSpriteFrame(async_0, bytesBuffer, offset_0, width, height, encoding) {
-    Companion_getInstance_63();
+    Companion_getInstance_64();
     SpriteFrame.call(this, width, height);
     this._async_0 = async_0;
     this._offset_8 = offset_0;
@@ -45285,7 +45376,7 @@
       tmp_0 = tmp1_elvis_lhs;
     }
     var bytesBuffer = tmp_0;
-    return Companion_getInstance_63().parseFrame_mftphl_k$(bytesBuffer, this._offset_8, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_0);
+    return Companion_getInstance_64().parseFrame_mftphl_k$(bytesBuffer, this._offset_8, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_0);
   };
   BlkSpriteFrame.$metadata$ = {
     simpleName: 'BlkSpriteFrame',
@@ -45293,14 +45384,20 @@
     interfaces: []
   };
   function _no_name_provided_$factory_172(this$0) {
-    var i = new _no_name_provided__201(this$0);
+    var i = new _no_name_provided__202(this$0);
     return function (p1) {
       i.invoke_3p24ox_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_173($width, $height, $encoding) {
-    var i = new _no_name_provided__202($width, $height, $encoding);
+  function _no_name_provided_$factory_173() {
+    var i = new _no_name_provided__201();
+    return function (p1) {
+      return i.invoke_r02v3k_k$(p1);
+    };
+  }
+  function _no_name_provided_$factory_174($width, $height, $encoding) {
+    var i = new _no_name_provided__203($width, $height, $encoding);
     return function (p1) {
       return i.invoke_r02v3k_k$(p1);
     };
@@ -45314,7 +45411,7 @@
     } else if (buffer.compareTo_wiekkq_k$(new Long(3, 0)) > 0) {
       throw Exception_init_$Create$('' + "C16 file encoding not recognised. ('" + buffer + "')");
     }var imagesCount = _get_uInt16_(_this_);
-    var black = keepBlack ? Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 0) : Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
+    var black = keepBlack ? Companion_getInstance_59().invoke_6v5qfk_k$(0, 0, 0) : Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 0);
     var tmp$ret$7;
     $l$block_6: {
       var tmp$ret$2;
@@ -45408,41 +45505,41 @@
     }
     $this._set_mFrames__7r1kda_k$(tmp$ret$7);
   }
-  function Companion_65() {
-    Companion_instance_64 = this;
+  function Companion_66() {
+    Companion_instance_65 = this;
   }
-  Companion_65.$metadata$ = {
+  Companion_66.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_64;
-  function Companion_getInstance_64() {
-    if (Companion_instance_64 == null)
-      new Companion_65();
-    return Companion_instance_64;
+  var Companion_instance_65;
+  function Companion_getInstance_65() {
+    if (Companion_instance_65 == null)
+      new Companion_66();
+    return Companion_instance_65;
   }
-  function _no_name_provided__203(this$0, $keepBlack) {
+  function _no_name_provided__204(this$0, $keepBlack) {
     this._this$0_30 = this$0;
     this._$keepBlack = $keepBlack;
   }
-  _no_name_provided__203.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
+  _no_name_provided__204.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
     initFrames_0($this$readAt, this._this$0_30, this._$keepBlack);
   };
-  _no_name_provided__203.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__204.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_3p24ox_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__203.$metadata$ = {
+  _no_name_provided__204.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function C16SpriteFile(bytesBuffer, keepBlack, progressChunkSize, progressCallback) {
-    Companion_getInstance_64();
+    Companion_getInstance_65();
     SpriteFile.call(this, SpriteType_C16_getInstance(), progressChunkSize, progressCallback);
     this._mBytesBuffer_1 = null;
     this._mBytesBuffer_1 = bytesBuffer;
-    readAt(bytesBuffer, 0, _no_name_provided_$factory_174(this, keepBlack));
+    readAt(bytesBuffer, 0, _no_name_provided_$factory_175(this, keepBlack));
   }
   C16SpriteFile.prototype._get_allowAsync__0_k$ = function () {
     return false;
@@ -45474,7 +45571,7 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__204($endOffset, $width, $height, $encoding, $index, $black) {
+  function _no_name_provided__205($endOffset, $width, $height, $encoding, $index, $black) {
     this._$endOffset = $endOffset;
     this._$width_1 = $width;
     this._$height_1 = $height;
@@ -45482,7 +45579,7 @@
     this._$index = $index;
     this._$black = $black;
   }
-  _no_name_provided__204.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
+  _no_name_provided__205.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
     if (toLong(_get_lastIndex__4($this$readAt)).compareTo_wiekkq_k$(this._$endOffset) < 0) {
       throw Exception_init_$Create$('' + 'Not enough bytes for next C16 image. Position ' + this._$endOffset + ' > limit ' + _get_lastIndex__4($this$readAt));
     }var image = Bitmap32_init_$Create$(this._$width_1, this._$height_1, null, false, 12, null);
@@ -45525,32 +45622,32 @@
        while (inductionVariable < last_0);
     return image;
   };
-  _no_name_provided__204.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__205.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_r02v3k_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__204.$metadata$ = {
+  _no_name_provided__205.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function Companion_66() {
-    Companion_instance_65 = this;
+  function Companion_67() {
+    Companion_instance_66 = this;
   }
-  Companion_66.prototype.parseFrame_u6syim_k$ = function (index, bytesBuffer, offset_0, endOffset, width, height, encoding, black) {
-    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_175(endOffset, width, height, encoding, index, black));
+  Companion_67.prototype.parseFrame_u6syim_k$ = function (index, bytesBuffer, offset_0, endOffset, width, height, encoding, black) {
+    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_176(endOffset, width, height, encoding, index, black));
   };
-  Companion_66.$metadata$ = {
+  Companion_67.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_65;
-  function Companion_getInstance_65() {
-    if (Companion_instance_65 == null)
-      new Companion_66();
-    return Companion_instance_65;
+  var Companion_instance_66;
+  function Companion_getInstance_66() {
+    if (Companion_instance_66 == null)
+      new Companion_67();
+    return Companion_instance_66;
   }
   function C16SpriteFrame(index, bytesBuffer, offset_0, endOffset, width, height, encoding, black) {
-    Companion_getInstance_65();
+    Companion_getInstance_66();
     SpriteFrame.call(this, width, height);
     this._index_4 = index;
     this._offset_9 = offset_0;
@@ -45591,22 +45688,22 @@
       tmp_0 = tmp1_elvis_lhs;
     }
     var bytesBuffer = tmp_0;
-    return Companion_getInstance_65().parseFrame_u6syim_k$(this._index_4, bytesBuffer, this._offset_9, this._endOffset, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_1, this._black_0);
+    return Companion_getInstance_66().parseFrame_u6syim_k$(this._index_4, bytesBuffer, this._offset_9, this._endOffset, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_1, this._black_0);
   };
   C16SpriteFrame.$metadata$ = {
     simpleName: 'C16SpriteFrame',
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_174(this$0, $keepBlack) {
-    var i = new _no_name_provided__203(this$0, $keepBlack);
+  function _no_name_provided_$factory_175(this$0, $keepBlack) {
+    var i = new _no_name_provided__204(this$0, $keepBlack);
     return function (p1) {
       i.invoke_3p24ox_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_175($endOffset, $width, $height, $encoding, $index, $black) {
-    var i = new _no_name_provided__204($endOffset, $width, $height, $encoding, $index, $black);
+  function _no_name_provided_$factory_176($endOffset, $width, $height, $encoding, $index, $black) {
+    var i = new _no_name_provided__205($endOffset, $width, $height, $encoding, $index, $black);
     return function (p1) {
       return i.invoke_r02v3k_k$(p1);
     };
@@ -45683,7 +45780,7 @@
           do {
             var n = inductionVariable;
             inductionVariable = inductionVariable + 1 | 0;
-            RgbaArray__set_impl(out._get_palette__wd8tzq_k$(), n, Companion_getInstance_58().invoke_aewswh_k$(readS32LE_0(s), 255));
+            RgbaArray__set_impl(out._get_palette__wd8tzq_k$(), n, Companion_getInstance_59().invoke_aewswh_k$(readS32LE_0(s), 255));
           }
            while (inductionVariable < 256);
         var inductionVariable_0 = 0;
@@ -45793,7 +45890,7 @@
       throw Exception_init_$Create$('' + "S16 file encoding not recognized. ('" + buffer + "')");
     }
     var encoding = tmp;
-    var black = keepBlack ? Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 0) : Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
+    var black = keepBlack ? Companion_getInstance_59().invoke_6v5qfk_k$(0, 0, 0) : Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 0);
     var imagesCount = _get_uInt16_(_this_);
     var tmp$ret$2;
     $l$block_1: {
@@ -45827,41 +45924,41 @@
     }
     $this._set_mFrames__7r1kda_k$(tmp$ret$2);
   }
-  function Companion_67() {
-    Companion_instance_66 = this;
+  function Companion_68() {
+    Companion_instance_67 = this;
   }
-  Companion_67.$metadata$ = {
+  Companion_68.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_66;
-  function Companion_getInstance_66() {
-    if (Companion_instance_66 == null)
-      new Companion_67();
-    return Companion_instance_66;
+  var Companion_instance_67;
+  function Companion_getInstance_67() {
+    if (Companion_instance_67 == null)
+      new Companion_68();
+    return Companion_instance_67;
   }
-  function _no_name_provided__205(this$0, $keepBlack) {
+  function _no_name_provided__206(this$0, $keepBlack) {
     this._this$0_31 = this$0;
     this._$keepBlack_0 = $keepBlack;
   }
-  _no_name_provided__205.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
+  _no_name_provided__206.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
     initFrames_1($this$readAt, this._this$0_31, this._$keepBlack_0);
   };
-  _no_name_provided__205.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__206.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_3p24ox_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__205.$metadata$ = {
+  _no_name_provided__206.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function S16SpriteFile(bytesBuffer, keepBlack, progressChunkSize, progressCallback) {
-    Companion_getInstance_66();
+    Companion_getInstance_67();
     SpriteFile.call(this, SpriteType_S16_getInstance(), progressChunkSize, progressCallback);
     this._mBytesBuffer_3 = null;
     this._mBytesBuffer_3 = bytesBuffer;
-    readAt(bytesBuffer, 0, _no_name_provided_$factory_176(this, keepBlack));
+    readAt(bytesBuffer, 0, _no_name_provided_$factory_177(this, keepBlack));
   }
   S16SpriteFile.prototype._get_allowAsync__0_k$ = function () {
     return false;
@@ -45893,13 +45990,13 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__206($width, $height, $encoding, $black) {
+  function _no_name_provided__207($width, $height, $encoding, $black) {
     this._$width_2 = $width;
     this._$height_2 = $height;
     this._$encoding_1 = $encoding;
     this._$black_0 = $black;
   }
-  _no_name_provided__206.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
+  _no_name_provided__207.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
     var image = Bitmap32_init_$Create$(this._$width_2, this._$height_2, null, false, 12, null);
     var toRgb = this._$encoding_1._get_toRgb__0_k$();
     var inductionVariable = 0;
@@ -45927,32 +46024,32 @@
        while (inductionVariable < last_0);
     return image;
   };
-  _no_name_provided__206.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__207.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_r02v3k_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__206.$metadata$ = {
+  _no_name_provided__207.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function Companion_68() {
-    Companion_instance_67 = this;
+  function Companion_69() {
+    Companion_instance_68 = this;
   }
-  Companion_68.prototype.parseFrame_w0q4jb_k$ = function (bytesBuffer, offset_0, width, height, encoding, black) {
-    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_177(width, height, encoding, black));
+  Companion_69.prototype.parseFrame_w0q4jb_k$ = function (bytesBuffer, offset_0, width, height, encoding, black) {
+    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_178(width, height, encoding, black));
   };
-  Companion_68.$metadata$ = {
+  Companion_69.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_67;
-  function Companion_getInstance_67() {
-    if (Companion_instance_67 == null)
-      new Companion_68();
-    return Companion_instance_67;
+  var Companion_instance_68;
+  function Companion_getInstance_68() {
+    if (Companion_instance_68 == null)
+      new Companion_69();
+    return Companion_instance_68;
   }
   function S16SpriteFrame(bytesBuffer, offset_0, width, height, encoding, black) {
-    Companion_getInstance_67();
+    Companion_getInstance_68();
     SpriteFrame.call(this, width, height);
     this._offset_10 = offset_0;
     this._encoding_2 = encoding;
@@ -45991,22 +46088,22 @@
       tmp_0 = tmp1_elvis_lhs;
     }
     var bytesBuffer = tmp_0;
-    return Companion_getInstance_67().parseFrame_w0q4jb_k$(bytesBuffer, this._offset_10, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_2, this._black_1);
+    return Companion_getInstance_68().parseFrame_w0q4jb_k$(bytesBuffer, this._offset_10, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_2, this._black_1);
   };
   S16SpriteFrame.$metadata$ = {
     simpleName: 'S16SpriteFrame',
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_176(this$0, $keepBlack) {
-    var i = new _no_name_provided__205(this$0, $keepBlack);
+  function _no_name_provided_$factory_177(this$0, $keepBlack) {
+    var i = new _no_name_provided__206(this$0, $keepBlack);
     return function (p1) {
       i.invoke_3p24ox_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_177($width, $height, $encoding, $black) {
-    var i = new _no_name_provided__206($width, $height, $encoding, $black);
+  function _no_name_provided_$factory_178($width, $height, $encoding, $black) {
+    var i = new _no_name_provided__207($width, $height, $encoding, $black);
     return function (p1) {
       return i.invoke_r02v3k_k$(p1);
     };
@@ -46059,48 +46156,48 @@
     }
     $this._set_mFrames__7r1kda_k$(tmp$ret$3);
   }
-  function Companion_69() {
-    Companion_instance_68 = this;
+  function Companion_70() {
+    Companion_instance_69 = this;
   }
-  Companion_69.$metadata$ = {
+  Companion_70.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_68;
-  function Companion_getInstance_68() {
-    if (Companion_instance_68 == null)
-      new Companion_69();
-    return Companion_instance_68;
+  var Companion_instance_69;
+  function Companion_getInstance_69() {
+    if (Companion_instance_69 == null)
+      new Companion_70();
+    return Companion_instance_69;
   }
-  function _no_name_provided__207(this$0, $black) {
+  function _no_name_provided__208(this$0, $black) {
     this._this$0_32 = this$0;
     this._$black_1 = $black;
   }
-  _no_name_provided__207.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
+  _no_name_provided__208.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
     initFrames_2($this$readAt, this._this$0_32, this._$black_1);
   };
-  _no_name_provided__207.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__208.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_3p24ox_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__207.$metadata$ = {
+  _no_name_provided__208.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function SprSpriteFile(bytesBuffer, keepBlack, progressChunkSize, progressCallback) {
-    Companion_getInstance_68();
+    Companion_getInstance_69();
     SpriteFile.call(this, SpriteType_SPR_getInstance(), progressChunkSize, progressCallback);
     this._mBytesBuffer_5 = null;
     this._mBytesBuffer_5 = bytesBuffer;
     var tmp;
     if (keepBlack) {
-      tmp = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255);
+      tmp = Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 255);
     } else {
-      tmp = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
+      tmp = Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 0);
     }
     var black = tmp;
-    readAt(bytesBuffer, 0, _no_name_provided_$factory_178(this, black));
+    readAt(bytesBuffer, 0, _no_name_provided_$factory_179(this, black));
   }
   SprSpriteFile.prototype._get_allowAsync__0_k$ = function () {
     return false;
@@ -46184,40 +46281,40 @@
     }
     return out;
   }
-  function _no_name_provided__208($width, $height, $black) {
+  function _no_name_provided__209($width, $height, $black) {
     this._$width_3 = $width;
     this._$height_3 = $height;
     this._$black_2 = $black;
   }
-  _no_name_provided__208.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
-    return readFrame($this$readAt, Companion_getInstance_69(), this._$width_3, this._$height_3, this._$black_2);
+  _no_name_provided__209.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
+    return readFrame($this$readAt, Companion_getInstance_70(), this._$width_3, this._$height_3, this._$black_2);
   };
-  _no_name_provided__208.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__209.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_r02v3k_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__208.$metadata$ = {
+  _no_name_provided__209.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function Companion_70() {
-    Companion_instance_69 = this;
+  function Companion_71() {
+    Companion_instance_70 = this;
   }
-  Companion_70.prototype.readSpriteFrame_a03w2c_k$ = function (bytesBuffer, offset_0, width, height, black) {
-    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_179(width, height, black));
+  Companion_71.prototype.readSpriteFrame_a03w2c_k$ = function (bytesBuffer, offset_0, width, height, black) {
+    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_180(width, height, black));
   };
-  Companion_70.$metadata$ = {
+  Companion_71.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_69;
-  function Companion_getInstance_69() {
-    if (Companion_instance_69 == null)
-      new Companion_70();
-    return Companion_instance_69;
+  var Companion_instance_70;
+  function Companion_getInstance_70() {
+    if (Companion_instance_70 == null)
+      new Companion_71();
+    return Companion_instance_70;
   }
   function SprSpriteFrame(bytesBuffer, offset_0, width, height, black) {
-    Companion_getInstance_69();
+    Companion_getInstance_70();
     SpriteFrame.call(this, width, height);
     this._offset_11 = offset_0;
     this._black_2 = black;
@@ -46255,22 +46352,22 @@
       tmp_0 = tmp1_elvis_lhs;
     }
     var bytesBuffer = tmp_0;
-    return Companion_getInstance_69().readSpriteFrame_a03w2c_k$(bytesBuffer, this._offset_11, this._get_width__0_k$(), this._get_height__0_k$(), this._black_2);
+    return Companion_getInstance_70().readSpriteFrame_a03w2c_k$(bytesBuffer, this._offset_11, this._get_width__0_k$(), this._get_height__0_k$(), this._black_2);
   };
   SprSpriteFrame.$metadata$ = {
     simpleName: 'SprSpriteFrame',
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_178(this$0, $black) {
-    var i = new _no_name_provided__207(this$0, $black);
+  function _no_name_provided_$factory_179(this$0, $black) {
+    var i = new _no_name_provided__208(this$0, $black);
     return function (p1) {
       i.invoke_3p24ox_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_179($width, $height, $black) {
-    var i = new _no_name_provided__208($width, $height, $black);
+  function _no_name_provided_$factory_180($width, $height, $black) {
+    var i = new _no_name_provided__209($width, $height, $black);
     return function (p1) {
       return i.invoke_r02v3k_k$(p1);
     };
@@ -46341,10 +46438,10 @@
     }if (!$this._closed_0) {
       throw Exception_init_$Create$('Failed to close byte stream');
     }}
-  function _no_name_provided__209(this$0) {
+  function _no_name_provided__210(this$0) {
     this._this$0_33 = this$0;
   }
-  _no_name_provided__209.prototype.invoke_0_k$ = function () {
+  _no_name_provided__210.prototype.invoke_0_k$ = function () {
     var tmp0_safe_receiver = this._this$0_33._decodedFrames;
     if (tmp0_safe_receiver == null)
       null;
@@ -46462,25 +46559,25 @@
     }
     return tmp$ret$7;
   };
-  _no_name_provided__209.$metadata$ = {
+  _no_name_provided__210.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__210($done, this$0, resultContinuation) {
+  function _no_name_provided__211($done, this$0, resultContinuation) {
     this._$done = $done;
     this._this$0_34 = this$0;
     CoroutineImpl_0.call(this, resultContinuation);
   }
-  _no_name_provided__210.prototype.invoke_3q6o9z_k$ = function (frame, $cont) {
+  _no_name_provided__211.prototype.invoke_3q6o9z_k$ = function (frame, $cont) {
     var tmp = this.create_e3qt6t_k$(frame, $cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__210.prototype.invoke_20e8_k$ = function (p1, $cont) {
+  _no_name_provided__211.prototype.invoke_20e8_k$ = function (p1, $cont) {
     return this.invoke_3q6o9z_k$(p1 instanceof SpriteFrame ? p1 : THROW_CCE(), $cont);
   };
-  _no_name_provided__210.prototype.doResume_0_k$ = function () {
+  _no_name_provided__211.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
     $sm: do
       try {
@@ -46508,12 +46605,12 @@
       }
      while (true);
   };
-  _no_name_provided__210.prototype.create_e3qt6t_k$ = function (frame, completion) {
-    var i = new _no_name_provided__210(this._$done, this._this$0_34, completion);
+  _no_name_provided__211.prototype.create_e3qt6t_k$ = function (frame, completion) {
+    var i = new _no_name_provided__211(this._$done, this._this$0_34, completion);
     i._frame_0 = frame;
     return i;
   };
-  _no_name_provided__210.$metadata$ = {
+  _no_name_provided__211.$metadata$ = {
     kind: 'class',
     interfaces: [],
     suspendArity: 1
@@ -46536,7 +46633,7 @@
             this._done0 = new Pointer(0);
             this._state_0 = 1;
             var tmp_0 = this.__this__20._get_mFrames__0_k$();
-            suspendResult = mapAsync(tmp_0, _no_name_provided_$factory_181(this._done0, this.__this__20, null), this);
+            suspendResult = mapAsync(tmp_0, _no_name_provided_$factory_182(this._done0, this.__this__20, null), this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -46576,7 +46673,7 @@
     this._closedAllChildren = false;
     this._decodedFrames = null;
     var tmp = this;
-    tmp._frames$delegate = lazy(_no_name_provided_$factory_180(this));
+    tmp._frames$delegate = lazy(_no_name_provided_$factory_181(this));
   }
   SpriteFile.prototype._set_mFrames__7r1kda_k$ = function (_set___) {
     this._mFrames = _set___;
@@ -46612,13 +46709,13 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__211(this$0) {
+  function _no_name_provided__212(this$0) {
     this._this$0_35 = this$0;
   }
-  _no_name_provided__211.prototype.invoke_0_k$ = function () {
+  _no_name_provided__212.prototype.invoke_0_k$ = function () {
     return this._this$0_35.decodeActual_0_k$();
   };
-  _no_name_provided__211.$metadata$ = {
+  _no_name_provided__212.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -46626,7 +46723,7 @@
     this._width_7 = width;
     this._height_7 = height;
     var tmp = this;
-    tmp._decoded$delegate = lazy(_no_name_provided_$factory_182(this));
+    tmp._decoded$delegate = lazy(_no_name_provided_$factory_183(this));
   }
   SpriteFrame.prototype._get_width__0_k$ = function () {
     return this._width_7;
@@ -46668,91 +46765,91 @@
       return receiver._get_decoded__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_180(this$0) {
-    var i = new _no_name_provided__209(this$0);
+  function _no_name_provided_$factory_181(this$0) {
+    var i = new _no_name_provided__210(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_181($done, this$0, resultContinuation) {
-    var i = new _no_name_provided__210($done, this$0, resultContinuation);
+  function _no_name_provided_$factory_182($done, this$0, resultContinuation) {
+    var i = new _no_name_provided__211($done, this$0, resultContinuation);
     var l = function (p1, $cont) {
       return i.invoke_3q6o9z_k$(p1, $cont);
     };
     l.$arity = 1;
     return l;
   }
-  function _no_name_provided_$factory_182(this$0) {
-    var i = new _no_name_provided__211(this$0);
+  function _no_name_provided_$factory_183(this$0) {
+    var i = new _no_name_provided__212(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided__212($progressCallback) {
+  function _no_name_provided__213($progressCallback) {
     this._$progressCallback = $progressCallback;
   }
-  _no_name_provided__212.prototype.invoke_27zxwg_k$ = function (i, count) {
+  _no_name_provided__213.prototype.invoke_27zxwg_k$ = function (i, count) {
     var tmp0_safe_receiver = this._$progressCallback;
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, i, count);
   };
-  _no_name_provided__212.prototype.invoke_osx4an_k$ = function (p1, p2) {
-    var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
-    return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
-  };
-  _no_name_provided__212.$metadata$ = {
-    kind: 'class',
-    interfaces: []
-  };
-  function _no_name_provided__213($progressCallback) {
-    this._$progressCallback_0 = $progressCallback;
-  }
-  _no_name_provided__213.prototype.invoke_rvwcgf_k$ = function (i, count) {
-    var tmp0_safe_receiver = this._$progressCallback_0;
-    if ((tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, i, count)) === false) {
-      throw SpriteParserCancelledException_init_$Create$('Stitch BLK was cancelled during compile', null, 2, null);
-    } else {
-    }
-  };
   _no_name_provided__213.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
-    this.invoke_rvwcgf_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
-    return Unit_getInstance();
+    return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
   _no_name_provided__213.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function _no_name_provided__214($progressCallback) {
-    this._$progressCallback_1 = $progressCallback;
+    this._$progressCallback_0 = $progressCallback;
   }
-  _no_name_provided__214.prototype.invoke_27zxwg_k$ = function (i, count) {
-    var tmp0_safe_receiver = this._$progressCallback_1;
-    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, i, count);
+  _no_name_provided__214.prototype.invoke_rvwcgf_k$ = function (i, count) {
+    var tmp0_safe_receiver = this._$progressCallback_0;
+    if ((tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, i, count)) === false) {
+      throw SpriteParserCancelledException_init_$Create$('Stitch BLK was cancelled during compile', null, 2, null);
+    } else {
+    }
   };
   _no_name_provided__214.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
-    return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
+    this.invoke_rvwcgf_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
+    return Unit_getInstance();
   };
   _no_name_provided__214.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function _no_name_provided__215($progressCallback) {
+    this._$progressCallback_1 = $progressCallback;
+  }
+  _no_name_provided__215.prototype.invoke_27zxwg_k$ = function (i, count) {
+    var tmp0_safe_receiver = this._$progressCallback_1;
+    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, i, count);
+  };
+  _no_name_provided__215.prototype.invoke_osx4an_k$ = function (p1, p2) {
+    var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
+    return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
+  };
+  _no_name_provided__215.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__216($progressCallback) {
     this._$progressCallback_2 = $progressCallback;
   }
-  _no_name_provided__215.prototype.invoke_rvwcgf_k$ = function (i, count) {
+  _no_name_provided__216.prototype.invoke_rvwcgf_k$ = function (i, count) {
     var tmp0_safe_receiver = this._$progressCallback_2;
     if ((tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, i, count)) === false) {
       throw SpriteParserCancelledException_init_$Create$('Stitch BLK was cancelled during compile', null, 2, null);
     } else {
     }
   };
-  _no_name_provided__215.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__216.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     this.invoke_rvwcgf_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__215.$metadata$ = {
+  _no_name_provided__216.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -46815,14 +46912,14 @@
           case 0:
             this._exceptionState = 2;
             this._state_0 = 1;
-            suspendResult = this.__this__22.parseBLKAsync_8vehpu_k$(this._bytesBuffer, this._progressChunkSize_1, _no_name_provided_$factory_185(this._progressCallback_1), this);
+            suspendResult = this.__this__22.parseBLKAsync_8vehpu_k$(this._bytesBuffer, this._progressChunkSize_1, _no_name_provided_$factory_186(this._progressCallback_1), this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
             continue $sm;
           case 1:
             var result = suspendResult;
-            return this.__this__22.getStitched_wb6cju_k$(result._cellsWide, result._cellsHigh, result._imageData, _no_name_provided_$factory_186(this._progressCallback_1));
+            return this.__this__22.getStitched_wb6cju_k$(result._cellsWide, result._cellsHigh, result._imageData, _no_name_provided_$factory_187(this._progressCallback_1));
           case 2:
             throw this._exception_0;
         }
@@ -46910,11 +47007,11 @@
     return tmp.doResume_0_k$();
   };
   SpriteParser.prototype.getStitched_wb6cju_k$ = function (cellsWide, cellsHigh, frames, progressCallback) {
-    return Companion_getInstance_62().getStitched_wb6cju_k$(cellsWide, cellsHigh, frames, progressCallback);
+    return Companion_getInstance_63().getStitched_wb6cju_k$(cellsWide, cellsHigh, frames, progressCallback);
   };
   SpriteParser.prototype.getStitched_fu8muu_k$ = function (bytesBuffer, progressCallback) {
-    var result = this.parseBLK$default_r2t3ao_k$(bytesBuffer, 0, _no_name_provided_$factory_183(progressCallback), 2, null);
-    return this.getStitched_wb6cju_k$(result._cellsWide, result._cellsHigh, result._imageData, _no_name_provided_$factory_184(progressCallback));
+    var result = this.parseBLK$default_r2t3ao_k$(bytesBuffer, 0, _no_name_provided_$factory_184(progressCallback), 2, null);
+    return this.getStitched_wb6cju_k$(result._cellsWide, result._cellsHigh, result._imageData, _no_name_provided_$factory_185(progressCallback));
   };
   SpriteParser.prototype.getStitchedAsync_m97t7v_k$ = function (bytesBuffer, progressChunkSize, progressCallback, $cont) {
     var tmp = new $getStitchedAsyncCOROUTINE$2(this, bytesBuffer, progressChunkSize, progressCallback, $cont);
@@ -46973,72 +47070,72 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_183($progressCallback) {
-    var i = new _no_name_provided__212($progressCallback);
-    return function (p1, p2) {
-      return i.invoke_27zxwg_k$(p1, p2);
-    };
-  }
   function _no_name_provided_$factory_184($progressCallback) {
     var i = new _no_name_provided__213($progressCallback);
     return function (p1, p2) {
-      i.invoke_rvwcgf_k$(p1, p2);
-      return Unit_getInstance();
+      return i.invoke_27zxwg_k$(p1, p2);
     };
   }
   function _no_name_provided_$factory_185($progressCallback) {
     var i = new _no_name_provided__214($progressCallback);
     return function (p1, p2) {
-      return i.invoke_27zxwg_k$(p1, p2);
+      i.invoke_rvwcgf_k$(p1, p2);
+      return Unit_getInstance();
     };
   }
   function _no_name_provided_$factory_186($progressCallback) {
     var i = new _no_name_provided__215($progressCallback);
     return function (p1, p2) {
+      return i.invoke_27zxwg_k$(p1, p2);
+    };
+  }
+  function _no_name_provided_$factory_187($progressCallback) {
+    var i = new _no_name_provided__216($progressCallback);
+    return function (p1, p2) {
       i.invoke_rvwcgf_k$(p1, p2);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided__216(this$0) {
+  function _no_name_provided__217(this$0) {
     this._this$0_36 = this$0;
   }
-  _no_name_provided__216.prototype.invoke_fcwjfj_k$ = function (red, green, blue) {
+  _no_name_provided__217.prototype.invoke_fcwjfj_k$ = function (red, green, blue) {
     return (red & this._this$0_36._encodeBitMasks._first_0) << this._this$0_36._bitShifts._first_0 | (green & this._this$0_36._encodeBitMasks._second_0) << this._this$0_36._bitShifts._second_0 | (blue & this._this$0_36._encodeBitMasks._third) >> this._this$0_36._bitShifts._third;
   };
-  _no_name_provided__216.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
+  _no_name_provided__217.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     var tmp_0 = (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE();
     return this.invoke_fcwjfj_k$(tmp, tmp_0, (!(p3 == null) ? typeof p3 === 'number' : false) ? p3 : THROW_CCE());
-  };
-  _no_name_provided__216.$metadata$ = {
-    kind: 'class',
-    interfaces: []
-  };
-  function _no_name_provided__217(this$0) {
-    this._this$0_37 = this$0;
-  }
-  _no_name_provided__217.prototype.invoke_kxqjbk_k$ = function (pixel) {
-    var red = (pixel & this._this$0_37._decodeBitMask._first_0) >> this._this$0_37._bitShifts._first_0;
-    var green = (pixel & this._this$0_37._decodeBitMask._second_0) >> this._this$0_37._bitShifts._second_0;
-    var blue = (pixel & this._this$0_37._decodeBitMask._third) << this._this$0_37._bitShifts._third;
-    return Companion_getInstance_58().invoke_fnl2i9_k$(red, green, blue, 255);
-  };
-  _no_name_provided__217.prototype.invoke_20e8_k$ = function (p1) {
-    return new RGBA(this.invoke_kxqjbk_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE()));
   };
   _no_name_provided__217.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
+  function _no_name_provided__218(this$0) {
+    this._this$0_37 = this$0;
+  }
+  _no_name_provided__218.prototype.invoke_kxqjbk_k$ = function (pixel) {
+    var red = (pixel & this._this$0_37._decodeBitMask._first_0) >> this._this$0_37._bitShifts._first_0;
+    var green = (pixel & this._this$0_37._decodeBitMask._second_0) >> this._this$0_37._bitShifts._second_0;
+    var blue = (pixel & this._this$0_37._decodeBitMask._third) << this._this$0_37._bitShifts._third;
+    return Companion_getInstance_59().invoke_fnl2i9_k$(red, green, blue, 255);
+  };
+  _no_name_provided__218.prototype.invoke_20e8_k$ = function (p1) {
+    return new RGBA(this.invoke_kxqjbk_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE()));
+  };
+  _no_name_provided__218.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
   var ColorEncoding_X_555_instance;
   var ColorEncoding_X_565_instance;
-  function Companion_71() {
-    Companion_instance_70 = this;
+  function Companion_72() {
+    Companion_instance_71 = this;
     this._x555 = '555';
     this._x565 = '565';
     this._ENCODING_DEFAULT = ColorEncoding_X_565_getInstance();
   }
-  Companion_71.prototype.fromString_6wfw3l_k$ = function (value) {
+  Companion_72.prototype.fromString_6wfw3l_k$ = function (value) {
     var tmp;
     var tmp_0;
     if (value === '555') {
@@ -47065,34 +47162,34 @@
     }
     return tmp;
   };
-  Companion_71.$metadata$ = {
+  Companion_72.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_70;
-  function Companion_getInstance_70() {
-    if (Companion_instance_70 == null)
-      new Companion_71();
-    return Companion_instance_70;
+  var Companion_instance_71;
+  function Companion_getInstance_71() {
+    if (Companion_instance_71 == null)
+      new Companion_72();
+    return Companion_instance_71;
   }
-  function _no_name_provided__218(this$0) {
+  function _no_name_provided__219(this$0) {
     this._this$0_38 = this$0;
   }
-  _no_name_provided__218.prototype.invoke_0_k$ = function () {
-    return _no_name_provided_$factory_189(this._this$0_38);
+  _no_name_provided__219.prototype.invoke_0_k$ = function () {
+    return _no_name_provided_$factory_190(this._this$0_38);
   };
-  _no_name_provided__218.$metadata$ = {
+  _no_name_provided__219.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__219(this$0) {
+  function _no_name_provided__220(this$0) {
     this._this$0_39 = this$0;
   }
-  _no_name_provided__219.prototype.invoke_0_k$ = function () {
-    return _no_name_provided_$factory_190(this._this$0_39);
+  _no_name_provided__220.prototype.invoke_0_k$ = function () {
+    return _no_name_provided_$factory_191(this._this$0_39);
   };
-  _no_name_provided__219.$metadata$ = {
+  _no_name_provided__220.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -47103,7 +47200,7 @@
     ColorEncoding_entriesInitialized = true;
     ColorEncoding_X_555_instance = new ColorEncoding('X_555', 0, '555', 0, new Triple(248, 248, 248), new Triple(31744, 992, 31), new Triple(7, 2, 3));
     ColorEncoding_X_565_instance = new ColorEncoding('X_565', 1, '565', 1, new Triple(248, 252, 248), new Triple(63488, 2016, 31), new Triple(8, 3, 3));
-    Companion_getInstance_70();
+    Companion_getInstance_71();
   }
   function ColorEncoding(name, ordinal, simpleName, marker, encodeBitMasks, decodeBitMask, bitShifts) {
     Enum.call(this, name, ordinal);
@@ -47113,9 +47210,9 @@
     this._decodeBitMask = decodeBitMask;
     this._bitShifts = bitShifts;
     var tmp = this;
-    tmp._toInt$delegate = lazy(_no_name_provided_$factory_187(this));
+    tmp._toInt$delegate = lazy(_no_name_provided_$factory_188(this));
     var tmp_0 = this;
-    tmp_0._toRgb$delegate = lazy(_no_name_provided_$factory_188(this));
+    tmp_0._toRgb$delegate = lazy(_no_name_provided_$factory_189(this));
   }
   ColorEncoding.prototype._get_toInt__0_k$ = function () {
     var tmp$ret$0;
@@ -47143,8 +47240,8 @@
   function InvalidSpriteEncodingString_init_$Init$(code, message, throwable, $mask0, $marker, $this) {
     if (!(($mask0 & 2) === 0)) {
       var tmp = '' + "Invalid sprite encoding value '" + code + "'. ";
-      Companion_getInstance_70();
-      Companion_getInstance_70();
+      Companion_getInstance_71();
+      Companion_getInstance_71();
       message = tmp + ('' + "Expected value of '" + '555' + "' or '" + '565' + "'");
     }if (!(($mask0 & 4) === 0))
       throwable = null;
@@ -47184,12 +47281,6 @@
       return receiver._get_toRgb__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_187(this$0) {
-    var i = new _no_name_provided__218(this$0);
-    return function () {
-      return i.invoke_0_k$();
-    };
-  }
   function _no_name_provided_$factory_188(this$0) {
     var i = new _no_name_provided__219(this$0);
     return function () {
@@ -47197,13 +47288,19 @@
     };
   }
   function _no_name_provided_$factory_189(this$0) {
-    var i = new _no_name_provided__216(this$0);
-    return function (p1, p2, p3) {
-      return i.invoke_fcwjfj_k$(p1, p2, p3);
+    var i = new _no_name_provided__220(this$0);
+    return function () {
+      return i.invoke_0_k$();
     };
   }
   function _no_name_provided_$factory_190(this$0) {
     var i = new _no_name_provided__217(this$0);
+    return function (p1, p2, p3) {
+      return i.invoke_fcwjfj_k$(p1, p2, p3);
+    };
+  }
+  function _no_name_provided_$factory_191(this$0) {
+    var i = new _no_name_provided__218(this$0);
     return function (p1) {
       return new RGBA(i.invoke_kxqjbk_k$(p1));
     };
@@ -47212,10 +47309,10 @@
   var SpriteType_S16_instance;
   var SpriteType_C16_instance;
   var SpriteType_BLK_instance;
-  function Companion_72() {
-    Companion_instance_71 = this;
+  function Companion_73() {
+    Companion_instance_72 = this;
   }
-  Companion_72.prototype.fromString_6wfw3l_k$ = function (value) {
+  Companion_73.prototype.fromString_6wfw3l_k$ = function (value) {
     var tmp$ret$1;
     $l$block_0: {
       var tmp$ret$0;
@@ -47245,16 +47342,16 @@
     }
     return tmp;
   };
-  Companion_72.$metadata$ = {
+  Companion_73.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_71;
-  function Companion_getInstance_71() {
-    if (Companion_instance_71 == null)
-      new Companion_72();
-    return Companion_instance_71;
+  var Companion_instance_72;
+  function Companion_getInstance_72() {
+    if (Companion_instance_72 == null)
+      new Companion_73();
+    return Companion_instance_72;
   }
   var SpriteType_entriesInitialized;
   function SpriteType_initEntries() {
@@ -47265,7 +47362,7 @@
     SpriteType_S16_instance = new SpriteType('S16', 1);
     SpriteType_C16_instance = new SpriteType('C16', 2);
     SpriteType_BLK_instance = new SpriteType('BLK', 3);
-    Companion_getInstance_71();
+    Companion_getInstance_72();
   }
   function SpriteType(name, ordinal) {
     Enum.call(this, name, ordinal);
@@ -47279,13 +47376,13 @@
     var tmp0_subject = _this_;
     var tmp;
     if (tmp0_subject.equals(SpriteType_SPR_getInstance())) {
-      tmp = _no_name_provided_$factory_191();
-    } else if (tmp0_subject.equals(SpriteType_S16_getInstance())) {
       tmp = _no_name_provided_$factory_192();
-    } else if (tmp0_subject.equals(SpriteType_C16_getInstance())) {
+    } else if (tmp0_subject.equals(SpriteType_S16_getInstance())) {
       tmp = _no_name_provided_$factory_193();
-    } else if (tmp0_subject.equals(SpriteType_BLK_getInstance())) {
+    } else if (tmp0_subject.equals(SpriteType_C16_getInstance())) {
       tmp = _no_name_provided_$factory_194();
+    } else if (tmp0_subject.equals(SpriteType_BLK_getInstance())) {
+      tmp = _no_name_provided_$factory_195();
     } else {
       noWhenBranchMatchedException();
     }
@@ -47314,24 +47411,10 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__220() {
-  }
-  _no_name_provided__220.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
-    return (new SprSpriteFile(bytes_0, keepBlack, 1, progressCallback))._get_frames__0_k$();
-  };
-  _no_name_provided__220.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
-    var tmp = (!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE();
-    var tmp_0 = (!(p2 == null) ? typeof p2 === 'boolean' : false) ? p2 : THROW_CCE();
-    return this.invoke_fqcrmv_k$(tmp, tmp_0, (p3 == null ? true : typeof p3 === 'function') ? p3 : THROW_CCE());
-  };
-  _no_name_provided__220.$metadata$ = {
-    kind: 'class',
-    interfaces: []
-  };
   function _no_name_provided__221() {
   }
   _no_name_provided__221.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
-    return (new S16SpriteFile(bytes_0, keepBlack, 1, progressCallback))._get_frames__0_k$();
+    return (new SprSpriteFile(bytes_0, keepBlack, 1, progressCallback))._get_frames__0_k$();
   };
   _no_name_provided__221.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
     var tmp = (!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE();
@@ -47345,7 +47428,7 @@
   function _no_name_provided__222() {
   }
   _no_name_provided__222.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
-    return (new C16SpriteFile(bytes_0, keepBlack, 1, progressCallback))._get_frames__0_k$();
+    return (new S16SpriteFile(bytes_0, keepBlack, 1, progressCallback))._get_frames__0_k$();
   };
   _no_name_provided__222.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
     var tmp = (!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE();
@@ -47358,8 +47441,8 @@
   };
   function _no_name_provided__223() {
   }
-  _no_name_provided__223.prototype.invoke_fqcrmv_k$ = function (bytes_0, _anonymous_parameter_1_, progressCallback) {
-    return BlkSpriteFile_init_$Create$(bytes_0, 1, progressCallback)._get_frames__0_k$();
+  _no_name_provided__223.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
+    return (new C16SpriteFile(bytes_0, keepBlack, 1, progressCallback))._get_frames__0_k$();
   };
   _no_name_provided__223.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
     var tmp = (!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE();
@@ -47367,6 +47450,20 @@
     return this.invoke_fqcrmv_k$(tmp, tmp_0, (p3 == null ? true : typeof p3 === 'function') ? p3 : THROW_CCE());
   };
   _no_name_provided__223.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__224() {
+  }
+  _no_name_provided__224.prototype.invoke_fqcrmv_k$ = function (bytes_0, _anonymous_parameter_1_, progressCallback) {
+    return BlkSpriteFile_init_$Create$(bytes_0, 1, progressCallback)._get_frames__0_k$();
+  };
+  _no_name_provided__224.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
+    var tmp = (!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE();
+    var tmp_0 = (!(p2 == null) ? typeof p2 === 'boolean' : false) ? p2 : THROW_CCE();
+    return this.invoke_fqcrmv_k$(tmp, tmp_0, (p3 == null ? true : typeof p3 === 'function') ? p3 : THROW_CCE());
+  };
+  _no_name_provided__224.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -47386,12 +47483,6 @@
     SpriteType_initEntries();
     return SpriteType_BLK_instance;
   }
-  function _no_name_provided_$factory_191() {
-    var i = new _no_name_provided__220();
-    return function (p1, p2, p3) {
-      return i.invoke_fqcrmv_k$(p1, p2, p3);
-    };
-  }
   function _no_name_provided_$factory_192() {
     var i = new _no_name_provided__221();
     return function (p1, p2, p3) {
@@ -47410,47 +47501,53 @@
       return i.invoke_fqcrmv_k$(p1, p2, p3);
     };
   }
-  function _no_name_provided__224() {
+  function _no_name_provided_$factory_195() {
+    var i = new _no_name_provided__224();
+    return function (p1, p2, p3) {
+      return i.invoke_fqcrmv_k$(p1, p2, p3);
+    };
   }
-  _no_name_provided__224.prototype.invoke_12t64v_k$ = function () {
-    return Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
+  function _no_name_provided__225() {
+  }
+  _no_name_provided__225.prototype.invoke_12t64v_k$ = function () {
+    return Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 0);
   };
-  _no_name_provided__224.prototype.invoke_0_k$ = function () {
+  _no_name_provided__225.prototype.invoke_0_k$ = function () {
     return new RGBA(this.invoke_12t64v_k$());
   };
-  _no_name_provided__224.$metadata$ = {
+  _no_name_provided__225.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__225() {
+  function _no_name_provided__226() {
     this._i_1 = 0;
     this._max_0 = _get_lastIndex_(ColorPalette_getInstance()._paletteColors);
   }
-  _no_name_provided__225.prototype.hasNext_0_k$ = function () {
+  _no_name_provided__226.prototype.hasNext_0_k$ = function () {
     return this._i_1 < this._max_0;
   };
-  _no_name_provided__225.prototype.next_12t64v_k$ = function () {
+  _no_name_provided__226.prototype.next_12t64v_k$ = function () {
     var tmp = ColorPalette_getInstance()._paletteColors;
     var tmp0_this = this;
     var tmp1 = tmp0_this._i_1;
     tmp0_this._i_1 = tmp1 + 1 | 0;
     return tmp[tmp1]._value_12;
   };
-  _no_name_provided__225.prototype.next_0_k$ = function () {
+  _no_name_provided__226.prototype.next_0_k$ = function () {
     return new RGBA(this.next_12t64v_k$());
   };
-  _no_name_provided__225.$metadata$ = {
+  _no_name_provided__226.$metadata$ = {
     kind: 'class',
     interfaces: [Iterator_0]
   };
   function ColorPalette() {
     ColorPalette_instance = this;
     var tmp = this;
-    tmp._TRANSPARENT_BLACK$delegate = lazy(_no_name_provided_$factory_195());
+    tmp._TRANSPARENT_BLACK$delegate = lazy(_no_name_provided_$factory_196());
     var tmp_0 = this;
     var tmp$ret$2;
     $l$block_1: {
-      var tmp0_arrayOf_0 = [new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(126, 3, 8, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(15, 127, 18, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(128, 127, 23, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(2, 12, 126, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(127, 15, 126, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(17, 128, 127, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(192, 192, 192, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(193, 219, 193, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(167, 203, 238, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(252, 252, 252, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(16, 8, 8, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(20, 24, 39, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(24, 40, 17, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(24, 36, 48, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(44, 16, 9, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(40, 24, 36, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(52, 40, 18, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(48, 44, 48, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(24, 29, 67, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(22, 53, 83, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(26, 61, 95, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(36, 29, 67, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(44, 52, 71, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(45, 57, 103, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(30, 63, 30, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(30, 64, 41, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(52, 71, 27, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(53, 72, 45, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(61, 95, 29, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(61, 95, 43, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(26, 64, 91, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(30, 65, 99, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(53, 68, 79, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(45, 77, 103, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(57, 96, 77, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(61, 96, 111, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(71, 24, 11, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(71, 29, 36, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(79, 44, 19, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(72, 52, 45, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(103, 25, 16, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(107, 29, 37, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(107, 48, 21, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(103, 52, 38, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(72, 56, 72, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(72, 57, 103, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(103, 53, 72, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(115, 54, 103, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(80, 71, 25, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(80, 72, 49, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(80, 99, 30, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(77, 103, 47, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(111, 72, 26, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(107, 76, 46, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(112, 99, 29, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(116, 99, 52, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(76, 76, 76, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(76, 84, 107, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(84, 100, 81, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(85, 100, 112, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(104, 84, 77, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(104, 88, 104, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(112, 104, 81, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(108, 108, 108, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(49, 62, 130, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(58, 93, 142, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(64, 62, 130, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(77, 89, 138, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(73, 90, 174, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(81, 105, 139, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(74, 109, 170, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(100, 89, 135, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(100, 94, 170, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(108, 113, 139, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(108, 117, 166, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(77, 95, 193, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(82, 118, 197, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(93, 116, 233, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(105, 122, 201, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(101, 124, 241, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(105, 139, 58, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(93, 131, 79, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(93, 128, 105, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(109, 139, 79, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(116, 136, 113, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(121, 163, 81, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(121, 163, 106, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(89, 128, 139, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(93, 129, 182, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(113, 132, 147, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(117, 137, 171, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(125, 163, 141, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(121, 164, 175, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(90, 134, 202, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(91, 146, 225, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(92, 166, 237, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(113, 137, 202, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(117, 139, 249, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(122, 161, 214, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(114, 165, 233, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(138, 25, 22, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(142, 30, 39, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(135, 52, 23, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 53, 43, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 26, 25, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 31, 37, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(166, 49, 25, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 49, 45, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(150, 53, 73, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 76, 28, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 80, 44, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(143, 103, 31, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(143, 103, 53, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 80, 31, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(166, 84, 46, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(175, 104, 34, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(171, 108, 51, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(135, 84, 73, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(135, 89, 108, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 108, 78, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(135, 116, 109, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 80, 74, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(174, 85, 101, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(167, 116, 76, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(171, 116, 105, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(206, 46, 38, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(210, 54, 75, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(198, 84, 34, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(198, 84, 48, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 104, 36, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 112, 53, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 81, 36, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 81, 53, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 116, 39, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 116, 52, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 81, 76, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 85, 102, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 116, 77, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(198, 116, 106, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 81, 84, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 90, 99, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(238, 112, 78, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 113, 114, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(143, 63, 131, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 82, 131, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(132, 120, 143, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(132, 121, 167, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(167, 120, 136, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(163, 125, 163, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(128, 126, 194, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(206, 53, 128, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(214, 113, 137, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 119, 203, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(163, 135, 53, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(147, 131, 83, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(144, 136, 113, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(137, 171, 85, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(141, 171, 111, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(175, 135, 84, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(171, 140, 110, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(179, 163, 86, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(180, 167, 115, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(157, 194, 71, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(165, 207, 99, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(206, 135, 42, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(206, 135, 58, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(211, 167, 44, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(207, 167, 58, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(238, 140, 43, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 140, 57, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(242, 171, 47, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(242, 171, 63, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(203, 140, 82, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(199, 148, 107, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(207, 167, 87, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(207, 167, 116, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 144, 80, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 144, 104, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(238, 171, 85, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(235, 175, 113, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(207, 195, 70, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(243, 203, 49, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(247, 203, 67, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(251, 238, 55, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(251, 234, 68, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(211, 195, 89, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(211, 195, 117, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(201, 242, 93, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(205, 242, 116, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(247, 199, 87, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(243, 203, 115, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(247, 234, 90, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(251, 231, 120, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(140, 136, 144, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(140, 144, 171, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(145, 168, 145, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(149, 168, 179, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(167, 144, 140, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(164, 152, 175, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(176, 168, 145, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(172, 168, 180, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(137, 149, 202, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(133, 154, 245, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(149, 165, 206, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(145, 170, 249, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(160, 157, 195, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(172, 173, 203, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(165, 185, 242, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(169, 199, 169, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(153, 196, 196, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(176, 192, 207, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(169, 197, 250, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(178, 231, 197, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(185, 228, 231, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(203, 144, 145, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(199, 152, 164, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(203, 176, 142, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(199, 176, 176, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 144, 142, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 145, 165, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(231, 180, 139, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(231, 180, 169, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(196, 184, 200, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(196, 189, 223, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(243, 173, 204, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(212, 199, 147, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(208, 200, 177, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(205, 239, 141, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(205, 227, 178, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(239, 203, 148, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(235, 208, 174, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(247, 231, 149, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(248, 235, 179, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(212, 200, 204, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(200, 201, 231, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(212, 228, 205, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(216, 232, 228, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(228, 212, 208, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(224, 208, 224, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(240, 232, 209, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(244, 244, 236, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(252, 252, 252, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(255, 251, 241, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(160, 160, 164, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(128, 128, 128, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(252, 13, 27, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(41, 253, 46, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(255, 253, 56, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(11, 36, 251, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(253, 40, 252, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(45, 255, 254, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(255, 255, 255, 255))];
+      var tmp0_arrayOf_0 = [new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 0)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(126, 3, 8, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(15, 127, 18, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(128, 127, 23, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(2, 12, 126, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(127, 15, 126, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(17, 128, 127, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(192, 192, 192, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(193, 219, 193, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(167, 203, 238, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(252, 252, 252, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(16, 8, 8, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(20, 24, 39, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(24, 40, 17, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(24, 36, 48, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(44, 16, 9, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(40, 24, 36, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(52, 40, 18, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(48, 44, 48, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(24, 29, 67, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(22, 53, 83, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(26, 61, 95, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(36, 29, 67, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(44, 52, 71, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(45, 57, 103, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(30, 63, 30, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(30, 64, 41, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(52, 71, 27, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(53, 72, 45, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(61, 95, 29, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(61, 95, 43, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(26, 64, 91, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(30, 65, 99, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(53, 68, 79, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(45, 77, 103, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(57, 96, 77, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(61, 96, 111, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(71, 24, 11, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(71, 29, 36, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(79, 44, 19, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(72, 52, 45, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(103, 25, 16, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(107, 29, 37, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(107, 48, 21, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(103, 52, 38, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(72, 56, 72, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(72, 57, 103, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(103, 53, 72, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(115, 54, 103, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(80, 71, 25, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(80, 72, 49, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(80, 99, 30, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(77, 103, 47, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(111, 72, 26, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(107, 76, 46, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(112, 99, 29, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(116, 99, 52, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(76, 76, 76, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(76, 84, 107, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(84, 100, 81, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(85, 100, 112, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(104, 84, 77, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(104, 88, 104, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(112, 104, 81, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(108, 108, 108, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(49, 62, 130, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(58, 93, 142, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(64, 62, 130, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(77, 89, 138, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(73, 90, 174, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(81, 105, 139, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(74, 109, 170, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(100, 89, 135, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(100, 94, 170, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(108, 113, 139, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(108, 117, 166, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(77, 95, 193, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(82, 118, 197, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(93, 116, 233, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(105, 122, 201, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(101, 124, 241, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(105, 139, 58, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(93, 131, 79, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(93, 128, 105, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(109, 139, 79, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(116, 136, 113, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(121, 163, 81, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(121, 163, 106, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(89, 128, 139, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(93, 129, 182, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(113, 132, 147, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(117, 137, 171, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(125, 163, 141, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(121, 164, 175, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(90, 134, 202, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(91, 146, 225, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(92, 166, 237, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(113, 137, 202, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(117, 139, 249, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(122, 161, 214, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(114, 165, 233, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(138, 25, 22, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(142, 30, 39, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(135, 52, 23, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(139, 53, 43, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(170, 26, 25, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(170, 31, 37, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(166, 49, 25, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(170, 49, 45, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(150, 53, 73, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(139, 76, 28, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(139, 80, 44, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(143, 103, 31, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(143, 103, 53, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(170, 80, 31, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(166, 84, 46, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(175, 104, 34, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(171, 108, 51, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(135, 84, 73, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(135, 89, 108, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(139, 108, 78, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(135, 116, 109, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(170, 80, 74, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(174, 85, 101, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(167, 116, 76, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(171, 116, 105, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(206, 46, 38, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(210, 54, 75, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(198, 84, 34, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(198, 84, 48, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(202, 104, 36, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(202, 112, 53, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(230, 81, 36, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(230, 81, 53, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(230, 116, 39, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(230, 116, 52, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(202, 81, 76, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(202, 85, 102, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(202, 116, 77, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(198, 116, 106, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(230, 81, 84, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(234, 90, 99, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(238, 112, 78, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(234, 113, 114, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(143, 63, 131, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(139, 82, 131, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(132, 120, 143, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(132, 121, 167, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(167, 120, 136, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(163, 125, 163, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(128, 126, 194, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(206, 53, 128, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(214, 113, 137, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(234, 119, 203, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(163, 135, 53, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(147, 131, 83, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(144, 136, 113, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(137, 171, 85, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(141, 171, 111, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(175, 135, 84, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(171, 140, 110, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(179, 163, 86, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(180, 167, 115, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(157, 194, 71, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(165, 207, 99, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(206, 135, 42, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(206, 135, 58, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(211, 167, 44, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(207, 167, 58, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(238, 140, 43, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(234, 140, 57, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(242, 171, 47, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(242, 171, 63, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(203, 140, 82, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(199, 148, 107, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(207, 167, 87, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(207, 167, 116, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(234, 144, 80, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(234, 144, 104, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(238, 171, 85, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(235, 175, 113, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(207, 195, 70, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(243, 203, 49, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(247, 203, 67, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(251, 238, 55, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(251, 234, 68, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(211, 195, 89, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(211, 195, 117, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(201, 242, 93, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(205, 242, 116, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(247, 199, 87, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(243, 203, 115, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(247, 234, 90, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(251, 231, 120, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(140, 136, 144, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(140, 144, 171, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(145, 168, 145, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(149, 168, 179, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(167, 144, 140, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(164, 152, 175, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(176, 168, 145, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(172, 168, 180, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(137, 149, 202, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(133, 154, 245, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(149, 165, 206, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(145, 170, 249, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(160, 157, 195, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(172, 173, 203, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(165, 185, 242, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(169, 199, 169, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(153, 196, 196, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(176, 192, 207, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(169, 197, 250, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(178, 231, 197, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(185, 228, 231, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(203, 144, 145, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(199, 152, 164, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(203, 176, 142, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(199, 176, 176, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(234, 144, 142, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(234, 145, 165, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(231, 180, 139, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(231, 180, 169, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(196, 184, 200, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(196, 189, 223, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(243, 173, 204, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(212, 199, 147, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(208, 200, 177, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(205, 239, 141, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(205, 227, 178, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(239, 203, 148, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(235, 208, 174, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(247, 231, 149, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(248, 235, 179, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(212, 200, 204, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(200, 201, 231, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(212, 228, 205, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(216, 232, 228, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(228, 212, 208, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(224, 208, 224, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(240, 232, 209, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(244, 244, 236, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(252, 252, 252, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(255, 251, 241, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(160, 160, 164, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(128, 128, 128, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(252, 13, 27, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(41, 253, 46, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(255, 253, 56, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(11, 36, 251, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(253, 40, 252, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(45, 255, 254, 255)), new RGBA(Companion_getInstance_59().invoke_fnl2i9_k$(255, 255, 255, 255))];
       var tmp$ret$1;
       $l$block_0: {
         var tmp$ret$0;
@@ -47473,7 +47570,7 @@
     return _get_lastIndex_(this._paletteColors);
   };
   ColorPalette.prototype.iterator_0_k$ = function () {
-    return new _no_name_provided__225();
+    return new _no_name_provided__226();
   };
   ColorPalette.$metadata$ = {
     simpleName: 'ColorPalette',
@@ -47486,30 +47583,30 @@
       new ColorPalette();
     return ColorPalette_instance;
   }
-  function _no_name_provided_$factory_195() {
-    var i = new _no_name_provided__224();
+  function _no_name_provided_$factory_196() {
+    var i = new _no_name_provided__225();
     return function () {
       return new RGBA(i.invoke_12t64v_k$());
     };
   }
   function mapAsync(_this_, f, $cont) {
-    return coroutineScope(_no_name_provided_$factory_196(_this_, f, null), $cont);
+    return coroutineScope(_no_name_provided_$factory_197(_this_, f, null), $cont);
   }
-  function _no_name_provided__226($f, $item_2_3, resultContinuation) {
+  function _no_name_provided__227($f, $item_2_3, resultContinuation) {
     this._$f = $f;
     this._$item_2_3 = $item_2_3;
     CoroutineImpl_0.call(this, resultContinuation);
   }
-  _no_name_provided__226.prototype.invoke_mzru1z_k$ = function ($this$async, $cont) {
+  _no_name_provided__227.prototype.invoke_mzru1z_k$ = function ($this$async, $cont) {
     var tmp = this.create_y6imfn_k$($this$async, $cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__226.prototype.invoke_20e8_k$ = function (p1, $cont) {
+  _no_name_provided__227.prototype.invoke_20e8_k$ = function (p1, $cont) {
     return this.invoke_mzru1z_k$((!(p1 == null) ? isInterface(p1, CoroutineScope) : false) ? p1 : THROW_CCE(), $cont);
   };
-  _no_name_provided__226.prototype.doResume_0_k$ = function () {
+  _no_name_provided__227.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
     $sm: do
       try {
@@ -47538,31 +47635,31 @@
       }
      while (true);
   };
-  _no_name_provided__226.prototype.create_y6imfn_k$ = function ($this$async, completion) {
-    var i = new _no_name_provided__226(this._$f, this._$item_2_3, completion);
+  _no_name_provided__227.prototype.create_y6imfn_k$ = function ($this$async, completion) {
+    var i = new _no_name_provided__227(this._$f, this._$item_2_3, completion);
     i._$this$async = $this$async;
     return i;
   };
-  _no_name_provided__226.$metadata$ = {
+  _no_name_provided__227.$metadata$ = {
     kind: 'class',
     interfaces: [],
     suspendArity: 1
   };
-  function _no_name_provided__227($this_mapAsync, $f, resultContinuation) {
+  function _no_name_provided__228($this_mapAsync, $f, resultContinuation) {
     this._$this_mapAsync = $this_mapAsync;
     this._$f_0 = $f;
     CoroutineImpl_0.call(this, resultContinuation);
   }
-  _no_name_provided__227.prototype.invoke_mzru1z_k$ = function ($this$coroutineScope, $cont) {
+  _no_name_provided__228.prototype.invoke_mzru1z_k$ = function ($this$coroutineScope, $cont) {
     var tmp = this.create_y6imfn_k$($this$coroutineScope, $cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__227.prototype.invoke_20e8_k$ = function (p1, $cont) {
+  _no_name_provided__228.prototype.invoke_20e8_k$ = function (p1, $cont) {
     return this.invoke_mzru1z_k$((!(p1 == null) ? isInterface(p1, CoroutineScope) : false) ? p1 : THROW_CCE(), $cont);
   };
-  _no_name_provided__227.prototype.doResume_0_k$ = function () {
+  _no_name_provided__228.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
     $sm: do
       try {
@@ -47576,7 +47673,7 @@
             var tmp0_iterator_1_2 = this._$this_mapAsync.iterator_0_k$();
             while (tmp0_iterator_1_2.hasNext_0_k$()) {
               var item_2_3 = tmp0_iterator_1_2.next_0_k$();
-              this._tmp0_mapTo_0_10.add_2bq_k$(async$default(this._$this$coroutineScope, null, null, _no_name_provided_$factory_197(this._$f_0, item_2_3, null), 3, null));
+              this._tmp0_mapTo_0_10.add_2bq_k$(async$default(this._$this$coroutineScope, null, null, _no_name_provided_$factory_198(this._$f_0, item_2_3, null), 3, null));
               Unit_getInstance();
             }
 
@@ -47600,26 +47697,26 @@
       }
      while (true);
   };
-  _no_name_provided__227.prototype.create_y6imfn_k$ = function ($this$coroutineScope, completion) {
-    var i = new _no_name_provided__227(this._$this_mapAsync, this._$f_0, completion);
+  _no_name_provided__228.prototype.create_y6imfn_k$ = function ($this$coroutineScope, completion) {
+    var i = new _no_name_provided__228(this._$this_mapAsync, this._$f_0, completion);
     i._$this$coroutineScope = $this$coroutineScope;
     return i;
   };
-  _no_name_provided__227.$metadata$ = {
+  _no_name_provided__228.$metadata$ = {
     kind: 'class',
     interfaces: [],
     suspendArity: 1
   };
-  function _no_name_provided_$factory_196($this_mapAsync, $f, resultContinuation) {
-    var i = new _no_name_provided__227($this_mapAsync, $f, resultContinuation);
+  function _no_name_provided_$factory_197($this_mapAsync, $f, resultContinuation) {
+    var i = new _no_name_provided__228($this_mapAsync, $f, resultContinuation);
     var l = function (p1, $cont) {
       return i.invoke_mzru1z_k$(p1, $cont);
     };
     l.$arity = 1;
     return l;
   }
-  function _no_name_provided_$factory_197($f, $item_2_3, resultContinuation) {
-    var i = new _no_name_provided__226($f, $item_2_3, resultContinuation);
+  function _no_name_provided_$factory_198($f, $item_2_3, resultContinuation) {
+    var i = new _no_name_provided__227($f, $item_2_3, resultContinuation);
     var l = function (p1, $cont) {
       return i.invoke_mzru1z_k$(p1, $cont);
     };
@@ -47630,10 +47727,10 @@
     return createSpriteCompiler_0(format_0, encoding === void 1 ? null : encoding);
   }
   function createSpriteCompiler_0(format_0, encoding) {
-    var type = Companion_getInstance_71().fromString_6wfw3l_k$(format_0);
+    var type = Companion_getInstance_72().fromString_6wfw3l_k$(format_0);
     var tmp;
     if (!(encoding == null)) {
-      tmp = Companion_getInstance_70().fromString_6wfw3l_k$(encoding);
+      tmp = Companion_getInstance_71().fromString_6wfw3l_k$(encoding);
     } else {
       tmp = null;
     }
@@ -47671,7 +47768,7 @@
         }
         var tmp$ret$0;
         $l$block: {
-          tmp$ret$0 = Companion_getInstance_71().fromString_6wfw3l_k$(tmp0_safe_receiver);
+          tmp$ret$0 = Companion_getInstance_72().fromString_6wfw3l_k$(tmp0_safe_receiver);
           break $l$block;
         }
         tmp$ret$1 = tmp$ret$0;
@@ -47681,7 +47778,7 @@
     }
     var tmp1_elvis_lhs = tmp;
     var type = tmp1_elvis_lhs == null ? this._format_0 : tmp1_elvis_lhs;
-    var compiler = Companion_getInstance_61().getCompiler_v3krwk_k$(type);
+    var compiler = Companion_getInstance_62().getCompiler_v3krwk_k$(type);
     return compiler.compileSpriteFromImageBytes$default_ouf8qm_k$(this._images, keepBlack, this._encoding_3, null, 8, null);
   };
   Compiler.prototype.compile$default_2d58d4_k$ = function (formatIn, keepBlack, $mask0, $handler) {
@@ -47740,11 +47837,11 @@
     return convertSprite_0(byteArray, fromSpriteTypeString, toSpriteTypeString, colorEncodingString === void 1 ? null : colorEncodingString, callback);
   }
   function convertSprite_0(byteArray, fromSpriteTypeString, toSpriteTypeString, colorEncodingString, callback) {
-    var fromSpriteType = Companion_getInstance_71().fromString_6wfw3l_k$(fromSpriteTypeString);
-    var toSpriteType = Companion_getInstance_71().fromString_6wfw3l_k$(toSpriteTypeString);
+    var fromSpriteType = Companion_getInstance_72().fromString_6wfw3l_k$(fromSpriteTypeString);
+    var toSpriteType = Companion_getInstance_72().fromString_6wfw3l_k$(toSpriteTypeString);
     var tmp = _get_parser_(fromSpriteType);
     var tmp_0 = new MemoryByteStreamReader(byteArray);
-    var images = tmp(tmp_0, false, _no_name_provided_$factory_198(callback));
+    var images = tmp(tmp_0, false, _no_name_provided_$factory_199(callback));
     var tmp0_safe_receiver = colorEncodingString;
     var tmp_1;
     if (tmp0_safe_receiver == null) {
@@ -47756,7 +47853,7 @@
         }
         var tmp$ret$0;
         $l$block: {
-          tmp$ret$0 = Companion_getInstance_70().fromString_6wfw3l_k$(tmp0_safe_receiver);
+          tmp$ret$0 = Companion_getInstance_71().fromString_6wfw3l_k$(tmp0_safe_receiver);
           break $l$block;
         }
         tmp$ret$1 = tmp$ret$0;
@@ -47765,30 +47862,15 @@
       tmp_1 = tmp$ret$1;
     }
     var colorEncoding = tmp_1;
-    var tmp_2 = Companion_getInstance_61().getCompiler_v3krwk_k$(toSpriteType);
-    return tmp_2.compileSpriteFromLoadedImages_kx4ton_k$(images, true, colorEncoding, _no_name_provided_$factory_199(callback));
+    var tmp_2 = Companion_getInstance_62().getCompiler_v3krwk_k$(toSpriteType);
+    return tmp_2.compileSpriteFromLoadedImages_kx4ton_k$(images, true, colorEncoding, _no_name_provided_$factory_200(callback));
   }
-  function _no_name_provided__228($callback) {
+  function _no_name_provided__229($callback) {
     this._$callback_7 = $callback;
   }
-  _no_name_provided__228.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__229.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_7;
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, current, total);
-  };
-  _no_name_provided__228.prototype.invoke_osx4an_k$ = function (p1, p2) {
-    var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
-    return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
-  };
-  _no_name_provided__228.$metadata$ = {
-    kind: 'class',
-    interfaces: []
-  };
-  function _no_name_provided__229($callback) {
-    this._$callback_8 = $callback;
-  }
-  _no_name_provided__229.prototype.invoke_27zxwg_k$ = function (current, total) {
-    var tmp0_safe_receiver = this._$callback_8;
-    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, current, total);
   };
   _no_name_provided__229.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
@@ -47798,14 +47880,29 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_198($callback) {
-    var i = new _no_name_provided__228($callback);
+  function _no_name_provided__230($callback) {
+    this._$callback_8 = $callback;
+  }
+  _no_name_provided__230.prototype.invoke_27zxwg_k$ = function (current, total) {
+    var tmp0_safe_receiver = this._$callback_8;
+    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, current, total);
+  };
+  _no_name_provided__230.prototype.invoke_osx4an_k$ = function (p1, p2) {
+    var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
+    return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
+  };
+  _no_name_provided__230.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided_$factory_199($callback) {
+    var i = new _no_name_provided__229($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_199($callback) {
-    var i = new _no_name_provided__229($callback);
+  function _no_name_provided_$factory_200($callback) {
+    var i = new _no_name_provided__230($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
@@ -47834,7 +47931,7 @@
     return stitchBlkToPngAsync_0(blkBytes, progressChunkSize, progressCallback === void 1 ? null : progressCallback);
   }
   function stitchBlkToPngAsync_0(blkBytes, progressChunkSize, progressCallback) {
-    return new Promise(_no_name_provided_$factory_200(blkBytes, progressChunkSize, progressCallback));
+    return new Promise(_no_name_provided_$factory_201(blkBytes, progressChunkSize, progressCallback));
   }
   function parseSprite(fileName, bytes_0, keepBlack, progressChunkSize, progressCallback) {
     var tmp$ret$3;
@@ -47869,24 +47966,24 @@
     }
     return tmp$ret$3;
   }
-  function _no_name_provided__230($blkBytes, $progressChunkSize, $progressCallback, $resolve, resultContinuation) {
+  function _no_name_provided__231($blkBytes, $progressChunkSize, $progressCallback, $resolve, resultContinuation) {
     this._$blkBytes = $blkBytes;
     this._$progressChunkSize = $progressChunkSize;
     this._$progressCallback_3 = $progressCallback;
     this._$resolve_0 = $resolve;
     CoroutineImpl_0.call(this, resultContinuation);
   }
-  _no_name_provided__230.prototype.invoke_2i3g7c_k$ = function ($this$launch, $cont) {
+  _no_name_provided__231.prototype.invoke_2i3g7c_k$ = function ($this$launch, $cont) {
     var tmp = this.create_y6imfn_k$($this$launch, $cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__230.prototype.invoke_20e8_k$ = function (p1, $cont) {
+  _no_name_provided__231.prototype.invoke_20e8_k$ = function (p1, $cont) {
     this.invoke_2i3g7c_k$((!(p1 == null) ? isInterface(p1, CoroutineScope) : false) ? p1 : THROW_CCE(), $cont);
     return Unit_getInstance();
   };
-  _no_name_provided__230.prototype.doResume_0_k$ = function () {
+  _no_name_provided__231.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
     $sm: do
       try {
@@ -47919,44 +48016,44 @@
       }
      while (true);
   };
-  _no_name_provided__230.prototype.create_y6imfn_k$ = function ($this$launch, completion) {
-    var i = new _no_name_provided__230(this._$blkBytes, this._$progressChunkSize, this._$progressCallback_3, this._$resolve_0, completion);
+  _no_name_provided__231.prototype.create_y6imfn_k$ = function ($this$launch, completion) {
+    var i = new _no_name_provided__231(this._$blkBytes, this._$progressChunkSize, this._$progressCallback_3, this._$resolve_0, completion);
     i._$this$launch = $this$launch;
     return i;
   };
-  _no_name_provided__230.$metadata$ = {
+  _no_name_provided__231.$metadata$ = {
     kind: 'class',
     interfaces: [],
     suspendArity: 1
   };
-  function _no_name_provided__231($blkBytes, $progressChunkSize, $progressCallback) {
+  function _no_name_provided__232($blkBytes, $progressChunkSize, $progressCallback) {
     this._$blkBytes_0 = $blkBytes;
     this._$progressChunkSize_0 = $progressChunkSize;
     this._$progressCallback_4 = $progressCallback;
   }
-  _no_name_provided__231.prototype.invoke_lnwnsw_k$ = function (resolve, _anonymous_parameter_1_) {
+  _no_name_provided__232.prototype.invoke_lnwnsw_k$ = function (resolve, _anonymous_parameter_1_) {
     var tmp = GlobalScope_getInstance();
-    launch$default(tmp, null, null, _no_name_provided_$factory_201(this._$blkBytes_0, this._$progressChunkSize_0, this._$progressCallback_4, resolve, null), 3, null);
+    launch$default(tmp, null, null, _no_name_provided_$factory_202(this._$blkBytes_0, this._$progressChunkSize_0, this._$progressCallback_4, resolve, null), 3, null);
     Unit_getInstance();
   };
-  _no_name_provided__231.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__232.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'function' : false) ? p1 : THROW_CCE();
     this.invoke_lnwnsw_k$(tmp, (!(p2 == null) ? typeof p2 === 'function' : false) ? p2 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__231.$metadata$ = {
+  _no_name_provided__232.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_200($blkBytes, $progressChunkSize, $progressCallback) {
-    var i = new _no_name_provided__231($blkBytes, $progressChunkSize, $progressCallback);
+  function _no_name_provided_$factory_201($blkBytes, $progressChunkSize, $progressCallback) {
+    var i = new _no_name_provided__232($blkBytes, $progressChunkSize, $progressCallback);
     return function (p1, p2) {
       i.invoke_lnwnsw_k$(p1, p2);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_201($blkBytes, $progressChunkSize, $progressCallback, $resolve, resultContinuation) {
-    var i = new _no_name_provided__230($blkBytes, $progressChunkSize, $progressCallback, $resolve, resultContinuation);
+  function _no_name_provided_$factory_202($blkBytes, $progressChunkSize, $progressCallback, $resolve, resultContinuation) {
+    var i = new _no_name_provided__231($blkBytes, $progressChunkSize, $progressCallback, $resolve, resultContinuation);
     var l = function (p1, $cont) {
       return i.invoke_2i3g7c_k$(p1, $cont);
     };
@@ -47967,13 +48064,29 @@
     return loadBackground_0(absolutePath, progressCallback === void 1 ? null : progressCallback);
   }
   function loadBackground_0(absolutePath, progressCallback) {
-    return new Promise(_no_name_provided_$factory_202(absolutePath, progressCallback));
+    return new Promise(_no_name_provided_$factory_203(absolutePath, progressCallback));
   }
-  function _no_name_provided__232($absolutePath, $progressCallback) {
+  function getBLKDimensions(absolutePath) {
+    if (!fileExists(absolutePath)) {
+      throw IOException_init_$Create$('BLK path does not exist', null, 2, null);
+    }var reader = JsFileStreamReader_init_$Create$(absolutePath, 0, 0, 0, 14, null);
+    var tmp0_container = Companion_getInstance_63().sizeInCells_r02v3k_k$(reader);
+    var widthInCells = tmp0_container.component1_0_k$();
+    var heightInCells = tmp0_container.component2_0_k$();
+    reader.close();
+    Unit_getInstance();
+    var dimensions = {};
+    Companion_getInstance_63();
+    dimensions.width = imul(widthInCells, 128);
+    Companion_getInstance_63();
+    dimensions.height = imul(heightInCells, 128);
+    return dimensions;
+  }
+  function _no_name_provided__233($absolutePath, $progressCallback) {
     this._$absolutePath = $absolutePath;
     this._$progressCallback_5 = $progressCallback;
   }
-  _no_name_provided__232.prototype.invoke_lnwnsw_k$ = function (resolve, reject) {
+  _no_name_provided__233.prototype.invoke_lnwnsw_k$ = function (resolve, reject) {
     if (!fileExists(this._$absolutePath)) {
       reject(IOException_init_$Create$('BLK path does not exist', null, 2, null));
       return Unit_getInstance();
@@ -47986,17 +48099,17 @@
     var tmp = PNG_getInstance();
     resolve(tmp.encode$default_tm5rke_k$(stitched, null, 2, null));
   };
-  _no_name_provided__232.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__233.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'function' : false) ? p1 : THROW_CCE();
     this.invoke_lnwnsw_k$(tmp, (!(p2 == null) ? typeof p2 === 'function' : false) ? p2 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__232.$metadata$ = {
+  _no_name_provided__233.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_202($absolutePath, $progressCallback) {
-    var i = new _no_name_provided__232($absolutePath, $progressCallback);
+  function _no_name_provided_$factory_203($absolutePath, $progressCallback) {
+    var i = new _no_name_provided__233($absolutePath, $progressCallback);
     return function (p1, p2) {
       i.invoke_lnwnsw_k$(p1, p2);
       return Unit_getInstance();
@@ -48169,7 +48282,7 @@
   leadingNumberRegex = leadingNumberRegex$init$();
   trailingNumberRegex = trailingNumberRegex$init$();
   sortedFilesNice = sortedFilesNice$init$();
-  KlockLocale_default = Companion_getInstance_16();
+  KlockLocale_default = Companion_getInstance_17();
   ExtendedTimezoneNames = ExtendedTimezoneNames$init$();
   klockIsKotlinNative = false;
   isNode = typeof window === 'undefined';
@@ -48300,6 +48413,7 @@
   _.stitchBlkToPng = stitchBlkToPng;
   _.stitchBlkToPngAsync = stitchBlkToPngAsync;
   _.loadBackground = loadBackground;
+  _.getBLKDimensions = getBLKDimensions;
   return _;
 }));
 
