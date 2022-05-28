@@ -181,6 +181,9 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
         img = images.checkerboard;
         color = black;
         break;
+        default:
+            console.error(`Cannot render room with invalid type: ${selectedRoom.roomType}`);
+            return;
     }
 
     let tempCanvas = document.createElement("canvas");
@@ -200,17 +203,19 @@ async function drawRoomtype(roomtypeCtx, selectedRoom) {
 
     let patternStyle = roomtypeCtx.createPattern(tempCanvas, "repeat");
     if (!patternStyle) {
-      return;
+        return;
     }
     patternStyle.width = img.width * zooomSettle;
     patternStyle.height = img.width * zooomSettle;
 
     roomtypeCtx.fillStyle = patternStyle;
     roomtypeCtx.beginPath();
-    roomtypeCtx.moveTo(selectedRoom.leftX - posX, selectedRoom.leftCeilingY - posY);
-    roomtypeCtx.lineTo(selectedRoom.rightX - posX, selectedRoom.rightCeilingY - posY);
-    roomtypeCtx.lineTo(selectedRoom.rightX - posX, selectedRoom.rightFloorY - posY);
-    roomtypeCtx.lineTo(selectedRoom.leftX - posX, selectedRoom.leftFloorY - posY);
+    
+    const zoomMod = 1 / zoom;  
+    roomtypeCtx.moveTo((selectedRoom.leftX - posX) * zoomMod, (selectedRoom.leftCeilingY - posY) * zoomMod);
+    roomtypeCtx.lineTo((selectedRoom.rightX - posX) * zoomMod, (selectedRoom.rightCeilingY - posY) * zoomMod);
+    roomtypeCtx.lineTo((selectedRoom.rightX - posX) * zoomMod, (selectedRoom.rightFloorY - posY) * zoomMod);
+    roomtypeCtx.lineTo((selectedRoom.leftX - posX) * zoomMod, (selectedRoom.leftFloorY - posY) * zoomMod);
     roomtypeCtx.closePath();
     roomtypeCtx.fill();
 }
