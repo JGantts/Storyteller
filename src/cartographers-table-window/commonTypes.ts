@@ -129,3 +129,8 @@ declare let posX: number;
 declare let posY: number;
 
 declare function getRoomLineThickness(): number;
+
+
+type BlkData = HTMLImageElement|ImageData;
+
+type BlkCallback = (image: ImageData | HTMLImageElement) => void;

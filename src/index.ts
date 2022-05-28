@@ -508,7 +508,7 @@ function createCartographersTableWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      nodeIntegrationInWorker: true,
+      nodeIntegrationInWorker: true
     }
   })
 

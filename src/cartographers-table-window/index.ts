@@ -49,9 +49,12 @@ const {potentialFactory} = require('./potentialFactory.js');
 const {lineSegmentComparison} = require('./lineSegmentComparison.js');
 const {updatePropertiesPanel, updateRoomtypePanel} = require('./properties-panel-updater.js');
 // @ts-ignore
-const {loadBackground} = require('./loadBackground.js');
+const {loadBackground, loadBackgroundAsPromise} = require('./loadBackground.js');
+// @ts-ignore
+const {getBLKDimensions} = require("./../hard-dependencies/NodeBLKLoader.js");
 const {common} = require('./commonFunctions.js');
 
+const displayBLKStatus = true;
 
 let zoom = 1;
 let posX = 0;
@@ -293,7 +296,19 @@ function redoMultiCommand({subcommands}: { subcommands: Command[] }) {
 async function newFile() {
     await fileHelper.newFile();
     let backgroundFile = await fileHelper.selectBackgroundFile();
-    await reloadBackgroundFile(backgroundFile);
+    const isBlk = path.extname(backgroundFile).toLowerCase();
+    let width: number;
+    let height: number;
+    if (isBlk) {
+        const {width:blkWidth, height: blkHeight} = getBLKDimensions(backgroundFile);
+        width = blkWidth;
+        height = blkHeight;
+        reloadBackgroundFile(backgroundFile, false);
+    } else {
+        await reloadBackgroundFile(backgroundFile, true);
+        width = img!.width
+        height = img!.height
+    }
     
     let fileContents =
         {
@@ -303,8 +318,8 @@ async function newFile() {
             music: "",
             x: 0,
             y: 0,
-            width: img!.width,
-            height: img!.height,
+            width: width,
+            height: height,
             rooms: {},
             perms: {}
         };
@@ -1348,7 +1363,7 @@ function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground?: stri
 let imgPathRel = "";
 let img: (null | ImageData | HTMLImageElement);
 
-async function reloadBackgroundFile(backgroundFileAbsoluteWorking?: string) {
+async function reloadBackgroundFile(backgroundFileAbsoluteWorking?: string, synchronous: Boolean = false) {
     let imgPathAbsolute =
         backgroundFileAbsoluteWorking
         ?? path.join(
@@ -1359,12 +1374,19 @@ async function reloadBackgroundFile(backgroundFileAbsoluteWorking?: string) {
     switch (path.extname(imgPathAbsolute)) {
         case ".blk":
             img = null;
-            // Loads image in background thread if possible
-            loadBackground(imgPathAbsolute, (image: ImageData|HTMLImageElement) => {
-                img = image;
-                masterUiState.camera.redraw = true;
-                redrawMetaroom();
-            });
+            if (synchronous) {
+                await loadBackgroundAsPromise(imgPathAbsolute, displayBLKStatus, (image: BlkData) => {
+                        img = image;
+                        masterUiState.camera.redraw = true;
+                });
+            } else {
+                // Loads image in background thread if possible
+                loadBackground(imgPathAbsolute, displayBLKStatus, (image: BlkData) => {
+                    img = image;
+                    masterUiState.camera.redraw = true;
+                    redrawMetaroom();
+                });
+            }
             return
         case ".jpg":
         case ".png":
