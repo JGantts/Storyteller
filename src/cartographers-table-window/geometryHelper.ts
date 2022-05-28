@@ -1,13 +1,20 @@
 /// <reference path="./commonTypes.ts" />
 /// <reference path="./commonFunctions.ts" />
 
+const {common} = require('./commonFunctions.js');
+
 function getCorner(room: Room, point: SimplePoint) {
     //0: top-left
     //1: top-right
     //2: bottom-right
     //3: bottom-left
     let cornerIndex = tryGetCorner(room, point);
-    assert(cornerIndex !== -1, `Couldn't find cooresponding corner of room ${JSON.stringify(room)} to point ${JSON.stringify(point)}`);
+    
+    // assert(cornerIndex !== -1, `Couldn't find corresponding corner of room ${JSON.stringify(room)} to point ${JSON.stringify(point)}`);
+    if(cornerIndex === -1) {
+        console.error(`Couldn't find corresponding corner of room ${JSON.stringify(room)} to point ${JSON.stringify(point)}`);
+        flashError();
+    }
     return cornerIndex;
 }
 
@@ -55,11 +62,16 @@ function getSortedDoor(
   permeability: number,
   roomKeys: string[]
 ) {
-    assert(roomKeys.length === 2, JSON.stringify(roomKeys));
+    // assert(roomKeys.length === 2, JSON.stringify(roomKeys));
+    if (roomKeys.length !== 2) {
+        console.error(`Room keys length is invalid. Expected 2; Actual: ${roomKeys.length}; Data: ${JSON.stringify(roomKeys)}`);
+        flashError();
+        return null;
+    }
     let line = _getSortedLine(aX, aY, bX, bY);
     if (line) {
         return {
-            id: getSortedId(roomKeys[0], roomKeys[1]),
+            id: common.getSortedId(roomKeys[0], roomKeys[1]),
             permeability,
             start: line.start,
             end: line.end,
@@ -210,7 +222,9 @@ function pointsEqual(a: SimplePoint, b: SimplePoint) {
 
 function getCornerAngle(point: SimplePoint, room: Room) {
     let cornerIndex = getCorner(room, point);
-
+    if (cornerIndex < 0) {
+        return null;
+    }
     let width = room.rightX-room.leftX;
     let ceilingYDiff = Math.abs(room.leftCeilingY-room.rightCeilingY);
     let floorYDiff = Math.abs(room.leftFloorY-room.rightFloorY);

@@ -1,7 +1,7 @@
 /// <reference path="./commonTypes.ts" />
 
 const assert = require('assert');
-
+const { flashError } = require('./flashError');
 type LineSlice = (
   start: SimplePoint,
   end: SimplePoint,
@@ -14,18 +14,34 @@ function lineSegmentComparison(
   lineABSlice: LineSlice,
   lineBSlice: LineSlice
 ) {
-    assert(
-      lineA.start.x !== lineA.end.x ||
-      lineA.start.y !== lineA.end.y,
-      `LineA has 0 length\n${JSON.stringify(lineA)}`
-    );
+    
+    // assert(
+    //   lineA.start.x !== lineA.end.x ||
+    //   lineA.start.y !== lineA.end.y,
+    //   `LineA has 0 length\n${JSON.stringify(lineA)}`
+    // );
+    if (
+        lineA.start.x === lineA.end.x &&
+        lineA.start.y === lineA.end.y
+    ) {
+        console.error(`LineA has 0 length\n${JSON.stringify(lineA)}`);
+        flashError();
+        return;
+    }
 
-    assert(
-      lineB.start.x !== lineB.end.x ||
-      lineB.start.y !== lineB.end.y,
-      `LineB has 0 length\n${JSON.stringify(lineB)}`
-    );
-
+    // assert(
+    //   lineB.start.x !== lineB.end.x ||
+    //   lineB.start.y !== lineB.end.y,
+    //   `LineB has 0 length\n${JSON.stringify(lineB)}`
+    // );
+    if (
+        lineB.start.x === lineB.end.x &&
+        lineB.start.y === lineB.end.y
+    ) {
+        console.error(`LineB has 0 length\n${JSON.stringify(lineB)}`);
+        flashError();
+        return;
+    }
 
     let lineAMinX = Math.min(lineA.start.x, lineA.end.x);
     let lineAMaxX = Math.max(lineA.start.x, lineA.end.x);

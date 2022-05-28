@@ -1,4 +1,10 @@
-function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
+import {flashError} from "./flashError";
+
+const { dataStructureFactory } = require('./dataStructureFactory.js');
+const { geometry } = require('./geometryHelper.js');
+const { selectionChecker } = require("./selectionChecker")
+
+function getPotentialRoomFromLine(startPoint:SimplePoint, endPoint:SimplePoint, dataStructures: DataStructures, line: Door) {
   // Vertical
   if (line.start.x === line.end.x) {
       let deltaX = endPoint.x - startPoint.x;
@@ -100,7 +106,7 @@ function getPotentialRoomFromLine(startPoint, endPoint, dataStructures, line) {
   }
 }
 
-function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
+function getPotentialRoomFromPoints(startPoint: SimplePoint, endPoint: SimplePoint, dataStructures: DataStructures): Nullable<Room> {
 
       let deltaX = endPoint.x - startPoint.x;
 
@@ -174,7 +180,7 @@ function getPotentialRoomFromPoints(startPoint, endPoint, dataStructures) {
 
 }
 
-function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room) {
+function getPotentialRoomFromYChange(startPoint: SimplePoint, endPoint: SimplePoint, dataStructures: DataStructures, room: Room) {
     let deltaY = endPoint.y - startPoint.y;
 
     if (Math.abs(deltaY) < 5) {
@@ -255,10 +261,15 @@ function getPotentialRoomFromYChange(startPoint, endPoint, dataStructures, room)
     }
 }
 
-function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selectedRoom, selectedSide) {
+function getPotentialRoomFromSide(startPoint: SimplePoint, endPoint: SimplePoint, dataStructures: DataStructures, selectedRoom: Room, selectedSide: number): Nullable<Room> {
     let room = selectedRoom;
     let side = dataStructureFactory.getWallsFromRoom(room)[selectedSide];
-    assert(selectedSide !== -1)
+    // assert(selectedSide !== -1)
+    if (selectedSide === -1) {
+        console.error(`cannot get potential room for invalid side: ${selectedSide}`);
+        flashError();
+        return null;
+    }
     if (selectedSide === 0 || selectedSide == 2) {
         let deltaY = endPoint.y - startPoint.y;
 
@@ -361,7 +372,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
             };
 
           case 3:
-            let toReturn = {
+            let toReturn:Room = {
                 id: room.id,
                 leftX: xToUse,
                 rightX: room.rightX,
@@ -376,7 +387,7 @@ function getPotentialRoomFromSide(startPoint, endPoint, dataStructures, selected
     }
 }
 
-function roomOverlapsOrCausesTooSmallDoor(room, dataStructures, idsToDelete) {
+function roomOverlapsOrCausesTooSmallDoor(room: Nullable<Room>, dataStructures: DataStructures, idsToDelete?: Room[]) {
     if (!room) {
         return false;
     }
@@ -417,11 +428,11 @@ function roomOverlapsOrCausesTooSmallDoor(room, dataStructures, idsToDelete) {
     //check if potentialRoom overlaps exactly any existing room sides
     //    such that rooms are overlapping, not adjacent.
     //    exclude all rooms which we're modifying.
-    for (const roomKey in dataStructures.metaroomDisk.rooms) {
+    for (const roomKey in dataStructures.metaroomDisk!!.rooms) {
         if (idsToDelete?.some(idToDelete => roomKey === idToDelete.id)) {
             continue;
         }
-        let linesExisting = dataStructureFactory.getWallsFromRoom(dataStructures.metaroomDisk.rooms[roomKey]);
+        let linesExisting = dataStructureFactory.getWallsFromRoom(dataStructures.metaroomDisk!!.rooms[roomKey]);
         for (let i=0; i<4; i++) {
             let shouldReturnTrue = false;
             lineSegmentComparison(
@@ -464,16 +475,16 @@ function roomOverlapsOrCausesTooSmallDoor(room, dataStructures, idsToDelete) {
     return false;
 }
 
-function getPotentialRooms(masterUiState, selection, dataStructures) {
-    let rooms = [];
+function getPotentialRooms(masterUiState: MasterUiState, selection: MapSelection, dataStructures: DataStructures): Room[] {
+    let rooms: Room[] = [];
     if (masterUiState.dragging.isDragging) {
         if (masterUiState.keys.shiftKeyIsDown) {
             if (masterUiState.dragging.whatDragging === "point") {
-                let room = [getPotentialRoomFromPoints(
-                  masterUiState.dragging.startDragging,
-                  masterUiState.dragging.stopDragging,
+                let room = getPotentialRoomFromPoints(
+                  masterUiState.dragging.startDragging!!,
+                  masterUiState.dragging.stopDragging!!,
                   dataStructures,
-                )];
+                );
                 if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
                     rooms = [room];
                 }
@@ -495,8 +506,8 @@ function getPotentialRooms(masterUiState, selection, dataStructures) {
 
             } else {
                 let room = getPotentialRoomFromPoints(
-                  masterUiState.dragging.startDragging,
-                  masterUiState.dragging.stopDragging,
+                  masterUiState.dragging.startDragging!!,
+                  masterUiState.dragging.stopDragging!!,
                   dataStructures,
                 );
                 if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
@@ -507,11 +518,11 @@ function getPotentialRooms(masterUiState, selection, dataStructures) {
         } else if (masterUiState.keys.ctrlKeyIsDown) {
           if (masterUiState.dragging.whatDragging === "point"
             || masterUiState.dragging.whatDragging === "corner") {
-              let room = [getPotentialRoomFromPoints(
-                masterUiState.dragging.startDragging,
-                masterUiState.dragging.stopDragging,
+              let room = getPotentialRoomFromPoints(
+                masterUiState.dragging.startDragging!!,
+                masterUiState.dragging.stopDragging!!,
                 dataStructures,
-              )];
+              );
               if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
                   rooms = [room];
               }
@@ -521,7 +532,7 @@ function getPotentialRooms(masterUiState, selection, dataStructures) {
 
           } else if (masterUiState.dragging.whatDragging === "wall") {
               let selectedLine = dataStructures.walls[selection.selectedId];
-              let room = getPotentialRoomFromLine(masterUiState.dragging.startDragging, masterUiState.dragging.stopDragging, dataStructures, selectedLine);
+              let room = getPotentialRoomFromLine(masterUiState.dragging.startDragging!!, masterUiState.dragging.stopDragging!!, dataStructures, selectedLine);
               if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
                   rooms = [room];
               }
@@ -538,34 +549,42 @@ function getPotentialRooms(masterUiState, selection, dataStructures) {
           }
         } else {
             if (masterUiState.dragging.whatDragging === "point") {
-              let newRooms = [];
-              for (index in selection.selectedRoomsIdsPartsIds) {
+              let newRooms: Room[] = [];
+              for (const index in selection.selectedRoomsIdsPartsIds) {
                   let roomIdPartId = selection.selectedRoomsIdsPartsIds[index];
                   let id = roomIdPartId.roomId;
-                  let selectedRoom = dataStructures.metaroomDisk.rooms[id];
+                  let selectedRoom = dataStructures.metaroomDisk!!.rooms[id];
                   let room = getPotentialRoomFromYChange(
-                    masterUiState.dragging.startDragging,
-                    masterUiState.dragging.stopDragging,
+                    masterUiState.dragging.startDragging!!,
+                    masterUiState.dragging.stopDragging!!,
                     dataStructures,
                     selectedRoom
                   );
-                  newRooms.push(room);
+                  if (room) {
+                      newRooms.push(room);
+                  }
               }
-              for (newRoom of newRooms) {
+              for (const newRoom of newRooms) {
                   if (newRoom && !roomOverlapsOrCausesTooSmallDoor(newRoom, dataStructures, newRooms)) {
                       rooms.push(newRoom);
                   }
               }
 
             } else if (masterUiState.dragging.whatDragging === "corner") {
-              assert(selection.selectedRoomsIdsPartsIds.length === 1,
-                  `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`);
+              // assert(selection.selectedRoomsIdsPartsIds.length === 1,
+              //     `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`);
+               if (selection.selectedRoomsIdsPartsIds.length !== 1) {
+                    console.error(`Selected room id size was not 1 when dragging corner; ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`);
+                    selectionChecker.resetSelection();
+                    flashError();
+                    return [];
+               }
               let roomIdPartId = selection.selectedRoomsIdsPartsIds[0];
               let id = roomIdPartId.roomId;
-              let selectedRoom = dataStructures.metaroomDisk.rooms[id];
+              let selectedRoom = dataStructures.metaroomDisk!!.rooms[id];
               let room = getPotentialRoomFromYChange(
-                masterUiState.dragging.startDragging,
-                masterUiState.dragging.stopDragging,
+                masterUiState.dragging.startDragging!!,
+                masterUiState.dragging.stopDragging!!,
                 dataStructures,
                 selectedRoom
               );
@@ -576,16 +595,18 @@ function getPotentialRooms(masterUiState, selection, dataStructures) {
             } else if (masterUiState.dragging.whatDragging === "door"
                 || masterUiState.dragging.whatDragging === "wall"
             ) {
-                let newRooms = [];
-                for (index in selection.selectedRoomsIdsPartsIds) {
+                let newRooms: Room[] = [];
+                for (const index in selection.selectedRoomsIdsPartsIds) {
                     let selectedRoomIdPartId = selection.selectedRoomsIdsPartsIds[index];
                     let id = selectedRoomIdPartId.roomId;
-                    let selectedRoom = dataStructures.metaroomDisk.rooms[id];
+                    let selectedRoom = dataStructures.metaroomDisk!!.rooms[id];
                     let selectedSide = selectedRoomIdPartId.partId;
-                    let room = getPotentialRoomFromSide(masterUiState.dragging.startDragging, masterUiState.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
-                    newRooms.push(room);
+                    let room = getPotentialRoomFromSide(masterUiState.dragging.startDragging!!, masterUiState.dragging.stopDragging!!, dataStructures, selectedRoom, selectedSide);
+                    if (room) {
+                        newRooms.push(room);
+                    }
                 }
-                for (newRoom of newRooms) {
+                for (const newRoom of newRooms) {
                     if (newRoom && !roomOverlapsOrCausesTooSmallDoor(newRoom, dataStructures, newRooms)) {
                         rooms.push(newRoom);
                     }
@@ -596,13 +617,19 @@ function getPotentialRooms(masterUiState, selection, dataStructures) {
 
 
             } else if (masterUiState.dragging.whatDragging === "side") {
-                assert(selection.selectedRoomsIdsPartsIds.length === 1,
-                    `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`)
+                // assert(selection.selectedRoomsIdsPartsIds.length === 1,
+                //     `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`)
+                if (selection.selectedRoomsIdsPartsIds.length !== 1) {
+                    console.error(`Selected room ids was not 1 when dragging side: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`);
+                    selectionChecker.resetSelection();
+                    flashError();
+                    return [];
+                }
                 let roomIdPartId = selection.selectedRoomsIdsPartsIds[0];
                 let id = roomIdPartId.roomId;
-                let selectedRoom = dataStructures.metaroomDisk.rooms[id];
+                let selectedRoom = dataStructures.metaroomDisk!!.rooms[id];
                 let selectedSide = roomIdPartId.partId;
-                let room = getPotentialRoomFromSide(masterUiState.dragging.startDragging, masterUiState.dragging.stopDragging, dataStructures, selectedRoom, selectedSide);
+                let room = getPotentialRoomFromSide(masterUiState.dragging.startDragging!!, masterUiState.dragging.stopDragging!!, dataStructures, selectedRoom, selectedSide);
                 if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures, [selectedRoom])) {
                     rooms = [room];
                 }

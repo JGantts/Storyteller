@@ -1,3 +1,4 @@
+const {flashError} = require("./flashError");
 let propertiesTemplates = null;
 
 function updatePropertiesPanel(panel, selection, dataStructures) {
@@ -133,15 +134,17 @@ function updatePropertiesPanel(panel, selection, dataStructures) {
       break;
 
     default:
-      assert(false, "lol, wut?");
-
+      // assert(false, "lol, wut?");
+      console.error(`Unexpected selection type ${selection.selectedType}`);
+      flashError();
+      return;
   }
 
   panel.innerHTML = "";
   panel.appendChild(clone);
 }
 
-let = roomtypeTemplates = null;
+let roomtypeTemplates = null;
 
 let roomtypeNames = [
   "Atmosphere",

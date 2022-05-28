@@ -127,3 +127,5 @@ declare let zooomSettle: number;
 declare let zoom: number;
 declare let posX: number;
 declare let posY: number;
+
+declare function getRoomLineThickness(): number;

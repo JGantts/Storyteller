@@ -1,5 +1,6 @@
 const assert = require('assert');
 const crypto = require('crypto');
+const {flashError} = require("./flashError");
 
 //room
 //door
@@ -76,14 +77,21 @@ function checkSelectionRoomtypeClick(x, y, dataStructures ){
     }
 }
 
-function checkSelection(x, y, dataStructures, b_points, b_lines, b_rooms){
-    assert(b_points || b_lines || b_rooms, "wut?")
+function checkSelection(x, y, dataStructures, b_points, b_lines, b_rooms) {
+    // assert(b_points || b_lines || b_rooms, "wut?")
+
     let selected = {
       selectedType : "",
       selectedId: "",
       selectedRoomsIdsPartsIds: [],
       selectionInstancedId: null,
     }
+    if (!b_points && !b_lines && !b_rooms) {
+        console.error("No valid selection components");
+        flashError();
+        return selected
+    }
+
     if (b_points) {
         if (selected.selectedType === "") {
             selected = checkPointSelection(x, y, dataStructures);

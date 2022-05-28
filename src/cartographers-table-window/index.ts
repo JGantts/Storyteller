@@ -1,10 +1,11 @@
 /// <reference path="./commonTypes.ts" />
 /// <reference path="./commonFunctions.ts" />
+// noinspection JSUnusedLocalSymbols,JSIgnoredPromiseFromCall
 
 export {};
 
 declare global {
-  var fileHelper: typeof FileHelper;
+    var fileHelper: typeof FileHelper;
 }
 
 type FileRef = {
@@ -15,37 +16,42 @@ type FileRef = {
 
 //$.getScript('../engine-api/CAOS.js
 
-const { FileHelper } = require('../render-helpers/file-helper.js');
+const {FileHelper} = require('../render-helpers/file-helper.js');
+const {flashError} = require('./flashError.js');
 globalThis.fileHelper = new FileHelper(
     updateTitle,
     displayFiles,
     (type: string) => {
         switch (type) {
-          case "json":
-            return JSON.stringify(dataStructures.metaroomDisk!, null, " ").replace(/(\n|\r|\r\n)[\s]+/g, "\n");
-          case "caos":
-            let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk!);
-            return toReturn;
+            case "json":
+                console.log(JSON.stringify(dataStructures.metaroomDisk));
+                return JSON.stringify(dataStructures.metaroomDisk!, null, " ")
+                    .replace(/(\n|\r|\r\n)[\s]+/g, "\n");
+            case "caos":
+                let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk!);
+                return toReturn;
         }
     }
 );
 const assert = require('assert');
-const { clipboard } = require('electron');
+const {clipboard} = require('electron');
 const fs = require('fs/promises');
 const crypto = require('crypto');
 const path = require("path");
 
-const { parseCaosForMetaroom, parseMetaroomToCaos } = require('./caos-to-metaroom-parser.js');
-const { geometry } = require('./geometryHelper.js');
-const { roomtypeRenderer } = require('./roomtype-renderer.js');
-const { selectionRenderer } = require('./selectionRenderer.js');
-const { selectionChecker } = require('./selectionChecker.js');
-const { dataStructureFactory } = require('./dataStructureFactory.js');
-const { potentialFactory } = require('./potentialFactory.js');
-const { lineSegmentComparison } = require('./lineSegmentComparison.js');
-const { updatePropertiesPanel, updateRoomtypePanel } = require('./properties-panel-updater.js');
+const {parseCaosForMetaroom, parseMetaroomToCaos} = require('./caos-to-metaroom-parser.js');
+const {geometry} = require('./geometryHelper.js');
+const {roomtypeRenderer} = require('./roomtype-renderer.js');
+const {selectionRenderer} = require('./selectionRenderer.js');
+const {selectionChecker} = require('./selectionChecker.js');
+const {dataStructureFactory} = require('./dataStructureFactory.js');
+const {potentialFactory} = require('./potentialFactory.js');
+const {lineSegmentComparison} = require('./lineSegmentComparison.js');
+const {updatePropertiesPanel, updateRoomtypePanel} = require('./properties-panel-updater.js');
+// @ts-ignore
+const {loadBackground} = require('./loadBackground.js');
+const {common} = require('./commonFunctions.js');
 
-import { clbTools } from '../../hard-dependencies/clb-tools'
 
 let zoom = 1;
 let posX = 0;
@@ -57,14 +63,14 @@ let zoomPanSettleMilliseconds = 80;
 let zoomPanSettleTimestampLastChange: number | null;
 
 let dataStructures: DataStructures = {
-  metaroomDisk: undefined,
-  backgroundFileAbsoluteWorking: undefined,
-  points: {},
-  walls: [],
-  doorsDict: {},
-  doorsArray: [],
-  pointsSortedX: [],
-  pointsSortedY: [],
+    metaroomDisk: undefined,
+    backgroundFileAbsoluteWorking: undefined,
+    points: {},
+    walls: [],
+    doorsDict: {},
+    doorsArray: [],
+    pointsSortedX: [],
+    pointsSortedY: [],
 };
 
 let masterUiState: MasterUiState = {
@@ -73,22 +79,22 @@ let masterUiState: MasterUiState = {
         ctrlKeyIsDown: false,
         spacebarIsDown: false,
     },
-
+    
     dragging: {
         isMouseButtonDown: false,
-
+        
         isDragging: false,
         whatDragging: "",
         idDragging: -1,
-
+        
         startDragging: undefined,
         stopDragging: undefined,
     },
-
+    
     state: {
         isViewingRoomType: false,
     },
-
+    
     camera: {
         redraw: false,
         rezoom: false,
@@ -126,9 +132,9 @@ let offscreenCanvasElements: { [canvasName: string]: HTMLCanvasElement } = {
     pasties: document.createElement('canvas') as HTMLCanvasElement,
 };
 
-let onscreenCanvasContexts: { [canvasName: string]: CanvasRenderingContext2D } = { };
+let onscreenCanvasContexts: { [canvasName: string]: CanvasRenderingContext2D } = {};
 
-let offscreenCanvasContexts: { [canvasName: string]: CanvasRenderingContext2D } = { };
+let offscreenCanvasContexts: { [canvasName: string]: CanvasRenderingContext2D } = {};
 
 function resizeOnscreenCanvasElements() {
     for (let key in onscreenCanvasElements) {
@@ -154,37 +160,37 @@ function resizeOffscreenCanvasElements(rectangle: { width: number, height: numbe
 
 function copyOffscreenCanvasesToScreen(keys: string[]) {
     if (
-      offscreenCanvasElements.background.width !== 0
-      && onscreenCanvasElements.selectionUnder.width !== 0
-      && dataStructures?.metaroomDisk
-   ) {
+        offscreenCanvasElements.background.width !== 0
+        && onscreenCanvasElements.selectionUnder.width !== 0
+        && dataStructures?.metaroomDisk
+    ) {
         for (let key of keys) {
             /*var imgurl= offscreenCanvasElements[key].toDataURL();
             const data = imgurl.replace(/^data:image\/\w+;base64,/, "");
             const buf = Buffer.from(data, "base64");
             fs.writeFile(key + ".png", buf);*/
-
+            
             onscreenCanvasContexts[key].clearRect(
-              0, 0,
-              canvasHolder.clientWidth,
-              canvasHolder.clientHeight
+                0, 0,
+                canvasHolder.clientWidth,
+                canvasHolder.clientHeight
             );
-
+            
             let inContextRoomSizeBlurFix = roomSizeBlurFix;
             if (key === "background") {
                 inContextRoomSizeBlurFix = 1;
             }
-
+            
             onscreenCanvasContexts[key].drawImage(
-              offscreenCanvasElements[key],
-              posX * inContextRoomSizeBlurFix,
-              posY * inContextRoomSizeBlurFix,
-              canvasHolder.clientWidth * zoom * inContextRoomSizeBlurFix,
-              canvasHolder.clientHeight * zoom * inContextRoomSizeBlurFix,
-              0,
-              0,
-              canvasHolder.clientWidth,
-              canvasHolder.clientHeight
+                offscreenCanvasElements[key],
+                posX * inContextRoomSizeBlurFix,
+                posY * inContextRoomSizeBlurFix,
+                canvasHolder.clientWidth * zoom * inContextRoomSizeBlurFix,
+                canvasHolder.clientHeight * zoom * inContextRoomSizeBlurFix,
+                0,
+                0,
+                canvasHolder.clientWidth,
+                canvasHolder.clientHeight
             );
         }
     }
@@ -192,24 +198,24 @@ function copyOffscreenCanvasesToScreen(keys: string[]) {
 
 
 let topCanvasElement = onscreenCanvasElements["selectionOver"];
-topCanvasElement.onmousedown=handleMouseDown;
-topCanvasElement.onmousemove=handleMouseMove;
-topCanvasElement.onmouseup=handleMouseUp;
-topCanvasElement.onmouseout=handleMouseOut;
+topCanvasElement.onmousedown = handleMouseDown;
+topCanvasElement.onmousemove = handleMouseMove;
+topCanvasElement.onmouseup = handleMouseUp;
+topCanvasElement.onmouseout = handleMouseOut;
 topCanvasElement.onwheel = handleWheel;
 
 window.onkeydown = userTextKeyDown;
 window.onkeyup = userTextKeyUp;
 
 
-window.onmousedown=windowHandleMouseDown;
+window.onmousedown = windowHandleMouseDown;
 
 function getSelectionCheckMargin() {
     return 6 * zoom;
 }
 
 function getSelectionSquareWidth() {
-    return getSelectionCheckMargin() * 4/3;
+    return getSelectionCheckMargin() * 4 / 3;
 }
 
 function getRoomLineThickness() {
@@ -226,82 +232,82 @@ let _redoList: Command[] = [];
 //type CommandArgs = { [argKey: string]: any };
 type AbsoluteCommand = (arg0: any) => void;
 
-class Command{
-
-  _undo: AbsoluteCommand;
-  _undoArgs: any;
-  _redo: AbsoluteCommand;
-  _redoArgs: any;
-
-  constructor(
-    undo: AbsoluteCommand,
-    undoArgs: any,
-    redo: AbsoluteCommand,
-    redoArgs: any
-  ) {
-    this._undo = undo;
-    this._undoArgs = undoArgs;
-    this._redo = redo;
-    this._redoArgs = redoArgs;
-  }
-
-  do(){
-    this.redo();
-  }
-
-  redo(){
-    this._redo(this._redoArgs);
-    masterUiState.camera.redraw = true;
-  }
-
-  undo(){
-    this._undo(this._undoArgs);
-    masterUiState.camera.redraw = true;
-  }
+class Command {
+    
+    _undo: AbsoluteCommand;
+    _undoArgs: any;
+    _redo: AbsoluteCommand;
+    _redoArgs: any;
+    
+    constructor(
+        undo: AbsoluteCommand,
+        undoArgs: any,
+        redo: AbsoluteCommand,
+        redoArgs: any
+    ) {
+        this._undo = undo;
+        this._undoArgs = undoArgs;
+        this._redo = redo;
+        this._redoArgs = redoArgs;
+    }
+    
+    do() {
+        this.redo();
+    }
+    
+    redo() {
+        this._redo(this._redoArgs);
+        masterUiState.camera.redraw = true;
+    }
+    
+    undo() {
+        this._undo(this._undoArgs);
+        masterUiState.camera.redraw = true;
+    }
 }
 
-function buildMultiCommand(subcommands: Command[]){
-  let subcommandsForwards = subcommands;
-  let subcommandsReversed = subcommands.slice();
-  subcommandsReversed.reverse();
-  return new Command(
-    undoMultiCommand,
-    {subcommmands: subcommandsReversed},
-    redoMultiCommand,
-    {subcommands: subcommandsForwards},
-  );
+function buildMultiCommand(subcommands: Command[]) {
+    let subcommandsForwards = subcommands;
+    let subcommandsReversed = subcommands.slice();
+    subcommandsReversed.reverse();
+    return new Command(
+        undoMultiCommand,
+        {subcommands: subcommandsReversed},
+        redoMultiCommand,
+        {subcommands: subcommandsForwards},
+    );
 }
 
-function undoMultiCommand({ subcommands }: { subcommands: Command[] }) {
-  for (let subcommand of subcommands) {
-      subcommand.undo();
-  }
+function undoMultiCommand({subcommands}: { subcommands: Command[] }) {
+    for (let subcommand of subcommands) {
+        subcommand.undo();
+    }
 }
 
-function redoMultiCommand({ subcommands }: { subcommands: Command[] }){
-  for (let subcommand of subcommands) {
-      subcommand.redo();
-  }
+function redoMultiCommand({subcommands}: { subcommands: Command[] }) {
+    for (let subcommand of subcommands) {
+        subcommand.redo();
+    }
 }
 
 async function newFile() {
     await fileHelper.newFile();
     let backgroundFile = await fileHelper.selectBackgroundFile();
     await reloadBackgroundFile(backgroundFile);
-
+    
     let fileContents =
-    {
-      id: crypto.randomUUID(),
-      name: "",
-      background: path.basename(backgroundFile),
-      music: "",
-      x: 0,
-      y: 0,
-      width: img!.width,
-      height: img!.height,
-      rooms: {},
-      perms: {}
-    };
+        {
+            id: crypto.randomUUID(),
+            name: "",
+            background: path.basename(backgroundFile),
+            music: "",
+            x: 0,
+            y: 0,
+            width: img!.width,
+            height: img!.height,
+            rooms: {},
+            perms: {}
+        };
     loadMetaroom(
         fileContents,
         backgroundFile
@@ -320,14 +326,14 @@ async function openFile() {
 
 async function saveFile() {
     await fileHelper.saveCartFile();
-    let workingBackgoundFile = dataStructures.backgroundFileAbsoluteWorking;
+    let workingBackgroundFile = dataStructures.backgroundFileAbsoluteWorking;
     let newImgPathAbsolute: string = "";
-    if (workingBackgoundFile) {
+    if (workingBackgroundFile) {
         newImgPathAbsolute = path.join(
-          path.dirname(fileHelper.getCurrentFileRef().path),
-          dataStructures!.metaroomDisk!.background
+            path.dirname(fileHelper.getCurrentFileRef().path),
+            dataStructures!.metaroomDisk!.background
         );
-        await fs.copyFile(workingBackgoundFile, newImgPathAbsolute);
+        await fs.copyFile(workingBackgroundFile, newImgPathAbsolute);
     }
     updateBarButtons();
 }
@@ -369,7 +375,13 @@ async function viewEditRoomType() {
 
 async function editRoomtypes() {
     let isViewingRoomType = masterUiState.state.isViewingRoomType as ViewingRoomTypeState;
-    assert(isViewingRoomType, "wut?");
+    
+    // assert(isViewingRoomType, "wut?");
+    if (!isViewingRoomType) {
+        console.error("ViewingRoomTypeState cannot be null");
+        flashError();
+        return;
+    }
     if (isViewingRoomType.isViewingPalette) {
         isViewingRoomType.isViewingPalette = false;
         document.getElementById('roomtype-palette')!.style.height = "0";
@@ -382,23 +394,28 @@ async function editRoomtypes() {
 }
 
 function pad2(number: number) {
-     return (number < 10 ? '0' : '') + number;
+    return (number < 10 ? '0' : '') + number;
 }
 
 async function editingRoomtype(param1: string) {
     let isViewingRoomType = masterUiState.state.isViewingRoomType as ViewingRoomTypeState;
-    assert(isViewingRoomType, "wut?");
+    // assert(isViewingRoomType, "wut?");
+    if (!isViewingRoomType) {
+        console.error("ViewingRoomTypeState cannot be null");
+        flashError();
+        return;
+    }
     let roomtype = parseFloat(param1.slice(-2));
-
+    
     let img = document.getElementById(`rooomtype-button-img-${pad2(roomtype)}`)!;
-
+    
     for (let element of document.getElementsByClassName("editor-button")) {
         (element as HTMLElement).style.animation = "none";
         (element as HTMLElement).style.borderRadius = "8px";
     }
-
+    
     if (isViewingRoomType.isEditingRoomtype
-      && selectionChecker.getSelectionRoomtypeClick() === roomtype
+        && selectionChecker.getSelectionRoomtypeClick() === roomtype
     ) {
         selectionChecker.setSelectionRoomtypeClick(null);
         isViewingRoomType.isEditingRoomtype = false;
@@ -409,17 +426,17 @@ async function editingRoomtype(param1: string) {
             pickedRoomtype: roomtype,
         };
         canvasHolder.style.cursor = "url('./icons/bucket.png') 6 30, default";
-        img.style.animation="pulse-border 2s linear 0s infinite alternate";
+        img.style.animation = "pulse-border 2s linear 0s infinite alternate";
         img.style.borderRadius = "32px";
     }
 }
 
 async function permChange(newPerm: number) {
-  let door_refA = dataStructures.doorsDict[selectionChecker.getSelectionClick().selectedId]!;
-  let door_refB = dataStructures.metaroomDisk!.perms[getSortedId(door_refA.roomKeys[0], door_refA.roomKeys[1])]!;
-  door_refA.permeability = Math.min(Math.max(newPerm, 0), 100);
-  door_refB.permeability = Math.min(Math.max(newPerm, 0), 100);
-  masterUiState.camera.redraw = true;
+    let door_refA = dataStructures.doorsDict[selectionChecker.getSelectionClick().selectedId]!;
+    let door_refB = dataStructures.metaroomDisk!.perms[common.getSortedId(door_refA.roomKeys[0], door_refA.roomKeys[1])]!;
+    door_refA.permeability = Math.min(Math.max(newPerm, 0), 100);
+    door_refB.permeability = Math.min(Math.max(newPerm, 0), 100);
+    masterUiState.camera.redraw = true;
 }
 
 async function xChange(value: number) {
@@ -431,18 +448,18 @@ async function yChange(value: number) {
 }
 
 async function musicChange(id: string, value: string) {
-  switch (id) {
-    case "property-metaroom-music":
-      dataStructures.metaroomDisk!.music = value;
-      break;
-    case "property-room-music":
-      let room = dataStructures.metaroomDisk!.rooms[selectionChecker.getSelectionClick().selectedId];
-      room.music = value;
-      break;
-    default:
-      console.log("internal error");
-      break;
-  }
+    switch (id) {
+        case "property-metaroom-music":
+            dataStructures.metaroomDisk!.music = value;
+            break;
+        case "property-room-music":
+            let room = dataStructures.metaroomDisk!.rooms[selectionChecker.getSelectionClick().selectedId];
+            room.music = value;
+            break;
+        default:
+            console.log("internal error");
+            break;
+    }
 }
 
 async function roomtypeButtonMouseOver(param1: string) {
@@ -454,201 +471,226 @@ async function roomtypeButtonMouseOut() {
 }
 
 function displayFiles(files: { fileRef: FileRef; contents: string }[]) {
-    if (!files) { return; }
-    if (files.length === 0) { return; }
+    if (!files) {
+        return;
+    }
+    if (files.length === 0) {
+        return;
+    }
     zoom = 1.0;
     posX = 0;
     posY = 0;
     let file = files[0];
     //for(file in files) {
-        let fileContents = null;
-        switch (file.fileRef.type) {
-          case ".cart":
+    let fileContents = null;
+    switch (file.fileRef.type) {
+        case ".cart":
             fileContents = file.contents;
             break;
-          case ".cos":
+        case ".cos":
             fileContents = parseCaosForMetaroom(file.contents);
             break;
-          default:
+        default:
             throw new Error(`Unknown file type: ${file.fileRef}`);
-        }
-
-        loadMetaroom(fileContents);
-        updateTitle();
-        _undoList = [];
-        _redoList = [];
-        updateBarButtons();
-        masterUiState.camera.redraw = true;
+    }
+    
+    loadMetaroom(fileContents);
+    updateTitle();
+    _undoList = [];
+    _redoList = [];
+    updateBarButtons();
+    masterUiState.camera.redraw = true;
     //}
 }
 
-function updateTitle(){
-  let title = '';
-  let currentFileRef = fileHelper.getCurrentFileRef();
-  if (currentFileRef){
-    title += tileNameFromPath(currentFileRef.path) + ' ';
-  }
-  if (fileHelper.getCurrentFileNeedsSaving()) {
-    title += '* '
-  }else{
-  }
-  if (currentFileRef){
-    title += '- ';
-  }
-  title += 'Cartographer\'s Table';
-  document.title = title;
-  updateBarButtons();
+function updateTitle() {
+    let title = '';
+    let currentFileRef = fileHelper.getCurrentFileRef();
+    if (currentFileRef) {
+        title += tileNameFromPath(currentFileRef.path) + ' ';
+    }
+    if (fileHelper.getCurrentFileNeedsSaving()) {
+        title += '* '
+    } else {
+    }
+    if (currentFileRef) {
+        title += '- ';
+    }
+    title += 'Cartographer\'s Table';
+    document.title = title;
+    updateBarButtons();
 }
 
 function tileNameFromPath(path?: string) {
-    assert(
-      typeof path === 'string'
-      || typeof path === 'object',
-      `Expected string or NULL, instead found \{${JSON.stringify(path)}\}.`)
-
+    // assert(
+    //   typeof path === 'string'
+    //   || typeof path === 'object',
+    //   `Expected string or NULL, instead found \{${JSON.stringify(path)}\}.`)
+    if (
+        typeof path !== 'string'
+        && typeof path !== 'object'
+    ) {
+        console.error(`Expected string or NULL, instead found \{${JSON.stringify(path)}\}.`);
+        flashError();
+        return "Unsaved";
+    }
     if (!path) {
         return "Unsaved";
     }
-
+    
     let lastIndexOfSlash = path.lastIndexOf("/")
-    let secondTolastIndex = path.lastIndexOf("/", lastIndexOfSlash-1);
+    let secondToLastIndex = path.lastIndexOf("/", lastIndexOfSlash - 1);
     let lastIndexOfDot = path.lastIndexOf(".")
-    let fileName = "..." + path.slice(secondTolastIndex);
+    let fileName = "..." + path.slice(secondToLastIndex);
     return fileName;
 }
 
-function updateBarButtons(){
-  let currentFile = fileHelper.getCurrentFileRef();
-  if (!currentFile || !fileHelper.getCurrentFileNeedsSaving()) {
-    $('#save-file-img').css('opacity','0.4')
-  }else{
-    $('#save-file-img').css('opacity','1')
-  }
-  if (!currentFile) {
-    $('#save-as-img').css('opacity','0.4')
-  }else{
-    $('#save-as-img').css('opacity','1')
-  }
-  if (!currentFile) {
-    $('#export-caos-img').css('opacity','0.4')
-  }else{
-    $('#export-caos-img').css('opacity','1')
-  }
-  if (_undoList.length === 0){
-    $('#undo-button-img').css('opacity','0.4')
-  }else{
-    $('#undo-button-img').css('opacity','1')
-  }
-  if (_redoList.length === 0){
-    $('#redo-button-img').css('opacity','0.4')
-  }else{
-    $('#redo-button-img').css('opacity','1')
-  }
-  if (!currentFile) {
-    $('#view-edit-room-type-img').css('opacity','0.4')
-  }else{
-    $('#view-edit-room-type-img').css('opacity','1')
-  }
-  if (!currentFile || zoom === 1) {
-    $('#one-to-one-zoom-img').css('opacity','0.4')
-  }else{
-    $('#one-to-one-zoom-img').css('opacity','1')
-  }
+function updateBarButtons() {
+    let currentFile = fileHelper.getCurrentFileRef();
+    if (!currentFile || !fileHelper.getCurrentFileNeedsSaving()) {
+        $('#save-file-img')
+            .css('opacity', '0.4')
+    } else {
+        $('#save-file-img')
+            .css('opacity', '1')
+    }
+    if (!currentFile) {
+        $('#save-as-img')
+            .css('opacity', '0.4')
+    } else {
+        $('#save-as-img')
+            .css('opacity', '1')
+    }
+    if (!currentFile) {
+        $('#export-caos-img')
+            .css('opacity', '0.4')
+    } else {
+        $('#export-caos-img')
+            .css('opacity', '1')
+    }
+    if (_undoList.length === 0) {
+        $('#undo-button-img')
+            .css('opacity', '0.4')
+    } else {
+        $('#undo-button-img')
+            .css('opacity', '1')
+    }
+    if (_redoList.length === 0) {
+        $('#redo-button-img')
+            .css('opacity', '0.4')
+    } else {
+        $('#redo-button-img')
+            .css('opacity', '1')
+    }
+    if (!currentFile) {
+        $('#view-edit-room-type-img')
+            .css('opacity', '0.4')
+    } else {
+        $('#view-edit-room-type-img')
+            .css('opacity', '1')
+    }
+    if (!currentFile || zoom === 1) {
+        $('#one-to-one-zoom-img')
+            .css('opacity', '0.4')
+    } else {
+        $('#one-to-one-zoom-img')
+            .css('opacity', '1')
+    }
 }
 
 function oneToOneZoom() {
-      let zoomInitial = zoom;
-      zoom = 1;
-      zooomSettle = 1;
-      constrainPositionZoom();
-      let zoomFinal = zoom;
-      masterUiState.camera.rezoom = true;
-
-      posX += (canvasHolder.clientWidth/2) * (zoomInitial/zoomFinal - 1);
-      posY += (canvasHolder.clientHeight/2) * (zoomInitial/zoomFinal - 1);
-      constrainPositionZoom();
+    let zoomInitial = zoom;
+    zoom = 1;
+    zooomSettle = 1;
+    constrainPositionZoom();
+    let zoomFinal = zoom;
+    masterUiState.camera.rezoom = true;
+    
+    posX += (canvasHolder.clientWidth / 2) * (zoomInitial / zoomFinal - 1);
+    posY += (canvasHolder.clientHeight / 2) * (zoomInitial / zoomFinal - 1);
+    constrainPositionZoom();
 }
 
-function undo(){
-  let command = _undoList.pop();
-  if (!command){
-    return;
-  }
-  command.undo()
-  _redoList.push(command);
-  fileHelper.fileModified();
-  rebuildRooms();
-  redrawRooms(
-    offscreenCanvasContexts.room,
-    offscreenCanvasContexts.pasties,
-    [...dataStructures.doorsArray, ...dataStructures.walls],
-    dataStructures.points,
-    dataStructures.metaroomDisk!);
-  selectionChecker.resetSelection();
-  updateBarButtons();
+function undo() {
+    let command = _undoList.pop();
+    if (!command) {
+        return;
+    }
+    command.undo()
+    _redoList.push(command);
+    fileHelper.fileModified();
+    rebuildRooms();
+    redrawRooms(
+        offscreenCanvasContexts.room,
+        offscreenCanvasContexts.pasties,
+        [...dataStructures.doorsArray, ...dataStructures.walls],
+        dataStructures.points,
+        dataStructures.metaroomDisk!);
+    selectionChecker.resetSelection();
+    updateBarButtons();
 }
 
-function redo(){
-  let command = _redoList.pop();
-  if (!command){
-    return;
-  }
-  command.redo()
-  _undoList.push(command);
-  fileHelper.fileModified();
-  rebuildRooms();
-  redrawRooms(
-    offscreenCanvasContexts.room,
-    offscreenCanvasContexts.pasties,
-    [...dataStructures.doorsArray, ...dataStructures.walls],
-    dataStructures.points,
-    dataStructures.metaroomDisk!);
-  selectionChecker.resetSelection();
-  updateBarButtons();
+function redo() {
+    let command = _redoList.pop();
+    if (!command) {
+        return;
+    }
+    command.redo()
+    _undoList.push(command);
+    fileHelper.fileModified();
+    rebuildRooms();
+    redrawRooms(
+        offscreenCanvasContexts.room,
+        offscreenCanvasContexts.pasties,
+        [...dataStructures.doorsArray, ...dataStructures.walls],
+        dataStructures.points,
+        dataStructures.metaroomDisk!);
+    selectionChecker.resetSelection();
+    updateBarButtons();
 }
 
 let lastDownTarget: any = null;
 
-function userTextKeyDown(event: any){
-  if (lastDownTarget !== topCanvasElement) {
-      return;
-  }
-
-  if (event.defaultPrevented) {
-    return; // Do nothing if the event was already processed
-  }
-
-  if (event.key === "Shift") {
-    shiftKeyDown(event);
-  } else if (event.key === "Control") {
-    controlKeyDown(event);
-  } else if (event.altKey || event.ctrlKey || event.metaKey){
-    controlKeyComboDown(event);
-  } else if (event.shiftKey){
-    shiftKeyComboDown(event);
-  }else{
-    switch (event.key){
-      case 'Backspace':
-      case 'Delete':
-        editingKeyDown(event);
-        return;
-
-      case 'Escape':
-        selectionChecker.resetSelection();
-        break;
-
-      case ' ':
-        spacebarDown(event);
-        break;
-
-      default:
+function userTextKeyDown(event: any) {
+    if (lastDownTarget !== topCanvasElement) {
         return;
     }
-  }
-  event.preventDefault();
+    
+    if (event.defaultPrevented) {
+        return; // Do nothing if the event was already processed
+    }
+    
+    if (event.key === "Shift") {
+        shiftKeyDown(event);
+    } else if (event.key === "Control") {
+        controlKeyDown(event);
+    } else if (event.altKey || event.ctrlKey || event.metaKey) {
+        controlKeyComboDown(event);
+    } else if (event.shiftKey) {
+        shiftKeyComboDown(event);
+    } else {
+        switch (event.key) {
+            case 'Backspace':
+            case 'Delete':
+                editingKeyDown(event);
+                return;
+            
+            case 'Escape':
+                selectionChecker.resetSelection();
+                break;
+            
+            case ' ':
+                spacebarDown(event);
+                break;
+            
+            default:
+                return;
+        }
+    }
+    event.preventDefault();
 }
 
-function userTextKeyUp(event: any){
+function userTextKeyUp(event: any) {
     if (event.defaultPrevented) {
         return; // Do nothing if the event was already processed
     }
@@ -674,37 +716,37 @@ function editingKeyDown(event: any) {
 }
 
 
-function shiftKeyDown(event: any){
-  masterUiState.keys.shiftKeyIsDown = true;
+function shiftKeyDown(event: any) {
+    masterUiState.keys.shiftKeyIsDown = true;
 }
 
-function controlKeyDown(event: any){
-  masterUiState.keys.ctrlKeyIsDown = true;
+function controlKeyDown(event: any) {
+    masterUiState.keys.ctrlKeyIsDown = true;
 }
 
-function spacebarDown(event: any){
-  masterUiState.keys.spacebarIsDown = true;
+function spacebarDown(event: any) {
+    masterUiState.keys.spacebarIsDown = true;
 }
 
 
-
-function controlKeyComboDown(event: any){
-  if (event.key === 'z'){
-    undo();
-  } else if (
-    event.key === 'y'
-    || (event.key === 'z' && event.shiftKey)
- ){
-    redo();
-  }
+function controlKeyComboDown(event: any) {
+    if (event.key === 'z') {
+        undo();
+    } else if (
+        event.key === 'y'
+        || (event.key === 'z' && event.shiftKey)
+    ) {
+        redo();
+    }
 }
+
 function tryDelete() {
     let selection = selectionChecker.getSelectionClick();
     if (selection.selectedType === "wall") {
         Function.prototype();
     } else if (
-      selection.selectedType === "point"
-      || selection.selectedType === "corner"
+        selection.selectedType === "point"
+        || selection.selectedType === "corner"
     ) {
         Function.prototype();
     } else if (selection.selectedType === "room") {
@@ -715,7 +757,7 @@ function tryDelete() {
 }
 
 
-function deleteRoom(id: string){
+function deleteRoom(id: string) {
     let permsStorageCommand = makePermsStorageCommand([id]);
     let deleteCommand = makeDeleteRoomCommand(id);
     let finalCommand = buildMultiCommand([permsStorageCommand, deleteCommand]);
@@ -725,27 +767,27 @@ function deleteRoom(id: string){
     fileHelper.fileModified();
     rebuildRooms();
     redrawRooms(
-      offscreenCanvasContexts.room,
-      offscreenCanvasContexts.pasties,
-      [...dataStructures.doorsArray, ...dataStructures.walls],
-      dataStructures.points,
-      dataStructures.metaroomDisk!);
+        offscreenCanvasContexts.room,
+        offscreenCanvasContexts.pasties,
+        [...dataStructures.doorsArray, ...dataStructures.walls],
+        dataStructures.points,
+        dataStructures.metaroomDisk!);
     selectionChecker.resetSelection();
     updateBarButtons();
 }
 
-function controlKeyUp(event: any){
+function controlKeyUp(event: any) {
     if (masterUiState.keys.ctrlKeyIsDown) {
         masterUiState.keys.ctrlKeyIsDown = false;
-
+        
         if (masterUiState.dragging.isDragging) {
             masterUiState.dragging = {
                 isMouseButtonDown: false,
-
+                
                 isDragging: false,
                 whatDragging: "",
                 idDragging: -1,
-
+                
                 startDragging: undefined,
                 stopDragging: undefined,
             }
@@ -753,24 +795,24 @@ function controlKeyUp(event: any){
     }
 }
 
-function shiftKeyComboDown(event: any){
+function shiftKeyComboDown(event: any) {
     if (event.key === "Shift") {
         masterUiState.keys.shiftKeyIsDown = true;
     }
 }
 
-function shiftKeyUp(event: any){
+function shiftKeyUp(event: any) {
     if (masterUiState.keys.shiftKeyIsDown) {
         masterUiState.keys.shiftKeyIsDown = false;
-
+        
         if (masterUiState.dragging.isDragging) {
             masterUiState.dragging = {
                 isMouseButtonDown: false,
-
+                
                 isDragging: false,
                 whatDragging: "",
                 idDragging: -1,
-
+                
                 startDragging: undefined,
                 stopDragging: undefined,
             }
@@ -778,18 +820,18 @@ function shiftKeyUp(event: any){
     }
 }
 
-function spacebarUp(event: any){
+function spacebarUp(event: any) {
     if (masterUiState.keys.spacebarIsDown) {
         masterUiState.keys.spacebarIsDown = false;
-
+        
         if (masterUiState.dragging.isDragging) {
             masterUiState.dragging = {
                 isMouseButtonDown: false,
-
+                
                 isDragging: false,
                 whatDragging: "",
                 idDragging: -1,
-
+                
                 startDragging: undefined,
                 stopDragging: undefined,
             }
@@ -797,21 +839,21 @@ function spacebarUp(event: any){
     }
 }
 
-function windowHandleMouseDown(event: any){
+function windowHandleMouseDown(event: any) {
     lastDownTarget = event.target;
 }
 
-function handleMouseDown(event: any){
+function handleMouseDown(event: any) {
     // tell the browser we're handling this event
     event.preventDefault();
     event.stopPropagation();
     lastDownTarget = event.target;
     masterUiState.dragging.isMouseButtonDown = true;
-    let startX = (parseInt(event.offsetX) + posX) * zoom;
-    let startY = (parseInt(event.offsetY) + posY) * zoom;
-
+    let startX = (parseInt(event.offsetX) + (posX / zoom)) * zoom;
+    let startY = (parseInt(event.offsetY) + (posY / zoom)) * zoom;
+    
     let isViewingRoomType = masterUiState.state.isViewingRoomType as ViewingRoomTypeState;
-
+    
     if (isViewingRoomType) {
         selectionChecker.checkSelectionRoomtypeClick(startX, startY, dataStructures);
         if (isViewingRoomType.isEditingRoomtype) {
@@ -823,26 +865,26 @@ function handleMouseDown(event: any){
     }
 }
 
-function handleMouseUp(event: any){
+function handleMouseUp(event: any) {
     event.preventDefault();
     event.stopPropagation();
     masterUiState.dragging.isMouseButtonDown = false;
-
+    
     tryCreateRoom();
-
+    
     masterUiState.dragging = {
         isMouseButtonDown: false,
-
+        
         isDragging: false,
         whatDragging: "",
         idDragging: -1,
-
+        
         startDragging: undefined,
         stopDragging: undefined,
     }
 }
 
-function handleMouseOut(event: any){
+function handleMouseOut(event: any) {
     masterUiState.keys.shiftKeyIsDown = false;
     // return if we're not dragging
     /*masterUiState.dragging.isMouseButtonDown = false;
@@ -854,126 +896,125 @@ function handleMouseOut(event: any){
     stopDragging = null;*/
 }
 
-function handleMouseMove(event: any){
-  // tell the browser we're handling this event
-  event.preventDefault();
-  event.stopPropagation();
-  // calculate the current mouse position
-  let currX = parseInt(event.offsetX + posX) * zoom;
-  let currY = parseInt(event.offsetY + posY) * zoom;
-
-  if (!dataStructures.metaroomDisk!) {
-      return;
-  }
-
-  let isViewingRoomType = masterUiState.state.isViewingRoomType as ViewingRoomTypeState;
-
-  if (!masterUiState.dragging.isDragging) {
-      if (isViewingRoomType) {
-          selectionChecker.checkSelectionRoomtypeHover(currX, currY, dataStructures);
-      } else {
-          selectionChecker.checkSelectionHover(currX, currY, dataStructures);
-      }
-  }
-
-  /*console.log({
-    isMouseButtonDown: masterUiState.dragging.isMouseButtonDown,
-    isDragging: isDragging,
-    "selected.selectedType": selected.selectedType,
-  });*/
-
-  if (masterUiState.dragging.isMouseButtonDown) {
-      if (masterUiState.keys.spacebarIsDown) {
-          posX -= event.movementX;
-          posY -= event.movementY;
-          masterUiState.camera.reposition = true;
-          constrainPositionZoom();
-      } else {
-          let selection = selectionChecker.getSelectionClick();
-          if (!masterUiState.dragging.isDragging) {
-              if (selection.selectedType === "wall"
-                || selection.selectedType === "door"
-              ) {
-                  masterUiState.dragging = {
-                      isMouseButtonDown: true,
-
-                      isDragging: true,
-                      whatDragging: selection.selectedType,
-                      idDragging: selection.selectedId,
-
-                      startDragging: {x: currX, y: currY},
-                      stopDragging: {x: currX, y: currY},
-                  }
-              } else if (selection.selectedType === "point") {
-                  masterUiState.dragging = {
-                      isMouseButtonDown: true,
-
-                      isDragging: true,
-                      whatDragging: selection.selectedType,
-                      idDragging: selection.selectedId,
-
-                      startDragging: dataStructures.points[selection.selectedId],
-                      stopDragging: {x: currX, y: currY},
-                  }
-              } else if (selection.selectedType === "corner") {
-                  masterUiState.dragging = {
-                      isMouseButtonDown: true,
-
-                      isDragging: true,
-                      whatDragging: selection.selectedType,
-                      idDragging: selection.selectedId,
-
-                      startDragging: dataStructures.points[selection.selectedId],
-                      stopDragging: {x: currX, y: currY},
-                  }
-              } else if (selection.selectedType === "side") {
-                  masterUiState.dragging = {
-                      isMouseButtonDown: true,
-
-                      isDragging: true,
-                      whatDragging: selection.selectedType,
-                      idDragging: selection.selectedId,
-
-                      startDragging: {x: currX, y: currY},
-                      stopDragging: {x: currX, y: currY},
-                  }
-              } else {
-                  masterUiState.dragging = {
-                      isMouseButtonDown: true,
-
-                      isDragging: true,
-                      whatDragging: "cursor_point",
-                      idDragging: undefined,
-
-                      startDragging: {x: Math.round(currX), y: Math.round(currY)},
-                      stopDragging: {x: currX, y: currY},
-                  }
-              }
-          }
-      }
-      if (masterUiState.dragging.isDragging) {
-          masterUiState.dragging.stopDragging = {x: currX, y: currY};
-      }
-  }
-
-
-  //checkSelection(startX, startY);
+function handleMouseMove(event: any) {
+    // tell the browser we're handling this event
+    event.preventDefault();
+    event.stopPropagation();
+    // calculate the current mouse position
+    let currX = parseInt(event.offsetX + (posX / zoom)) * zoom;
+    let currY = parseInt(event.offsetY + (posY / zoom)) * zoom;
+    
+    if (!dataStructures.metaroomDisk!) {
+        return;
+    }
+    
+    let isViewingRoomType = masterUiState.state.isViewingRoomType as ViewingRoomTypeState;
+    
+    if (!masterUiState.dragging.isDragging) {
+        if (isViewingRoomType) {
+            selectionChecker.checkSelectionRoomtypeHover(currX, currY, dataStructures);
+        } else {
+            selectionChecker.checkSelectionHover(currX, currY, dataStructures);
+        }
+    }
+    
+    /*console.log({
+      isMouseButtonDown: masterUiState.dragging.isMouseButtonDown,
+      isDragging: isDragging,
+      "selected.selectedType": selected.selectedType,
+    });*/
+    
+    if (masterUiState.dragging.isMouseButtonDown) {
+        if (masterUiState.keys.spacebarIsDown) {
+            posX -= event.movementX;
+            posY -= event.movementY;
+            masterUiState.camera.reposition = true;
+            constrainPositionZoom();
+        } else {
+            let selection = selectionChecker.getSelectionClick();
+            if (!masterUiState.dragging.isDragging) {
+                if (selection.selectedType === "wall"
+                    || selection.selectedType === "door"
+                ) {
+                    masterUiState.dragging = {
+                        isMouseButtonDown: true,
+                        
+                        isDragging: true,
+                        whatDragging: selection.selectedType,
+                        idDragging: selection.selectedId,
+                        
+                        startDragging: {x: currX, y: currY},
+                        stopDragging: {x: currX, y: currY},
+                    }
+                } else if (selection.selectedType === "point") {
+                    masterUiState.dragging = {
+                        isMouseButtonDown: true,
+                        
+                        isDragging: true,
+                        whatDragging: selection.selectedType,
+                        idDragging: selection.selectedId,
+                        
+                        startDragging: dataStructures.points[selection.selectedId],
+                        stopDragging: {x: currX, y: currY},
+                    }
+                } else if (selection.selectedType === "corner") {
+                    masterUiState.dragging = {
+                        isMouseButtonDown: true,
+                        
+                        isDragging: true,
+                        whatDragging: selection.selectedType,
+                        idDragging: selection.selectedId,
+                        
+                        startDragging: dataStructures.points[selection.selectedId],
+                        stopDragging: {x: currX, y: currY},
+                    }
+                } else if (selection.selectedType === "side") {
+                    masterUiState.dragging = {
+                        isMouseButtonDown: true,
+                        
+                        isDragging: true,
+                        whatDragging: selection.selectedType,
+                        idDragging: selection.selectedId,
+                        
+                        startDragging: {x: currX, y: currY},
+                        stopDragging: {x: currX, y: currY},
+                    }
+                } else {
+                    masterUiState.dragging = {
+                        isMouseButtonDown: true,
+                        
+                        isDragging: true,
+                        whatDragging: "cursor_point",
+                        idDragging: undefined,
+                        
+                        startDragging: {x: Math.round(currX), y: Math.round(currY)},
+                        stopDragging: {x: currX, y: currY},
+                    }
+                }
+            }
+        }
+        if (masterUiState.dragging.isDragging) {
+            masterUiState.dragging.stopDragging = {x: currX, y: currY};
+        }
+    }
+    
+    
+    //checkSelection(startX, startY);
 }
-
 
 
 function handleWheel(event: any) {
     event.preventDefault();
-
+    
     if (event.ctrlKey) {
         let zoomInitial = zoom;
         zoom += event.deltaY * 0.0025;
         constrainPositionZoom();
         let zoomFinal = zoom;
         masterUiState.camera.rezoom = true;
-
-        posX += (event.offsetX) * (zoomInitial/zoomFinal - 1);
-        posY += (event.offsetY) * (zoomInitial/zoomFinal - 1);
+        
+        posX += (event.offsetX) * (zoomInitial / zoomFinal - 1);
+        posY += (event.offsetY) * (zoomInitial / zoomFinal - 1);
     } else {
         if (event.altKey) {
             posX += event.deltaY * 2;
@@ -988,7 +1029,7 @@ function handleWheel(event: any) {
 
 function constrainPositionZoom() {
     zoom = Math.min(zoom, 2);
-    zoom = Math.max(zoom, 1/roomSizeBlurFix);
+    zoom = Math.max(zoom, 1 / roomSizeBlurFix);
     posX = Math.min(posX, dataStructures.metaroomDisk!.width / zoom - canvasHolder.clientWidth);
     posX = Math.max(posX, 0);
     posY = Math.min(posY, dataStructures.metaroomDisk!.height / zoom - canvasHolder.clientHeight);
@@ -1008,8 +1049,8 @@ function tryCreateRoom() {
         selection,
         dataStructures
     );
-    if (newRooms.length === 0) {
-      return;
+    if (!newRooms || newRooms.length === 0) {
+        return;
     }
     let commands = [];
     if (_shiftKeyIsDown || _ctrlKeyIsDown) {
@@ -1040,106 +1081,135 @@ function tryCreateRoom() {
     fileHelper.fileModified();
     rebuildRooms();
     redrawRooms(
-      offscreenCanvasContexts.room,
-      offscreenCanvasContexts.pasties,
-      [...dataStructures.doorsArray, ...dataStructures.walls],
-      dataStructures.points,
-      dataStructures.metaroomDisk!);
+        offscreenCanvasContexts.room,
+        offscreenCanvasContexts.pasties,
+        [...dataStructures.doorsArray, ...dataStructures.walls],
+        dataStructures.points,
+        dataStructures.metaroomDisk!);
     selectionChecker.resetSelection();
     updateBarButtons();
 }
 
-function makeAddRoomCommand(id: string, room: Room){
-  return new Command(
-    deleteRoomAbsolute,
-    {id},
-    addRoomAbsolute,
-    {id, room},
-  );
+function makeAddRoomCommand(id: string, room: Room) {
+    return new Command(
+        deleteRoomAbsolute,
+        {id},
+        addRoomAbsolute,
+        {id, room},
+    );
 }
 
-function addRoomAbsolute({id, room}: {id: string, room: Room}){
-  assert(id && id !== "", `Instead of UUID, found ${id}`);
-  assert(room, `Instead of room, found ${room}`);
-  assert(room.leftX != room.rightX, `Instead of room, found ${JSON.stringify(room)}`);
-  let newPerms = dataStructureFactory.getPermsFromRoomPotential(room, dataStructures);
-
-  dataStructures.metaroomDisk!.rooms[id] = room;
-
-  for (const permKey in newPerms) {
-      dataStructures.metaroomDisk!.perms[newPerms[permKey].id] = newPerms[permKey];
-  }
+function addRoomAbsolute({id, room}: { id: string, room: Room }) {
+    
+    // assert(id && id !== "", `Instead of UUID, found ${id}`);
+    if (!id || id === "") {
+        console.error(`Room id is not UUID, found ${id}`);
+        flashError();
+        return;
+    }
+    // assert(room, `Instead of room, found ${room}`);
+    if (!room) {
+        console.error(`Instead of room, found ${room}`);
+        flashError();
+        return;
+    }
+    // assert(room.leftX != room.rightX, `Instead of room, found ${JSON.stringify(room)}`);
+    if (room.leftX === room.rightX) {
+        console.error(`Instead of room, found ${JSON.stringify(room)}`);
+        flashError();
+        return;
+    }
+    let newPerms = dataStructureFactory.getPermsFromRoomPotential(room, dataStructures);
+    
+    dataStructures.metaroomDisk!.rooms[id] = room;
+    
+    for (const permKey in newPerms) {
+        dataStructures.metaroomDisk!.perms[newPerms[permKey].id] = newPerms[permKey];
+    }
 }
 
 function retypeRoom(id: string, type: number) {
     let myCommand = makeRetypeRoomCommand(id, type);
+    if (myCommand == null) {
+        return;
+    }
     _undoList.push(myCommand);
     myCommand.do();
     _redoList = [];
     fileHelper.fileModified();
     rebuildRooms();
     redrawRooms(
-      offscreenCanvasContexts.room,
-      offscreenCanvasContexts.pasties,
-      [...dataStructures.doorsArray, ...dataStructures.walls],
-      dataStructures.points,
-      dataStructures.metaroomDisk!);
+        offscreenCanvasContexts.room,
+        offscreenCanvasContexts.pasties,
+        [...dataStructures.doorsArray, ...dataStructures.walls],
+        dataStructures.points,
+        dataStructures.metaroomDisk!);
     selectionChecker.resetSelection();
     updateBarButtons();
 }
 
-function makeRetypeRoomCommand(id: string, type: number){
-  let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
-  assert(roomOriginal, "");
-  return new Command(
-      retypeRoomAbsolute,
-      {id, type: roomOriginal.roomType},
-      retypeRoomAbsolute,
-      {id, type: type},
-  );
+function makeRetypeRoomCommand(id: string, type: number) {
+    let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
+    // assert(roomOriginal, "");
+    if (!roomOriginal) {
+        console.error("Cannot retype room. Original is undefined");
+        flashError();
+        return null;
+    }
+    return new Command(
+        retypeRoomAbsolute,
+        {id, type: roomOriginal.roomType},
+        retypeRoomAbsolute,
+        {id, type: type},
+    );
 }
 
-function retypeRoomAbsolute({id, type}: { id: string, type: number }){
+function retypeRoomAbsolute({id, type}: { id: string, type: number }) {
     dataStructures.metaroomDisk!.rooms[id].roomType = type;
 }
 
-function makeRepermDoorsCommand(id: string, type: number){
-  let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
-  assert(roomOriginal, "");
-  return new Command(
-      repermDoorsAbsolute,
-      {id, type: roomOriginal.roomType},
-      repermDoorsAbsolute,
-      {id, type: type},
-  );
+function makeRepermDoorsCommand(id: string, type: number) {
+    let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
+    // assert(roomOriginal, "");
+    if (!roomOriginal) {
+        console.error("Cannot re-perm room. Original is undefined");
+        flashError();
+        return null;
+    }
+    return new Command(
+        repermDoorsAbsolute,
+        {id, type: roomOriginal.roomType},
+        repermDoorsAbsolute,
+        {id, type: type},
+    );
 }
 
-function repermDoorsAbsolute({id, perm}: { id: string, perm: number }){
+function repermDoorsAbsolute({id, perm}: { id: string, perm: number }) {
     dataStructures.doorsDict[id].permeability = perm;
     //dataStructures.metaroomDisk.
 }
 
-function makeDeleteRoomCommand(id: string){
-  let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
-  let room = {
-      id: roomOriginal.id,
-      leftX: roomOriginal.leftX,
-      rightX: roomOriginal.rightX,
-      leftCeilingY: roomOriginal.leftCeilingY,
-      rightCeilingY: roomOriginal.rightCeilingY,
-      leftFloorY: roomOriginal.leftFloorY,
-      rightFloorY: roomOriginal.rightFloorY,
-      roomType: roomOriginal.roomType,
-  }
-  return new Command(
-      addRoomAbsolute,
-      {id, room},
-      deleteRoomAbsolute,
-      {id},
-  );
+function makeDeleteRoomCommand(id: string) {
+    let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
+    let room = {
+        id: roomOriginal.id,
+        leftX: roomOriginal.leftX,
+        rightX: roomOriginal.rightX,
+        leftCeilingY: roomOriginal.leftCeilingY,
+        rightCeilingY: roomOriginal.rightCeilingY,
+        leftFloorY: roomOriginal.leftFloorY,
+        rightFloorY: roomOriginal.rightFloorY,
+        roomType: roomOriginal.roomType,
+    }
+    return new Command(
+        addRoomAbsolute,
+        {id, room},
+        deleteRoomAbsolute,
+        {id},
+    );
 }
 
-function deleteRoomAbsolute({id}: { id: string }){
+function deleteRoomAbsolute({id}: { id: string }) {
     delete dataStructures.metaroomDisk!.rooms[id];
     for (let permKey in dataStructures.metaroomDisk!.perms) {
         let perm = dataStructures.metaroomDisk!.perms[permKey];
@@ -1149,15 +1219,15 @@ function deleteRoomAbsolute({id}: { id: string }){
     }
 }
 
-function makePermsStorageCommand(ids: string[]){
+function makePermsStorageCommand(ids: string[]) {
     let toStore: { [keys: string]: Perm } = {};
     for (let permKey in dataStructures.metaroomDisk!.perms) {
         let perm = dataStructures.metaroomDisk!.perms[permKey];
         if (ids.some(id =>
-          (id === perm.rooms.a
-          || id === perm.rooms.b)
+            (id === perm.rooms.a
+                || id === perm.rooms.b)
         )) {
-          toStore[perm.id] = perm;
+            toStore[perm.id] = perm;
         }
     }
     return new Command(
@@ -1168,7 +1238,7 @@ function makePermsStorageCommand(ids: string[]){
     );
 }
 
-function permsStorageAbsolute({toStore}: any){
+function permsStorageAbsolute({toStore}: any) {
     for (let storedKey in toStore) {
         let stored = toStore[storedKey];
         let existing = dataStructures.metaroomDisk!.perms[stored.id];
@@ -1179,28 +1249,38 @@ function permsStorageAbsolute({toStore}: any){
 }
 
 function rebuildRooms() {
-    let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk!.rooms).filter((val: any) => {return val});
+    let wallsOverreach = dataStructureFactory.getWallsFromRooms(dataStructures.metaroomDisk!.rooms)
+        .filter((val: any) => {
+            return val
+        });
     //console.log(dataStructures.metaroomDisk.perms);
     let doorsArray =
         dataStructureFactory
             .getDoorsFromRooms(dataStructures.metaroomDisk!.rooms, dataStructures.metaroomDisk!.perms)
-            .filter((val?: Door) => {return val})
-            .filter((val: Door) => {return (
-              val.start.x !== val.end.x ||
-              val.start.y !== val.end.y
-            );});
-    let walls = dataStructureFactory.subtractSegmentsFromSegments(wallsOverreach, doorsArray).filter((val: any) => {return val});
+            .filter((val?: Door) => {
+                return val
+            })
+            .filter((val: Door) => {
+                return (
+                    val.start.x !== val.end.x ||
+                    val.start.y !== val.end.y
+                );
+            });
+    let walls = dataStructureFactory.subtractSegmentsFromSegments(wallsOverreach, doorsArray)
+        .filter((val: any) => {
+            return val
+        });
     let points = dataStructureFactory.getPointsFromRooms(dataStructures.metaroomDisk!.rooms);
     let pointsSortedX = Object.values(points);
     pointsSortedX = pointsSortedX.sort((a: any, b: any) => a.x - b.x);
     let pointsSortedY = Object.values(points);
     pointsSortedY = pointsSortedY.sort((a: any, b: any) => a.y - b.y);
-
+    
     let doorsDict: { [key: string]: Door } = {};
     for (let door of doorsArray) {
         doorsDict[door.id] = door;
     }
-
+    
     dataStructures = {
         metaroomDisk: dataStructures.metaroomDisk,
         backgroundFileAbsoluteWorking: dataStructures.backgroundFileAbsoluteWorking,
@@ -1227,7 +1307,7 @@ let blankRoom: Metaroom = {
 };
 
 function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground?: string) {
-
+    
     let metaroom: Metaroom;
     if (typeof metaroomIn === "string") {
         if (metaroomIn !== "") {
@@ -1240,65 +1320,69 @@ function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground?: stri
     } else {
         metaroom = blankRoom;
     }
-
-
+    
+    
     dataStructures = {
-      metaroomDisk: metaroom,
-      backgroundFileAbsoluteWorking: undefined,
-      points: {},
-      walls: [],
-      doorsDict: {},
-      doorsArray: [],
-      pointsSortedX: [],
-      pointsSortedY: [],
+        metaroomDisk: metaroom,
+        backgroundFileAbsoluteWorking: undefined,
+        points: {},
+        walls: [],
+        doorsDict: {},
+        doorsArray: [],
+        pointsSortedX: [],
+        pointsSortedY: [],
     } as DataStructures;
-
+    
     if (additionalBackground) {
         dataStructures.backgroundFileAbsoluteWorking = additionalBackground;
     } else {
         //set img to null to retrigger its loading
         img = null;
     }
-
-   resizeOffscreenCanvasElements(dataStructures.metaroomDisk!);
-   rebuildRooms();
-   redrawMetaroom();
+    
+    resizeOffscreenCanvasElements(dataStructures.metaroomDisk!);
+    rebuildRooms();
+    redrawMetaroom();
 }
 
 let imgPathRel = "";
 let img: (null | ImageData | HTMLImageElement);
+
 async function reloadBackgroundFile(backgroundFileAbsoluteWorking?: string) {
     let imgPathAbsolute =
         backgroundFileAbsoluteWorking
         ?? path.join(
-          path.dirname(fileHelper.getCurrentFileRef().path),
-          dataStructures.metaroomDisk!.background
+            path.dirname(fileHelper.getCurrentFileRef().path),
+            dataStructures.metaroomDisk!.background
         );
-
+    
     switch (path.extname(imgPathAbsolute)) {
-      case ".blk":
-        img = await clbTools.loadBackground(imgPathAbsolute);
-        if (img !== null){
-          break;
-        }
-
-      case ".jpg":
-      case ".png":
-      case ".bmp":
-        img = new Image;
-        img.src = imgPathAbsolute;
-        await img.decode();
-        break;
-
-      default:
-        console.log(`Unsupported file type: ${path.extname(imgPathAbsolute)}`);
-        break;
+        case ".blk":
+            img = null;
+            // Loads image in background thread if possible
+            loadBackground(imgPathAbsolute, (image: ImageData|HTMLImageElement) => {
+                img = image;
+                masterUiState.camera.redraw = true;
+                redrawMetaroom();
+            });
+            return
+        case ".jpg":
+        case ".png":
+        case ".bmp":
+            img = new Image;
+            img.src = imgPathAbsolute;
+            await img.decode();
+            break;
+        
+        default:
+            console.log(`Unsupported file type: ${path.extname(imgPathAbsolute)}`);
+            break;
     }
     masterUiState.camera.redraw = true;
 }
 
 
-async function redrawMetaroom(){
+async function redrawMetaroom() {
     redrawRooms(
         offscreenCanvasContexts.room,
         offscreenCanvasContexts.pasties,
@@ -1310,47 +1394,41 @@ async function redrawMetaroom(){
         if (!img) {
             await reloadBackgroundFile();
         }
-        switch (path.extname(dataStructures.metaroomDisk!.background)) {
-          case ".blk":
-            offscreenCanvasContexts.background.moveTo(0, 0);
-            offscreenCanvasContexts.background.putImageData(img as ImageData, 0, 0);
-            break;
-
-          case ".jpg":
-          case ".png":
-          case ".bmp":
-            offscreenCanvasContexts.background.moveTo(0, 0);
-            offscreenCanvasContexts.background.drawImage(img as HTMLImageElement, 0, 0);
-            break;
-
-          default:
-            console.log(`Unsupported file type: ${path.extname(dataStructures.metaroomDisk!.background)}`);
-            break;
+        if (img) {
+            if (img instanceof Image) {
+                offscreenCanvasContexts.background.moveTo(0, 0);
+                offscreenCanvasContexts.background.drawImage(img as HTMLImageElement, 0, 0);
+            } else if (img instanceof ImageData) {
+                offscreenCanvasContexts.background.putImageData(img as ImageData, 0, 0);
+            } else {
+                // @ts-ignore
+                console.log(`Unsupported file type: ${img.constructor.name}${path.extname(dataStructures.metaroomDisk!.background)}`);
+            }
         }
     }
 }
 
 async function redrawRooms(
-  roomCtx: CanvasRenderingContext2D,
-  pastiesCtx: CanvasRenderingContext2D,
-  lines: Door[],
-  points: { [key: string]: Point; },
-  metaroom: Metaroom
-){
-
+    roomCtx: CanvasRenderingContext2D,
+    pastiesCtx: CanvasRenderingContext2D,
+    lines: Door[],
+    points: { [key: string]: Point; },
+    metaroom: Metaroom
+) {
+    
     roomCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
     pastiesCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
     roomCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
     lines
         .forEach((line, i) => {
             if (line.permeability < 0) {
-              roomCtx.strokeStyle = 'rgb(005, 170, 255)';
+                roomCtx.strokeStyle = 'rgb(005, 170, 255)';
             } else if (line.permeability === 0) {
-              roomCtx.strokeStyle = 'rgb(228, 000, 107)';
+                roomCtx.strokeStyle = 'rgb(228, 000, 107)';
             } else if (line.permeability < 100) {
-              roomCtx.strokeStyle = 'rgb(207, 140, 003)';
+                roomCtx.strokeStyle = 'rgb(207, 140, 003)';
             } else if (line.permeability === 100) {
-              roomCtx.strokeStyle = 'rgb(172, 255, 083)';
+                roomCtx.strokeStyle = 'rgb(172, 255, 083)';
             }
             roomCtx.beginPath();
             roomCtx.moveTo(line.start.x * roomSizeBlurFix, line.start.y * roomSizeBlurFix);
@@ -1362,46 +1440,47 @@ async function redrawRooms(
 }
 
 async function redrawPasties(
-  pastiesCtx: CanvasRenderingContext2D,
-  points: { [key: string]: Point; },
-  metaroom: Metaroom
-){
+    pastiesCtx: CanvasRenderingContext2D,
+    points: { [key: string]: Point; },
+    metaroom: Metaroom
+) {
     //console.log(points);
     //console.log(new Error().stack);
     pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
-      pastiesCtx.beginPath();
-      pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() * 1.5 * roomSizeBlurFix, 0, 2 * Math.PI, true);
-      pastiesCtx.fill();
+        pastiesCtx.beginPath();
+        pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() /*getRoomLineThickness() * 1.5 * roomSizeBlurFix*/, 0, 2 * Math.PI, true);
+        pastiesCtx.fill();
     }
 }
 
 async function redrawPotentialRooms(
-  roomCtx: CanvasRenderingContext2D,
-  pastiesCtx: CanvasRenderingContext2D,
-  lines: Door[],
-  points: SimplePoint[],
-  metaroom: Metaroom
-){
-
+    roomCtx: CanvasRenderingContext2D,
+    pastiesCtx: CanvasRenderingContext2D,
+    lines: Door[],
+    points: SimplePoint[],
+    metaroom: Metaroom
+) {
+    
     roomCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
     pastiesCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
     roomCtx.lineWidth = getRoomLineThickness();
+    const zoomMod = 1 / zoom;
     lines
         .forEach((line, i) => {
             if (line.permeability < 0) {
-              roomCtx.strokeStyle = 'rgb(005, 170, 255)';
+                roomCtx.strokeStyle = 'rgb(005, 170, 255)';
             } else if (line.permeability === 0) {
-              roomCtx.strokeStyle = 'rgb(228, 000, 107)';
+                roomCtx.strokeStyle = 'rgb(228, 000, 107)';
             } else if (line.permeability < 100) {
-              roomCtx.strokeStyle = 'rgb(207, 140, 003)';
+                roomCtx.strokeStyle = 'rgb(207, 140, 003)';
             } else if (line.permeability === 100) {
-              roomCtx.strokeStyle = 'rgb(172, 255, 083)';
+                roomCtx.strokeStyle = 'rgb(172, 255, 083)';
             }
             roomCtx.beginPath();
-            roomCtx.moveTo(line.start.x - posX, line.start.y - posY);
-            roomCtx.lineTo(line.end.x - posX, line.end.y - posY);
+            roomCtx.moveTo((line.start.x - posX) * zoomMod, (line.start.y - posY) * zoomMod);
+            roomCtx.lineTo((line.end.x - posX) * zoomMod, (line.end.y - posY) * zoomMod);
             roomCtx.stroke();
         });
     redrawPotentialPasties(pastiesCtx, points, metaroom);
@@ -1409,18 +1488,19 @@ async function redrawPotentialRooms(
 }
 
 async function redrawPotentialPasties(
-  pastiesCtx: CanvasRenderingContext2D,
-  points: SimplePoint[],
-  metaroom: Metaroom
-){
+    pastiesCtx: CanvasRenderingContext2D,
+    points: SimplePoint[],
+    metaroom: Metaroom
+) {
+    const zoomMod = 1 / zoom;
     //console.log(points);
     //console.log(new Error().stack);
     pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
-      pastiesCtx.beginPath();
-      pastiesCtx.arc(points[key].x - posX, points[key].y - posY, getRoomLineThickness() * 1.5, 0, 2 * Math.PI, true);
-      pastiesCtx.fill();
+        pastiesCtx.beginPath();
+        pastiesCtx.arc((points[key].x - posX) * zoomMod, (points[key].y - posY) * zoomMod, getRoomLineThickness() * 0.75, 0, 2 * Math.PI, true);
+        pastiesCtx.fill();
     }
 }
 
@@ -1434,112 +1514,113 @@ let previousSelectionInstanceId = "uninitialized";
 
 async function redrawSelection(timestamp: number) {
     frameIndex += 1;
-    if (frameIndex%3 === 0) {
-      if (!oldTimestamp) {
-          oldTimestamp = timestamp;
-          fps = 0;
-      } else {
-          secondsPassed = (timestamp - oldTimestamp) / 1000;
-          oldTimestamp = timestamp;
-          fps = Math.round(1 / secondsPassed);
-          console.log(fps)
-      }
-
-      if (dataStructures?.metaroomDisk) {
-
-          if (zoomPanSettleTimestampLastChange
-              && (timestamp - zoomPanSettleTimestampLastChange) > zoomPanSettleMilliseconds) {
-              zoomPanSettleTimestampLastChange = null;
-              zooomSettle = zoom;
-          }
-
-          if (masterUiState.state.isViewingRoomType) {
-              if (true || zoomPanSettleTimestampLastChange === null) {
-                  let selection = selectionChecker.getSelectionRoomtypeHover();
-                  if (selection.selectedType === "") {
-                      selection = selectionChecker.getSelectionRoomtypeClick();
-                  }
-
-                  if (previousHoverSelectionInstanceId !== selection.selectionInstancedId
-                  || previousHoverSelectionInstanceId === "uninitialized") {
-                      previousHoverSelectionInstanceId = selection.selectionInstancedId;
-                      updateRoomtypePanel(
+    if (frameIndex % 3 === 0) {
+        if (!oldTimestamp) {
+            oldTimestamp = timestamp;
+            fps = 0;
+        } else {
+            secondsPassed = (timestamp - oldTimestamp) / 1000;
+            oldTimestamp = timestamp;
+            fps = Math.round(1 / secondsPassed);
+            // console.log(fps)
+        }
+        
+        if (dataStructures?.metaroomDisk) {
+            
+            if (zoomPanSettleTimestampLastChange
+                && (timestamp - zoomPanSettleTimestampLastChange) > zoomPanSettleMilliseconds) {
+                zoomPanSettleTimestampLastChange = null;
+                zooomSettle = zoom;
+            }
+            
+            if (masterUiState.state.isViewingRoomType) {
+                if (true || zoomPanSettleTimestampLastChange === null) {
+                    let selection = selectionChecker.getSelectionRoomtypeHover();
+                    if (selection.selectedType === "") {
+                        selection = selectionChecker.getSelectionRoomtypeClick();
+                    }
+                    
+                    if (previousHoverSelectionInstanceId !== selection.selectionInstancedId
+                        || previousHoverSelectionInstanceId === "uninitialized") {
+                        previousHoverSelectionInstanceId = selection.selectionInstancedId;
+                        updateRoomtypePanel(
+                            document.getElementById("properties-panel"),
+                            selection,
+                            dataStructures);
+                    }
+                    
+                    onscreenCanvasContexts.selectionUnder.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
+                    roomtypeRenderer.redrawRoomtypes(onscreenCanvasContexts.selectionUnder, dataStructures);
+                }
+            } else {
+                let selection = selectionChecker.getSelectionHover();
+                if (selection.selectedType === "") {
+                    selection = selectionChecker.getSelectionClick();
+                }
+                
+                if (previousSelectionInstanceId !== selection.selectionInstancedId
+                    || previousSelectionInstanceId === "uninitialized"
+                ) {
+                    previousSelectionInstanceId = selection.selectionInstancedId;
+                    updatePropertiesPanel(
                         document.getElementById("properties-panel"),
                         selection,
                         dataStructures);
-                  }
-
-                  onscreenCanvasContexts.selectionUnder.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
-                  roomtypeRenderer.redrawRoomtypes(onscreenCanvasContexts.selectionUnder, dataStructures);
-              }
-          } else {
-              let selection = selectionChecker.getSelectionHover();
-              if (selection.selectedType === "") {
-                  selection = selectionChecker.getSelectionClick();
-              }
-
-              if (previousSelectionInstanceId !== selection.selectionInstancedId
-              || previousSelectionInstanceId === "uninitialized") {
-                  previousSelectionInstanceId = selection.selectionInstancedId;
-                  updatePropertiesPanel(
-                    document.getElementById("properties-panel"),
+                }
+                
+                let potentialRooms = potentialFactory.getPotentialRooms
+                (
+                    masterUiState,
                     selection,
-                    dataStructures);
-              }
-
-              let potentialRooms = potentialFactory.getPotentialRooms
-              (
-                  masterUiState,
-                  selection,
-                  dataStructures
-              );
-              redrawPotential(potentialRooms, dataStructures);
-              onscreenCanvasContexts.selectionUnder.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
-              onscreenCanvasContexts.selectionOver.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
-              selectionRenderer.redrawSelection(onscreenCanvasContexts.selectionUnder, onscreenCanvasContexts.selectionOver, dataStructures, selection);
-          }
-
-          masterUiState.camera.redraw =
-            masterUiState.camera.redraw ||
-            masterUiState.camera.rezoom ||
-            masterUiState.camera.reposition;
-
-          if (
-              masterUiState.camera.rezoom ||
-              masterUiState.camera.reposition
-          ) {
-              zoomPanSettleTimestampLastChange = timestamp;
-          }
-
-          if (masterUiState.camera.rezoom){
-              updateBarButtons();
-          }
-
-          if (masterUiState.camera.redraw) {
-              copyOffscreenCanvasesToScreen(
-                [
-                  "background",
-                  "room",
-                  "pasties",
-                ]
-              );
-          }
-          masterUiState.camera.redraw = false;
-          masterUiState.camera.rezoom = false;
-          masterUiState.camera.reposition = false;
-      }
+                    dataStructures
+                );
+                redrawPotential(potentialRooms, dataStructures);
+                onscreenCanvasContexts.selectionUnder.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
+                onscreenCanvasContexts.selectionOver.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
+                selectionRenderer.redrawSelection(onscreenCanvasContexts.selectionUnder, onscreenCanvasContexts.selectionOver, dataStructures, selection);
+            }
+            
+            masterUiState.camera.redraw =
+                masterUiState.camera.redraw ||
+                masterUiState.camera.rezoom ||
+                masterUiState.camera.reposition;
+            
+            if (
+                masterUiState.camera.rezoom ||
+                masterUiState.camera.reposition
+            ) {
+                zoomPanSettleTimestampLastChange = timestamp;
+            }
+            
+            if (masterUiState.camera.rezoom) {
+                updateBarButtons();
+            }
+            
+            if (masterUiState.camera.redraw) {
+                copyOffscreenCanvasesToScreen(
+                    [
+                        "background",
+                        "room",
+                        "pasties",
+                    ]
+                );
+            }
+            masterUiState.camera.redraw = false;
+            masterUiState.camera.rezoom = false;
+            masterUiState.camera.reposition = false;
+        }
     }
     window.requestAnimationFrame(redrawSelection);
 }
 
 function redrawPotential(
-  potentialRooms: Room[],
-  dataStructures: DataStructures
+    potentialRooms: Room[],
+    dataStructures: DataStructures
 ) {
     onscreenCanvasContexts.potential.clearRect(
-      0, 0,
-      dataStructures.metaroomDisk!.width * roomSizeBlurFix,
-      dataStructures.metaroomDisk!.height * roomSizeBlurFix);
+        0, 0,
+        dataStructures.metaroomDisk!.width * roomSizeBlurFix,
+        dataStructures.metaroomDisk!.height * roomSizeBlurFix);
     if (potentialRooms.length != 0) {
         let doorsWalls: Door[] = [];
         for (let potentialRoom of potentialRooms) {
