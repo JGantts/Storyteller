@@ -1,3 +1,12 @@
 type Nullable<T> = T | null | undefined
-export function loadBackground(absolutePath: string, progressCallback: Nullable<(p0: number, p1: number, p2: number) => Nullable<boolean>>): kotlin.js.Promise<Int8Array>;
+type BlkProgressCallback = (p0: number, p1: number, p2: number) => Nullable<boolean>;
+export function loadBackground(
+    absolutePath: string,
+    progressCallback: Nullable<BlkProgressCallback>
+): kotlin.js.Promise<Int8Array>;
+export function loadBackgroundWithProgressChunkSize(
+    absolutePath: string,
+    progressChunkSize: number,
+    progressCallback: Nullable<BlkProgressCallback>
+): kotlin.js.Promise<Int8Array>;
 export as namespace NodeBLKLoader;

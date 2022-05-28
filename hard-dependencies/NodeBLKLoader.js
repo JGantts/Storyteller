@@ -68,10 +68,10 @@
   AbstractMutableSet.prototype.constructor = AbstractMutableSet;
   AbstractEntrySet.prototype = Object.create(AbstractMutableSet.prototype);
   AbstractEntrySet.prototype.constructor = AbstractEntrySet;
-  _no_name_provided__11.prototype = Object.create(AbstractMutableSet.prototype);
-  _no_name_provided__11.prototype.constructor = _no_name_provided__11;
-  _no_name_provided__12.prototype = Object.create(AbstractMutableCollection.prototype);
-  _no_name_provided__12.prototype.constructor = _no_name_provided__12;
+  _no_name_provided__13.prototype = Object.create(AbstractMutableSet.prototype);
+  _no_name_provided__13.prototype.constructor = _no_name_provided__13;
+  _no_name_provided__14.prototype = Object.create(AbstractMutableCollection.prototype);
+  _no_name_provided__14.prototype.constructor = _no_name_provided__14;
   AbstractMutableMap.prototype = Object.create(AbstractMap.prototype);
   AbstractMutableMap.prototype.constructor = AbstractMutableMap;
   ArrayList.prototype = Object.create(AbstractMutableList.prototype);
@@ -108,12 +108,14 @@
   CharacterCodingException.prototype.constructor = CharacterCodingException;
   RegexOption.prototype = Object.create(Enum.prototype);
   RegexOption.prototype.constructor = RegexOption;
-  _no_name_provided__38.prototype = Object.create(AbstractCollection.prototype);
-  _no_name_provided__38.prototype.constructor = _no_name_provided__38;
-  _no_name_provided__39.prototype = Object.create(AbstractList.prototype);
-  _no_name_provided__39.prototype.constructor = _no_name_provided__39;
+  _no_name_provided__40.prototype = Object.create(AbstractCollection.prototype);
+  _no_name_provided__40.prototype.constructor = _no_name_provided__40;
+  _no_name_provided__41.prototype = Object.create(AbstractList.prototype);
+  _no_name_provided__41.prototype.constructor = _no_name_provided__41;
   Long.prototype = Object.create(Number_0.prototype);
   Long.prototype.constructor = Long;
+  _no_name_provided__1_1.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__1_1.prototype.constructor = _no_name_provided__1_1;
   IllegalArgumentException.prototype = Object.create(RuntimeException.prototype);
   IllegalArgumentException.prototype.constructor = IllegalArgumentException;
   NoSuchElementException.prototype = Object.create(RuntimeException.prototype);
@@ -138,14 +140,36 @@
   UninitializedPropertyAccessException.prototype.constructor = UninitializedPropertyAccessException;
   None.prototype = Object.create(TraceBase.prototype);
   None.prototype.constructor = None;
+  AbstractCoroutine.prototype = Object.create(JobSupport.prototype);
+  AbstractCoroutine.prototype.constructor = AbstractCoroutine;
+  CancelHandler.prototype = Object.create(CancelHandlerBase.prototype);
+  CancelHandler.prototype.constructor = CancelHandler;
+  DisposeHandlersOnCancel.prototype = Object.create(CancelHandler.prototype);
+  DisposeHandlersOnCancel.prototype.constructor = DisposeHandlersOnCancel;
+  CompletionHandlerBase.prototype = Object.create(LinkedListNode.prototype);
+  CompletionHandlerBase.prototype.constructor = CompletionHandlerBase;
+  JobNode.prototype = Object.create(CompletionHandlerBase.prototype);
+  JobNode.prototype.constructor = JobNode;
+  AwaitAllNode.prototype = Object.create(JobNode.prototype);
+  AwaitAllNode.prototype.constructor = AwaitAllNode;
+  $awaitAllCOROUTINE$0.prototype = Object.create(CoroutineImpl_0.prototype);
+  $awaitAllCOROUTINE$0.prototype.constructor = $awaitAllCOROUTINE$0;
+  StandaloneCoroutine.prototype = Object.create(AbstractCoroutine.prototype);
+  StandaloneCoroutine.prototype.constructor = StandaloneCoroutine;
+  LazyStandaloneCoroutine.prototype = Object.create(StandaloneCoroutine.prototype);
+  LazyStandaloneCoroutine.prototype.constructor = LazyStandaloneCoroutine;
+  DeferredCoroutine.prototype = Object.create(AbstractCoroutine.prototype);
+  DeferredCoroutine.prototype.constructor = DeferredCoroutine;
+  LazyDeferredCoroutine.prototype = Object.create(DeferredCoroutine.prototype);
+  LazyDeferredCoroutine.prototype.constructor = LazyDeferredCoroutine;
   DispatchedTask.prototype = Object.create(SchedulerTask.prototype);
   DispatchedTask.prototype.constructor = DispatchedTask;
   CancellableContinuationImpl.prototype = Object.create(DispatchedTask.prototype);
   CancellableContinuationImpl.prototype.constructor = CancellableContinuationImpl;
-  CancelHandler.prototype = Object.create(CancelHandlerBase.prototype);
-  CancelHandler.prototype.constructor = CancelHandler;
   BeforeResumeCancelHandler.prototype = Object.create(CancelHandler.prototype);
   BeforeResumeCancelHandler.prototype.constructor = BeforeResumeCancelHandler;
+  InvokeOnCancel.prototype = Object.create(CancelHandler.prototype);
+  InvokeOnCancel.prototype.constructor = InvokeOnCancel;
   CompletableDeferredImpl.prototype = Object.create(JobSupport.prototype);
   CompletableDeferredImpl.prototype.constructor = CompletableDeferredImpl;
   CancelledContinuation.prototype = Object.create(CompletedExceptionally.prototype);
@@ -154,6 +178,8 @@
   Key_2.prototype.constructor = Key_2;
   CoroutineDispatcher.prototype = Object.create(AbstractCoroutineContextElement.prototype);
   CoroutineDispatcher.prototype.constructor = CoroutineDispatcher;
+  CoroutineStart.prototype = Object.create(Enum.prototype);
+  CoroutineStart.prototype.constructor = CoroutineStart;
   EventLoop.prototype = Object.create(CoroutineDispatcher.prototype);
   EventLoop.prototype.constructor = EventLoop;
   CompletionHandlerException.prototype = Object.create(RuntimeException.prototype);
@@ -164,10 +190,6 @@
   LinkedListHead.prototype.constructor = LinkedListHead;
   NodeList_0.prototype = Object.create(LinkedListHead.prototype);
   NodeList_0.prototype.constructor = NodeList_0;
-  CompletionHandlerBase.prototype = Object.create(LinkedListNode.prototype);
-  CompletionHandlerBase.prototype.constructor = CompletionHandlerBase;
-  JobNode.prototype = Object.create(CompletionHandlerBase.prototype);
-  JobNode.prototype.constructor = JobNode;
   ChildCompletion.prototype = Object.create(JobNode.prototype);
   ChildCompletion.prototype.constructor = ChildCompletion;
   JobCancellingNode.prototype = Object.create(JobNode.prototype);
@@ -180,14 +202,40 @@
   InvokeOnCompletion.prototype.constructor = InvokeOnCompletion;
   ChildContinuation.prototype = Object.create(JobCancellingNode.prototype);
   ChildContinuation.prototype.constructor = ChildContinuation;
+  MainCoroutineDispatcher.prototype = Object.create(CoroutineDispatcher.prototype);
+  MainCoroutineDispatcher.prototype.constructor = MainCoroutineDispatcher;
   TimeoutCancellationException.prototype = Object.create(CancellationException.prototype);
   TimeoutCancellationException.prototype.constructor = TimeoutCancellationException;
+  Unconfined.prototype = Object.create(CoroutineDispatcher.prototype);
+  Unconfined.prototype.constructor = Unconfined;
   DispatchedContinuation.prototype = Object.create(DispatchedTask.prototype);
   DispatchedContinuation.prototype.constructor = DispatchedContinuation;
+  ScopeCoroutine.prototype = Object.create(AbstractCoroutine.prototype);
+  ScopeCoroutine.prototype.constructor = ScopeCoroutine;
+  JsMainDispatcher.prototype = Object.create(MainCoroutineDispatcher.prototype);
+  JsMainDispatcher.prototype.constructor = JsMainDispatcher;
   UnconfinedEventLoop.prototype = Object.create(EventLoop.prototype);
   UnconfinedEventLoop.prototype.constructor = UnconfinedEventLoop;
   JobCancellationException.prototype = Object.create(CancellationException.prototype);
   JobCancellationException.prototype.constructor = JobCancellationException;
+  SetTimeoutBasedDispatcher.prototype = Object.create(CoroutineDispatcher.prototype);
+  SetTimeoutBasedDispatcher.prototype.constructor = SetTimeoutBasedDispatcher;
+  NodeDispatcher.prototype = Object.create(SetTimeoutBasedDispatcher.prototype);
+  NodeDispatcher.prototype.constructor = NodeDispatcher;
+  SetTimeoutDispatcher.prototype = Object.create(SetTimeoutBasedDispatcher.prototype);
+  SetTimeoutDispatcher.prototype.constructor = SetTimeoutDispatcher;
+  MessageQueue.prototype = Object.create(ArrayQueue.prototype);
+  MessageQueue.prototype.constructor = MessageQueue;
+  ScheduledMessageQueue.prototype = Object.create(MessageQueue.prototype);
+  ScheduledMessageQueue.prototype.constructor = ScheduledMessageQueue;
+  WindowDispatcher.prototype = Object.create(CoroutineDispatcher.prototype);
+  WindowDispatcher.prototype.constructor = WindowDispatcher;
+  WindowMessageQueue.prototype = Object.create(MessageQueue.prototype);
+  WindowMessageQueue.prototype.constructor = WindowMessageQueue;
+  StructureKind.prototype = Object.create(SerialKind.prototype);
+  StructureKind.prototype.constructor = StructureKind;
+  CLASS.prototype = Object.create(StructureKind.prototype);
+  CLASS.prototype.constructor = CLASS;
   C1.prototype = Object.create(GameVariant.prototype);
   C1.prototype.constructor = C1;
   C2.prototype = Object.create(GameVariant.prototype);
@@ -228,8 +276,8 @@
   LogLevel.prototype.constructor = LogLevel;
   Choice.prototype = Object.create(ArgType.prototype);
   Choice.prototype.constructor = Choice;
-  _no_name_provided__59.prototype = Object.create(CoroutineImpl_0.prototype);
-  _no_name_provided__59.prototype.constructor = _no_name_provided__59;
+  _no_name_provided__69.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__69.prototype.constructor = _no_name_provided__69;
   $promptOverwriteCOROUTINE$0.prototype = Object.create(CoroutineImpl_0.prototype);
   $promptOverwriteCOROUTINE$0.prototype.constructor = $promptOverwriteCOROUTINE$0;
   AppRequestTermination.prototype = Object.create(Exception.prototype);
@@ -242,26 +290,26 @@
   DayOfWeek.prototype.constructor = DayOfWeek;
   English.prototype = Object.create(KlockLocale.prototype);
   English.prototype.constructor = English;
-  Companion_16.prototype = Object.create(English.prototype);
-  Companion_16.prototype.constructor = Companion_16;
+  Companion_17.prototype = Object.create(English.prototype);
+  Companion_17.prototype.constructor = Companion_17;
   RingBuffer.prototype = Object.create(ByteRingBuffer.prototype);
   RingBuffer.prototype.constructor = RingBuffer;
   FastArrayList.prototype = Object.create(AbstractMutableList.prototype);
   FastArrayList.prototype.constructor = FastArrayList;
-  _no_name_provided__70.prototype = Object.create(KmemGCImpl.prototype);
-  _no_name_provided__70.prototype.constructor = _no_name_provided__70;
+  _no_name_provided__83.prototype = Object.create(KmemGCImpl.prototype);
+  _no_name_provided__83.prototype.constructor = _no_name_provided__83;
   Signal.prototype = Object.create(BaseSignal.prototype);
   Signal.prototype.constructor = Signal;
-  _no_name_provided__73.prototype = Object.create(AbstractCoroutineContextElement.prototype);
-  _no_name_provided__73.prototype.constructor = _no_name_provided__73;
-  _no_name_provided__75.prototype = Object.create(CoroutineImpl_0.prototype);
-  _no_name_provided__75.prototype.constructor = _no_name_provided__75;
-  _no_name_provided__76.prototype = Object.create(CoroutineImpl_0.prototype);
-  _no_name_provided__76.prototype.constructor = _no_name_provided__76;
+  _no_name_provided__86.prototype = Object.create(AbstractCoroutineContextElement.prototype);
+  _no_name_provided__86.prototype.constructor = _no_name_provided__86;
+  _no_name_provided__88.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__88.prototype.constructor = _no_name_provided__88;
+  _no_name_provided__89.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__89.prototype.constructor = _no_name_provided__89;
   $flushCOROUTINE$11.prototype = Object.create(CoroutineImpl_0.prototype);
   $flushCOROUTINE$11.prototype.constructor = $flushCOROUTINE$11;
-  Companion_29.prototype = Object.create(DeflatePortable.prototype);
-  Companion_29.prototype.constructor = Companion_29;
+  Companion_30.prototype = Object.create(DeflatePortable.prototype);
+  Companion_30.prototype.constructor = Companion_30;
   $compressCOROUTINE$9.prototype = Object.create(CoroutineImpl_0.prototype);
   $compressCOROUTINE$9.prototype.constructor = $compressCOROUTINE$9;
   $uncompressCOROUTINE$10.prototype = Object.create(CoroutineImpl_0.prototype);
@@ -270,8 +318,8 @@
   $writeCOROUTINE$19.prototype.constructor = $writeCOROUTINE$19;
   $readCOROUTINE$20.prototype = Object.create(CoroutineImpl_0.prototype);
   $readCOROUTINE$20.prototype.constructor = $readCOROUTINE$20;
-  Companion_30.prototype = Object.create(ZLib.prototype);
-  Companion_30.prototype.constructor = Companion_30;
+  Companion_31.prototype = Object.create(ZLib.prototype);
+  Companion_31.prototype.constructor = Companion_31;
   $uncompressCOROUTINE$17.prototype = Object.create(CoroutineImpl_0.prototype);
   $uncompressCOROUTINE$17.prototype.constructor = $uncompressCOROUTINE$17;
   $compressCOROUTINE$18.prototype = Object.create(CoroutineImpl_0.prototype);
@@ -284,8 +332,8 @@
   $readCOROUTINE$24.prototype.constructor = $readCOROUTINE$24;
   $getLengthCOROUTINE$27.prototype = Object.create(CoroutineImpl_0.prototype);
   $getLengthCOROUTINE$27.prototype.constructor = $getLengthCOROUTINE$27;
-  Companion_32.prototype = Object.create(KDynamic.prototype);
-  Companion_32.prototype.constructor = Companion_32;
+  Companion_33.prototype = Object.create(KDynamic.prototype);
+  Companion_33.prototype.constructor = Companion_33;
   TypeContext.prototype = Object.create(KDynamic.prototype);
   TypeContext.prototype.constructor = TypeContext;
   Proxy.prototype = Object.create(Vfs.prototype);
@@ -294,8 +342,8 @@
   VfsV2.prototype.constructor = VfsV2;
   VfsFile.prototype = Object.create(VfsNamed.prototype);
   VfsFile.prototype.constructor = VfsFile;
-  _no_name_provided__93.prototype = Object.create(Proxy.prototype);
-  _no_name_provided__93.prototype.constructor = _no_name_provided__93;
+  _no_name_provided__106.prototype = Object.create(Proxy.prototype);
+  _no_name_provided__106.prototype.constructor = _no_name_provided__106;
   MapLikeStorageVfs.prototype = Object.create(VfsV2.prototype);
   MapLikeStorageVfs.prototype.constructor = MapLikeStorageVfs;
   NodeVfs.prototype = Object.create(VfsV2.prototype);
@@ -316,8 +364,8 @@
   ASCII.prototype.constructor = ASCII;
   InvalidOperationException.prototype = Object.create(Exception.prototype);
   InvalidOperationException.prototype.constructor = InvalidOperationException;
-  _no_name_provided__103.prototype = Object.create(NativeThreadLocal.prototype);
-  _no_name_provided__103.prototype.constructor = _no_name_provided__103;
+  _no_name_provided__116.prototype = Object.create(NativeThreadLocal.prototype);
+  _no_name_provided__116.prototype.constructor = _no_name_provided__116;
   $writeCOROUTINE$134.prototype = Object.create(CoroutineImpl_0.prototype);
   $writeCOROUTINE$134.prototype.constructor = $writeCOROUTINE$134;
   $getPositionCOROUTINE$154.prototype = Object.create(CoroutineImpl_0.prototype);
@@ -348,10 +396,10 @@
   FileNotFoundException.prototype.constructor = FileNotFoundException;
   EOFException.prototype = Object.create(IOException_0.prototype);
   EOFException.prototype.constructor = EOFException;
-  _no_name_provided__140.prototype = Object.create(UTC8CharsetBase.prototype);
-  _no_name_provided__140.prototype.constructor = _no_name_provided__140;
-  _no_name_provided__141.prototype = Object.create(AsyncSocketFactory.prototype);
-  _no_name_provided__141.prototype.constructor = _no_name_provided__141;
+  _no_name_provided__153.prototype = Object.create(UTC8CharsetBase.prototype);
+  _no_name_provided__153.prototype.constructor = _no_name_provided__153;
+  _no_name_provided__154.prototype = Object.create(AsyncSocketFactory.prototype);
+  _no_name_provided__154.prototype.constructor = _no_name_provided__154;
   HttpClientBrowserJs.prototype = Object.create(HttpClient.prototype);
   HttpClientBrowserJs.prototype.constructor = HttpClientBrowserJs;
   Type.prototype = Object.create(Enum.prototype);
@@ -370,12 +418,12 @@
   BitmapSlice.prototype.constructor = BitmapSlice;
   RGB.prototype = Object.create(ColorFormat24.prototype);
   RGB.prototype.constructor = RGB;
-  Companion_56.prototype = Object.create(RGB.prototype);
-  Companion_56.prototype.constructor = Companion_56;
+  Companion_57.prototype = Object.create(RGB.prototype);
+  Companion_57.prototype.constructor = Companion_57;
   BGR.prototype = Object.create(RGB.prototype);
   BGR.prototype.constructor = BGR;
-  Companion_58.prototype = Object.create(ColorFormat32.prototype);
-  Companion_58.prototype.constructor = Companion_58;
+  Companion_59.prototype = Object.create(ColorFormat32.prototype);
+  Companion_59.prototype.constructor = Companion_59;
   TtfNativeSystemFontProvider.prototype = Object.create(NativeSystemFontProvider.prototype);
   TtfNativeSystemFontProvider.prototype.constructor = TtfNativeSystemFontProvider;
   FallbackNativeSystemFontProvider.prototype = Object.create(TtfNativeSystemFontProvider.prototype);
@@ -440,6 +488,14 @@
   SprSpriteFile.prototype.constructor = SprSpriteFile;
   SprSpriteFrame.prototype = Object.create(SpriteFrame.prototype);
   SprSpriteFrame.prototype.constructor = SprSpriteFrame;
+  _no_name_provided__210.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__210.prototype.constructor = _no_name_provided__210;
+  $framesAsyncCOROUTINE$0.prototype = Object.create(CoroutineImpl_0.prototype);
+  $framesAsyncCOROUTINE$0.prototype.constructor = $framesAsyncCOROUTINE$0;
+  $parseBLKAsyncCOROUTINE$1.prototype = Object.create(CoroutineImpl_0.prototype);
+  $parseBLKAsyncCOROUTINE$1.prototype.constructor = $parseBLKAsyncCOROUTINE$1;
+  $getStitchedAsyncCOROUTINE$2.prototype = Object.create(CoroutineImpl_0.prototype);
+  $getStitchedAsyncCOROUTINE$2.prototype.constructor = $getStitchedAsyncCOROUTINE$2;
   SpriteParserException.prototype = Object.create(Exception.prototype);
   SpriteParserException.prototype.constructor = SpriteParserException;
   SpriteParserCancelledException.prototype = Object.create(Exception.prototype);
@@ -452,6 +508,12 @@
   SpriteType.prototype.constructor = SpriteType;
   InvalidSpriteTypeException.prototype = Object.create(Exception.prototype);
   InvalidSpriteTypeException.prototype.constructor = InvalidSpriteTypeException;
+  _no_name_provided__226.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__226.prototype.constructor = _no_name_provided__226;
+  _no_name_provided__227.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__227.prototype.constructor = _no_name_provided__227;
+  _no_name_provided__230.prototype = Object.create(CoroutineImpl_0.prototype);
+  _no_name_provided__230.prototype.constructor = _no_name_provided__230;
   function toList(_this_) {
     var tmp0_subject = _this_.length;
     switch (tmp0_subject) {
@@ -461,6 +523,9 @@
         return listOf_0(_this_[0]);
       default:return toMutableList(_this_);
     }
+  }
+  function _get_indices_(_this_) {
+    return new IntRange(0, _get_lastIndex_(_this_));
   }
   function reverse(_this_) {
     var midPoint = (_this_.length / 2 | 0) - 1 | 0;
@@ -1395,23 +1460,23 @@
   function Companion_0() {
     Companion_instance = this;
   }
-  Companion_0.prototype.checkElementIndex_rvwcgf_k$ = function (index, size) {
-    if (index < 0 ? true : index >= size) {
-      throw IndexOutOfBoundsException_init_$Create$('' + 'index: ' + index + ', size: ' + size);
+  Companion_0.prototype.checkElementIndex_rvwcgf_k$ = function (index, size_0) {
+    if (index < 0 ? true : index >= size_0) {
+      throw IndexOutOfBoundsException_init_$Create$('' + 'index: ' + index + ', size: ' + size_0);
     }};
-  Companion_0.prototype.checkPositionIndex_rvwcgf_k$ = function (index, size) {
-    if (index < 0 ? true : index > size) {
-      throw IndexOutOfBoundsException_init_$Create$('' + 'index: ' + index + ', size: ' + size);
+  Companion_0.prototype.checkPositionIndex_rvwcgf_k$ = function (index, size_0) {
+    if (index < 0 ? true : index > size_0) {
+      throw IndexOutOfBoundsException_init_$Create$('' + 'index: ' + index + ', size: ' + size_0);
     }};
-  Companion_0.prototype.checkRangeIndexes_zd700_k$ = function (fromIndex, toIndex, size) {
-    if (fromIndex < 0 ? true : toIndex > size) {
-      throw IndexOutOfBoundsException_init_$Create$('' + 'fromIndex: ' + fromIndex + ', toIndex: ' + toIndex + ', size: ' + size);
+  Companion_0.prototype.checkRangeIndexes_zd700_k$ = function (fromIndex, toIndex, size_0) {
+    if (fromIndex < 0 ? true : toIndex > size_0) {
+      throw IndexOutOfBoundsException_init_$Create$('' + 'fromIndex: ' + fromIndex + ', toIndex: ' + toIndex + ', size: ' + size_0);
     }if (fromIndex > toIndex) {
       throw IllegalArgumentException_init_$Create$('' + 'fromIndex: ' + fromIndex + ' > toIndex: ' + toIndex);
     }};
-  Companion_0.prototype.checkBoundsIndexes_zd700_k$ = function (startIndex, endIndex, size) {
-    if (startIndex < 0 ? true : endIndex > size) {
-      throw IndexOutOfBoundsException_init_$Create$('' + 'startIndex: ' + startIndex + ', endIndex: ' + endIndex + ', size: ' + size);
+  Companion_0.prototype.checkBoundsIndexes_zd700_k$ = function (startIndex, endIndex, size_0) {
+    if (startIndex < 0 ? true : endIndex > size_0) {
+      throw IndexOutOfBoundsException_init_$Create$('' + 'startIndex: ' + startIndex + ', endIndex: ' + endIndex + ', size: ' + size_0);
     }if (startIndex > endIndex) {
       throw IllegalArgumentException_init_$Create$('' + 'startIndex: ' + startIndex + ' > endIndex: ' + endIndex);
     }};
@@ -1834,7 +1899,7 @@
   function arrayListOf(elements) {
     return elements.length === 0 ? ArrayList_init_$Create$() : ArrayList_init_$Create$_1(new ArrayAsCollection(elements, true));
   }
-  function _get_indices_(_this_) {
+  function _get_indices__0(_this_) {
     return numberRangeToNumber(0, _this_._get_size__0_k$() - 1 | 0);
   }
   function optimizeReadOnlyList(_this_) {
@@ -2350,6 +2415,20 @@
     kind: 'interface',
     interfaces: []
   };
+  function startCoroutine(_this_, receiver, completion) {
+    var tmp$ret$1;
+    $l$block_0: {
+      var tmp0_resume_0 = intercepted(createCoroutineUnintercepted(_this_, receiver, completion));
+      var tmp$ret$0;
+      $l$block: {
+        var tmp0_success_0_1 = Companion_getInstance_2();
+        tmp$ret$0 = _Result___init__impl_(Unit_getInstance());
+        break $l$block;
+      }
+      tmp$ret$1 = tmp0_resume_0.resumeWith_bnunh2_k$(tmp$ret$0);
+      break $l$block_0;
+    }
+  }
   function Key_0() {
     Key_instance = this;
   }
@@ -2388,6 +2467,13 @@
     }
     return tmp_1;
   };
+  ContinuationInterceptor.prototype.minusKey_djuxjq_k$ = function (key) {
+    if (key instanceof AbstractCoroutineContextKey) {
+      return (key.isSubKey_djuxjq_k$(this._get_key__0_k$()) ? !(key.tryCast_k332zt_k$(this) == null) : false) ? EmptyCoroutineContext_getInstance() : this;
+    } else {
+    }
+    return Key_getInstance() === key ? EmptyCoroutineContext_getInstance() : this;
+  };
   ContinuationInterceptor.$metadata$ = {
     simpleName: 'ContinuationInterceptor',
     kind: 'interface',
@@ -2411,17 +2497,245 @@
     }
     return tmp;
   };
+  Element_0.prototype.fold_cq605b_k$ = function (initial, operation) {
+    return operation(initial, this);
+  };
+  Element_0.prototype.minusKey_djuxjq_k$ = function (key) {
+    return equals_1(this._get_key__0_k$(), key) ? EmptyCoroutineContext_getInstance() : this;
+  };
   Element_0.$metadata$ = {
     simpleName: 'Element',
     kind: 'interface',
     interfaces: [CoroutineContext]
   };
+  function _no_name_provided__5() {
+  }
+  _no_name_provided__5.prototype.invoke_2v6pkd_k$ = function (acc, element) {
+    var removed = acc.minusKey_djuxjq_k$(element._get_key__0_k$());
+    var tmp;
+    if (removed === EmptyCoroutineContext_getInstance()) {
+      tmp = element;
+    } else {
+      var interceptor = removed.get_9uvjra_k$(Key_getInstance());
+      var tmp_0;
+      if (interceptor == null) {
+        tmp_0 = new CombinedContext(removed, element);
+      } else {
+        var left = removed.minusKey_djuxjq_k$(Key_getInstance());
+        tmp_0 = left === EmptyCoroutineContext_getInstance() ? new CombinedContext(element, interceptor) : new CombinedContext(new CombinedContext(left, element), interceptor);
+      }
+      tmp = tmp_0;
+    }
+    return tmp;
+  };
+  _no_name_provided__5.prototype.invoke_osx4an_k$ = function (p1, p2) {
+    var tmp = (!(p1 == null) ? isInterface(p1, CoroutineContext) : false) ? p1 : THROW_CCE();
+    return this.invoke_2v6pkd_k$(tmp, (!(p2 == null) ? isInterface(p2, Element_0) : false) ? p2 : THROW_CCE());
+  };
+  _no_name_provided__5.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
   function CoroutineContext() {
   }
+  CoroutineContext.prototype.plus_d7pszg_k$ = function (context) {
+    var tmp;
+    if (context === EmptyCoroutineContext_getInstance()) {
+      tmp = this;
+    } else {
+      tmp = context.fold_cq605b_k$(this, _no_name_provided_$factory_1());
+    }
+    return tmp;
+  };
   CoroutineContext.$metadata$ = {
     simpleName: 'CoroutineContext',
     kind: 'interface',
     interfaces: []
+  };
+  function _no_name_provided_$factory_1() {
+    var i = new _no_name_provided__5();
+    return function (p1, p2) {
+      return i.invoke_2v6pkd_k$(p1, p2);
+    };
+  }
+  function EmptyCoroutineContext() {
+    EmptyCoroutineContext_instance = this;
+    this._serialVersionUID_2 = new Long(0, 0);
+  }
+  EmptyCoroutineContext.prototype.get_9uvjra_k$ = function (key) {
+    return null;
+  };
+  EmptyCoroutineContext.prototype.fold_cq605b_k$ = function (initial, operation) {
+    return initial;
+  };
+  EmptyCoroutineContext.prototype.plus_d7pszg_k$ = function (context) {
+    return context;
+  };
+  EmptyCoroutineContext.prototype.minusKey_djuxjq_k$ = function (key) {
+    return this;
+  };
+  EmptyCoroutineContext.prototype.hashCode = function () {
+    return 0;
+  };
+  EmptyCoroutineContext.prototype.toString = function () {
+    return 'EmptyCoroutineContext';
+  };
+  EmptyCoroutineContext.$metadata$ = {
+    simpleName: 'EmptyCoroutineContext',
+    kind: 'object',
+    interfaces: [CoroutineContext, Serializable]
+  };
+  var EmptyCoroutineContext_instance;
+  function EmptyCoroutineContext_getInstance() {
+    if (EmptyCoroutineContext_instance == null)
+      new EmptyCoroutineContext();
+    return EmptyCoroutineContext_instance;
+  }
+  function size($this) {
+    var cur = $this;
+    var size_0 = 2;
+    while (true) {
+      var tmp = cur._left;
+      var tmp0_elvis_lhs = tmp instanceof CombinedContext ? tmp : null;
+      var tmp_0;
+      if (tmp0_elvis_lhs == null) {
+        return size_0;
+      } else {
+        tmp_0 = tmp0_elvis_lhs;
+      }
+      cur = tmp_0;
+      var tmp1 = size_0;
+      size_0 = tmp1 + 1 | 0;
+      Unit_getInstance();
+    }
+  }
+  function contains_2($this, element) {
+    return equals_1($this.get_9uvjra_k$(element._get_key__0_k$()), element);
+  }
+  function containsAll($this, context) {
+    var cur = context;
+    while (true) {
+      if (!contains_2($this, cur._element))
+        return false;
+      var next = cur._left;
+      if (next instanceof CombinedContext) {
+        cur = next;
+      } else {
+        {
+          return contains_2($this, isInterface(next, Element_0) ? next : THROW_CCE());
+        }
+      }
+    }
+  }
+  function _no_name_provided__6() {
+  }
+  _no_name_provided__6.prototype.invoke_mz4o2y_k$ = function (acc, element) {
+    var tmp;
+    var tmp$ret$0;
+    $l$block: {
+      tmp$ret$0 = charSequenceLength(acc) === 0;
+      break $l$block;
+    }
+    if (tmp$ret$0) {
+      tmp = toString_3(element);
+    } else {
+      {
+        tmp = '' + acc + ', ' + element;
+      }
+    }
+    return tmp;
+  };
+  _no_name_provided__6.prototype.invoke_osx4an_k$ = function (p1, p2) {
+    var tmp = (!(p1 == null) ? typeof p1 === 'string' : false) ? p1 : THROW_CCE();
+    return this.invoke_mz4o2y_k$(tmp, (!(p2 == null) ? isInterface(p2, Element_0) : false) ? p2 : THROW_CCE());
+  };
+  _no_name_provided__6.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function CombinedContext(left, element) {
+    this._left = left;
+    this._element = element;
+  }
+  CombinedContext.prototype.get_9uvjra_k$ = function (key) {
+    var cur = this;
+    while (true) {
+      var tmp0_safe_receiver = cur._element.get_9uvjra_k$(key);
+      if (tmp0_safe_receiver == null)
+        null;
+      else {
+        var tmp$ret$0;
+        {
+          {
+          }
+          return tmp0_safe_receiver;
+        }
+      }
+      Unit_getInstance();
+      var next = cur._left;
+      if (next instanceof CombinedContext) {
+        cur = next;
+      } else {
+        {
+          return next.get_9uvjra_k$(key);
+        }
+      }
+    }
+  };
+  CombinedContext.prototype.fold_cq605b_k$ = function (initial, operation) {
+    return operation(this._left.fold_cq605b_k$(initial, operation), this._element);
+  };
+  CombinedContext.prototype.minusKey_djuxjq_k$ = function (key) {
+    var tmp0_safe_receiver = this._element.get_9uvjra_k$(key);
+    if (tmp0_safe_receiver == null)
+      null;
+    else {
+      var tmp$ret$0;
+      {
+        {
+        }
+        return this._left;
+      }
+    }
+    Unit_getInstance();
+    var newLeft = this._left.minusKey_djuxjq_k$(key);
+    return newLeft === this._left ? this : newLeft === EmptyCoroutineContext_getInstance() ? this._element : new CombinedContext(newLeft, this._element);
+  };
+  CombinedContext.prototype.equals = function (other) {
+    var tmp;
+    if (this === other) {
+      tmp = true;
+    } else {
+      var tmp_0;
+      var tmp_1;
+      if (other instanceof CombinedContext) {
+        tmp_1 = size(other) === size(this);
+      } else {
+        {
+          tmp_1 = false;
+        }
+      }
+      if (tmp_1) {
+        tmp_0 = containsAll(other, this);
+      } else {
+        {
+          tmp_0 = false;
+        }
+      }
+      tmp = tmp_0;
+    }
+    return tmp;
+  };
+  CombinedContext.prototype.hashCode = function () {
+    return hashCode(this._left) + hashCode(this._element) | 0;
+  };
+  CombinedContext.prototype.toString = function () {
+    return '[' + this.fold_cq605b_k$('', _no_name_provided_$factory_2()) + ']';
+  };
+  CombinedContext.$metadata$ = {
+    simpleName: 'CombinedContext',
+    kind: 'class',
+    interfaces: [CoroutineContext, Serializable]
   };
   function AbstractCoroutineContextKey(baseKey, safeCast) {
     this._safeCast = safeCast;
@@ -2458,6 +2772,12 @@
     kind: 'class',
     interfaces: [Element_0]
   };
+  function _no_name_provided_$factory_2() {
+    var i = new _no_name_provided__6();
+    return function (p1, p2) {
+      return i.invoke_mz4o2y_k$(p1, p2);
+    };
+  }
   function _get_COROUTINE_SUSPENDED_() {
     return CoroutineSingletons_COROUTINE_SUSPENDED_getInstance();
   }
@@ -2955,13 +3275,13 @@
       ignoreCase = false;
     return indexOf_4(_this_, string, startIndex, ignoreCase);
   }
-  function contains_2(_this_, char, ignoreCase) {
+  function contains_3(_this_, char, ignoreCase) {
     return indexOf$default(_this_, char, 0, ignoreCase, 2, null) >= 0;
   }
   function contains$default(_this_, char, ignoreCase, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
       ignoreCase = false;
-    return contains_2(_this_, char, ignoreCase);
+    return contains_3(_this_, char, ignoreCase);
   }
   function lineSequence(_this_) {
     return splitToSequence$default(_this_, ['\r\n', '\n', '\r'], false, 0, 6, null);
@@ -3074,7 +3394,7 @@
       ignoreCase = false;
     return lastIndexOf(_this_, char, startIndex, ignoreCase);
   }
-  function contains_3(_this_, other, ignoreCase) {
+  function contains_4(_this_, other, ignoreCase) {
     var tmp;
     if (typeof other === 'string') {
       tmp = indexOf$default_0(_this_, other, 0, ignoreCase, 2, null) >= 0;
@@ -3089,7 +3409,7 @@
   function contains$default_0(_this_, other, ignoreCase, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
       ignoreCase = false;
-    return contains_3(_this_, other, ignoreCase);
+    return contains_4(_this_, other, ignoreCase);
   }
   function trim(_this_) {
     var tmp$ret$0;
@@ -3157,7 +3477,7 @@
   }
   function rangesDelimitedBy(_this_, delimiters, startIndex, ignoreCase, limit) {
     requireNonNegativeLimit(limit);
-    return new DelimitedRangesSequence(_this_, startIndex, limit, _no_name_provided_$factory_1(delimiters, ignoreCase));
+    return new DelimitedRangesSequence(_this_, startIndex, limit, _no_name_provided_$factory_3(delimiters, ignoreCase));
   }
   function rangesDelimitedBy$default(_this_, delimiters, startIndex, ignoreCase, limit, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
@@ -3171,7 +3491,7 @@
   function rangesDelimitedBy_0(_this_, delimiters, startIndex, ignoreCase, limit) {
     requireNonNegativeLimit(limit);
     var delimitersList = asList(delimiters);
-    return new DelimitedRangesSequence(_this_, startIndex, limit, _no_name_provided_$factory_2(delimitersList, ignoreCase));
+    return new DelimitedRangesSequence(_this_, startIndex, limit, _no_name_provided_$factory_4(delimitersList, ignoreCase));
   }
   function rangesDelimitedBy$default_0(_this_, delimiters, startIndex, ignoreCase, limit, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
@@ -3294,7 +3614,7 @@
   }
   function splitToSequence(_this_, delimiters, ignoreCase, limit) {
     var tmp = rangesDelimitedBy$default_0(_this_, delimiters, 0, ignoreCase, limit, 2, null);
-    return map(tmp, _no_name_provided_$factory_3(_this_));
+    return map(tmp, _no_name_provided_$factory_5(_this_));
   }
   function splitToSequence$default(_this_, delimiters, ignoreCase, limit, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
@@ -3440,7 +3760,7 @@
       $this._nextState = 1;
     }
   }
-  function _no_name_provided__5(this$0) {
+  function _no_name_provided__7(this$0) {
     this._this$0_3 = this$0;
     this._nextState = -1;
     this._currentStartIndex = coerceIn(this._this$0_3._startIndex, 0, charSequenceLength(this._this$0_3._input));
@@ -3448,7 +3768,7 @@
     this._nextItem = null;
     this._counter = 0;
   }
-  _no_name_provided__5.prototype.next_0_k$ = function () {
+  _no_name_provided__7.prototype.next_0_k$ = function () {
     if (this._nextState === -1)
       calcNext(this);
     if (this._nextState === 0)
@@ -3459,12 +3779,12 @@
     this._nextState = -1;
     return result;
   };
-  _no_name_provided__5.prototype.hasNext_0_k$ = function () {
+  _no_name_provided__7.prototype.hasNext_0_k$ = function () {
     if (this._nextState === -1)
       calcNext(this);
     return this._nextState === 1;
   };
-  _no_name_provided__5.$metadata$ = {
+  _no_name_provided__7.$metadata$ = {
     kind: 'class',
     interfaces: [Iterator_0]
   };
@@ -3475,7 +3795,7 @@
     this._getNextMatch = getNextMatch;
   }
   DelimitedRangesSequence.prototype.iterator_0_k$ = function () {
-    return new _no_name_provided__5(this);
+    return new _no_name_provided__7(this);
   };
   DelimitedRangesSequence.$metadata$ = {
     simpleName: 'DelimitedRangesSequence',
@@ -3639,11 +3959,11 @@
     }
     return tmp$ret$0;
   }
-  function _no_name_provided__6($delimiters, $ignoreCase) {
+  function _no_name_provided__8($delimiters, $ignoreCase) {
     this._$delimiters = $delimiters;
     this._$ignoreCase = $ignoreCase;
   }
-  _no_name_provided__6.prototype.invoke_w2qdfo_k$ = function ($this$$receiver, currentIndex) {
+  _no_name_provided__8.prototype.invoke_w2qdfo_k$ = function ($this$$receiver, currentIndex) {
     var tmp$ret$1;
     $l$block_0: {
       var tmp0_let_0 = indexOfAny($this$$receiver, this._$delimiters, currentIndex, this._$ignoreCase);
@@ -3659,19 +3979,19 @@
     }
     return tmp$ret$1;
   };
-  _no_name_provided__6.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__8.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? isCharSequence(p1) : false) ? p1 : THROW_CCE();
     return this.invoke_w2qdfo_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__6.$metadata$ = {
+  _no_name_provided__8.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__7($delimitersList, $ignoreCase) {
+  function _no_name_provided__9($delimitersList, $ignoreCase) {
     this._$delimitersList = $delimitersList;
     this._$ignoreCase_0 = $ignoreCase;
   }
-  _no_name_provided__7.prototype.invoke_w2qdfo_k$ = function ($this$$receiver, currentIndex) {
+  _no_name_provided__9.prototype.invoke_w2qdfo_k$ = function ($this$$receiver, currentIndex) {
     var tmp0_safe_receiver = findAnyOf($this$$receiver, this._$delimitersList, currentIndex, this._$ignoreCase_0, false);
     var tmp;
     if (tmp0_safe_receiver == null) {
@@ -3693,41 +4013,41 @@
     }
     return tmp;
   };
-  _no_name_provided__7.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__9.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? isCharSequence(p1) : false) ? p1 : THROW_CCE();
     return this.invoke_w2qdfo_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__7.$metadata$ = {
+  _no_name_provided__9.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__8($this_splitToSequence) {
+  function _no_name_provided__10($this_splitToSequence) {
     this._$this_splitToSequence = $this_splitToSequence;
   }
-  _no_name_provided__8.prototype.invoke_em8bnc_k$ = function (it) {
+  _no_name_provided__10.prototype.invoke_em8bnc_k$ = function (it) {
     return substring(this._$this_splitToSequence, it);
   };
-  _no_name_provided__8.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__10.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_em8bnc_k$(p1 instanceof IntRange ? p1 : THROW_CCE());
   };
-  _no_name_provided__8.$metadata$ = {
+  _no_name_provided__10.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_1($delimiters, $ignoreCase) {
-    var i = new _no_name_provided__6($delimiters, $ignoreCase);
+  function _no_name_provided_$factory_3($delimiters, $ignoreCase) {
+    var i = new _no_name_provided__8($delimiters, $ignoreCase);
     return function (p1, p2) {
       return i.invoke_w2qdfo_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_2($delimitersList, $ignoreCase) {
-    var i = new _no_name_provided__7($delimitersList, $ignoreCase);
+  function _no_name_provided_$factory_4($delimitersList, $ignoreCase) {
+    var i = new _no_name_provided__9($delimitersList, $ignoreCase);
     return function (p1, p2) {
       return i.invoke_w2qdfo_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_3($this_splitToSequence) {
-    var i = new _no_name_provided__8($this_splitToSequence);
+  function _no_name_provided_$factory_5($this_splitToSequence) {
+    var i = new _no_name_provided__10($this_splitToSequence);
     return function (p1) {
       return i.invoke_em8bnc_k$(p1);
     };
@@ -3976,8 +4296,8 @@
   function _UByteArray___get_storage__impl_(this_0) {
     return this_0;
   }
-  function _UByteArray___init__impl__0(size) {
-    var tmp = _UByteArray___init__impl_(new Int8Array(size));
+  function _UByteArray___init__impl__0(size_0) {
+    var tmp = _UByteArray___init__impl_(new Int8Array(size_0));
     return tmp;
   }
   function UByteArray__get_impl(this_0, index) {
@@ -4066,6 +4386,13 @@
       quotient = tmp$ret$3;
     }return toString_4(quotient, base) + toString_4(rem, base);
   }
+  function Annotation() {
+  }
+  Annotation.$metadata$ = {
+    simpleName: 'Annotation',
+    kind: 'interface',
+    interfaces: []
+  };
   function CharSequence() {
   }
   CharSequence.$metadata$ = {
@@ -4877,29 +5204,29 @@
     kind: 'class',
     interfaces: [MutableList]
   };
-  function _no_name_provided__9($entryIterator) {
+  function _no_name_provided__11($entryIterator) {
     this._$entryIterator_0 = $entryIterator;
   }
-  _no_name_provided__9.prototype.hasNext_0_k$ = function () {
+  _no_name_provided__11.prototype.hasNext_0_k$ = function () {
     return this._$entryIterator_0.hasNext_0_k$();
   };
-  _no_name_provided__9.prototype.next_0_k$ = function () {
+  _no_name_provided__11.prototype.next_0_k$ = function () {
     return this._$entryIterator_0.next_0_k$()._get_key__0_k$();
   };
-  _no_name_provided__9.$metadata$ = {
+  _no_name_provided__11.$metadata$ = {
     kind: 'class',
     interfaces: [MutableIterator]
   };
-  function _no_name_provided__10($entryIterator) {
+  function _no_name_provided__12($entryIterator) {
     this._$entryIterator_1 = $entryIterator;
   }
-  _no_name_provided__10.prototype.hasNext_0_k$ = function () {
+  _no_name_provided__12.prototype.hasNext_0_k$ = function () {
     return this._$entryIterator_1.hasNext_0_k$();
   };
-  _no_name_provided__10.prototype.next_0_k$ = function () {
+  _no_name_provided__12.prototype.next_0_k$ = function () {
     return this._$entryIterator_1.next_0_k$()._get_value__0_k$();
   };
-  _no_name_provided__10.$metadata$ = {
+  _no_name_provided__12.$metadata$ = {
     kind: 'class',
     interfaces: [MutableIterator]
   };
@@ -4943,68 +5270,68 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__11(this$0) {
+  function _no_name_provided__13(this$0) {
     this._this$0_4 = this$0;
     AbstractMutableSet.call(this);
   }
-  _no_name_provided__11.prototype.add_2bw_k$ = function (element) {
+  _no_name_provided__13.prototype.add_2bw_k$ = function (element) {
     throw UnsupportedOperationException_init_$Create$_0('Add is not supported on keys');
   };
-  _no_name_provided__11.prototype.add_2bq_k$ = function (element) {
+  _no_name_provided__13.prototype.add_2bq_k$ = function (element) {
     return this.add_2bw_k$((element == null ? true : isObject(element)) ? element : THROW_CCE());
   };
-  _no_name_provided__11.prototype.contains_2bw_k$ = function (element) {
+  _no_name_provided__13.prototype.contains_2bw_k$ = function (element) {
     return this._this$0_4.containsKey_2bw_k$(element);
   };
-  _no_name_provided__11.prototype.contains_2bq_k$ = function (element) {
+  _no_name_provided__13.prototype.contains_2bq_k$ = function (element) {
     if (!(element == null ? true : isObject(element)))
       return false;
     else {
     }
     return this.contains_2bw_k$((element == null ? true : isObject(element)) ? element : THROW_CCE());
   };
-  _no_name_provided__11.prototype.iterator_0_k$ = function () {
+  _no_name_provided__13.prototype.iterator_0_k$ = function () {
     var entryIterator = this._this$0_4._get_entries__0_k$().iterator_0_k$();
-    return new _no_name_provided__9(entryIterator);
+    return new _no_name_provided__11(entryIterator);
   };
-  _no_name_provided__11.prototype._get_size__0_k$ = function () {
+  _no_name_provided__13.prototype._get_size__0_k$ = function () {
     return this._this$0_4._get_size__0_k$();
   };
-  _no_name_provided__11.prototype.checkIsMutable_sv8swh_k$ = function () {
+  _no_name_provided__13.prototype.checkIsMutable_sv8swh_k$ = function () {
     return this._this$0_4.checkIsMutable_sv8swh_k$();
   };
-  _no_name_provided__11.$metadata$ = {
+  _no_name_provided__13.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__12(this$0) {
+  function _no_name_provided__14(this$0) {
     this._this$0_5 = this$0;
     AbstractMutableCollection.call(this);
   }
-  _no_name_provided__12.prototype.add_2c7_k$ = function (element) {
+  _no_name_provided__14.prototype.add_2c7_k$ = function (element) {
     throw UnsupportedOperationException_init_$Create$_0('Add is not supported on values');
   };
-  _no_name_provided__12.prototype.add_2bq_k$ = function (element) {
+  _no_name_provided__14.prototype.add_2bq_k$ = function (element) {
     return this.add_2c7_k$((element == null ? true : isObject(element)) ? element : THROW_CCE());
   };
-  _no_name_provided__12.prototype.contains_2c7_k$ = function (element) {
+  _no_name_provided__14.prototype.contains_2c7_k$ = function (element) {
     return this._this$0_5.containsValue_2c7_k$(element);
   };
-  _no_name_provided__12.prototype.contains_2bq_k$ = function (element) {
+  _no_name_provided__14.prototype.contains_2bq_k$ = function (element) {
     if (!(element == null ? true : isObject(element)))
       return false;
     else {
     }
     return this.contains_2c7_k$((element == null ? true : isObject(element)) ? element : THROW_CCE());
   };
-  _no_name_provided__12.prototype.iterator_0_k$ = function () {
+  _no_name_provided__14.prototype.iterator_0_k$ = function () {
     var entryIterator = this._this$0_5._get_entries__0_k$().iterator_0_k$();
-    return new _no_name_provided__10(entryIterator);
+    return new _no_name_provided__12(entryIterator);
   };
-  _no_name_provided__12.prototype._get_size__0_k$ = function () {
+  _no_name_provided__14.prototype._get_size__0_k$ = function () {
     return this._this$0_5._get_size__0_k$();
   };
-  _no_name_provided__12.prototype.equals = function (other) {
+  _no_name_provided__14.prototype.equals = function (other) {
     if (this === other)
       return true;
     if (!(!(other == null) ? isInterface(other, Collection) : false))
@@ -5013,13 +5340,13 @@
     }
     return Companion_getInstance().orderedEquals_tuq55s_k$(this, other);
   };
-  _no_name_provided__12.prototype.hashCode = function () {
+  _no_name_provided__14.prototype.hashCode = function () {
     return Companion_getInstance().orderedHashCode_dxd51x_k$(this);
   };
-  _no_name_provided__12.prototype.checkIsMutable_sv8swh_k$ = function () {
+  _no_name_provided__14.prototype.checkIsMutable_sv8swh_k$ = function () {
     return this._this$0_5.checkIsMutable_sv8swh_k$();
   };
-  _no_name_provided__12.$metadata$ = {
+  _no_name_provided__14.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -5031,13 +5358,13 @@
   AbstractMutableMap.prototype._get_keys__0_k$ = function () {
     if (this.__keys_0 == null) {
       var tmp = this;
-      tmp.__keys_0 = new _no_name_provided__11(this);
+      tmp.__keys_0 = new _no_name_provided__13(this);
     }return ensureNotNull(this.__keys_0);
   };
   AbstractMutableMap.prototype._get_values__0_k$ = function () {
     if (this.__values_0 == null) {
       var tmp = this;
-      tmp.__values_0 = new _no_name_provided__12(this);
+      tmp.__values_0 = new _no_name_provided__14(this);
     }return ensureNotNull(this.__values_0);
   };
   AbstractMutableMap.prototype.checkIsMutable_sv8swh_k$ = function () {
@@ -5298,7 +5625,7 @@
   var _stableSortingIsSupported;
   function sortArrayWith(array, comparator) {
     if (getStableSortingIsSupported()) {
-      var comparison = _no_name_provided_$factory_4(comparator);
+      var comparison = _no_name_provided_$factory_6(comparator);
       var tmp$ret$0;
       $l$block: {
         tmp$ret$0 = array;
@@ -5353,7 +5680,7 @@
         tmp$ret$2.push(index);
       }
        while (inductionVariable < 600);
-    var comparison = _no_name_provided_$factory_5();
+    var comparison = _no_name_provided_$factory_7();
     var tmp$ret$3;
     $l$block_1: {
       tmp$ret$3 = array;
@@ -5449,41 +5776,41 @@
        while (!(i === end));
     return target;
   }
-  function _no_name_provided__13($comparator) {
+  function _no_name_provided__15($comparator) {
     this._$comparator = $comparator;
   }
-  _no_name_provided__13.prototype.invoke_1qgdm_k$ = function (a, b) {
+  _no_name_provided__15.prototype.invoke_1qgdm_k$ = function (a, b) {
     return this._$comparator.compare(a, b);
   };
-  _no_name_provided__13.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__15.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE();
     return this.invoke_1qgdm_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__13.$metadata$ = {
+  _no_name_provided__15.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__14() {
+  function _no_name_provided__16() {
   }
-  _no_name_provided__14.prototype.invoke_27zxwg_k$ = function (a, b) {
+  _no_name_provided__16.prototype.invoke_27zxwg_k$ = function (a, b) {
     return (a & 3) - (b & 3) | 0;
   };
-  _no_name_provided__14.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__16.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__14.$metadata$ = {
+  _no_name_provided__16.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_4($comparator) {
-    var i = new _no_name_provided__13($comparator);
+  function _no_name_provided_$factory_6($comparator) {
+    var i = new _no_name_provided__15($comparator);
     return function (p1, p2) {
       return i.invoke_1qgdm_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_5() {
-    var i = new _no_name_provided__14();
+  function _no_name_provided_$factory_7() {
+    var i = new _no_name_provided__16();
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
@@ -5790,7 +6117,7 @@
     var chainOrEntry = $this._backingMap[hashCode_1];
     return chainOrEntry === undefined ? null : chainOrEntry;
   }
-  function _no_name_provided__15(this$0) {
+  function _no_name_provided__17(this$0) {
     this._this$0_6 = this$0;
     this._state = -1;
     this._keys = Object.keys(this._this$0_6._backingMap);
@@ -5800,12 +6127,12 @@
     this._itemIndex = -1;
     this._lastEntry = null;
   }
-  _no_name_provided__15.prototype.hasNext_0_k$ = function () {
+  _no_name_provided__17.prototype.hasNext_0_k$ = function () {
     if (this._state === -1)
       this._state = computeNext(this);
     return this._state === 0;
   };
-  _no_name_provided__15.prototype.next_0_k$ = function () {
+  _no_name_provided__17.prototype.next_0_k$ = function () {
     if (!this.hasNext_0_k$())
       throw NoSuchElementException_init_$Create$();
     var tmp;
@@ -5831,7 +6158,7 @@
     this._state = -1;
     return lastEntry;
   };
-  _no_name_provided__15.$metadata$ = {
+  _no_name_provided__17.$metadata$ = {
     kind: 'class',
     interfaces: [MutableIterator]
   };
@@ -5969,7 +6296,7 @@
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver._get_value__0_k$();
   };
   InternalHashCodeMap.prototype.iterator_0_k$ = function () {
-    return new _no_name_provided__15(this);
+    return new _no_name_provided__17(this);
   };
   InternalHashCodeMap.$metadata$ = {
     simpleName: 'InternalHashCodeMap',
@@ -6520,34 +6847,10 @@
     interfaces: [KCallable]
   };
   var functionClasses;
-  function _no_name_provided__16() {
-  }
-  _no_name_provided__16.prototype.invoke_wi7j7l_k$ = function (it) {
-    return isObject(it);
-  };
-  _no_name_provided__16.prototype.invoke_20e8_k$ = function (p1) {
-    return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
-  };
-  _no_name_provided__16.$metadata$ = {
-    kind: 'class',
-    interfaces: []
-  };
-  function _no_name_provided__17() {
-  }
-  _no_name_provided__17.prototype.invoke_wi7j7l_k$ = function (it) {
-    return isNumber(it);
-  };
-  _no_name_provided__17.prototype.invoke_20e8_k$ = function (p1) {
-    return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
-  };
-  _no_name_provided__17.$metadata$ = {
-    kind: 'class',
-    interfaces: []
-  };
   function _no_name_provided__18() {
   }
   _no_name_provided__18.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? typeof it === 'boolean' : false;
+    return isObject(it);
   };
   _no_name_provided__18.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6559,7 +6862,7 @@
   function _no_name_provided__19() {
   }
   _no_name_provided__19.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? typeof it === 'number' : false;
+    return isNumber(it);
   };
   _no_name_provided__19.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6571,7 +6874,7 @@
   function _no_name_provided__20() {
   }
   _no_name_provided__20.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? typeof it === 'number' : false;
+    return !(it == null) ? typeof it === 'boolean' : false;
   };
   _no_name_provided__20.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6619,7 +6922,7 @@
   function _no_name_provided__24() {
   }
   _no_name_provided__24.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? isArray(it) : false;
+    return !(it == null) ? typeof it === 'number' : false;
   };
   _no_name_provided__24.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6631,7 +6934,7 @@
   function _no_name_provided__25() {
   }
   _no_name_provided__25.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? typeof it === 'string' : false;
+    return !(it == null) ? typeof it === 'number' : false;
   };
   _no_name_provided__25.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6643,7 +6946,7 @@
   function _no_name_provided__26() {
   }
   _no_name_provided__26.prototype.invoke_wi7j7l_k$ = function (it) {
-    return it instanceof Error;
+    return !(it == null) ? isArray(it) : false;
   };
   _no_name_provided__26.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6655,7 +6958,7 @@
   function _no_name_provided__27() {
   }
   _no_name_provided__27.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? isBooleanArray(it) : false;
+    return !(it == null) ? typeof it === 'string' : false;
   };
   _no_name_provided__27.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6667,7 +6970,7 @@
   function _no_name_provided__28() {
   }
   _no_name_provided__28.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? isCharArray(it) : false;
+    return it instanceof Error;
   };
   _no_name_provided__28.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6679,7 +6982,7 @@
   function _no_name_provided__29() {
   }
   _no_name_provided__29.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? isByteArray(it) : false;
+    return !(it == null) ? isBooleanArray(it) : false;
   };
   _no_name_provided__29.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6691,7 +6994,7 @@
   function _no_name_provided__30() {
   }
   _no_name_provided__30.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? isShortArray(it) : false;
+    return !(it == null) ? isCharArray(it) : false;
   };
   _no_name_provided__30.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6703,7 +7006,7 @@
   function _no_name_provided__31() {
   }
   _no_name_provided__31.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? isIntArray(it) : false;
+    return !(it == null) ? isByteArray(it) : false;
   };
   _no_name_provided__31.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6715,7 +7018,7 @@
   function _no_name_provided__32() {
   }
   _no_name_provided__32.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? isLongArray(it) : false;
+    return !(it == null) ? isShortArray(it) : false;
   };
   _no_name_provided__32.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6727,7 +7030,7 @@
   function _no_name_provided__33() {
   }
   _no_name_provided__33.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? isFloatArray(it) : false;
+    return !(it == null) ? isIntArray(it) : false;
   };
   _no_name_provided__33.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6739,7 +7042,7 @@
   function _no_name_provided__34() {
   }
   _no_name_provided__34.prototype.invoke_wi7j7l_k$ = function (it) {
-    return !(it == null) ? isDoubleArray(it) : false;
+    return !(it == null) ? isLongArray(it) : false;
   };
   _no_name_provided__34.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
@@ -6748,10 +7051,34 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__35($arity) {
-    this._$arity = $arity;
+  function _no_name_provided__35() {
   }
   _no_name_provided__35.prototype.invoke_wi7j7l_k$ = function (it) {
+    return !(it == null) ? isFloatArray(it) : false;
+  };
+  _no_name_provided__35.prototype.invoke_20e8_k$ = function (p1) {
+    return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
+  };
+  _no_name_provided__35.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__36() {
+  }
+  _no_name_provided__36.prototype.invoke_wi7j7l_k$ = function (it) {
+    return !(it == null) ? isDoubleArray(it) : false;
+  };
+  _no_name_provided__36.prototype.invoke_20e8_k$ = function (p1) {
+    return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
+  };
+  _no_name_provided__36.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__37($arity) {
+    this._$arity = $arity;
+  }
+  _no_name_provided__37.prototype.invoke_wi7j7l_k$ = function (it) {
     var tmp;
     if (typeof it === 'function') {
       var tmp$ret$0;
@@ -6765,10 +7092,10 @@
     }
     return tmp;
   };
-  _no_name_provided__35.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__37.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
   };
-  _no_name_provided__35.$metadata$ = {
+  _no_name_provided__37.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -6782,7 +7109,7 @@
       break $l$block;
     }
     var tmp_0 = tmp$ret$0;
-    tmp._anyClass = new PrimitiveKClassImpl(tmp_0, 'Any', _no_name_provided_$factory_6());
+    tmp._anyClass = new PrimitiveKClassImpl(tmp_0, 'Any', _no_name_provided_$factory_8());
     var tmp_1 = this;
     var tmp$ret$1;
     $l$block_0: {
@@ -6791,7 +7118,7 @@
       break $l$block_0;
     }
     var tmp_2 = tmp$ret$1;
-    tmp_1._numberClass = new PrimitiveKClassImpl(tmp_2, 'Number', _no_name_provided_$factory_7());
+    tmp_1._numberClass = new PrimitiveKClassImpl(tmp_2, 'Number', _no_name_provided_$factory_9());
     this._nothingClass = NothingKClassImpl_getInstance();
     var tmp_3 = this;
     var tmp$ret$2;
@@ -6801,7 +7128,7 @@
       break $l$block_1;
     }
     var tmp_4 = tmp$ret$2;
-    tmp_3._booleanClass = new PrimitiveKClassImpl(tmp_4, 'Boolean', _no_name_provided_$factory_8());
+    tmp_3._booleanClass = new PrimitiveKClassImpl(tmp_4, 'Boolean', _no_name_provided_$factory_10());
     var tmp_5 = this;
     var tmp$ret$3;
     $l$block_2: {
@@ -6810,7 +7137,7 @@
       break $l$block_2;
     }
     var tmp_6 = tmp$ret$3;
-    tmp_5._byteClass = new PrimitiveKClassImpl(tmp_6, 'Byte', _no_name_provided_$factory_9());
+    tmp_5._byteClass = new PrimitiveKClassImpl(tmp_6, 'Byte', _no_name_provided_$factory_11());
     var tmp_7 = this;
     var tmp$ret$4;
     $l$block_3: {
@@ -6819,7 +7146,7 @@
       break $l$block_3;
     }
     var tmp_8 = tmp$ret$4;
-    tmp_7._shortClass = new PrimitiveKClassImpl(tmp_8, 'Short', _no_name_provided_$factory_10());
+    tmp_7._shortClass = new PrimitiveKClassImpl(tmp_8, 'Short', _no_name_provided_$factory_12());
     var tmp_9 = this;
     var tmp$ret$5;
     $l$block_4: {
@@ -6828,7 +7155,7 @@
       break $l$block_4;
     }
     var tmp_10 = tmp$ret$5;
-    tmp_9._intClass = new PrimitiveKClassImpl(tmp_10, 'Int', _no_name_provided_$factory_11());
+    tmp_9._intClass = new PrimitiveKClassImpl(tmp_10, 'Int', _no_name_provided_$factory_13());
     var tmp_11 = this;
     var tmp$ret$6;
     $l$block_5: {
@@ -6837,7 +7164,7 @@
       break $l$block_5;
     }
     var tmp_12 = tmp$ret$6;
-    tmp_11._floatClass = new PrimitiveKClassImpl(tmp_12, 'Float', _no_name_provided_$factory_12());
+    tmp_11._floatClass = new PrimitiveKClassImpl(tmp_12, 'Float', _no_name_provided_$factory_14());
     var tmp_13 = this;
     var tmp$ret$7;
     $l$block_6: {
@@ -6846,7 +7173,7 @@
       break $l$block_6;
     }
     var tmp_14 = tmp$ret$7;
-    tmp_13._doubleClass = new PrimitiveKClassImpl(tmp_14, 'Double', _no_name_provided_$factory_13());
+    tmp_13._doubleClass = new PrimitiveKClassImpl(tmp_14, 'Double', _no_name_provided_$factory_15());
     var tmp_15 = this;
     var tmp$ret$8;
     $l$block_7: {
@@ -6855,7 +7182,7 @@
       break $l$block_7;
     }
     var tmp_16 = tmp$ret$8;
-    tmp_15._arrayClass = new PrimitiveKClassImpl(tmp_16, 'Array', _no_name_provided_$factory_14());
+    tmp_15._arrayClass = new PrimitiveKClassImpl(tmp_16, 'Array', _no_name_provided_$factory_16());
     var tmp_17 = this;
     var tmp$ret$9;
     $l$block_8: {
@@ -6864,7 +7191,7 @@
       break $l$block_8;
     }
     var tmp_18 = tmp$ret$9;
-    tmp_17._stringClass = new PrimitiveKClassImpl(tmp_18, 'String', _no_name_provided_$factory_15());
+    tmp_17._stringClass = new PrimitiveKClassImpl(tmp_18, 'String', _no_name_provided_$factory_17());
     var tmp_19 = this;
     var tmp$ret$10;
     $l$block_9: {
@@ -6873,7 +7200,7 @@
       break $l$block_9;
     }
     var tmp_20 = tmp$ret$10;
-    tmp_19._throwableClass = new PrimitiveKClassImpl(tmp_20, 'Throwable', _no_name_provided_$factory_16());
+    tmp_19._throwableClass = new PrimitiveKClassImpl(tmp_20, 'Throwable', _no_name_provided_$factory_18());
     var tmp_21 = this;
     var tmp$ret$11;
     $l$block_10: {
@@ -6882,7 +7209,7 @@
       break $l$block_10;
     }
     var tmp_22 = tmp$ret$11;
-    tmp_21._booleanArrayClass = new PrimitiveKClassImpl(tmp_22, 'BooleanArray', _no_name_provided_$factory_17());
+    tmp_21._booleanArrayClass = new PrimitiveKClassImpl(tmp_22, 'BooleanArray', _no_name_provided_$factory_19());
     var tmp_23 = this;
     var tmp$ret$12;
     $l$block_11: {
@@ -6891,7 +7218,7 @@
       break $l$block_11;
     }
     var tmp_24 = tmp$ret$12;
-    tmp_23._charArrayClass = new PrimitiveKClassImpl(tmp_24, 'CharArray', _no_name_provided_$factory_18());
+    tmp_23._charArrayClass = new PrimitiveKClassImpl(tmp_24, 'CharArray', _no_name_provided_$factory_20());
     var tmp_25 = this;
     var tmp$ret$13;
     $l$block_12: {
@@ -6900,7 +7227,7 @@
       break $l$block_12;
     }
     var tmp_26 = tmp$ret$13;
-    tmp_25._byteArrayClass = new PrimitiveKClassImpl(tmp_26, 'ByteArray', _no_name_provided_$factory_19());
+    tmp_25._byteArrayClass = new PrimitiveKClassImpl(tmp_26, 'ByteArray', _no_name_provided_$factory_21());
     var tmp_27 = this;
     var tmp$ret$14;
     $l$block_13: {
@@ -6909,7 +7236,7 @@
       break $l$block_13;
     }
     var tmp_28 = tmp$ret$14;
-    tmp_27._shortArrayClass = new PrimitiveKClassImpl(tmp_28, 'ShortArray', _no_name_provided_$factory_20());
+    tmp_27._shortArrayClass = new PrimitiveKClassImpl(tmp_28, 'ShortArray', _no_name_provided_$factory_22());
     var tmp_29 = this;
     var tmp$ret$15;
     $l$block_14: {
@@ -6918,7 +7245,7 @@
       break $l$block_14;
     }
     var tmp_30 = tmp$ret$15;
-    tmp_29._intArrayClass = new PrimitiveKClassImpl(tmp_30, 'IntArray', _no_name_provided_$factory_21());
+    tmp_29._intArrayClass = new PrimitiveKClassImpl(tmp_30, 'IntArray', _no_name_provided_$factory_23());
     var tmp_31 = this;
     var tmp$ret$16;
     $l$block_15: {
@@ -6927,7 +7254,7 @@
       break $l$block_15;
     }
     var tmp_32 = tmp$ret$16;
-    tmp_31._longArrayClass = new PrimitiveKClassImpl(tmp_32, 'LongArray', _no_name_provided_$factory_22());
+    tmp_31._longArrayClass = new PrimitiveKClassImpl(tmp_32, 'LongArray', _no_name_provided_$factory_24());
     var tmp_33 = this;
     var tmp$ret$17;
     $l$block_16: {
@@ -6936,7 +7263,7 @@
       break $l$block_16;
     }
     var tmp_34 = tmp$ret$17;
-    tmp_33._floatArrayClass = new PrimitiveKClassImpl(tmp_34, 'FloatArray', _no_name_provided_$factory_23());
+    tmp_33._floatArrayClass = new PrimitiveKClassImpl(tmp_34, 'FloatArray', _no_name_provided_$factory_25());
     var tmp_35 = this;
     var tmp$ret$18;
     $l$block_17: {
@@ -6945,7 +7272,7 @@
       break $l$block_17;
     }
     var tmp_36 = tmp$ret$18;
-    tmp_35._doubleArrayClass = new PrimitiveKClassImpl(tmp_36, 'DoubleArray', _no_name_provided_$factory_24());
+    tmp_35._doubleArrayClass = new PrimitiveKClassImpl(tmp_36, 'DoubleArray', _no_name_provided_$factory_26());
   }
   PrimitiveClasses_0.prototype._get_anyClass__0_k$ = function () {
     return this._anyClass;
@@ -7025,7 +7352,7 @@
           }
           var tmp_0 = tmp$ret$0;
           var tmp_1 = '' + 'Function' + arity;
-          var result_2 = new PrimitiveKClassImpl(tmp_0, tmp_1, _no_name_provided_$factory_25(arity));
+          var result_2 = new PrimitiveKClassImpl(tmp_0, tmp_1, _no_name_provided_$factory_27(arity));
           var tmp$ret$1;
           $l$block_0: {
             var tmp1_asDynamic_0_5 = functionClasses;
@@ -7136,18 +7463,6 @@
       new PrimitiveClasses_0();
     return PrimitiveClasses_instance;
   }
-  function _no_name_provided_$factory_6() {
-    var i = new _no_name_provided__16();
-    return function (p1) {
-      return i.invoke_wi7j7l_k$(p1);
-    };
-  }
-  function _no_name_provided_$factory_7() {
-    var i = new _no_name_provided__17();
-    return function (p1) {
-      return i.invoke_wi7j7l_k$(p1);
-    };
-  }
   function _no_name_provided_$factory_8() {
     var i = new _no_name_provided__18();
     return function (p1) {
@@ -7250,8 +7565,20 @@
       return i.invoke_wi7j7l_k$(p1);
     };
   }
-  function _no_name_provided_$factory_25($arity) {
-    var i = new _no_name_provided__35($arity);
+  function _no_name_provided_$factory_25() {
+    var i = new _no_name_provided__35();
+    return function (p1) {
+      return i.invoke_wi7j7l_k$(p1);
+    };
+  }
+  function _no_name_provided_$factory_26() {
+    var i = new _no_name_provided__36();
+    return function (p1) {
+      return i.invoke_wi7j7l_k$(p1);
+    };
+  }
+  function _no_name_provided_$factory_27($arity) {
+    var i = new _no_name_provided__37($arity);
     return function (p1) {
       return i.invoke_wi7j7l_k$(p1);
     };
@@ -7887,7 +8214,7 @@
     interfaces: []
   };
   function toFlags(_this_, prepend) {
-    return joinToString$default_1(_this_, '', prepend, null, 0, null, _no_name_provided_$factory_26(), 28, null);
+    return joinToString$default_1(_this_, '', prepend, null, 0, null, _no_name_provided_$factory_28(), 28, null);
   }
   function findNext(_this_, input, from) {
     _this_.lastIndex = from;
@@ -7895,45 +8222,45 @@
     if (match == null)
       return null;
     var range = numberRangeToNumber(match.index, _this_.lastIndex - 1 | 0);
-    return new _no_name_provided__40(range, match, _this_, input);
+    return new _no_name_provided__42(range, match, _this_, input);
   }
-  function _no_name_provided__36() {
+  function _no_name_provided__38() {
   }
-  _no_name_provided__36.prototype.invoke_ot21mf_k$ = function (it) {
+  _no_name_provided__38.prototype.invoke_ot21mf_k$ = function (it) {
     return it._value;
   };
-  _no_name_provided__36.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__38.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_ot21mf_k$(p1 instanceof RegexOption ? p1 : THROW_CCE());
   };
-  _no_name_provided__36.$metadata$ = {
+  _no_name_provided__38.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__37(this$0) {
+  function _no_name_provided__39(this$0) {
     this._this$0_7 = this$0;
   }
-  _no_name_provided__37.prototype.invoke_ha5a7z_k$ = function (it) {
+  _no_name_provided__39.prototype.invoke_ha5a7z_k$ = function (it) {
     return this._this$0_7.get_ha5a7z_k$(it);
   };
-  _no_name_provided__37.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__39.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_ha5a7z_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__37.$metadata$ = {
+  _no_name_provided__39.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__38($match) {
+  function _no_name_provided__40($match) {
     this._$match = $match;
     AbstractCollection.call(this);
   }
-  _no_name_provided__38.prototype._get_size__0_k$ = function () {
+  _no_name_provided__40.prototype._get_size__0_k$ = function () {
     return this._$match.length;
   };
-  _no_name_provided__38.prototype.iterator_0_k$ = function () {
-    var tmp = asSequence(_get_indices_(this));
-    return map(tmp, _no_name_provided_$factory_27(this)).iterator_0_k$();
+  _no_name_provided__40.prototype.iterator_0_k$ = function () {
+    var tmp = asSequence(_get_indices__0(this));
+    return map(tmp, _no_name_provided_$factory_29(this)).iterator_0_k$();
   };
-  _no_name_provided__38.prototype.get_ha5a7z_k$ = function (index) {
+  _no_name_provided__40.prototype.get_ha5a7z_k$ = function (index) {
     var tmp$ret$1;
     $l$block_0: {
       var tmp$ret$0;
@@ -7965,18 +8292,18 @@
     }
     return tmp;
   };
-  _no_name_provided__38.$metadata$ = {
+  _no_name_provided__40.$metadata$ = {
     kind: 'class',
     interfaces: [MatchGroupCollection]
   };
-  function _no_name_provided__39($match) {
+  function _no_name_provided__41($match) {
     this._$match_0 = $match;
     AbstractList.call(this);
   }
-  _no_name_provided__39.prototype._get_size__0_k$ = function () {
+  _no_name_provided__41.prototype._get_size__0_k$ = function () {
     return this._$match_0.length;
   };
-  _no_name_provided__39.prototype.get_ha5a7z_k$ = function (index) {
+  _no_name_provided__41.prototype.get_ha5a7z_k$ = function (index) {
     var tmp$ret$1;
     $l$block_0: {
       var tmp$ret$0;
@@ -7990,36 +8317,36 @@
     var tmp0_elvis_lhs = tmp$ret$1;
     return tmp0_elvis_lhs == null ? '' : tmp0_elvis_lhs;
   };
-  _no_name_provided__39.$metadata$ = {
+  _no_name_provided__41.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__40($range, $match, $this_findNext, $input) {
+  function _no_name_provided__42($range, $match, $this_findNext, $input) {
     this._$range = $range;
     this._$match_1 = $match;
     this._$this_findNext = $this_findNext;
     this._$input = $input;
     this._range = this._$range;
     var tmp = this;
-    tmp._groups = new _no_name_provided__38(this._$match_1);
+    tmp._groups = new _no_name_provided__40(this._$match_1);
     this._groupValues_ = null;
   }
-  _no_name_provided__40.prototype._get_range__0_k$ = function () {
+  _no_name_provided__42.prototype._get_range__0_k$ = function () {
     return this._range;
   };
-  _no_name_provided__40.prototype._get_groups__0_k$ = function () {
+  _no_name_provided__42.prototype._get_groups__0_k$ = function () {
     return this._groups;
   };
-  _no_name_provided__40.prototype._get_groupValues__0_k$ = function () {
+  _no_name_provided__42.prototype._get_groupValues__0_k$ = function () {
     if (this._groupValues_ == null) {
       var tmp = this;
-      tmp._groupValues_ = new _no_name_provided__39(this._$match_1);
+      tmp._groupValues_ = new _no_name_provided__41(this._$match_1);
     }return ensureNotNull(this._groupValues_);
   };
-  _no_name_provided__40.prototype.next_0_k$ = function () {
+  _no_name_provided__42.prototype.next_0_k$ = function () {
     return findNext(this._$this_findNext, this._$input, this._$range.isEmpty_0_k$() ? this._$range._get_start__0_k$() + 1 | 0 : this._$range._get_endInclusive__0_k$() + 1 | 0);
   };
-  _no_name_provided__40.$metadata$ = {
+  _no_name_provided__42.$metadata$ = {
     kind: 'class',
     interfaces: [MatchResult]
   };
@@ -8027,14 +8354,14 @@
     RegexOption_initEntries();
     return RegexOption_MULTILINE_instance;
   }
-  function _no_name_provided_$factory_26() {
-    var i = new _no_name_provided__36();
+  function _no_name_provided_$factory_28() {
+    var i = new _no_name_provided__38();
     return function (p1) {
       return i.invoke_ot21mf_k$(p1);
     };
   }
-  function _no_name_provided_$factory_27(this$0) {
-    var i = new _no_name_provided__37(this$0);
+  function _no_name_provided_$factory_29(this$0) {
+    var i = new _no_name_provided__39(this$0);
     return function (p1) {
       return i.invoke_ha5a7z_k$(p1);
     };
@@ -8384,10 +8711,10 @@
       return malformed(0, index, throwOnMalformed);
     }return 65536 + ((high & 1023) << 10) | 0 | low & 1023;
   }
-  function malformed(size, index, throwOnMalformed) {
+  function malformed(size_0, index, throwOnMalformed) {
     if (throwOnMalformed)
       throw new CharacterCodingException('' + 'Malformed sequence starting at ' + (index - 1 | 0));
-    return -size | 0;
+    return -size_0 | 0;
   }
   function REPLACEMENT_BYTE_SEQUENCE$init$() {
     var tmp$ret$0;
@@ -8882,14 +9209,30 @@
     return array;
   }
   function arrayIterator(array) {
-    return new _no_name_provided__41(array);
+    return new _no_name_provided__43(array);
   }
-  function charArray(size) {
+  function booleanArray(size_0) {
+    var tmp$ret$1;
+    $l$block_0: {
+      var tmp$ret$0;
+      $l$block: {
+        var tmp0_withType_0 = fillArrayVal(Array(size_0), false);
+        tmp0_withType_0.$type$ = 'BooleanArray';
+        tmp$ret$0 = tmp0_withType_0;
+        break $l$block;
+      }
+      var tmp1_unsafeCast_0 = tmp$ret$0;
+      tmp$ret$1 = tmp1_unsafeCast_0;
+      break $l$block_0;
+    }
+    return tmp$ret$1;
+  }
+  function charArray(size_0) {
     var tmp$ret$4;
     $l$block_3: {
       var tmp$ret$3;
       $l$block_2: {
-        var tmp = Array(size);
+        var tmp = Array(size_0);
         var tmp$ret$2;
         $l$block_1: {
           var tmp_0;
@@ -8953,14 +9296,14 @@
     }
     return tmp$ret$2;
   }
-  function _no_name_provided__41($array) {
+  function _no_name_provided__43($array) {
     this._$array = $array;
     this._index_1 = 0;
   }
-  _no_name_provided__41.prototype.hasNext_0_k$ = function () {
+  _no_name_provided__43.prototype.hasNext_0_k$ = function () {
     return !(this._index_1 === this._$array.length);
   };
-  _no_name_provided__41.prototype.next_0_k$ = function () {
+  _no_name_provided__43.prototype.next_0_k$ = function () {
     var tmp;
     if (!(this._index_1 === this._$array.length)) {
       var tmp0_this = this;
@@ -8972,7 +9315,7 @@
     }
     return tmp;
   };
-  _no_name_provided__41.$metadata$ = {
+  _no_name_provided__43.$metadata$ = {
     kind: 'class',
     interfaces: [Iterator_0]
   };
@@ -9140,7 +9483,7 @@
     return tmp;
   }
   function arrayToString(array) {
-    return joinToString$default_0(array, ', ', '[', ']', 0, null, _no_name_provided_$factory_28(), 24, null);
+    return joinToString$default_0(array, ', ', '[', ']', 0, null, _no_name_provided_$factory_30(), 24, null);
   }
   function contentEqualsInternal(_this_, other) {
     var tmp$ret$0;
@@ -9192,20 +9535,20 @@
        while (inductionVariable < last_0);
     return result;
   }
-  function _no_name_provided__42() {
+  function _no_name_provided__44() {
   }
-  _no_name_provided__42.prototype.invoke_wi7j7l_k$ = function (it) {
+  _no_name_provided__44.prototype.invoke_wi7j7l_k$ = function (it) {
     return toString_3(it);
   };
-  _no_name_provided__42.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__44.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_wi7j7l_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
   };
-  _no_name_provided__42.$metadata$ = {
+  _no_name_provided__44.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_28() {
-    var i = new _no_name_provided__42();
+  function _no_name_provided_$factory_30() {
+    var i = new _no_name_provided__44();
     return function (p1) {
       return i.invoke_wi7j7l_k$(p1);
     };
@@ -10449,6 +10792,12 @@
       }}
     return fillFrom(_this_, new Int8Array(newSize));
   }
+  function contentEquals(_this_, other) {
+    return contentEqualsInternal(_this_, other);
+  }
+  function contentHashCode(_this_) {
+    return contentHashCodeInternal(_this_);
+  }
   function copyOfRange(_this_, fromIndex, toIndex) {
     Companion_getInstance().checkRangeIndexes_zd700_k$(fromIndex, toIndex, _this_.length);
     var tmp$ret$0;
@@ -10471,10 +10820,10 @@
     }
     return new ArrayList(tmp$ret$1);
   }
-  function contentEquals(_this_, other) {
+  function contentEquals_0(_this_, other) {
     return contentEqualsInternal(_this_, other);
   }
-  function contentHashCode(_this_) {
+  function contentHashCode_0(_this_) {
     return contentHashCodeInternal(_this_);
   }
   function fill_0(_this_, element, fromIndex, toIndex) {
@@ -10591,6 +10940,9 @@
     tmp.__context = tmp0_safe_receiver == null ? null : tmp0_safe_receiver._get_context__0_k$();
     this._intercepted_ = null;
   }
+  CoroutineImpl_0.prototype._get_exception__0_k$ = function () {
+    return this._exception_0;
+  };
   CoroutineImpl_0.prototype._get_context__0_k$ = function () {
     return ensureNotNull(this.__context);
   };
@@ -10746,6 +11098,43 @@
     var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : tmp0_safe_receiver.intercepted_0_k$();
     return tmp1_elvis_lhs == null ? _this_ : tmp1_elvis_lhs;
   }
+  function createCoroutineUnintercepted(_this_, receiver, completion) {
+    var tmp$ret$0;
+    $l$block: {
+      tmp$ret$0 = new _no_name_provided__1_1(_this_, receiver, completion);
+      break $l$block;
+    }
+    return tmp$ret$0;
+  }
+  function _no_name_provided__1_1($this_createCoroutineUnintercepted, $receiver, $completion) {
+    this._$this_createCoroutineUnintercepted = $this_createCoroutineUnintercepted;
+    this._$receiver = $receiver;
+    this._$completion = $completion;
+    CoroutineImpl_0.call(this, isInterface($completion, Continuation) ? $completion : THROW_CCE());
+  }
+  _no_name_provided__1_1.prototype.doResume_2_0_k$ = function () {
+    if (this._get_exception__0_k$() != null)
+      throw this._get_exception__0_k$();
+    var tmp$ret$1;
+    $l$block_0: {
+      var tmp$ret$0;
+      $l$block: {
+        tmp$ret$0 = this._$this_createCoroutineUnintercepted;
+        break $l$block;
+      }
+      tmp$ret$1 = tmp$ret$0(this._$receiver, this._$completion);
+      break $l$block_0;
+    }
+    return tmp$ret$1;
+  };
+  _no_name_provided__1_1.prototype.doResume_0_k$ = function () {
+    return this.doResume_2_0_k$();
+  };
+  _no_name_provided__1_1.$metadata$ = {
+    simpleName: '<no name provided>_1',
+    kind: 'class',
+    interfaces: []
+  };
   function Exception_init_$Init$($this) {
     extendThrowable($this, void 1, void 1);
     Exception.call($this);
@@ -10900,6 +11289,11 @@
     RuntimeException_init_$Init$_1(message, cause, $this);
     IllegalStateException.call($this);
     return $this;
+  }
+  function IllegalStateException_init_$Create$_1(message, cause) {
+    var tmp = IllegalStateException_init_$Init$_1(message, cause, Object.create(IllegalStateException.prototype));
+    captureStack(tmp, IllegalStateException_init_$Create$_1);
+    return tmp;
   }
   function IllegalStateException() {
     captureStack(this, IllegalStateException);
@@ -11411,6 +11805,407 @@
   function atomic_9(initial, trace) {
     return new AtomicLong(initial);
   }
+  function AbstractCoroutine(parentContext, initParentJob, active) {
+    JobSupport.call(this, active);
+    if (initParentJob)
+      this.initParentJob_64sshe_k$(parentContext.get_9uvjra_k$(Key_getInstance_2()));
+    this._context = parentContext.plus_d7pszg_k$(this);
+  }
+  AbstractCoroutine.prototype._get_context__0_k$ = function () {
+    return this._context;
+  };
+  AbstractCoroutine.prototype._get_coroutineContext__0_k$ = function () {
+    return this._context;
+  };
+  AbstractCoroutine.prototype._get_isActive__0_k$ = function () {
+    return JobSupport.prototype._get_isActive__0_k$.call(this);
+  };
+  AbstractCoroutine.prototype.onCompleted_iav7o_k$ = function (value) {
+  };
+  AbstractCoroutine.prototype.onCancelled_mnel9l_k$ = function (cause, handled) {
+  };
+  AbstractCoroutine.prototype.cancellationExceptionMessage_0_k$ = function () {
+    return '' + _get_classSimpleName_(this) + ' was cancelled';
+  };
+  AbstractCoroutine.prototype.onCompletionInternal_qi8yb4_k$ = function (state) {
+    if (state instanceof CompletedExceptionally)
+      this.onCancelled_mnel9l_k$(state._cause, state._get_handled__0_k$());
+    else {
+      {
+        this.onCompleted_iav7o_k$((state == null ? true : isObject(state)) ? state : THROW_CCE());
+      }
+    }
+  };
+  AbstractCoroutine.prototype.resumeWith_bnunh2_k$ = function (result) {
+    var state = this.makeCompletingOnce_wi7j7l_k$(toState$default(result, null, 1, null));
+    if (state === COMPLETING_WAITING_CHILDREN)
+      return Unit_getInstance();
+    this.afterResume_qi8yb4_k$(state);
+  };
+  AbstractCoroutine.prototype.afterResume_qi8yb4_k$ = function (state) {
+    return this.afterCompletion_qi8yb4_k$(state);
+  };
+  AbstractCoroutine.prototype.handleOnCompletionException_1ti8hr_k$ = function (exception) {
+    handleCoroutineException(this._context, exception);
+  };
+  AbstractCoroutine.prototype.nameString_0_k$ = function () {
+    var tmp0_elvis_lhs = _get_coroutineName_(this._context);
+    var tmp;
+    if (tmp0_elvis_lhs == null) {
+      return JobSupport.prototype.nameString_0_k$.call(this);
+    } else {
+      tmp = tmp0_elvis_lhs;
+    }
+    var coroutineName = tmp;
+    return '' + '"' + coroutineName + '":' + JobSupport.prototype.nameString_0_k$.call(this);
+  };
+  AbstractCoroutine.prototype.start_hfyz87_k$ = function (start, receiver, block) {
+    start.invoke_huaxoh_k$(block, receiver, this);
+  };
+  AbstractCoroutine.$metadata$ = {
+    simpleName: 'AbstractCoroutine',
+    kind: 'class',
+    interfaces: [Job, Continuation, CoroutineScope]
+  };
+  function awaitAll(_this_, $cont) {
+    var tmp = new $awaitAllCOROUTINE$0(_this_, $cont);
+    tmp._result = Unit_getInstance();
+    tmp._exception_0 = null;
+    return tmp.doResume_0_k$();
+  }
+  function DisposeHandlersOnCancel($outer, nodes) {
+    this._$this_7 = $outer;
+    CancelHandler.call(this);
+    this._nodes = nodes;
+  }
+  DisposeHandlersOnCancel.prototype.disposeAll_sv8swh_k$ = function () {
+    {
+      var tmp0_forEach_0 = this._nodes;
+      var indexedObject = tmp0_forEach_0;
+      var inductionVariable = 0;
+      var last_0 = indexedObject.length;
+      while (inductionVariable < last_0) {
+        var element_2 = indexedObject[inductionVariable];
+        inductionVariable = inductionVariable + 1 | 0;
+        {
+          element_2._get_handle__0_k$().dispose_sv8swh_k$();
+        }
+      }
+    }
+  };
+  DisposeHandlersOnCancel.prototype.invoke_houul8_k$ = function (cause) {
+    this.disposeAll_sv8swh_k$();
+  };
+  DisposeHandlersOnCancel.prototype.invoke = function (cause) {
+    return this.invoke_houul8_k$(cause);
+  };
+  DisposeHandlersOnCancel.prototype.toString = function () {
+    return '' + 'DisposeHandlersOnCancel[' + this._nodes + ']';
+  };
+  DisposeHandlersOnCancel.$metadata$ = {
+    simpleName: 'DisposeHandlersOnCancel',
+    kind: 'class',
+    interfaces: []
+  };
+  function AwaitAllNode($outer, continuation) {
+    this._$this_8 = $outer;
+    JobNode.call(this);
+    this._continuation = continuation;
+    this.__disposer = atomic(null);
+  }
+  AwaitAllNode.prototype._get_handle__0_k$ = function () {
+    var tmp = this._handle;
+    if (!(tmp == null))
+      return tmp;
+    else {
+      throwUninitializedPropertyAccessException('handle');
+    }
+  };
+  AwaitAllNode.prototype._set_disposer__g6jnve_k$ = function (value) {
+    this.__disposer._value_2 = value;
+  };
+  AwaitAllNode.prototype._get_disposer__0_k$ = function () {
+    return this.__disposer._value_2;
+  };
+  AwaitAllNode.prototype.invoke_houul8_k$ = function (cause) {
+    if (!(cause == null)) {
+      var token = this._continuation.tryResumeWithException_onfaoi_k$(cause);
+      if (!(token == null)) {
+        this._continuation.completeResume_wu1lm5_k$(token);
+        var tmp0_safe_receiver = this._get_disposer__0_k$();
+        if (tmp0_safe_receiver == null)
+          null;
+        else {
+          tmp0_safe_receiver.disposeAll_sv8swh_k$();
+          Unit_getInstance();
+        }
+        Unit_getInstance();
+      }} else if (this._$this_8._notCompletedCount.atomicfu$decrementAndGet() === 0) {
+      var tmp$ret$4;
+      $l$block_3: {
+        var tmp1_resume_0 = this._continuation;
+        var tmp$ret$2;
+        $l$block_1: {
+          var tmp0_map_0 = this._$this_8._deferreds;
+          var tmp$ret$1;
+          $l$block_0: {
+            var tmp0_mapTo_0_1 = ArrayList_init_$Create$_0(tmp0_map_0.length);
+            var indexedObject = tmp0_map_0;
+            var inductionVariable = 0;
+            var last_0 = indexedObject.length;
+            while (inductionVariable < last_0) {
+              var item_2_3 = indexedObject[inductionVariable];
+              inductionVariable = inductionVariable + 1 | 0;
+              var tmp$ret$0;
+              $l$block: {
+                tmp$ret$0 = item_2_3.getCompleted_0_k$();
+                break $l$block;
+              }
+              tmp0_mapTo_0_1.add_2bq_k$(tmp$ret$0);
+              Unit_getInstance();
+            }
+            tmp$ret$1 = tmp0_mapTo_0_1;
+            break $l$block_0;
+          }
+          tmp$ret$2 = tmp$ret$1;
+          break $l$block_1;
+        }
+        var tmp2_resume_0 = tmp$ret$2;
+        var tmp$ret$3;
+        $l$block_2: {
+          var tmp0_success_0_1 = Companion_getInstance_2();
+          tmp$ret$3 = _Result___init__impl_(tmp2_resume_0);
+          break $l$block_2;
+        }
+        tmp$ret$4 = tmp1_resume_0.resumeWith_bnunh2_k$(tmp$ret$3);
+        break $l$block_3;
+      }
+    }};
+  AwaitAllNode.prototype.invoke = function (cause) {
+    return this.invoke_houul8_k$(cause);
+  };
+  AwaitAllNode.$metadata$ = {
+    simpleName: 'AwaitAllNode',
+    kind: 'class',
+    interfaces: []
+  };
+  function AwaitAll(deferreds) {
+    this._deferreds = deferreds;
+    this._notCompletedCount = atomic_1(this._deferreds.length);
+  }
+  AwaitAll.prototype.await_0_k$ = function ($cont) {
+    var tmp$ret$7;
+    $l$block_6: {
+      var tmp0__anonymous__1_1 = $cont;
+      var cancellable_2_2 = new CancellableContinuationImpl(intercepted(tmp0__anonymous__1_1), 1);
+      cancellable_2_2.initCancellability_sv8swh_k$();
+      {
+        var tmp_5 = 0;
+        var tmp_6 = this._deferreds.length;
+        var tmp$ret$0;
+        $l$block: {
+          tmp$ret$0 = fillArrayVal(Array(tmp_6), null);
+          break $l$block;
+        }
+        var tmp_7 = tmp$ret$0;
+        while (tmp_5 < tmp_6) {
+          var tmp_8 = tmp_5;
+          var tmp$ret$4;
+          $l$block_3: {
+            var deferred_9 = this._deferreds[tmp_8];
+            deferred_9.start_0_k$();
+            Unit_getInstance();
+            var tmp$ret$3;
+            $l$block_2: {
+              var tmp0_apply_0_10 = new AwaitAllNode(this, cancellable_2_2);
+              {
+              }
+              {
+                var tmp = tmp0_apply_0_10;
+                var tmp$ret$2;
+                $l$block_1: {
+                  var tmp$ret$1;
+                  $l$block_0: {
+                    tmp$ret$1 = tmp0_apply_0_10;
+                    break $l$block_0;
+                  }
+                  tmp$ret$2 = tmp$ret$1;
+                  break $l$block_1;
+                }
+                tmp._handle = deferred_9.invokeOnCompletion_wjzpsu_k$(tmp$ret$2);
+              }
+              tmp$ret$3 = tmp0_apply_0_10;
+              break $l$block_2;
+            }
+            tmp$ret$4 = tmp$ret$3;
+            break $l$block_3;
+          }
+          tmp_7[tmp_8] = tmp$ret$4;
+          tmp_5 = tmp_5 + 1 | 0;
+        }
+        var nodes_4 = tmp_7;
+        var disposer_11 = new DisposeHandlersOnCancel(this, nodes_4);
+        {
+          var indexedObject = nodes_4;
+          var inductionVariable = 0;
+          var last_0 = indexedObject.length;
+          while (inductionVariable < last_0) {
+            var element_2_13 = indexedObject[inductionVariable];
+            inductionVariable = inductionVariable + 1 | 0;
+            {
+              element_2_13._set_disposer__g6jnve_k$(disposer_11);
+            }
+          }
+        }
+        if (cancellable_2_2._get_isCompleted__0_k$()) {
+          disposer_11.disposeAll_sv8swh_k$();
+        } else {
+          var tmp$ret$6;
+          $l$block_5: {
+            var tmp$ret$5;
+            $l$block_4: {
+              tmp$ret$5 = disposer_11;
+              break $l$block_4;
+            }
+            tmp$ret$6 = tmp$ret$5;
+            break $l$block_5;
+          }
+          cancellable_2_2.invokeOnCancellation_aip8gd_k$(tmp$ret$6);
+        }
+      }
+      tmp$ret$7 = cancellable_2_2.getResult_0_k$();
+      break $l$block_6;
+    }
+    return tmp$ret$7;
+  };
+  AwaitAll.$metadata$ = {
+    simpleName: 'AwaitAll',
+    kind: 'class',
+    interfaces: []
+  };
+  function $awaitAllCOROUTINE$0(_this_, resultContinuation) {
+    CoroutineImpl_0.call(this, resultContinuation);
+    this.__this_ = _this_;
+  }
+  $awaitAllCOROUTINE$0.prototype.doResume_0_k$ = function () {
+    var suspendResult = this._result;
+    $sm: do
+      try {
+        var tmp = this._state_0;
+        switch (tmp) {
+          case 0:
+            this._exceptionState = 3;
+            if (this.__this_.isEmpty_0_k$()) {
+              this._WHEN_RESULT0 = emptyList();
+              this._state_0 = 2;
+              continue $sm;
+            } else {
+              this._state_0 = 1;
+              suspendResult = (new AwaitAll(copyToArray_0(this.__this_))).await_0_k$(this);
+              if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
+                return suspendResult;
+              }continue $sm;
+            }
+
+            break;
+          case 1:
+            this._WHEN_RESULT0 = suspendResult;
+            this._state_0 = 2;
+            continue $sm;
+          case 2:
+            return this._WHEN_RESULT0;
+          case 3:
+            throw this._exception_0;
+        }
+      } catch ($p) {
+        if (this._exceptionState === 3) {
+          throw $p;
+        } else {
+          this._state_0 = this._exceptionState;
+          this._exception_0 = $p;
+        }
+      }
+     while (true);
+  };
+  $awaitAllCOROUTINE$0.$metadata$ = {
+    simpleName: '$awaitAllCOROUTINE$0',
+    kind: 'class',
+    interfaces: []
+  };
+  function launch(_this_, context, start, block) {
+    var newContext = newCoroutineContext(_this_, context);
+    var coroutine = start._get_isLazy__0_k$() ? new LazyStandaloneCoroutine(newContext, block) : new StandaloneCoroutine(newContext, true);
+    coroutine.start_hfyz87_k$(start, coroutine, block);
+    return coroutine;
+  }
+  function launch$default(_this_, context, start, block, $mask0, $handler) {
+    if (!(($mask0 & 1) === 0))
+      context = EmptyCoroutineContext_getInstance();
+    if (!(($mask0 & 2) === 0))
+      start = CoroutineStart_DEFAULT_getInstance();
+    return launch(_this_, context, start, block);
+  }
+  function async(_this_, context, start, block) {
+    var newContext = newCoroutineContext(_this_, context);
+    var coroutine = start._get_isLazy__0_k$() ? new LazyDeferredCoroutine(newContext, block) : new DeferredCoroutine(newContext, true);
+    coroutine.start_hfyz87_k$(start, coroutine, block);
+    return coroutine;
+  }
+  function async$default(_this_, context, start, block, $mask0, $handler) {
+    if (!(($mask0 & 1) === 0))
+      context = EmptyCoroutineContext_getInstance();
+    if (!(($mask0 & 2) === 0))
+      start = CoroutineStart_DEFAULT_getInstance();
+    return async(_this_, context, start, block);
+  }
+  function StandaloneCoroutine(parentContext, active) {
+    AbstractCoroutine.call(this, parentContext, true, active);
+  }
+  StandaloneCoroutine.prototype.handleJobException_onfaoi_k$ = function (exception) {
+    handleCoroutineException(this._get_context__0_k$(), exception);
+    return true;
+  };
+  StandaloneCoroutine.$metadata$ = {
+    simpleName: 'StandaloneCoroutine',
+    kind: 'class',
+    interfaces: []
+  };
+  function LazyStandaloneCoroutine(parentContext, block) {
+    StandaloneCoroutine.call(this, parentContext, false);
+    this._continuation_0 = createCoroutineUnintercepted(block, this, this);
+  }
+  LazyStandaloneCoroutine.prototype.onStart_sv8swh_k$ = function () {
+    startCoroutineCancellable_0(this._continuation_0, this);
+  };
+  LazyStandaloneCoroutine.$metadata$ = {
+    simpleName: 'LazyStandaloneCoroutine',
+    kind: 'class',
+    interfaces: []
+  };
+  function DeferredCoroutine(parentContext, active) {
+    AbstractCoroutine.call(this, parentContext, true, active);
+  }
+  DeferredCoroutine.prototype.getCompleted_0_k$ = function () {
+    var tmp = this.getCompletedInternal_0_k$();
+    return (tmp == null ? true : isObject(tmp)) ? tmp : THROW_CCE();
+  };
+  DeferredCoroutine.$metadata$ = {
+    simpleName: 'DeferredCoroutine',
+    kind: 'class',
+    interfaces: [Deferred, SelectClause1]
+  };
+  function LazyDeferredCoroutine(parentContext, block) {
+    DeferredCoroutine.call(this, parentContext, false);
+    this._continuation_1 = createCoroutineUnintercepted(block, this, this);
+  }
+  LazyDeferredCoroutine.prototype.onStart_sv8swh_k$ = function () {
+    startCoroutineCancellable_0(this._continuation_1, this);
+  };
+  LazyDeferredCoroutine.$metadata$ = {
+    simpleName: 'LazyDeferredCoroutine',
+    kind: 'class',
+    interfaces: []
+  };
   function CancellableContinuation() {
   }
   CancellableContinuation.$metadata$ = {
@@ -11418,6 +12213,7 @@
     kind: 'interface',
     interfaces: [Continuation]
   };
+  var RESUME_TOKEN;
   function _get_stateDebugRepresentation_($this) {
     var tmp0_subject = $this._get_state__0_k$();
     var tmp;
@@ -11450,6 +12246,23 @@
     var tmp = $this._delegate;
     var dispatched = tmp instanceof DispatchedContinuation ? tmp : THROW_CCE();
     return dispatched.postponeCancellation_onfaoi_k$(cause);
+  }
+  function callCancelHandler($this, handler, cause) {
+    var tmp;
+    try {
+      tmp = invokeIt(handler, cause);
+    } catch ($p) {
+      var tmp_0;
+      if ($p instanceof Error) {
+        tmp_0 = handleCoroutineException($this._get_context__0_k$(), new CompletionHandlerException('' + 'Exception in invokeOnCancellation handler for ' + $this, $p));
+      } else {
+        {
+          throw $p;
+        }
+      }
+      tmp = tmp_0;
+    }
+    return tmp;
   }
   function trySuspend($this) {
     {
@@ -11531,6 +12344,23 @@
     $this.detachChild_sv8swh_k$();
     $this.cancel_h62ekz_k$(cancellationCause);
     Unit_getInstance();
+  }
+  function multipleHandlersError($this, handler, state) {
+    {
+      var tmp0_error_0 = '' + "It's prohibited to register multiple handlers, tried to register " + handler + ', already has ' + state;
+      throw IllegalStateException_init_$Create$_0(toString_3(tmp0_error_0));
+    }
+  }
+  function makeCancelHandler($this, handler) {
+    var tmp;
+    if (handler instanceof CancelHandler) {
+      tmp = handler;
+    } else {
+      {
+        tmp = new InvokeOnCancel(handler);
+      }
+    }
+    return tmp;
   }
   function dispatchResume($this, mode) {
     if (tryResume($this))
@@ -11631,6 +12461,41 @@
       onCancellation = null;
     return resumeImpl($this, proposedUpdate, resumeMode, onCancellation);
   }
+  function tryResumeImpl($this, proposedUpdate, idempotent, onCancellation) {
+    {
+      var tmp0_loop_0 = $this.__state;
+      while (true) {
+        var tmp$ret$0;
+        $l$block: {
+          var tmp1__anonymous__1 = tmp0_loop_0._value_2;
+          var tmp0_subject_2 = tmp1__anonymous__1;
+          if (!(tmp0_subject_2 == null) ? isInterface(tmp0_subject_2, NotCompleted) : false) {
+            var update_3 = resumedState($this, tmp1__anonymous__1, proposedUpdate, $this._get_resumeMode__0_k$(), onCancellation, idempotent);
+            if (!$this.__state.atomicfu$compareAndSet(tmp1__anonymous__1, update_3)) {
+              tmp$ret$0 = Unit_getInstance();
+              break $l$block;
+            }detachChildIfNonResuable($this);
+            return RESUME_TOKEN;
+          } else {
+            if (tmp0_subject_2 instanceof CompletedContinuation_0) {
+              var tmp;
+              if (!(idempotent == null) ? tmp1__anonymous__1._idempotentResume === idempotent : false) {
+                {
+                }
+                tmp = RESUME_TOKEN;
+              } else {
+                tmp = null;
+              }
+              return tmp;
+            } else {
+              return null;
+            }
+          }
+        }
+      }
+      Unit_getInstance();
+    }
+  }
   function alreadyResumedError($this, proposedUpdate) {
     {
       var tmp0_error_0 = '' + 'Already resumed, but proposed with update ' + proposedUpdate;
@@ -11646,7 +12511,7 @@
     this._delegate = delegate;
     {
     }
-    this._context = this._delegate._get_context__0_k$();
+    this._context_0 = this._delegate._get_context__0_k$();
     this.__decision = atomic_1(0);
     this.__state = atomic(Active_getInstance());
     this._parentHandle = null;
@@ -11655,7 +12520,7 @@
     return this._delegate;
   };
   CancellableContinuationImpl.prototype._get_context__0_k$ = function () {
-    return this._context;
+    return this._context_0;
   };
   CancellableContinuationImpl.prototype._get_state__0_k$ = function () {
     return this.__state._value_2;
@@ -11832,6 +12697,63 @@
     var tmp_0 = this._get_resumeMode__0_k$();
     return resumeImpl$default(this, tmp, tmp_0, null, 8, null);
   };
+  CancellableContinuationImpl.prototype.invokeOnCancellation_aip8gd_k$ = function (handler) {
+    var cancelHandler = makeCancelHandler(this, handler);
+    {
+      var tmp0_loop_0 = this.__state;
+      while (true) {
+        {
+          var tmp1__anonymous__1 = tmp0_loop_0._value_2;
+          var tmp0_subject_2 = tmp1__anonymous__1;
+          if (tmp0_subject_2 instanceof Active) {
+            if (this.__state.atomicfu$compareAndSet(tmp1__anonymous__1, cancelHandler))
+              return Unit_getInstance();
+          } else {
+            if (tmp0_subject_2 instanceof CancelHandler)
+              multipleHandlersError(this, handler, tmp1__anonymous__1);
+            else {
+              if (tmp0_subject_2 instanceof CompletedExceptionally) {
+                if (!tmp1__anonymous__1.makeHandled_0_k$())
+                  multipleHandlersError(this, handler, tmp1__anonymous__1);
+                if (tmp1__anonymous__1 instanceof CancelledContinuation) {
+                  var tmp1_safe_receiver_3 = tmp1__anonymous__1 instanceof CompletedExceptionally ? tmp1__anonymous__1 : null;
+                  callCancelHandler(this, handler, tmp1_safe_receiver_3 == null ? null : tmp1_safe_receiver_3._cause);
+                } else {
+                }
+                return Unit_getInstance();
+              } else {
+                if (tmp0_subject_2 instanceof CompletedContinuation_0) {
+                  if (!(tmp1__anonymous__1._cancelHandler == null))
+                    multipleHandlersError(this, handler, tmp1__anonymous__1);
+                  if (cancelHandler instanceof BeforeResumeCancelHandler)
+                    return Unit_getInstance();
+                  else {
+                  }
+                  if (tmp1__anonymous__1._get_cancelled__0_k$()) {
+                    callCancelHandler(this, handler, tmp1__anonymous__1._cancelCause);
+                    return Unit_getInstance();
+                  }var update_4 = tmp1__anonymous__1.copy$default_tn4acp_k$(null, cancelHandler, null, null, null, 29, null);
+                  if (this.__state.atomicfu$compareAndSet(tmp1__anonymous__1, update_4))
+                    return Unit_getInstance();
+                } else {
+                  {
+                    if (cancelHandler instanceof BeforeResumeCancelHandler)
+                      return Unit_getInstance();
+                    else {
+                    }
+                    var update_5 = CompletedContinuation_init_$Create$(tmp1__anonymous__1, cancelHandler, null, null, null, 28, null);
+                    if (this.__state.atomicfu$compareAndSet(tmp1__anonymous__1, update_5))
+                      return Unit_getInstance();
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      Unit_getInstance();
+    }
+  };
   CancellableContinuationImpl.prototype.detachChild_sv8swh_k$ = function () {
     var tmp0_elvis_lhs = this._parentHandle;
     var tmp;
@@ -11843,6 +12765,14 @@
     var handle = tmp;
     handle.dispose_sv8swh_k$();
     this._parentHandle = NonDisposableHandle_getInstance();
+  };
+  CancellableContinuationImpl.prototype.tryResumeWithException_onfaoi_k$ = function (exception) {
+    return tryResumeImpl(this, CompletedExceptionally_init_$Create$(exception, false, 2, null), null, null);
+  };
+  CancellableContinuationImpl.prototype.completeResume_wu1lm5_k$ = function (token) {
+    {
+    }
+    dispatchResume(this, this._get_resumeMode__0_k$());
   };
   CancellableContinuationImpl.prototype.getSuccessfulResult_6jiqgr_k$ = function (state) {
     var tmp0_subject = state;
@@ -11891,6 +12821,7 @@
     interfaces: [CancellableContinuation, CoroutineStackFrame]
   };
   function CancelHandler() {
+    CancelHandlerBase.call(this);
   }
   CancelHandler.$metadata$ = {
     simpleName: 'CancelHandler',
@@ -12035,6 +12966,24 @@
     kind: 'class',
     interfaces: []
   };
+  function InvokeOnCancel(handler) {
+    CancelHandler.call(this);
+    this._handler = handler;
+  }
+  InvokeOnCancel.prototype.invoke_houul8_k$ = function (cause) {
+    this._handler(cause);
+  };
+  InvokeOnCancel.prototype.invoke = function (cause) {
+    return this.invoke_houul8_k$(cause);
+  };
+  InvokeOnCancel.prototype.toString = function () {
+    return '' + 'InvokeOnCancel[' + _get_classSimpleName_(this._handler) + '@' + _get_hexAddress_(this) + ']';
+  };
+  InvokeOnCancel.$metadata$ = {
+    simpleName: 'InvokeOnCancel',
+    kind: 'class',
+    interfaces: []
+  };
   function CompletableDeferred() {
   }
   CompletableDeferred.$metadata$ = {
@@ -12064,6 +13013,10 @@
   CompletableDeferredImpl.prototype._get_onCancelComplete__0_k$ = function () {
     return true;
   };
+  CompletableDeferredImpl.prototype.getCompleted_0_k$ = function () {
+    var tmp = this.getCompletedInternal_0_k$();
+    return (tmp == null ? true : isObject(tmp)) ? tmp : THROW_CCE();
+  };
   CompletableDeferredImpl.prototype.complete_2c5_k$ = function (value) {
     return this.makeCompleting_wi7j7l_k$(value);
   };
@@ -12087,6 +13040,9 @@
   }
   CompletedExceptionally.prototype._get_cause__0_k$ = function () {
     return this._cause;
+  };
+  CompletedExceptionally.prototype._get_handled__0_k$ = function () {
+    return this.__handled._value_3;
   };
   CompletedExceptionally.prototype.makeHandled_0_k$ = function () {
     return this.__handled.atomicfu$compareAndSet(false, true);
@@ -12207,22 +13163,47 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__43() {
+  function recoverResult(state, uCont) {
+    var tmp;
+    if (state instanceof CompletedExceptionally) {
+      var tmp$ret$0;
+      $l$block: {
+        var tmp0_failure_0 = Companion_getInstance_2();
+        var tmp1_failure_0 = recoverStackTrace(state._cause, uCont);
+        tmp$ret$0 = _Result___init__impl_(createFailure(tmp1_failure_0));
+        break $l$block;
+      }
+      tmp = tmp$ret$0;
+    } else {
+      {
+        var tmp$ret$1;
+        $l$block_0: {
+          var tmp2_success_0 = Companion_getInstance_2();
+          var tmp3_success_0 = (state == null ? true : isObject(state)) ? state : THROW_CCE();
+          tmp$ret$1 = _Result___init__impl_(tmp3_success_0);
+          break $l$block_0;
+        }
+        tmp = tmp$ret$1;
+      }
+    }
+    return tmp;
   }
-  _no_name_provided__43.prototype.invoke_k332zt_k$ = function (it) {
+  function _no_name_provided__45() {
+  }
+  _no_name_provided__45.prototype.invoke_k332zt_k$ = function (it) {
     return it instanceof CoroutineDispatcher ? it : null;
   };
-  _no_name_provided__43.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__45.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_k332zt_k$((!(p1 == null) ? isInterface(p1, Element_0) : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__43.$metadata$ = {
+  _no_name_provided__45.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function Key_2() {
     Key_instance_0 = this;
     var tmp = Key_getInstance();
-    AbstractCoroutineContextKey.call(this, tmp, _no_name_provided_$factory_29());
+    AbstractCoroutineContextKey.call(this, tmp, _no_name_provided_$factory_31());
   }
   Key_2.$metadata$ = {
     simpleName: 'Key',
@@ -12257,8 +13238,8 @@
     kind: 'class',
     interfaces: [ContinuationInterceptor]
   };
-  function _no_name_provided_$factory_29() {
-    var i = new _no_name_provided__43();
+  function _no_name_provided_$factory_31() {
+    var i = new _no_name_provided__45();
     return function (p1) {
       return i.invoke_k332zt_k$(p1);
     };
@@ -12320,6 +13301,99 @@
       break $l$block;
     }
     return tmp$ret$0;
+  }
+  function CoroutineScope() {
+  }
+  CoroutineScope.$metadata$ = {
+    simpleName: 'CoroutineScope',
+    kind: 'interface',
+    interfaces: []
+  };
+  function GlobalScope_0() {
+    GlobalScope_instance = this;
+  }
+  GlobalScope_0.prototype._get_coroutineContext__0_k$ = function () {
+    return EmptyCoroutineContext_getInstance();
+  };
+  GlobalScope_0.$metadata$ = {
+    simpleName: 'GlobalScope',
+    kind: 'object',
+    interfaces: [CoroutineScope]
+  };
+  var GlobalScope_instance;
+  function GlobalScope_getInstance() {
+    if (GlobalScope_instance == null)
+      new GlobalScope_0();
+    return GlobalScope_instance;
+  }
+  function coroutineScope(block, $cont) {
+    {
+    }
+    var tmp$ret$0;
+    $l$block: {
+      var tmp0__anonymous__1 = $cont;
+      var coroutine_2 = new ScopeCoroutine(tmp0__anonymous__1._get_context__0_k$(), tmp0__anonymous__1);
+      tmp$ret$0 = startUndispatchedOrReturn(coroutine_2, coroutine_2, block);
+      break $l$block;
+    }
+    return tmp$ret$0;
+  }
+  var CoroutineStart_DEFAULT_instance;
+  var CoroutineStart_LAZY_instance;
+  var CoroutineStart_ATOMIC_instance;
+  var CoroutineStart_UNDISPATCHED_instance;
+  var CoroutineStart_entriesInitialized;
+  function CoroutineStart_initEntries() {
+    if (CoroutineStart_entriesInitialized)
+      return Unit_getInstance();
+    CoroutineStart_entriesInitialized = true;
+    CoroutineStart_DEFAULT_instance = new CoroutineStart('DEFAULT', 0);
+    CoroutineStart_LAZY_instance = new CoroutineStart('LAZY', 1);
+    CoroutineStart_ATOMIC_instance = new CoroutineStart('ATOMIC', 2);
+    CoroutineStart_UNDISPATCHED_instance = new CoroutineStart('UNDISPATCHED', 3);
+  }
+  function CoroutineStart(name, ordinal) {
+    Enum.call(this, name, ordinal);
+  }
+  CoroutineStart.prototype.invoke_huaxoh_k$ = function (block, receiver, completion) {
+    var tmp0_subject = this;
+    var tmp;
+    if (tmp0_subject.equals(CoroutineStart_DEFAULT_getInstance())) {
+      tmp = startCoroutineCancellable$default(block, receiver, completion, null, 4, null);
+    } else if (tmp0_subject.equals(CoroutineStart_ATOMIC_getInstance())) {
+      tmp = startCoroutine(block, receiver, completion);
+    } else if (tmp0_subject.equals(CoroutineStart_UNDISPATCHED_getInstance())) {
+      tmp = startCoroutineUndispatched(block, receiver, completion);
+    } else if (tmp0_subject.equals(CoroutineStart_LAZY_getInstance())) {
+      tmp = Unit_getInstance();
+    } else {
+      noWhenBranchMatchedException();
+    }
+    return tmp;
+  };
+  CoroutineStart.prototype._get_isLazy__0_k$ = function () {
+    return this === CoroutineStart_LAZY_getInstance();
+  };
+  CoroutineStart.$metadata$ = {
+    simpleName: 'CoroutineStart',
+    kind: 'class',
+    interfaces: []
+  };
+  function CoroutineStart_DEFAULT_getInstance() {
+    CoroutineStart_initEntries();
+    return CoroutineStart_DEFAULT_instance;
+  }
+  function CoroutineStart_LAZY_getInstance() {
+    CoroutineStart_initEntries();
+    return CoroutineStart_LAZY_instance;
+  }
+  function CoroutineStart_ATOMIC_getInstance() {
+    CoroutineStart_initEntries();
+    return CoroutineStart_ATOMIC_instance;
+  }
+  function CoroutineStart_UNDISPATCHED_getInstance() {
+    CoroutineStart_initEntries();
+    return CoroutineStart_UNDISPATCHED_instance;
   }
   function CopyableThrowable() {
   }
@@ -13475,6 +14549,10 @@
       return COMPLETING_WAITING_CHILDREN;
     return finalizeFinishingState($this, finishing, proposedUpdate);
   }
+  function _get_exceptionOrNull_(_this_, $this) {
+    var tmp0_safe_receiver = _this_ instanceof CompletedExceptionally ? _this_ : null;
+    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver._cause;
+  }
   function firstChild($this, state) {
     var tmp1_elvis_lhs = state instanceof ChildHandleNode ? state : null;
     var tmp;
@@ -13880,6 +14958,9 @@
       message = null;
     return this.toCancellationException_ntgz4s_k$(_this__0, message);
   };
+  JobSupport.prototype.invokeOnCompletion_wjzpsu_k$ = function (handler) {
+    return this.invokeOnCompletion_431mg2_k$(false, true, handler);
+  };
   JobSupport.prototype.invokeOnCompletion_431mg2_k$ = function (onCancelling, invokeImmediately, handler) {
     var node = makeNode(this, handler, onCancelling);
     {
@@ -14081,6 +15162,25 @@
       Unit_getInstance();
     }
   };
+  JobSupport.prototype.makeCompletingOnce_wi7j7l_k$ = function (proposedUpdate) {
+    {
+      while (true) {
+        var tmp$ret$0;
+        $l$block: {
+          var tmp0__anonymous__1 = this._get_state__0_k$();
+          var finalState_2 = tryMakeCompleting(this, tmp0__anonymous__1, proposedUpdate);
+          if (finalState_2 === COMPLETING_ALREADY)
+            throw IllegalStateException_init_$Create$_1('' + 'Job ' + this + ' is already complete or completing, ' + ('' + 'but is being completed with ' + proposedUpdate), _get_exceptionOrNull_(proposedUpdate, this));
+          else if (finalState_2 === COMPLETING_RETRY) {
+            tmp$ret$0 = Unit_getInstance();
+            break $l$block;
+          } else
+            return finalState_2;
+        }
+      }
+      Unit_getInstance();
+    }
+  };
   JobSupport.prototype.attachChild_o588si_k$ = function (child) {
     var tmp$ret$1;
     $l$block_0: {
@@ -14122,6 +15222,28 @@
   };
   JobSupport.prototype.nameString_0_k$ = function () {
     return _get_classSimpleName_(this);
+  };
+  JobSupport.prototype.getCompletedInternal_0_k$ = function () {
+    var state = this._get_state__0_k$();
+    {
+      {
+      }
+      if (!!(!(state == null) ? isInterface(state, Incomplete) : false)) {
+        var tmp$ret$0;
+        $l$block: {
+          tmp$ret$0 = 'This job has not completed yet';
+          break $l$block;
+        }
+        var message_1 = tmp$ret$0;
+        throw IllegalStateException_init_$Create$_0(toString_3(message_1));
+      } else {
+      }
+    }
+    if (state instanceof CompletedExceptionally)
+      throw state._cause;
+    else {
+    }
+    return unboxState(state);
   };
   JobSupport.$metadata$ = {
     simpleName: 'JobSupport',
@@ -14184,12 +15306,12 @@
   };
   function InvokeOnCancelling(handler) {
     JobCancellingNode.call(this);
-    this._handler = handler;
+    this._handler_0 = handler;
     this.__invoked = atomic_1(0);
   }
   InvokeOnCancelling.prototype.invoke_houul8_k$ = function (cause) {
     if (this.__invoked.atomicfu$compareAndSet(0, 1))
-      this._handler(cause);
+      this._handler_0(cause);
   };
   InvokeOnCancelling.prototype.invoke = function (cause) {
     return this.invoke_houul8_k$(cause);
@@ -14201,10 +15323,10 @@
   };
   function InvokeOnCompletion(handler) {
     JobNode.call(this);
-    this._handler_0 = handler;
+    this._handler_1 = handler;
   }
   InvokeOnCompletion.prototype.invoke_houul8_k$ = function (cause) {
-    return this._handler_0(cause);
+    return this._handler_1(cause);
   };
   InvokeOnCompletion.prototype.invoke = function (cause) {
     return this.invoke_houul8_k$(cause);
@@ -14214,6 +15336,11 @@
     kind: 'class',
     interfaces: []
   };
+  function unboxState(_this_) {
+    var tmp0_safe_receiver = _this_ instanceof IncompleteStateBox ? _this_ : null;
+    var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : tmp0_safe_receiver._state_2;
+    return tmp1_elvis_lhs == null ? _this_ : tmp1_elvis_lhs;
+  }
   function IncompleteStateBox(state) {
     this._state_2 = state;
   }
@@ -14237,6 +15364,41 @@
     kind: 'class',
     interfaces: []
   };
+  function MainCoroutineDispatcher() {
+    CoroutineDispatcher.call(this);
+  }
+  MainCoroutineDispatcher.prototype.toString = function () {
+    var tmp0_elvis_lhs = this.toStringInternalImpl_0_k$();
+    return tmp0_elvis_lhs == null ? '' + _get_classSimpleName_(this) + '@' + _get_hexAddress_(this) : tmp0_elvis_lhs;
+  };
+  MainCoroutineDispatcher.prototype.toStringInternalImpl_0_k$ = function () {
+    var main = Dispatchers_getInstance()._Main;
+    if (this === main)
+      return 'Dispatchers.Main';
+    var tmp;
+    try {
+      tmp = main._get_immediate__0_k$();
+    } catch ($p) {
+      var tmp_0;
+      if ($p instanceof UnsupportedOperationException) {
+        tmp_0 = null;
+      } else {
+        {
+          throw $p;
+        }
+      }
+      tmp = tmp_0;
+    }
+    var immediate = tmp;
+    if (this === immediate)
+      return 'Dispatchers.Main.immediate';
+    return null;
+  };
+  MainCoroutineDispatcher.$metadata$ = {
+    simpleName: 'MainCoroutineDispatcher',
+    kind: 'class',
+    interfaces: []
+  };
   function TimeoutCancellationException() {
   }
   TimeoutCancellationException.$metadata$ = {
@@ -14244,6 +15406,48 @@
     kind: 'class',
     interfaces: [CopyableThrowable]
   };
+  function Unconfined() {
+    Unconfined_instance = this;
+    CoroutineDispatcher.call(this);
+  }
+  Unconfined.prototype.isDispatchNeeded_d7pszg_k$ = function (context) {
+    return false;
+  };
+  Unconfined.prototype.dispatch_7n0ou3_k$ = function (context, block) {
+    var yieldContext = context.get_9uvjra_k$(Key_getInstance_3());
+    if (!(yieldContext == null)) {
+      yieldContext.dispatcherWasUnconfined__error = true;
+      return Unit_getInstance();
+    }throw UnsupportedOperationException_init_$Create$_0('Dispatchers.Unconfined.dispatch function can only be used by the yield function. If you wrap Unconfined dispatcher in your code, make sure you properly delegate isDispatchNeeded and dispatch calls.');
+  };
+  Unconfined.prototype.toString = function () {
+    return 'Dispatchers.Unconfined';
+  };
+  Unconfined.$metadata$ = {
+    simpleName: 'Unconfined',
+    kind: 'object',
+    interfaces: []
+  };
+  var Unconfined_instance;
+  function Unconfined_getInstance() {
+    if (Unconfined_instance == null)
+      new Unconfined();
+    return Unconfined_instance;
+  }
+  function Key_5() {
+    Key_instance_3 = this;
+  }
+  Key_5.$metadata$ = {
+    simpleName: 'Key',
+    kind: 'object',
+    interfaces: [Key_1]
+  };
+  var Key_instance_3;
+  function Key_getInstance_3() {
+    if (Key_instance_3 == null)
+      new Key_5();
+    return Key_instance_3;
+  }
   function ensureCapacity($this) {
     var currentSize = $this._elements.length;
     var newCapacity = currentSize << 1;
@@ -14319,6 +15523,110 @@
   };
   var UNDEFINED;
   var REUSABLE_CLAIMED;
+  function resumeCancellableWith(_this_, result, onCancellation) {
+    var tmp0_subject = _this_;
+    var tmp;
+    if (tmp0_subject instanceof DispatchedContinuation) {
+      var tmp1_resumeCancellableWith_0 = _this_;
+      var state_1 = toState_0(result, onCancellation);
+      var tmp_0;
+      if (tmp1_resumeCancellableWith_0._dispatcher.isDispatchNeeded_d7pszg_k$(tmp1_resumeCancellableWith_0._get_context__0_k$())) {
+        tmp1_resumeCancellableWith_0.__state_1 = state_1;
+        tmp1_resumeCancellableWith_0._set_resumeMode__majfzk_k$(1);
+        tmp_0 = tmp1_resumeCancellableWith_0._dispatcher.dispatch_7n0ou3_k$(tmp1_resumeCancellableWith_0._get_context__0_k$(), tmp1_resumeCancellableWith_0);
+      } else {
+        var tmp$ret$0;
+        $l$block_5: {
+          var tmp0_executeUnconfined_0 = 1;
+          {
+          }
+          var eventLoop_2 = ThreadLocalEventLoop_getInstance()._get_eventLoop__0_k$();
+          if (false ? eventLoop_2._get_isUnconfinedQueueEmpty__0_k$() : false) {
+            tmp$ret$0 = false;
+            break $l$block_5;
+          }var tmp_1;
+          if (eventLoop_2._get_isUnconfinedLoopActive__0_k$()) {
+            tmp1_resumeCancellableWith_0.__state_1 = state_1;
+            tmp1_resumeCancellableWith_0._set_resumeMode__majfzk_k$(tmp0_executeUnconfined_0);
+            eventLoop_2.dispatchUnconfined_3yrun8_k$(tmp1_resumeCancellableWith_0);
+            tmp_1 = true;
+          } else {
+            {
+              eventLoop_2.incrementUseCount_rpwsgn_k$(true);
+              try {
+                {
+                  var tmp$ret$3;
+                  $l$block_3: {
+                    var job_1_4 = tmp1_resumeCancellableWith_0._get_context__0_k$().get_9uvjra_k$(Key_getInstance_2());
+                    if (!(job_1_4 == null) ? !job_1_4._get_isActive__0_k$() : false) {
+                      var cause_2_5 = job_1_4.getCancellationException_0_k$();
+                      tmp1_resumeCancellableWith_0.cancelCompletedResult_6goujk_k$(state_1, cause_2_5);
+                      var tmp$ret$2;
+                      $l$block_1: {
+                        var tmp$ret$1;
+                        $l$block_0: {
+                          var tmp0_failure_0_1_6 = Companion_getInstance_2();
+                          tmp$ret$1 = _Result___init__impl_(createFailure(cause_2_5));
+                          break $l$block_0;
+                        }
+                        tmp$ret$2 = tmp1_resumeCancellableWith_0.resumeWith_bnunh2_k$(tmp$ret$1);
+                        break $l$block_1;
+                      }
+                      tmp$ret$3 = true;
+                      break $l$block_3;
+                    }tmp$ret$3 = false;
+                    break $l$block_3;
+                  }
+                  if (!tmp$ret$3) {
+                    {
+                      var tmp$ret$4;
+                      $l$block_4: {
+                        var tmp0_withContinuationContext_0_7 = tmp1_resumeCancellableWith_0._continuation_2;
+                        var tmp1_withContinuationContext_0_8 = tmp1_resumeCancellableWith_0._countOrElement;
+                        tmp$ret$4 = tmp1_resumeCancellableWith_0._continuation_2.resumeWith_bnunh2_k$(result);
+                        break $l$block_4;
+                      }
+                    }
+                  } else {
+                  }
+                }
+                $l$break: while (true) {
+                  if (!eventLoop_2.processUnconfinedEvent_0_k$())
+                    break $l$break;
+                }
+              } catch ($p) {
+                if ($p instanceof Error) {
+                  tmp1_resumeCancellableWith_0.handleFatalException_amk5yv_k$($p, null);
+                } else {
+                  {
+                    throw $p;
+                  }
+                }
+              }
+              finally {
+                eventLoop_2.decrementUseCount_rpwsgn_k$(true);
+              }
+            }
+            tmp_1 = false;
+          }
+          tmp$ret$0 = tmp_1;
+          break $l$block_5;
+        }
+        tmp_0 = Unit_getInstance();
+      }
+      tmp = tmp_0;
+    } else {
+      {
+        tmp = _this_.resumeWith_bnunh2_k$(result);
+      }
+    }
+    return tmp;
+  }
+  function resumeCancellableWith$default(_this_, result, onCancellation, $mask0, $handler) {
+    if (!(($mask0 & 2) === 0))
+      onCancellation = null;
+    return resumeCancellableWith(_this_, result, onCancellation);
+  }
   function _get_reusableCancellableContinuation_($this) {
     var tmp = $this.__reusableCancellableContinuation._value_2;
     return tmp instanceof CancellableContinuationImpl ? tmp : null;
@@ -14326,13 +15634,13 @@
   function DispatchedContinuation(dispatcher, continuation) {
     DispatchedTask.call(this, -1);
     this._dispatcher = dispatcher;
-    this._continuation = continuation;
+    this._continuation_2 = continuation;
     this.__state_1 = UNDEFINED;
     this._countOrElement = threadContextElements(this._get_context__0_k$());
     this.__reusableCancellableContinuation = atomic(null);
   }
   DispatchedContinuation.prototype._get_context__0_k$ = function () {
-    return this._continuation._get_context__0_k$();
+    return this._continuation_2._get_context__0_k$();
   };
   DispatchedContinuation.prototype.isReusable_0_k$ = function () {
     return !(this.__reusableCancellableContinuation._value_2 == null);
@@ -14438,7 +15746,7 @@
     return this;
   };
   DispatchedContinuation.prototype.resumeWith_bnunh2_k$ = function (result) {
-    var context = this._continuation._get_context__0_k$();
+    var context = this._continuation_2._get_context__0_k$();
     var state = toState$default(result, null, 1, null);
     if (this._dispatcher.isDispatchNeeded_d7pszg_k$(context)) {
       this.__state_1 = state;
@@ -14469,7 +15777,7 @@
                 $l$block_0: {
                   var tmp0_withCoroutineContext_0_4 = this._get_context__0_k$();
                   var tmp1_withCoroutineContext_0_5 = this._countOrElement;
-                  tmp$ret$1 = this._continuation.resumeWith_bnunh2_k$(result);
+                  tmp$ret$1 = this._continuation_2.resumeWith_bnunh2_k$(result);
                   break $l$block_0;
                 }
               }
@@ -14505,7 +15813,7 @@
     }
   };
   DispatchedContinuation.prototype.toString = function () {
-    return '' + 'DispatchedContinuation[' + this._dispatcher + ', ' + toDebugString(this._continuation) + ']';
+    return '' + 'DispatchedContinuation[' + this._dispatcher + ', ' + toDebugString(this._continuation_2) + ']';
   };
   DispatchedContinuation.$metadata$ = {
     simpleName: 'DispatchedContinuation',
@@ -14539,7 +15847,7 @@
     try {
       var tmp = this._get_delegate__0_k$();
       var delegate = tmp instanceof DispatchedContinuation ? tmp : THROW_CCE();
-      var continuation = delegate._continuation;
+      var continuation = delegate._continuation_2;
       var tmp$ret$5;
       $l$block_4: {
         var tmp0_withContinuationContext_0 = delegate._countOrElement;
@@ -14752,14 +16060,34 @@
       var tmp3_resumeUndispatchedWith_0 = delegate instanceof DispatchedContinuation ? delegate : THROW_CCE();
       var tmp$ret$2;
       $l$block_1: {
-        var tmp0_withContinuationContext_0_1 = tmp3_resumeUndispatchedWith_0._continuation;
+        var tmp0_withContinuationContext_0_1 = tmp3_resumeUndispatchedWith_0._continuation_2;
         var tmp1_withContinuationContext_0_2 = tmp3_resumeUndispatchedWith_0._countOrElement;
-        tmp$ret$2 = tmp3_resumeUndispatchedWith_0._continuation.resumeWith_bnunh2_k$(result);
+        tmp$ret$2 = tmp3_resumeUndispatchedWith_0._continuation_2.resumeWith_bnunh2_k$(result);
         break $l$block_1;
       }
     } else
       delegate.resumeWith_bnunh2_k$(result);
   }
+  function ScopeCoroutine(context, uCont) {
+    AbstractCoroutine.call(this, context, true, true);
+    this._uCont = uCont;
+  }
+  ScopeCoroutine.prototype._get_isScopedCoroutine__0_k$ = function () {
+    return true;
+  };
+  ScopeCoroutine.prototype.afterCompletion_qi8yb4_k$ = function (state) {
+    var tmp = intercepted(this._uCont);
+    var tmp_0 = recoverResult(state, this._uCont);
+    resumeCancellableWith$default(tmp, tmp_0, null, 2, null);
+  };
+  ScopeCoroutine.prototype.afterResume_qi8yb4_k$ = function (state) {
+    this._uCont.resumeWith_bnunh2_k$(recoverResult(state, this._uCont));
+  };
+  ScopeCoroutine.$metadata$ = {
+    simpleName: 'ScopeCoroutine',
+    kind: 'class',
+    interfaces: [CoroutineStackFrame]
+  };
   function Symbol(symbol) {
     this._symbol = symbol;
   }
@@ -14771,6 +16099,218 @@
     kind: 'class',
     interfaces: []
   };
+  function startCoroutineCancellable(_this_, receiver, completion, onCancellation) {
+    var tmp;
+    try {
+      var tmp_0 = intercepted(createCoroutineUnintercepted(_this_, receiver, completion));
+      var tmp$ret$0;
+      $l$block: {
+        var tmp0_success_0_3 = Companion_getInstance_2();
+        tmp$ret$0 = _Result___init__impl_(Unit_getInstance());
+        break $l$block;
+      }
+      tmp = resumeCancellableWith(tmp_0, tmp$ret$0, onCancellation);
+    } catch ($p) {
+      var tmp_1;
+      if ($p instanceof Error) {
+        tmp_1 = dispatcherFailure(completion, $p);
+      } else {
+        {
+          throw $p;
+        }
+      }
+      tmp = tmp_1;
+    }
+    return tmp;
+  }
+  function startCoroutineCancellable$default(_this_, receiver, completion, onCancellation, $mask0, $handler) {
+    if (!(($mask0 & 4) === 0))
+      onCancellation = null;
+    return startCoroutineCancellable(_this_, receiver, completion, onCancellation);
+  }
+  function dispatcherFailure(completion, e) {
+    var tmp$ret$0;
+    $l$block: {
+      var tmp0_failure_0 = Companion_getInstance_2();
+      tmp$ret$0 = _Result___init__impl_(createFailure(e));
+      break $l$block;
+    }
+    completion.resumeWith_bnunh2_k$(tmp$ret$0);
+    throw e;
+  }
+  function startCoroutineCancellable_0(_this_, fatalCompletion) {
+    var tmp;
+    try {
+      var tmp_0 = intercepted(_this_);
+      var tmp$ret$0;
+      $l$block: {
+        var tmp0_success_0_3 = Companion_getInstance_2();
+        tmp$ret$0 = _Result___init__impl_(Unit_getInstance());
+        break $l$block;
+      }
+      var tmp_1 = tmp$ret$0;
+      tmp = resumeCancellableWith$default(tmp_0, tmp_1, null, 2, null);
+    } catch ($p) {
+      var tmp_2;
+      if ($p instanceof Error) {
+        tmp_2 = dispatcherFailure(fatalCompletion, $p);
+      } else {
+        {
+          throw $p;
+        }
+      }
+      tmp = tmp_2;
+    }
+    return tmp;
+  }
+  function startUndispatchedOrReturn(_this_, receiver, block) {
+    var tmp$ret$3;
+    $l$block_5: {
+      var tmp;
+      try {
+        var tmp$ret$2;
+        $l$block_1: {
+          var tmp$ret$1;
+          $l$block_0: {
+            var tmp$ret$0;
+            $l$block: {
+              tmp$ret$0 = block;
+              break $l$block;
+            }
+            tmp$ret$1 = tmp$ret$0(receiver, _this_);
+            break $l$block_0;
+          }
+          tmp$ret$2 = tmp$ret$1;
+          break $l$block_1;
+        }
+        tmp = tmp$ret$2;
+      } catch ($p) {
+        var tmp_0;
+        if ($p instanceof Error) {
+          tmp_0 = CompletedExceptionally_init_$Create$($p, false, 2, null);
+        } else {
+          {
+            throw $p;
+          }
+        }
+        tmp = tmp_0;
+      }
+      var result_1 = tmp;
+      if (result_1 === _get_COROUTINE_SUSPENDED_()) {
+        tmp$ret$3 = _get_COROUTINE_SUSPENDED_();
+        break $l$block_5;
+      }var state_3 = _this_.makeCompletingOnce_wi7j7l_k$(result_1);
+      if (state_3 === COMPLETING_WAITING_CHILDREN) {
+        tmp$ret$3 = _get_COROUTINE_SUSPENDED_();
+        break $l$block_5;
+      }var tmp_1;
+      if (state_3 instanceof CompletedExceptionally) {
+        var tmp_2;
+        var tmp$ret$4;
+        $l$block_4: {
+          var tmp0__anonymous__5 = state_3._cause;
+          tmp$ret$4 = true;
+          break $l$block_4;
+        }
+        if (tmp$ret$4) {
+          throw recoverStackTrace(state_3._cause, _this_._uCont);
+        } else {
+          if (result_1 instanceof CompletedExceptionally) {
+            throw recoverStackTrace(result_1._cause, _this_._uCont);
+          } else {
+            {
+              tmp_2 = result_1;
+            }
+          }
+        }
+        tmp_1 = tmp_2;
+      } else {
+        {
+          tmp_1 = unboxState(state_3);
+        }
+      }
+      tmp$ret$3 = tmp_1;
+      break $l$block_5;
+    }
+    return tmp$ret$3;
+  }
+  function startCoroutineUndispatched(_this_, receiver, completion) {
+    var tmp$ret$8;
+    $l$block_7: {
+      var tmp$ret$0;
+      $l$block: {
+        tmp$ret$0 = completion;
+        break $l$block;
+      }
+      var actualCompletion_1 = tmp$ret$0;
+      var tmp;
+      try {
+        var tmp$ret$5;
+        $l$block_4: {
+          var tmp$ret$4;
+          $l$block_3: {
+            var tmp0_withCoroutineContext_0_8 = completion._get_context__0_k$();
+            var tmp$ret$3;
+            $l$block_2: {
+              var tmp$ret$2;
+              $l$block_1: {
+                var tmp$ret$1;
+                $l$block_0: {
+                  tmp$ret$1 = _this_;
+                  break $l$block_0;
+                }
+                tmp$ret$2 = tmp$ret$1(receiver, actualCompletion_1);
+                break $l$block_1;
+              }
+              tmp$ret$3 = tmp$ret$2;
+              break $l$block_2;
+            }
+            tmp$ret$4 = tmp$ret$3;
+            break $l$block_3;
+          }
+          tmp$ret$5 = tmp$ret$4;
+          break $l$block_4;
+        }
+        tmp = tmp$ret$5;
+      } catch ($p) {
+        var tmp_0;
+        if ($p instanceof Error) {
+          var tmp$ret$7;
+          $l$block_6: {
+            var tmp$ret$6;
+            $l$block_5: {
+              var tmp0_failure_0_1_4 = Companion_getInstance_2();
+              tmp$ret$6 = _Result___init__impl_(createFailure($p));
+              break $l$block_5;
+            }
+            tmp$ret$7 = actualCompletion_1.resumeWith_bnunh2_k$(tmp$ret$6);
+            break $l$block_6;
+          }
+          tmp$ret$8 = Unit_getInstance();
+          break $l$block_7;
+        } else {
+          {
+            throw $p;
+          }
+        }
+        tmp = tmp_0;
+      }
+      var value_2 = tmp;
+      if (!(value_2 === _get_COROUTINE_SUSPENDED_())) {
+        var tmp$ret$10;
+        $l$block_9: {
+          var tmp0_resume_0_5 = (value_2 == null ? true : isObject(value_2)) ? value_2 : THROW_CCE();
+          var tmp$ret$9;
+          $l$block_8: {
+            var tmp0_success_0_1_6 = Companion_getInstance_2();
+            tmp$ret$9 = _Result___init__impl_(tmp0_resume_0_5);
+            break $l$block_8;
+          }
+          tmp$ret$10 = actualCompletion_1.resumeWith_bnunh2_k$(tmp$ret$9);
+          break $l$block_9;
+        }
+      }}
+  }
   function SelectClause0() {
   }
   SelectClause0.$metadata$ = {
@@ -14816,6 +16356,61 @@
   function toDebugString(_this_) {
     return toString_3(_this_);
   }
+  function newCoroutineContext(_this_, context) {
+    var combined = _this_._get_coroutineContext__0_k$().plus_d7pszg_k$(context);
+    return (!(combined === Dispatchers_getInstance()._Default) ? combined.get_9uvjra_k$(Key_getInstance()) == null : false) ? combined.plus_d7pszg_k$(Dispatchers_getInstance()._Default) : combined;
+  }
+  function _get_coroutineName_(_this_) {
+    return null;
+  }
+  function createDefaultDispatcher() {
+    var tmp;
+    if (isJsdom()) {
+      tmp = NodeDispatcher_getInstance();
+    } else {
+      var tmp_0;
+      var tmp_1;
+      if (!(typeof window === 'undefined')) {
+        var tmp$ret$0;
+        $l$block: {
+          var tmp0_asDynamic_0 = window;
+          tmp$ret$0 = tmp0_asDynamic_0;
+          break $l$block;
+        }
+        tmp_1 = tmp$ret$0 != null;
+      } else {
+        tmp_1 = false;
+      }
+      if (tmp_1) {
+        var tmp$ret$1;
+        $l$block_0: {
+          var tmp1_asDynamic_0 = window;
+          tmp$ret$1 = tmp1_asDynamic_0;
+          break $l$block_0;
+        }
+        tmp_0 = !(typeof tmp$ret$1.addEventListener === 'undefined');
+      } else {
+        {
+          tmp_0 = false;
+        }
+      }
+      if (tmp_0) {
+        tmp = asCoroutineDispatcher(window);
+      } else {
+        if (typeof process === 'undefined' ? true : typeof process.nextTick === 'undefined') {
+          tmp = SetTimeoutDispatcher_getInstance();
+        } else {
+          {
+            tmp = NodeDispatcher_getInstance();
+          }
+        }
+      }
+    }
+    return tmp;
+  }
+  function isJsdom() {
+    return ((((!(typeof navigator === 'undefined') ? navigator != null : false) ? navigator.userAgent != null : false) ? !(typeof navigator.userAgent === 'undefined') : false) ? !(typeof navigator.userAgent.match === 'undefined') : false) ? navigator.userAgent.match('\\bjsdom\\b') : false;
+  }
   function handleCoroutineExceptionImpl(context, exception) {
     console.error(exception);
   }
@@ -14843,6 +16438,47 @@
       tmp$ret$1.__debug_counter = result;
     }return ((!(result == null) ? typeof result === 'number' : false) ? result : THROW_CCE()).toString();
   }
+  function Dispatchers() {
+    Dispatchers_instance = this;
+    this._Default = createDefaultDispatcher();
+    this._Main = new JsMainDispatcher(this._Default, false);
+    this._Unconfined = Unconfined_getInstance();
+  }
+  Dispatchers.$metadata$ = {
+    simpleName: 'Dispatchers',
+    kind: 'object',
+    interfaces: []
+  };
+  var Dispatchers_instance;
+  function Dispatchers_getInstance() {
+    if (Dispatchers_instance == null)
+      new Dispatchers();
+    return Dispatchers_instance;
+  }
+  function JsMainDispatcher(delegate, invokeImmediately) {
+    MainCoroutineDispatcher.call(this);
+    this._delegate_0 = delegate;
+    this._invokeImmediately = invokeImmediately;
+    this._immediate = this._invokeImmediately ? this : new JsMainDispatcher(this._delegate_0, true);
+  }
+  JsMainDispatcher.prototype._get_immediate__0_k$ = function () {
+    return this._immediate;
+  };
+  JsMainDispatcher.prototype.isDispatchNeeded_d7pszg_k$ = function (context) {
+    return !this._invokeImmediately;
+  };
+  JsMainDispatcher.prototype.dispatch_7n0ou3_k$ = function (context, block) {
+    return this._delegate_0.dispatch_7n0ou3_k$(context, block);
+  };
+  JsMainDispatcher.prototype.toString = function () {
+    var tmp0_elvis_lhs = this.toStringInternalImpl_0_k$();
+    return tmp0_elvis_lhs == null ? this._delegate_0.toString() : tmp0_elvis_lhs;
+  };
+  JsMainDispatcher.$metadata$ = {
+    simpleName: 'JsMainDispatcher',
+    kind: 'class',
+    interfaces: []
+  };
   function createEventLoop() {
     return new UnconfinedEventLoop();
   }
@@ -14912,6 +16548,222 @@
     kind: 'class',
     interfaces: []
   };
+  function NodeDispatcher() {
+    NodeDispatcher_instance = this;
+    SetTimeoutBasedDispatcher.call(this);
+  }
+  NodeDispatcher.prototype.scheduleQueueProcessing_sv8swh_k$ = function () {
+    process.nextTick(this._get_messageQueue__0_k$()._processQueue);
+  };
+  NodeDispatcher.$metadata$ = {
+    simpleName: 'NodeDispatcher',
+    kind: 'object',
+    interfaces: []
+  };
+  var NodeDispatcher_instance;
+  function NodeDispatcher_getInstance() {
+    if (NodeDispatcher_instance == null)
+      new NodeDispatcher();
+    return NodeDispatcher_instance;
+  }
+  function SetTimeoutDispatcher() {
+    SetTimeoutDispatcher_instance = this;
+    SetTimeoutBasedDispatcher.call(this);
+  }
+  SetTimeoutDispatcher.prototype.scheduleQueueProcessing_sv8swh_k$ = function () {
+    setTimeout(this._get_messageQueue__0_k$()._processQueue, 0);
+    Unit_getInstance();
+  };
+  SetTimeoutDispatcher.$metadata$ = {
+    simpleName: 'SetTimeoutDispatcher',
+    kind: 'object',
+    interfaces: []
+  };
+  var SetTimeoutDispatcher_instance;
+  function SetTimeoutDispatcher_getInstance() {
+    if (SetTimeoutDispatcher_instance == null)
+      new SetTimeoutDispatcher();
+    return SetTimeoutDispatcher_instance;
+  }
+  function _no_name_provided__46(this$0) {
+    this._this$0_8 = this$0;
+  }
+  _no_name_provided__46.prototype.invoke_sv8swh_k$ = function () {
+    this._this$0_8.process_sv8swh_k$();
+  };
+  _no_name_provided__46.prototype.invoke_0_k$ = function () {
+    this.invoke_sv8swh_k$();
+    return Unit_getInstance();
+  };
+  _no_name_provided__46.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function ScheduledMessageQueue($outer) {
+    this._$this_9 = $outer;
+    MessageQueue.call(this);
+    var tmp = this;
+    tmp._processQueue = _no_name_provided_$factory_32(this);
+  }
+  ScheduledMessageQueue.prototype.schedule_sv8swh_k$ = function () {
+    this._$this_9.scheduleQueueProcessing_sv8swh_k$();
+  };
+  ScheduledMessageQueue.prototype.reschedule_sv8swh_k$ = function () {
+    setTimeout(this._processQueue, 0);
+    Unit_getInstance();
+  };
+  ScheduledMessageQueue.$metadata$ = {
+    simpleName: 'ScheduledMessageQueue',
+    kind: 'class',
+    interfaces: []
+  };
+  function SetTimeoutBasedDispatcher() {
+    CoroutineDispatcher.call(this);
+    this._messageQueue = new ScheduledMessageQueue(this);
+  }
+  SetTimeoutBasedDispatcher.prototype._get_messageQueue__0_k$ = function () {
+    return this._messageQueue;
+  };
+  SetTimeoutBasedDispatcher.prototype.dispatch_7n0ou3_k$ = function (context, block) {
+    this._messageQueue.enqueue_iz8ddj_k$(block);
+  };
+  SetTimeoutBasedDispatcher.$metadata$ = {
+    simpleName: 'SetTimeoutBasedDispatcher',
+    kind: 'class',
+    interfaces: [Delay]
+  };
+  function MessageQueue() {
+    ArrayQueue.call(this);
+    this._yieldEvery = 16;
+    this._scheduled = false;
+  }
+  MessageQueue.prototype.enqueue_iz8ddj_k$ = function (element) {
+    this.addLast_iav7o_k$(element);
+    if (!this._scheduled) {
+      this._scheduled = true;
+      this.schedule_sv8swh_k$();
+    }};
+  MessageQueue.prototype.process_sv8swh_k$ = function () {
+    try {
+      {
+        var tmp0_repeat_0 = this._yieldEvery;
+        {
+        }
+        var inductionVariable = 0;
+        if (inductionVariable < tmp0_repeat_0)
+          do {
+            var index_2 = inductionVariable;
+            inductionVariable = inductionVariable + 1 | 0;
+            {
+              var tmp0_elvis_lhs_5 = this.removeFirstOrNull_0_k$();
+              var tmp;
+              if (tmp0_elvis_lhs_5 == null) {
+                return Unit_getInstance();
+              } else {
+                tmp = tmp0_elvis_lhs_5;
+              }
+              var element_4 = tmp;
+              element_4.run_sv8swh_k$();
+            }
+          }
+           while (inductionVariable < tmp0_repeat_0);
+      }
+    }finally {
+      if (this._get_isEmpty__0_k$()) {
+        this._scheduled = false;
+      } else {
+        this.reschedule_sv8swh_k$();
+      }
+    }
+  };
+  MessageQueue.$metadata$ = {
+    simpleName: 'MessageQueue',
+    kind: 'class',
+    interfaces: []
+  };
+  function WindowDispatcher(window_0) {
+    CoroutineDispatcher.call(this);
+    this._window = window_0;
+    this._queue = new WindowMessageQueue(this._window);
+  }
+  WindowDispatcher.prototype.dispatch_7n0ou3_k$ = function (context, block) {
+    return this._queue.enqueue_iz8ddj_k$(block);
+  };
+  WindowDispatcher.$metadata$ = {
+    simpleName: 'WindowDispatcher',
+    kind: 'class',
+    interfaces: [Delay]
+  };
+  function _no_name_provided__47(this$0) {
+    this._this$0_9 = this$0;
+  }
+  _no_name_provided__47.prototype.invoke_h9nkbz_k$ = function (event) {
+    if (event.source == this._this$0_9._window_0 ? event.data == this._this$0_9._messageName : false) {
+      event.stopPropagation();
+      this._this$0_9.process_sv8swh_k$();
+    }};
+  _no_name_provided__47.prototype.invoke_20e8_k$ = function (p1) {
+    this.invoke_h9nkbz_k$((p1 == null ? true : p1) ? p1 : THROW_CCE());
+    return Unit_getInstance();
+  };
+  _no_name_provided__47.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__48(this$0) {
+    this._this$0_10 = this$0;
+  }
+  _no_name_provided__48.prototype.invoke_89eg7z_k$ = function (it) {
+    this._this$0_10.process_sv8swh_k$();
+  };
+  _no_name_provided__48.prototype.invoke_20e8_k$ = function (p1) {
+    this.invoke_89eg7z_k$(p1 instanceof Unit ? p1 : THROW_CCE());
+    return Unit_getInstance();
+  };
+  _no_name_provided__48.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function WindowMessageQueue(window_0) {
+    MessageQueue.call(this);
+    this._window_0 = window_0;
+    this._messageName = 'dispatchCoroutine';
+    this._window_0.addEventListener('message', _no_name_provided_$factory_33(this), true);
+  }
+  WindowMessageQueue.prototype.schedule_sv8swh_k$ = function () {
+    var tmp = Promise.resolve(Unit_getInstance());
+    tmp.then(_no_name_provided_$factory_34(this));
+    Unit_getInstance();
+  };
+  WindowMessageQueue.prototype.reschedule_sv8swh_k$ = function () {
+    this._window_0.postMessage(this._messageName, '*');
+  };
+  WindowMessageQueue.$metadata$ = {
+    simpleName: 'WindowMessageQueue',
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided_$factory_32(this$0) {
+    var i = new _no_name_provided__46(this$0);
+    return function () {
+      i.invoke_sv8swh_k$();
+      return Unit_getInstance();
+    };
+  }
+  function _no_name_provided_$factory_33(this$0) {
+    var i = new _no_name_provided__47(this$0);
+    return function (p1) {
+      i.invoke_h9nkbz_k$(p1);
+      return Unit_getInstance();
+    };
+  }
+  function _no_name_provided_$factory_34(this$0) {
+    var i = new _no_name_provided__48(this$0);
+    return function (p1) {
+      i.invoke_89eg7z_k$(p1);
+      return Unit_getInstance();
+    };
+  }
   function await_0(_this_, $cont) {
     var tmp$ret$0;
     $l$block: {
@@ -14919,8 +16771,8 @@
       var cancellable_2_2 = new CancellableContinuationImpl(intercepted(tmp0__anonymous__1_1), 1);
       cancellable_2_2.initCancellability_sv8swh_k$();
       {
-        var tmp = _no_name_provided_$factory_30(cancellable_2_2);
-        _this_.then(tmp, _no_name_provided_$factory_31(cancellable_2_2));
+        var tmp = _no_name_provided_$factory_35(cancellable_2_2);
+        _this_.then(tmp, _no_name_provided_$factory_36(cancellable_2_2));
         Unit_getInstance();
       }
       tmp$ret$0 = cancellable_2_2.getResult_0_k$();
@@ -14928,10 +16780,10 @@
     }
     return tmp$ret$0;
   }
-  function _no_name_provided__44($cancellable_2_2) {
+  function _no_name_provided__49($cancellable_2_2) {
     this._$cancellable_2_2 = $cancellable_2_2;
   }
-  _no_name_provided__44.prototype.invoke_iav7o_k$ = function (it) {
+  _no_name_provided__49.prototype.invoke_iav7o_k$ = function (it) {
     var tmp$ret$1;
     $l$block_0: {
       var tmp$ret$0;
@@ -14944,18 +16796,18 @@
       break $l$block_0;
     }
   };
-  _no_name_provided__44.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__49.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_iav7o_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__44.$metadata$ = {
+  _no_name_provided__49.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__45($cancellable_2_2) {
+  function _no_name_provided__50($cancellable_2_2) {
     this._$cancellable_2_2_0 = $cancellable_2_2;
   }
-  _no_name_provided__45.prototype.invoke_1ti8hr_k$ = function (it) {
+  _no_name_provided__50.prototype.invoke_1ti8hr_k$ = function (it) {
     var tmp$ret$1;
     $l$block_0: {
       var tmp$ret$0;
@@ -14968,23 +16820,23 @@
       break $l$block_0;
     }
   };
-  _no_name_provided__45.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__50.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_1ti8hr_k$(p1 instanceof Error ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__45.$metadata$ = {
+  _no_name_provided__50.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_30($cancellable_2_2) {
-    var i = new _no_name_provided__44($cancellable_2_2);
+  function _no_name_provided_$factory_35($cancellable_2_2) {
+    var i = new _no_name_provided__49($cancellable_2_2);
     return function (p1) {
       i.invoke_iav7o_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_31($cancellable_2_2) {
-    var i = new _no_name_provided__45($cancellable_2_2);
+  function _no_name_provided_$factory_36($cancellable_2_2) {
+    var i = new _no_name_provided__50($cancellable_2_2);
     return function (p1) {
       i.invoke_1ti8hr_k$(p1);
       return Unit_getInstance();
@@ -15006,6 +16858,37 @@
   };
   function _get_taskContext_(_this_) {
     return Unit_getInstance();
+  }
+  function asCoroutineDispatcher(_this_) {
+    var tmp$ret$0;
+    $l$block: {
+      tmp$ret$0 = _this_;
+      break $l$block;
+    }
+    var tmp0_elvis_lhs = tmp$ret$0.coroutineDispatcher;
+    var tmp;
+    if (tmp0_elvis_lhs == null) {
+      var tmp$ret$2;
+      $l$block_1: {
+        var tmp0_also_0 = new WindowDispatcher(_this_);
+        {
+        }
+        {
+          var tmp$ret$1;
+          $l$block_0: {
+            tmp$ret$1 = _this_;
+            break $l$block_0;
+          }
+          tmp$ret$1.coroutineDispatcher = tmp0_also_0;
+        }
+        tmp$ret$2 = tmp0_also_0;
+        break $l$block_1;
+      }
+      tmp = tmp$ret$2;
+    } else {
+      tmp = tmp0_elvis_lhs;
+    }
+    return tmp;
   }
   function identitySet(expectedSize) {
     return HashSet_init_$Create$(expectedSize);
@@ -15088,6 +16971,582 @@
     kind: 'class',
     interfaces: []
   };
+  function ensureNeverFrozen(_this_) {
+  }
+  function SerialDescriptor() {
+  }
+  SerialDescriptor.$metadata$ = {
+    simpleName: 'SerialDescriptor',
+    kind: 'interface',
+    interfaces: []
+  };
+  function _get_elementDescriptors_(_this_) {
+    var tmp$ret$0;
+    $l$block: {
+      tmp$ret$0 = new _no_name_provided__1_2(_this_);
+      break $l$block;
+    }
+    return tmp$ret$0;
+  }
+  function _no_name_provided__51($this_elementDescriptors) {
+    this._$this_elementDescriptors = $this_elementDescriptors;
+    this._elementsLeft = this._$this_elementDescriptors._get_elementsCount__0_k$();
+  }
+  _no_name_provided__51.prototype.hasNext_0_k$ = function () {
+    return this._elementsLeft > 0;
+  };
+  _no_name_provided__51.prototype.next_0_k$ = function () {
+    var tmp = this._$this_elementDescriptors._get_elementsCount__0_k$();
+    var tmp0_this = this;
+    var tmp1 = tmp0_this._elementsLeft;
+    tmp0_this._elementsLeft = tmp1 - 1 | 0;
+    return this._$this_elementDescriptors.getElementDescriptor_ha5a7z_k$(tmp - tmp1 | 0);
+  };
+  _no_name_provided__51.$metadata$ = {
+    kind: 'class',
+    interfaces: [Iterator_0]
+  };
+  function _no_name_provided__1_2($this_elementDescriptors) {
+    this._$this_elementDescriptors_0 = $this_elementDescriptors;
+  }
+  _no_name_provided__1_2.prototype.iterator_2_0_k$ = function () {
+    var tmp$ret$0;
+    $l$block: {
+      tmp$ret$0 = new _no_name_provided__51(this._$this_elementDescriptors_0);
+      break $l$block;
+    }
+    return tmp$ret$0;
+  };
+  _no_name_provided__1_2.prototype.iterator_0_k$ = function () {
+    return this.iterator_2_0_k$();
+  };
+  _no_name_provided__1_2.$metadata$ = {
+    simpleName: '<no name provided>_1',
+    kind: 'class',
+    interfaces: [Iterable_0]
+  };
+  function SerialKind() {
+  }
+  SerialKind.prototype.toString = function () {
+    return ensureNotNull(getKClassFromExpression_0(this)._get_simpleName__0_k$());
+  };
+  SerialKind.prototype.hashCode = function () {
+    return getStringHashCode(this.toString());
+  };
+  SerialKind.$metadata$ = {
+    simpleName: 'SerialKind',
+    kind: 'class',
+    interfaces: []
+  };
+  function CLASS() {
+    CLASS_instance = this;
+    StructureKind.call(this);
+  }
+  CLASS.$metadata$ = {
+    simpleName: 'CLASS',
+    kind: 'object',
+    interfaces: []
+  };
+  var CLASS_instance;
+  function CLASS_getInstance() {
+    if (CLASS_instance == null)
+      new CLASS();
+    return CLASS_instance;
+  }
+  function StructureKind() {
+    SerialKind.call(this);
+  }
+  StructureKind.$metadata$ = {
+    simpleName: 'StructureKind',
+    kind: 'class',
+    interfaces: []
+  };
+  function CachedNames() {
+  }
+  CachedNames.$metadata$ = {
+    simpleName: 'CachedNames',
+    kind: 'interface',
+    interfaces: []
+  };
+  var EMPTY_DESCRIPTOR_ARRAY;
+  function compactArray(_this_) {
+    var tmp$ret$2;
+    $l$block_1: {
+      {
+      }
+      var tmp;
+      var tmp$ret$1;
+      $l$block_0: {
+        var tmp$ret$0;
+        $l$block: {
+          {
+          }
+          tmp$ret$0 = _this_ == null ? true : _this_.isEmpty_0_k$();
+          break $l$block;
+        }
+        tmp$ret$1 = tmp$ret$0;
+        break $l$block_0;
+      }
+      if (!tmp$ret$1) {
+        tmp = _this_;
+      } else {
+        {
+          tmp = null;
+        }
+      }
+      tmp$ret$2 = tmp;
+      break $l$block_1;
+    }
+    var tmp0_safe_receiver = tmp$ret$2;
+    var tmp_0;
+    if (tmp0_safe_receiver == null) {
+      tmp_0 = null;
+    } else {
+      var tmp$ret$3;
+      $l$block_2: {
+        tmp$ret$3 = copyToArray_0(tmp0_safe_receiver);
+        break $l$block_2;
+      }
+      tmp_0 = tmp$ret$3;
+    }
+    var tmp1_elvis_lhs = tmp_0;
+    return tmp1_elvis_lhs == null ? EMPTY_DESCRIPTOR_ARRAY : tmp1_elvis_lhs;
+  }
+  function EMPTY_DESCRIPTOR_ARRAY$init$() {
+    var tmp$ret$2;
+    $l$block_1: {
+      var tmp$ret$1;
+      $l$block_0: {
+        var tmp$ret$0;
+        $l$block: {
+          tmp$ret$0 = [];
+          break $l$block;
+        }
+        tmp$ret$1 = tmp$ret$0;
+        break $l$block_0;
+      }
+      tmp$ret$2 = tmp$ret$1;
+      break $l$block_1;
+    }
+    return tmp$ret$2;
+  }
+  function hashCodeImpl(_this_, typeParams) {
+    var result = getStringHashCode(_this_._get_serialName__0_k$());
+    result = imul(31, result) + contentHashCode(typeParams) | 0;
+    var elementDescriptors = _get_elementDescriptors_(_this_);
+    var tmp$ret$4;
+    $l$block_3: {
+      var tmp$ret$3;
+      $l$block_2: {
+        var accumulator_1_1 = 1;
+        var tmp0_iterator_2_2 = elementDescriptors.iterator_0_k$();
+        while (tmp0_iterator_2_2.hasNext_0_k$()) {
+          var element_3_3 = tmp0_iterator_2_2.next_0_k$();
+          var tmp$ret$2;
+          $l$block_1: {
+            var tmp0__anonymous__4_4 = accumulator_1_1;
+            var tmp = imul(31, tmp0__anonymous__4_4);
+            var tmp$ret$1;
+            $l$block_0: {
+              var tmp$ret$0;
+              $l$block: {
+                tmp$ret$0 = element_3_3._get_serialName__0_k$();
+                break $l$block;
+              }
+              var tmp0_hashCode_0_5_5 = tmp$ret$0;
+              var tmp0_safe_receiver_2_7_7 = tmp0_hashCode_0_5_5;
+              var tmp1_elvis_lhs_1_6_6 = tmp0_safe_receiver_2_7_7 == null ? null : hashCode(tmp0_safe_receiver_2_7_7);
+              tmp$ret$1 = tmp1_elvis_lhs_1_6_6 == null ? 0 : tmp1_elvis_lhs_1_6_6;
+              break $l$block_0;
+            }
+            tmp$ret$2 = tmp + tmp$ret$1 | 0;
+            break $l$block_1;
+          }
+          accumulator_1_1 = tmp$ret$2;
+        }
+        tmp$ret$3 = accumulator_1_1;
+        break $l$block_2;
+      }
+      tmp$ret$4 = tmp$ret$3;
+      break $l$block_3;
+    }
+    var namesHash = tmp$ret$4;
+    var tmp$ret$9;
+    $l$block_8: {
+      var tmp$ret$8;
+      $l$block_7: {
+        var accumulator_1_1_0 = 1;
+        var tmp0_iterator_2_2_0 = elementDescriptors.iterator_0_k$();
+        while (tmp0_iterator_2_2_0.hasNext_0_k$()) {
+          var element_3_3_0 = tmp0_iterator_2_2_0.next_0_k$();
+          var tmp$ret$7;
+          $l$block_6: {
+            var tmp0__anonymous__4_4_0 = accumulator_1_1_0;
+            var tmp_0 = imul(31, tmp0__anonymous__4_4_0);
+            var tmp$ret$6;
+            $l$block_5: {
+              var tmp$ret$5;
+              $l$block_4: {
+                tmp$ret$5 = element_3_3_0._get_kind__0_k$();
+                break $l$block_4;
+              }
+              var tmp0_hashCode_0_5_5_0 = tmp$ret$5;
+              var tmp0_safe_receiver_2_7_7_0 = tmp0_hashCode_0_5_5_0;
+              var tmp1_elvis_lhs_1_6_6_0 = tmp0_safe_receiver_2_7_7_0 == null ? null : hashCode(tmp0_safe_receiver_2_7_7_0);
+              tmp$ret$6 = tmp1_elvis_lhs_1_6_6_0 == null ? 0 : tmp1_elvis_lhs_1_6_6_0;
+              break $l$block_5;
+            }
+            tmp$ret$7 = tmp_0 + tmp$ret$6 | 0;
+            break $l$block_6;
+          }
+          accumulator_1_1_0 = tmp$ret$7;
+        }
+        tmp$ret$8 = accumulator_1_1_0;
+        break $l$block_7;
+      }
+      tmp$ret$9 = tmp$ret$8;
+      break $l$block_8;
+    }
+    var kindHash = tmp$ret$9;
+    result = imul(31, result) + namesHash | 0;
+    result = imul(31, result) + kindHash | 0;
+    return result;
+  }
+  function _get_childSerializers_($this) {
+    var tmp$ret$0;
+    $l$block: {
+      var tmp0_getValue_0 = childSerializers$factory();
+      tmp$ret$0 = $this._childSerializers$delegate._get_value__0_k$();
+      break $l$block;
+    }
+    return tmp$ret$0;
+  }
+  function _get__hashCode_($this) {
+    var tmp$ret$0;
+    $l$block: {
+      var tmp0_getValue_0 = _hashCode$factory();
+      tmp$ret$0 = $this.__hashCode$delegate._get_value__0_k$();
+      break $l$block;
+    }
+    return tmp$ret$0;
+  }
+  function buildIndices($this) {
+    var indices = HashMap_init_$Create$();
+    var inductionVariable = 0;
+    var last_0 = $this._names.length - 1 | 0;
+    if (inductionVariable <= last_0)
+      do {
+        var i = inductionVariable;
+        inductionVariable = inductionVariable + 1 | 0;
+        {
+          var tmp0_set_0 = $this._names[i];
+          indices.put_1q9pf_k$(tmp0_set_0, i);
+          Unit_getInstance();
+        }
+      }
+       while (inductionVariable <= last_0);
+    return indices;
+  }
+  function _no_name_provided__52(this$0) {
+    this._this$0_11 = this$0;
+  }
+  _no_name_provided__52.prototype.invoke_0_k$ = function () {
+    var tmp0_safe_receiver = this._this$0_11._generatedSerializer;
+    var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : tmp0_safe_receiver.childSerializers_0_k$();
+    var tmp;
+    if (tmp1_elvis_lhs == null) {
+      var tmp$ret$0;
+      $l$block: {
+        tmp$ret$0 = [];
+        break $l$block;
+      }
+      tmp = tmp$ret$0;
+    } else {
+      tmp = tmp1_elvis_lhs;
+    }
+    return tmp;
+  };
+  _no_name_provided__52.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__53(this$0) {
+    this._this$0_12 = this$0;
+  }
+  _no_name_provided__53.prototype.invoke_0_k$ = function () {
+    var tmp0_safe_receiver = this._this$0_12._generatedSerializer;
+    var tmp1_safe_receiver = tmp0_safe_receiver == null ? null : tmp0_safe_receiver.typeParametersSerializers_0_k$();
+    var tmp;
+    if (tmp1_safe_receiver == null) {
+      tmp = null;
+    } else {
+      var tmp$ret$2;
+      $l$block_1: {
+        var tmp$ret$1;
+        $l$block_0: {
+          var tmp0_mapTo_0_1 = ArrayList_init_$Create$_0(tmp1_safe_receiver.length);
+          var tmp0_iterator_1_2 = arrayIterator(tmp1_safe_receiver);
+          while (tmp0_iterator_1_2.hasNext_0_k$()) {
+            var item_2_3 = tmp0_iterator_1_2.next_0_k$();
+            var tmp$ret$0;
+            $l$block: {
+              tmp$ret$0 = item_2_3._get_descriptor__0_k$();
+              break $l$block;
+            }
+            tmp0_mapTo_0_1.add_2bq_k$(tmp$ret$0);
+            Unit_getInstance();
+          }
+          tmp$ret$1 = tmp0_mapTo_0_1;
+          break $l$block_0;
+        }
+        tmp$ret$2 = tmp$ret$1;
+        break $l$block_1;
+      }
+      tmp = tmp$ret$2;
+    }
+    return compactArray(tmp);
+  };
+  _no_name_provided__53.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__54(this$0) {
+    this._this$0_13 = this$0;
+  }
+  _no_name_provided__54.prototype.invoke_0_k$ = function () {
+    return hashCodeImpl(this._this$0_13, this._this$0_13._get_typeParameterDescriptors__0_k$());
+  };
+  _no_name_provided__54.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__55(this$0) {
+    this._this$0_14 = this$0;
+  }
+  _no_name_provided__55.prototype.invoke_ha5a7z_k$ = function (i) {
+    return this._this$0_14.getElementName_ha5a7z_k$(i) + ': ' + this._this$0_14.getElementDescriptor_ha5a7z_k$(i)._get_serialName__0_k$();
+  };
+  _no_name_provided__55.prototype.invoke_20e8_k$ = function (p1) {
+    return this.invoke_ha5a7z_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE());
+  };
+  _no_name_provided__55.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function PluginGeneratedSerialDescriptor(serialName, generatedSerializer, elementsCount) {
+    this._serialName = serialName;
+    this._generatedSerializer = generatedSerializer;
+    this._elementsCount = elementsCount;
+    this._added = -1;
+    var tmp = this;
+    var tmp_0 = 0;
+    var tmp_1 = this._elementsCount;
+    var tmp$ret$0;
+    $l$block: {
+      tmp$ret$0 = fillArrayVal(Array(tmp_1), null);
+      break $l$block;
+    }
+    var tmp_2 = tmp$ret$0;
+    while (tmp_0 < tmp_1) {
+      var tmp_3 = tmp_0;
+      var tmp$ret$1;
+      $l$block_0: {
+        tmp$ret$1 = '[UNINITIALIZED]';
+        break $l$block_0;
+      }
+      tmp_2[tmp_3] = tmp$ret$1;
+      tmp_0 = tmp_0 + 1 | 0;
+    }
+    tmp._names = tmp_2;
+    var tmp_4 = this;
+    var tmp$ret$2;
+    $l$block_1: {
+      var tmp0_arrayOfNulls_0 = this._elementsCount;
+      tmp$ret$2 = fillArrayVal(Array(tmp0_arrayOfNulls_0), null);
+      break $l$block_1;
+    }
+    tmp_4._propertiesAnnotations = tmp$ret$2;
+    this._classAnnotations = null;
+    this._elementsOptionality = booleanArray(this._elementsCount);
+    this._indices = emptyMap();
+    var tmp_5 = this;
+    tmp_5._childSerializers$delegate = lazy(_no_name_provided_$factory_37(this));
+    var tmp_6 = this;
+    tmp_6._typeParameterDescriptors$delegate = lazy(_no_name_provided_$factory_38(this));
+    var tmp_7 = this;
+    tmp_7.__hashCode$delegate = lazy(_no_name_provided_$factory_39(this));
+  }
+  PluginGeneratedSerialDescriptor.prototype._get_serialName__0_k$ = function () {
+    return this._serialName;
+  };
+  PluginGeneratedSerialDescriptor.prototype._get_elementsCount__0_k$ = function () {
+    return this._elementsCount;
+  };
+  PluginGeneratedSerialDescriptor.prototype._get_kind__0_k$ = function () {
+    return CLASS_getInstance();
+  };
+  PluginGeneratedSerialDescriptor.prototype._get_typeParameterDescriptors__0_k$ = function () {
+    var tmp$ret$0;
+    $l$block: {
+      var tmp0_getValue_0 = typeParameterDescriptors$factory();
+      tmp$ret$0 = this._typeParameterDescriptors$delegate._get_value__0_k$();
+      break $l$block;
+    }
+    return tmp$ret$0;
+  };
+  PluginGeneratedSerialDescriptor.prototype.addElement_5xhc52_k$ = function (name, isOptional) {
+    var tmp0_this = this;
+    tmp0_this._added = tmp0_this._added + 1 | 0;
+    this._names[tmp0_this._added] = name;
+    this._elementsOptionality[this._added] = isOptional;
+    this._propertiesAnnotations[this._added] = null;
+    if (this._added === (this._elementsCount - 1 | 0)) {
+      this._indices = buildIndices(this);
+    }};
+  PluginGeneratedSerialDescriptor.prototype.getElementDescriptor_ha5a7z_k$ = function (index) {
+    return getChecked(_get_childSerializers_(this), index)._get_descriptor__0_k$();
+  };
+  PluginGeneratedSerialDescriptor.prototype.getElementName_ha5a7z_k$ = function (index) {
+    return getChecked(this._names, index);
+  };
+  PluginGeneratedSerialDescriptor.prototype.equals = function (other) {
+    var tmp$ret$0;
+    $l$block_7: {
+      if (this === other) {
+        tmp$ret$0 = true;
+        break $l$block_7;
+      }if (!(other instanceof PluginGeneratedSerialDescriptor)) {
+        tmp$ret$0 = false;
+        break $l$block_7;
+      } else {
+      }
+      if (!(this._get_serialName__0_k$() === other._get_serialName__0_k$())) {
+        tmp$ret$0 = false;
+        break $l$block_7;
+      }var tmp$ret$1;
+      $l$block_2: {
+        var tmp0__anonymous__3 = other;
+        tmp$ret$1 = contentEquals(this._get_typeParameterDescriptors__0_k$(), tmp0__anonymous__3._get_typeParameterDescriptors__0_k$());
+        break $l$block_2;
+      }
+      if (!tmp$ret$1) {
+        tmp$ret$0 = false;
+        break $l$block_7;
+      } else {
+      }
+      if (!(this._get_elementsCount__0_k$() === other._get_elementsCount__0_k$())) {
+        tmp$ret$0 = false;
+        break $l$block_7;
+      }var inductionVariable = 0;
+      var last_0 = this._get_elementsCount__0_k$();
+      if (inductionVariable < last_0)
+        do {
+          var index_2 = inductionVariable;
+          inductionVariable = inductionVariable + 1 | 0;
+          if (!(this.getElementDescriptor_ha5a7z_k$(index_2)._get_serialName__0_k$() === other.getElementDescriptor_ha5a7z_k$(index_2)._get_serialName__0_k$())) {
+            tmp$ret$0 = false;
+            break $l$block_7;
+          }if (!equals_1(this.getElementDescriptor_ha5a7z_k$(index_2)._get_kind__0_k$(), other.getElementDescriptor_ha5a7z_k$(index_2)._get_kind__0_k$())) {
+            tmp$ret$0 = false;
+            break $l$block_7;
+          }}
+         while (inductionVariable < last_0);
+      tmp$ret$0 = true;
+      break $l$block_7;
+    }
+    return tmp$ret$0;
+  };
+  PluginGeneratedSerialDescriptor.prototype.hashCode = function () {
+    return _get__hashCode_(this);
+  };
+  PluginGeneratedSerialDescriptor.prototype.toString = function () {
+    var tmp = until(0, this._elementsCount);
+    var tmp_0 = '' + this._get_serialName__0_k$() + '(';
+    return joinToString$default_1(tmp, ', ', tmp_0, ')', 0, null, _no_name_provided_$factory_40(this), 24, null);
+  };
+  PluginGeneratedSerialDescriptor.$metadata$ = {
+    simpleName: 'PluginGeneratedSerialDescriptor',
+    kind: 'class',
+    interfaces: [SerialDescriptor, CachedNames]
+  };
+  function childSerializers$factory() {
+    return getPropertyCallableRef('childSerializers', 1, KProperty1, function (receiver) {
+      return _get_childSerializers_(receiver);
+    }, null);
+  }
+  function typeParameterDescriptors$factory() {
+    return getPropertyCallableRef('typeParameterDescriptors', 1, KProperty1, function (receiver) {
+      return receiver._get_typeParameterDescriptors__0_k$();
+    }, null);
+  }
+  function _hashCode$factory() {
+    return getPropertyCallableRef('_hashCode', 1, KProperty1, function (receiver) {
+      return _get__hashCode_(receiver);
+    }, null);
+  }
+  function _no_name_provided_$factory_37(this$0) {
+    var i = new _no_name_provided__52(this$0);
+    return function () {
+      return i.invoke_0_k$();
+    };
+  }
+  function _no_name_provided_$factory_38(this$0) {
+    var i = new _no_name_provided__53(this$0);
+    return function () {
+      return i.invoke_0_k$();
+    };
+  }
+  function _no_name_provided_$factory_39(this$0) {
+    var i = new _no_name_provided__54(this$0);
+    return function () {
+      return i.invoke_0_k$();
+    };
+  }
+  function _no_name_provided_$factory_40(this$0) {
+    var i = new _no_name_provided__55(this$0);
+    return function (p1) {
+      return i.invoke_ha5a7z_k$(p1);
+    };
+  }
+  var EMPTY_SERIALIZER_ARRAY;
+  function SerializerFactory() {
+  }
+  SerializerFactory.$metadata$ = {
+    simpleName: 'SerializerFactory',
+    kind: 'interface',
+    interfaces: []
+  };
+  function EMPTY_SERIALIZER_ARRAY$init$() {
+    var tmp$ret$2;
+    $l$block_1: {
+      var tmp$ret$1;
+      $l$block_0: {
+        var tmp$ret$0;
+        $l$block: {
+          tmp$ret$0 = [];
+          break $l$block;
+        }
+        tmp$ret$1 = tmp$ret$0;
+        break $l$block_0;
+      }
+      tmp$ret$2 = tmp$ret$1;
+      break $l$block_1;
+    }
+    return tmp$ret$2;
+  }
+  function SerializableWith() {
+  }
+  SerializableWith.$metadata$ = {
+    simpleName: 'SerializableWith',
+    kind: 'class',
+    interfaces: [Annotation],
+    associatedObjectKey: 0
+  };
+  function getChecked(_this_, index) {
+    if (!(0 <= index ? index <= (_this_.length - 1 | 0) : false))
+      throw IndexOutOfBoundsException_init_$Create$('' + 'Index ' + index + ' out of bounds ' + _get_indices_(_this_));
+    return _this_[index];
+  }
   var encoding$delegate;
   function uInt16(_this_) {
     return int(_this_, 2).toInt_0_k$() & 65535;
@@ -15285,33 +17744,33 @@
     }
     return tmp;
   }
-  function _no_name_provided__46($bytes) {
+  function _no_name_provided__56($bytes) {
     this._$bytes = $bytes;
   }
-  _no_name_provided__46.prototype.invoke_0_k$ = function () {
+  _no_name_provided__56.prototype.invoke_0_k$ = function () {
     return this._$bytes.length;
   };
-  _no_name_provided__46.$metadata$ = {
+  _no_name_provided__56.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__47(this$0) {
-    this._this$0_8 = this$0;
+  function _no_name_provided__57(this$0) {
+    this._this$0_15 = this$0;
   }
-  _no_name_provided__47.prototype.invoke_0_k$ = function () {
-    return this._this$0_8._get_size__0_k$() - 1 | 0;
+  _no_name_provided__57.prototype.invoke_0_k$ = function () {
+    return this._this$0_15._get_size__0_k$() - 1 | 0;
   };
-  _no_name_provided__47.$metadata$ = {
+  _no_name_provided__57.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function MemoryByteStreamReader(bytes_0) {
     var tmp = this;
-    tmp._size$delegate = lazy(_no_name_provided_$factory_33(bytes_0));
+    tmp._size$delegate = lazy(_no_name_provided_$factory_42(bytes_0));
     this._mPosition = 0;
     this._mBytes = bytes_0;
     var tmp_0 = this;
-    tmp_0._lastIndex$delegate = lazy(_no_name_provided_$factory_34(this));
+    tmp_0._lastIndex$delegate = lazy(_no_name_provided_$factory_43(this));
   }
   MemoryByteStreamReader.prototype._get_size__0_k$ = function () {
     var tmp$ret$0;
@@ -15488,9 +17947,9 @@
   function _get_lastIndex__4(_this_) {
     return _this_.size - 1 | 0;
   }
-  function _no_name_provided__48() {
+  function _no_name_provided__58() {
   }
-  _no_name_provided__48.prototype.invoke_0_k$ = function () {
+  _no_name_provided__58.prototype.invoke_0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_apply_0 = listOf([new Char(0), new Char(1), new Char(2), new Char(3), new Char(4), new Char(5), new Char(6), new Char(7), new Char(8), new Char(9), new Char(10), new Char(11), new Char(12), new Char(13), new Char(14), new Char(15), new Char(16), new Char(17), new Char(18), new Char(19), new Char(20), new Char(21), new Char(22), new Char(23), new Char(24), new Char(25), new Char(26), new Char(27), new Char(28), new Char(29), new Char(30), new Char(31), new Char(32), new Char(33), new Char(34), new Char(35), new Char(36), new Char(37), new Char(38), new Char(39), new Char(40), new Char(41), new Char(42), new Char(43), new Char(44), new Char(45), new Char(46), new Char(47), new Char(48), new Char(49), new Char(50), new Char(51), new Char(52), new Char(53), new Char(54), new Char(55), new Char(56), new Char(57), new Char(58), new Char(59), new Char(60), new Char(61), new Char(62), new Char(63), new Char(64), new Char(65), new Char(66), new Char(67), new Char(68), new Char(69), new Char(70), new Char(71), new Char(72), new Char(73), new Char(74), new Char(75), new Char(76), new Char(77), new Char(78), new Char(79), new Char(80), new Char(81), new Char(82), new Char(83), new Char(84), new Char(85), new Char(86), new Char(87), new Char(88), new Char(89), new Char(90), new Char(91), new Char(92), new Char(93), new Char(94), new Char(95), new Char(96), new Char(97), new Char(98), new Char(99), new Char(100), new Char(101), new Char(102), new Char(103), new Char(104), new Char(105), new Char(106), new Char(107), new Char(108), new Char(109), new Char(110), new Char(111), new Char(112), new Char(113), new Char(114), new Char(115), new Char(116), new Char(117), new Char(118), new Char(119), new Char(120), new Char(121), new Char(122), new Char(123), new Char(124), new Char(125), new Char(126), new Char(127), new Char(8364), new Char(65533), new Char(8218), new Char(402), new Char(8222), new Char(8230), new Char(8224), new Char(8225), new Char(710), new Char(8240), new Char(352), new Char(8249), new Char(338), new Char(65533), new Char(381), new Char(65533), new Char(65533), new Char(8216), new Char(8217), new Char(8220), new Char(8221), new Char(8226), new Char(8211), new Char(8212), new Char(732), new Char(8482), new Char(353), new Char(8250), new Char(339), new Char(65533), new Char(382), new Char(376), new Char(160), new Char(161), new Char(162), new Char(163), new Char(164), new Char(165), new Char(166), new Char(167), new Char(168), new Char(169), new Char(170), new Char(171), new Char(172), new Char(173), new Char(174), new Char(175), new Char(176), new Char(177), new Char(178), new Char(179), new Char(180), new Char(181), new Char(182), new Char(183), new Char(184), new Char(185), new Char(186), new Char(187), new Char(188), new Char(189), new Char(190), new Char(191), new Char(192), new Char(193), new Char(194), new Char(195), new Char(196), new Char(197), new Char(198), new Char(199), new Char(200), new Char(201), new Char(202), new Char(203), new Char(204), new Char(205), new Char(206), new Char(207), new Char(208), new Char(209), new Char(210), new Char(211), new Char(212), new Char(213), new Char(214), new Char(215), new Char(216), new Char(217), new Char(218), new Char(219), new Char(220), new Char(221), new Char(222), new Char(223), new Char(224), new Char(225), new Char(226), new Char(227), new Char(228), new Char(229), new Char(230), new Char(231), new Char(232), new Char(233), new Char(234), new Char(235), new Char(236), new Char(237), new Char(238), new Char(239), new Char(240), new Char(241), new Char(242), new Char(243), new Char(244), new Char(245), new Char(246), new Char(247), new Char(248), new Char(249), new Char(250), new Char(251), new Char(252), new Char(253), new Char(254), new Char(255)]);
@@ -15506,7 +17965,7 @@
     }
     return tmp$ret$0;
   };
-  _no_name_provided__48.$metadata$ = {
+  _no_name_provided__58.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -15515,34 +17974,34 @@
       return receiver._get_size__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_32() {
-    var i = new _no_name_provided__48();
+  function _no_name_provided_$factory_41() {
+    var i = new _no_name_provided__58();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_33($bytes) {
-    var i = new _no_name_provided__46($bytes);
+  function _no_name_provided_$factory_42($bytes) {
+    var i = new _no_name_provided__56($bytes);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_34(this$0) {
-    var i = new _no_name_provided__47(this$0);
+  function _no_name_provided_$factory_43(this$0) {
+    var i = new _no_name_provided__57(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function MemoryByteStreamWriter_init_$Init$(size, buffer, $mask0, $marker, $this) {
+  function MemoryByteStreamWriter_init_$Init$(size_0, buffer, $mask0, $marker, $this) {
     if (!(($mask0 & 1) === 0))
-      size = 1000;
+      size_0 = 1000;
     if (!(($mask0 & 2) === 0))
       buffer = null;
-    MemoryByteStreamWriter.call($this, size, buffer);
+    MemoryByteStreamWriter.call($this, size_0, buffer);
     return $this;
   }
-  function MemoryByteStreamWriter_init_$Create$(size, buffer, $mask0, $marker) {
-    return MemoryByteStreamWriter_init_$Init$(size, buffer, $mask0, $marker, Object.create(MemoryByteStreamWriter.prototype));
+  function MemoryByteStreamWriter_init_$Create$(size_0, buffer, $mask0, $marker) {
+    return MemoryByteStreamWriter_init_$Init$(size_0, buffer, $mask0, $marker, Object.create(MemoryByteStreamWriter.prototype));
   }
   function _get_nextPosition_($this) {
     var tmp0_this = $this;
@@ -15559,10 +18018,10 @@
     tmp._furthest = tmp$ret$0;
     return position;
   }
-  function ensure($this, size) {
-    if ($this._byteArray.length < (($this._mPosition_0 + 1 | 0) + size | 0)) {
+  function ensure($this, size_0) {
+    if ($this._byteArray.length < (($this._mPosition_0 + 1 | 0) + size_0 | 0)) {
       var needed = $this._buffer;
-      while (needed < size) {
+      while (needed < size_0) {
         needed = needed + $this._buffer | 0;
       }
       var newByteArray = new Int8Array($this._mPosition_0 + needed | 0);
@@ -15613,9 +18072,9 @@
       new Companion_12();
     return Companion_instance_11;
   }
-  function MemoryByteStreamWriter(size, buffer) {
+  function MemoryByteStreamWriter(size_0, buffer) {
     Companion_getInstance_11();
-    var size_0 = size === void 1 ? 1000 : size;
+    var size_1 = size_0 === void 1 ? 1000 : size_0;
     var buffer_0 = buffer === void 1 ? null : buffer;
     var tmp = this;
     var tmp0_elvis_lhs = buffer_0;
@@ -15627,8 +18086,8 @@
       tmp_0 = tmp0_elvis_lhs;
     }
     tmp._buffer = tmp_0;
-    this._mSize = size_0;
-    this._byteArray = new Int8Array(size_0);
+    this._mSize = size_1;
+    this._byteArray = new Int8Array(size_1);
     this._mPosition_0 = 0;
     this._furthest = -1;
   }
@@ -15647,8 +18106,8 @@
     return this;
   };
   MemoryByteStreamWriter.prototype.write = function (bytes_0) {
-    var size = bytes_0.length;
-    ensure(this, size);
+    var size_0 = bytes_0.length;
+    ensure(this, size_0);
     var position = this._mPosition_0;
     var tmp$ret$4;
     $l$block_3: {
@@ -15684,13 +18143,13 @@
     var tmp$ret$5;
     $l$block_4: {
       var tmp2_max_0 = this._furthest;
-      var tmp3_max_0 = position + size | 0;
+      var tmp3_max_0 = position + size_0 | 0;
       tmp$ret$5 = Math.max(tmp2_max_0, tmp3_max_0);
       break $l$block_4;
     }
     tmp_0._furthest = tmp$ret$5;
     var tmp0_this = this;
-    tmp0_this._mPosition_0 = tmp0_this._mPosition_0 + size | 0;
+    tmp0_this._mPosition_0 = tmp0_this._mPosition_0 + size_0 | 0;
     return this;
   };
   MemoryByteStreamWriter.prototype.writeUInt16s = function (ushortArray) {
@@ -15866,12 +18325,12 @@
     }
     return tmp$ret$0;
   }
-  function _no_name_provided__49() {
+  function _no_name_provided__59() {
   }
-  _no_name_provided__49.prototype.invoke_0_k$ = function () {
+  _no_name_provided__59.prototype.invoke_0_k$ = function () {
     return listOf([C1_getInstance(), C2_getInstance(), CV_getInstance(), C3_getInstance(), DS_getInstance(), SM_getInstance()]);
   };
-  _no_name_provided__49.$metadata$ = {
+  _no_name_provided__59.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -15974,7 +18433,7 @@
   function Companion_13() {
     Companion_instance_12 = this;
     var tmp = this;
-    tmp._values$delegate = lazy(_no_name_provided_$factory_35());
+    tmp._values$delegate = lazy(_no_name_provided_$factory_44());
     var tmp_0 = this;
     var tmp$ret$0;
     $l$block: {
@@ -16066,12 +18525,58 @@
       return receiver._get_values__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_35() {
-    var i = new _no_name_provided__49();
+  function _no_name_provided_$factory_44() {
+    var i = new _no_name_provided__59();
     return function () {
       return i.invoke_0_k$();
     };
   }
+  function Companion_14() {
+    Companion_instance_13 = this;
+    var tmp0_serialDesc = new PluginGeneratedSerialDescriptor('bedalton.creatures.structs.Pointer', null, 1);
+    tmp0_serialDesc.addElement_5xhc52_k$('value', false);
+    Companion_getInstance_13()._$cachedDescriptor = tmp0_serialDesc;
+  }
+  Companion_14.$metadata$ = {
+    simpleName: 'Companion',
+    kind: 'object',
+    interfaces: [SerializerFactory]
+  };
+  var Companion_instance_13;
+  function Companion_getInstance_13() {
+    if (Companion_instance_13 == null)
+      new Companion_14();
+    return Companion_instance_13;
+  }
+  function Pointer(value) {
+    Companion_getInstance_13();
+    this._value_7 = value;
+    ensureNeverFrozen(this);
+  }
+  Pointer.prototype.toString = function () {
+    return toString_2(this._value_7);
+  };
+  Pointer.prototype.hashCode = function () {
+    return this._value_7 == null ? 0 : hashCode(this._value_7);
+  };
+  Pointer.prototype.equals = function (other) {
+    if (this === other)
+      return true;
+    if (!(other instanceof Pointer))
+      return false;
+    else {
+    }
+    var tmp0_other_with_cast = other instanceof Pointer ? other : THROW_CCE();
+    if (!equals_1(this._value_7, tmp0_other_with_cast._value_7))
+      return false;
+    return true;
+  };
+  Pointer.$metadata$ = {
+    simpleName: 'Pointer',
+    kind: 'class',
+    interfaces: [],
+    associatedObjects: {0: Companion_getInstance_13}
+  };
   function pathSeparator($this, path) {
     if (path == null ? true : isBlank(path)) {
       return _get_pathSeparatorChar_();
@@ -16324,20 +18829,20 @@
       new FileNameUtil();
     return FileNameUtil_instance;
   }
-  function _no_name_provided__50($message) {
+  function _no_name_provided__60($message) {
     this._$message = $message;
   }
-  _no_name_provided__50.prototype.invoke_0_k$ = function () {
+  _no_name_provided__60.prototype.invoke_0_k$ = function () {
     return this._$message;
   };
-  _no_name_provided__50.$metadata$ = {
+  _no_name_provided__60.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function CommonException(message, throwable) {
     extendThrowable(this, message, throwable);
     var tmp = this;
-    tmp._message$delegate = lazy(_no_name_provided_$factory_36(message));
+    tmp._message$delegate = lazy(_no_name_provided_$factory_45(message));
     captureStack(this, CommonException);
   }
   CommonException.prototype._get_message__0_k$ = function () {
@@ -16429,8 +18934,8 @@
       return receiver._get_message__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_36($message) {
-    var i = new _no_name_provided__50($message);
+  function _no_name_provided_$factory_45($message) {
+    var i = new _no_name_provided__60($message);
     return function () {
       return i.invoke_0_k$();
     };
@@ -16518,19 +19023,19 @@
   function CallbackLogger_init_$Create$(mLog, mInfo, mWarning, mError, mLogMemory, mGetColor, prependLogType, $mask0, $marker) {
     return CallbackLogger_init_$Init$(mLog, mInfo, mWarning, mError, mLogMemory, mGetColor, prependLogType, $mask0, $marker, Object.create(CallbackLogger.prototype));
   }
-  function _no_name_provided__51($boundThis) {
+  function _no_name_provided__61($boundThis) {
     this._$boundThis = $boundThis;
   }
-  _no_name_provided__51.prototype.invoke_yb1ek6_k$ = function (p0) {
+  _no_name_provided__61.prototype.invoke_yb1ek6_k$ = function (p0) {
     return this._$boundThis.getColor(p0);
   };
-  _no_name_provided__51.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__61.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_yb1ek6_k$((p1 == null ? true : p1 instanceof LoggerColor) ? p1 : THROW_CCE());
   };
-  _no_name_provided__51.prototype._get_name__0_k$ = function () {
+  _no_name_provided__61.prototype._get_name__0_k$ = function () {
     return 'getColor';
   };
-  _no_name_provided__51.$metadata$ = {
+  _no_name_provided__61.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -16590,7 +19095,7 @@
     var tmp0_elvis_lhs = this._mGetColor_0;
     var tmp;
     if (tmp0_elvis_lhs == null) {
-      tmp = _no_name_provided_$factory_37(DefaultLoggerObject_getInstance());
+      tmp = _no_name_provided_$factory_46(DefaultLoggerObject_getInstance());
     } else {
       tmp = tmp0_elvis_lhs;
     }
@@ -16643,8 +19148,8 @@
     get: CallbackLogger.prototype._get_prependLogType__0_k$,
     set: CallbackLogger.prototype._set_prependLogType__3vfqq4_k$
   });
-  function _no_name_provided_$factory_37($boundThis) {
-    var i = new _no_name_provided__51($boundThis);
+  function _no_name_provided_$factory_46($boundThis) {
+    var i = new _no_name_provided__61($boundThis);
     var l = function (p1) {
       return i.invoke_yb1ek6_k$(p1);
     };
@@ -16827,7 +19332,7 @@
   }
   function LogLevel(name, ordinal, value) {
     Enum.call(this, name, ordinal);
-    this._value_7 = value;
+    this._value_8 = value;
   }
   LogLevel.$metadata$ = {
     simpleName: 'LogLevel',
@@ -17105,7 +19610,7 @@
           } else {
             {
               var tmp1_e_0 = Log_getInstance();
-              if (tmp1_e_0._logLevel._value_7 >= LogLevel_ERROR_getInstance()._value_7) {
+              if (tmp1_e_0._logLevel._value_8 >= LogLevel_ERROR_getInstance()._value_8) {
                 var tmp_1 = tmp1_e_0._loggerObject;
                 var tmp$ret$3;
                 $l$block_2: {
@@ -17138,7 +19643,7 @@
                   var tmp$ret$2;
                   $l$block_1: {
                     var tmp_6 = replaceCharCodesForLatin1._get_keys__0_k$();
-                    tmp$ret$2 = '' + 'CP1252 does not have char code ' + charCode + '; Codes: ' + joinToString$default_1(tmp_6, null, null, null, 0, null, _no_name_provided_$factory_38(), 31, null);
+                    tmp$ret$2 = '' + 'CP1252 does not have char code ' + charCode + '; Codes: ' + joinToString$default_1(tmp_6, null, null, null, 0, null, _no_name_provided_$factory_47(), 31, null);
                     break $l$block_1;
                   }
                   tmp$ret$3 = '' + tmp_3 + tmp_5 + tmp$ret$2;
@@ -17163,20 +19668,20 @@
        while (inductionVariable < length);
     return writer.write(bytes_0);
   }
-  function _no_name_provided__52() {
+  function _no_name_provided__62() {
   }
-  _no_name_provided__52.prototype.invoke_ha5a7z_k$ = function (it) {
+  _no_name_provided__62.prototype.invoke_ha5a7z_k$ = function (it) {
     return '' + it;
   };
-  _no_name_provided__52.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__62.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_ha5a7z_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__52.$metadata$ = {
+  _no_name_provided__62.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_38() {
-    var i = new _no_name_provided__52();
+  function _no_name_provided_$factory_47() {
+    var i = new _no_name_provided__62();
     return function (p1) {
       return i.invoke_ha5a7z_k$(p1);
     };
@@ -17193,9 +19698,9 @@
   var pathSeparatorChar$delegate;
   var pathSeparator_0;
   var applicationSupportPath;
-  function _no_name_provided__53() {
+  function _no_name_provided__63() {
   }
-  _no_name_provided__53.prototype.invoke_0_k$ = function () {
+  _no_name_provided__63.prototype.invoke_0_k$ = function () {
     var tmp;
     var tmp_0 = require != null;
     if ((!(tmp_0 == null) ? typeof tmp_0 === 'boolean' : false) ? tmp_0 : THROW_CCE()) {
@@ -17224,7 +19729,7 @@
     }
     return tmp;
   };
-  _no_name_provided__53.$metadata$ = {
+  _no_name_provided__63.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -17233,8 +19738,8 @@
       return _get_pathSeparatorChar_();
     }, null);
   }
-  function _no_name_provided_$factory_39() {
-    var i = new _no_name_provided__53();
+  function _no_name_provided_$factory_48() {
+    var i = new _no_name_provided__63();
     return function () {
       return i.invoke_0_k$();
     };
@@ -17245,31 +19750,31 @@
   function info$info(receiver, p0) {
     receiver.info(p0);
   }
-  function _no_name_provided__54($boundThis) {
+  function _no_name_provided__64($boundThis) {
     this._$boundThis_0 = $boundThis;
   }
-  _no_name_provided__54.prototype.invoke_qi8yb4_k$ = function (p0) {
+  _no_name_provided__64.prototype.invoke_qi8yb4_k$ = function (p0) {
     return log$log(this._$boundThis_0, p0);
   };
-  _no_name_provided__54.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__64.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_qi8yb4_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__54.$metadata$ = {
+  _no_name_provided__64.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__55($boundThis) {
+  function _no_name_provided__65($boundThis) {
     this._$boundThis_1 = $boundThis;
   }
-  _no_name_provided__55.prototype.invoke_qi8yb4_k$ = function (p0) {
+  _no_name_provided__65.prototype.invoke_qi8yb4_k$ = function (p0) {
     return info$info(this._$boundThis_1, p0);
   };
-  _no_name_provided__55.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__65.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_qi8yb4_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__55.$metadata$ = {
+  _no_name_provided__65.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -17305,7 +19810,7 @@
     var colorPrefix = tmp1_elvis_lhs == null ? '' : tmp1_elvis_lhs;
     if (replace_1) {
       var tmp_0 = colorPrefix + message;
-      logReplace(tmp_0, _no_name_provided_$factory_40(console));
+      logReplace(tmp_0, _no_name_provided_$factory_49(console));
       return Unit_getInstance();
     }console.log(colorPrefix + message);
   };
@@ -17333,7 +19838,7 @@
     var colorPrefix = tmp1_elvis_lhs == null ? '' : tmp1_elvis_lhs;
     if (replace_1) {
       var tmp_0 = colorPrefix + message;
-      logReplace(tmp_0, _no_name_provided_$factory_41(console));
+      logReplace(tmp_0, _no_name_provided_$factory_50(console));
       return Unit_getInstance();
     }console.info(colorPrefix + message);
   };
@@ -17472,15 +19977,15 @@
   function logReplace$outlinedJsCode$(process) {
     return typeof process.stdout === 'object';
   }
-  function _no_name_provided_$factory_40($boundThis) {
-    var i = new _no_name_provided__54($boundThis);
+  function _no_name_provided_$factory_49($boundThis) {
+    var i = new _no_name_provided__64($boundThis);
     return function (p1) {
       i.invoke_qi8yb4_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_41($boundThis) {
-    var i = new _no_name_provided__55($boundThis);
+  function _no_name_provided_$factory_50($boundThis) {
+    var i = new _no_name_provided__65($boundThis);
     return function (p1) {
       i.invoke_qi8yb4_k$(p1);
       return Unit_getInstance();
@@ -17489,19 +19994,19 @@
   function compareTo_0(_this_, i) {
     return compareTo(numberToInt(_this_), i);
   }
-  function Companion_14() {
-    Companion_instance_13 = this;
+  function Companion_15() {
+    Companion_instance_14 = this;
   }
-  Companion_14.$metadata$ = {
+  Companion_15.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_13;
-  function Companion_getInstance_13() {
-    if (Companion_instance_13 == null)
-      new Companion_14();
-    return Companion_instance_13;
+  var Companion_instance_14;
+  function Companion_getInstance_14() {
+    if (Companion_instance_14 == null)
+      new Companion_15();
+    return Companion_instance_14;
   }
   function Choice(choices, toVariant, variantToString) {
     ArgType.call(this, true);
@@ -17552,7 +20057,7 @@
     interfaces: []
   };
   function ArgType(hasParameter) {
-    Companion_getInstance_13();
+    Companion_getInstance_14();
     this._hasParameter = hasParameter;
   }
   ArgType.$metadata$ = {
@@ -17561,9 +20066,9 @@
     interfaces: []
   };
   var GameArgType;
-  function _no_name_provided__56() {
+  function _no_name_provided__66() {
   }
-  _no_name_provided__56.prototype.invoke_6wfw3l_k$ = function (arg) {
+  _no_name_provided__66.prototype.invoke_6wfw3l_k$ = function (arg) {
     var tmp0_elvis_lhs = Companion_getInstance_12().fromString_6wfw3l_k$(arg);
     var tmp;
     if (tmp0_elvis_lhs == null) {
@@ -17573,46 +20078,46 @@
     }
     return tmp;
   };
-  _no_name_provided__56.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__66.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_6wfw3l_k$((!(p1 == null) ? typeof p1 === 'string' : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__56.$metadata$ = {
+  _no_name_provided__66.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__57() {
+  function _no_name_provided__67() {
   }
-  _no_name_provided__57.prototype.invoke_vq3k9t_k$ = function (type) {
+  _no_name_provided__67.prototype.invoke_vq3k9t_k$ = function (type) {
     return type._code;
   };
-  _no_name_provided__57.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__67.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_vq3k9t_k$(p1 instanceof GameVariant ? p1 : THROW_CCE());
   };
-  _no_name_provided__57.$metadata$ = {
+  _no_name_provided__67.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_42() {
-    var i = new _no_name_provided__56();
+  function _no_name_provided_$factory_51() {
+    var i = new _no_name_provided__66();
     return function (p1) {
       return i.invoke_6wfw3l_k$(p1);
     };
   }
-  function _no_name_provided_$factory_43() {
-    var i = new _no_name_provided__57();
+  function _no_name_provided_$factory_52() {
+    var i = new _no_name_provided__67();
     return function (p1) {
       return i.invoke_vq3k9t_k$(p1);
     };
   }
   function GameArgType$init$() {
     var tmp = toList_2(Companion_getInstance_12()._get_values__0_k$());
-    var tmp_0 = _no_name_provided_$factory_42();
-    return new Choice(tmp, tmp_0, _no_name_provided_$factory_43());
+    var tmp_0 = _no_name_provided_$factory_51();
+    return new Choice(tmp, tmp_0, _no_name_provided_$factory_52());
   }
   var shouldOverwriteOverride;
   var defaultOverwrite$delegate;
   function createDefaultShouldOverwriteCallback() {
-    return _no_name_provided_$factory_45(null);
+    return _no_name_provided_$factory_54(null);
   }
   function shouldWrite(outputFilePath, $cont) {
     if (!fileExists(outputFilePath)) {
@@ -17633,25 +20138,28 @@
       appendValidResponses = true;
     return promptOverwrite(promptString, appendValidResponses, $cont);
   }
-  function _no_name_provided__58() {
+  function _no_name_provided__68() {
   }
-  _no_name_provided__58.prototype.invoke_0_k$ = function () {
+  _no_name_provided__68.prototype.invoke_0_k$ = function () {
     return createDefaultShouldOverwriteCallback();
   };
-  _no_name_provided__58.$metadata$ = {
+  _no_name_provided__68.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__59(resultContinuation) {
+  function _no_name_provided__69(resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
   }
-  _no_name_provided__59.prototype.invoke_6wfw3l_k$ = function (filePath, $cont) {
+  _no_name_provided__69.prototype.invoke_6wfw3l_k$ = function (filePath, $cont) {
     var tmp = this.create_dsepsj_k$(filePath, $cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__59.prototype.doResume_0_k$ = function () {
+  _no_name_provided__69.prototype.invoke_20e8_k$ = function (p1, $cont) {
+    return this.invoke_6wfw3l_k$((!(p1 == null) ? typeof p1 === 'string' : false) ? p1 : THROW_CCE(), $cont);
+  };
+  _no_name_provided__69.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
     $sm: do
       try {
@@ -17680,12 +20188,12 @@
       }
      while (true);
   };
-  _no_name_provided__59.prototype.create_dsepsj_k$ = function (filePath, completion) {
-    var i = new _no_name_provided__59(completion);
+  _no_name_provided__69.prototype.create_dsepsj_k$ = function (filePath, completion) {
+    var i = new _no_name_provided__69(completion);
     i._filePath = filePath;
     return i;
   };
-  _no_name_provided__59.$metadata$ = {
+  _no_name_provided__69.$metadata$ = {
     kind: 'class',
     interfaces: [],
     suspendArity: 1
@@ -17747,7 +20255,7 @@
               } else {
                 var tmp_4 = this;
                 tmp_4._tmp0_e_04 = Log_getInstance();
-                if (this._tmp0_e_04._logLevel._value_7 >= LogLevel_ERROR_getInstance()._value_7) {
+                if (this._tmp0_e_04._logLevel._value_8 >= LogLevel_ERROR_getInstance()._value_8) {
                   var tmp_5 = this._tmp0_e_04._loggerObject;
                   var tmp_6;
                   var tmp0_elvis_lhs_1_1 = this._tmp0_e_04._loggerObject.prependLogType;
@@ -17787,7 +20295,7 @@
             var tmp1_apply_0 = this._WHEN_RESULT3;
             if (tmp1_apply_0) {
               var tmp0_i_0_2 = Log_getInstance();
-              if (tmp0_i_0_2._logLevel._value_7 >= LogLevel_LOG_1_getInstance()._value_7) {
+              if (tmp0_i_0_2._logLevel._value_8 >= LogLevel_LOG_1_getInstance()._value_8) {
                 var tmp_10 = tmp0_i_0_2._loggerObject;
                 var tmp_11;
                 var tmp0_elvis_lhs_1_1_3 = tmp0_i_0_2._loggerObject.prependLogType;
@@ -17811,7 +20319,7 @@
                 tmp_10.info(false, '' + tmp_12 + tmp_14 + 'Overwriting file...', null);
               }} else {
               var tmp1_i_0_4 = Log_getInstance();
-              if (tmp1_i_0_4._logLevel._value_7 >= LogLevel_LOG_1_getInstance()._value_7) {
+              if (tmp1_i_0_4._logLevel._value_8 >= LogLevel_LOG_1_getInstance()._value_8) {
                 var tmp_15 = tmp1_i_0_4._loggerObject;
                 var tmp_16;
                 var tmp0_elvis_lhs_1_1_5 = tmp1_i_0_4._loggerObject.prependLogType;
@@ -17854,14 +20362,14 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_44() {
-    var i = new _no_name_provided__58();
+  function _no_name_provided_$factory_53() {
+    var i = new _no_name_provided__68();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_45(resultContinuation) {
-    var i = new _no_name_provided__59(resultContinuation);
+  function _no_name_provided_$factory_54(resultContinuation) {
+    var i = new _no_name_provided__69(resultContinuation);
     var l = function (p1, $cont) {
       return i.invoke_6wfw3l_k$(p1, $cont);
     };
@@ -17987,9 +20495,9 @@
     kind: 'class',
     interfaces: [Comparator]
   };
-  function _no_name_provided__60() {
+  function _no_name_provided__70() {
   }
-  _no_name_provided__60.prototype.invoke_jg38oy_k$ = function (aRaw, bRaw) {
+  _no_name_provided__70.prototype.invoke_jg38oy_k$ = function (aRaw, bRaw) {
     var tmp$ret$1;
     $l$block_0: {
       var tmp = FileNameUtil_getInstance();
@@ -18210,16 +20718,16 @@
         return sort_1;
       }}return compareTo(a, b);
   };
-  _no_name_provided__60.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__70.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'string' : false) ? p1 : THROW_CCE();
     return this.invoke_jg38oy_k$(tmp, (!(p2 == null) ? typeof p2 === 'string' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__60.$metadata$ = {
+  _no_name_provided__70.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_46() {
-    var i = new _no_name_provided__60();
+  function _no_name_provided_$factory_55() {
+    var i = new _no_name_provided__70();
     return function (p1, p2) {
       return i.invoke_jg38oy_k$(p1, p2);
     };
@@ -18241,35 +20749,35 @@
     return tmp$ret$0;
   }
   function sortedFilesNice$init$() {
-    var tmp = _no_name_provided_$factory_46();
+    var tmp = _no_name_provided_$factory_55();
     return new sam$kotlin_Comparator$0(tmp);
   }
   function fileExists(filePath) {
     return existsSync_0(filePath);
   }
   function readLine(prompt, default_0, $cont) {
-    var tmp = new Promise(_no_name_provided_$factory_47(prompt, default_0));
-    return await_0(tmp.catch(_no_name_provided_$factory_48()), $cont);
+    var tmp = new Promise(_no_name_provided_$factory_56(prompt, default_0));
+    return await_0(tmp.catch(_no_name_provided_$factory_57()), $cont);
   }
   function readLine$default(prompt, default_0, $mask0, $handler, $cont) {
     if (!(($mask0 & 2) === 0))
       default_0 = null;
     return readLine(prompt, default_0, $cont);
   }
-  function _no_name_provided__61($readLine, $prompt, $resolve, $default) {
+  function _no_name_provided__71($readLine, $prompt, $resolve, $default) {
     this._$readLine = $readLine;
     this._$prompt = $prompt;
     this._$resolve = $resolve;
     this._$default = $default;
   }
-  _no_name_provided__61.prototype.invoke_a4enbm_k$ = function (it) {
+  _no_name_provided__71.prototype.invoke_a4enbm_k$ = function (it) {
     try {
       this._$readLine.close();
     } catch ($p) {
       if ($p instanceof Exception) {
         {
           var tmp0_e_0 = Log_getInstance();
-          if (tmp0_e_0._logLevel._value_7 >= LogLevel_ERROR_getInstance()._value_7) {
+          if (tmp0_e_0._logLevel._value_8 >= LogLevel_ERROR_getInstance()._value_8) {
             var tmp = tmp0_e_0._loggerObject;
             var tmp$ret$2;
             $l$block_1: {
@@ -18319,19 +20827,19 @@
     var tmp0_elvis_lhs = nullIfEmpty(it);
     this._$resolve(tmp0_elvis_lhs == null ? this._$default : tmp0_elvis_lhs);
   };
-  _no_name_provided__61.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__71.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_a4enbm_k$((!(p1 == null) ? typeof p1 === 'string' : false) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__61.$metadata$ = {
+  _no_name_provided__71.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__62($prompt, $default) {
+  function _no_name_provided__72($prompt, $default) {
     this._$prompt_0 = $prompt;
     this._$default_0 = $default;
   }
-  _no_name_provided__62.prototype.invoke_lmz38d_k$ = function (resolve, _anonymous_parameter_1_) {
+  _no_name_provided__72.prototype.invoke_lmz38d_k$ = function (resolve, _anonymous_parameter_1_) {
     var tmp = {};
     var readLineOptions = (!(tmp == null) ? isObject(tmp) : false) ? tmp : THROW_CCE();
     readLineOptions.input = process_0.stdin;
@@ -18339,7 +20847,7 @@
     readLineOptions.output = isObject(tmp_0) ? tmp_0 : null;
     var readLine_0 = createInterface_0(readLineOptions);
     try {
-      readLine_0.question(this._$prompt_0, _no_name_provided_$factory_49(readLine_0, this._$prompt_0, resolve, this._$default_0));
+      readLine_0.question(this._$prompt_0, _no_name_provided_$factory_58(readLine_0, this._$prompt_0, resolve, this._$default_0));
     } catch ($p) {
       if ($p instanceof Exception) {
         try {
@@ -18348,7 +20856,7 @@
           if ($p_0 instanceof Exception) {
             {
               var tmp0_e_0 = Log_getInstance();
-              if (tmp0_e_0._logLevel._value_7 >= LogLevel_ERROR_getInstance()._value_7) {
+              if (tmp0_e_0._logLevel._value_8 >= LogLevel_ERROR_getInstance()._value_8) {
                 var tmp_1 = tmp0_e_0._loggerObject;
                 var tmp$ret$2;
                 $l$block_1: {
@@ -18397,7 +20905,7 @@
         }
         {
           var tmp1_e_0 = Log_getInstance();
-          if (tmp1_e_0._logLevel._value_7 >= LogLevel_ERROR_getInstance()._value_7) {
+          if (tmp1_e_0._logLevel._value_8 >= LogLevel_ERROR_getInstance()._value_8) {
             var tmp_6 = tmp1_e_0._loggerObject;
             var tmp$ret$5;
             $l$block_4: {
@@ -18445,21 +20953,21 @@
       }
     }
   };
-  _no_name_provided__62.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__72.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'function' : false) ? p1 : THROW_CCE();
     this.invoke_lmz38d_k$(tmp, (!(p2 == null) ? typeof p2 === 'function' : false) ? p2 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__62.$metadata$ = {
+  _no_name_provided__72.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__63() {
+  function _no_name_provided__73() {
   }
-  _no_name_provided__63.prototype.invoke_onfaoi_k$ = function (e) {
+  _no_name_provided__73.prototype.invoke_onfaoi_k$ = function (e) {
     {
       var tmp0_e_0 = Log_getInstance();
-      if (tmp0_e_0._logLevel._value_7 >= LogLevel_ERROR_getInstance()._value_7) {
+      if (tmp0_e_0._logLevel._value_8 >= LogLevel_ERROR_getInstance()._value_8) {
         var tmp = tmp0_e_0._loggerObject;
         var tmp$ret$2;
         $l$block_1: {
@@ -18501,28 +21009,28 @@
       }}
     return null;
   };
-  _no_name_provided__63.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__73.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_onfaoi_k$(p1 instanceof Error ? p1 : THROW_CCE());
   };
-  _no_name_provided__63.$metadata$ = {
+  _no_name_provided__73.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_47($prompt, $default) {
-    var i = new _no_name_provided__62($prompt, $default);
+  function _no_name_provided_$factory_56($prompt, $default) {
+    var i = new _no_name_provided__72($prompt, $default);
     return function (p1, p2) {
       i.invoke_lmz38d_k$(p1, p2);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_48() {
-    var i = new _no_name_provided__63();
+  function _no_name_provided_$factory_57() {
+    var i = new _no_name_provided__73();
     return function (p1) {
       return i.invoke_onfaoi_k$(p1);
     };
   }
-  function _no_name_provided_$factory_49($readLine, $prompt, $resolve, $default) {
-    var i = new _no_name_provided__61($readLine, $prompt, $resolve, $default);
+  function _no_name_provided_$factory_58($readLine, $prompt, $resolve, $default) {
+    var i = new _no_name_provided__71($readLine, $prompt, $resolve, $default);
     return function (p1) {
       i.invoke_a4enbm_k$(p1);
       return Unit_getInstance();
@@ -18545,14 +21053,36 @@
     }
     return tmp$ret$1;
   }
-  function JsFileStreamReader_init_$Init$(path, bufferSize, $mask0, $marker, $this) {
+  function JsFileStreamReader_init_$Init$(path, bufferSize, rangeStart, rangeEnd, $mask0, $marker, $this) {
     if (!(($mask0 & 2) === 0))
       bufferSize = 64;
-    JsFileStreamReader.call($this, path, bufferSize);
+    if (!(($mask0 & 4) === 0))
+      rangeStart = 0;
+    if (!(($mask0 & 8) === 0))
+      rangeEnd = -1;
+    JsFileStreamReader.call($this, path, bufferSize, rangeStart, rangeEnd);
     return $this;
   }
-  function JsFileStreamReader_init_$Create$(path, bufferSize, $mask0, $marker) {
-    return JsFileStreamReader_init_$Init$(path, bufferSize, $mask0, $marker, Object.create(JsFileStreamReader.prototype));
+  function JsFileStreamReader_init_$Create$(path, bufferSize, rangeStart, rangeEnd, $mask0, $marker) {
+    return JsFileStreamReader_init_$Init$(path, bufferSize, rangeStart, rangeEnd, $mask0, $marker, Object.create(JsFileStreamReader.prototype));
+  }
+  function _get_trueSize_($this) {
+    var tmp$ret$0;
+    $l$block: {
+      var tmp0_getValue_0 = trueSize$factory();
+      tmp$ret$0 = $this._trueSize$delegate._get_value__0_k$();
+      break $l$block;
+    }
+    return tmp$ret$0;
+  }
+  function _get_mRangeEnd_($this) {
+    var tmp$ret$0;
+    $l$block: {
+      var tmp0_getValue_0 = mRangeEnd$factory();
+      tmp$ret$0 = $this._mRangeEnd$delegate._get_value__0_k$();
+      break $l$block;
+    }
+    return tmp$ret$0;
   }
   function _get_handle_($this) {
     var tmp$ret$0;
@@ -18563,13 +21093,16 @@
     }
     return tmp$ret$0;
   }
+  function _get_offsetPosition_($this) {
+    return $this._rangeStart_0 + $this._mPosition_1 | 0;
+  }
   function adjustBuffer($this, currentBufferStart) {
-    var bufferAfterPosition = $this._mPosition_1 - currentBufferStart | 0;
+    var bufferAfterPosition = _get_offsetPosition_($this) - currentBufferStart | 0;
     if (0 <= bufferAfterPosition ? bufferAfterPosition < (currentBufferStart + $this._bufferSize | 0) : false) {
       return currentBufferStart;
     }var tmp$ret$0;
     $l$block: {
-      var tmp0_floor_0 = $this._mPosition_1 / $this._bufferSize;
+      var tmp0_floor_0 = _get_offsetPosition_($this) / $this._bufferSize;
       tmp$ret$0 = Math.floor(tmp0_floor_0);
       break $l$block;
     }
@@ -18577,7 +21110,7 @@
     try {
       var tmp$ret$1;
       $l$block_0: {
-        var tmp1_minOf_0 = $this._size_0;
+        var tmp1_minOf_0 = $this._rangeEnd;
         var tmp2_minOf_0 = bufferStart + $this._bufferSize | 0;
         tmp$ret$1 = Math.min(tmp1_minOf_0, tmp2_minOf_0);
         break $l$block_0;
@@ -18613,9 +21146,9 @@
     return bufferStart;
   }
   function readByteAtATime($this) {
-    var bytesRead = numberToInt(readSync_2(_get_handle_($this), $this._byteBuffer, 0, 1, $this._mPosition_1));
+    var bytesRead = numberToInt(readSync_2(_get_handle_($this), $this._byteBuffer, 0, 1, _get_offsetPosition_($this)));
     if (bytesRead === 0) {
-      var tmp = '' + 'Failed to read byte at ' + $this._mPosition_1 + '; Size: ' + $this._size_0;
+      var tmp = '' + 'Failed to read byte at ' + $this._mPosition_1 + '; Size: ' + $this._get_size__0_k$();
       throw CreaturesIOException_init_$Create$(tmp, null, 2, null);
     }var tmp$ret$1;
     $l$block_0: {
@@ -18630,24 +21163,30 @@
     }
     return tmp$ret$1;
   }
-  function _no_name_provided__64(this$0) {
-    this._this$0_9 = this$0;
+  function _no_name_provided__74(this$0) {
+    this._this$0_16 = this$0;
   }
-  _no_name_provided__64.prototype.invoke_0_k$ = function () {
-    return this._this$0_9.newHandle_0_k$();
+  _no_name_provided__74.prototype.invoke_0_k$ = function () {
+    return numberToInt(statSync_0(this._this$0_16._path).size);
   };
-  _no_name_provided__64.$metadata$ = {
+  _no_name_provided__74.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function JsFileStreamReader(path, bufferSize) {
-    this._path = path;
-    this._bufferSize = bufferSize;
-    this._mClosed = false;
-    var tmp = this;
-    var tmp_0;
+  function _no_name_provided__75(this$0) {
+    this._this$0_17 = this$0;
+  }
+  _no_name_provided__75.prototype.invoke_0_k$ = function () {
+    var tmp;
     try {
-      tmp_0 = numberToInt(statSync_0(this._path).size);
+      var range = _get_mRangeEnd_(this._this$0_17) - this._this$0_17._rangeStart_0 | 0;
+      var tmp_0;
+      if (range < 0) {
+        tmp_0 = _get_trueSize_(this._this$0_17);
+      } else {
+        tmp_0 = range;
+      }
+      tmp = tmp_0;
     } catch ($p) {
       var tmp_1;
       if ($p instanceof Exception) {
@@ -18657,20 +21196,69 @@
           throw $p;
         }
       }
-      tmp_0 = tmp_1;
+      tmp = tmp_1;
     }
-    tmp._size_0 = tmp_0;
+    return tmp;
+  };
+  _no_name_provided__75.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__76(this$0) {
+    this._this$0_18 = this$0;
+  }
+  _no_name_provided__76.prototype.invoke_0_k$ = function () {
+    var tmp;
+    if (this._this$0_18._rangeEnd < 0) {
+      tmp = _get_trueSize_(this._this$0_18);
+    } else {
+      tmp = this._this$0_18._rangeEnd;
+    }
+    return tmp;
+  };
+  _no_name_provided__76.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__77(this$0) {
+    this._this$0_19 = this$0;
+  }
+  _no_name_provided__77.prototype.invoke_0_k$ = function () {
+    return this._this$0_19.newHandle_0_k$();
+  };
+  _no_name_provided__77.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function JsFileStreamReader(path, bufferSize, rangeStart, rangeEnd) {
+    this._path = path;
+    this._bufferSize = bufferSize;
+    this._rangeStart_0 = rangeStart;
+    this._rangeEnd = rangeEnd;
+    this._mClosed = false;
+    var tmp = this;
+    tmp._trueSize$delegate = lazy(_no_name_provided_$factory_59(this));
+    var tmp_0 = this;
+    tmp_0._size$delegate_0 = lazy(_no_name_provided_$factory_60(this));
+    var tmp_1 = this;
+    tmp_1._mRangeEnd$delegate = lazy(_no_name_provided_$factory_61(this));
     this._byteBuffer = new Uint8Array(this._bufferSize);
     this._bufferStart = 0;
     this._mPosition_1 = 0;
     var tmp_2 = this;
-    tmp_2._handle$delegate = lazy(_no_name_provided_$factory_50(this));
+    tmp_2._handle$delegate = lazy(_no_name_provided_$factory_62(this));
   }
   JsFileStreamReader.prototype._get_closed__0_k$ = function () {
     return this._mClosed;
   };
   JsFileStreamReader.prototype._get_size__0_k$ = function () {
-    return this._size_0;
+    var tmp$ret$0;
+    $l$block: {
+      var tmp0_getValue_0 = size$factory_0();
+      tmp$ret$0 = this._size$delegate_0._get_value__0_k$();
+      break $l$block;
+    }
+    return tmp$ret$0;
   };
   JsFileStreamReader.prototype.newHandle_0_k$ = function () {
     return openSync_1(this._path, 'r', '444');
@@ -18685,7 +21273,7 @@
       if ($p instanceof Exception) {
         {
           var tmp0_e_0 = Log_getInstance();
-          if (tmp0_e_0._logLevel._value_7 >= LogLevel_ERROR_getInstance()._value_7) {
+          if (tmp0_e_0._logLevel._value_8 >= LogLevel_ERROR_getInstance()._value_8) {
             var tmp = tmp0_e_0._loggerObject;
             var tmp$ret$2;
             $l$block_1: {
@@ -18734,7 +21322,7 @@
     return this._mClosed;
   };
   JsFileStreamReader.prototype.copyAsOpened = function () {
-    return (new JsFileStreamReader(this._path, this._bufferSize)).setPosition(this.position());
+    return JsFileStreamReader_init_$Create$(this._path, this._bufferSize, 0, 0, 12, null).setPosition(this.position());
   };
   JsFileStreamReader.prototype.canReopen = function () {
     return true;
@@ -18743,6 +21331,8 @@
     if (start >= end) {
       var tmp = '' + 'Invalid copyOfBytes range. (' + start + ', ' + end + ')';
       throw IOException_init_$Create$(tmp, null, 2, null);
+    }if (end > this._get_size__0_k$()) {
+      throw CreaturesIOException_init_$Create$('Cannot copy bytes past end of stream', null, 2, null);
     }var length = end - start | 0;
     var needsRead = length;
     var int8Array_0 = new Int8Array(length);
@@ -18753,11 +21343,11 @@
       break $l$block;
     }
     var opts = tmp$ret$0;
-    opts.position = start;
+    opts.position = this._rangeStart_0 + start | 0;
     opts.length = length;
     opts.offset = 0;
     while (needsRead > 0) {
-      var read_0 = readSync_1(_get_handle_(this), int8Array_0, needsRead, length, start);
+      var read_0 = readSync_1(_get_handle_(this), int8Array_0, needsRead, needsRead, this._rangeStart_0 + start | 0);
       if (equals_1(read_0, 0)) {
         var tmp_0 = '' + "Failed to read all requested bytes from file '" + this._path + "'; Requested (" + start + '..' + end + ') read ' + (length - needsRead | 0);
         throw CreaturesIOException_init_$Create$(tmp_0, null, 2, null);
@@ -18766,10 +21356,10 @@
     return toByteArray_2(int8Array_0);
   };
   JsFileStreamReader.prototype.copyOfRange = function (start, end) {
-    return new MemoryByteStreamReader(this.copyOfBytes(start, end));
+    return new JsFileStreamReader(this._path, this._bufferSize, start, end);
   };
   JsFileStreamReader.prototype.duplicate = function () {
-    var out = JsFileStreamReader_init_$Create$(this._path, 0, 2, null);
+    var out = new JsFileStreamReader(this._path, this._bufferSize, this._rangeStart_0, this._rangeEnd);
     out._mPosition_1 = this._mPosition_1;
     return out;
   };
@@ -18796,7 +21386,7 @@
     var bufferStart = tmp;
     var tmp_0;
     if (!(bufferStart == null)) {
-      var positionInBuffer = this._mPosition_1 - bufferStart | 0;
+      var positionInBuffer = _get_offsetPosition_(this);
       if (positionInBuffer < 0) {
         throw CreaturesIOException_init_$Create$('JS File Stream buffer shifted buffer and came out with negative buffer array index', null, 2, null);
       }var tmp$ret$3;
@@ -18896,13 +21486,46 @@
     }
     return toByteArray(tmp$ret$4);
   }
+  function trueSize$factory() {
+    return getPropertyCallableRef('trueSize', 1, KProperty1, function (receiver) {
+      return _get_trueSize_(receiver);
+    }, null);
+  }
+  function size$factory_0() {
+    return getPropertyCallableRef('size', 1, KProperty1, function (receiver) {
+      return receiver._get_size__0_k$();
+    }, null);
+  }
+  function mRangeEnd$factory() {
+    return getPropertyCallableRef('mRangeEnd', 1, KProperty1, function (receiver) {
+      return _get_mRangeEnd_(receiver);
+    }, null);
+  }
   function handle$factory() {
     return getPropertyCallableRef('handle', 1, KProperty1, function (receiver) {
       return _get_handle_(receiver);
     }, null);
   }
-  function _no_name_provided_$factory_50(this$0) {
-    var i = new _no_name_provided__64(this$0);
+  function _no_name_provided_$factory_59(this$0) {
+    var i = new _no_name_provided__74(this$0);
+    return function () {
+      return i.invoke_0_k$();
+    };
+  }
+  function _no_name_provided_$factory_60(this$0) {
+    var i = new _no_name_provided__75(this$0);
+    return function () {
+      return i.invoke_0_k$();
+    };
+  }
+  function _no_name_provided_$factory_61(this$0) {
+    var i = new _no_name_provided__76(this$0);
+    return function () {
+      return i.invoke_0_k$();
+    };
+  }
+  function _no_name_provided_$factory_62(this$0) {
+    var i = new _no_name_provided__77(this$0);
     return function () {
       return i.invoke_0_k$();
     };
@@ -18921,22 +21544,22 @@
   var DayOfWeek_Thursday_instance;
   var DayOfWeek_Friday_instance;
   var DayOfWeek_Saturday_instance;
-  function Companion_15() {
-    Companion_instance_14 = this;
-    this._serialVersionUID_2 = new Long(1, 0);
+  function Companion_16() {
+    Companion_instance_15 = this;
+    this._serialVersionUID_3 = new Long(1, 0);
     this._Count = 7;
     this._BY_INDEX0 = values();
   }
-  Companion_15.$metadata$ = {
+  Companion_16.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_14;
-  function Companion_getInstance_14() {
-    if (Companion_instance_14 == null)
-      new Companion_15();
-    return Companion_instance_14;
+  var Companion_instance_15;
+  function Companion_getInstance_15() {
+    if (Companion_instance_15 == null)
+      new Companion_16();
+    return Companion_instance_15;
   }
   function values() {
     return [DayOfWeek_Sunday_getInstance(), DayOfWeek_Monday_getInstance(), DayOfWeek_Tuesday_getInstance(), DayOfWeek_Wednesday_getInstance(), DayOfWeek_Thursday_getInstance(), DayOfWeek_Friday_getInstance(), DayOfWeek_Saturday_getInstance()];
@@ -18953,7 +21576,7 @@
     DayOfWeek_Thursday_instance = new DayOfWeek('Thursday', 4, 4);
     DayOfWeek_Friday_instance = new DayOfWeek('Friday', 5, 5);
     DayOfWeek_Saturday_instance = new DayOfWeek('Saturday', 6, 6);
-    Companion_getInstance_14();
+    Companion_getInstance_15();
   }
   function DayOfWeek(name, ordinal, index0) {
     Enum.call(this, name, ordinal);
@@ -18993,23 +21616,9 @@
     return DayOfWeek_Saturday_instance;
   }
   var KlockLocale_default;
-  function Companion_16() {
-    Companion_instance_15 = this;
-    English.call(this);
-  }
-  Companion_16.$metadata$ = {
-    simpleName: 'Companion',
-    kind: 'object',
-    interfaces: []
-  };
-  var Companion_instance_15;
-  function Companion_getInstance_15() {
-    if (Companion_instance_15 == null)
-      new Companion_16();
-    return Companion_instance_15;
-  }
   function Companion_17() {
     Companion_instance_16 = this;
+    English.call(this);
   }
   Companion_17.$metadata$ = {
     simpleName: 'Companion',
@@ -19022,8 +21631,22 @@
       new Companion_17();
     return Companion_instance_16;
   }
+  function Companion_18() {
+    Companion_instance_17 = this;
+  }
+  Companion_18.$metadata$ = {
+    simpleName: 'Companion',
+    kind: 'object',
+    interfaces: []
+  };
+  var Companion_instance_17;
+  function Companion_getInstance_17() {
+    if (Companion_instance_17 == null)
+      new Companion_18();
+    return Companion_instance_17;
+  }
   function English() {
-    Companion_getInstance_15();
+    Companion_getInstance_16();
     KlockLocale.call(this);
     this._ISO639_1 = 'en';
     this._firstDayOfWeek = DayOfWeek_Sunday_getInstance();
@@ -19043,13 +21666,13 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__65(this$0) {
-    this._this$0_10 = this$0;
+  function _no_name_provided__78(this$0) {
+    this._this$0_20 = this$0;
   }
-  _no_name_provided__65.prototype.invoke_0_k$ = function () {
+  _no_name_provided__78.prototype.invoke_0_k$ = function () {
     var tmp$ret$2;
     $l$block_1: {
-      var tmp0_map_0 = this._this$0_10._get_months__0_k$();
+      var tmp0_map_0 = this._this$0_20._get_months__0_k$();
       var tmp$ret$1;
       $l$block_0: {
         var tmp0_mapTo_0_1 = ArrayList_init_$Create$_0(collectionSizeOrDefault(tmp0_map_0, 10));
@@ -19072,17 +21695,17 @@
     }
     return tmp$ret$2;
   };
-  _no_name_provided__65.$metadata$ = {
+  _no_name_provided__78.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__66(this$0) {
-    this._this$0_11 = this$0;
+  function _no_name_provided__79(this$0) {
+    this._this$0_21 = this$0;
   }
-  _no_name_provided__66.prototype.invoke_0_k$ = function () {
+  _no_name_provided__79.prototype.invoke_0_k$ = function () {
     var tmp$ret$2;
     $l$block_1: {
-      var tmp0_map_0 = this._this$0_11._get_daysOfWeek__0_k$();
+      var tmp0_map_0 = this._this$0_21._get_daysOfWeek__0_k$();
       var tmp$ret$1;
       $l$block_0: {
         var tmp0_mapTo_0_1 = ArrayList_init_$Create$_0(collectionSizeOrDefault(tmp0_map_0, 10));
@@ -19105,16 +21728,16 @@
     }
     return tmp$ret$2;
   };
-  _no_name_provided__66.$metadata$ = {
+  _no_name_provided__79.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function KlockLocale() {
-    Companion_getInstance_16();
+    Companion_getInstance_17();
     var tmp = this;
-    tmp._monthsShort$delegate = klockLazyOrGet(_no_name_provided_$factory_51(this));
+    tmp._monthsShort$delegate = klockLazyOrGet(_no_name_provided_$factory_63(this));
     var tmp_0 = this;
-    tmp_0._daysOfWeekShort$delegate = klockLazyOrGet(_no_name_provided_$factory_52(this));
+    tmp_0._daysOfWeekShort$delegate = klockLazyOrGet(_no_name_provided_$factory_64(this));
     var tmp_1 = this;
     var tmp_2 = 0;
     var tmp_3 = 32;
@@ -19172,14 +21795,14 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_51(this$0) {
-    var i = new _no_name_provided__65(this$0);
+  function _no_name_provided_$factory_63(this$0) {
+    var i = new _no_name_provided__78(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_52(this$0) {
-    var i = new _no_name_provided__66(this$0);
+  function _no_name_provided_$factory_64(this$0) {
+    var i = new _no_name_provided__79(this$0);
     return function () {
       return i.invoke_0_k$();
     };
@@ -19215,39 +21838,11 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_18() {
-    Companion_instance_17 = this;
-    this._serialVersionUID_3 = new Long(1, 0);
-    this._DEFAULT = new Options(false);
-    this._WITH_OPTIONAL = new Options(true);
-  }
-  Companion_18.$metadata$ = {
-    simpleName: 'Companion',
-    kind: 'object',
-    interfaces: []
-  };
-  var Companion_instance_17;
-  function Companion_getInstance_17() {
-    if (Companion_instance_17 == null)
-      new Companion_18();
-    return Companion_instance_17;
-  }
-  function PatternDateFormat_init_$Init$(format_0, locale, tzNames, options, $mask0, $marker, $this) {
-    if (!(($mask0 & 2) === 0))
-      locale = null;
-    if (!(($mask0 & 4) === 0))
-      tzNames = Companion_getInstance_21()._DEFAULT_0;
-    if (!(($mask0 & 8) === 0))
-      options = Companion_getInstance_17()._DEFAULT;
-    PatternDateFormat.call($this, format_0, locale, tzNames, options);
-    return $this;
-  }
-  function PatternDateFormat_init_$Create$(format_0, locale, tzNames, options, $mask0, $marker) {
-    return PatternDateFormat_init_$Init$(format_0, locale, tzNames, options, $mask0, $marker, Object.create(PatternDateFormat.prototype));
-  }
   function Companion_19() {
     Companion_instance_18 = this;
     this._serialVersionUID_4 = new Long(1, 0);
+    this._DEFAULT = new Options(false);
+    this._WITH_OPTIONAL = new Options(true);
   }
   Companion_19.$metadata$ = {
     simpleName: 'Companion',
@@ -19260,8 +21855,36 @@
       new Companion_19();
     return Companion_instance_18;
   }
+  function PatternDateFormat_init_$Init$(format_0, locale, tzNames, options, $mask0, $marker, $this) {
+    if (!(($mask0 & 2) === 0))
+      locale = null;
+    if (!(($mask0 & 4) === 0))
+      tzNames = Companion_getInstance_22()._DEFAULT_0;
+    if (!(($mask0 & 8) === 0))
+      options = Companion_getInstance_18()._DEFAULT;
+    PatternDateFormat.call($this, format_0, locale, tzNames, options);
+    return $this;
+  }
+  function PatternDateFormat_init_$Create$(format_0, locale, tzNames, options, $mask0, $marker) {
+    return PatternDateFormat_init_$Init$(format_0, locale, tzNames, options, $mask0, $marker, Object.create(PatternDateFormat.prototype));
+  }
+  function Companion_20() {
+    Companion_instance_19 = this;
+    this._serialVersionUID_5 = new Long(1, 0);
+  }
+  Companion_20.$metadata$ = {
+    simpleName: 'Companion',
+    kind: 'object',
+    interfaces: []
+  };
+  var Companion_instance_19;
+  function Companion_getInstance_19() {
+    if (Companion_instance_19 == null)
+      new Companion_20();
+    return Companion_instance_19;
+  }
   function Options(optionalSupport) {
-    Companion_getInstance_17();
+    Companion_getInstance_18();
     this._optionalSupport = optionalSupport;
   }
   Options.prototype.toString = function () {
@@ -19288,7 +21911,7 @@
     interfaces: [Serializable_0]
   };
   function PatternDateFormat(format_0, locale, tzNames, options) {
-    Companion_getInstance_18();
+    Companion_getInstance_19();
     this._format = format_0;
     this._locale = locale;
     this._tzNames = tzNames;
@@ -19712,19 +22335,19 @@
       new PerformanceCounter();
     return PerformanceCounter_instance;
   }
-  function Companion_20() {
-    Companion_instance_19 = this;
+  function Companion_21() {
+    Companion_instance_20 = this;
   }
-  Companion_20.$metadata$ = {
+  Companion_21.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: [TimeProvider]
   };
-  var Companion_instance_19;
-  function Companion_getInstance_19() {
-    if (Companion_instance_19 == null)
-      new Companion_20();
-    return Companion_instance_19;
+  var Companion_instance_20;
+  function Companion_getInstance_20() {
+    if (Companion_instance_20 == null)
+      new Companion_21();
+    return Companion_instance_20;
   }
   function TimeProvider() {
   }
@@ -19749,9 +22372,9 @@
   function TimeSpan__plus_impl(this_0, other) {
     return _TimeSpan___init__impl_(_TimeSpan___get_milliseconds__impl_(this_0) + _TimeSpan___get_milliseconds__impl_(other));
   }
-  function Companion_21() {
-    Companion_instance_20 = this;
-    this._serialVersionUID_5 = new Long(1, 0);
+  function Companion_22() {
+    Companion_instance_21 = this;
+    this._serialVersionUID_6 = new Long(1, 0);
     this._MILLIS_PER_MICROSECOND = 0.001;
     this._MILLIS_PER_NANOSECOND = 1.0E-6;
     this._ZERO = _TimeSpan___init__impl_(0.0);
@@ -19760,32 +22383,32 @@
     tmp._NIL = _TimeSpan___init__impl_(NaN);
     this._timeSteps = listOf([60, 60, 24]);
   }
-  Companion_21.prototype.fromMilliseconds_ttklb2_k$ = function (ms) {
+  Companion_22.prototype.fromMilliseconds_ttklb2_k$ = function (ms) {
     var tmp0_subject = ms;
     return tmp0_subject === 0.0 ? this._ZERO : _TimeSpan___init__impl_(ms);
   };
-  Companion_21.prototype.fromMicroseconds_ttklb2_k$ = function (s) {
+  Companion_22.prototype.fromMicroseconds_ttklb2_k$ = function (s) {
     return this.fromMilliseconds_ttklb2_k$(s * 0.001);
   };
-  Companion_21.prototype.fromSeconds_ttklb2_k$ = function (s) {
+  Companion_22.prototype.fromSeconds_ttklb2_k$ = function (s) {
     return this.fromMilliseconds_ttklb2_k$(s * 1000);
   };
-  Companion_21.prototype.fromMinutes_ttklb2_k$ = function (s) {
+  Companion_22.prototype.fromMinutes_ttklb2_k$ = function (s) {
     return this.fromMilliseconds_ttklb2_k$(s * 60000);
   };
-  Companion_21.prototype.fromHours_ttklb2_k$ = function (s) {
+  Companion_22.prototype.fromHours_ttklb2_k$ = function (s) {
     return this.fromMilliseconds_ttklb2_k$(s * 3600000);
   };
-  Companion_21.$metadata$ = {
+  Companion_22.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_20;
-  function Companion_getInstance_20() {
-    if (Companion_instance_20 == null)
-      new Companion_21();
-    return Companion_instance_20;
+  var Companion_instance_21;
+  function Companion_getInstance_21() {
+    if (Companion_instance_21 == null)
+      new Companion_22();
+    return Companion_instance_21;
   }
   function TimeSpan__toString_impl(this_0) {
     return '' + _get_niceStr_(_TimeSpan___get_milliseconds__impl_(this_0)) + 'ms';
@@ -19804,7 +22427,7 @@
     return true;
   }
   function TimeSpan(milliseconds) {
-    Companion_getInstance_20();
+    Companion_getInstance_21();
     this._milliseconds = milliseconds;
   }
   TimeSpan.prototype.compareTo_wv9l0m_k$ = function (other) {
@@ -19834,48 +22457,48 @@
   function TimezoneNames_init_$Create$(tz) {
     return TimezoneNames_init_$Init$(tz, Object.create(TimezoneNames.prototype));
   }
-  function Companion_22() {
-    Companion_instance_21 = this;
-    this._serialVersionUID_6 = new Long(1, 0);
+  function Companion_23() {
+    Companion_instance_22 = this;
+    this._serialVersionUID_7 = new Long(1, 0);
     var tmp = this;
     var tmp$ret$0;
     $l$block: {
-      tmp$ret$0 = Companion_getInstance_20().fromHours_ttklb2_k$(-7.0);
+      tmp$ret$0 = Companion_getInstance_21().fromHours_ttklb2_k$(-7.0);
       break $l$block;
     }
     var tmp_0 = to('PDT', new TimeSpan(tmp$ret$0));
     var tmp$ret$1;
     $l$block_0: {
-      tmp$ret$1 = Companion_getInstance_20().fromHours_ttklb2_k$(-8.0);
+      tmp$ret$1 = Companion_getInstance_21().fromHours_ttklb2_k$(-8.0);
       break $l$block_0;
     }
     var tmp_1 = to('PST', new TimeSpan(tmp$ret$1));
     var tmp$ret$2;
     $l$block_1: {
-      tmp$ret$2 = Companion_getInstance_20().fromHours_ttklb2_k$(0.0);
+      tmp$ret$2 = Companion_getInstance_21().fromHours_ttklb2_k$(0.0);
       break $l$block_1;
     }
     var tmp_2 = to('GMT', new TimeSpan(tmp$ret$2));
     var tmp$ret$3;
     $l$block_2: {
-      tmp$ret$3 = Companion_getInstance_20().fromHours_ttklb2_k$(0.0);
+      tmp$ret$3 = Companion_getInstance_21().fromHours_ttklb2_k$(0.0);
       break $l$block_2;
     }
     tmp._DEFAULT_0 = TimezoneNames_init_$Create$([tmp_0, tmp_1, tmp_2, to('UTC', new TimeSpan(tmp$ret$3))]);
   }
-  Companion_22.$metadata$ = {
+  Companion_23.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_21;
-  function Companion_getInstance_21() {
-    if (Companion_instance_21 == null)
-      new Companion_22();
-    return Companion_instance_21;
+  var Companion_instance_22;
+  function Companion_getInstance_22() {
+    if (Companion_instance_22 == null)
+      new Companion_23();
+    return Companion_instance_22;
   }
   function TimezoneNames(namesToOffsets) {
-    Companion_getInstance_21();
+    Companion_getInstance_22();
     this._namesToOffsets = namesToOffsets;
   }
   TimezoneNames.prototype.toString = function () {
@@ -19907,38 +22530,38 @@
   function _HRTimeSpan___get_nanosecondsRaw__impl_(this_0) {
     return this_0;
   }
-  function Companion_23() {
-    Companion_instance_22 = this;
+  function Companion_24() {
+    Companion_instance_23 = this;
     this._ZERO_0 = _HRTimeSpan___init__impl_(0.0);
     var tmp = this;
     DoubleCompanionObject_getInstance();
     tmp._NIL_0 = _HRTimeSpan___init__impl_(NaN);
   }
-  Companion_23.prototype.fromSeconds_nj2146_k$ = function (value) {
+  Companion_24.prototype.fromSeconds_nj2146_k$ = function (value) {
     return _HRTimeSpan___init__impl_(round(value * 1000000000));
   };
-  Companion_23.prototype.fromMilliseconds_nj2146_k$ = function (value) {
+  Companion_24.prototype.fromMilliseconds_nj2146_k$ = function (value) {
     return _HRTimeSpan___init__impl_(round(value * 1000000));
   };
-  Companion_23.prototype.fromNanoseconds_nj2146_k$ = function (value) {
+  Companion_24.prototype.fromNanoseconds_nj2146_k$ = function (value) {
     return _HRTimeSpan___init__impl_(round(value));
   };
-  Companion_23.$metadata$ = {
+  Companion_24.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_22;
-  function Companion_getInstance_22() {
-    if (Companion_instance_22 == null)
-      new Companion_23();
-    return Companion_instance_22;
+  var Companion_instance_23;
+  function Companion_getInstance_23() {
+    if (Companion_instance_23 == null)
+      new Companion_24();
+    return Companion_instance_23;
   }
   function _HRTimeSpan___get_microsecondsDouble__impl_(this_0) {
     return _HRTimeSpan___get_nanosecondsRaw__impl_(this_0) / 1000;
   }
   function HRTimeSpan__plus_impl(this_0, other) {
-    return Companion_getInstance_22().fromNanoseconds_nj2146_k$(_HRTimeSpan___get_nanosecondsRaw__impl_(this_0) + _HRTimeSpan___get_nanosecondsRaw__impl_(other));
+    return Companion_getInstance_23().fromNanoseconds_nj2146_k$(_HRTimeSpan___get_nanosecondsRaw__impl_(this_0) + _HRTimeSpan___get_nanosecondsRaw__impl_(other));
   }
   function increment(_this_, key) {
     var tmp$ret$1;
@@ -20075,13 +22698,13 @@
   function utc(hours, minutes) {
     var tmp$ret$0;
     $l$block: {
-      tmp$ret$0 = Companion_getInstance_20().fromHours_ttklb2_k$(hours);
+      tmp$ret$0 = Companion_getInstance_21().fromHours_ttklb2_k$(hours);
       break $l$block;
     }
     var tmp = tmp$ret$0;
     var tmp$ret$1;
     $l$block_0: {
-      tmp$ret$1 = Companion_getInstance_20().fromMinutes_ttklb2_k$(minutes);
+      tmp$ret$1 = Companion_getInstance_21().fromMinutes_ttklb2_k$(minutes);
       break $l$block_0;
     }
     return TimeSpan__plus_impl(tmp, tmp$ret$1);
@@ -20333,9 +22956,9 @@
         break $l$block;
       }
       var result = tmp$ret$0;
-      tmp = HRTimeSpan__plus_impl(Companion_getInstance_22().fromSeconds_nj2146_k$(result[0]), Companion_getInstance_22().fromNanoseconds_nj2146_k$(result[1]));
+      tmp = HRTimeSpan__plus_impl(Companion_getInstance_23().fromSeconds_nj2146_k$(result[0]), Companion_getInstance_23().fromNanoseconds_nj2146_k$(result[1]));
     } else {
-      tmp = Companion_getInstance_22().fromMilliseconds_nj2146_k$(window.performance.now());
+      tmp = Companion_getInstance_23().fromMilliseconds_nj2146_k$(window.performance.now());
     }
     return tmp;
   };
@@ -20350,12 +22973,12 @@
       new KlockInternal();
     return KlockInternal_instance;
   }
-  function _no_name_provided__67() {
+  function _no_name_provided__80() {
   }
-  _no_name_provided__67.prototype.invoke_0_k$ = function () {
+  _no_name_provided__80.prototype.invoke_0_k$ = function () {
     return process.hrtime();
   };
-  _no_name_provided__67.$metadata$ = {
+  _no_name_provided__80.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -20364,8 +22987,8 @@
       return _get_initialHrTime_();
     }, null);
   }
-  function _no_name_provided_$factory_53() {
-    var i = new _no_name_provided__67();
+  function _no_name_provided_$factory_65() {
+    var i = new _no_name_provided__80();
     return function () {
       return i.invoke_0_k$();
     };
@@ -20402,8 +23025,8 @@
   ByteArrayDeque.prototype._get_availableRead__0_k$ = function () {
     return this._ring._get_availableRead__0_k$();
   };
-  ByteArrayDeque.prototype.write_irqg4d_k$ = function (buffer, offset_0, size) {
-    var out = ensureWrite(this, size)._ring.write_irqg4d_k$(buffer, offset_0, size);
+  ByteArrayDeque.prototype.write_irqg4d_k$ = function (buffer, offset_0, size_0) {
+    var out = ensureWrite(this, size_0)._ring.write_irqg4d_k$(buffer, offset_0, size_0);
     if (out > 0) {
       var tmp0_this = this;
       var tmp = tmp0_this;
@@ -20416,8 +23039,8 @@
       tmp._written = tmp$ret$0;
     }return out;
   };
-  ByteArrayDeque.prototype.read_irqg4d_k$ = function (buffer, offset_0, size) {
-    var out = this._ring.read_irqg4d_k$(buffer, offset_0, size);
+  ByteArrayDeque.prototype.read_irqg4d_k$ = function (buffer, offset_0, size_0) {
+    var out = this._ring.read_irqg4d_k$(buffer, offset_0, size_0);
     if (out > 0) {
       var tmp0_this = this;
       var tmp = tmp0_this;
@@ -20461,19 +23084,19 @@
   function DoubleArrayList_init_$Create$(capacity, $mask0, $marker) {
     return DoubleArrayList_init_$Init$(capacity, $mask0, $marker, Object.create(DoubleArrayList.prototype));
   }
-  function Companion_24() {
-    Companion_instance_23 = this;
+  function Companion_25() {
+    Companion_instance_24 = this;
   }
-  Companion_24.$metadata$ = {
+  Companion_25.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_23;
-  function Companion_getInstance_23() {
-    if (Companion_instance_23 == null)
-      new Companion_24();
-    return Companion_instance_23;
+  var Companion_instance_24;
+  function Companion_getInstance_24() {
+    if (Companion_instance_24 == null)
+      new Companion_25();
+    return Companion_instance_24;
   }
   function ensure_0($this, count) {
     if (($this._length + count | 0) > $this._data.length) {
@@ -20490,7 +23113,7 @@
       tmp._data = isDoubleArray(tmp_1) ? tmp_1 : THROW_CCE();
     }}
   function DoubleArrayList(capacity) {
-    Companion_getInstance_23();
+    Companion_getInstance_24();
     var tmp = this;
     var tmp_0 = new Float64Array(capacity);
     tmp._data = isDoubleArray(tmp_0) ? tmp_0 : THROW_CCE();
@@ -20637,11 +23260,11 @@
     return take(this._data, this._length).listIterator_ha5a7z_k$(index);
   };
   DoubleArrayList.prototype.hashCode = function () {
-    return contentHashCode_0(this._data, 0, this._get_size__0_k$());
+    return contentHashCode_1(this._data, 0, this._get_size__0_k$());
   };
   DoubleArrayList.prototype.equals = function (other) {
     if (other instanceof DoubleArrayList)
-      return this._get_size__0_k$() === other._get_size__0_k$() ? contentEquals_0(this._data, other._data, 0, this._get_size__0_k$()) : false;
+      return this._get_size__0_k$() === other._get_size__0_k$() ? contentEquals_1(this._data, other._data, 0, this._get_size__0_k$()) : false;
     else {
     }
     if (!(other == null) ? isInterface(other, List) : false)
@@ -20694,22 +23317,22 @@
   function IntArrayList_init_$Create$(capacity, $mask0, $marker) {
     return IntArrayList_init_$Init$(capacity, $mask0, $marker, Object.create(IntArrayList.prototype));
   }
-  function Companion_25() {
-    Companion_instance_24 = this;
+  function Companion_26() {
+    Companion_instance_25 = this;
   }
-  Companion_25.$metadata$ = {
+  Companion_26.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_24;
-  function Companion_getInstance_24() {
-    if (Companion_instance_24 == null)
-      new Companion_25();
-    return Companion_instance_24;
+  var Companion_instance_25;
+  function Companion_getInstance_25() {
+    if (Companion_instance_25 == null)
+      new Companion_26();
+    return Companion_instance_25;
   }
   function IntArrayList(capacity) {
-    Companion_getInstance_24();
+    Companion_getInstance_25();
     var tmp = this;
     var tmp_0 = new Int32Array(capacity);
     tmp._data_0 = isIntArray(tmp_0) ? tmp_0 : THROW_CCE();
@@ -20798,11 +23421,11 @@
     return take_0(this._data_0, this._length_0).listIterator_ha5a7z_k$(index);
   };
   IntArrayList.prototype.hashCode = function () {
-    return contentHashCode_1(this._data_0, 0, this._get_size__0_k$());
+    return contentHashCode_2(this._data_0, 0, this._get_size__0_k$());
   };
   IntArrayList.prototype.equals = function (other) {
     if (other instanceof IntArrayList)
-      return this._get_size__0_k$() === other._get_size__0_k$() ? contentEquals_1(this._data_0, other._data_0, 0, this._get_size__0_k$()) : false;
+      return this._get_size__0_k$() === other._get_size__0_k$() ? contentEquals_2(this._data_0, other._data_0, 0, this._get_size__0_k$()) : false;
     else {
     }
     if (!(other == null) ? isInterface(other, List) : false)
@@ -20916,22 +23539,22 @@
   function IntIntMap_init_$Create$(initialCapacity, loadFactor, $mask0, $marker) {
     return IntIntMap_init_$Init$_0(initialCapacity, loadFactor, $mask0, $marker, Object.create(IntIntMap.prototype));
   }
-  function Companion_26() {
-    Companion_instance_25 = this;
+  function Companion_27() {
+    Companion_instance_26 = this;
     this._EOF = 2147483646;
     this._ZERO_INDEX = 2147483647;
     this._EMPTY_1 = 0;
   }
-  Companion_26.$metadata$ = {
+  Companion_27.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_25;
-  function Companion_getInstance_25() {
-    if (Companion_instance_25 == null)
-      new Companion_26();
-    return Companion_instance_25;
+  var Companion_instance_26;
+  function Companion_getInstance_26() {
+    if (Companion_instance_26 == null)
+      new Companion_27();
+    return Companion_instance_26;
   }
   function _get_stashStart_($this) {
     return $this.__keys_1.length - $this._stashSize | 0;
@@ -20947,7 +23570,7 @@
         var n = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         var k = $this.__keys_1[n];
-        Companion_getInstance_25();
+        Companion_getInstance_26();
         if (!(k === 0)) {
           new_0.set_27zxwg_k$(k, $this.__values_1[n]);
           Unit_getInstance();
@@ -20972,7 +23595,7 @@
     if (key === 0) {
       var tmp;
       if ($this._hasZero) {
-        Companion_getInstance_25();
+        Companion_getInstance_26();
         tmp = 2147483647;
       } else {
         tmp = -1;
@@ -21001,7 +23624,7 @@
   }
   function setEmptySlot($this, index, key, value) {
     var tmp = $this.__keys_1[index];
-    Companion_getInstance_25();
+    Companion_getInstance_26();
     if (!(tmp === 0))
       throw IllegalStateException_init_$Create$();
     else {
@@ -21009,8 +23632,8 @@
     $this.__keys_1[index] = key;
     $this.__values_1[index] = value;
     var tmp0_this = $this;
-    var tmp1 = tmp0_this._size_1;
-    tmp0_this._size_1 = tmp1 + 1 | 0;
+    var tmp1 = tmp0_this._size_0;
+    tmp0_this._size_0 = tmp1 + 1 | 0;
     Unit_getInstance();
     return 0;
   }
@@ -21024,7 +23647,7 @@
     return _hash3(key, $this._mask);
   }
   function IntIntMap(nbits, loadFactor, dummy) {
-    Companion_getInstance_25();
+    Companion_getInstance_26();
     this._nbits = nbits;
     this._loadFactor = loadFactor;
     this._capacity = 1 << this._nbits;
@@ -21035,7 +23658,7 @@
     this.__keys_1 = new Int32Array(this._get_backSize__0_k$());
     this.__values_1 = new Int32Array(this._get_backSize__0_k$());
     this._growSize = numberToInt(this._capacity * this._loadFactor);
-    this._size_1 = 0;
+    this._size_0 = 0;
   }
   IntIntMap.prototype._get_backSize__0_k$ = function () {
     return this._capacity + this._stashSize | 0;
@@ -21047,7 +23670,7 @@
     var index = _getKeyIndex(this, key);
     if (index < 0)
       return 0;
-    Companion_getInstance_25();
+    Companion_getInstance_26();
     if (index === 2147483647)
       return this._zeroValue;
     else {
@@ -21062,29 +23685,29 @@
           this._hasZero = true;
           this._zeroValue = value;
           var tmp0_this = this;
-          var tmp1 = tmp0_this._size_1;
-          tmp0_this._size_1 = tmp1 + 1 | 0;
+          var tmp1 = tmp0_this._size_0;
+          tmp0_this._size_0 = tmp1 + 1 | 0;
           Unit_getInstance();
           return 0;
-        }if (this._size_1 >= this._growSize)
+        }if (this._size_0 >= this._growSize)
           grow(this);
         var index1 = hash1(this, key);
         var tmp = this.__keys_1[index1];
-        Companion_getInstance_25();
+        Companion_getInstance_26();
         if (tmp === 0)
           return setEmptySlot(this, index1, key, value);
         else {
         }
         var index2 = hash2(this, key);
         var tmp_0 = this.__keys_1[index2];
-        Companion_getInstance_25();
+        Companion_getInstance_26();
         if (tmp_0 === 0)
           return setEmptySlot(this, index2, key, value);
         else {
         }
         var index3 = hash3(this, key);
         var tmp_1 = this.__keys_1[index3];
-        Companion_getInstance_25();
+        Companion_getInstance_26();
         if (tmp_1 === 0)
           return setEmptySlot(this, index3, key, value);
         else {
@@ -21096,7 +23719,7 @@
             var n = inductionVariable;
             inductionVariable = inductionVariable + 1 | 0;
             var tmp_2 = this.__keys_1[n];
-            Companion_getInstance_25();
+            Companion_getInstance_26();
             if (tmp_2 === 0)
               return setEmptySlot(this, n, key, value);
             else {
@@ -21110,7 +23733,7 @@
         }
         continue retry;
       } else {
-        Companion_getInstance_25();
+        Companion_getInstance_26();
         if (index === 2147483647) {
           var tmp$ret$0;
           $l$block: {
@@ -21151,14 +23774,14 @@
         var n = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         var tmp = keys[n];
-        Companion_getInstance_25();
+        Companion_getInstance_26();
         if (!(tmp === 0))
           return n;
         else {
         }
       }
        while (inductionVariable < last_0);
-    Companion_getInstance_25();
+    Companion_getInstance_26();
     return 2147483646;
   };
   IntIntMap.prototype.equals = function (other) {
@@ -21170,7 +23793,7 @@
       {
         var tmp;
         if (this._hasZero) {
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           tmp = 2147483647;
         } else {
           tmp = this.nextNonEmptyIndex_pb76ll_k$(this.__keys_1, 0);
@@ -21178,19 +23801,19 @@
         var index_1_1 = tmp;
         $l$break: while (true) {
           var tmp_0 = index_1_1;
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           if (!!(tmp_0 === 2147483646)) {
             break $l$break;
           }{
             var tmp0_subject_2_3 = index_1_1;
             var tmp_1;
             var tmp_2;
-            Companion_getInstance_26();
+            Companion_getInstance_27();
             if (tmp0_subject_2_3 === 2147483647) {
               tmp_2 = true;
             } else {
               {
-                Companion_getInstance_26();
+                Companion_getInstance_27();
                 tmp_2 = tmp0_subject_2_3 === 2147483646;
               }
             }
@@ -21211,7 +23834,7 @@
           var tmp_3 = this.__keys_1;
           var tmp_4;
           var tmp_5 = index_1_1;
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           if (tmp_5 === 2147483647) {
             tmp_4 = 0;
           } else {
@@ -21231,7 +23854,7 @@
       {
         var tmp;
         if (this._hasZero) {
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           tmp = 2147483647;
         } else {
           tmp = this.nextNonEmptyIndex_pb76ll_k$(this.__keys_1, 0);
@@ -21239,19 +23862,19 @@
         var index_1_1 = tmp;
         $l$break: while (true) {
           var tmp_0 = index_1_1;
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           if (!!(tmp_0 === 2147483646)) {
             break $l$break;
           }{
             var tmp0_subject_2_3 = index_1_1;
             var tmp_1;
             var tmp_2;
-            Companion_getInstance_26();
+            Companion_getInstance_27();
             if (tmp0_subject_2_3 === 2147483647) {
               tmp_2 = true;
             } else {
               {
-                Companion_getInstance_26();
+                Companion_getInstance_27();
                 tmp_2 = tmp0_subject_2_3 === 2147483646;
               }
             }
@@ -21271,7 +23894,7 @@
           var tmp_3 = this.__keys_1;
           var tmp_4;
           var tmp_5 = index_1_1;
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           if (tmp_5 === 2147483647) {
             tmp_4 = 0;
           } else {
@@ -21311,22 +23934,22 @@
   function IntMap_init_$Create$(initialCapacity, loadFactor, $mask0, $marker) {
     return IntMap_init_$Init$_0(initialCapacity, loadFactor, $mask0, $marker, Object.create(IntMap.prototype));
   }
-  function Companion_27() {
-    Companion_instance_26 = this;
+  function Companion_28() {
+    Companion_instance_27 = this;
     this._EOF_0 = 2147483646;
     this._ZERO_INDEX_0 = 2147483647;
     this._EMPTY_2 = 0;
   }
-  Companion_27.$metadata$ = {
+  Companion_28.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_26;
-  function Companion_getInstance_26() {
-    if (Companion_instance_26 == null)
-      new Companion_27();
-    return Companion_instance_26;
+  var Companion_instance_27;
+  function Companion_getInstance_27() {
+    if (Companion_instance_27 == null)
+      new Companion_28();
+    return Companion_instance_27;
   }
   function _get_stashStart__0($this) {
     return $this.__keys_2.length - $this._stashSize_0 | 0;
@@ -21342,7 +23965,7 @@
         var n = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         var k = $this.__keys_2[n];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (!(k === 0)) {
           new_0.set_bq5tp3_k$(k, $this.__values_2[n]);
           Unit_getInstance();
@@ -21367,7 +23990,7 @@
     if (key === 0) {
       var tmp;
       if ($this._hasZero_0) {
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         tmp = 2147483647;
       } else {
         tmp = -1;
@@ -21396,7 +24019,7 @@
   }
   function setEmptySlot_0($this, index, key, value) {
     var tmp = $this.__keys_2[index];
-    Companion_getInstance_26();
+    Companion_getInstance_27();
     if (!(tmp === 0))
       throw IllegalStateException_init_$Create$();
     else {
@@ -21404,8 +24027,8 @@
     $this.__keys_2[index] = key;
     $this.__values_2[index] = value;
     var tmp0_this = $this;
-    var tmp1 = tmp0_this._size_2;
-    tmp0_this._size_2 = tmp1 + 1 | 0;
+    var tmp1 = tmp0_this._size_1;
+    tmp0_this._size_1 = tmp1 + 1 | 0;
     Unit_getInstance();
     return null;
   }
@@ -21419,7 +24042,7 @@
     return _hash3(key, $this._mask_0);
   }
   function IntMap(nbits, loadFactor, dummy) {
-    Companion_getInstance_26();
+    Companion_getInstance_27();
     this._nbits_0 = nbits;
     this._loadFactor_0 = loadFactor;
     this._capacity_0 = 1 << this._nbits_0;
@@ -21438,7 +24061,7 @@
     var tmp_0 = tmp$ret$0;
     tmp.__values_2 = isArray(tmp_0) ? tmp_0 : THROW_CCE();
     this._growSize_0 = numberToInt(this._capacity_0 * this._loadFactor_0);
-    this._size_2 = 0;
+    this._size_1 = 0;
   }
   IntMap.prototype._get_backSize__0_k$ = function () {
     return this._capacity_0 + this._stashSize_0 | 0;
@@ -21447,7 +24070,7 @@
     var index = _getKeyIndex_0(this, key);
     if (index < 0)
       return null;
-    Companion_getInstance_26();
+    Companion_getInstance_27();
     if (index === 2147483647)
       return this._zeroValue_0;
     else {
@@ -21462,29 +24085,29 @@
           this._hasZero_0 = true;
           this._zeroValue_0 = value;
           var tmp0_this = this;
-          var tmp1 = tmp0_this._size_2;
-          tmp0_this._size_2 = tmp1 + 1 | 0;
+          var tmp1 = tmp0_this._size_1;
+          tmp0_this._size_1 = tmp1 + 1 | 0;
           Unit_getInstance();
           return null;
-        }if (this._size_2 >= this._growSize_0)
+        }if (this._size_1 >= this._growSize_0)
           grow_0(this);
         var index1 = hash1_0(this, key);
         var tmp = this.__keys_2[index1];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (tmp === 0)
           return setEmptySlot_0(this, index1, key, value);
         else {
         }
         var index2 = hash2_0(this, key);
         var tmp_0 = this.__keys_2[index2];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (tmp_0 === 0)
           return setEmptySlot_0(this, index2, key, value);
         else {
         }
         var index3 = hash3_0(this, key);
         var tmp_1 = this.__keys_2[index3];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (tmp_1 === 0)
           return setEmptySlot_0(this, index3, key, value);
         else {
@@ -21496,7 +24119,7 @@
             var n = inductionVariable;
             inductionVariable = inductionVariable + 1 | 0;
             var tmp_2 = this.__keys_2[n];
-            Companion_getInstance_26();
+            Companion_getInstance_27();
             if (tmp_2 === 0)
               return setEmptySlot_0(this, n, key, value);
             else {
@@ -21510,7 +24133,7 @@
         }
         continue retry;
       } else {
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (index === 2147483647) {
           var tmp$ret$0;
           $l$block: {
@@ -21551,14 +24174,14 @@
         var n = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         var tmp = keys[n];
-        Companion_getInstance_26();
+        Companion_getInstance_27();
         if (!(tmp === 0))
           return n;
         else {
         }
       }
        while (inductionVariable < last_0);
-    Companion_getInstance_26();
+    Companion_getInstance_27();
     return 2147483646;
   };
   IntMap.prototype.equals = function (other) {
@@ -21570,7 +24193,7 @@
       {
         var tmp;
         if (this._hasZero_0) {
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           tmp = 2147483647;
         } else {
           tmp = this.nextNonEmptyIndex_pb76ll_k$(this.__keys_2, 0);
@@ -21578,19 +24201,19 @@
         var index_1_1 = tmp;
         $l$break: while (true) {
           var tmp_0 = index_1_1;
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           if (!!(tmp_0 === 2147483646)) {
             break $l$break;
           }{
             var tmp0_subject_2_3 = index_1_1;
             var tmp_1;
             var tmp_2;
-            Companion_getInstance_26();
+            Companion_getInstance_27();
             if (tmp0_subject_2_3 === 2147483647) {
               tmp_2 = true;
             } else {
               {
-                Companion_getInstance_26();
+                Companion_getInstance_27();
                 tmp_2 = tmp0_subject_2_3 === 2147483646;
               }
             }
@@ -21611,7 +24234,7 @@
           var tmp_3 = this.__keys_2;
           var tmp_4;
           var tmp_5 = index_1_1;
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           if (tmp_5 === 2147483647) {
             tmp_4 = 0;
           } else {
@@ -21631,7 +24254,7 @@
       {
         var tmp;
         if (this._hasZero_0) {
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           tmp = 2147483647;
         } else {
           tmp = this.nextNonEmptyIndex_pb76ll_k$(this.__keys_2, 0);
@@ -21639,19 +24262,19 @@
         var index_1_1 = tmp;
         $l$break: while (true) {
           var tmp_0 = index_1_1;
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           if (!!(tmp_0 === 2147483646)) {
             break $l$break;
           }{
             var tmp0_subject_2_3 = index_1_1;
             var tmp_1;
             var tmp_2;
-            Companion_getInstance_26();
+            Companion_getInstance_27();
             if (tmp0_subject_2_3 === 2147483647) {
               tmp_2 = true;
             } else {
               {
-                Companion_getInstance_26();
+                Companion_getInstance_27();
                 tmp_2 = tmp0_subject_2_3 === 2147483646;
               }
             }
@@ -21680,7 +24303,7 @@
           var tmp_5 = this.__keys_2;
           var tmp_6;
           var tmp_7 = index_1_1;
-          Companion_getInstance_26();
+          Companion_getInstance_27();
           if (tmp_7 === 2147483647) {
             tmp_6 = 0;
           } else {
@@ -21713,7 +24336,7 @@
   }
   function Pool_init_$Init$(reset, preallocate, gen, $mask0, $marker, $this) {
     if (!(($mask0 & 1) === 0)) {
-      reset = _no_name_provided_$factory_54();
+      reset = _no_name_provided_$factory_66();
     }if (!(($mask0 & 2) === 0))
       preallocate = 0;
     Pool.call($this, reset, preallocate, gen);
@@ -21722,22 +24345,22 @@
   function Pool_init_$Create$(reset, preallocate, gen, $mask0, $marker) {
     return Pool_init_$Init$(reset, preallocate, gen, $mask0, $marker, Object.create(Pool.prototype));
   }
-  function Companion_28() {
-    Companion_instance_27 = this;
+  function Companion_29() {
+    Companion_instance_28 = this;
   }
-  Companion_28.$metadata$ = {
+  Companion_29.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_27;
-  function Companion_getInstance_27() {
-    if (Companion_instance_27 == null)
-      new Companion_28();
-    return Companion_instance_27;
+  var Companion_instance_28;
+  function Companion_getInstance_28() {
+    if (Companion_instance_28 == null)
+      new Companion_29();
+    return Companion_instance_28;
   }
   function Pool_init_$Init$_0(preallocate, gen, $this) {
-    Pool.call($this, _no_name_provided_$factory_55(), preallocate, gen);
+    Pool.call($this, _no_name_provided_$factory_67(), preallocate, gen);
     return $this;
   }
   function Pool_init_$Create$_0(preallocate, gen) {
@@ -21752,34 +24375,34 @@
   function Pool_init_$Create$_1(preallocate, gen, $mask0, $marker) {
     return Pool_init_$Init$_1(preallocate, gen, $mask0, $marker, Object.create(Pool.prototype));
   }
-  function _no_name_provided__68() {
+  function _no_name_provided__81() {
   }
-  _no_name_provided__68.prototype.invoke_iav7o_k$ = function (it) {
+  _no_name_provided__81.prototype.invoke_iav7o_k$ = function (it) {
     return Unit_getInstance();
   };
-  _no_name_provided__68.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__81.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_iav7o_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__68.$metadata$ = {
+  _no_name_provided__81.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__69() {
+  function _no_name_provided__82() {
   }
-  _no_name_provided__69.prototype.invoke_iav7o_k$ = function (it) {
+  _no_name_provided__82.prototype.invoke_iav7o_k$ = function (it) {
     return Unit_getInstance();
   };
-  _no_name_provided__69.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__82.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_iav7o_k$((p1 == null ? true : isObject(p1)) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__69.$metadata$ = {
+  _no_name_provided__82.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function Pool(reset, preallocate, gen) {
-    Companion_getInstance_27();
+    Companion_getInstance_28();
     this._reset = reset;
     this._gen = gen;
     this._items = new TGenStack();
@@ -21850,15 +24473,15 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_54() {
-    var i = new _no_name_provided__68();
+  function _no_name_provided_$factory_66() {
+    var i = new _no_name_provided__81();
     return function (p1) {
       i.invoke_iav7o_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_55() {
-    var i = new _no_name_provided__69();
+  function _no_name_provided_$factory_67() {
+    var i = new _no_name_provided__82();
     return function (p1) {
       i.invoke_iav7o_k$(p1);
       return Unit_getInstance();
@@ -21888,11 +24511,11 @@
   ByteRingBuffer.prototype._get_availableRead__0_k$ = function () {
     return this._availableRead;
   };
-  ByteRingBuffer.prototype.write_irqg4d_k$ = function (data, offset_0, size) {
+  ByteRingBuffer.prototype.write_irqg4d_k$ = function (data, offset_0, size_0) {
     var tmp$ret$0;
     $l$block: {
       var tmp0_min_0 = this._availableWrite;
-      tmp$ret$0 = Math.min(tmp0_min_0, size);
+      tmp$ret$0 = Math.min(tmp0_min_0, size_0);
       break $l$block;
     }
     var toWrite = tmp$ret$0;
@@ -21911,11 +24534,11 @@
     tmp2_this._availableWrite = tmp2_this._availableWrite - toWrite | 0;
     return toWrite;
   };
-  ByteRingBuffer.prototype.read_irqg4d_k$ = function (data, offset_0, size) {
+  ByteRingBuffer.prototype.read_irqg4d_k$ = function (data, offset_0, size_0) {
     var tmp$ret$0;
     $l$block: {
       var tmp0_min_0 = this._availableRead;
-      tmp$ret$0 = Math.min(tmp0_min_0, size);
+      tmp$ret$0 = Math.min(tmp0_min_0, size_0);
       break $l$block;
     }
     var toRead = tmp$ret$0;
@@ -22138,92 +24761,10 @@
     }
     return numberToInt(tmp$ret$1);
   }
-  function arraycopy(src, srcPos, dst, dstPos, size) {
+  function arraycopy(src, srcPos, dst, dstPos, size_0) {
     var tmp$ret$4;
     $l$block_3: {
-      var tmp0_copyInto_0 = srcPos + size | 0;
-      var tmp$ret$1;
-      $l$block_0: {
-        var tmp$ret$0;
-        $l$block: {
-          tmp$ret$0 = src;
-          break $l$block;
-        }
-        tmp$ret$1 = tmp$ret$0;
-        break $l$block_0;
-      }
-      var tmp = tmp$ret$1;
-      var tmp$ret$3;
-      $l$block_2: {
-        var tmp$ret$2;
-        $l$block_1: {
-          tmp$ret$2 = dst;
-          break $l$block_1;
-        }
-        tmp$ret$3 = tmp$ret$2;
-        break $l$block_2;
-      }
-      arrayCopy_0(tmp, tmp$ret$3, dstPos, srcPos, tmp0_copyInto_0);
-      tmp$ret$4 = dst;
-      break $l$block_3;
-    }
-    return tmp$ret$4;
-  }
-  function contentHashCode_0(_this_, src, dst) {
-    var tmp$ret$1;
-    $l$block_0: {
-      var tmp0_hashCoder_0 = dst - src | 0;
-      var out_1 = 0;
-      var inductionVariable = 0;
-      if (inductionVariable < tmp0_hashCoder_0)
-        do {
-          var n_3 = inductionVariable;
-          inductionVariable = inductionVariable + 1 | 0;
-          out_1 = imul(out_1, 7);
-          var tmp = out_1;
-          var tmp$ret$0;
-          $l$block: {
-            tmp$ret$0 = numberToInt(_this_[src + n_3 | 0]);
-            break $l$block;
-          }
-          out_1 = tmp + tmp$ret$0 | 0;
-        }
-         while (inductionVariable < tmp0_hashCoder_0);
-      tmp$ret$1 = out_1;
-      break $l$block_0;
-    }
-    return tmp$ret$1;
-  }
-  function contentEquals_0(_this_, that, src, dst) {
-    var tmp$ret$1;
-    $l$block_1: {
-      var tmp0_equaler_0 = dst - src | 0;
-      var inductionVariable = 0;
-      if (inductionVariable < tmp0_equaler_0)
-        do {
-          var n_2 = inductionVariable;
-          inductionVariable = inductionVariable + 1 | 0;
-          var tmp$ret$0;
-          $l$block: {
-            tmp$ret$0 = _this_[src + n_2 | 0] === that[src + n_2 | 0];
-            break $l$block;
-          }
-          if (!tmp$ret$0) {
-            tmp$ret$1 = false;
-            break $l$block_1;
-          } else {
-          }
-        }
-         while (inductionVariable < tmp0_equaler_0);
-      tmp$ret$1 = true;
-      break $l$block_1;
-    }
-    return tmp$ret$1;
-  }
-  function arraycopy_0(src, srcPos, dst, dstPos, size) {
-    var tmp$ret$4;
-    $l$block_3: {
-      var tmp0_copyInto_0 = srcPos + size | 0;
+      var tmp0_copyInto_0 = srcPos + size_0 | 0;
       var tmp$ret$1;
       $l$block_0: {
         var tmp$ret$0;
@@ -22265,7 +24806,7 @@
           var tmp = out_1;
           var tmp$ret$0;
           $l$block: {
-            tmp$ret$0 = _this_[src + n_3 | 0];
+            tmp$ret$0 = numberToInt(_this_[src + n_3 | 0]);
             break $l$block;
           }
           out_1 = tmp + tmp$ret$0 | 0;
@@ -22277,6 +24818,88 @@
     return tmp$ret$1;
   }
   function contentEquals_1(_this_, that, src, dst) {
+    var tmp$ret$1;
+    $l$block_1: {
+      var tmp0_equaler_0 = dst - src | 0;
+      var inductionVariable = 0;
+      if (inductionVariable < tmp0_equaler_0)
+        do {
+          var n_2 = inductionVariable;
+          inductionVariable = inductionVariable + 1 | 0;
+          var tmp$ret$0;
+          $l$block: {
+            tmp$ret$0 = _this_[src + n_2 | 0] === that[src + n_2 | 0];
+            break $l$block;
+          }
+          if (!tmp$ret$0) {
+            tmp$ret$1 = false;
+            break $l$block_1;
+          } else {
+          }
+        }
+         while (inductionVariable < tmp0_equaler_0);
+      tmp$ret$1 = true;
+      break $l$block_1;
+    }
+    return tmp$ret$1;
+  }
+  function arraycopy_0(src, srcPos, dst, dstPos, size_0) {
+    var tmp$ret$4;
+    $l$block_3: {
+      var tmp0_copyInto_0 = srcPos + size_0 | 0;
+      var tmp$ret$1;
+      $l$block_0: {
+        var tmp$ret$0;
+        $l$block: {
+          tmp$ret$0 = src;
+          break $l$block;
+        }
+        tmp$ret$1 = tmp$ret$0;
+        break $l$block_0;
+      }
+      var tmp = tmp$ret$1;
+      var tmp$ret$3;
+      $l$block_2: {
+        var tmp$ret$2;
+        $l$block_1: {
+          tmp$ret$2 = dst;
+          break $l$block_1;
+        }
+        tmp$ret$3 = tmp$ret$2;
+        break $l$block_2;
+      }
+      arrayCopy_0(tmp, tmp$ret$3, dstPos, srcPos, tmp0_copyInto_0);
+      tmp$ret$4 = dst;
+      break $l$block_3;
+    }
+    return tmp$ret$4;
+  }
+  function contentHashCode_2(_this_, src, dst) {
+    var tmp$ret$1;
+    $l$block_0: {
+      var tmp0_hashCoder_0 = dst - src | 0;
+      var out_1 = 0;
+      var inductionVariable = 0;
+      if (inductionVariable < tmp0_hashCoder_0)
+        do {
+          var n_3 = inductionVariable;
+          inductionVariable = inductionVariable + 1 | 0;
+          out_1 = imul(out_1, 7);
+          var tmp = out_1;
+          var tmp$ret$0;
+          $l$block: {
+            tmp$ret$0 = _this_[src + n_3 | 0];
+            break $l$block;
+          }
+          out_1 = tmp + tmp$ret$0 | 0;
+        }
+         while (inductionVariable < tmp0_hashCoder_0);
+      tmp$ret$1 = out_1;
+      break $l$block_0;
+    }
+    return tmp$ret$1;
+  }
+  function contentEquals_2(_this_, that, src, dst) {
     var tmp$ret$1;
     $l$block_1: {
       var tmp0_equaler_0 = dst - src | 0;
@@ -22527,10 +25150,10 @@
     return tmp$ret$0;
   }
   var CONCURRENCY_COUNT;
-  function arraycopy_1(src, srcPos, dst, dstPos, size) {
+  function arraycopy_1(src, srcPos, dst, dstPos, size_0) {
     var tmp$ret$4;
     $l$block_3: {
-      var tmp0_copyInto_0 = srcPos + size | 0;
+      var tmp0_copyInto_0 = srcPos + size_0 | 0;
       var tmp$ret$1;
       $l$block_0: {
         var tmp$ret$0;
@@ -22558,10 +25181,10 @@
     }
     Unit_getInstance();
   }
-  function arraycopy_2(src, srcPos, dst, dstPos, size) {
+  function arraycopy_2(src, srcPos, dst, dstPos, size_0) {
     var tmp$ret$4;
     $l$block_3: {
-      var tmp0_copyInto_0 = srcPos + size | 0;
+      var tmp0_copyInto_0 = srcPos + size_0 | 0;
       var tmp$ret$1;
       $l$block_0: {
         var tmp$ret$0;
@@ -22614,8 +25237,8 @@
     }
     return tmp$ret$0;
   }
-  function UByteArrayInt(size) {
-    return _UByteArrayInt___init__impl_(new Int8Array(size));
+  function UByteArrayInt(size_0) {
+    return _UByteArrayInt___init__impl_(new Int8Array(size_0));
   }
   function asByteArray(_this_) {
     return _UByteArrayInt___get_bytes__impl_(_this_);
@@ -22661,16 +25284,16 @@
   function insertScaled(_this_, value, offset_0, count, scale) {
     return insert(_this_, imul(value, mask(count)) / scale | 0, offset_0, count);
   }
-  function ByteArrayBuilder_init_$Init$(data, size, allowGrow, $mask0, $marker, $this) {
+  function ByteArrayBuilder_init_$Init$(data, size_0, allowGrow, $mask0, $marker, $this) {
     if (!(($mask0 & 2) === 0))
-      size = data.length;
+      size_0 = data.length;
     if (!(($mask0 & 4) === 0))
       allowGrow = true;
-    ByteArrayBuilder.call($this, data, size, allowGrow);
+    ByteArrayBuilder.call($this, data, size_0, allowGrow);
     return $this;
   }
-  function ByteArrayBuilder_init_$Create$(data, size, allowGrow, $mask0, $marker) {
-    return ByteArrayBuilder_init_$Init$(data, size, allowGrow, $mask0, $marker, Object.create(ByteArrayBuilder.prototype));
+  function ByteArrayBuilder_init_$Create$(data, size_0, allowGrow, $mask0, $marker) {
+    return ByteArrayBuilder_init_$Init$(data, size_0, allowGrow, $mask0, $marker, Object.create(ByteArrayBuilder.prototype));
   }
   function ByteArrayBuilder_init_$Init$_0(initialCapacity, $this) {
     var tmp = new Int8Array(initialCapacity);
@@ -22703,10 +25326,10 @@
       }
       tmp._data_1 = copyOf_1(tmp_0, tmp$ret$0);
     }}
-  function ByteArrayBuilder(data, size, allowGrow) {
+  function ByteArrayBuilder(data, size_0, allowGrow) {
     this._data_1 = data;
     this._allowGrow = allowGrow;
-    this.__size = size;
+    this.__size = size_0;
   }
   ByteArrayBuilder.prototype._set_size__majfzk_k$ = function (value) {
     var oldPosition = this.__size;
@@ -23094,15 +25717,15 @@
     return _this_.compareTo_wiekkq_k$(min) < 0 ? min : _this_.compareTo_wiekkq_k$(max) > 0 ? max : _this_;
   }
   var KmemGC;
-  function _no_name_provided__70() {
+  function _no_name_provided__83() {
     KmemGCImpl.call(this);
   }
-  _no_name_provided__70.$metadata$ = {
+  _no_name_provided__83.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function KmemGC$init$() {
-    return new _no_name_provided__70();
+    return new _no_name_provided__83();
   }
   var EmptyByteArray;
   var EmptyShortArray;
@@ -23364,9 +25987,9 @@
   }
   var isNodeJs$delegate;
   var _global;
-  function _no_name_provided__71() {
+  function _no_name_provided__84() {
   }
-  _no_name_provided__71.prototype.invoke_0_k$ = function () {
+  _no_name_provided__84.prototype.invoke_0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_unsafeCast_0 = typeof process === 'object' && typeof require === 'function';
@@ -23375,12 +25998,12 @@
     }
     return tmp$ret$0;
   };
-  _no_name_provided__71.$metadata$ = {
+  _no_name_provided__84.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_56() {
-    var i = new _no_name_provided__71();
+  function _no_name_provided_$factory_68() {
+    var i = new _no_name_provided__84();
     return function () {
       return i.invoke_0_k$();
     };
@@ -23397,7 +26020,7 @@
   function DEFAULT_SUSPEND_TEST_TIMEOUT$init$() {
     var tmp$ret$0;
     $l$block: {
-      tmp$ret$0 = Companion_getInstance_20().fromSeconds_ttklb2_k$(20.0);
+      tmp$ret$0 = Companion_getInstance_21().fromSeconds_ttklb2_k$(20.0);
       break $l$block;
     }
     return tmp$ret$0;
@@ -23420,23 +26043,23 @@
   };
   function Signal_init_$Init$(onRegister, $mask0, $marker, $this) {
     if (!(($mask0 & 1) === 0)) {
-      onRegister = _no_name_provided_$factory_57();
+      onRegister = _no_name_provided_$factory_69();
     }Signal.call($this, onRegister);
     return $this;
   }
   function Signal_init_$Create$(onRegister, $mask0, $marker) {
     return Signal_init_$Init$(onRegister, $mask0, $marker, Object.create(Signal.prototype));
   }
-  function _no_name_provided__72() {
+  function _no_name_provided__85() {
   }
-  _no_name_provided__72.prototype.invoke_sv8swh_k$ = function () {
+  _no_name_provided__85.prototype.invoke_sv8swh_k$ = function () {
     return Unit_getInstance();
   };
-  _no_name_provided__72.prototype.invoke_0_k$ = function () {
+  _no_name_provided__85.prototype.invoke_0_k$ = function () {
     this.invoke_sv8swh_k$();
     return Unit_getInstance();
   };
-  _no_name_provided__72.$metadata$ = {
+  _no_name_provided__85.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -23459,8 +26082,8 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_57() {
-    var i = new _no_name_provided__72();
+  function _no_name_provided_$factory_69() {
+    var i = new _no_name_provided__85();
     return function () {
       i.invoke_sv8swh_k$();
       return Unit_getInstance();
@@ -23471,7 +26094,7 @@
     var rresult = {_v: null};
     var resultEx = {_v: null};
     var suspendCount = {_v: 0};
-    startCoroutineUndispatched(callback, new _no_name_provided__74(suspendCount, resultEx, completed, rresult));
+    startCoroutineUndispatched_0(callback, new _no_name_provided__87(suspendCount, resultEx, completed, rresult));
     if (!completed._v) {
       invalidOp('' + 'runBlockingNoSuspensions was not completed synchronously! suspendCount=' + suspendCount._v);
     }if (!(resultEx._v == null))
@@ -23484,7 +26107,7 @@
     }
     return tmp;
   }
-  function startCoroutineUndispatched(_this_, completion) {
+  function startCoroutineUndispatched_0(_this_, completion) {
     var tmp$ret$7;
     $l$block_6: {
       var tmp;
@@ -23558,15 +26181,15 @@
   function _get_unitInstance_($this) {
     return Unit_getInstance();
   }
-  function _no_name_provided__73($suspendCount) {
+  function _no_name_provided__86($suspendCount) {
     this._$suspendCount = $suspendCount;
     AbstractCoroutineContextElement.call(this, Key_getInstance());
     this._key_1 = Key_getInstance();
   }
-  _no_name_provided__73.prototype._get_key__0_k$ = function () {
+  _no_name_provided__86.prototype._get_key__0_k$ = function () {
     return this._key_1;
   };
-  _no_name_provided__73.prototype.interceptContinuation_x4ijla_k$ = function (continuation) {
+  _no_name_provided__86.prototype.interceptContinuation_x4ijla_k$ = function (continuation) {
     var tmp$ret$0;
     $l$block: {
       {
@@ -23581,22 +26204,22 @@
     }
     return tmp$ret$0;
   };
-  _no_name_provided__73.$metadata$ = {
+  _no_name_provided__86.$metadata$ = {
     kind: 'class',
     interfaces: [ContinuationInterceptor, Delay]
   };
-  function _no_name_provided__74($suspendCount, $resultEx, $completed, $rresult) {
+  function _no_name_provided__87($suspendCount, $resultEx, $completed, $rresult) {
     this._$suspendCount_0 = $suspendCount;
     this._$resultEx = $resultEx;
     this._$completed = $completed;
     this._$rresult = $rresult;
     var tmp = this;
-    tmp._context_0 = new _no_name_provided__73(this._$suspendCount_0);
+    tmp._context_1 = new _no_name_provided__86(this._$suspendCount_0);
   }
-  _no_name_provided__74.prototype._get_context__0_k$ = function () {
-    return this._context_0;
+  _no_name_provided__87.prototype._get_context__0_k$ = function () {
+    return this._context_1;
   };
-  _no_name_provided__74.prototype.resumeWith_suddo1_k$ = function (result) {
+  _no_name_provided__87.prototype.resumeWith_suddo1_k$ = function (result) {
     var exception = Result__exceptionOrNull_impl(result);
     if (!(exception == null)) {
       this._$resultEx._v = exception;
@@ -23631,10 +26254,10 @@
       this._$completed._v = true;
     }
   };
-  _no_name_provided__74.prototype.resumeWith_bnunh2_k$ = function (result) {
+  _no_name_provided__87.prototype.resumeWith_bnunh2_k$ = function (result) {
     return this.resumeWith_suddo1_k$(result);
   };
-  _no_name_provided__74.$metadata$ = {
+  _no_name_provided__87.$metadata$ = {
     kind: 'class',
     interfaces: [Continuation]
   };
@@ -23712,27 +26335,27 @@
     return compress(_this_, method, context, outputSizeHint);
   }
   function uncompress_1(_this_, i, o) {
-    return runBlockingNoSuspensions(_no_name_provided_$factory_58(_this_, i, o, null));
+    return runBlockingNoSuspensions(_no_name_provided_$factory_70(_this_, i, o, null));
   }
   function compress_0(_this_, i, o, context) {
-    return runBlockingNoSuspensions(_no_name_provided_$factory_59(_this_, i, o, context, null));
+    return runBlockingNoSuspensions(_no_name_provided_$factory_71(_this_, i, o, context, null));
   }
   function compress_1(_this_, i, o, context, $cont) {
     return _this_.compress_ydifiq_k$(new BitReader(i), o, context, $cont);
   }
-  function _no_name_provided__75($this_uncompress, $i, $o, resultContinuation) {
+  function _no_name_provided__88($this_uncompress, $i, $o, resultContinuation) {
     this._$this_uncompress = $this_uncompress;
     this._$i = $i;
     this._$o = $o;
     CoroutineImpl_0.call(this, resultContinuation);
   }
-  _no_name_provided__75.prototype.invoke_sv8swh_k$ = function ($cont) {
+  _no_name_provided__88.prototype.invoke_sv8swh_k$ = function ($cont) {
     var tmp = this.create_s8oglw_k$($cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__75.prototype.doResume_0_k$ = function () {
+  _no_name_provided__88.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
     $sm: do
       try {
@@ -23761,29 +26384,29 @@
       }
      while (true);
   };
-  _no_name_provided__75.prototype.create_s8oglw_k$ = function (completion) {
-    var i = new _no_name_provided__75(this._$this_uncompress, this._$i, this._$o, completion);
+  _no_name_provided__88.prototype.create_s8oglw_k$ = function (completion) {
+    var i = new _no_name_provided__88(this._$this_uncompress, this._$i, this._$o, completion);
     return i;
   };
-  _no_name_provided__75.$metadata$ = {
+  _no_name_provided__88.$metadata$ = {
     kind: 'class',
     interfaces: [],
     suspendArity: 0
   };
-  function _no_name_provided__76($this_compress, $i, $o, $context, resultContinuation) {
+  function _no_name_provided__89($this_compress, $i, $o, $context, resultContinuation) {
     this._$this_compress = $this_compress;
     this._$i_0 = $i;
     this._$o_0 = $o;
     this._$context = $context;
     CoroutineImpl_0.call(this, resultContinuation);
   }
-  _no_name_provided__76.prototype.invoke_sv8swh_k$ = function ($cont) {
+  _no_name_provided__89.prototype.invoke_sv8swh_k$ = function ($cont) {
     var tmp = this.create_s8oglw_k$($cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__76.prototype.doResume_0_k$ = function () {
+  _no_name_provided__89.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
     $sm: do
       try {
@@ -23812,25 +26435,25 @@
       }
      while (true);
   };
-  _no_name_provided__76.prototype.create_s8oglw_k$ = function (completion) {
-    var i = new _no_name_provided__76(this._$this_compress, this._$i_0, this._$o_0, this._$context, completion);
+  _no_name_provided__89.prototype.create_s8oglw_k$ = function (completion) {
+    var i = new _no_name_provided__89(this._$this_compress, this._$i_0, this._$o_0, this._$context, completion);
     return i;
   };
-  _no_name_provided__76.$metadata$ = {
+  _no_name_provided__89.$metadata$ = {
     kind: 'class',
     interfaces: [],
     suspendArity: 0
   };
-  function _no_name_provided_$factory_58($this_uncompress, $i, $o, resultContinuation) {
-    var i = new _no_name_provided__75($this_uncompress, $i, $o, resultContinuation);
+  function _no_name_provided_$factory_70($this_uncompress, $i, $o, resultContinuation) {
+    var i = new _no_name_provided__88($this_uncompress, $i, $o, resultContinuation);
     var l = function ($cont) {
       return i.invoke_sv8swh_k$($cont);
     };
     l.$arity = 0;
     return l;
   }
-  function _no_name_provided_$factory_59($this_compress, $i, $o, $context, resultContinuation) {
-    var i = new _no_name_provided__76($this_compress, $i, $o, $context, resultContinuation);
+  function _no_name_provided_$factory_71($this_compress, $i, $o, $context, resultContinuation) {
+    var i = new _no_name_provided__89($this_compress, $i, $o, $context, resultContinuation);
     var l = function ($cont) {
       return i.invoke_sv8swh_k$($cont);
     };
@@ -23840,7 +26463,7 @@
   var Deflate$delegate;
   function $flushCOROUTINE$11(_this_, finish, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this_ = _this_;
+    this.__this__0 = _this_;
     this._finish = finish;
   }
   $flushCOROUTINE$11.prototype.doResume_0_k$ = function () {
@@ -23851,9 +26474,9 @@
         switch (tmp) {
           case 0:
             this._exceptionState = 3;
-            if (this._finish ? true : this.__this_._get_mustFlush__0_k$()) {
+            if (this._finish ? true : this.__this__0._get_mustFlush__0_k$()) {
               this._state_0 = 1;
-              suspendResult = this.__this_._out.write_ysdrhq_k$(this.__this_._bab._data_1, 0, this.__this_._bab._get_size__0_k$(), this);
+              suspendResult = this.__this__0._out.write_ysdrhq_k$(this.__this__0._bab._data_1, 0, this.__this__0._bab._get_size__0_k$(), this);
               if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
                 return suspendResult;
               }continue $sm;
@@ -23864,7 +26487,7 @@
 
             break;
           case 1:
-            this.__this_._bab.clear_sv8swh_k$();
+            this.__this__0._bab.clear_sv8swh_k$();
             this._state_0 = 2;
             continue $sm;
           case 2:
@@ -23936,8 +26559,8 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_29() {
-    Companion_instance_28 = this;
+  function Companion_30() {
+    Companion_instance_29 = this;
     DeflatePortable.call(this, 15);
     var tmp = this;
     var tmp_0 = new HuffmanTree();
@@ -24037,23 +26660,23 @@
     }
     tmp_12._HCLENPOS = tmp$ret$6;
   }
-  Companion_29.$metadata$ = {
+  Companion_30.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_28;
-  function Companion_getInstance_28() {
-    if (Companion_instance_28 == null)
-      new Companion_29();
-    return Companion_instance_28;
+  var Companion_instance_29;
+  function Companion_getInstance_29() {
+    if (Companion_instance_29 == null)
+      new Companion_30();
+    return Companion_instance_29;
   }
   function $compressCOROUTINE$9(_this_, i, o, context, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__0 = _this_;
+    this.__this__1 = _this_;
     this._i = i;
     this._o = o;
-    this._context_1 = context;
+    this._context_2 = context;
   }
   $compressCOROUTINE$9.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
@@ -24147,7 +26770,7 @@
   };
   function $uncompressCOROUTINE$10(_this_, reader, out, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__1 = _this_;
+    this.__this__2 = _this_;
     this._reader_0 = reader;
     this._out_0 = out;
   }
@@ -24159,7 +26782,7 @@
         switch (tmp) {
           case 0:
             this._exceptionState = 19;
-            this._sout0 = new SlidingWindowWithOutput(new SlidingWindow(this.__this__1._windowBits), this._out_0);
+            this._sout0 = new SlidingWindowWithOutput(new SlidingWindow(this.__this__2._windowBits), this._out_0);
             this._lastBlock1 = false;
             this._tempTree2 = new HuffmanTree();
             this._tempDist3 = new HuffmanTree();
@@ -24215,8 +26838,8 @@
               }continue $sm;
             } else {
               if (this._blockType6 === 1) {
-                this._tree11 = Companion_getInstance_28()._FIXED_TREE;
-                this._dist12 = Companion_getInstance_28()._FIXED_DIST;
+                this._tree11 = Companion_getInstance_29()._FIXED_TREE;
+                this._dist12 = Companion_getInstance_29()._FIXED_DIST;
               } else {
                 var hlit = this._reader_0.readBits_ha5a7z_k$(5) + 257 | 0;
                 var hdist = this._reader_0.readBits_ha5a7z_k$(5) + 1 | 0;
@@ -24228,7 +26851,7 @@
                   do {
                     var i = inductionVariable;
                     inductionVariable = inductionVariable + 1 | 0;
-                    this._codeLenCodeLen4[Companion_getInstance_28()._HCLENPOS[i]] = this._reader_0.readBits_ha5a7z_k$(3);
+                    this._codeLenCodeLen4[Companion_getInstance_29()._HCLENPOS[i]] = this._reader_0.readBits_ha5a7z_k$(3);
                   }
                    while (inductionVariable < hclen);
                 var codeLen = this._tempTree2.fromLengths$default_gakitm_k$(this._codeLenCodeLen4, 0, 0, 6, null);
@@ -24237,7 +26860,7 @@
                 var tmp2_fill_0 = this._lengths5.length;
                 fill_0(this._lengths5, 0, 0, tmp2_fill_0);
                 while (n < hlithdist) {
-                  var value = read(this._reader_0, this.__this__1, codeLen);
+                  var value = read(this._reader_0, this.__this__2, codeLen);
                   if (!(0 <= value ? value <= 18 : false)) {
                     throw IllegalStateException_init_$Create$_0('Invalid');
                   }var tmp1_subject = value;
@@ -24344,11 +26967,11 @@
             continue $sm;
           case 9:
             this._zlenof14 = this._value13 - 257 | 0;
-            this._lengthExtra15 = this._reader_0.readBits_ha5a7z_k$(Companion_getInstance_28()._LEN_EXTRA[this._zlenof14]);
-            this._distanceData16 = read(this._reader_0, this.__this__1, this._dist12);
-            this._distanceExtra17 = this._reader_0.readBits_ha5a7z_k$(Companion_getInstance_28()._DIST_EXTRA[this._distanceData16]);
-            this._distance18 = Companion_getInstance_28()._DIST_BASE[this._distanceData16] + this._distanceExtra17 | 0;
-            this._length19 = Companion_getInstance_28()._LEN_BASE[this._zlenof14] + this._lengthExtra15 | 0;
+            this._lengthExtra15 = this._reader_0.readBits_ha5a7z_k$(Companion_getInstance_29()._LEN_EXTRA[this._zlenof14]);
+            this._distanceData16 = read(this._reader_0, this.__this__2, this._dist12);
+            this._distanceExtra17 = this._reader_0.readBits_ha5a7z_k$(Companion_getInstance_29()._DIST_EXTRA[this._distanceData16]);
+            this._distance18 = Companion_getInstance_29()._DIST_BASE[this._distanceData16] + this._distanceExtra17 | 0;
+            this._length19 = Companion_getInstance_29()._LEN_BASE[this._zlenof14] + this._lengthExtra15 | 0;
             this._sout0.getPutCopyOut_rvwcgf_k$(this._distance18, this._length19);
             this._state_0 = 10;
             continue $sm;
@@ -24419,7 +27042,7 @@
     interfaces: []
   };
   function DeflatePortable(windowBits) {
-    Companion_getInstance_28();
+    Companion_getInstance_29();
     this._windowBits = windowBits;
   }
   DeflatePortable.prototype.compress_ydifiq_k$ = function (i, o, context, $cont) {
@@ -24439,36 +27062,36 @@
     kind: 'class',
     interfaces: [CompressionMethod]
   };
-  function _no_name_provided__77() {
+  function _no_name_provided__90() {
   }
-  _no_name_provided__77.prototype.invoke_0_k$ = function () {
+  _no_name_provided__90.prototype.invoke_0_k$ = function () {
     return Deflate(15);
   };
-  _no_name_provided__77.$metadata$ = {
+  _no_name_provided__90.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_60() {
-    var i = new _no_name_provided__77();
+  function _no_name_provided_$factory_72() {
+    var i = new _no_name_provided__90();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided__78() {
+  function _no_name_provided__91() {
   }
-  _no_name_provided__78.prototype.invoke_ha5a7z_k$ = function (it) {
+  _no_name_provided__91.prototype.invoke_ha5a7z_k$ = function (it) {
     return Deflate(it);
   };
-  _no_name_provided__78.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__91.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_ha5a7z_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__78.$metadata$ = {
+  _no_name_provided__91.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function $writeCOROUTINE$19(_this_, buffer, offset_0, len, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__2 = _this_;
+    this.__this__3 = _this_;
     this._buffer_1 = buffer;
     this._offset_0 = offset_0;
     this._len = len;
@@ -24482,13 +27105,13 @@
           case 0:
             this._exceptionState = 2;
             this._state_0 = 1;
-            suspendResult = this.__this__2._$o_1.write_ysdrhq_k$(this._buffer_1, this._offset_0, this._len, this);
+            suspendResult = this.__this__3._$o_1.write_ysdrhq_k$(this._buffer_1, this._offset_0, this._len, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
             continue $sm;
           case 1:
-            this.__this__2._$chash._v = Adler32_getInstance().update_9piif6_k$(this.__this__2._$chash._v, this._buffer_1, this._offset_0, this._len);
+            this.__this__3._$chash._v = Adler32_getInstance().update_9piif6_k$(this.__this__3._$chash._v, this._buffer_1, this._offset_0, this._len);
             return Unit_getInstance();
           case 2:
             throw this._exception_0;
@@ -24510,7 +27133,7 @@
   };
   function $readCOROUTINE$20(_this_, buffer, offset_0, len, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__3 = _this_;
+    this.__this__4 = _this_;
     this._buffer_2 = buffer;
     this._offset_1 = offset_0;
     this._len_0 = len;
@@ -24524,7 +27147,7 @@
           case 0:
             this._exceptionState = 2;
             this._state_0 = 1;
-            suspendResult = this.__this__3._$i_1.read_irqg4d_k$(this._buffer_2, this._offset_1, this._len_0, this);
+            suspendResult = this.__this__4._$i_1.read_irqg4d_k$(this._buffer_2, this._offset_1, this._len_0, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -24532,7 +27155,7 @@
           case 1:
             var read_0 = suspendResult;
             if (read_0 > 0) {
-              this.__this__3._$adler._v = Adler32_getInstance().update_9piif6_k$(this.__this__3._$adler._v, this._buffer_2, this._offset_1, read_0);
+              this.__this__4._$adler._v = Adler32_getInstance().update_9piif6_k$(this.__this__4._$adler._v, this._buffer_2, this._offset_1, read_0);
             }
             return read_0;
           case 2:
@@ -24553,59 +27176,59 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_30() {
-    Companion_instance_29 = this;
-    ZLib.call(this, _no_name_provided_$factory_61());
+  function Companion_31() {
+    Companion_instance_30 = this;
+    ZLib.call(this, _no_name_provided_$factory_73());
   }
-  Companion_30.$metadata$ = {
+  Companion_31.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_29;
-  function Companion_getInstance_29() {
-    if (Companion_instance_29 == null)
-      new Companion_30();
-    return Companion_instance_29;
+  var Companion_instance_30;
+  function Companion_getInstance_30() {
+    if (Companion_instance_30 == null)
+      new Companion_31();
+    return Companion_instance_30;
   }
-  function _no_name_provided__79($o, $chash) {
+  function _no_name_provided__92($o, $chash) {
     this._$o_1 = $o;
     this._$chash = $chash;
   }
-  _no_name_provided__79.prototype.write_ysdrhq_k$ = function (buffer, offset_0, len, $cont) {
+  _no_name_provided__92.prototype.write_ysdrhq_k$ = function (buffer, offset_0, len, $cont) {
     var tmp = new $writeCOROUTINE$19(this, buffer, offset_0, len, $cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__79.$metadata$ = {
+  _no_name_provided__92.$metadata$ = {
     kind: 'class',
     interfaces: [AsyncOutputStream]
   };
-  function _no_name_provided__80($i, $adler) {
+  function _no_name_provided__93($i, $adler) {
     this._$i_1 = $i;
     this._$adler = $adler;
     this._$$delegate_0 = this._$i_1;
   }
-  _no_name_provided__80.prototype.getLength_0_k$ = function ($cont) {
+  _no_name_provided__93.prototype.getLength_0_k$ = function ($cont) {
     return this._$$delegate_0.getLength_0_k$($cont);
   };
-  _no_name_provided__80.prototype.getPosition_0_k$ = function ($cont) {
+  _no_name_provided__93.prototype.getPosition_0_k$ = function ($cont) {
     return this._$$delegate_0.getPosition_0_k$($cont);
   };
-  _no_name_provided__80.prototype.read_irqg4d_k$ = function (buffer, offset_0, len, $cont) {
+  _no_name_provided__93.prototype.read_irqg4d_k$ = function (buffer, offset_0, len, $cont) {
     var tmp = new $readCOROUTINE$20(this, buffer, offset_0, len, $cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__80.$metadata$ = {
+  _no_name_provided__93.$metadata$ = {
     kind: 'class',
     interfaces: [AsyncInputStreamWithLength]
   };
   function $uncompressCOROUTINE$17(_this_, reader, out, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__4 = _this_;
+    this.__this__5 = _this_;
     this._reader_1 = reader;
     this._out_1 = out;
   }
@@ -24659,8 +27282,8 @@
             }
             this._chash11 = {_v: Adler32_getInstance()._initialValue};
             this._state_0 = 3;
-            var tmp_1 = this.__this__4._deflater(this._windowBits6);
-            suspendResult = tmp_1.uncompress_hzt0ks_k$(this._r0, new _no_name_provided__79(this._o1, this._chash11), this);
+            var tmp_1 = this.__this__5._deflater(this._windowBits6);
+            suspendResult = tmp_1.uncompress_hzt0ks_k$(this._r0, new _no_name_provided__92(this._o1, this._chash11), this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -24708,10 +27331,10 @@
   };
   function $compressCOROUTINE$18(_this_, i, o, context, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__5 = _this_;
+    this.__this__6 = _this_;
     this._i_0 = i;
     this._o_0 = o;
-    this._context_2 = context;
+    this._context_3 = context;
   }
   $compressCOROUTINE$18.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
@@ -24722,7 +27345,7 @@
           case 0:
             this._exceptionState = 5;
             this._slidingBits0 = 15;
-            this._clevel1 = this._context_2._level <= 0 ? 0 : this._context_2._level < 6 ? 1 : this._context_2._level < 9 ? 2 : 3;
+            this._clevel1 = this._context_3._level <= 0 ? 0 : this._context_3._level < 6 ? 1 : this._context_3._level < 9 ? 2 : 3;
             this._cmf2_0 = 8 | (this._slidingBits0 - 8 | 0) << 4;
             this._flg3_0 = 0 | this._clevel1 << 6;
             this._fcheck4 = 0;
@@ -24752,8 +27375,8 @@
           case 2:
             this._adler5 = {_v: Adler32_getInstance()._initialValue};
             this._state_0 = 3;
-            var tmp_0 = this.__this__5._deflater(this._slidingBits0);
-            suspendResult = compress_1(tmp_0, new _no_name_provided__80(this._i_0, this._adler5), this._o_0, this._context_2, this);
+            var tmp_0 = this.__this__6._deflater(this._slidingBits0);
+            suspendResult = compress_1(tmp_0, new _no_name_provided__93(this._i_0, this._adler5), this._o_0, this._context_3, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -24786,7 +27409,7 @@
     interfaces: []
   };
   function ZLib(deflater) {
-    Companion_getInstance_29();
+    Companion_getInstance_30();
     this._deflater = deflater;
   }
   ZLib.prototype.uncompress_hzt0ks_k$ = function (reader, out, $cont) {
@@ -24806,8 +27429,8 @@
     kind: 'class',
     interfaces: [CompressionMethod]
   };
-  function _no_name_provided_$factory_61() {
-    var i = new _no_name_provided__78();
+  function _no_name_provided_$factory_73() {
+    var i = new _no_name_provided__91();
     return function (p1) {
       return i.invoke_ha5a7z_k$(p1);
     };
@@ -24817,7 +27440,7 @@
   }
   function $prepareBytesUpToCOROUTINE$22(_this_, expectedBytes, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__6 = _this_;
+    this.__this__7 = _this_;
     this._expectedBytes = expectedBytes;
   }
   $prepareBytesUpToCOROUTINE$22.prototype.doResume_0_k$ = function () {
@@ -24831,14 +27454,14 @@
             this._state_0 = 1;
             continue $sm;
           case 1:
-            if (!(this.__this__6._sbuffers._get_availableRead__0_k$() < this._expectedBytes)) {
+            if (!(this.__this__7._sbuffers._get_availableRead__0_k$() < this._expectedBytes)) {
               this._state_0 = 4;
               continue $sm;
             }
             this._state_0 = 2;
             var tmp_0 = this;
-            tmp_0._tmp0_min_00 = this.__this__6._tempBA.length;
-            suspendResult = this.__this__6._s.read_irqg4d_k$(this.__this__6._tempBA, 0, Math.min(this._tmp0_min_00, this._expectedBytes), this);
+            tmp_0._tmp0_min_00 = this.__this__7._tempBA.length;
+            suspendResult = this.__this__7._s.read_irqg4d_k$(this.__this__7._tempBA, 0, Math.min(this._tmp0_min_00, this._expectedBytes), this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -24855,12 +27478,12 @@
 
             break;
           case 3:
-            this.__this__6._sbuffers.write_irqg4d_k$(this.__this__6._tempBA, 0, read_0);
+            this.__this__7._sbuffers.write_irqg4d_k$(this.__this__7._tempBA, 0, read_0);
             Unit_getInstance();
             this._state_0 = 1;
             continue $sm;
           case 4:
-            return this.__this__6;
+            return this.__this__7;
           case 5:
             throw this._exception_0;
         }
@@ -24881,7 +27504,7 @@
   };
   function $abytesCOROUTINE$23(_this_, count, out, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__7 = _this_;
+    this.__this__8 = _this_;
     this._count = count;
     this._out_2 = out;
   }
@@ -24894,7 +27517,7 @@
           case 0:
             this._exceptionState = 2;
             this._state_0 = 1;
-            suspendResult = this.__this__7.prepareBytesUpTo_ha5a7z_k$(this._count, this);
+            suspendResult = this.__this__8.prepareBytesUpTo_ha5a7z_k$(this._count, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -24922,7 +27545,7 @@
   };
   function $readCOROUTINE$24(_this_, buffer, offset_0, len, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__8 = _this_;
+    this.__this__9 = _this_;
     this._buffer_3 = buffer;
     this._offset_2 = offset_0;
     this._len_1 = len;
@@ -24936,7 +27559,7 @@
           case 0:
             this._exceptionState = 2;
             this._state_0 = 1;
-            suspendResult = this.__this__8.prepareBytesUpTo_ha5a7z_k$(this._len_1, this);
+            suspendResult = this.__this__9.prepareBytesUpTo_ha5a7z_k$(this._len_1, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -24965,7 +27588,7 @@
   };
   function $getLengthCOROUTINE$27(_this_, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__9 = _this_;
+    this.__this__10 = _this_;
   }
   $getLengthCOROUTINE$27.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
@@ -24976,7 +27599,7 @@
           case 0:
             this._exceptionState = 3;
             var tmp_0 = this;
-            var tmp_1 = this.__this__9._s;
+            var tmp_1 = this.__this__10._s;
             tmp_0._tmp0_safe_receiver0 = isInterface(tmp_1, AsyncGetLengthStream) ? tmp_1 : null;
             if (this._tmp0_safe_receiver0 == null) {
               this._WHEN_RESULT1 = null;
@@ -25131,24 +27754,24 @@
     kind: 'class',
     interfaces: [AsyncInputStreamWithLength]
   };
-  function Companion_31() {
-    Companion_instance_30 = this;
+  function Companion_32() {
+    Companion_instance_31 = this;
     this._INVALID_VALUE = -1;
     this._NIL_1 = 1023;
     this._FAST_BITS = 9;
     this._MAX_LEN = 16;
     this._MAX_CODES = 288;
   }
-  Companion_31.$metadata$ = {
+  Companion_32.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_30;
-  function Companion_getInstance_30() {
-    if (Companion_instance_30 == null)
-      new Companion_31();
-    return Companion_instance_30;
+  var Companion_instance_31;
+  function Companion_getInstance_31() {
+    if (Companion_instance_31 == null)
+      new Companion_32();
+    return Companion_instance_31;
   }
   function resetAlloc($this) {
     $this._nodeOffset = 0;
@@ -25163,8 +27786,8 @@
       {
       }
       {
-        $this._value_8[tmp0_apply_0] = value;
-        $this._left[tmp0_apply_0] = left;
+        $this._value_9[tmp0_apply_0] = value;
+        $this._left_0[tmp0_apply_0] = left;
         $this._right[tmp0_apply_0] = right;
       }
       tmp$ret$0 = tmp0_apply_0;
@@ -25173,41 +27796,41 @@
     return tmp$ret$0;
   }
   function allocLeaf($this, value) {
-    Companion_getInstance_30();
-    Companion_getInstance_30();
+    Companion_getInstance_31();
+    Companion_getInstance_31();
     return alloc($this, value, 1023, 1023);
   }
   function allocNode($this, left, right) {
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     return alloc($this, -1, left, right);
   }
   function HuffmanTree() {
-    Companion_getInstance_30();
-    this._value_8 = new Int32Array(1024);
-    this._left = new Int32Array(1024);
+    Companion_getInstance_31();
+    this._value_9 = new Int32Array(1024);
+    this._left_0 = new Int32Array(1024);
     this._right = new Int32Array(1024);
     this._nodeOffset = 0;
     var tmp = this;
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     tmp._root = 1023;
     this._ncodes = 0;
     var tmp_0 = this;
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     tmp_0._COUNTS = new Int32Array(16 + 1 | 0);
     var tmp_1 = this;
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     tmp_1._OFFSETS = new Int32Array(16 + 1 | 0);
     var tmp_2 = this;
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     tmp_2._COFFSET = new Int32Array(16 + 1 | 0);
     var tmp_3 = this;
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     tmp_3._CODES = new Int32Array(288);
     var tmp_4 = this;
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     tmp_4._ENCODED_VAL = new Int32Array(288);
     var tmp_5 = this;
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     tmp_5._ENCODED_LEN = new Int8Array(288);
   }
   HuffmanTree.prototype.read_ifkopv_k$ = function (reader) {
@@ -25227,7 +27850,7 @@
           var tmp$ret$1;
           $l$block_0: {
             var tmp1__get_left__0 = node;
-            tmp$ret$1 = this._left[tmp1__get_left__0];
+            tmp$ret$1 = this._left_0[tmp1__get_left__0];
             break $l$block_0;
           }
           tmp = tmp$ret$1;
@@ -25237,16 +27860,16 @@
        while (false);
       var tmp_0;
       var tmp_1 = node;
-      Companion_getInstance_30();
+      Companion_getInstance_31();
       if (!(tmp_1 === 1023)) {
         var tmp$ret$2;
         $l$block_1: {
           var tmp2__get_value__0 = node;
-          tmp$ret$2 = this._value_8[tmp2__get_value__0];
+          tmp$ret$2 = this._value_9[tmp2__get_value__0];
           break $l$block_1;
         }
         var tmp_2 = tmp$ret$2;
-        Companion_getInstance_30();
+        Companion_getInstance_31();
         tmp_0 = tmp_2 === -1;
       } else {
         {
@@ -25258,7 +27881,7 @@
     var tmp$ret$3;
     $l$block_2: {
       var tmp3__get_value__0 = node;
-      tmp$ret$3 = this._value_8[tmp3__get_value__0];
+      tmp$ret$3 = this._value_9[tmp3__get_value__0];
       break $l$block_2;
     }
     return tmp$ret$3;
@@ -25283,7 +27906,7 @@
         var codeLen = codeLengths[n];
         var tmp;
         if (0 <= codeLen) {
-          Companion_getInstance_30();
+          Companion_getInstance_31();
           tmp = codeLen <= 16;
         } else {
           tmp = false;
@@ -25302,7 +27925,7 @@
        while (inductionVariable < end);
     var currentOffset = 0;
     var inductionVariable_0 = 0;
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     var last_0 = 16;
     if (inductionVariable_0 < last_0)
       do {
@@ -25327,7 +27950,7 @@
         this._CODES[tmp8] = n_1 - start | 0;
       }
        while (inductionVariable_1 < end);
-    Companion_getInstance_30();
+    Companion_getInstance_31();
     var inductionVariable_2 = 16;
     if (1 <= inductionVariable_2)
       do {
@@ -25426,7 +28049,7 @@
     interfaces: []
   };
   function KorAtomicRef(initial, dummy) {
-    this._value_9 = initial;
+    this._value_10 = initial;
   }
   KorAtomicRef.$metadata$ = {
     simpleName: 'KorAtomicRef',
@@ -25680,23 +28303,23 @@
     kind: 'interface',
     interfaces: []
   };
-  function Companion_32() {
-    Companion_instance_31 = this;
+  function Companion_33() {
+    Companion_instance_32 = this;
     KDynamic.call(this);
   }
-  Companion_32.$metadata$ = {
+  Companion_33.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_31;
-  function Companion_getInstance_31() {
-    if (Companion_instance_31 == null)
-      new Companion_32();
-    return Companion_instance_31;
+  var Companion_instance_32;
+  function Companion_getInstance_32() {
+    if (Companion_instance_32 == null)
+      new Companion_33();
+    return Companion_instance_32;
   }
   function KDynamic() {
-    Companion_getInstance_31();
+    Companion_getInstance_32();
   }
   KDynamic.prototype._get_list__kajtkh_k$ = function (_this__0) {
     return _Dyn___get_listAny__impl_(_get_dyn_(_this__0));
@@ -25749,161 +28372,161 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__81() {
+  function _no_name_provided__94() {
   }
-  _no_name_provided__81.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__94.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return $this$registerType.toBool_kajtkh_k$(it);
   };
-  _no_name_provided__81.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__94.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__81.$metadata$ = {
+  _no_name_provided__94.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__82() {
+  function _no_name_provided__95() {
   }
-  _no_name_provided__82.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__95.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return $this$registerType.toByte_kajtkh_k$(it);
   };
-  _no_name_provided__82.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__95.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__82.$metadata$ = {
+  _no_name_provided__95.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__83() {
+  function _no_name_provided__96() {
   }
-  _no_name_provided__83.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__96.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return $this$registerType.toChar_kajtkh_k$(it);
   };
-  _no_name_provided__83.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__96.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__83.$metadata$ = {
+  _no_name_provided__96.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__84() {
+  function _no_name_provided__97() {
   }
-  _no_name_provided__84.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__97.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return $this$registerType.toShort_kajtkh_k$(it);
   };
-  _no_name_provided__84.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__97.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__84.$metadata$ = {
+  _no_name_provided__97.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__85() {
+  function _no_name_provided__98() {
   }
-  _no_name_provided__85.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__98.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return $this$registerType.toInt_kajtkh_k$(it);
   };
-  _no_name_provided__85.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__98.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__85.$metadata$ = {
+  _no_name_provided__98.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__86() {
+  function _no_name_provided__99() {
   }
-  _no_name_provided__86.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__99.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return $this$registerType.toLong_kajtkh_k$(it);
   };
-  _no_name_provided__86.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__99.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__86.$metadata$ = {
+  _no_name_provided__99.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__87() {
+  function _no_name_provided__100() {
   }
-  _no_name_provided__87.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__100.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return $this$registerType.toFloat_kajtkh_k$(it);
   };
-  _no_name_provided__87.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__100.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__87.$metadata$ = {
+  _no_name_provided__100.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__88() {
+  function _no_name_provided__101() {
   }
-  _no_name_provided__88.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__101.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return $this$registerType.toDouble_kajtkh_k$(it);
   };
-  _no_name_provided__88.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__101.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__88.$metadata$ = {
+  _no_name_provided__101.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__89() {
+  function _no_name_provided__102() {
   }
-  _no_name_provided__89.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__102.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return toSet($this$registerType._get_list__kajtkh_k$(it));
   };
-  _no_name_provided__89.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__102.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__89.$metadata$ = {
+  _no_name_provided__102.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__90() {
+  function _no_name_provided__103() {
   }
-  _no_name_provided__90.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__103.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return $this$registerType._get_list__kajtkh_k$(it);
   };
-  _no_name_provided__90.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__103.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__90.$metadata$ = {
+  _no_name_provided__103.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__91() {
+  function _no_name_provided__104() {
   }
-  _no_name_provided__91.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__104.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     return toMutableList_2($this$registerType._get_list__kajtkh_k$(it));
   };
-  _no_name_provided__91.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__104.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__91.$metadata$ = {
+  _no_name_provided__104.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__92() {
+  function _no_name_provided__105() {
   }
-  _no_name_provided__92.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
+  _no_name_provided__105.prototype.invoke_a7p0jt_k$ = function ($this$registerType, it) {
     var tmp0_safe_receiver = it;
     var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : toString_3(tmp0_safe_receiver);
     return tmp1_elvis_lhs == null ? 'null' : tmp1_elvis_lhs;
   };
-  _no_name_provided__92.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__105.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof TypeContext ? p1 : THROW_CCE();
     return this.invoke_a7p0jt_k$(tmp, (p2 == null ? true : isObject(p2)) ? p2 : THROW_CCE());
   };
-  _no_name_provided__92.$metadata$ = {
+  _no_name_provided__105.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -25927,40 +28550,40 @@
     this._typeCtx = new TypeContext(this);
     this._untypeCtx = new UntypeContext(this);
     var tmp_1 = PrimitiveClasses_getInstance()._get_booleanClass__0_k$();
-    this.registerType_6m096n_k$(tmp_1, _no_name_provided_$factory_62());
+    this.registerType_6m096n_k$(tmp_1, _no_name_provided_$factory_74());
     Unit_getInstance();
     var tmp_2 = PrimitiveClasses_getInstance()._get_byteClass__0_k$();
-    this.registerType_6m096n_k$(tmp_2, _no_name_provided_$factory_63());
+    this.registerType_6m096n_k$(tmp_2, _no_name_provided_$factory_75());
     Unit_getInstance();
     var tmp_3 = getKClass_0(Char);
-    this.registerType_6m096n_k$(tmp_3, _no_name_provided_$factory_64());
+    this.registerType_6m096n_k$(tmp_3, _no_name_provided_$factory_76());
     Unit_getInstance();
     var tmp_4 = PrimitiveClasses_getInstance()._get_shortClass__0_k$();
-    this.registerType_6m096n_k$(tmp_4, _no_name_provided_$factory_65());
+    this.registerType_6m096n_k$(tmp_4, _no_name_provided_$factory_77());
     Unit_getInstance();
     var tmp_5 = PrimitiveClasses_getInstance()._get_intClass__0_k$();
-    this.registerType_6m096n_k$(tmp_5, _no_name_provided_$factory_66());
+    this.registerType_6m096n_k$(tmp_5, _no_name_provided_$factory_78());
     Unit_getInstance();
     var tmp_6 = getKClass_0(Long);
-    this.registerType_6m096n_k$(tmp_6, _no_name_provided_$factory_67());
+    this.registerType_6m096n_k$(tmp_6, _no_name_provided_$factory_79());
     Unit_getInstance();
     var tmp_7 = PrimitiveClasses_getInstance()._get_floatClass__0_k$();
-    this.registerType_6m096n_k$(tmp_7, _no_name_provided_$factory_68());
+    this.registerType_6m096n_k$(tmp_7, _no_name_provided_$factory_80());
     Unit_getInstance();
     var tmp_8 = PrimitiveClasses_getInstance()._get_doubleClass__0_k$();
-    this.registerType_6m096n_k$(tmp_8, _no_name_provided_$factory_69());
+    this.registerType_6m096n_k$(tmp_8, _no_name_provided_$factory_81());
     Unit_getInstance();
     var tmp_9 = getKClass_0(Set);
-    this.registerType_6m096n_k$(tmp_9, _no_name_provided_$factory_70());
+    this.registerType_6m096n_k$(tmp_9, _no_name_provided_$factory_82());
     Unit_getInstance();
     var tmp_10 = getKClass_0(List);
-    this.registerType_6m096n_k$(tmp_10, _no_name_provided_$factory_71());
+    this.registerType_6m096n_k$(tmp_10, _no_name_provided_$factory_83());
     Unit_getInstance();
     var tmp_11 = getKClass_0(MutableList);
-    this.registerType_6m096n_k$(tmp_11, _no_name_provided_$factory_72());
+    this.registerType_6m096n_k$(tmp_11, _no_name_provided_$factory_84());
     Unit_getInstance();
     var tmp_12 = PrimitiveClasses_getInstance()._get_stringClass__0_k$();
-    this.registerType_6m096n_k$(tmp_12, _no_name_provided_$factory_73());
+    this.registerType_6m096n_k$(tmp_12, _no_name_provided_$factory_85());
     Unit_getInstance();
   }
   ObjectMapper.prototype.registerType_6m096n_k$ = function (clazz, generate) {
@@ -25985,74 +28608,74 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_62() {
-    var i = new _no_name_provided__81();
+  function _no_name_provided_$factory_74() {
+    var i = new _no_name_provided__94();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_63() {
-    var i = new _no_name_provided__82();
+  function _no_name_provided_$factory_75() {
+    var i = new _no_name_provided__95();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_64() {
-    var i = new _no_name_provided__83();
+  function _no_name_provided_$factory_76() {
+    var i = new _no_name_provided__96();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_65() {
-    var i = new _no_name_provided__84();
+  function _no_name_provided_$factory_77() {
+    var i = new _no_name_provided__97();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_66() {
-    var i = new _no_name_provided__85();
+  function _no_name_provided_$factory_78() {
+    var i = new _no_name_provided__98();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_67() {
-    var i = new _no_name_provided__86();
+  function _no_name_provided_$factory_79() {
+    var i = new _no_name_provided__99();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_68() {
-    var i = new _no_name_provided__87();
+  function _no_name_provided_$factory_80() {
+    var i = new _no_name_provided__100();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_69() {
-    var i = new _no_name_provided__88();
+  function _no_name_provided_$factory_81() {
+    var i = new _no_name_provided__101();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_70() {
-    var i = new _no_name_provided__89();
+  function _no_name_provided_$factory_82() {
+    var i = new _no_name_provided__102();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_71() {
-    var i = new _no_name_provided__90();
+  function _no_name_provided_$factory_83() {
+    var i = new _no_name_provided__103();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_72() {
-    var i = new _no_name_provided__91();
+  function _no_name_provided_$factory_84() {
+    var i = new _no_name_provided__104();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_73() {
-    var i = new _no_name_provided__92();
+  function _no_name_provided_$factory_85() {
+    var i = new _no_name_provided__105();
     return function (p1, p2) {
       return i.invoke_a7p0jt_k$(p1, p2);
     };
@@ -26350,37 +28973,37 @@
     interfaces: [AsyncInputOpenable, Extra]
   };
   function JailVfs(jailRoot) {
-    return (new _no_name_provided__93(jailRoot))._get_root__0_k$();
+    return (new _no_name_provided__106(jailRoot))._get_root__0_k$();
   }
-  function _no_name_provided__93($jailRoot) {
+  function _no_name_provided__106($jailRoot) {
     this._$jailRoot = $jailRoot;
     Proxy.call(this);
     this._baseJail = normalize(this._$jailRoot._get_pathInfo__i519nt_k$());
   }
-  _no_name_provided__93.prototype.toString = function () {
+  _no_name_provided__106.prototype.toString = function () {
     return '' + 'JailVfs(' + this._$jailRoot + ')';
   };
-  _no_name_provided__93.$metadata$ = {
+  _no_name_provided__106.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   var resourcesVfsDebug;
-  function _no_name_provided__94(this$0) {
-    this._this$0_12 = this$0;
+  function _no_name_provided__107(this$0) {
+    this._this$0_22 = this$0;
   }
-  _no_name_provided__94.prototype.invoke_0_k$ = function () {
-    return this._this$0_12._timeProvider;
+  _no_name_provided__107.prototype.invoke_0_k$ = function () {
+    return this._this$0_22._timeProvider;
   };
-  _no_name_provided__94.$metadata$ = {
+  _no_name_provided__107.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function MapLikeStorageVfs(storage) {
     VfsV2.call(this);
     this._storage = storage;
-    this._timeProvider = Companion_getInstance_19();
+    this._timeProvider = Companion_getInstance_20();
     var tmp = this;
-    tmp._files = new StorageFiles(this._storage, _no_name_provided_$factory_74(this));
+    tmp._files = new StorageFiles(this._storage, _no_name_provided_$factory_86(this));
     this._initialized_0 = false;
     this._writeLock = new AsyncThread2();
   }
@@ -26392,23 +29015,23 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_33() {
-    Companion_instance_32 = this;
+  function Companion_34() {
+    Companion_instance_33 = this;
     this._CHUNK_SIZE = 16384;
   }
-  Companion_33.$metadata$ = {
+  Companion_34.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_32;
-  function Companion_getInstance_32() {
-    if (Companion_instance_32 == null)
-      new Companion_33();
-    return Companion_instance_32;
+  var Companion_instance_33;
+  function Companion_getInstance_33() {
+    if (Companion_instance_33 == null)
+      new Companion_34();
+    return Companion_instance_33;
   }
   function StorageFiles(storage, timeProvider) {
-    Companion_getInstance_32();
+    Companion_getInstance_33();
     this._storage_0 = storage;
     this._timeProvider_0 = timeProvider;
   }
@@ -26417,8 +29040,8 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_74(this$0) {
-    var i = new _no_name_provided__94(this$0);
+  function _no_name_provided_$factory_86(this$0) {
+    var i = new _no_name_provided__107(this$0);
     return function () {
       return i.invoke_0_k$();
     };
@@ -26471,7 +29094,7 @@
     return Node_init_$Init$($outer, name, isDirectory, parent, $mask0, $marker, Object.create(Node_0.prototype));
   }
   function Node_0($outer, name, isDirectory, parent) {
-    this._$this_7 = $outer;
+    this._$this_10 = $outer;
     this._name_2 = name;
     this._isDirectory = isDirectory;
     var tmp = this;
@@ -26554,7 +29177,7 @@
         tmp = this._parent_0;
         break;
       default:var tmp_0;
-        if (this._$this_7._caseSensitive) {
+        if (this._$this_10._caseSensitive) {
           tmp_0 = this._children.get_2bw_k$(name);
         } else {
           var tmp$ret$1;
@@ -26576,7 +29199,7 @@
     return tmp;
   };
   Node_0.prototype.createChild_2f0f39_k$ = function (name, isDirectory) {
-    return new Node_0(this._$this_7, name, isDirectory, this);
+    return new Node_0(this._$this_10, name, isDirectory, this);
   };
   Node_0.prototype.access_2f0f39_k$ = function (path, createFolders) {
     var tmp;
@@ -26685,64 +29308,64 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__95() {
+  function _no_name_provided__108() {
   }
-  _no_name_provided__95.prototype.invoke_lysikz_k$ = function (it) {
+  _no_name_provided__108.prototype.invoke_lysikz_k$ = function (it) {
     return UrlVfs$default(it, null, false, 6, null);
   };
-  _no_name_provided__95.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__108.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_lysikz_k$(p1 instanceof URL_0 ? p1 : THROW_CCE());
   };
-  _no_name_provided__95.$metadata$ = {
+  _no_name_provided__108.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__96() {
+  function _no_name_provided__109() {
   }
-  _no_name_provided__96.prototype.invoke_lysikz_k$ = function (it) {
+  _no_name_provided__109.prototype.invoke_lysikz_k$ = function (it) {
     return UrlVfs$default(it, null, false, 6, null);
   };
-  _no_name_provided__96.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__109.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_lysikz_k$(p1 instanceof URL_0 ? p1 : THROW_CCE());
   };
-  _no_name_provided__96.$metadata$ = {
+  _no_name_provided__109.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__97() {
+  function _no_name_provided__110() {
   }
-  _no_name_provided__97.prototype.invoke_lysikz_k$ = function (it) {
+  _no_name_provided__110.prototype.invoke_lysikz_k$ = function (it) {
     return _get_rootLocalVfs_().get_6wfw3l_k$(it._path_1);
   };
-  _no_name_provided__97.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__110.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_lysikz_k$(p1 instanceof URL_0 ? p1 : THROW_CCE());
   };
-  _no_name_provided__97.$metadata$ = {
+  _no_name_provided__110.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_75() {
-    var i = new _no_name_provided__95();
+  function _no_name_provided_$factory_87() {
+    var i = new _no_name_provided__108();
     return function (p1) {
       return i.invoke_lysikz_k$(p1);
     };
   }
-  function _no_name_provided_$factory_76() {
-    var i = new _no_name_provided__96();
+  function _no_name_provided_$factory_88() {
+    var i = new _no_name_provided__109();
     return function (p1) {
       return i.invoke_lysikz_k$(p1);
     };
   }
-  function _no_name_provided_$factory_77() {
-    var i = new _no_name_provided__97();
+  function _no_name_provided_$factory_89() {
+    var i = new _no_name_provided__110();
     return function (p1) {
       return i.invoke_lysikz_k$(p1);
     };
   }
   function defaultUniSchema$init$() {
-    var tmp = new UniSchema('http', _no_name_provided_$factory_75());
-    var tmp_0 = new UniSchema('https', _no_name_provided_$factory_76());
-    return UniSchemaProviders_init_$Create$([tmp, tmp_0, new UniSchema('file', _no_name_provided_$factory_77())]);
+    var tmp = new UniSchema('http', _no_name_provided_$factory_87());
+    var tmp_0 = new UniSchema('https', _no_name_provided_$factory_88());
+    return UniSchemaProviders_init_$Create$([tmp, tmp_0, new UniSchema('file', _no_name_provided_$factory_89())]);
   }
   function UrlVfs(url, client, failFromStatus) {
     return (new UrlVfs_0(url.copy$default_2za93v_k$(false, null, null, null, '', null, null, 0, 207, null)._get_fullUrl__0_k$(), Unit_getInstance(), client, failFromStatus)).get_6wfw3l_k$(url._path_1);
@@ -26771,7 +29394,7 @@
     interfaces: []
   };
   function UrlVfs_1(url, client, failFromStatus) {
-    return UrlVfs(Companion_getInstance_34().invoke_6wfw3l_k$(url), client, failFromStatus);
+    return UrlVfs(Companion_getInstance_35().invoke_6wfw3l_k$(url), client, failFromStatus);
   }
   function UrlVfs$default_0(url, client, failFromStatus, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
@@ -26791,45 +29414,45 @@
     return tmp$ret$0;
   }
   var smallBytesPool$delegate;
-  function _no_name_provided__98() {
+  function _no_name_provided__111() {
   }
-  _no_name_provided__98.prototype.invoke_ha5a7z_k$ = function (it) {
+  _no_name_provided__111.prototype.invoke_ha5a7z_k$ = function (it) {
     return new Int8Array(65536);
   };
-  _no_name_provided__98.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__111.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_ha5a7z_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__98.$metadata$ = {
+  _no_name_provided__111.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__99() {
+  function _no_name_provided__112() {
   }
-  _no_name_provided__99.prototype.invoke_0_k$ = function () {
-    return Pool_init_$Create$_0(1, _no_name_provided_$factory_80());
+  _no_name_provided__112.prototype.invoke_0_k$ = function () {
+    return Pool_init_$Create$_0(1, _no_name_provided_$factory_92());
   };
-  _no_name_provided__99.$metadata$ = {
+  _no_name_provided__112.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__100() {
+  function _no_name_provided__113() {
   }
-  _no_name_provided__100.prototype.invoke_ha5a7z_k$ = function (it) {
+  _no_name_provided__113.prototype.invoke_ha5a7z_k$ = function (it) {
     return new Int8Array(16);
   };
-  _no_name_provided__100.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__113.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_ha5a7z_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__100.$metadata$ = {
+  _no_name_provided__113.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__101() {
+  function _no_name_provided__114() {
   }
-  _no_name_provided__101.prototype.invoke_0_k$ = function () {
-    return Pool_init_$Create$_0(16, _no_name_provided_$factory_81());
+  _no_name_provided__114.prototype.invoke_0_k$ = function () {
+    return Pool_init_$Create$_0(16, _no_name_provided_$factory_93());
   };
-  _no_name_provided__101.$metadata$ = {
+  _no_name_provided__114.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -26838,26 +29461,26 @@
       return _get_smallBytesPool_();
     }, null);
   }
-  function _no_name_provided_$factory_78() {
-    var i = new _no_name_provided__99();
+  function _no_name_provided_$factory_90() {
+    var i = new _no_name_provided__112();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_79() {
-    var i = new _no_name_provided__101();
+  function _no_name_provided_$factory_91() {
+    var i = new _no_name_provided__114();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_80() {
-    var i = new _no_name_provided__98();
+  function _no_name_provided_$factory_92() {
+    var i = new _no_name_provided__111();
     return function (p1) {
       return i.invoke_ha5a7z_k$(p1);
     };
   }
-  function _no_name_provided_$factory_81() {
-    var i = new _no_name_provided__100();
+  function _no_name_provided_$factory_93() {
+    var i = new _no_name_provided__113();
     return function (p1) {
       return i.invoke_ha5a7z_k$(p1);
     };
@@ -27001,10 +29624,10 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_34() {
-    Companion_instance_33 = this;
+  function Companion_35() {
+    Companion_instance_34 = this;
   }
-  Companion_34.prototype.appendCodePointV_ip6ytn_k$ = function (_this__0, codePoint) {
+  Companion_35.prototype.appendCodePointV_ip6ytn_k$ = function (_this__0, codePoint) {
     if ((55296 <= codePoint ? codePoint <= 57343 : false) ? true : codePoint > 65535) {
       var U0 = codePoint - 65536 | 0;
       var hs = extract(U0, 10, 10);
@@ -27018,19 +29641,19 @@
       Unit_getInstance();
     }
   };
-  Companion_34.$metadata$ = {
+  Companion_35.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_33;
-  function Companion_getInstance_33() {
-    if (Companion_instance_33 == null)
-      new Companion_34();
-    return Companion_instance_33;
+  var Companion_instance_34;
+  function Companion_getInstance_34() {
+    if (Companion_instance_34 == null)
+      new Companion_35();
+    return Companion_instance_34;
   }
   function Charset(name) {
-    Companion_getInstance_33();
+    Companion_getInstance_34();
     this._name_4 = name;
   }
   Charset.prototype.estimateNumberOfCharactersForBytes_ha5a7z_k$ = function (nbytes) {
@@ -27101,7 +29724,7 @@
   };
   UTC8CharsetBase.prototype.encode_kaapbp_k$ = function (out, src, start, end) {
     {
-      var tmp0_decodeCodePoints_0 = Companion_getInstance_33();
+      var tmp0_decodeCodePoints_0 = Companion_getInstance_34();
       var highSurrogate_1 = 0;
       var inductionVariable = start;
       if (inductionVariable < end)
@@ -27164,16 +29787,16 @@
       var c = src[i] & 255;
       var tmp0_subject = c >> 4;
       if (0 <= tmp0_subject ? tmp0_subject <= 7 : false) {
-        Companion_getInstance_33().appendCodePointV_ip6ytn_k$(out, c);
+        Companion_getInstance_34().appendCodePointV_ip6ytn_k$(out, c);
         i = i + 1 | 0;
       } else if (12 <= tmp0_subject ? tmp0_subject <= 13 : false) {
-        Companion_getInstance_33().appendCodePointV_ip6ytn_k$(out, (c & 31) << 6 | src[i + 1 | 0] & 63);
+        Companion_getInstance_34().appendCodePointV_ip6ytn_k$(out, (c & 31) << 6 | src[i + 1 | 0] & 63);
         i = i + 2 | 0;
       } else if (tmp0_subject === 14) {
-        Companion_getInstance_33().appendCodePointV_ip6ytn_k$(out, (c & 15) << 12 | (src[i + 1 | 0] & 63) << 6 | src[i + 2 | 0] & 63);
+        Companion_getInstance_34().appendCodePointV_ip6ytn_k$(out, (c & 15) << 12 | (src[i + 1 | 0] & 63) << 6 | src[i + 2 | 0] & 63);
         i = i + 3 | 0;
       } else if (tmp0_subject === 15) {
-        Companion_getInstance_33().appendCodePointV_ip6ytn_k$(out, insert(insert(insert(insert(0, extract(src[i + 0 | 0], 0, 3), 18, 3), extract(src[i + 1 | 0], 0, 6), 12, 6), extract(src[i + 2 | 0], 0, 6), 6, 6), extract(src[i + 3 | 0], 0, 6), 0, 6));
+        Companion_getInstance_34().appendCodePointV_ip6ytn_k$(out, insert(insert(insert(insert(0, extract(src[i + 0 | 0], 0, 3), 18, 3), extract(src[i + 1 | 0], 0, 6), 12, 6), extract(src[i + 2 | 0], 0, 6), 6, 6), extract(src[i + 3 | 0], 0, 6), 0, 6));
         i = i + 4 | 0;
       } else {
         out.append_wi8o78_k$(new Char(65533));
@@ -27456,36 +30079,36 @@
     }
     return tmp$ret$0;
   }
-  function _no_name_provided__102() {
+  function _no_name_provided__115() {
   }
-  _no_name_provided__102.prototype.invoke_0_k$ = function () {
+  _no_name_provided__115.prototype.invoke_0_k$ = function () {
     return Regex_init_$Create$_0('[^ -~]');
   };
-  _no_name_provided__102.$metadata$ = {
+  _no_name_provided__115.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_82() {
-    var i = new _no_name_provided__102();
+  function _no_name_provided_$factory_94() {
+    var i = new _no_name_provided__115();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided__103(this$0) {
-    this._this$0_13 = this$0;
+  function _no_name_provided__116(this$0) {
+    this._this$0_23 = this$0;
     NativeThreadLocal.call(this);
   }
-  _no_name_provided__103.prototype.initialValue_0_k$ = function () {
-    return this._this$0_13._gen_0();
+  _no_name_provided__116.prototype.initialValue_0_k$ = function () {
+    return this._this$0_23._gen_0();
   };
-  _no_name_provided__103.$metadata$ = {
+  _no_name_provided__116.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function threadLocal(gen) {
     this._gen_0 = gen;
     var tmp = this;
-    tmp._local = new _no_name_provided__103(this);
+    tmp._local = new _no_name_provided__116(this);
   }
   threadLocal.$metadata$ = {
     simpleName: 'threadLocal',
@@ -27500,17 +30123,17 @@
     interfaces: []
   };
   var MimeType_byExtensions$delegate;
-  function _no_name_provided__104() {
+  function _no_name_provided__117() {
   }
-  _no_name_provided__104.prototype.invoke_0_k$ = function () {
+  _no_name_provided__117.prototype.invoke_0_k$ = function () {
     return LinkedHashMap_init_$Create$();
   };
-  _no_name_provided__104.$metadata$ = {
+  _no_name_provided__117.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_83() {
-    var i = new _no_name_provided__104();
+  function _no_name_provided_$factory_95() {
+    var i = new _no_name_provided__117();
     return function () {
       return i.invoke_0_k$();
     };
@@ -27536,8 +30159,8 @@
           var tmp1__anonymous__3 = tmp0_fastForEach_0.get_ha5a7z_k$(tmp0_2);
           var tmp_0 = charArrayOf([new Char(61)]);
           var parts_4 = split$default(tmp1__anonymous__3, tmp_0, false, 2, 2, null);
-          var key_5 = Companion_getInstance_34().decodeComponent_1d8j4y_k$(parts_4.get_ha5a7z_k$(0), UTF8, true);
-          var tmp_1 = Companion_getInstance_34();
+          var key_5 = Companion_getInstance_35().decodeComponent_1d8j4y_k$(parts_4.get_ha5a7z_k$(0), UTF8, true);
+          var tmp_1 = Companion_getInstance_35();
           var tmp$ret$2;
           $l$block_1: {
             var tmp_2;
@@ -27601,12 +30224,12 @@
       new QueryString();
     return QueryString_instance;
   }
-  function Companion_35() {
-    Companion_instance_34 = this;
+  function Companion_36() {
+    Companion_instance_35 = this;
     this._DEFAULT_PORT = 0;
     this._schemeRegex = Regex_init_$Create$_0('\\w+:');
   }
-  Companion_35.prototype.defaultPortForScheme_uch40_k$ = function (scheme) {
+  Companion_36.prototype.defaultPortForScheme_uch40_k$ = function (scheme) {
     var tmp0_subject = scheme;
     switch (tmp0_subject) {
       case 'ftp':
@@ -27622,17 +30245,17 @@
       default:return -1;
     }
   };
-  Companion_35.prototype.invoke_u5s38a_k$ = function (scheme, userInfo, host, path, query, fragment, opaque, port) {
+  Companion_36.prototype.invoke_u5s38a_k$ = function (scheme, userInfo, host, path, query, fragment, opaque, port) {
     return new URL_0(opaque, scheme, userInfo, host, path, query, fragment, port);
   };
-  Companion_35.prototype.invoke$default_bj3nqc_k$ = function (scheme, userInfo, host, path, query, fragment, opaque, port, $mask0, $handler) {
+  Companion_36.prototype.invoke$default_bj3nqc_k$ = function (scheme, userInfo, host, path, query, fragment, opaque, port, $mask0, $handler) {
     if (!(($mask0 & 64) === 0))
       opaque = false;
     if (!(($mask0 & 128) === 0))
       port = this._DEFAULT_PORT;
     return this.invoke_u5s38a_k$(scheme, userInfo, host, path, query, fragment, opaque, port);
   };
-  Companion_35.prototype.invoke_6wfw3l_k$ = function (url) {
+  Companion_36.prototype.invoke_6wfw3l_k$ = function (url) {
     var r = StrReader_init_$Create$(url, null, 0, 6, null);
     var schemeColon = r.tryRegex_x1socs_k$(this._schemeRegex);
     var tmp;
@@ -27686,7 +30309,7 @@
       var tmp0_safe_receiver = port;
       var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : toIntOrNull(tmp0_safe_receiver);
       var tmp5_port = tmp1_elvis_lhs == null ? this._DEFAULT_PORT : tmp1_elvis_lhs;
-      tmp = Companion_getInstance_34().invoke_u5s38a_k$(scheme, userInfo, tmp3_host, tmp4_path, query, fragment, tmp2_opaque, tmp5_port);
+      tmp = Companion_getInstance_35().invoke_u5s38a_k$(scheme, userInfo, tmp3_host, tmp4_path, query, fragment, tmp2_opaque, tmp5_port);
     } else {
       var tmp_6 = new Char(35);
       var nonFragment_0 = substringBefore$default(url, tmp_6, null, 2, null);
@@ -27694,12 +30317,12 @@
       var tmp_7 = new Char(63);
       var path_0 = substringBefore$default(nonFragment_0, tmp_7, null, 2, null);
       var query_0 = substringAfterOrNull(nonFragment_0, new Char(63));
-      var tmp_8 = Companion_getInstance_34();
+      var tmp_8 = Companion_getInstance_35();
       tmp = tmp_8.invoke$default_bj3nqc_k$(null, null, null, path_0, query_0, fragment_0, false, 0, 128, null);
     }
     return tmp;
   };
-  Companion_35.prototype.decodeComponent_1d8j4y_k$ = function (s, charset, formUrlEncoded) {
+  Companion_36.prototype.decodeComponent_1d8j4y_k$ = function (s, charset, formUrlEncoded) {
     var bos = ByteArrayBuilder_init_$Create$_1(0, 1, null);
     var len = s.length;
     var n = 0;
@@ -27728,55 +30351,55 @@
     }
     return toString_5(bos.toByteArray_0_k$(), charset);
   };
-  Companion_35.$metadata$ = {
+  Companion_36.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_34;
-  function Companion_getInstance_34() {
-    if (Companion_instance_34 == null)
-      new Companion_35();
-    return Companion_instance_34;
+  var Companion_instance_35;
+  function Companion_getInstance_35() {
+    if (Companion_instance_35 == null)
+      new Companion_36();
+    return Companion_instance_35;
   }
-  function _no_name_provided__105(this$0) {
-    this._this$0_14 = this$0;
+  function _no_name_provided__118(this$0) {
+    this._this$0_24 = this$0;
   }
-  _no_name_provided__105.prototype.invoke_0_k$ = function () {
-    return this._this$0_14.toUrlString$default_29kf1o_k$(false, null, 3, null).toString();
+  _no_name_provided__118.prototype.invoke_0_k$ = function () {
+    return this._this$0_24.toUrlString$default_29kf1o_k$(false, null, 3, null).toString();
   };
-  _no_name_provided__105.$metadata$ = {
+  _no_name_provided__118.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__106(this$0) {
-    this._this$0_15 = this$0;
+  function _no_name_provided__119(this$0) {
+    this._this$0_25 = this$0;
   }
-  _no_name_provided__106.prototype.invoke_0_k$ = function () {
-    return this._this$0_15.toUrlString$default_29kf1o_k$(false, null, 2, null).toString();
+  _no_name_provided__119.prototype.invoke_0_k$ = function () {
+    return this._this$0_25.toUrlString$default_29kf1o_k$(false, null, 2, null).toString();
   };
-  _no_name_provided__106.$metadata$ = {
+  _no_name_provided__119.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__107(this$0) {
-    this._this$0_16 = this$0;
+  function _no_name_provided__120(this$0) {
+    this._this$0_26 = this$0;
   }
-  _no_name_provided__107.prototype.invoke_0_k$ = function () {
+  _no_name_provided__120.prototype.invoke_0_k$ = function () {
     var tmp;
-    if (!(this._this$0_16._query == null)) {
-      tmp = '' + this._this$0_16._path_1 + '?' + this._this$0_16._query;
+    if (!(this._this$0_26._query == null)) {
+      tmp = '' + this._this$0_26._path_1 + '?' + this._this$0_26._query;
     } else {
-      tmp = this._this$0_16._path_1;
+      tmp = this._this$0_26._path_1;
     }
     return tmp;
   };
-  _no_name_provided__107.$metadata$ = {
+  _no_name_provided__120.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function URL_0(isOpaque, scheme, userInfo, host, path, query, fragment, defaultPort) {
-    Companion_getInstance_34();
+    Companion_getInstance_35();
     this._isOpaque = isOpaque;
     this._scheme = scheme;
     this._userInfo = userInfo;
@@ -27786,17 +30409,17 @@
     this._fragment = fragment;
     this._defaultPort = defaultPort;
     var tmp = this;
-    tmp._fullUrl$delegate = lazy(_no_name_provided_$factory_84(this));
+    tmp._fullUrl$delegate = lazy(_no_name_provided_$factory_96(this));
     var tmp_0 = this;
-    tmp_0._fullUrlWithoutScheme$delegate = lazy(_no_name_provided_$factory_85(this));
+    tmp_0._fullUrlWithoutScheme$delegate = lazy(_no_name_provided_$factory_97(this));
     var tmp_1 = this;
-    tmp_1._pathWithQuery$delegate = lazy(_no_name_provided_$factory_86(this));
+    tmp_1._pathWithQuery$delegate = lazy(_no_name_provided_$factory_98(this));
   }
   URL_0.prototype._get_defaultSchemePort__0_k$ = function () {
-    return Companion_getInstance_34().defaultPortForScheme_uch40_k$(this._scheme);
+    return Companion_getInstance_35().defaultPortForScheme_uch40_k$(this._scheme);
   };
   URL_0.prototype._get_port__0_k$ = function () {
-    return this._defaultPort === Companion_getInstance_34()._DEFAULT_PORT ? this._get_defaultSchemePort__0_k$() : this._defaultPort;
+    return this._defaultPort === Companion_getInstance_35()._DEFAULT_PORT ? this._get_defaultSchemePort__0_k$() : this._defaultPort;
   };
   URL_0.prototype._get_fullUrl__0_k$ = function () {
     var tmp$ret$0;
@@ -27820,7 +30443,7 @@
     }if (!(this._host == null)) {
       out.append_uch40_k$(this._host);
       Unit_getInstance();
-    }if (!(this._get_port__0_k$() === Companion_getInstance_34()._DEFAULT_PORT) ? !(this._get_port__0_k$() === this._get_defaultSchemePort__0_k$()) : false) {
+    }if (!(this._get_port__0_k$() === Companion_getInstance_35()._DEFAULT_PORT) ? !(this._get_port__0_k$() === this._get_defaultSchemePort__0_k$()) : false) {
       out.append_wi8o78_k$(new Char(58)).append_wi7j7l_k$(this._get_port__0_k$());
       Unit_getInstance();
     }out.append_uch40_k$(this._path_1);
@@ -27912,20 +30535,20 @@
       return receiver._get_fullUrl__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_84(this$0) {
-    var i = new _no_name_provided__105(this$0);
+  function _no_name_provided_$factory_96(this$0) {
+    var i = new _no_name_provided__118(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_85(this$0) {
-    var i = new _no_name_provided__106(this$0);
+  function _no_name_provided_$factory_97(this$0) {
+    var i = new _no_name_provided__119(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_86(this$0) {
-    var i = new _no_name_provided__107(this$0);
+  function _no_name_provided_$factory_98(this$0) {
+    var i = new _no_name_provided__120(this$0);
     return function () {
       return i.invoke_0_k$();
     };
@@ -27940,27 +30563,27 @@
     return tmp$ret$0;
   }
   var _defaultHttpFactory$delegate;
-  function Companion_36() {
-    Companion_instance_35 = this;
+  function Companion_37() {
+    Companion_instance_36 = this;
     this._DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36';
     this._DEFAULT_ACCEPT = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8';
     this._DEFAULT_LANGUAGE = 'en-us';
     this._DEFAULT_ENCODING = 'gzip, deflate';
     this._DEFAULT_CONNECTION = 'Close';
   }
-  Companion_36.$metadata$ = {
+  Companion_37.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_35;
-  function Companion_getInstance_35() {
-    if (Companion_instance_35 == null)
-      new Companion_36();
-    return Companion_instance_35;
+  var Companion_instance_36;
+  function Companion_getInstance_36() {
+    if (Companion_instance_36 == null)
+      new Companion_37();
+    return Companion_instance_36;
   }
   function HttpClient() {
-    Companion_getInstance_35();
+    Companion_getInstance_36();
     this._ignoreSslCertificates = false;
   }
   HttpClient.$metadata$ = {
@@ -27993,12 +30616,12 @@
   function _get_defaultHttpFactory_() {
     return _get__defaultHttpFactory_();
   }
-  function _no_name_provided__108() {
+  function _no_name_provided__121() {
   }
-  _no_name_provided__108.prototype.invoke_0_k$ = function () {
+  _no_name_provided__121.prototype.invoke_0_k$ = function () {
     return new ProxiedHttpFactory(_get_httpFactory_());
   };
-  _no_name_provided__108.$metadata$ = {
+  _no_name_provided__121.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -28007,8 +30630,8 @@
       return _get__defaultHttpFactory_();
     }, null);
   }
-  function _no_name_provided_$factory_87() {
-    var i = new _no_name_provided__108();
+  function _no_name_provided_$factory_99() {
+    var i = new _no_name_provided__121();
     return function () {
       return i.invoke_0_k$();
     };
@@ -28030,7 +30653,7 @@
   };
   function $writeCOROUTINE$134(_this_, byte, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__10 = _this_;
+    this.__this__11 = _this_;
     this._byte = byte;
   }
   $writeCOROUTINE$134.prototype.doResume_0_k$ = function () {
@@ -28056,7 +30679,7 @@
             this._exceptionState = 8;
             this._temp_12[0] = toByte(this._byte);
             this._state_0 = 4;
-            suspendResult = this.__this__10.write_ysdrhq_k$(this._temp_12, 0, 1, this);
+            suspendResult = this.__this__11.write_ysdrhq_k$(this._temp_12, 0, 1, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -28196,10 +30819,10 @@
     return tmp.doResume_0_k$();
   }
   function toAsyncInputStream(_this_) {
-    return new _no_name_provided__109(_this_);
+    return new _no_name_provided__122(_this_);
   }
   function toAsyncOutputStream(_this_) {
-    return new _no_name_provided__110(_this_);
+    return new _no_name_provided__123(_this_);
   }
   function write32BE_0(_this_, v, $cont) {
     var tmp = new $write32BECOROUTINE$153(_this_, v, $cont);
@@ -28209,7 +30832,7 @@
   }
   function $getPositionCOROUTINE$154(_this_, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__11 = _this_;
+    this.__this__12 = _this_;
   }
   $getPositionCOROUTINE$154.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
@@ -28220,12 +30843,12 @@
           case 0:
             this._exceptionState = 3;
             var tmp_0 = this;
-            var tmp_1 = this.__this__11._sync;
+            var tmp_1 = this.__this__12._sync;
             var tmp0_safe_receiver = isInterface(tmp_1, SyncPositionStream) ? tmp_1 : null;
             tmp_0._tmp1_elvis_lhs0 = tmp0_safe_receiver == null ? null : tmp0_safe_receiver._get_position__0_k$();
             if (this._tmp1_elvis_lhs0 == null) {
               this._state_0 = 1;
-              suspendResult = AsyncGetPositionStream.prototype.getPosition_0_k$.call(this.__this__11, this);
+              suspendResult = AsyncGetPositionStream.prototype.getPosition_0_k$.call(this.__this__12, this);
               if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
                 return suspendResult;
               }continue $sm;
@@ -28262,7 +30885,7 @@
   };
   function $getLengthCOROUTINE$155(_this_, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__12 = _this_;
+    this.__this__13 = _this_;
   }
   $getLengthCOROUTINE$155.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
@@ -28273,12 +30896,12 @@
           case 0:
             this._exceptionState = 3;
             var tmp_0 = this;
-            var tmp_1 = this.__this__12._sync;
+            var tmp_1 = this.__this__13._sync;
             var tmp0_safe_receiver = isInterface(tmp_1, SyncLengthStream) ? tmp_1 : null;
             tmp_0._tmp1_elvis_lhs0_0 = tmp0_safe_receiver == null ? null : tmp0_safe_receiver._get_length__0_k$();
             if (this._tmp1_elvis_lhs0_0 == null) {
               this._state_0 = 1;
-              suspendResult = AsyncGetLengthStream.prototype.getLength_0_k$.call(this.__this__12, this);
+              suspendResult = AsyncGetLengthStream.prototype.getLength_0_k$.call(this.__this__13, this);
               if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
                 return suspendResult;
               }continue $sm;
@@ -28313,42 +30936,42 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__109($this_toAsyncInputStream) {
+  function _no_name_provided__122($this_toAsyncInputStream) {
     this._$this_toAsyncInputStream = $this_toAsyncInputStream;
     this._sync = this._$this_toAsyncInputStream;
   }
-  _no_name_provided__109.prototype.read_irqg4d_k$ = function (buffer, offset_0, len, $cont) {
+  _no_name_provided__122.prototype.read_irqg4d_k$ = function (buffer, offset_0, len, $cont) {
     return this._sync.read_irqg4d_k$(buffer, offset_0, len);
   };
-  _no_name_provided__109.prototype.getPosition_0_k$ = function ($cont) {
+  _no_name_provided__122.prototype.getPosition_0_k$ = function ($cont) {
     var tmp = new $getPositionCOROUTINE$154(this, $cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__109.prototype.getLength_0_k$ = function ($cont) {
+  _no_name_provided__122.prototype.getLength_0_k$ = function ($cont) {
     var tmp = new $getLengthCOROUTINE$155(this, $cont);
     tmp._result = Unit_getInstance();
     tmp._exception_0 = null;
     return tmp.doResume_0_k$();
   };
-  _no_name_provided__109.$metadata$ = {
+  _no_name_provided__122.$metadata$ = {
     kind: 'class',
     interfaces: [AsyncInputStreamWithLength]
   };
-  function _no_name_provided__110($this_toAsyncOutputStream) {
+  function _no_name_provided__123($this_toAsyncOutputStream) {
     this._$this_toAsyncOutputStream = $this_toAsyncOutputStream;
   }
-  _no_name_provided__110.prototype.write_ysdrhq_k$ = function (buffer, offset_0, len, $cont) {
+  _no_name_provided__123.prototype.write_ysdrhq_k$ = function (buffer, offset_0, len, $cont) {
     return this._$this_toAsyncOutputStream.write_ysdrhq_k$(buffer, offset_0, len);
   };
-  _no_name_provided__110.$metadata$ = {
+  _no_name_provided__123.$metadata$ = {
     kind: 'class',
     interfaces: [AsyncOutputStream]
   };
   function $readBytesExactCOROUTINE$137(_this_, len, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__13 = _this_;
+    this.__this__14 = _this_;
     this._len_2 = len;
   }
   $readBytesExactCOROUTINE$137.prototype.doResume_0_k$ = function () {
@@ -28362,7 +30985,7 @@
             var tmp_0 = this;
             tmp_0._tmp0_apply_00 = new Int8Array(this._len_2);
             this._state_0 = 1;
-            suspendResult = readExact(this.__this__13, this._tmp0_apply_00, 0, this._len_2, this);
+            suspendResult = readExact(this.__this__14, this._tmp0_apply_00, 0, this._len_2, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -28389,7 +31012,7 @@
   };
   function $readExactCOROUTINE$141(_this_, buffer, offset_0, len, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__14 = _this_;
+    this.__this__15 = _this_;
     this._buffer_4 = buffer;
     this._offset_3 = offset_0;
     this._len_3 = len;
@@ -28404,7 +31027,7 @@
             this._exceptionState = 5;
             this._remaining0 = this._len_3;
             this._coffset1 = this._offset_3;
-            this._reader2 = this.__this__14;
+            this._reader2 = this.__this__15;
             this._state_0 = 1;
             continue $sm;
           case 1:
@@ -28458,7 +31081,7 @@
   };
   function $getAvailableCOROUTINE$150(_this_, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__15 = _this_;
+    this.__this__16 = _this_;
   }
   $getAvailableCOROUTINE$150.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
@@ -28469,7 +31092,7 @@
           case 0:
             this._exceptionState = 3;
             this._state_0 = 1;
-            suspendResult = this.__this__15.getLength_0_k$(this);
+            suspendResult = this.__this__16.getLength_0_k$(this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -28477,7 +31100,7 @@
           case 1:
             this._ARGUMENT0 = suspendResult;
             this._state_0 = 2;
-            suspendResult = this.__this__15.getPosition_0_k$(this);
+            suspendResult = this.__this__16.getPosition_0_k$(this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -28505,7 +31128,7 @@
   };
   function $write16LECOROUTINE$151(_this_, v, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__16 = _this_;
+    this.__this__17 = _this_;
     this._v_0 = v;
   }
   $write16LECOROUTINE$151.prototype.doResume_0_k$ = function () {
@@ -28531,7 +31154,7 @@
             this._exceptionState = 8;
             write16LE(this._temp_12_0, 0, this._v_0);
             this._state_0 = 4;
-            suspendResult = this.__this__16.write_ysdrhq_k$(this._temp_12_0, 0, 2, this);
+            suspendResult = this.__this__17.write_ysdrhq_k$(this._temp_12_0, 0, 2, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -28582,7 +31205,7 @@
   };
   function $hasAvailableCOROUTINE$152(_this_, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__17 = _this_;
+    this.__this__18 = _this_;
   }
   $hasAvailableCOROUTINE$152.prototype.doResume_0_k$ = function () {
     var suspendResult = this._result;
@@ -28593,7 +31216,7 @@
           case 0:
             this._exceptionState = 2;
             this._state_0 = 1;
-            suspendResult = getAvailable(this.__this__17, this);
+            suspendResult = getAvailable(this.__this__18, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -28621,7 +31244,7 @@
   };
   function $write32BECOROUTINE$153(_this_, v, resultContinuation) {
     CoroutineImpl_0.call(this, resultContinuation);
-    this.__this__18 = _this_;
+    this.__this__19 = _this_;
     this._v_1 = v;
   }
   $write32BECOROUTINE$153.prototype.doResume_0_k$ = function () {
@@ -28647,7 +31270,7 @@
             this._exceptionState = 8;
             write32BE(this._temp_12_1, 0, this._v_1);
             this._state_0 = 4;
-            suspendResult = this.__this__18.write_ysdrhq_k$(this._temp_12_1, 0, 4, this);
+            suspendResult = this.__this__19.write_ysdrhq_k$(this._temp_12_1, 0, 4, this);
             if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
               return suspendResult;
             }
@@ -29007,8 +31630,8 @@
     tmp0_this._set_positionRead__kdfck9_k$(tmp$ret$0);
   };
   SyncStream.prototype.read_0_k$ = function () {
-    var size = this.read_irqg4d_k$(this._smallTemp, 0, 1);
-    if (size <= 0)
+    var size_0 = this.read_irqg4d_k$(this._smallTemp, 0, 1);
+    if (size_0 <= 0)
       return -1;
     var tmp$ret$0;
     $l$block: {
@@ -29488,17 +32111,17 @@
     }
   }
   var traceTimes$delegate;
-  function _no_name_provided__111() {
+  function _no_name_provided__124() {
   }
-  _no_name_provided__111.prototype.invoke_0_k$ = function () {
+  _no_name_provided__124.prototype.invoke_0_k$ = function () {
     return Environment_getInstance().get_6wfw3l_k$('TRACE_TIMES') === 'true';
   };
-  _no_name_provided__111.$metadata$ = {
+  _no_name_provided__124.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_88() {
-    var i = new _no_name_provided__111();
+  function _no_name_provided_$factory_100() {
+    var i = new _no_name_provided__124();
     return function () {
       return i.invoke_0_k$();
     };
@@ -29688,9 +32311,9 @@
     }
     return toString_1(tmp$ret$0, radix);
   }
-  function _no_name_provided__112() {
+  function _no_name_provided__125() {
   }
-  _no_name_provided__112.prototype.invoke_0_k$ = function () {
+  _no_name_provided__125.prototype.invoke_0_k$ = function () {
     var tmp$ret$1;
     $l$block_0: {
       var tmp0_toLowerCase_0 = OS_getInstance()._get_rawName__0_k$();
@@ -29704,13 +32327,13 @@
     }
     return tmp$ret$1;
   };
-  _no_name_provided__112.$metadata$ = {
+  _no_name_provided__125.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__113() {
+  function _no_name_provided__126() {
   }
-  _no_name_provided__113.prototype.invoke_0_k$ = function () {
+  _no_name_provided__126.prototype.invoke_0_k$ = function () {
     var tmp$ret$1;
     $l$block_0: {
       var tmp0_toLowerCase_0 = OS_getInstance()._get_platformName__0_k$();
@@ -29724,23 +32347,23 @@
     }
     return tmp$ret$1;
   };
-  _no_name_provided__113.$metadata$ = {
+  _no_name_provided__126.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__114() {
+  function _no_name_provided__127() {
   }
-  _no_name_provided__114.prototype.invoke_0_k$ = function () {
+  _no_name_provided__127.prototype.invoke_0_k$ = function () {
     var tmp = OS_getInstance()._get_rawNameLC__0_k$();
     return contains$default_0(tmp, 'win', false, 2, null);
   };
-  _no_name_provided__114.$metadata$ = {
+  _no_name_provided__127.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__115() {
+  function _no_name_provided__128() {
   }
-  _no_name_provided__115.prototype.invoke_0_k$ = function () {
+  _no_name_provided__128.prototype.invoke_0_k$ = function () {
     var tmp;
     var tmp_0;
     var tmp_1 = OS_getInstance()._get_rawNameLC__0_k$();
@@ -29762,80 +32385,80 @@
     }
     return tmp;
   };
-  _no_name_provided__115.$metadata$ = {
+  _no_name_provided__128.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__116() {
+  function _no_name_provided__129() {
   }
-  _no_name_provided__116.prototype.invoke_0_k$ = function () {
+  _no_name_provided__129.prototype.invoke_0_k$ = function () {
     var tmp = OS_getInstance()._get_rawNameLC__0_k$();
     return contains$default_0(tmp, 'mac', false, 2, null);
   };
-  _no_name_provided__116.$metadata$ = {
+  _no_name_provided__129.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__117() {
+  function _no_name_provided__130() {
   }
-  _no_name_provided__117.prototype.invoke_0_k$ = function () {
+  _no_name_provided__130.prototype.invoke_0_k$ = function () {
     var tmp = OS_getInstance()._get_rawNameLC__0_k$();
     return contains$default_0(tmp, 'ios', false, 2, null);
   };
-  _no_name_provided__117.$metadata$ = {
+  _no_name_provided__130.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__118() {
+  function _no_name_provided__131() {
   }
-  _no_name_provided__118.prototype.invoke_0_k$ = function () {
+  _no_name_provided__131.prototype.invoke_0_k$ = function () {
     var tmp = OS_getInstance()._get_platformNameLC__0_k$();
     return contains$default_0(tmp, 'android', false, 2, null);
   };
-  _no_name_provided__118.$metadata$ = {
+  _no_name_provided__131.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__119() {
+  function _no_name_provided__132() {
   }
-  _no_name_provided__119.prototype.invoke_0_k$ = function () {
+  _no_name_provided__132.prototype.invoke_0_k$ = function () {
     var tmp = OS_getInstance()._get_rawNameLC__0_k$();
     return contains$default_0(tmp, 'watchos', false, 2, null);
   };
-  _no_name_provided__119.$metadata$ = {
+  _no_name_provided__132.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__120() {
+  function _no_name_provided__133() {
   }
-  _no_name_provided__120.prototype.invoke_0_k$ = function () {
+  _no_name_provided__133.prototype.invoke_0_k$ = function () {
     var tmp = OS_getInstance()._get_rawNameLC__0_k$();
     return contains$default_0(tmp, 'tvos', false, 2, null);
   };
-  _no_name_provided__120.$metadata$ = {
+  _no_name_provided__133.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function OS() {
     OS_instance = this;
     var tmp = this;
-    tmp._rawNameLC$delegate = lazy(_no_name_provided_$factory_89());
+    tmp._rawNameLC$delegate = lazy(_no_name_provided_$factory_101());
     var tmp_0 = this;
-    tmp_0._platformNameLC$delegate = lazy(_no_name_provided_$factory_90());
+    tmp_0._platformNameLC$delegate = lazy(_no_name_provided_$factory_102());
     var tmp_1 = this;
-    tmp_1._isWindows$delegate = lazy(_no_name_provided_$factory_91());
+    tmp_1._isWindows$delegate = lazy(_no_name_provided_$factory_103());
     var tmp_2 = this;
-    tmp_2._isLinux$delegate = lazy(_no_name_provided_$factory_92());
+    tmp_2._isLinux$delegate = lazy(_no_name_provided_$factory_104());
     var tmp_3 = this;
-    tmp_3._isMac$delegate = lazy(_no_name_provided_$factory_93());
+    tmp_3._isMac$delegate = lazy(_no_name_provided_$factory_105());
     var tmp_4 = this;
-    tmp_4._isIos$delegate = lazy(_no_name_provided_$factory_94());
+    tmp_4._isIos$delegate = lazy(_no_name_provided_$factory_106());
     var tmp_5 = this;
-    tmp_5._isAndroid$delegate = lazy(_no_name_provided_$factory_95());
+    tmp_5._isAndroid$delegate = lazy(_no_name_provided_$factory_107());
     var tmp_6 = this;
-    tmp_6._isWatchos$delegate = lazy(_no_name_provided_$factory_96());
+    tmp_6._isWatchos$delegate = lazy(_no_name_provided_$factory_108());
     var tmp_7 = this;
-    tmp_7._isTvos$delegate = lazy(_no_name_provided_$factory_97());
+    tmp_7._isTvos$delegate = lazy(_no_name_provided_$factory_109());
   }
   OS.prototype._get_rawName__0_k$ = function () {
     return _get_rawOsName_();
@@ -29885,56 +32508,56 @@
       return receiver._get_platformNameLC__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_89() {
-    var i = new _no_name_provided__112();
+  function _no_name_provided_$factory_101() {
+    var i = new _no_name_provided__125();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_90() {
-    var i = new _no_name_provided__113();
+  function _no_name_provided_$factory_102() {
+    var i = new _no_name_provided__126();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_91() {
-    var i = new _no_name_provided__114();
+  function _no_name_provided_$factory_103() {
+    var i = new _no_name_provided__127();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_92() {
-    var i = new _no_name_provided__115();
+  function _no_name_provided_$factory_104() {
+    var i = new _no_name_provided__128();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_93() {
-    var i = new _no_name_provided__116();
+  function _no_name_provided_$factory_105() {
+    var i = new _no_name_provided__129();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_94() {
-    var i = new _no_name_provided__117();
+  function _no_name_provided_$factory_106() {
+    var i = new _no_name_provided__130();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_95() {
-    var i = new _no_name_provided__118();
+  function _no_name_provided_$factory_107() {
+    var i = new _no_name_provided__131();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_96() {
-    var i = new _no_name_provided__119();
+  function _no_name_provided_$factory_108() {
+    var i = new _no_name_provided__132();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_97() {
-    var i = new _no_name_provided__120();
+  function _no_name_provided_$factory_109() {
+    var i = new _no_name_provided__133();
     return function () {
       return i.invoke_0_k$();
     };
@@ -29956,19 +32579,19 @@
   function StrReader_init_$Create$(str, file, pos, $mask0, $marker) {
     return StrReader_init_$Init$(str, file, pos, $mask0, $marker, Object.create(StrReader.prototype));
   }
-  function Companion_37() {
-    Companion_instance_36 = this;
+  function Companion_38() {
+    Companion_instance_37 = this;
   }
-  Companion_37.$metadata$ = {
+  Companion_38.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_36;
-  function Companion_getInstance_36() {
-    if (Companion_instance_36 == null)
-      new Companion_37();
-    return Companion_instance_36;
+  var Companion_instance_37;
+  function Companion_getInstance_37() {
+    if (Companion_instance_37 == null)
+      new Companion_38();
+    return Companion_instance_37;
   }
   function substr_2($this, pos, length) {
     var tmp$ret$3;
@@ -30000,7 +32623,7 @@
     return tmp$ret$3;
   }
   function StrReader(str, file, pos) {
-    Companion_getInstance_36();
+    Companion_getInstance_37();
     this._str_0 = str;
     this._file = file;
     this._pos_0 = pos;
@@ -30196,9 +32819,9 @@
     interfaces: []
   };
   var Language_CURRENT$delegate;
-  function _no_name_provided__121() {
+  function _no_name_provided__134() {
   }
-  _no_name_provided__121.prototype.invoke_0_k$ = function () {
+  _no_name_provided__134.prototype.invoke_0_k$ = function () {
     var tmp$ret$3;
     $l$block_2: {
       var tmp0_mapNotNull_0 = _get_systemLanguageStrings_();
@@ -30212,7 +32835,7 @@
             {
               var tmp$ret$0;
               $l$block: {
-                var tmp = Companion_getInstance_37()._BY_ID;
+                var tmp = Companion_getInstance_38()._BY_ID;
                 var tmp_0 = new Char(45);
                 tmp$ret$0 = tmp.get_2bw_k$(substringBefore$default(element_2_3, tmp_0, null, 2, null));
                 break $l$block;
@@ -30243,17 +32866,17 @@
     }
     return tmp$ret$3;
   };
-  _no_name_provided__121.$metadata$ = {
+  _no_name_provided__134.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__122() {
+  function _no_name_provided__135() {
   }
-  _no_name_provided__122.prototype.invoke_0_k$ = function () {
-    var tmp0_elvis_lhs = firstOrNull(Companion_getInstance_37()._get_SYSTEM_LANGS__0_k$());
+  _no_name_provided__135.prototype.invoke_0_k$ = function () {
+    var tmp0_elvis_lhs = firstOrNull(Companion_getInstance_38()._get_SYSTEM_LANGS__0_k$());
     return tmp0_elvis_lhs == null ? Language_ENGLISH_getInstance() : tmp0_elvis_lhs;
   };
-  _no_name_provided__122.$metadata$ = {
+  _no_name_provided__135.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -30268,8 +32891,8 @@
   var Language_RUSSIAN_instance;
   var Language_KOREAN_instance;
   var Language_CHINESE_instance;
-  function Companion_38() {
-    Companion_instance_37 = this;
+  function Companion_39() {
+    Companion_instance_38 = this;
     var tmp = this;
     var tmp$ret$4;
     $l$block_3: {
@@ -30364,11 +32987,11 @@
     }
     tmp._BY_ID = toMap(plus(tmp_1, tmp$ret$10));
     var tmp_2 = this;
-    tmp_2._SYSTEM_LANGS$delegate = lazy(_no_name_provided_$factory_99());
+    tmp_2._SYSTEM_LANGS$delegate = lazy(_no_name_provided_$factory_111());
     var tmp_3 = this;
-    tmp_3._SYSTEM$delegate = lazy(_no_name_provided_$factory_100());
+    tmp_3._SYSTEM$delegate = lazy(_no_name_provided_$factory_112());
   }
-  Companion_38.prototype._get_SYSTEM_LANGS__0_k$ = function () {
+  Companion_39.prototype._get_SYSTEM_LANGS__0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_getValue_0 = SYSTEM_LANGS$factory();
@@ -30377,7 +33000,7 @@
     }
     return tmp$ret$0;
   };
-  Companion_38.prototype._get_SYSTEM__0_k$ = function () {
+  Companion_39.prototype._get_SYSTEM__0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_getValue_0 = SYSTEM$factory();
@@ -30386,16 +33009,16 @@
     }
     return tmp$ret$0;
   };
-  Companion_38.$metadata$ = {
+  Companion_39.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_37;
-  function Companion_getInstance_37() {
-    if (Companion_instance_37 == null)
-      new Companion_38();
-    return Companion_instance_37;
+  var Companion_instance_38;
+  function Companion_getInstance_38() {
+    if (Companion_instance_38 == null)
+      new Companion_39();
+    return Companion_instance_38;
   }
   function values_0() {
     return [Language_JAPANESE_getInstance(), Language_ENGLISH_getInstance(), Language_FRENCH_getInstance(), Language_SPANISH_getInstance(), Language_GERMAN_getInstance(), Language_ITALIAN_getInstance(), Language_DUTCH_getInstance(), Language_PORTUGUESE_getInstance(), Language_RUSSIAN_getInstance(), Language_KOREAN_getInstance(), Language_CHINESE_getInstance()];
@@ -30416,7 +33039,7 @@
     Language_RUSSIAN_instance = new Language('RUSSIAN', 8, 'ru', 'rus');
     Language_KOREAN_instance = new Language('KOREAN', 9, 'ko', 'kor');
     Language_CHINESE_instance = new Language('CHINESE', 10, 'zh', 'zho');
-    Companion_getInstance_37();
+    Companion_getInstance_38();
   }
   function Language(name, ordinal, iso6391, iso6392) {
     Enum.call(this, name, ordinal);
@@ -30428,12 +33051,12 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__123() {
+  function _no_name_provided__136() {
   }
-  _no_name_provided__123.prototype.invoke_0_k$ = function () {
-    return KorAtomicRef_0(Companion_getInstance_37()._get_SYSTEM__0_k$());
+  _no_name_provided__136.prototype.invoke_0_k$ = function () {
+    return KorAtomicRef_0(Companion_getInstance_38()._get_SYSTEM__0_k$());
   };
-  _no_name_provided__123.$metadata$ = {
+  _no_name_provided__136.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -30491,20 +33114,20 @@
       return receiver._get_SYSTEM__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_98() {
-    var i = new _no_name_provided__123();
+  function _no_name_provided_$factory_110() {
+    var i = new _no_name_provided__136();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_99() {
-    var i = new _no_name_provided__121();
+  function _no_name_provided_$factory_111() {
+    var i = new _no_name_provided__134();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_100() {
-    var i = new _no_name_provided__122();
+  function _no_name_provided_$factory_112() {
+    var i = new _no_name_provided__135();
     return function () {
       return i.invoke_0_k$();
     };
@@ -30519,18 +33142,18 @@
     return tmp$ret$0;
   }
   var jsLocalStorageVfs$delegate;
-  function _no_name_provided__124() {
+  function _no_name_provided__137() {
   }
-  _no_name_provided__124.$metadata$ = {
+  _no_name_provided__137.$metadata$ = {
     kind: 'class',
     interfaces: [SimpleStorage]
   };
-  function _no_name_provided__125() {
+  function _no_name_provided__138() {
   }
-  _no_name_provided__125.prototype.invoke_0_k$ = function () {
-    return new MapLikeStorageVfs(new _no_name_provided__124());
+  _no_name_provided__138.prototype.invoke_0_k$ = function () {
+    return new MapLikeStorageVfs(new _no_name_provided__137());
   };
-  _no_name_provided__125.$metadata$ = {
+  _no_name_provided__138.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -30539,8 +33162,8 @@
       return _get_jsLocalStorageVfs_();
     }, null);
   }
-  function _no_name_provided_$factory_101() {
-    var i = new _no_name_provided__125();
+  function _no_name_provided_$factory_113() {
+    var i = new _no_name_provided__138();
     return function () {
       return i.invoke_0_k$();
     };
@@ -30621,9 +33244,9 @@
   function jsObjectKeys$outlinedJsCode$(obj) {
     return Object.keys(obj);
   }
-  function _no_name_provided__126() {
+  function _no_name_provided__139() {
   }
-  _no_name_provided__126.prototype.invoke_0_k$ = function () {
+  _no_name_provided__139.prototype.invoke_0_k$ = function () {
     var tmp0_safe_receiver = document.location;
     var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : tmp0_safe_receiver.href;
     var href = tmp1_elvis_lhs == null ? '.' : tmp1_elvis_lhs;
@@ -30638,13 +33261,13 @@
     }
     return tmp;
   };
-  _no_name_provided__126.$metadata$ = {
+  _no_name_provided__139.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__127() {
+  function _no_name_provided__140() {
   }
-  _no_name_provided__127.prototype.invoke_0_k$ = function () {
+  _no_name_provided__140.prototype.invoke_0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_unsafeCast_0 = typeof window === 'object';
@@ -30653,13 +33276,13 @@
     }
     return tmp$ret$0;
   };
-  _no_name_provided__127.$metadata$ = {
+  _no_name_provided__140.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__128() {
+  function _no_name_provided__141() {
   }
-  _no_name_provided__128.prototype.invoke_0_k$ = function () {
+  _no_name_provided__141.prototype.invoke_0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_unsafeCast_0 = typeof importScripts === 'function';
@@ -30668,13 +33291,13 @@
     }
     return tmp$ret$0;
   };
-  _no_name_provided__128.$metadata$ = {
+  _no_name_provided__141.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__129() {
+  function _no_name_provided__142() {
   }
-  _no_name_provided__129.prototype.invoke_0_k$ = function () {
+  _no_name_provided__142.prototype.invoke_0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_unsafeCast_0 = typeof process !== 'undefined' && process.release && process.release.name.search(/node|io.js/) !== -1;
@@ -30683,7 +33306,7 @@
     }
     return tmp$ret$0;
   };
-  _no_name_provided__129.$metadata$ = {
+  _no_name_provided__142.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -30707,26 +33330,26 @@
       return _get_isNodeJs_();
     }, null);
   }
-  function _no_name_provided_$factory_102() {
-    var i = new _no_name_provided__126();
+  function _no_name_provided_$factory_114() {
+    var i = new _no_name_provided__139();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_103() {
-    var i = new _no_name_provided__127();
+  function _no_name_provided_$factory_115() {
+    var i = new _no_name_provided__140();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_104() {
-    var i = new _no_name_provided__128();
+  function _no_name_provided_$factory_116() {
+    var i = new _no_name_provided__141();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_105() {
-    var i = new _no_name_provided__129();
+  function _no_name_provided_$factory_117() {
+    var i = new _no_name_provided__142();
     return function () {
       return i.invoke_0_k$();
     };
@@ -30814,90 +33437,90 @@
     }
     return tmp;
   }
-  function _no_name_provided__130() {
+  function _no_name_provided__143() {
   }
-  _no_name_provided__130.prototype.invoke_0_k$ = function () {
+  _no_name_provided__143.prototype.invoke_0_k$ = function () {
     return '/tmp';
   };
-  _no_name_provided__130.$metadata$ = {
+  _no_name_provided__143.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__131() {
+  function _no_name_provided__144() {
   }
-  _no_name_provided__131.prototype.invoke_0_k$ = function () {
+  _no_name_provided__144.prototype.invoke_0_k$ = function () {
     return '.';
   };
-  _no_name_provided__131.$metadata$ = {
+  _no_name_provided__144.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__132() {
+  function _no_name_provided__145() {
   }
-  _no_name_provided__132.prototype.invoke_0_k$ = function () {
+  _no_name_provided__145.prototype.invoke_0_k$ = function () {
     return _get_applicationVfs_().jail_0_k$();
   };
-  _no_name_provided__132.$metadata$ = {
+  _no_name_provided__145.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__133() {
+  function _no_name_provided__146() {
   }
-  _no_name_provided__133.prototype.invoke_0_k$ = function () {
+  _no_name_provided__146.prototype.invoke_0_k$ = function () {
     return localVfs(_get_absoluteCwd_());
   };
-  _no_name_provided__133.$metadata$ = {
+  _no_name_provided__146.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__134() {
+  function _no_name_provided__147() {
   }
-  _no_name_provided__134.prototype.invoke_0_k$ = function () {
+  _no_name_provided__147.prototype.invoke_0_k$ = function () {
     return localVfs(_get_absoluteCwd_());
   };
-  _no_name_provided__134.$metadata$ = {
+  _no_name_provided__147.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__135() {
+  function _no_name_provided__148() {
   }
-  _no_name_provided__135.prototype.invoke_0_k$ = function () {
+  _no_name_provided__148.prototype.invoke_0_k$ = function () {
     return _get_jsLocalStorageVfs_()._get_root__0_k$();
   };
-  _no_name_provided__135.$metadata$ = {
+  _no_name_provided__148.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__136() {
+  function _no_name_provided__149() {
   }
-  _no_name_provided__136.prototype.invoke_0_k$ = function () {
+  _no_name_provided__149.prototype.invoke_0_k$ = function () {
     return MemoryVfs$default(null, false, 3, null);
   };
-  _no_name_provided__136.$metadata$ = {
+  _no_name_provided__149.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__137() {
+  function _no_name_provided__150() {
   }
-  _no_name_provided__137.prototype.invoke_0_k$ = function () {
+  _no_name_provided__150.prototype.invoke_0_k$ = function () {
     return localVfs(_get_absoluteCwd_());
   };
-  _no_name_provided__137.$metadata$ = {
+  _no_name_provided__150.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__138() {
+  function _no_name_provided__151() {
   }
-  _no_name_provided__138.prototype.invoke_0_k$ = function () {
+  _no_name_provided__151.prototype.invoke_0_k$ = function () {
     return localVfs(_get_absoluteCwd_());
   };
-  _no_name_provided__138.$metadata$ = {
+  _no_name_provided__151.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__139() {
+  function _no_name_provided__152() {
   }
-  _no_name_provided__139.prototype.invoke_0_k$ = function () {
+  _no_name_provided__152.prototype.invoke_0_k$ = function () {
     var tmp;
     if (_get_isNodeJs_()) {
       tmp = localVfs(_get_tmpdir_());
@@ -30906,7 +33529,7 @@
     }
     return tmp;
   };
-  _no_name_provided__139.$metadata$ = {
+  _no_name_provided__152.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -30930,62 +33553,62 @@
       return _get_applicationVfs_();
     }, null);
   }
-  function _no_name_provided_$factory_106() {
-    var i = new _no_name_provided__130();
+  function _no_name_provided_$factory_118() {
+    var i = new _no_name_provided__143();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_107() {
-    var i = new _no_name_provided__131();
+  function _no_name_provided_$factory_119() {
+    var i = new _no_name_provided__144();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_108() {
-    var i = new _no_name_provided__132();
+  function _no_name_provided_$factory_120() {
+    var i = new _no_name_provided__145();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_109() {
-    var i = new _no_name_provided__133();
+  function _no_name_provided_$factory_121() {
+    var i = new _no_name_provided__146();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_110() {
-    var i = new _no_name_provided__134();
+  function _no_name_provided_$factory_122() {
+    var i = new _no_name_provided__147();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_111() {
-    var i = new _no_name_provided__135();
+  function _no_name_provided_$factory_123() {
+    var i = new _no_name_provided__148();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_112() {
-    var i = new _no_name_provided__136();
+  function _no_name_provided_$factory_124() {
+    var i = new _no_name_provided__149();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_113() {
-    var i = new _no_name_provided__137();
+  function _no_name_provided_$factory_125() {
+    var i = new _no_name_provided__150();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_114() {
-    var i = new _no_name_provided__138();
+  function _no_name_provided_$factory_126() {
+    var i = new _no_name_provided__151();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_115() {
-    var i = new _no_name_provided__139();
+  function _no_name_provided_$factory_127() {
+    var i = new _no_name_provided__152();
     return function () {
       return i.invoke_0_k$();
     };
@@ -31186,10 +33809,10 @@
     interfaces: []
   };
   function NativeThreadLocal() {
-    this._value_10 = this.initialValue_0_k$();
+    this._value_11 = this.initialValue_0_k$();
   }
   NativeThreadLocal.prototype.get_0_k$ = function () {
-    return this._value_10;
+    return this._value_11;
   };
   NativeThreadLocal.$metadata$ = {
     simpleName: 'NativeThreadLocal',
@@ -31197,7 +33820,7 @@
     interfaces: []
   };
   var UTF8;
-  function _no_name_provided__140() {
+  function _no_name_provided__153() {
     UTC8CharsetBase.call(this, 'UTF-8');
     var tmp = this;
     var tmp_0;
@@ -31224,7 +33847,7 @@
     }
     tmp_2._textEncoder = tmp_3;
   }
-  _no_name_provided__140.prototype.decode_g45q85_k$ = function (out, src, start, end) {
+  _no_name_provided__153.prototype.decode_g45q85_k$ = function (out, src, start, end) {
     if (!(this._textDecoder == null)) {
       var tmp$ret$1;
       $l$block_0: {
@@ -31243,7 +33866,7 @@
       UTC8CharsetBase.prototype.decode_g45q85_k$.call(this, out, src, start, end);
     }
   };
-  _no_name_provided__140.prototype.encode_kaapbp_k$ = function (out, src, start, end) {
+  _no_name_provided__153.prototype.encode_kaapbp_k$ = function (out, src, start, end) {
     if (!(this._textEncoder == null)) {
       var tmp$ret$0;
       $l$block: {
@@ -31268,32 +33891,32 @@
       UTC8CharsetBase.prototype.encode_kaapbp_k$.call(this, out, src, start, end);
     }
   };
-  _no_name_provided__140.$metadata$ = {
+  _no_name_provided__153.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function UTF8$init$() {
-    return new _no_name_provided__140();
+    return new _no_name_provided__153();
   }
   var asyncSocketFactory$delegate;
-  function _no_name_provided__141() {
+  function _no_name_provided__154() {
     AsyncSocketFactory.call(this);
   }
-  _no_name_provided__141.$metadata$ = {
+  _no_name_provided__154.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__142() {
+  function _no_name_provided__155() {
   }
-  _no_name_provided__142.prototype.invoke_0_k$ = function () {
-    return new _no_name_provided__141();
+  _no_name_provided__155.prototype.invoke_0_k$ = function () {
+    return new _no_name_provided__154();
   };
-  _no_name_provided__142.$metadata$ = {
+  _no_name_provided__155.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_116() {
-    var i = new _no_name_provided__142();
+  function _no_name_provided_$factory_128() {
+    var i = new _no_name_provided__155();
     return function () {
       return i.invoke_0_k$();
     };
@@ -31316,21 +33939,21 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__143() {
+  function _no_name_provided__156() {
   }
-  _no_name_provided__143.prototype.createClient_0_k$ = function () {
+  _no_name_provided__156.prototype.createClient_0_k$ = function () {
     return new HttpClientBrowserJs();
   };
-  _no_name_provided__143.$metadata$ = {
+  _no_name_provided__156.$metadata$ = {
     kind: 'class',
     interfaces: [HttpFactory]
   };
-  function _no_name_provided__144() {
+  function _no_name_provided__157() {
   }
-  _no_name_provided__144.prototype.invoke_0_k$ = function () {
-    return new _no_name_provided__143();
+  _no_name_provided__157.prototype.invoke_0_k$ = function () {
+    return new _no_name_provided__156();
   };
-  _no_name_provided__144.$metadata$ = {
+  _no_name_provided__157.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -31339,8 +33962,8 @@
       return _get_httpFactory_();
     }, null);
   }
-  function _no_name_provided_$factory_117() {
-    var i = new _no_name_provided__144();
+  function _no_name_provided_$factory_129() {
+    var i = new _no_name_provided__157();
     return function () {
       return i.invoke_0_k$();
     };
@@ -31356,9 +33979,9 @@
   }
   var rawOsName$delegate;
   var rawPlatformName;
-  function _no_name_provided__145() {
+  function _no_name_provided__158() {
   }
-  _no_name_provided__145.prototype.invoke_0_k$ = function () {
+  _no_name_provided__158.prototype.invoke_0_k$ = function () {
     var tmp;
     if (_get_isNodeJs_()) {
       var tmp$ret$0;
@@ -31379,7 +34002,7 @@
     }
     return tmp;
   };
-  _no_name_provided__145.$metadata$ = {
+  _no_name_provided__158.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -31388,8 +34011,8 @@
       return _get_rawOsName_();
     }, null);
   }
-  function _no_name_provided_$factory_118() {
-    var i = new _no_name_provided__145();
+  function _no_name_provided_$factory_130() {
+    var i = new _no_name_provided__158();
     return function () {
       return i.invoke_0_k$();
     };
@@ -31407,9 +34030,9 @@
     return tmp$ret$0;
   }
   var systemLanguageStrings$delegate;
-  function _no_name_provided__146() {
+  function _no_name_provided__159() {
   }
-  _no_name_provided__146.prototype.invoke_0_k$ = function () {
+  _no_name_provided__159.prototype.invoke_0_k$ = function () {
     var tmp;
     if (_get_isNodeJs_()) {
       var env = process.env;
@@ -31423,7 +34046,7 @@
     }
     return tmp;
   };
-  _no_name_provided__146.$metadata$ = {
+  _no_name_provided__159.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -31432,36 +34055,36 @@
       return _get_systemLanguageStrings_();
     }, null);
   }
-  function _no_name_provided_$factory_119() {
-    var i = new _no_name_provided__146();
+  function _no_name_provided_$factory_131() {
+    var i = new _no_name_provided__159();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function Companion_39() {
-    Companion_instance_38 = this;
+  function Companion_40() {
+    Companion_instance_39 = this;
     this._MIN = -Infinity;
     this._MAX = Infinity;
   }
-  Companion_39.$metadata$ = {
+  Companion_40.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_38;
-  function Companion_getInstance_38() {
-    if (Companion_instance_38 == null)
-      new Companion_39();
-    return Companion_instance_38;
+  var Companion_instance_39;
+  function Companion_getInstance_39() {
+    if (Companion_instance_39 == null)
+      new Companion_40();
+    return Companion_instance_39;
   }
   function BoundsBuilder() {
-    Companion_getInstance_38();
-    this._tempRect = Companion_getInstance_44().invoke_0_k$();
+    Companion_getInstance_39();
+    this._tempRect = Companion_getInstance_45().invoke_0_k$();
     this._npoints = 0;
-    this._xmin = Companion_getInstance_38()._MAX;
-    this._xmax = Companion_getInstance_38()._MIN;
-    this._ymin = Companion_getInstance_38()._MAX;
-    this._ymax = Companion_getInstance_38()._MIN;
+    this._xmin = Companion_getInstance_39()._MAX;
+    this._xmax = Companion_getInstance_39()._MIN;
+    this._ymin = Companion_getInstance_39()._MAX;
+    this._ymax = Companion_getInstance_39()._MIN;
   }
   BoundsBuilder.prototype.add_ngl742_k$ = function (x, y) {
     if (x < this._xmin)
@@ -31518,19 +34141,19 @@
   function Matrix_init_$Create$(a, b, c, d, tx, ty, $mask0, $marker) {
     return Matrix_init_$Init$(a, b, c, d, tx, ty, $mask0, $marker, Object.create(Matrix.prototype));
   }
-  function Companion_40() {
-    Companion_instance_39 = this;
+  function Companion_41() {
+    Companion_instance_40 = this;
   }
-  Companion_40.$metadata$ = {
+  Companion_41.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_39;
-  function Companion_getInstance_39() {
-    if (Companion_instance_39 == null)
-      new Companion_40();
-    return Companion_instance_39;
+  var Companion_instance_40;
+  function Companion_getInstance_40() {
+    if (Companion_instance_40 == null)
+      new Companion_41();
+    return Companion_instance_40;
   }
   function Type(name, ordinal, id, hasRotation, hasScale, hasTranslation) {
     Enum.call(this, name, ordinal);
@@ -31565,7 +34188,7 @@
     return Type_COMPLEX_instance;
   }
   function Matrix(a, b, c, d, tx, ty) {
-    Companion_getInstance_39();
+    Companion_getInstance_40();
     this._a = a;
     this._b = b;
     this._c = c;
@@ -31666,8 +34289,8 @@
   var tempVec2;
   var tempVec3;
   var tempMat1;
-  function Companion_41() {
-    Companion_instance_40 = this;
+  function Companion_42() {
+    Companion_instance_41 = this;
     this._M00 = 0;
     this._M10 = 1;
     this._M20 = 2;
@@ -31685,22 +34308,22 @@
     this._M23 = 14;
     this._M33 = 15;
   }
-  Companion_41.prototype.columnMajorIndex_27zxwg_k$ = function (row, column) {
+  Companion_42.prototype.columnMajorIndex_27zxwg_k$ = function (row, column) {
     return imul(column, 4) + row | 0;
   };
-  Companion_41.$metadata$ = {
+  Companion_42.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_40;
-  function Companion_getInstance_40() {
-    if (Companion_instance_40 == null)
-      new Companion_41();
-    return Companion_instance_40;
+  var Companion_instance_41;
+  function Companion_getInstance_41() {
+    if (Companion_instance_41 == null)
+      new Companion_42();
+    return Companion_instance_41;
   }
   function Matrix3D() {
-    Companion_getInstance_40();
+    Companion_getInstance_41();
     var tmp = this;
     var tmp$ret$0;
     $l$block: {
@@ -31710,12 +34333,12 @@
     tmp._data_5 = tmp$ret$0;
   }
   Matrix3D.prototype.get_27zxwg_k$ = function (row, column) {
-    return this._data_5[Companion_getInstance_40().columnMajorIndex_27zxwg_k$(row, column)];
+    return this._data_5[Companion_getInstance_41().columnMajorIndex_27zxwg_k$(row, column)];
   };
   Matrix3D.prototype.equals = function (other) {
     var tmp;
     if (other instanceof Matrix3D) {
-      tmp = contentEquals(this._data_5, other._data_5);
+      tmp = contentEquals_0(this._data_5, other._data_5);
     } else {
       {
         tmp = false;
@@ -31724,7 +34347,7 @@
     return tmp;
   };
   Matrix3D.prototype.hashCode = function () {
-    return contentHashCode(this._data_5);
+    return contentHashCode_0(this._data_5);
   };
   Matrix3D.prototype.toString = function () {
     var tmp$ret$2;
@@ -31791,22 +34414,22 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_42() {
-    Companion_instance_41 = this;
+  function Companion_43() {
+    Companion_instance_42 = this;
   }
-  Companion_42.prototype.invoke_ngl742_k$ = function (x, y) {
+  Companion_43.prototype.invoke_ngl742_k$ = function (x, y) {
     return new Point(x, y);
   };
-  Companion_42.$metadata$ = {
+  Companion_43.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_41;
-  function Companion_getInstance_41() {
-    if (Companion_instance_41 == null)
-      new Companion_42();
-    return Companion_instance_41;
+  var Companion_instance_42;
+  function Companion_getInstance_42() {
+    if (Companion_instance_42 == null)
+      new Companion_43();
+    return Companion_instance_42;
   }
   function IPoint_0() {
   }
@@ -31829,23 +34452,23 @@
   function Point_init_$Create$_0(x, y) {
     return Point_init_$Init$_0(x, y, Object.create(Point.prototype));
   }
-  function Companion_43() {
-    Companion_instance_42 = this;
-    this._Zero = Companion_getInstance_41().invoke_ngl742_k$(0.0, 0.0);
-    this._One = Companion_getInstance_41().invoke_ngl742_k$(1.0, 1.0);
-    this._Up = Companion_getInstance_41().invoke_ngl742_k$(0.0, 1.0);
-    this._Down = Companion_getInstance_41().invoke_ngl742_k$(0.0, -1.0);
-    this._Left = Companion_getInstance_41().invoke_ngl742_k$(-1.0, 0.0);
-    this._Right = Companion_getInstance_41().invoke_ngl742_k$(1.0, 0.0);
+  function Companion_44() {
+    Companion_instance_43 = this;
+    this._Zero = Companion_getInstance_42().invoke_ngl742_k$(0.0, 0.0);
+    this._One = Companion_getInstance_42().invoke_ngl742_k$(1.0, 1.0);
+    this._Up = Companion_getInstance_42().invoke_ngl742_k$(0.0, 1.0);
+    this._Down = Companion_getInstance_42().invoke_ngl742_k$(0.0, -1.0);
+    this._Left = Companion_getInstance_42().invoke_ngl742_k$(-1.0, 0.0);
+    this._Right = Companion_getInstance_42().invoke_ngl742_k$(1.0, 0.0);
   }
-  Companion_43.prototype.invoke_0_k$ = function () {
+  Companion_44.prototype.invoke_0_k$ = function () {
     return new Point(0.0, 0.0);
   };
-  Companion_43.prototype.compare_i6u10_k$ = function (lx, ly, rx, ry) {
+  Companion_44.prototype.compare_i6u10_k$ = function (lx, ly, rx, ry) {
     var ret = compareTo(ly, ry);
     return ret === 0 ? compareTo(lx, rx) : ret;
   };
-  Companion_43.prototype.distance_i6u10_k$ = function (x1, y1, x2, y2) {
+  Companion_44.prototype.distance_i6u10_k$ = function (x1, y1, x2, y2) {
     var tmp$ret$0;
     $l$block: {
       var tmp0_hypot_0 = x1 - x2;
@@ -31855,19 +34478,19 @@
     }
     return tmp$ret$0;
   };
-  Companion_43.$metadata$ = {
+  Companion_44.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_42;
-  function Companion_getInstance_42() {
-    if (Companion_instance_42 == null)
-      new Companion_43();
-    return Companion_instance_42;
+  var Companion_instance_43;
+  function Companion_getInstance_43() {
+    if (Companion_instance_43 == null)
+      new Companion_44();
+    return Companion_instance_43;
   }
   function Point(x, y) {
-    Companion_getInstance_42();
+    Companion_getInstance_43();
     this._x = x;
     this._y = y;
   }
@@ -31878,7 +34501,7 @@
     return this._y;
   };
   Point.prototype.compareTo_jr2uc6_k$ = function (other) {
-    return Companion_getInstance_42().compare_i6u10_k$(this._x, this._y, other._get_x__0_k$(), other._get_y__0_k$());
+    return Companion_getInstance_43().compare_i6u10_k$(this._x, this._y, other._get_x__0_k$(), other._get_y__0_k$());
   };
   Point.prototype.compareTo_2c5_k$ = function (other) {
     return this.compareTo_jr2uc6_k$((!(other == null) ? isInterface(other, IPoint_0) : false) ? other : THROW_CCE());
@@ -31933,22 +34556,22 @@
   function PointArrayList_init_$Create$(capacity, $mask0, $marker) {
     return PointArrayList_init_$Init$(capacity, $mask0, $marker, Object.create(PointArrayList.prototype));
   }
-  function Companion_44() {
-    Companion_instance_43 = this;
+  function Companion_45() {
+    Companion_instance_44 = this;
   }
-  Companion_44.$metadata$ = {
+  Companion_45.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_43;
-  function Companion_getInstance_43() {
-    if (Companion_instance_43 == null)
-      new Companion_44();
-    return Companion_instance_43;
+  var Companion_instance_44;
+  function Companion_getInstance_44() {
+    if (Companion_instance_44 == null)
+      new Companion_45();
+    return Companion_instance_44;
   }
   function PointArrayList(capacity) {
-    Companion_getInstance_43();
+    Companion_getInstance_44();
     this._xList = new DoubleArrayList(capacity);
     this._yList = new DoubleArrayList(capacity);
   }
@@ -32030,31 +34653,31 @@
     kind: 'interface',
     interfaces: []
   };
-  function Companion_45() {
-    Companion_instance_44 = this;
+  function Companion_46() {
+    Companion_instance_45 = this;
   }
-  Companion_45.prototype.invoke_0_k$ = function () {
+  Companion_46.prototype.invoke_0_k$ = function () {
     return new Rectangle(0.0, 0.0, 0.0, 0.0);
   };
-  Companion_45.prototype.invoke_w0xdj4_k$ = function (x, y, width, height) {
+  Companion_46.prototype.invoke_w0xdj4_k$ = function (x, y, width, height) {
     return new Rectangle(x, y, width, height);
   };
-  Companion_45.prototype.fromBounds_i6u10_k$ = function (left, top, right, bottom) {
-    return Companion_getInstance_44().invoke_0_k$().setBounds_i6u10_k$(left, top, right, bottom);
+  Companion_46.prototype.fromBounds_i6u10_k$ = function (left, top, right, bottom) {
+    return Companion_getInstance_45().invoke_0_k$().setBounds_i6u10_k$(left, top, right, bottom);
   };
-  Companion_45.$metadata$ = {
+  Companion_46.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_44;
-  function Companion_getInstance_44() {
-    if (Companion_instance_44 == null)
-      new Companion_45();
-    return Companion_instance_44;
+  var Companion_instance_45;
+  function Companion_getInstance_45() {
+    if (Companion_instance_45 == null)
+      new Companion_46();
+    return Companion_instance_45;
   }
   function Rectangle(x, y, width, height) {
-    Companion_getInstance_44();
+    Companion_getInstance_45();
     this._x_0 = x;
     this._y_0 = y;
     this._width = width;
@@ -32086,7 +34709,7 @@
     return '' + 'Rectangle(x=' + _get_niceStr__0(this._x_0) + ', y=' + _get_niceStr__0(this._y_0) + ', width=' + _get_niceStr__0(this._width) + ', height=' + _get_niceStr__0(this._height) + ')';
   };
   Rectangle.prototype.toInt_t4v1qq_k$ = function () {
-    return Companion_getInstance_45().invoke_x6iaui_k$(this._x_0, this._y_0, this._width, this._height);
+    return Companion_getInstance_46().invoke_x6iaui_k$(this._x_0, this._y_0, this._width, this._height);
   };
   Rectangle.prototype.hashCode = function () {
     var result = getNumberHashCode(this._x_0);
@@ -32155,25 +34778,25 @@
   function _RectangleInt___get_bottom__impl_(this_0) {
     return numberToInt(_RectangleInt___get_rect__impl_(this_0)._get_bottom__0_k$());
   }
-  function Companion_46() {
-    Companion_instance_45 = this;
+  function Companion_47() {
+    Companion_instance_46 = this;
   }
-  Companion_46.prototype.invoke_ihmn6a_k$ = function (x, y, width, height) {
-    return _RectangleInt___init__impl_(Companion_getInstance_44().invoke_w0xdj4_k$(x, y, width, height));
+  Companion_47.prototype.invoke_ihmn6a_k$ = function (x, y, width, height) {
+    return _RectangleInt___init__impl_(Companion_getInstance_45().invoke_w0xdj4_k$(x, y, width, height));
   };
-  Companion_46.prototype.invoke_x6iaui_k$ = function (x, y, width, height) {
+  Companion_47.prototype.invoke_x6iaui_k$ = function (x, y, width, height) {
     return _RectangleInt___init__impl_(new Rectangle(x, y, width, height));
   };
-  Companion_46.$metadata$ = {
+  Companion_47.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_45;
-  function Companion_getInstance_45() {
-    if (Companion_instance_45 == null)
-      new Companion_46();
-    return Companion_instance_45;
+  var Companion_instance_46;
+  function Companion_getInstance_46() {
+    if (Companion_instance_46 == null)
+      new Companion_47();
+    return Companion_instance_46;
   }
   function RectangleInt__toString_impl(this_0) {
     return '' + 'Rectangle(x=' + _RectangleInt___get_x__impl_(this_0) + ', y=' + _RectangleInt___get_y__impl_(this_0) + ', width=' + _RectangleInt___get_width__impl_(this_0) + ', height=' + _RectangleInt___get_height__impl_(this_0) + ')';
@@ -32192,7 +34815,7 @@
     return true;
   }
   function RectangleInt(rect) {
-    Companion_getInstance_45();
+    Companion_getInstance_46();
     this._rect = rect;
   }
   RectangleInt.prototype.toString = function () {
@@ -32236,22 +34859,22 @@
   function _Size___get_p__impl_(this_0) {
     return this_0;
   }
-  function Companion_47() {
-    Companion_instance_46 = this;
+  function Companion_48() {
+    Companion_instance_47 = this;
   }
-  Companion_47.prototype.invoke_5hnyrx_k$ = function (width, height) {
+  Companion_48.prototype.invoke_5hnyrx_k$ = function (width, height) {
     return _Size___init__impl_(Point_init_$Create$_0(width, height));
   };
-  Companion_47.$metadata$ = {
+  Companion_48.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_46;
-  function Companion_getInstance_46() {
-    if (Companion_instance_46 == null)
-      new Companion_47();
-    return Companion_instance_46;
+  var Companion_instance_47;
+  function Companion_getInstance_47() {
+    if (Companion_instance_47 == null)
+      new Companion_48();
+    return Companion_instance_47;
   }
   function _Size___get_width__impl_(this_0) {
     return _Size___get_p__impl_(this_0)._x;
@@ -32276,7 +34899,7 @@
     return true;
   }
   function Size(p) {
-    Companion_getInstance_46();
+    Companion_getInstance_47();
     this._p = p;
   }
   Size.prototype.toString = function () {
@@ -32293,29 +34916,29 @@
     kind: 'class',
     interfaces: [MutableInterpolable, Interpolable, ISize, Sizeable]
   };
-  function _SizeInt___init__impl_(size) {
-    new Size(size);
-    return size;
+  function _SizeInt___init__impl_(size_0) {
+    new Size(size_0);
+    return size_0;
   }
   function _SizeInt___get_size__impl_(this_0) {
     return this_0;
   }
-  function Companion_48() {
-    Companion_instance_47 = this;
+  function Companion_49() {
+    Companion_instance_48 = this;
   }
-  Companion_48.prototype.invoke_aaxa64_k$ = function (x, y) {
-    return _SizeInt___init__impl_(Companion_getInstance_46().invoke_5hnyrx_k$(x, y));
+  Companion_49.prototype.invoke_aaxa64_k$ = function (x, y) {
+    return _SizeInt___init__impl_(Companion_getInstance_47().invoke_5hnyrx_k$(x, y));
   };
-  Companion_48.$metadata$ = {
+  Companion_49.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_47;
-  function Companion_getInstance_47() {
-    if (Companion_instance_47 == null)
-      new Companion_48();
-    return Companion_instance_47;
+  var Companion_instance_48;
+  function Companion_getInstance_48() {
+    if (Companion_instance_48 == null)
+      new Companion_49();
+    return Companion_instance_48;
   }
   function _SizeInt___get_width__impl_(this_0) {
     return numberToInt(_Size___get_width__impl_(_SizeInt___get_size__impl_(this_0)));
@@ -32334,23 +34957,23 @@
       return false;
     else {
     }
-    var tmp0_other_with_cast = other instanceof SizeInt ? other._size_3 : THROW_CCE();
+    var tmp0_other_with_cast = other instanceof SizeInt ? other._size_2 : THROW_CCE();
     if (!equals_1(new Size(this_0), new Size(tmp0_other_with_cast)))
       return false;
     return true;
   }
-  function SizeInt(size) {
-    Companion_getInstance_47();
-    this._size_3 = size;
+  function SizeInt(size_0) {
+    Companion_getInstance_48();
+    this._size_2 = size_0;
   }
   SizeInt.prototype.toString = function () {
-    return SizeInt__toString_impl(this._size_3);
+    return SizeInt__toString_impl(this._size_2);
   };
   SizeInt.prototype.hashCode = function () {
-    return SizeInt__hashCode_impl(this._size_3);
+    return SizeInt__hashCode_impl(this._size_2);
   };
   SizeInt.prototype.equals = function (other) {
-    return SizeInt__equals_impl(this._size_3, other);
+    return SizeInt__equals_impl(this._size_2, other);
   };
   SizeInt.$metadata$ = {
     simpleName: 'SizeInt',
@@ -32364,22 +34987,22 @@
     kind: 'interface',
     interfaces: []
   };
-  function Companion_49() {
-    Companion_instance_48 = this;
+  function Companion_50() {
+    Companion_instance_49 = this;
   }
-  Companion_49.$metadata$ = {
+  Companion_50.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_48;
-  function Companion_getInstance_48() {
-    if (Companion_instance_48 == null)
-      new Companion_49();
-    return Companion_instance_48;
+  var Companion_instance_49;
+  function Companion_getInstance_49() {
+    if (Companion_instance_49 == null)
+      new Companion_50();
+    return Companion_instance_49;
   }
   function Vector3D() {
-    Companion_getInstance_48();
+    Companion_getInstance_49();
     var tmp = this;
     var tmp$ret$0;
     $l$block: {
@@ -32436,7 +35059,7 @@
     return tmp;
   };
   Vector3D.prototype.hashCode = function () {
-    return contentHashCode(this._data_6);
+    return contentHashCode_0(this._data_6);
   };
   Vector3D.prototype.toString = function () {
     return this._get_w__0_k$() === 1.0 ? '' + '(' + _get_niceStr__1(this._get_x__0_k$()) + ', ' + _get_niceStr__1(this._get_y__0_k$()) + ', ' + _get_niceStr__1(this._get_z__0_k$()) + ')' : '' + '(' + _get_niceStr__1(this._get_x__0_k$()) + ', ' + _get_niceStr__1(this._get_y__0_k$()) + ', ' + _get_niceStr__1(this._get_z__0_k$()) + ', ' + _get_niceStr__1(this._get_w__0_k$()) + ')';
@@ -32450,30 +35073,16 @@
     this._tvalues = new Float64Array(6);
     this._xvalues = new Float64Array(8);
     this._yvalues = new Float64Array(8);
-    this._tpoint0 = Companion_getInstance_42().invoke_0_k$();
-    this._tpoint1 = Companion_getInstance_42().invoke_0_k$();
-    this._tpoint2 = Companion_getInstance_42().invoke_0_k$();
-    this._tpoint3 = Companion_getInstance_42().invoke_0_k$();
+    this._tpoint0 = Companion_getInstance_43().invoke_0_k$();
+    this._tpoint1 = Companion_getInstance_43().invoke_0_k$();
+    this._tpoint2 = Companion_getInstance_43().invoke_0_k$();
+    this._tpoint3 = Companion_getInstance_43().invoke_0_k$();
   }
   Temp.$metadata$ = {
     simpleName: 'Temp',
     kind: 'class',
     interfaces: []
   };
-  function Companion_50() {
-    Companion_instance_49 = this;
-  }
-  Companion_50.$metadata$ = {
-    simpleName: 'Companion',
-    kind: 'object',
-    interfaces: []
-  };
-  var Companion_instance_49;
-  function Companion_getInstance_49() {
-    if (Companion_instance_49 == null)
-      new Companion_50();
-    return Companion_instance_49;
-  }
   function Companion_51() {
     Companion_instance_50 = this;
   }
@@ -32488,8 +35097,22 @@
       new Companion_51();
     return Companion_instance_50;
   }
+  function Companion_52() {
+    Companion_instance_51 = this;
+  }
+  Companion_52.$metadata$ = {
+    simpleName: 'Companion',
+    kind: 'object',
+    interfaces: []
+  };
+  var Companion_instance_51;
+  function Companion_getInstance_51() {
+    if (Companion_instance_51 == null)
+      new Companion_52();
+    return Companion_instance_51;
+  }
   function Edge() {
-    Companion_getInstance_50();
+    Companion_getInstance_51();
     this._ax = 0;
     this._ay = 0;
     this._bx = 0;
@@ -32551,29 +35174,29 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__147() {
+  function _no_name_provided__160() {
   }
-  _no_name_provided__147.prototype.invoke_xf6auj_k$ = function (it) {
+  _no_name_provided__160.prototype.invoke_xf6auj_k$ = function (it) {
     it.clear_0_k$();
     Unit_getInstance();
   };
-  _no_name_provided__147.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__160.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_xf6auj_k$(p1 instanceof Bucket ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__147.$metadata$ = {
+  _no_name_provided__160.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__148() {
+  function _no_name_provided__161() {
   }
-  _no_name_provided__148.prototype.invoke_ha5a7z_k$ = function (it) {
+  _no_name_provided__161.prototype.invoke_ha5a7z_k$ = function (it) {
     return new Bucket();
   };
-  _no_name_provided__148.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__161.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_ha5a7z_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__148.$metadata$ = {
+  _no_name_provided__161.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -32680,16 +35303,16 @@
   };
   function AllBuckets() {
     var tmp = this;
-    var tmp_0 = _no_name_provided_$factory_121();
-    tmp._pool_0 = Pool_init_$Create$(tmp_0, 0, _no_name_provided_$factory_122(), 2, null);
+    var tmp_0 = _no_name_provided_$factory_133();
+    tmp._pool_0 = Pool_init_$Create$(tmp_0, 0, _no_name_provided_$factory_134(), 2, null);
     var tmp_1 = this;
-    Companion_getInstance_51();
+    Companion_getInstance_52();
     tmp_1._small = new Buckets(this._pool_0, 80);
     var tmp_2 = this;
-    Companion_getInstance_51();
+    Companion_getInstance_52();
     tmp_2._medium = new Buckets(this._pool_0, 320);
     var tmp_3 = this;
-    Companion_getInstance_51();
+    Companion_getInstance_52();
     tmp_3._big = new Buckets(this._pool_0, 1280);
   }
   AllBuckets.prototype.add_ekpeoo_k$ = function (edge) {
@@ -32739,15 +35362,15 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__149() {
+  function _no_name_provided__162() {
   }
-  _no_name_provided__149.prototype.invoke_ha5a7z_k$ = function (it) {
+  _no_name_provided__162.prototype.invoke_ha5a7z_k$ = function (it) {
     return new Edge();
   };
-  _no_name_provided__149.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__162.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_ha5a7z_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__149.$metadata$ = {
+  _no_name_provided__162.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -32757,7 +35380,7 @@
     this._winding = Winding_NON_ZERO_getInstance();
     this._boundsBuilder = new BoundsBuilder();
     var tmp = this;
-    tmp._edgesPool = Pool_init_$Create$_1(0, _no_name_provided_$factory_120(), 1, null);
+    tmp._edgesPool = Pool_init_$Create$_1(0, _no_name_provided_$factory_132(), 1, null);
     this._edges_0 = FastArrayList_init_$Create$();
     this._buckets_0 = new AllBuckets();
     this._closed = true;
@@ -32892,7 +35515,7 @@
                     var tmp8_11_12_32 = n_1_7;
                     n_1_7 = tmp8_11_12_32 + 1 | 0;
                     var tmp9__anonymous__24_31 = path._data_7.get_ha5a7z_k$(tmp8_11_12_32);
-                    var sum_25_33 = Companion_getInstance_42().distance_i6u10_k$(lx_5._v, ly_6._v, tmp6__anonymous__24_25, tmp7__anonymous__24_27) + Companion_getInstance_42().distance_i6u10_k$(tmp6__anonymous__24_25, tmp7__anonymous__24_27, tmp8__anonymous__24_29, tmp9__anonymous__24_31);
+                    var sum_25_33 = Companion_getInstance_43().distance_i6u10_k$(lx_5._v, ly_6._v, tmp6__anonymous__24_25, tmp7__anonymous__24_27) + Companion_getInstance_43().distance_i6u10_k$(tmp6__anonymous__24_25, tmp7__anonymous__24_27, tmp8__anonymous__24_29, tmp9__anonymous__24_31);
                     {
                       var tmp0_approximateCurve_0_26_34 = numberToInt(sum_25_33);
                       var tmp$ret$5;
@@ -32910,7 +35533,7 @@
                       {
                         var tmp$ret$6;
                         $l$block_5: {
-                          var tmp0_quadCalc_0_16_34_42 = Companion_getInstance_49();
+                          var tmp0_quadCalc_0_16_34_42 = Companion_getInstance_50();
                           var tmp1_quadCalc_0_17_35_43 = lx_5._v;
                           var tmp2_quadCalc_0_18_36_44 = ly_6._v;
                           var t1_1_19_37_45 = 1.0;
@@ -32933,7 +35556,7 @@
                           {
                             var tmp$ret$8;
                             $l$block_7: {
-                              var tmp0_quadCalc_0_16_46_54 = Companion_getInstance_49();
+                              var tmp0_quadCalc_0_16_46_54 = Companion_getInstance_50();
                               var tmp1_quadCalc_0_17_47_55 = lx_5._v;
                               var tmp2_quadCalc_0_18_48_56 = ly_6._v;
                               var t1_1_19_49_57 = 1 - ratio_11_45_53;
@@ -33010,7 +35633,7 @@
                       var tmp14_17_18_76 = n_1_7;
                       n_1_7 = tmp14_17_18_76 + 1 | 0;
                       var tmp15__anonymous__57_75 = path._data_7.get_ha5a7z_k$(tmp14_17_18_76);
-                      var sum_58_77 = Companion_getInstance_42().distance_i6u10_k$(lx_5._v, ly_6._v, tmp10__anonymous__57_65, tmp11__anonymous__57_67) + Companion_getInstance_42().distance_i6u10_k$(tmp10__anonymous__57_65, tmp11__anonymous__57_67, tmp12__anonymous__57_69, tmp13__anonymous__57_71) + Companion_getInstance_42().distance_i6u10_k$(tmp12__anonymous__57_69, tmp13__anonymous__57_71, tmp14__anonymous__57_73, tmp15__anonymous__57_75);
+                      var sum_58_77 = Companion_getInstance_43().distance_i6u10_k$(lx_5._v, ly_6._v, tmp10__anonymous__57_65, tmp11__anonymous__57_67) + Companion_getInstance_43().distance_i6u10_k$(tmp10__anonymous__57_65, tmp11__anonymous__57_67, tmp12__anonymous__57_69, tmp13__anonymous__57_71) + Companion_getInstance_43().distance_i6u10_k$(tmp12__anonymous__57_69, tmp13__anonymous__57_71, tmp14__anonymous__57_73, tmp15__anonymous__57_75);
                       {
                         var tmp0_approximateCurve_0_59_78 = numberToInt(sum_58_77);
                         var tmp$ret$12;
@@ -33028,7 +35651,7 @@
                         {
                           var tmp$ret$13;
                           $l$block_12: {
-                            var tmp0_cubicCalc_0_16_67_86 = Companion_getInstance_49();
+                            var tmp0_cubicCalc_0_16_67_86 = Companion_getInstance_50();
                             var tmp1_cubicCalc_0_17_68_87 = lx_5._v;
                             var tmp2_cubicCalc_0_18_69_88 = ly_6._v;
                             var cx_1_19_70_89 = 3.0 * (tmp10__anonymous__57_65 - tmp1_cubicCalc_0_17_68_87);
@@ -33055,7 +35678,7 @@
                             {
                               var tmp$ret$15;
                               $l$block_14: {
-                                var tmp0_cubicCalc_0_16_83_102 = Companion_getInstance_49();
+                                var tmp0_cubicCalc_0_16_83_102 = Companion_getInstance_50();
                                 var tmp1_cubicCalc_0_17_84_103 = lx_5._v;
                                 var tmp2_cubicCalc_0_18_85_104 = ly_6._v;
                                 var cx_1_19_86_105 = 3.0 * (tmp10__anonymous__57_65 - tmp1_cubicCalc_0_17_84_103);
@@ -33158,34 +35781,34 @@
     kind: 'class',
     interfaces: []
   };
-  function Companion_52() {
-    Companion_instance_51 = this;
+  function Companion_53() {
+    Companion_instance_52 = this;
     this._RAST_FIXED_SCALE = 20;
     this._RAST_FIXED_SCALE_HALF = 0;
     this._RAST_SMALL_BUCKET_SIZE = 80;
     this._RAST_MEDIUM_BUCKET_SIZE = 320;
     this._RAST_BIG_BUCKET_SIZE = 1280;
   }
-  Companion_52.$metadata$ = {
+  Companion_53.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_51;
-  function Companion_getInstance_51() {
-    if (Companion_instance_51 == null)
-      new Companion_52();
-    return Companion_instance_51;
+  var Companion_instance_52;
+  function Companion_getInstance_52() {
+    if (Companion_instance_52 == null)
+      new Companion_53();
+    return Companion_instance_52;
   }
   function RastScale() {
-    Companion_getInstance_51();
+    Companion_getInstance_52();
   }
   RastScale.prototype._get_sscale__0_k$ = function () {
-    Companion_getInstance_51();
+    Companion_getInstance_52();
     return 20;
   };
   RastScale.prototype._get_hscale__0_k$ = function () {
-    Companion_getInstance_51();
+    Companion_getInstance_52();
     return 0;
   };
   RastScale.prototype._get_s__xaho5p_k$ = function (_this__0) {
@@ -33196,21 +35819,21 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_120() {
-    var i = new _no_name_provided__149();
+  function _no_name_provided_$factory_132() {
+    var i = new _no_name_provided__162();
     return function (p1) {
       return i.invoke_ha5a7z_k$(p1);
     };
   }
-  function _no_name_provided_$factory_121() {
-    var i = new _no_name_provided__147();
+  function _no_name_provided_$factory_133() {
+    var i = new _no_name_provided__160();
     return function (p1) {
       i.invoke_xf6auj_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_122() {
-    var i = new _no_name_provided__148();
+  function _no_name_provided_$factory_134() {
+    var i = new _no_name_provided__161();
     return function (p1) {
       return i.invoke_ha5a7z_k$(p1);
     };
@@ -33248,21 +35871,21 @@
   }
   var tempMatrix;
   var identityMatrix;
-  function Companion_53() {
-    Companion_instance_52 = this;
+  function Companion_54() {
+    Companion_instance_53 = this;
     var tmp = this;
     tmp._identityMatrix = Matrix_init_$Create$(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 63, null);
   }
-  Companion_53.$metadata$ = {
+  Companion_54.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_52;
-  function Companion_getInstance_52() {
-    if (Companion_instance_52 == null)
-      new Companion_53();
-    return Companion_instance_52;
+  var Companion_instance_53;
+  function Companion_getInstance_53() {
+    if (Companion_instance_53 == null)
+      new Companion_54();
+    return Companion_instance_53;
   }
   function ensureMoveTo($this, x, y) {
     if (isEmpty($this))
@@ -33287,30 +35910,30 @@
       new Command();
     return Command_instance;
   }
-  function _no_name_provided__150(this$0) {
-    this._this$0_17 = this$0;
+  function _no_name_provided__163(this$0) {
+    this._this$0_27 = this$0;
   }
-  _no_name_provided__150.prototype.invoke_0_k$ = function () {
+  _no_name_provided__163.prototype.invoke_0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_also_0 = new PolygonScanline();
       {
       }
       {
-        tmp0_also_0.add_qvfozx_k$(this._this$0_17);
-        tmp0_also_0._version = this._this$0_17._version_0;
+        tmp0_also_0.add_qvfozx_k$(this._this$0_27);
+        tmp0_also_0._version = this._this$0_27._version_0;
       }
       tmp$ret$0 = tmp0_also_0;
       break $l$block;
     }
     return tmp$ret$0;
   };
-  _no_name_provided__150.$metadata$ = {
+  _no_name_provided__163.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function VectorPath(commands, data, winding) {
-    Companion_getInstance_52();
+    Companion_getInstance_53();
     this._commands = commands;
     this._data_7 = data;
     this._winding_0 = winding;
@@ -33319,7 +35942,7 @@
     this._lastY_0 = 0.0;
     this._bezierTemp = new Temp();
     var tmp = this;
-    tmp._scanline$delegate = lazy(_no_name_provided_$factory_123(this));
+    tmp._scanline$delegate = lazy(_no_name_provided_$factory_135(this));
   }
   VectorPath.prototype._get_commands__0_k$ = function () {
     return this._commands;
@@ -33549,8 +36172,8 @@
     kind: 'class',
     interfaces: [VectorBuilder]
   };
-  function _no_name_provided_$factory_123(this$0) {
-    var i = new _no_name_provided__150(this$0);
+  function _no_name_provided_$factory_135(this$0) {
+    var i = new _no_name_provided__163(this$0);
     return function () {
       return i.invoke_0_k$();
     };
@@ -33680,16 +36303,16 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__151(this$0) {
-    this._this$0_18 = this$0;
+  function _no_name_provided__164(this$0) {
+    this._this$0_28 = this$0;
   }
-  _no_name_provided__151.prototype.invoke_wd8tzq_k$ = function () {
-    return Companion_getInstance_56().invoke_spsmd3_k$(imul(this._this$0_18._width_0, 2));
+  _no_name_provided__164.prototype.invoke_wd8tzq_k$ = function () {
+    return Companion_getInstance_57().invoke_spsmd3_k$(imul(this._this$0_28._width_0, 2));
   };
-  _no_name_provided__151.prototype.invoke_0_k$ = function () {
+  _no_name_provided__164.prototype.invoke_0_k$ = function () {
     return new RgbaArray(this.invoke_wd8tzq_k$());
   };
-  _no_name_provided__151.$metadata$ = {
+  _no_name_provided__164.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -33702,7 +36325,7 @@
     var tmp = this;
     tmp._$$delegate_0_3 = Mixin_init_$Create$(null, 1, null);
     var tmp_0 = this;
-    tmp_0._tempRgba$delegate = lazy(_no_name_provided_$factory_124(this));
+    tmp_0._tempRgba$delegate = lazy(_no_name_provided_$factory_136(this));
     this._contentVersion = 0;
     this._texture = null;
     this._mipmaps = false;
@@ -33825,15 +36448,15 @@
     kind: 'class',
     interfaces: [Sizeable, Extra]
   };
-  function _no_name_provided_$factory_124(this$0) {
-    var i = new _no_name_provided__151(this$0);
+  function _no_name_provided_$factory_136(this$0) {
+    var i = new _no_name_provided__164(this$0);
     return function () {
       return new RgbaArray(i.invoke_wd8tzq_k$());
     };
   }
   function Bitmap32_init_$Init$(width, height, data, premultiplied, $mask0, $marker, $this) {
     if (!(($mask0 & 4) === 0))
-      data = Companion_getInstance_56().invoke_spsmd3_k$(imul(width, height));
+      data = Companion_getInstance_57().invoke_spsmd3_k$(imul(width, height));
     if (!(($mask0 & 8) === 0))
       premultiplied = false;
     Bitmap32.call($this, width, height, data, premultiplied);
@@ -33842,36 +36465,36 @@
   function Bitmap32_init_$Create$(width, height, data, premultiplied, $mask0, $marker) {
     return Bitmap32_init_$Init$(width, height, data, premultiplied, $mask0, $marker, Object.create(Bitmap32.prototype));
   }
-  function Companion_54() {
-    Companion_instance_53 = this;
+  function Companion_55() {
+    Companion_instance_54 = this;
   }
-  Companion_54.$metadata$ = {
+  Companion_55.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_53;
-  function Companion_getInstance_53() {
-    if (Companion_instance_53 == null)
-      new Companion_54();
-    return Companion_instance_53;
+  var Companion_instance_54;
+  function Companion_getInstance_54() {
+    if (Companion_instance_54 == null)
+      new Companion_55();
+    return Companion_instance_54;
   }
   function Bitmap32(width, height, data, premultiplied) {
-    Companion_getInstance_53();
+    Companion_getInstance_54();
     Bitmap.call(this, width, height, 32, premultiplied, new RgbaArray(data));
     this._data_8 = data;
     this._dataPremult = _RgbaPremultipliedArray___init__impl_(_RgbaArray___get_ints__impl_(this._data_8));
     if (_RgbaArray___get_size__impl_(this._data_8) < imul(width, height))
       throw RuntimeException_init_$Create$('' + 'Bitmap data is too short: width=' + width + ', height=' + height + ', data=ByteArray(' + _RgbaArray___get_size__impl_(this._data_8) + '), area=' + imul(width, height));
     var tmp = this;
-    var tmp_0 = Companion_getInstance_56();
+    var tmp_0 = Companion_getInstance_57();
     var tmp$ret$0;
     $l$block: {
       tmp$ret$0 = Math.max(width, height);
       break $l$block;
     }
     tmp._temp_0 = tmp_0.invoke_spsmd3_k$(tmp$ret$0);
-    this._bounds = new RectangleInt(Companion_getInstance_45().invoke_ihmn6a_k$(0, 0, width, height));
+    this._bounds = new RectangleInt(Companion_getInstance_46().invoke_ihmn6a_k$(0, 0, width, height));
   }
   Bitmap32.prototype.set_5mmwyp_k$ = function (x, y, color) {
     RgbaArray__set_impl(this._data_8, this.index_27zxwg_k$(x, y), color);
@@ -34136,29 +36759,29 @@
     if (!(($mask0 & 4) === 0))
       data = new Int8Array(imul(width, height));
     if (!(($mask0 & 8) === 0))
-      palette = Companion_getInstance_56().invoke_spsmd3_k$(256);
+      palette = Companion_getInstance_57().invoke_spsmd3_k$(256);
     Bitmap8.call($this, width, height, data, palette);
     return $this;
   }
   function Bitmap8_init_$Create$(width, height, data, palette, $mask0, $marker) {
     return Bitmap8_init_$Init$(width, height, data, palette, $mask0, $marker, Object.create(Bitmap8.prototype));
   }
-  function Companion_55() {
-    Companion_instance_54 = this;
+  function Companion_56() {
+    Companion_instance_55 = this;
   }
-  Companion_55.$metadata$ = {
+  Companion_56.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_54;
-  function Companion_getInstance_54() {
-    if (Companion_instance_54 == null)
-      new Companion_55();
-    return Companion_instance_54;
+  var Companion_instance_55;
+  function Companion_getInstance_55() {
+    if (Companion_instance_55 == null)
+      new Companion_56();
+    return Companion_instance_55;
   }
   function Bitmap8(width, height, data, palette) {
-    Companion_getInstance_54();
+    Companion_getInstance_55();
     BitmapIndexed.call(this, 8, width, height, data, palette);
   }
   Bitmap8.prototype.setInt_zd700_k$ = function (x, y, color) {
@@ -34339,7 +36962,7 @@
     tmp._$$delegate_0_4 = Mixin_init_$Create$(null, 1, null);
   }
   BitmapSlice.prototype.toString = function () {
-    return '' + 'BitmapSlice(' + this._get_name__0_k$() + ':' + new SizeInt(Companion_getInstance_47().invoke_aaxa64_k$(_RectangleInt___get_width__impl_(this._get_bounds__t4v1qq_k$()), _RectangleInt___get_height__impl_(this._get_bounds__t4v1qq_k$()))) + ')';
+    return '' + 'BitmapSlice(' + this._get_name__0_k$() + ':' + new SizeInt(Companion_getInstance_48().invoke_aaxa64_k$(_RectangleInt___get_width__impl_(this._get_bounds__t4v1qq_k$()), _RectangleInt___get_height__impl_(this._get_bounds__t4v1qq_k$()))) + ')';
   };
   BitmapSlice.$metadata$ = {
     simpleName: 'BitmapSlice',
@@ -34351,7 +36974,7 @@
   }
   function slice$default(_this_, bounds, name, $mask0, $handler) {
     if (!(($mask0 & 1) === 0))
-      bounds = Companion_getInstance_45().invoke_ihmn6a_k$(0, 0, _this_._width_0, _this_._height_0);
+      bounds = Companion_getInstance_46().invoke_ihmn6a_k$(0, 0, _this_._width_0, _this_._height_0);
     if (!(($mask0 & 2) === 0))
       name = null;
     return slice(_this_, bounds, name);
@@ -34497,7 +37120,7 @@
   function Bitmaps_white$init$() {
     var tmp$ret$2;
     $l$block_1: {
-      var tmp1_invoke_0 = Companion_getInstance_56();
+      var tmp1_invoke_0 = Companion_getInstance_57();
       var tmp$ret$1;
       $l$block_0: {
         var tmp0_apply_0 = _RgbaArray___init__impl_(new Int32Array(1));
@@ -34614,16 +37237,16 @@
     kind: 'interface',
     interfaces: []
   };
-  function decode(_this_, data, dataOffset, out, outOffset, size, littleEndian) {
+  function decode(_this_, data, dataOffset, out, outOffset, size_0, littleEndian) {
     var tmp0_subject = _this_._get_bpp__0_k$();
     var tmp;
     switch (tmp0_subject) {
       case 16:
         var tmp_0;
         if (littleEndian) {
-          tmp_0 = _no_name_provided_$factory_125();
+          tmp_0 = _no_name_provided_$factory_137();
         } else {
-          tmp_0 = _no_name_provided_$factory_126();
+          tmp_0 = _no_name_provided_$factory_138();
         }
 
         tmp = tmp_0;
@@ -34631,9 +37254,9 @@
       case 24:
         var tmp_1;
         if (littleEndian) {
-          tmp_1 = _no_name_provided_$factory_127();
+          tmp_1 = _no_name_provided_$factory_139();
         } else {
-          tmp_1 = _no_name_provided_$factory_128();
+          tmp_1 = _no_name_provided_$factory_140();
         }
 
         tmp = tmp_1;
@@ -34641,9 +37264,9 @@
       case 32:
         var tmp_2;
         if (littleEndian) {
-          tmp_2 = _no_name_provided_$factory_129();
+          tmp_2 = _no_name_provided_$factory_141();
         } else {
-          tmp_2 = _no_name_provided_$factory_130();
+          tmp_2 = _no_name_provided_$factory_142();
         }
 
         tmp = tmp_2;
@@ -34658,7 +37281,7 @@
       var outdata_4 = out;
       var Bpp_5 = numberToInt(bytesPerPixel_3);
       var inductionVariable = 0;
-      if (inductionVariable < size)
+      if (inductionVariable < size_0)
         do {
           var n_7 = inductionVariable;
           inductionVariable = inductionVariable + 1 | 0;
@@ -34666,30 +37289,30 @@
           io_1 = io_1 + Bpp_5 | 0;
           var tmp1_9 = oo_2;
           oo_2 = tmp1_9 + 1 | 0;
-          RgbaArray__set_impl(outdata_4, tmp1_9, Companion_getInstance_57().invoke_fnl2i9_k$(_this_.getR_ha5a7z_k$(c_8), _this_.getG_ha5a7z_k$(c_8), _this_.getB_ha5a7z_k$(c_8), _this_.getA_ha5a7z_k$(c_8)));
+          RgbaArray__set_impl(outdata_4, tmp1_9, Companion_getInstance_58().invoke_fnl2i9_k$(_this_.getR_ha5a7z_k$(c_8), _this_.getG_ha5a7z_k$(c_8), _this_.getB_ha5a7z_k$(c_8), _this_.getA_ha5a7z_k$(c_8)));
         }
-         while (inductionVariable < size);
+         while (inductionVariable < size_0);
     }
   }
-  function decode$default(_this_, data, dataOffset, out, outOffset, size, littleEndian, $mask0, $handler) {
+  function decode$default(_this_, data, dataOffset, out, outOffset, size_0, littleEndian, $mask0, $handler) {
     if (!(($mask0 & 32) === 0))
       littleEndian = true;
-    return decode(_this_, data, dataOffset, out, outOffset, size, littleEndian);
+    return decode(_this_, data, dataOffset, out, outOffset, size_0, littleEndian);
   }
-  function encode_0(_this_, colors, colorsOffset, size, littleEndian) {
-    var out = new Int8Array(numberToInt(size * _get_bytesPerPixel_(_this_)));
-    encode_1(_this_, colors, colorsOffset, out, 0, size, littleEndian);
+  function encode_0(_this_, colors, colorsOffset, size_0, littleEndian) {
+    var out = new Int8Array(numberToInt(size_0 * _get_bytesPerPixel_(_this_)));
+    encode_1(_this_, colors, colorsOffset, out, 0, size_0, littleEndian);
     return out;
   }
   function _get_bytesPerPixel_(_this_) {
     return _this_._get_bpp__0_k$() / 8;
   }
-  function encode_1(_this_, colors, colorsOffset, out, outOffset, size, littleEndian) {
+  function encode_1(_this_, colors, colorsOffset, out, outOffset, size_0, littleEndian) {
     var io = colorsOffset;
     var oo = outOffset;
     var Bpp = numberToInt(_get_bytesPerPixel_(_this_));
     var inductionVariable = 0;
-    if (inductionVariable < size)
+    if (inductionVariable < size_0)
       do {
         var n = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
@@ -34721,7 +37344,7 @@
         }
         oo = oo + Bpp | 0;
       }
-       while (inductionVariable < size);
+       while (inductionVariable < size_0);
   }
   function ColorFormat24() {
     this._bpp_2 = 24;
@@ -34734,144 +37357,144 @@
     kind: 'class',
     interfaces: [ColorFormat]
   };
-  function _no_name_provided__152() {
+  function _no_name_provided__165() {
   }
-  _no_name_provided__152.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
+  _no_name_provided__165.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
     return readU16LE(p0, p1);
   };
-  _no_name_provided__152.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__165.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? isByteArray(p1) : false) ? p1 : THROW_CCE();
     return this.invoke_kqg9r2_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__152.prototype._get_name__0_k$ = function () {
+  _no_name_provided__165.prototype._get_name__0_k$ = function () {
     return 'readU16LE';
   };
-  _no_name_provided__152.$metadata$ = {
+  _no_name_provided__165.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__153() {
+  function _no_name_provided__166() {
   }
-  _no_name_provided__153.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
+  _no_name_provided__166.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
     return readU16BE(p0, p1);
   };
-  _no_name_provided__153.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__166.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? isByteArray(p1) : false) ? p1 : THROW_CCE();
     return this.invoke_kqg9r2_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__153.prototype._get_name__0_k$ = function () {
+  _no_name_provided__166.prototype._get_name__0_k$ = function () {
     return 'readU16BE';
   };
-  _no_name_provided__153.$metadata$ = {
+  _no_name_provided__166.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__154() {
+  function _no_name_provided__167() {
   }
-  _no_name_provided__154.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
+  _no_name_provided__167.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
     return readU24LE(p0, p1);
   };
-  _no_name_provided__154.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__167.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? isByteArray(p1) : false) ? p1 : THROW_CCE();
     return this.invoke_kqg9r2_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__154.prototype._get_name__0_k$ = function () {
+  _no_name_provided__167.prototype._get_name__0_k$ = function () {
     return 'readU24LE';
   };
-  _no_name_provided__154.$metadata$ = {
+  _no_name_provided__167.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__155() {
+  function _no_name_provided__168() {
   }
-  _no_name_provided__155.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
+  _no_name_provided__168.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
     return readU24BE(p0, p1);
   };
-  _no_name_provided__155.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__168.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? isByteArray(p1) : false) ? p1 : THROW_CCE();
     return this.invoke_kqg9r2_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__155.prototype._get_name__0_k$ = function () {
+  _no_name_provided__168.prototype._get_name__0_k$ = function () {
     return 'readU24BE';
   };
-  _no_name_provided__155.$metadata$ = {
+  _no_name_provided__168.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__156() {
+  function _no_name_provided__169() {
   }
-  _no_name_provided__156.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
+  _no_name_provided__169.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
     return readS32LE(p0, p1);
   };
-  _no_name_provided__156.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__169.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? isByteArray(p1) : false) ? p1 : THROW_CCE();
     return this.invoke_kqg9r2_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__156.prototype._get_name__0_k$ = function () {
+  _no_name_provided__169.prototype._get_name__0_k$ = function () {
     return 'readS32LE';
   };
-  _no_name_provided__156.$metadata$ = {
+  _no_name_provided__169.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__157() {
+  function _no_name_provided__170() {
   }
-  _no_name_provided__157.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
+  _no_name_provided__170.prototype.invoke_kqg9r2_k$ = function (p0, p1) {
     return readS32BE(p0, p1);
   };
-  _no_name_provided__157.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__170.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? isByteArray(p1) : false) ? p1 : THROW_CCE();
     return this.invoke_kqg9r2_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__157.prototype._get_name__0_k$ = function () {
+  _no_name_provided__170.prototype._get_name__0_k$ = function () {
     return 'readS32BE';
   };
-  _no_name_provided__157.$metadata$ = {
+  _no_name_provided__170.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_125() {
-    var i = new _no_name_provided__152();
+  function _no_name_provided_$factory_137() {
+    var i = new _no_name_provided__165();
     var l = function (p1, p2) {
       return i.invoke_kqg9r2_k$(p1, p2);
     };
     l.callableName = i._get_name__0_k$();
     return l;
   }
-  function _no_name_provided_$factory_126() {
-    var i = new _no_name_provided__153();
+  function _no_name_provided_$factory_138() {
+    var i = new _no_name_provided__166();
     var l = function (p1, p2) {
       return i.invoke_kqg9r2_k$(p1, p2);
     };
     l.callableName = i._get_name__0_k$();
     return l;
   }
-  function _no_name_provided_$factory_127() {
-    var i = new _no_name_provided__154();
+  function _no_name_provided_$factory_139() {
+    var i = new _no_name_provided__167();
     var l = function (p1, p2) {
       return i.invoke_kqg9r2_k$(p1, p2);
     };
     l.callableName = i._get_name__0_k$();
     return l;
   }
-  function _no_name_provided_$factory_128() {
-    var i = new _no_name_provided__155();
+  function _no_name_provided_$factory_140() {
+    var i = new _no_name_provided__168();
     var l = function (p1, p2) {
       return i.invoke_kqg9r2_k$(p1, p2);
     };
     l.callableName = i._get_name__0_k$();
     return l;
   }
-  function _no_name_provided_$factory_129() {
-    var i = new _no_name_provided__156();
+  function _no_name_provided_$factory_141() {
+    var i = new _no_name_provided__169();
     var l = function (p1, p2) {
       return i.invoke_kqg9r2_k$(p1, p2);
     };
     l.callableName = i._get_name__0_k$();
     return l;
   }
-  function _no_name_provided_$factory_130() {
-    var i = new _no_name_provided__157();
+  function _no_name_provided_$factory_142() {
+    var i = new _no_name_provided__170();
     var l = function (p1, p2) {
       return i.invoke_kqg9r2_k$(p1, p2);
     };
@@ -34884,153 +37507,153 @@
   }
   function Colors() {
     Colors_instance = this;
-    this._WHITE = Companion_getInstance_57().invoke_fnl2i9_k$(255, 255, 255, 255);
-    this._BLACK = Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 255);
-    this._RED = Companion_getInstance_57().invoke_fnl2i9_k$(255, 0, 0, 255);
-    this._GREEN = Companion_getInstance_57().invoke_fnl2i9_k$(0, 255, 0, 255);
-    this._BLUE = Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 255, 255);
-    this._TRANSPARENT_BLACK = Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 0);
-    this._TRANSPARENT_WHITE = Companion_getInstance_57().invoke_fnl2i9_k$(255, 255, 255, 0);
-    this._ALICEBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(240, 248, 255);
-    this._ANTIQUEWHITE = Companion_getInstance_57().invoke_6v5qfk_k$(250, 235, 215);
-    this._AQUA = Companion_getInstance_57().invoke_6v5qfk_k$(0, 255, 255);
-    this._AQUAMARINE = Companion_getInstance_57().invoke_6v5qfk_k$(127, 255, 212);
-    this._AZURE = Companion_getInstance_57().invoke_6v5qfk_k$(240, 255, 255);
-    this._BEIGE = Companion_getInstance_57().invoke_6v5qfk_k$(245, 245, 220);
-    this._BISQUE = Companion_getInstance_57().invoke_6v5qfk_k$(255, 228, 196);
-    this._BLANCHEDALMOND = Companion_getInstance_57().invoke_6v5qfk_k$(255, 235, 205);
-    this._BLUEVIOLET = Companion_getInstance_57().invoke_6v5qfk_k$(138, 43, 226);
-    this._BROWN = Companion_getInstance_57().invoke_6v5qfk_k$(165, 42, 42);
-    this._BURLYWOOD = Companion_getInstance_57().invoke_6v5qfk_k$(222, 184, 135);
-    this._CADETBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(95, 158, 160);
-    this._CHARTREUSE = Companion_getInstance_57().invoke_6v5qfk_k$(127, 255, 0);
-    this._CHOCOLATE = Companion_getInstance_57().invoke_6v5qfk_k$(210, 105, 30);
-    this._CORAL = Companion_getInstance_57().invoke_6v5qfk_k$(255, 127, 80);
-    this._CORNFLOWERBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(100, 149, 237);
-    this._CORNSILK = Companion_getInstance_57().invoke_6v5qfk_k$(255, 248, 220);
-    this._CRIMSON = Companion_getInstance_57().invoke_6v5qfk_k$(220, 20, 60);
-    this._DARKBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(0, 0, 139);
-    this._CYAN = Companion_getInstance_57().invoke_6v5qfk_k$(0, 255, 255);
-    this._DARKCYAN = Companion_getInstance_57().invoke_6v5qfk_k$(0, 139, 139);
-    this._DARKGOLDENROD = Companion_getInstance_57().invoke_6v5qfk_k$(184, 134, 11);
-    this._DARKGRAY = Companion_getInstance_57().invoke_6v5qfk_k$(169, 169, 169);
-    this._DARKGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(0, 100, 0);
-    this._DARKGREY = Companion_getInstance_57().invoke_6v5qfk_k$(169, 169, 169);
-    this._DARKKHAKI = Companion_getInstance_57().invoke_6v5qfk_k$(189, 183, 107);
-    this._MAGENTA = Companion_getInstance_57().invoke_6v5qfk_k$(255, 0, 255);
-    this._DARKMAGENTA = Companion_getInstance_57().invoke_6v5qfk_k$(139, 0, 139);
-    this._DARKOLIVEGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(85, 107, 47);
-    this._DARKORANGE = Companion_getInstance_57().invoke_6v5qfk_k$(255, 140, 0);
-    this._DARKORCHID = Companion_getInstance_57().invoke_6v5qfk_k$(153, 50, 204);
-    this._DARKRED = Companion_getInstance_57().invoke_6v5qfk_k$(139, 0, 0);
-    this._DARKSALMON = Companion_getInstance_57().invoke_6v5qfk_k$(233, 150, 122);
-    this._DARKSEAGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(143, 188, 143);
-    this._DARKSLATEBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(72, 61, 139);
-    this._DARKSLATEGRAY = Companion_getInstance_57().invoke_6v5qfk_k$(47, 79, 79);
-    this._DARKSLATEGREY = Companion_getInstance_57().invoke_6v5qfk_k$(47, 79, 79);
-    this._DARKTURQUOISE = Companion_getInstance_57().invoke_6v5qfk_k$(0, 206, 209);
-    this._DARKVIOLET = Companion_getInstance_57().invoke_6v5qfk_k$(148, 0, 211);
-    this._DEEPPINK = Companion_getInstance_57().invoke_6v5qfk_k$(255, 20, 147);
-    this._DEEPSKYBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(0, 191, 255);
-    this._DIMGRAY = Companion_getInstance_57().invoke_6v5qfk_k$(105, 105, 105);
-    this._DIMGREY = Companion_getInstance_57().invoke_6v5qfk_k$(105, 105, 105);
-    this._DODGERBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(30, 144, 255);
-    this._FIREBRICK = Companion_getInstance_57().invoke_6v5qfk_k$(178, 34, 34);
-    this._FLORALWHITE = Companion_getInstance_57().invoke_6v5qfk_k$(255, 250, 240);
-    this._FORESTGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(34, 139, 34);
-    this._FUCHSIA = Companion_getInstance_57().invoke_6v5qfk_k$(255, 0, 255);
-    this._GAINSBORO = Companion_getInstance_57().invoke_6v5qfk_k$(220, 220, 220);
-    this._GHOSTWHITE = Companion_getInstance_57().invoke_6v5qfk_k$(248, 248, 255);
-    this._GOLD = Companion_getInstance_57().invoke_6v5qfk_k$(255, 215, 0);
-    this._GOLDENROD = Companion_getInstance_57().invoke_6v5qfk_k$(218, 165, 32);
-    this._GREENYELLOW = Companion_getInstance_57().invoke_6v5qfk_k$(173, 255, 47);
-    this._HONEYDEW = Companion_getInstance_57().invoke_6v5qfk_k$(240, 255, 240);
-    this._HOTPINK = Companion_getInstance_57().invoke_6v5qfk_k$(255, 105, 180);
-    this._INDIANRED = Companion_getInstance_57().invoke_6v5qfk_k$(205, 92, 92);
-    this._INDIGO = Companion_getInstance_57().invoke_6v5qfk_k$(75, 0, 130);
-    this._IVORY = Companion_getInstance_57().invoke_6v5qfk_k$(255, 255, 240);
-    this._KHAKI = Companion_getInstance_57().invoke_6v5qfk_k$(240, 230, 140);
-    this._LAVENDER = Companion_getInstance_57().invoke_6v5qfk_k$(230, 230, 250);
-    this._LAVENDERBLUSH = Companion_getInstance_57().invoke_6v5qfk_k$(255, 240, 245);
-    this._LAWNGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(124, 252, 0);
-    this._LEMONCHIFFON = Companion_getInstance_57().invoke_6v5qfk_k$(255, 250, 205);
-    this._LIGHTBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(173, 216, 230);
-    this._LIGHTCORAL = Companion_getInstance_57().invoke_6v5qfk_k$(240, 128, 128);
-    this._LIGHTCYAN = Companion_getInstance_57().invoke_6v5qfk_k$(224, 255, 255);
-    this._LIGHTGOLDENRODYELLOW = Companion_getInstance_57().invoke_6v5qfk_k$(250, 250, 210);
-    this._LIGHTGRAY = Companion_getInstance_57().invoke_6v5qfk_k$(211, 211, 211);
-    this._LIGHTGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(144, 238, 144);
-    this._LIGHTGREY = Companion_getInstance_57().invoke_6v5qfk_k$(211, 211, 211);
-    this._LIGHTPINK = Companion_getInstance_57().invoke_6v5qfk_k$(255, 182, 193);
-    this._LIGHTSALMON = Companion_getInstance_57().invoke_6v5qfk_k$(255, 160, 122);
-    this._LIGHTSEAGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(32, 178, 170);
-    this._LIGHTSKYBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(135, 206, 250);
-    this._LIGHTSLATEGRAY = Companion_getInstance_57().invoke_6v5qfk_k$(119, 136, 153);
-    this._LIGHTSLATEGREY = Companion_getInstance_57().invoke_6v5qfk_k$(119, 136, 153);
-    this._LIGHTSTEELBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(176, 196, 222);
-    this._LIGHTYELLOW = Companion_getInstance_57().invoke_6v5qfk_k$(255, 255, 224);
-    this._LIME = Companion_getInstance_57().invoke_6v5qfk_k$(0, 255, 0);
-    this._LIMEGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(50, 205, 50);
-    this._LINEN = Companion_getInstance_57().invoke_6v5qfk_k$(250, 240, 230);
-    this._MAROON = Companion_getInstance_57().invoke_6v5qfk_k$(128, 0, 0);
-    this._MEDIUMAQUAMARINE = Companion_getInstance_57().invoke_6v5qfk_k$(102, 205, 170);
-    this._MEDIUMBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(0, 0, 205);
-    this._MEDIUMORCHID = Companion_getInstance_57().invoke_6v5qfk_k$(186, 85, 211);
-    this._MEDIUMPURPLE = Companion_getInstance_57().invoke_6v5qfk_k$(147, 112, 219);
-    this._MEDIUMSEAGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(60, 179, 113);
-    this._MEDIUMSLATEBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(123, 104, 238);
-    this._MEDIUMSPRINGGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(0, 250, 154);
-    this._MEDIUMTURQUOISE = Companion_getInstance_57().invoke_6v5qfk_k$(72, 209, 204);
-    this._MEDIUMVIOLETRED = Companion_getInstance_57().invoke_6v5qfk_k$(199, 21, 133);
-    this._MIDNIGHTBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(25, 25, 112);
-    this._MINTCREAM = Companion_getInstance_57().invoke_6v5qfk_k$(245, 255, 250);
-    this._MISTYROSE = Companion_getInstance_57().invoke_6v5qfk_k$(255, 228, 225);
-    this._MOCCASIN = Companion_getInstance_57().invoke_6v5qfk_k$(255, 228, 181);
-    this._NAVAJOWHITE = Companion_getInstance_57().invoke_6v5qfk_k$(255, 222, 173);
-    this._NAVY = Companion_getInstance_57().invoke_6v5qfk_k$(0, 0, 128);
-    this._OLDLACE = Companion_getInstance_57().invoke_6v5qfk_k$(253, 245, 230);
-    this._OLIVE = Companion_getInstance_57().invoke_6v5qfk_k$(128, 128, 0);
-    this._OLIVEDRAB = Companion_getInstance_57().invoke_6v5qfk_k$(107, 142, 35);
-    this._ORANGE = Companion_getInstance_57().invoke_6v5qfk_k$(255, 165, 0);
-    this._ORANGERED = Companion_getInstance_57().invoke_6v5qfk_k$(255, 69, 0);
-    this._ORCHID = Companion_getInstance_57().invoke_6v5qfk_k$(218, 112, 214);
-    this._PALEGOLDENROD = Companion_getInstance_57().invoke_6v5qfk_k$(238, 232, 170);
-    this._PALEGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(152, 251, 152);
-    this._PALETURQUOISE = Companion_getInstance_57().invoke_6v5qfk_k$(175, 238, 238);
-    this._PALEVIOLETRED = Companion_getInstance_57().invoke_6v5qfk_k$(219, 112, 147);
-    this._PAPAYAWHIP = Companion_getInstance_57().invoke_6v5qfk_k$(255, 239, 213);
-    this._PEACHPUFF = Companion_getInstance_57().invoke_6v5qfk_k$(255, 218, 185);
-    this._PERU = Companion_getInstance_57().invoke_6v5qfk_k$(205, 133, 63);
-    this._PINK = Companion_getInstance_57().invoke_6v5qfk_k$(255, 192, 203);
-    this._PLUM = Companion_getInstance_57().invoke_6v5qfk_k$(221, 160, 221);
-    this._POWDERBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(176, 224, 230);
-    this._PURPLE = Companion_getInstance_57().invoke_6v5qfk_k$(128, 0, 128);
-    this._ROSYBROWN = Companion_getInstance_57().invoke_6v5qfk_k$(188, 143, 143);
-    this._ROYALBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(65, 105, 225);
-    this._SADDLEBROWN = Companion_getInstance_57().invoke_6v5qfk_k$(139, 69, 19);
-    this._SALMON = Companion_getInstance_57().invoke_6v5qfk_k$(250, 128, 114);
-    this._SANDYBROWN = Companion_getInstance_57().invoke_6v5qfk_k$(244, 164, 96);
-    this._SEAGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(46, 139, 87);
-    this._SEASHELL = Companion_getInstance_57().invoke_6v5qfk_k$(255, 245, 238);
-    this._SIENNA = Companion_getInstance_57().invoke_6v5qfk_k$(160, 82, 45);
-    this._SILVER = Companion_getInstance_57().invoke_6v5qfk_k$(192, 192, 192);
-    this._SKYBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(135, 206, 235);
-    this._SLATEBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(106, 90, 205);
-    this._SLATEGRAY = Companion_getInstance_57().invoke_6v5qfk_k$(112, 128, 144);
-    this._SLATEGREY = Companion_getInstance_57().invoke_6v5qfk_k$(112, 128, 144);
-    this._SNOW = Companion_getInstance_57().invoke_6v5qfk_k$(255, 250, 250);
-    this._SPRINGGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(0, 255, 127);
-    this._STEELBLUE = Companion_getInstance_57().invoke_6v5qfk_k$(70, 130, 180);
-    this._TAN = Companion_getInstance_57().invoke_6v5qfk_k$(210, 180, 140);
-    this._TEAL = Companion_getInstance_57().invoke_6v5qfk_k$(0, 128, 128);
-    this._THISTLE = Companion_getInstance_57().invoke_6v5qfk_k$(216, 191, 216);
-    this._TOMATO = Companion_getInstance_57().invoke_6v5qfk_k$(255, 99, 71);
-    this._TURQUOISE = Companion_getInstance_57().invoke_6v5qfk_k$(64, 224, 208);
-    this._VIOLET = Companion_getInstance_57().invoke_6v5qfk_k$(238, 130, 238);
-    this._WHEAT = Companion_getInstance_57().invoke_6v5qfk_k$(245, 222, 179);
-    this._WHITESMOKE = Companion_getInstance_57().invoke_6v5qfk_k$(245, 245, 245);
-    this._YELLOWGREEN = Companion_getInstance_57().invoke_6v5qfk_k$(154, 205, 50);
-    this._YELLOW = Companion_getInstance_57().invoke_6v5qfk_k$(255, 255, 0);
+    this._WHITE = Companion_getInstance_58().invoke_fnl2i9_k$(255, 255, 255, 255);
+    this._BLACK = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255);
+    this._RED = Companion_getInstance_58().invoke_fnl2i9_k$(255, 0, 0, 255);
+    this._GREEN = Companion_getInstance_58().invoke_fnl2i9_k$(0, 255, 0, 255);
+    this._BLUE = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 255, 255);
+    this._TRANSPARENT_BLACK = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
+    this._TRANSPARENT_WHITE = Companion_getInstance_58().invoke_fnl2i9_k$(255, 255, 255, 0);
+    this._ALICEBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(240, 248, 255);
+    this._ANTIQUEWHITE = Companion_getInstance_58().invoke_6v5qfk_k$(250, 235, 215);
+    this._AQUA = Companion_getInstance_58().invoke_6v5qfk_k$(0, 255, 255);
+    this._AQUAMARINE = Companion_getInstance_58().invoke_6v5qfk_k$(127, 255, 212);
+    this._AZURE = Companion_getInstance_58().invoke_6v5qfk_k$(240, 255, 255);
+    this._BEIGE = Companion_getInstance_58().invoke_6v5qfk_k$(245, 245, 220);
+    this._BISQUE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 228, 196);
+    this._BLANCHEDALMOND = Companion_getInstance_58().invoke_6v5qfk_k$(255, 235, 205);
+    this._BLUEVIOLET = Companion_getInstance_58().invoke_6v5qfk_k$(138, 43, 226);
+    this._BROWN = Companion_getInstance_58().invoke_6v5qfk_k$(165, 42, 42);
+    this._BURLYWOOD = Companion_getInstance_58().invoke_6v5qfk_k$(222, 184, 135);
+    this._CADETBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(95, 158, 160);
+    this._CHARTREUSE = Companion_getInstance_58().invoke_6v5qfk_k$(127, 255, 0);
+    this._CHOCOLATE = Companion_getInstance_58().invoke_6v5qfk_k$(210, 105, 30);
+    this._CORAL = Companion_getInstance_58().invoke_6v5qfk_k$(255, 127, 80);
+    this._CORNFLOWERBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(100, 149, 237);
+    this._CORNSILK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 248, 220);
+    this._CRIMSON = Companion_getInstance_58().invoke_6v5qfk_k$(220, 20, 60);
+    this._DARKBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 139);
+    this._CYAN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 255, 255);
+    this._DARKCYAN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 139, 139);
+    this._DARKGOLDENROD = Companion_getInstance_58().invoke_6v5qfk_k$(184, 134, 11);
+    this._DARKGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(169, 169, 169);
+    this._DARKGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 100, 0);
+    this._DARKGREY = Companion_getInstance_58().invoke_6v5qfk_k$(169, 169, 169);
+    this._DARKKHAKI = Companion_getInstance_58().invoke_6v5qfk_k$(189, 183, 107);
+    this._MAGENTA = Companion_getInstance_58().invoke_6v5qfk_k$(255, 0, 255);
+    this._DARKMAGENTA = Companion_getInstance_58().invoke_6v5qfk_k$(139, 0, 139);
+    this._DARKOLIVEGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(85, 107, 47);
+    this._DARKORANGE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 140, 0);
+    this._DARKORCHID = Companion_getInstance_58().invoke_6v5qfk_k$(153, 50, 204);
+    this._DARKRED = Companion_getInstance_58().invoke_6v5qfk_k$(139, 0, 0);
+    this._DARKSALMON = Companion_getInstance_58().invoke_6v5qfk_k$(233, 150, 122);
+    this._DARKSEAGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(143, 188, 143);
+    this._DARKSLATEBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(72, 61, 139);
+    this._DARKSLATEGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(47, 79, 79);
+    this._DARKSLATEGREY = Companion_getInstance_58().invoke_6v5qfk_k$(47, 79, 79);
+    this._DARKTURQUOISE = Companion_getInstance_58().invoke_6v5qfk_k$(0, 206, 209);
+    this._DARKVIOLET = Companion_getInstance_58().invoke_6v5qfk_k$(148, 0, 211);
+    this._DEEPPINK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 20, 147);
+    this._DEEPSKYBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(0, 191, 255);
+    this._DIMGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(105, 105, 105);
+    this._DIMGREY = Companion_getInstance_58().invoke_6v5qfk_k$(105, 105, 105);
+    this._DODGERBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(30, 144, 255);
+    this._FIREBRICK = Companion_getInstance_58().invoke_6v5qfk_k$(178, 34, 34);
+    this._FLORALWHITE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 250, 240);
+    this._FORESTGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(34, 139, 34);
+    this._FUCHSIA = Companion_getInstance_58().invoke_6v5qfk_k$(255, 0, 255);
+    this._GAINSBORO = Companion_getInstance_58().invoke_6v5qfk_k$(220, 220, 220);
+    this._GHOSTWHITE = Companion_getInstance_58().invoke_6v5qfk_k$(248, 248, 255);
+    this._GOLD = Companion_getInstance_58().invoke_6v5qfk_k$(255, 215, 0);
+    this._GOLDENROD = Companion_getInstance_58().invoke_6v5qfk_k$(218, 165, 32);
+    this._GREENYELLOW = Companion_getInstance_58().invoke_6v5qfk_k$(173, 255, 47);
+    this._HONEYDEW = Companion_getInstance_58().invoke_6v5qfk_k$(240, 255, 240);
+    this._HOTPINK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 105, 180);
+    this._INDIANRED = Companion_getInstance_58().invoke_6v5qfk_k$(205, 92, 92);
+    this._INDIGO = Companion_getInstance_58().invoke_6v5qfk_k$(75, 0, 130);
+    this._IVORY = Companion_getInstance_58().invoke_6v5qfk_k$(255, 255, 240);
+    this._KHAKI = Companion_getInstance_58().invoke_6v5qfk_k$(240, 230, 140);
+    this._LAVENDER = Companion_getInstance_58().invoke_6v5qfk_k$(230, 230, 250);
+    this._LAVENDERBLUSH = Companion_getInstance_58().invoke_6v5qfk_k$(255, 240, 245);
+    this._LAWNGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(124, 252, 0);
+    this._LEMONCHIFFON = Companion_getInstance_58().invoke_6v5qfk_k$(255, 250, 205);
+    this._LIGHTBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(173, 216, 230);
+    this._LIGHTCORAL = Companion_getInstance_58().invoke_6v5qfk_k$(240, 128, 128);
+    this._LIGHTCYAN = Companion_getInstance_58().invoke_6v5qfk_k$(224, 255, 255);
+    this._LIGHTGOLDENRODYELLOW = Companion_getInstance_58().invoke_6v5qfk_k$(250, 250, 210);
+    this._LIGHTGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(211, 211, 211);
+    this._LIGHTGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(144, 238, 144);
+    this._LIGHTGREY = Companion_getInstance_58().invoke_6v5qfk_k$(211, 211, 211);
+    this._LIGHTPINK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 182, 193);
+    this._LIGHTSALMON = Companion_getInstance_58().invoke_6v5qfk_k$(255, 160, 122);
+    this._LIGHTSEAGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(32, 178, 170);
+    this._LIGHTSKYBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(135, 206, 250);
+    this._LIGHTSLATEGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(119, 136, 153);
+    this._LIGHTSLATEGREY = Companion_getInstance_58().invoke_6v5qfk_k$(119, 136, 153);
+    this._LIGHTSTEELBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(176, 196, 222);
+    this._LIGHTYELLOW = Companion_getInstance_58().invoke_6v5qfk_k$(255, 255, 224);
+    this._LIME = Companion_getInstance_58().invoke_6v5qfk_k$(0, 255, 0);
+    this._LIMEGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(50, 205, 50);
+    this._LINEN = Companion_getInstance_58().invoke_6v5qfk_k$(250, 240, 230);
+    this._MAROON = Companion_getInstance_58().invoke_6v5qfk_k$(128, 0, 0);
+    this._MEDIUMAQUAMARINE = Companion_getInstance_58().invoke_6v5qfk_k$(102, 205, 170);
+    this._MEDIUMBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 205);
+    this._MEDIUMORCHID = Companion_getInstance_58().invoke_6v5qfk_k$(186, 85, 211);
+    this._MEDIUMPURPLE = Companion_getInstance_58().invoke_6v5qfk_k$(147, 112, 219);
+    this._MEDIUMSEAGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(60, 179, 113);
+    this._MEDIUMSLATEBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(123, 104, 238);
+    this._MEDIUMSPRINGGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 250, 154);
+    this._MEDIUMTURQUOISE = Companion_getInstance_58().invoke_6v5qfk_k$(72, 209, 204);
+    this._MEDIUMVIOLETRED = Companion_getInstance_58().invoke_6v5qfk_k$(199, 21, 133);
+    this._MIDNIGHTBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(25, 25, 112);
+    this._MINTCREAM = Companion_getInstance_58().invoke_6v5qfk_k$(245, 255, 250);
+    this._MISTYROSE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 228, 225);
+    this._MOCCASIN = Companion_getInstance_58().invoke_6v5qfk_k$(255, 228, 181);
+    this._NAVAJOWHITE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 222, 173);
+    this._NAVY = Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 128);
+    this._OLDLACE = Companion_getInstance_58().invoke_6v5qfk_k$(253, 245, 230);
+    this._OLIVE = Companion_getInstance_58().invoke_6v5qfk_k$(128, 128, 0);
+    this._OLIVEDRAB = Companion_getInstance_58().invoke_6v5qfk_k$(107, 142, 35);
+    this._ORANGE = Companion_getInstance_58().invoke_6v5qfk_k$(255, 165, 0);
+    this._ORANGERED = Companion_getInstance_58().invoke_6v5qfk_k$(255, 69, 0);
+    this._ORCHID = Companion_getInstance_58().invoke_6v5qfk_k$(218, 112, 214);
+    this._PALEGOLDENROD = Companion_getInstance_58().invoke_6v5qfk_k$(238, 232, 170);
+    this._PALEGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(152, 251, 152);
+    this._PALETURQUOISE = Companion_getInstance_58().invoke_6v5qfk_k$(175, 238, 238);
+    this._PALEVIOLETRED = Companion_getInstance_58().invoke_6v5qfk_k$(219, 112, 147);
+    this._PAPAYAWHIP = Companion_getInstance_58().invoke_6v5qfk_k$(255, 239, 213);
+    this._PEACHPUFF = Companion_getInstance_58().invoke_6v5qfk_k$(255, 218, 185);
+    this._PERU = Companion_getInstance_58().invoke_6v5qfk_k$(205, 133, 63);
+    this._PINK = Companion_getInstance_58().invoke_6v5qfk_k$(255, 192, 203);
+    this._PLUM = Companion_getInstance_58().invoke_6v5qfk_k$(221, 160, 221);
+    this._POWDERBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(176, 224, 230);
+    this._PURPLE = Companion_getInstance_58().invoke_6v5qfk_k$(128, 0, 128);
+    this._ROSYBROWN = Companion_getInstance_58().invoke_6v5qfk_k$(188, 143, 143);
+    this._ROYALBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(65, 105, 225);
+    this._SADDLEBROWN = Companion_getInstance_58().invoke_6v5qfk_k$(139, 69, 19);
+    this._SALMON = Companion_getInstance_58().invoke_6v5qfk_k$(250, 128, 114);
+    this._SANDYBROWN = Companion_getInstance_58().invoke_6v5qfk_k$(244, 164, 96);
+    this._SEAGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(46, 139, 87);
+    this._SEASHELL = Companion_getInstance_58().invoke_6v5qfk_k$(255, 245, 238);
+    this._SIENNA = Companion_getInstance_58().invoke_6v5qfk_k$(160, 82, 45);
+    this._SILVER = Companion_getInstance_58().invoke_6v5qfk_k$(192, 192, 192);
+    this._SKYBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(135, 206, 235);
+    this._SLATEBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(106, 90, 205);
+    this._SLATEGRAY = Companion_getInstance_58().invoke_6v5qfk_k$(112, 128, 144);
+    this._SLATEGREY = Companion_getInstance_58().invoke_6v5qfk_k$(112, 128, 144);
+    this._SNOW = Companion_getInstance_58().invoke_6v5qfk_k$(255, 250, 250);
+    this._SPRINGGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(0, 255, 127);
+    this._STEELBLUE = Companion_getInstance_58().invoke_6v5qfk_k$(70, 130, 180);
+    this._TAN = Companion_getInstance_58().invoke_6v5qfk_k$(210, 180, 140);
+    this._TEAL = Companion_getInstance_58().invoke_6v5qfk_k$(0, 128, 128);
+    this._THISTLE = Companion_getInstance_58().invoke_6v5qfk_k$(216, 191, 216);
+    this._TOMATO = Companion_getInstance_58().invoke_6v5qfk_k$(255, 99, 71);
+    this._TURQUOISE = Companion_getInstance_58().invoke_6v5qfk_k$(64, 224, 208);
+    this._VIOLET = Companion_getInstance_58().invoke_6v5qfk_k$(238, 130, 238);
+    this._WHEAT = Companion_getInstance_58().invoke_6v5qfk_k$(245, 222, 179);
+    this._WHITESMOKE = Companion_getInstance_58().invoke_6v5qfk_k$(245, 245, 245);
+    this._YELLOWGREEN = Companion_getInstance_58().invoke_6v5qfk_k$(154, 205, 50);
+    this._YELLOW = Companion_getInstance_58().invoke_6v5qfk_k$(255, 255, 0);
     this._colorsByName = mapOf([to('black', new RGBA(this._BLACK)), to('white', new RGBA(this._WHITE)), to('red', new RGBA(this._RED)), to('green', new RGBA(this._GREEN)), to('blue', new RGBA(this._BLUE)), to('aliceblue', new RGBA(this._ALICEBLUE)), to('antiquewhite', new RGBA(this._ANTIQUEWHITE)), to('aqua', new RGBA(this._AQUA)), to('aquamarine', new RGBA(this._AQUAMARINE)), to('azure', new RGBA(this._AZURE)), to('beige', new RGBA(this._BEIGE)), to('bisque', new RGBA(this._BISQUE)), to('blanchedalmond', new RGBA(this._BLANCHEDALMOND)), to('blueviolet', new RGBA(this._BLUEVIOLET)), to('brown', new RGBA(this._BROWN)), to('burlywood', new RGBA(this._BURLYWOOD)), to('cadetblue', new RGBA(this._CADETBLUE)), to('chartreuse', new RGBA(this._CHARTREUSE)), to('chocolate', new RGBA(this._CHOCOLATE)), to('coral', new RGBA(this._CORAL)), to('cornflowerblue', new RGBA(this._CORNFLOWERBLUE)), to('cornsilk', new RGBA(this._CORNSILK)), to('crimson', new RGBA(this._CRIMSON)), to('darkblue', new RGBA(this._DARKBLUE)), to('darkcyan', new RGBA(this._DARKCYAN)), to('darkgoldenrod', new RGBA(this._DARKGOLDENROD)), to('darkgray', new RGBA(this._DARKGRAY)), to('darkgreen', new RGBA(this._DARKGREEN)), to('darkgrey', new RGBA(this._DARKGREY)), to('darkkhaki', new RGBA(this._DARKKHAKI)), to('darkmagenta', new RGBA(this._DARKMAGENTA)), to('darkolivegreen', new RGBA(this._DARKOLIVEGREEN)), to('darkorange', new RGBA(this._DARKORANGE)), to('darkorchid', new RGBA(this._DARKORCHID)), to('darkred', new RGBA(this._DARKRED)), to('darksalmon', new RGBA(this._DARKSALMON)), to('darkseagreen', new RGBA(this._DARKSEAGREEN)), to('darkslateblue', new RGBA(this._DARKSLATEBLUE)), to('darkslategray', new RGBA(this._DARKSLATEGRAY)), to('darkslategrey', new RGBA(this._DARKSLATEGREY)), to('darkturquoise', new RGBA(this._DARKTURQUOISE)), to('darkviolet', new RGBA(this._DARKVIOLET)), to('deeppink', new RGBA(this._DEEPPINK)), to('deepskyblue', new RGBA(this._DEEPSKYBLUE)), to('dimgray', new RGBA(this._DIMGRAY)), to('dimgrey', new RGBA(this._DIMGREY)), to('dodgerblue', new RGBA(this._DODGERBLUE)), to('firebrick', new RGBA(this._FIREBRICK)), to('floralwhite', new RGBA(this._FLORALWHITE)), to('forestgreen', new RGBA(this._FORESTGREEN)), to('fuchsia', new RGBA(this._FUCHSIA)), to('gainsboro', new RGBA(this._GAINSBORO)), to('ghostwhite', new RGBA(this._GHOSTWHITE)), to('gold', new RGBA(this._GOLD)), to('goldenrod', new RGBA(this._GOLDENROD)), to('greenyellow', new RGBA(this._GREENYELLOW)), to('honeydew', new RGBA(this._HONEYDEW)), to('hotpink', new RGBA(this._HOTPINK)), to('indianred', new RGBA(this._INDIANRED)), to('indigo', new RGBA(this._INDIGO)), to('ivory', new RGBA(this._IVORY)), to('khaki', new RGBA(this._KHAKI)), to('lavender', new RGBA(this._LAVENDER)), to('lavenderblush', new RGBA(this._LAVENDERBLUSH)), to('lawngreen', new RGBA(this._LAWNGREEN)), to('lemonchiffon', new RGBA(this._LEMONCHIFFON)), to('lightblue', new RGBA(this._LIGHTBLUE)), to('lightcoral', new RGBA(this._LIGHTCORAL)), to('lightcyan', new RGBA(this._LIGHTCYAN)), to('lightgoldenrodyellow', new RGBA(this._LIGHTGOLDENRODYELLOW)), to('lightgray', new RGBA(this._LIGHTGRAY)), to('lightgreen', new RGBA(this._LIGHTGREEN)), to('lightgrey', new RGBA(this._LIGHTGREY)), to('lightpink', new RGBA(this._LIGHTPINK)), to('lightsalmon', new RGBA(this._LIGHTSALMON)), to('lightseagreen', new RGBA(this._LIGHTSEAGREEN)), to('lightskyblue', new RGBA(this._LIGHTSKYBLUE)), to('lightslategray', new RGBA(this._LIGHTSLATEGRAY)), to('lightslategrey', new RGBA(this._LIGHTSLATEGREY)), to('lightsteelblue', new RGBA(this._LIGHTSTEELBLUE)), to('lightyellow', new RGBA(this._LIGHTYELLOW)), to('lime', new RGBA(this._LIME)), to('limegreen', new RGBA(this._LIMEGREEN)), to('linen', new RGBA(this._LINEN)), to('maroon', new RGBA(this._MAROON)), to('mediumaquamarine', new RGBA(this._MEDIUMAQUAMARINE)), to('mediumblue', new RGBA(this._MEDIUMBLUE)), to('mediumorchid', new RGBA(this._MEDIUMORCHID)), to('mediumpurple', new RGBA(this._MEDIUMPURPLE)), to('mediumseagreen', new RGBA(this._MEDIUMSEAGREEN)), to('mediumslateblue', new RGBA(this._MEDIUMSLATEBLUE)), to('mediumspringgreen', new RGBA(this._MEDIUMSPRINGGREEN)), to('mediumturquoise', new RGBA(this._MEDIUMTURQUOISE)), to('mediumvioletred', new RGBA(this._MEDIUMVIOLETRED)), to('midnightblue', new RGBA(this._MIDNIGHTBLUE)), to('mintcream', new RGBA(this._MINTCREAM)), to('mistyrose', new RGBA(this._MISTYROSE)), to('moccasin', new RGBA(this._MOCCASIN)), to('navajowhite', new RGBA(this._NAVAJOWHITE)), to('navy', new RGBA(this._NAVY)), to('oldlace', new RGBA(this._OLDLACE)), to('olive', new RGBA(this._OLIVE)), to('olivedrab', new RGBA(this._OLIVEDRAB)), to('orange', new RGBA(this._ORANGE)), to('orangered', new RGBA(this._ORANGERED)), to('orchid', new RGBA(this._ORCHID)), to('palegoldenrod', new RGBA(this._PALEGOLDENROD)), to('palegreen', new RGBA(this._PALEGREEN)), to('paleturquoise', new RGBA(this._PALETURQUOISE)), to('palevioletred', new RGBA(this._PALEVIOLETRED)), to('papayawhip', new RGBA(this._PAPAYAWHIP)), to('peachpuff', new RGBA(this._PEACHPUFF)), to('peru', new RGBA(this._PERU)), to('pink', new RGBA(this._PINK)), to('plum', new RGBA(this._PLUM)), to('powderblue', new RGBA(this._POWDERBLUE)), to('purple', new RGBA(this._PURPLE)), to('rosybrown', new RGBA(this._ROSYBROWN)), to('royalblue', new RGBA(this._ROYALBLUE)), to('saddlebrown', new RGBA(this._SADDLEBROWN)), to('salmon', new RGBA(this._SALMON)), to('sandybrown', new RGBA(this._SANDYBROWN)), to('seagreen', new RGBA(this._SEAGREEN)), to('seashell', new RGBA(this._SEASHELL)), to('sienna', new RGBA(this._SIENNA)), to('silver', new RGBA(this._SILVER)), to('skyblue', new RGBA(this._SKYBLUE)), to('slateblue', new RGBA(this._SLATEBLUE)), to('slategray', new RGBA(this._SLATEGRAY)), to('slategrey', new RGBA(this._SLATEGREY)), to('snow', new RGBA(this._SNOW)), to('springgreen', new RGBA(this._SPRINGGREEN)), to('steelblue', new RGBA(this._STEELBLUE)), to('tan', new RGBA(this._TAN)), to('teal', new RGBA(this._TEAL)), to('thistle', new RGBA(this._THISTLE)), to('tomato', new RGBA(this._TOMATO)), to('turquoise', new RGBA(this._TURQUOISE)), to('violet', new RGBA(this._VIOLET)), to('wheat', new RGBA(this._WHEAT)), to('whitesmoke', new RGBA(this._WHITESMOKE)), to('yellowgreen', new RGBA(this._YELLOWGREEN)), to('yellow', new RGBA(this._YELLOW))]);
   }
   Colors.$metadata$ = {
@@ -35044,23 +37667,23 @@
       new Colors();
     return Colors_instance;
   }
-  function Companion_56() {
-    Companion_instance_55 = this;
+  function Companion_57() {
+    Companion_instance_56 = this;
     RGB.call(this, 0, 8, 16);
   }
-  Companion_56.$metadata$ = {
+  Companion_57.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_55;
-  function Companion_getInstance_55() {
-    if (Companion_instance_55 == null)
-      new Companion_56();
-    return Companion_instance_55;
+  var Companion_instance_56;
+  function Companion_getInstance_56() {
+    if (Companion_instance_56 == null)
+      new Companion_57();
+    return Companion_instance_56;
   }
   function RGB(rOffset, gOffset, bOffset) {
-    Companion_getInstance_55();
+    Companion_getInstance_56();
     ColorFormat24.call(this);
     this._rOffset_0 = rOffset;
     this._gOffset_0 = gOffset;
@@ -35107,22 +37730,22 @@
   function _RgbaArray___get_ints__impl_(this_0) {
     return this_0;
   }
-  function Companion_57() {
-    Companion_instance_56 = this;
+  function Companion_58() {
+    Companion_instance_57 = this;
   }
-  Companion_57.prototype.invoke_spsmd3_k$ = function (size) {
-    return _RgbaArray___init__impl_(new Int32Array(size));
+  Companion_58.prototype.invoke_spsmd3_k$ = function (size_0) {
+    return _RgbaArray___init__impl_(new Int32Array(size_0));
   };
-  Companion_57.$metadata$ = {
+  Companion_58.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_56;
-  function Companion_getInstance_56() {
-    if (Companion_instance_56 == null)
-      new Companion_57();
-    return Companion_instance_56;
+  var Companion_instance_57;
+  function Companion_getInstance_57() {
+    if (Companion_instance_57 == null)
+      new Companion_58();
+    return Companion_instance_57;
   }
   function RgbaArray__contains_impl(this_0, element) {
     return contains(_RgbaArray___get_ints__impl_(this_0), _RGBA___get_value__impl_(element));
@@ -35145,7 +37768,7 @@
       }
       var tmp0_iterator_1 = elements.iterator_0_k$();
       while (tmp0_iterator_1.hasNext_0_k$()) {
-        var element_2 = tmp0_iterator_1.next_0_k$()._value_11;
+        var element_2 = tmp0_iterator_1.next_0_k$()._value_12;
         var tmp$ret$1;
         $l$block_0: {
           tmp$ret$1 = RgbaArray__contains_impl(this_0, element_2);
@@ -35216,7 +37839,7 @@
     return true;
   }
   function RgbaArray(ints) {
-    Companion_getInstance_56();
+    Companion_getInstance_57();
     this._ints = ints;
   }
   RgbaArray.prototype.containsAll_qcv5i4_k$ = function (elements) {
@@ -35308,8 +37931,8 @@
     return compareTo(_RGBA___get_value__impl_(this_0), _RGBA___get_value__impl_(other));
   }
   function RGBA__compareTo_impl_0(this_0, other) {
-    var tmp = this_0._value_11;
-    return RGBA__compareTo_impl(tmp, other instanceof RGBA ? other._value_11 : THROW_CCE());
+    var tmp = this_0._value_12;
+    return RGBA__compareTo_impl(tmp, other instanceof RGBA ? other._value_12 : THROW_CCE());
   }
   function _RGBA___get_premultiplied__impl_(this_0) {
     var A = _RGBA___get_a__impl_(this_0) + 1 | 0;
@@ -35317,44 +37940,44 @@
     var G = imul(_RGBA___get_value__impl_(this_0) & 65280, A) >>> 8 & 65280;
     return _RGBAPremultiplied___init__impl_(_RGBA___get_value__impl_(this_0) & -16777216 | RB | G);
   }
-  function Companion_58() {
-    Companion_instance_57 = this;
+  function Companion_59() {
+    Companion_instance_58 = this;
     ColorFormat32.call(this);
   }
-  Companion_58.prototype.invoke_fnl2i9_k$ = function (r, g, b, a) {
+  Companion_59.prototype.invoke_fnl2i9_k$ = function (r, g, b, a) {
     return _RGBA___init__impl_(packIntClamped(r, g, b, a));
   };
-  Companion_58.prototype.invoke_6v5qfk_k$ = function (r, g, b) {
+  Companion_59.prototype.invoke_6v5qfk_k$ = function (r, g, b) {
     return _RGBA___init__impl_(packIntClamped(r, g, b, 255));
   };
-  Companion_58.prototype.invoke_aewswh_k$ = function (rgb, a) {
+  Companion_59.prototype.invoke_aewswh_k$ = function (rgb, a) {
     return _RGBA___init__impl_(rgb & 16777215 | a << 24);
   };
-  Companion_58.prototype.getR_ha5a7z_k$ = function (v) {
+  Companion_59.prototype.getR_ha5a7z_k$ = function (v) {
     return _RGBA___get_r__impl_(_RGBA___init__impl_(v));
   };
-  Companion_58.prototype.getG_ha5a7z_k$ = function (v) {
+  Companion_59.prototype.getG_ha5a7z_k$ = function (v) {
     return _RGBA___get_g__impl_(_RGBA___init__impl_(v));
   };
-  Companion_58.prototype.getB_ha5a7z_k$ = function (v) {
+  Companion_59.prototype.getB_ha5a7z_k$ = function (v) {
     return _RGBA___get_b__impl_(_RGBA___init__impl_(v));
   };
-  Companion_58.prototype.getA_ha5a7z_k$ = function (v) {
+  Companion_59.prototype.getA_ha5a7z_k$ = function (v) {
     return _RGBA___get_a__impl_(_RGBA___init__impl_(v));
   };
-  Companion_58.prototype.pack_w0xdj4_k$ = function (r, g, b, a) {
-    return _RGBA___get_value__impl_(Companion_getInstance_57().invoke_fnl2i9_k$(r, g, b, a));
+  Companion_59.prototype.pack_w0xdj4_k$ = function (r, g, b, a) {
+    return _RGBA___get_value__impl_(Companion_getInstance_58().invoke_fnl2i9_k$(r, g, b, a));
   };
-  Companion_58.$metadata$ = {
+  Companion_59.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_57;
-  function Companion_getInstance_57() {
-    if (Companion_instance_57 == null)
-      new Companion_58();
-    return Companion_instance_57;
+  var Companion_instance_58;
+  function Companion_getInstance_58() {
+    if (Companion_instance_58 == null)
+      new Companion_59();
+    return Companion_instance_58;
   }
   function RGBA__hashCode_impl(this_0) {
     return this_0;
@@ -35364,29 +37987,29 @@
       return false;
     else {
     }
-    var tmp0_other_with_cast = other instanceof RGBA ? other._value_11 : THROW_CCE();
+    var tmp0_other_with_cast = other instanceof RGBA ? other._value_12 : THROW_CCE();
     if (!(this_0 === tmp0_other_with_cast))
       return false;
     return true;
   }
   function RGBA(value) {
-    Companion_getInstance_57();
-    this._value_11 = value;
+    Companion_getInstance_58();
+    this._value_12 = value;
   }
   RGBA.prototype.toString = function () {
-    return RGBA__toString_impl(this._value_11);
+    return RGBA__toString_impl(this._value_12);
   };
   RGBA.prototype.compareTo_mpdz1q_k$ = function (other) {
-    return RGBA__compareTo_impl(this._value_11, other);
+    return RGBA__compareTo_impl(this._value_12, other);
   };
   RGBA.prototype.compareTo_2c5_k$ = function (other) {
     return RGBA__compareTo_impl_0(this, other);
   };
   RGBA.prototype.hashCode = function () {
-    return RGBA__hashCode_impl(this._value_11);
+    return RGBA__hashCode_impl(this._value_12);
   };
   RGBA.prototype.equals = function (other) {
-    return RGBA__equals_impl(this._value_11, other);
+    return RGBA__equals_impl(this._value_12, other);
   };
   RGBA.$metadata$ = {
     simpleName: 'RGBA',
@@ -35443,7 +38066,7 @@
     var R = numberToInt(_RGBAPremultiplied___get_r__impl_(this_0) * Af);
     var G = numberToInt(_RGBAPremultiplied___get_g__impl_(this_0) * Af);
     var B = numberToInt(_RGBAPremultiplied___get_b__impl_(this_0) * Af);
-    return Companion_getInstance_57().invoke_fnl2i9_k$(R, G, B, A);
+    return Companion_getInstance_58().invoke_fnl2i9_k$(R, G, B, A);
   }
   function asPremultiplied(_this_) {
     return _RGBAPremultiplied___init__impl_(_RGBA___get_value__impl_(_this_));
@@ -35451,8 +38074,8 @@
   function asNonPremultiplied(_this_) {
     return _RGBA___init__impl_(_RGBAPremultiplied___get_value__impl_(_this_));
   }
-  function arraycopy_3(src, srcPos, dst, dstPos, size) {
-    return arraycopy_2(_RgbaArray___get_ints__impl_(src), srcPos, _RgbaArray___get_ints__impl_(dst), dstPos, size);
+  function arraycopy_3(src, srcPos, dst, dstPos, size_0) {
+    return arraycopy_2(_RgbaArray___get_ints__impl_(src), srcPos, _RgbaArray___get_ints__impl_(dst), dstPos, size_0);
   }
   function mix(_this_, src) {
     var dst = _this_;
@@ -35475,9 +38098,9 @@
     return tmp$ret$0;
   }
   var DefaultTtfFont$delegate;
-  function _no_name_provided__158() {
+  function _no_name_provided__171() {
   }
-  _no_name_provided__158.prototype.invoke_0_k$ = function () {
+  _no_name_provided__171.prototype.invoke_0_k$ = function () {
     var tmp$ret$2;
     $l$block_1: {
       var start_1 = PerformanceCounter_getInstance()._get_microseconds__0_k$();
@@ -35491,7 +38114,7 @@
       var tmp$ret$1;
       $l$block_0: {
         var tmp0__get_microseconds__0_5 = end_3 - start_1;
-        tmp$ret$1 = Companion_getInstance_20().fromMicroseconds_ttklb2_k$(tmp0__get_microseconds__0_5);
+        tmp$ret$1 = Companion_getInstance_21().fromMicroseconds_ttklb2_k$(tmp0__get_microseconds__0_5);
         break $l$block_0;
       }
       var elapsed_4 = tmp$ret$1;
@@ -35501,7 +38124,7 @@
     var res = tmp$ret$2;
     return res._result_2;
   };
-  _no_name_provided__158.$metadata$ = {
+  _no_name_provided__171.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -35510,15 +38133,15 @@
       return _get_DefaultTtfFont_();
     }, null);
   }
-  function _no_name_provided_$factory_131() {
-    var i = new _no_name_provided__158();
+  function _no_name_provided_$factory_143() {
+    var i = new _no_name_provided__171();
     return function () {
       return i.invoke_0_k$();
     };
   }
   function DefaultTtfFontBytes$init$() {
     var tmp = fromBase64$default('eNq0kwO8HFsSxv/Vmr4T20k/xZzYtu1J7maSp6vYtm3bTp5t25z71rbv3t4zp3t3nn98Z37f1OFXVV9XIUBRlmDSqUePYf1zK/5yNcSHAVUHDm0Um/qv7LYgvYCJk7Iz85o8PPgqOD8B89SdmdPzfB8T4v0A986suVOOvF/yV1CsPvT74K7JmYnI+XcmA68ALe5SG6XuiwqIBdx+V/aMOb0vDRkMcgbsdlm5kzJPDXrwPohuAONIduacPImzHaQ24OVkZk/etuvQSBhjgVUzL3f6DD+DBMTrAx4CyIE6I392V80JJdr9lSIuAK++/9gIgDdONirqLy/Mi26IZAEZGARDIJJVmEer6GP+cn+58i58ZchARP8PI0J7LL46TAxMq5hswca1m9p7QaoH1nyfKUZp1zawTfRYgtGoJEQJR89B/UbRCe8P2HNUDK9GsmTLErA18S/sOUFmdlkSAMY5kL8oxOlrjCKhzhPWImL2HIUexNR+Qp3HUjB6ETN/odZbSJheYNUbrH7UNmqSUDaFmHVF2crENPql57IlfPsLjRxtPyMWydJvUH4T1otq/oXm0VBxar5UHOZ9IZ+C00nZK+H5orRV0PdD4JzQ8QVQe0bNIGYdbxtiqbls0XmpGJWPl7XVa2Odnuv9lD4y2z9grghicYrrvILcQms8EsQYvkuou6i4MDdAap7K1/idfq9tykeKV/u8onR4Q+eGztULcjL36lj0XPGH+msd9Hut6V/Ce59pHr4NERe0tlq/NCTu35Q4ofWXW1/4B/6n69dh5qSs/6tQ2zT6hd+uchDTt8E5oezL39z/uv8v6/lV6Ptq3/+3Pk9D6/x/+6L2o2vIPkdap7iOVd93mymt3aBelKa6ZnRtBeehVQhrRn+3dbpWQqR1V0gYD+tvHtTrJ4HVWiveMLflil99X430nZBfgaB2v8oRaQPKxtI6axtL1354FvZNeAe9n7I9gnvONMXl6poNuMP7zgk9T9f+fVpD/Sa1p/RDrbXuGivC/bLBOv1Ngr4J76BrZQMEva+/g+7XsE8DPy9r/tQ89K97K+C5L+iLlG6pnlNvg5zDO2EvaT302gtili1pGI+kEcSv+17fcw1iRtsAKh6tafQxFdvT6uylwJfdI9S38ld6QJ8BZoiqCIAcwET02pIlwDg6YavVIk5xlgtc4ioP8DC+lJAq0kR6yVAZLZkyWXJljiySbcbzxqdWUWugNc6aYG31ynqVvererV5Nr7HXxjvhnfYueJe9q96jt1S45dbf//4P+D7gcZQznOcSV7jBwzwuRaWyYu8pQ2SUTJSE5Cj2hYr9OeMDS6zi1mArbm3xyngVvaqep9lbe8e/xv7bFLv/Y/9J/wn/cf8x/1H/Yf9B/z7/nH/EX+/P8rP9u/1JfqY/2h/s9/fbFEb+8/eCdwreLnir4M2Co/lefrX8qvlV8ivml8iPJA8nDyb3JncndyXXJ2PJ2qXipQYg/JDDMaIAwjf8CAbBMPj+Ebw0sbBxiOCSQZQiFKUYxSlBSUpRmjKUpRzlqUBFKlGZKlSlGtWpgcct3Mpt3M4d1KQWtalDXepRnwY0pBGNaUKMpjSjOS1oSSta04a2tKM9HehIJzrTha50ozs96EkvetOHvvSjPwMYyCAGM4ShDGM4IxjJKEYzhrGMYzxxJjCRTGAe81nIYlazgW3sZhd72Mde9nOQwxziCEc5zjFOcJLTnOUM57jAea5wmatck7ZkM4kESHumspMs7pY+5HIXsIBNQA4AU8jj6+MAl5jJj7gXeAWAe5ghHYBZzGU9j/OENJVm0kpaS3NpwUXgJi+CdJdO0hlA2jFNWkob6cgcljCbpSxiOStYyTLWsg5Ywxa2splHeJW3gdd5gzeZzju8xWsANAt/vRjGJn4iMZklq+SQ3Cfvye+k0ChqVDRqGiOMu4w9xgfGP8za5kRzlvmCherFilZ9q5M1wlpm/cZ27S72HPuI/YD9muM6ntPQ6eUknBnONueM85FTGGkRmRjZE7kQeSWSdHE9t5U7xE2409wV7j73jHuf+7uM2zP6ZazIeCDjg2jVaJfoiOi06KbofwmCB+AwggAAgLVeZz0vtW3btm3btm3bHdS2bdu2ld1ZyY4ke2UQo4IxwlhhXDG+mMLMZFYwO5iTzHXmNfOJBaxMVh6ri7XL+mbH2LnsEvY8e5W9zUngpHPKOXWcXs4UZ55zyDnn3HCeOB+cPyAJECAFqACWgU1gFzgGroFH4B34BZPBfLAUrAYbwXawFxwF18BvKB6ykULpUC7UAM1Cy9AmtAsdQ9fQI1wMj8Oz8DK8Ce/Dp/A1/Ah/IllIAVKG1CBNSAcygMwiF8gd8oJ8oQkooPloOVqLNqOdaD86ik6jS+gGuoP+YjVYE9aB9WEj2BS2gK1hW9gRdoHd4Um44hl4KV6F9+Jz+BZ+gJ/gP0QCUUiUEpVEI9FKzBHHxCvxTcaTSsbIcrKabCbHyClyj/yjkApUKlVElVFVVB3VQfVQA9QINU9dUXfUF5e4mdwKbg93iLvCved5XimvkjfNO+Pd8f75ifwsfjt/iD/BX+Mf8h/4P4I4AQm8IEWQJygSTAhmBBuCS8GrMEmYKcwXNgonhUfCD1GcKE9UIuoRDYhGRDOiBdGZ6JdOo3PoIrqObqcH6BF6ml6mN+gt+oA+p2/pWMasO7qNYuvvnVWxn5vWtiSHEluWC71IVhRawiGhOjSHIs4LfT/wJ/JCdTDfM/UIcEK1zDekHZOqF+flwyZHlGPyGlV0DoRQ4j8oIS/4genFG2vy/WZ3pUj0yDNbMuXOnXt/93dnv2r0NR7SOKNxQ+PfG99o/Co4O7ghaDTNaLquaXXTp83VzfHmTMtJLfOBMPru6Y5h17G4mwLsUJq94Yji8IbbmiJtTcFGt8vtnxadFg75vDVaQKNtGaoUMzg9JX4Y2b5qH3+nr74r1TO8e1c6k8mwxaM7+OiO1FiX19fpqzk52cliP/wgeZ/CgB0K1YDTq0AzpUYLa35vMKLzKRm6X905WYfuigLUl3GSvnF2explPuFRURtmf11GdfTfW6mXIwUj4ZqwGkAJe4NmCdYEUIIRwls685Q3Jy5dcinNQ/X8Z9aDWCsf6LVTaN4prIUO4nS/uEoWLrZweScLp4PEFjrIQt8QdDMHumkGboYxq8/vbmnVfH6HVgvFQP6W1pbWqM/v82strU1aW3RaNBLWoK9IW7Pqcru8tU62+IuH4tc9Ul5Bgzde9Zb+xUPH7NfTEJYvxLnyRddcXWyRNR3kXFi1Jt5dKeoZO018lF5w6R9eeLFqzcyO89oj3ZX0IWOn0r7mWyNWEjr6tvtOZP9jXk9QZG4VkmzL1G8VdNQq5Q1QmJjPW+sKNrZE2qaFvY2QyBcOQbwW5Rfe0wVs6kD2w8bh4Z4elFkXXjhr1kUXsW+Ln53dRq+zW76SZdFFs6z32f/+ySu5d1I2x4eQrQmxR2m2poWuoD05fQhaDZoi+AORsBd7qQW1gC1TVE1wI2N0HXh4w9766I4PhuKJ1esTt8RoE89kuJjRmVy92MCtwVNdB8Lx9BuXj6bjvYnzz79VRYPsQrY42RlbLY2LTA5mQA4nLBAzuYM6bznFMWzZnkJyv+kp7HcpdMk0T01YVnSQYXDDgJ3SN/jBSkQ5flcVt/dXax41LKvQLzSX7dUE82F+DQ+wHndrtDXqhyBRv9vvpnP0e0P34s+6OPZbu7bjnA782VeFJI9XE+CcZegf8AakmiIBLcxm0vHiSS6epOO52sCl/XKYMEnfxjUDBqGEg+aCh9ozup5fL3IKthncVZXyBCJsc3Y9+nPr/1DJvir6oqvdieCj01lM4gXWHKTwkiX0zyUZ28f3wz57nN2Qz4+mHiXYqGgeJRxSmhuhyepwCPphDo/48uPt4gvybP+YqkR56oknUn95/HG2WWwUS6iTzsKvUyx5Q3whxvBDO/Lh57FlegrjYz010TCWH9QznGecJ4SMXseH9prsM4a9pAROhxd6iniam2DaJpq1mmjmUHeKRWIRG5/soevp+uGeVFe9r9O/z6rtI1SC/9uy6ZGnOad9H9n0Rmfy5BqgmbdrzLYRmelh/APwAFSUQODzW85kg4HlSAdSq7yR02JS1rJjVN87EDqwyzDeHzIxILFq8+pk59//MHR+IrF+dSI+5OweXX6jDhs+sCvFjbTp+L2rY51JDmtO9MbTORx0zMH8DH4OK9Ci7qhmu0yEqI62/i8xy/CvAK+4/RXGJh820Y2rHZb8ln6mwhPz8mnSmqCXonWwljtSqTsyOjpmZ+uZZ4R4Jic6Ty5blrxWZ0u5OPTasXfeGbOlVVh+fK/SYGvIZZmB7efMPa0mN+9UYi1yWMsaJh6Mzx9JPVy64l9y3n+uqBhUE3LsnE1k4ivE7k/uzlbLye/aMlG83yXShhUt6KFABDuIGPVwtsXZzbPrJQawGFfUvGx7Y/eiwMdiHCraTfJWUh4UWyOqhU/hGYRHVvFBDpBeeSW3rWILoGjNGmxp+32JW8654ZxbE4WYVLi17B5iEpTk3jJiZ0uwcrtvxSb/RH+NlmSKJp0JuwIXirrUHDYeQvSNqT/yiC9+Rn/0jdSfWCI2St+C/og+uZuN2/qz4630c3WnB3sk462s1Qa8l9gh3wetNx7Ym6VvvJUYJH2QvBXkJWS/2fvY1ZPvqz6aNvDVVwM0DetYQE+p9wJvEe8tdJFFvRetGlB2ctgk58XjlVLkYEL8Tky+z67O3qc2sEvEi3JA8SKmtnWz0YxxUyRTQawv9mpvrcMbbGtiaoa2Ffu0yVkAYWrDHn9O7RjlO0bNccVV7iMxbqVyHMadFtVgEUFbyc2WEXiUQIOioQ5F/S77FnUtM93FDRtnkTYgnN8HQHc8UO/z1V/Wd+e6dXf20eH7eq9ZJU4WL+B3Mj1O0fEnrvhYbBF3Zb9kVdRFXaxqYnjukYeV1nSlns1mn011lZbwyfogzQ9OvfzlZPLlkHffV/ooSo/nBrnlir/mema/FHe9JrYddeixdUlqev11auovKxu08kvHsMQJyaOojNwq0JqCqjrz3/+ODAzQp+/QpwMDLMaS2QWIozKi01OKmscXD3Tc+BOMC2iAnIDFFOxrkK1ZbjvBaDq7nsXEDHpqYSKZ3UqDgLbzC2EtPerszlaL8sRCWD4aSmCzMfVBzLkvbEoCBXzS73LvwQ2Td7XgMUMlIyOJcEPPfscMTUyIVXThxIQNSSMj4ge2WQaM3kj7eR0z0znYsKFJfGHZkG7rpcSMwpZnBbT8DYtN0IVi1YQop2+eJLeYeFKsdnbnXMjZvWtqLh7tShfhTxlklyhqF12CJotBH4gxgCEYoCjndvvH0L60oH0w35pbTbMLrVhjyxoAVv1EF5qtKZMDQFts8U8VAnW91j/FK65iLS1t//iJRqwAu2qfqTSFi6aZ019RKL//WA+EQ1gJawEU9bHsbM7ZZs4WZxdiE7HPRq+9fpNTqVgPWhvc4oY5+dUO3FfgIayZoSVqehPGGU2beLXgbmf3ZF16FOB09wKleP6asEbhUgqSCg1xdmRatLHD0uKADEefr9TK7KLJ3ex2MS7uKdgHp9lP7gCXqpc7xu1xnbA+pdySM1BKcnEUNDgxGsGPcXHCO46xXT508TnGjF55ryiFMpVafcMEhaDjBraeb3D8edft6HG748/QRwHX/SkHsm9QowVM7Aexki76AeaWXW9tlWlvv82D8hwAnl2Tj7FyNf68S74lI45o5py25Xxw+ajcOG47nYWnu1+VOZXMGKSsIKGtrl+QN/GYnn7ozV8U+b2hR/X0bb8idRF3qVB8Obnd2N6fiD5yMe29Tnwi4kXyj9Rl57PFxYuwfGSO5SMkIdvpkIbWUMjFmps0BNEGOA5oQIYGadAwxLjtJm/yjDhXnGsYVI3cwvFh920bZsn0a9T2EjzPlomXzCoKbUFGNZuCO+aIc7k4F3Ltmur4kBfbjAabsUKIBhdggQaGG2MI//jXYrfY/TWnb5Y//fRyRL2ed8XHtPe78nCZ8viNuChxG8VRPSBq3xG1AzQifUyaqdXOtdaya7gK/EX+SaDvEFtfFmuX0AF0wMuyWiLWvuwY2nUm+p2JKwoMFv3z/ib7W71xw1rEoiF6TRw+JAnykAjRq0NsejbDNiNLyOBudnY2utr9Lf5lT60FaZtotvs1czbIXjN7HJ49t9i/o+QGdnkpauJlmTt7iPrY5DelqjpZN8ex3Mnn7NJdlu9aeZalc/gf9C6juVjtOpYbTdxdUpyXaFi+TEtcx/7wg/Lj/tgvOG+EnhKrMxnZgjtHuZmbdThKpL5tPQSJXU99aRlw09QHxHuP/irOZi3mmgGosd0uOZcTrEYCt8Htfcd3D7oAZ/cSD1vD/g+GMvhKYBh5/pJQd2LtTbZVyBMDpLrRgJ0nSBIK6VxuOzfPdM1d3rePT6ye25WhC/ovl3nCB+v+w52uVZv6XnmFDpoR6/LVLYqNX96PBOE/67LrN+K/ZAaO+fKYWC29Iyo1p5lEqdpr8ZZqBHYtn7EA0XhJaZ6D9F+2h8QMDkIBz5eVJ8Xo66+L0f4ylr6sPigesAlKDuuXYm1ePFjUyQzijUqkTQnLoMUq7vz73+98/Io4/+5ZMUa+Z7/j8SvUjidSqSfUjfF3GTIA8Fj2bnxjXleP5WRvKiJYmrmBORJs0TW1rrSAPSEHNrmXtYSBsn6LGiXLy9gRRu8gG5RSXz5VUqz6y5Q980H+GpyhKwFL7JDidTtN/WAp5HI3m5GXVZjybwSt3C87o2rOhXc+OT/+oGg4WWNnVJ4Y61lgrQQnZH+s6z553lB8G/vuxKu9F54Us/XEYlhXLR5k1oa8PNKGZXkPoWDjvhRmsYw8zgiFpoSm6Bm1Y/JhtYNzo+pupurc4qqmnJU4zVd+pATaE2KPgbjFpJS+KVAJHf7+sHmWck1vSaHi1I5CzUw+PPw+YK/3msGyAhUOKkoBj5H7jWXYRFzL25hPfYwnO+V0llWlxkw2hJQHlpM9x7ansZ87GwxqrThxMHA2KE8G1Z32eQXbvUJchXYS6xBP/LVYa2QqhUMAVLODrTQ+lLH15bgJXW1ZEzbmSC+waQXsna5Ji+doIC02f/stSMV1NCnOzD5Pf7NyI5vbIPc5KLdm5wboHrlzWMKQXKbf8llbA7krhm4fSt5d19eXfJlfd9ZQu1nJtOf2gzc9tUKmpBfEOTifvOzRJ8b+qT69v0ef6s5BW525HBJjWRwEVlyrBE2L9hec9MGMySfGnrWcUfomiroTieR7Yodlwlw6pywSS2B3GNPyR6UQRVpNIclO6m1IIVbkj3RQgfGpp5T1W0ACa8o+7+wezJ5rm514wHLIvJ1b85HEbK3Iolm0KE9TG34RvNSZg0YvOwLqySVI2TmXFaRX+XjN5HwaHn6sez/rO/zIPao/dZZ6lL9A61PQJY/t8gzdIh1FZ5s4iZK0BM5J3/TcJF4Tf9k68sGN8Y7VPTfR4XTe1hHxFugwnzvr7MiMTM8wj8dx2zYTt9viQ3nccAxL3KixT0lrsZFRL3QSAYrIQ1Ad5h8KGRnpMjj40FV2d5UBzlNkX9bpew41wvloo//IvOh+aWCmebENk3WWeZGi2Ot0ASWteC/zpQFqoqYBsQoO+y915mRd/humsxZty/Gg4pR+b5J/apAtfv7FiSXPPffyc88tmXhRrZ/8AP0+UveVpaCvejf6Sl7Cgjlqot4tHqD5aXD+8TTNFw+kqZqqYbQ4YqVu0SuPXFF3WzFaygmcVAB/oaglKwu0tO4/LXrP6eLenMi3iq9OOunTCnraUW/JDpDJ836s1ZbBZCkRk7EgWZt0sBBOKaaXCxdOUM/LHk38FLXcwe1+4CKLwTdgC05sVMMUagtGghGJVJ4AXjR68QHBh4rFQiGxhYdCcBBUK1fKG5r+GfFxctFBnAvj+1nHfScyPDeuYmDcfK4l+Yu75MdzOiL4FNGC6kD4DSavPQqsyYtJPQEIQQetXIkZ6SBUiJMh1DT9u+NmfU8ujmdhjHP6TGQglsVnWAx2kzB5rEc6HlYR9ki/xzJChr7gT2fq3PivPy04Q2cxOqi9HWOgMvGzXeI1zpDKFAdOrnf+M4dNS4HFdUog/0VFMgX7c0rE+ohifT3BxrFj37wjPq+/f178jjf11A133XVDStc7T73wwlM7Hf/neyreX5edU9cff8r30otV1/du3957fdWL4qHK9nmp1Lz2Sjs/uAnzhTGbPMqw6U7YOuiUpEue6bVCMUWfI6zZQU43ef7YM+/C2+Z28Vf6brvwwttuOF3XueeJZYyFxlITCKEjnckQY/QFWzz7iP5b6PBQsjM1Fgrp+hnbbjpitu5yL9JTY4iiyU59kdsl6a+Cyj3fPJtxgjc3mNkx7U3NqkwnavCzT3SDcBqLIzjnbcrut2lT9r1NnNh22rjdPOTduv2d7Vt5ho3TZHalcNCkTpPCIXMkWXTrYhW9kKvXWadnAftnuYY3YP7Y1eYHBFn2kHjrOQOE0fVHc3T+UTxY8SZvl7n4bVknh32a5311soY9gAmzzf9PzHWAt1Vk6zv3Xkl2LMtJ3O0Qxy3GxGmWnR7jNG9MHD5I8lixpEeL8wKpkPI2NlULKRTHy97tnQ4f0rf40XsVRXT4eInYkte0vQU+nmLfvHNmzp1bomRffwHJc+dOnzPnzPznH/lKEFPEliDayAaQJ8Sx2Sicm0u4zWoH6iWTRgv8U2jBwq34oJXLvbENhshdkHYjKiNChoRh40aubWdxdUS4piLVxTtGBduWdl9+effStqCvRKaHY20/2EOZbeTFWTXVEdxLR6prZoWCYcjQ2xaEfsDi0Xqh/XWsEzFT1glcIcXyz4A/xSdsOOCdMYBytAlmB6w2RZd9zIM+1itTIQ93FJSGWwP1pZCesLbyes3RY90eiFatpK0hHm+Yb/SzlpW751SM29bf7+gm+5rdGXW4oaEtvjOpRnavXDmnIvSJFnB27rjdadozANx6yMItzugdPOr2A+bwAdK5g/xURW5PFWLATm8VWwKSIT1WwxcYxmlnqJnhQGs0GaczFJP7kDG4S2/i+01oHBkydWK83zD64/zbGDkKu8zFRlz9yXBFPC78dbgPRJvg4+tqDPWxFibKMFrhRHWEnUj67s9eosVSR46kUGZRq2kTBDKuRkT7QK+9oETRxxQO2G6T9jLb43M+C2fD581tBdfu1atWXd08d27zsspFi1qjX65atqz78nA03FJT09K66KtRkqfNXJ4WcHlagJOC8dDXB7n+rNN+BvoT4zgu4P9obJ3SgGmVRWAwBnLEb2cncsanXOl/KuPfV7KO+DspHlYqnFbSvPdJX9p6H7hS5nuXrWUDiipxiCKOSYErns+7RDi1WlgG4xB31m+ygdE3/onF4STeIQFS/ThCnzTGHBOepSh47MoFfhJMXKTmnoKZ6qVHv5fwIqISQP7exyzHBKmjfzyUCyUlVPlHY1TvBIpzgpbhY3yumBMaS2/8dvZCzviUK/2dGE9jP5HG3sCxP/X3eB7h+VpEPcBOpHzsPkf8dmUZxmN6V3xKpD91I8Qf4/W0iHpO1VA9cV8az1mEPQXRzwK8DwscD5c2ygfccrK1FkQOWAw7YSHnQAQxgxbwZwajUXgmAB0MkWiv3sNlb7pT9gR2ytvbSrK9Nmf8dnVizviUK/1PZfz7rMURfyfFoxXKin6D5kujzLGLtHn6l2i/l8/K81kgnzWx5eY/bwH7XL0F8Tn4gkf1Q8cjvoUvtGOn4AjmO49jxcX8hI77DRiytqZ8RqJbwspwBPHkBEIqJXtmOev0+2MIqZ4/nFVTPn/sSRBY7eFexIoTfv9dX4j3Ivqa8Pvu+gKbFPAfwDF+rm/kgJqCBxTU59Qtd5vDONBD/gCkv5vpKMr8QY47jtcsp+7wxqPuyBmfcqW/E+NpHJM0jhHSEVa+ebbcO/DfPHEKIcS3sdZGsMNZAfiajeyYBWFrjwi410AMG70xLr/LuWLH4fXf4taXFy8DsEvIGr9+9tlfR6rOObdh96+f7e+/fnDw+v74FyOD118/KKCGu3/967v7IlVjKxvwCAQnIvC+7165eXBQ6GOOI3RBvxbTOo/njN/O9uaMT7nS11G8qrzfrzjiSzCexnUZ7ZKO6T3yfVqW967yS9o7Kf5dYBPz4bQ8n5BFxBVtzIpZ1lwCjShyeLh1YVwolAA5Jg0EHLVqiWiZnyeyaBxtCHJPXUVZ1WEPBpZ9+XADQpI/ORhhtwjIa+TGD3F7wOHJ3fVN51QdcOBiBxqkrufY4TSh6y3EsMmBI5YGzqDk2UvGzsOEJj5KCONt/5xDs/tKtx2wEEaNUMe3gsyrzq15eITP21Ka56SSK347G8gZn3KlL6F4nM8ozecJmE/S5zzfU1wOFt0IEZY+d8RvX4bxmN4dn+LpSZ9jPRBP+lzUo8C+SVHlGSikNJ+GGc5EAJJYV+1uzNCFGH4nibik4UQL3WBhNgrHg5NDLqiQbNojXNYvJl1vr4EM78sKGuNf5ozfzu7LGZ9ypa/DeCo/4YgvwXga+34xJmqh3sP93FnYoyb4maXAYijUtxfDBwkI7ARnCxgGugnU3yeTqNtPnjqu1+jIxy5S6kFWhRxOZXReDHDJbQVNHijjm3bQ72x+ZN/Nz4QX8u8r14CgPhIb7LpjjflrHvjZ0sfu/sqKC/j3lf1PgnheDW/7nwQIDgIkCyRbETlO3ngap5zxKVf6Eor3jAe853gJz7eaysMzDeF+XHZwLyBhP7nzpoWY7Y+jWIjtN4pNvF+bkBQoX3Lk3kDeyX9JorQkFVlXCdWFbWmldfECtkXwAbj9mMjb8pa064gdYBu7RLzdN9rjNlG83E/4ujiX9As8vkiv0hPe/ZdM713HGJ9UpI9by9i4izAWiuKykdOprdJGUlkXy7YS/hF4h5/BG0CCbJJDDWt3bJiZ0/naUxW3nMXxKievwOxweGHfGWdTHsa9I/fTXkesZS8+0jJ4BkULzs5oC5q4QvAixz6HJ+RwY3V1Yw470DSuqv6wG1tmD0t7omUONEya1OCyBY2Tmxtu9eDOq4URcY9zu3POMF4V4/w3XCe+tYFsqUw/wzkvDpt8iZxjd/kzT0v/CJehLwoZUg/pCSs9PwfNss9Bct7RRkcovpiXr8g90zySeYP2TLDHd9U/3ytH1N41LplsRR+k4MwwVN62N8TtUiplA9KdJAPgiBiu4D4SDBoiJP2X0KIu7ncur28K1M9k197TD//u8XVln3wy60mDPk44ov+DSKL38CTONJz7IcCEMBcgIELjtqq/u62t29cFW6vNbd3dZPfg3N8C+JAm8CGxXiDuBV/6r+ASy3cDygGf5jlzmpvnzfOl8RE/m+Y1izjCDvC2HJ5QyxFnDPsDZAtLOQIeq2/qb6qPzW2+bNWqy9bEkndsHldSMm7zHc1zl0eX77bH56CvjuOhbRYeWmLhoQ8snzVr8eJe+DNzyWK956NJky7BD2Ffh3xdIEfbW4V+bZF6OcN9TOcSvnGVbx/Na2275GWOKSGaW7vlaGIn0ENi7jiSGkrv3nRz4/ol3bE9bw7CkjeMkfjt6SFzx927NxV9TV/SvZkN7IndbvqkHeBy9i+W3WADDg5WneAloRY4Iw8r4E+pK0fuK9gXOzMbK3YFWM8/7T+Qm411YBu2hbgbY1VlhsPfhs84NvKcOjrnOZXW5gqefrLUrd/H8wXyWSQ/jdUCK7t+bCX8tU4aKFN7YrE9QA49+sJ3wcvKXhhKc/baISSn7YkhOc1sNR9iK9hbqG3TQ0Npwjpz1tHMLKZUjjqIOeWtg3hUVDrZGT73pZ65r88154Z3tmmSXbrkd9Y+lbAdK/4zHv826lDuO5hicTKamdWN0noV7ihgw+EbaVT68eyB9xSJQfFxb3DxeoK85dh5yM5HOwAN54RBvQe7rj0CO6sXeNsFS5ANDKU5+JMe2hODYSE9IOWi0faNErfL5ssZnHBD+DMfNx+u7MYxON+1iAfWorMXJ17vGTm6T2szQOsZiT5wqOs9ML9fN3+JuztQ3DXsCoT2HOtxrLUe4R9yQ7FkprF6TnBx8NK0FUnzvCF1mtk2pM5xcdTYVWzsyH4NaCTIVXPz1f6/eeRuTlutcIkjHS50v6Hee79hEdr0/R7b+BshN2Sb7HmaInSjg7vHuYNi5WVhwMU6m6BGkKlvrS0q25fmZUzzzP0kaceP4zOG3PyrWqqDcxO1jH785HgkRnllKIzPpN/weaLn/UyaZ1lumGhQcQcByuI90Xkb2kQc0ibUAjRDtcITge42bqPmwht4J/CIMUBtMzi28QH/YxgIcBj0R6IcEulAn4tAPKw1R+2dqyi0Zo971ixMod4DIg5r1uBLFofE/KaXjyb9v5hhDKr3KDi3QJkYR1LAJdYybABVzO3qOvCb33g7a6T8/pCoj2Fl9PGHspcAgw3+x6GnOuFj+SQJE1YYB+id+QxD5oRcsBCdmVWSC8KKmKVGGKlXfGr3dVlqZGSxpVy5GkRNoq8VelX/7S18/Ei3gi05xWW4Be6CKx4uJemucA7NZeRQW1gBaS2X/VSanKx0tJ20psmmogs5c4XTdiJw6rSd+wpG7lNXar/dZplPCz+1zOf+PxnYdsR9cE7Qh+g8MghrFB7rrF/TqxynhWEA1t4s/3oCyZwcX/xJ8PSzApgubqNYwbfsFtzDplo81yrJ5cR1yOrZFObYmdWO0asMc4v5q7tY9YYn0t9B2WbHUEy4S/KOiidAurlOYi848C8tAzK+WJH8NX8I6jiPUC3JMQEU4xzmILMpsC9S8D1uWLKJPgu5YC19CQuzEN3fPHikeM1uduJICs+jyG6YlTqyRHLbWOPbbOBt1hjpmLa2K8JpCJIHgJx4OPejfLg0ttwGFIPMlPJwlL26N9FdUdt6HngQARxf2xGJdMxqmW2+zabPjmiZ7/atWlxeVFzXvbkvAR6QDyIdHRG2rS47p6PD5qP8Hur0WTxT9fdwnsON+0MQy22e3gMhy+ZBe2ybB7tE9Lf8GJxXhgHKce0W9RBoheyf3xEG750/22cbPt5LhQ4kfhOW2OSxdeCfh6t05lND7PvmK0Nsl4M6NWh8mjQXqbNZHH3Q8CESVfJTiwMOZSJx0mXkZuY0cEh0miDG7aMnOEO875pIx1DJd2ZHtuw9uGJLf/KBN9V35NghO2bloo6IMadjdveWLcagk7eBti0sTVvUYKmnDTMMZ/fPtFHDFfD5zHm+YgW0J0q6yjg7Z0zL2N2l84Gdj2xgKbeBMAHmj5/6Mfhj2QBUviJrDpknWFDq5gTxZDgpHb+hOj1hmOmPzbTxb2wym8xBh87h5/AD4bu1L1FeZ33YVaw1C5rV4AJj7sAK0cumZSxcjM/5Clc/kRtLebWYyInNRGkT+tPcQflW4jPxPfG5y1OO5EVrMe7nFTK7wlAUif3wfKuFLTV3cDtWDRIyHdtgIZDtrUj0BG0iESfN9vQX29CTev6FGxCb3nChIQNLe/H017vUCsAY/HkjrGxY12wj+5NZtJGZx94GW7fRDOnXbkJXb5R9ahZEMcTbSfwjbOdlli3D/nvtLWxEx6IVi+J4PYTjhfb6rHyrMbn5VupTaPE534pdAxP2IfH56FzQJeoOY9X0AYkewP+pZvxUWG31pSF9kWyrbK+v6+R4ymZQRtls2x5qGbK7lmJz2F3kTgt1hmoNvf/g8bNUGNDGdyDeD9Nt4XJ4t4zV8LX1lPYI1iFlhdvcYrto6RLKWgUboiYtQ8VmRo6KihQn57gKGYK1eDTlRlcQHrnBxTGHjfhNpZ3riHqMPAlyFqy7qJC9YKzvWM35x0B8hHuI3Duw+sIb5J3zfVqG7KsDbyD7SphZibDv2vcI6Br+yDDerrwC4C9BsDy8PyR4zvgxd5i8Oz/42wOCanng756HuqSeDCE7p5i4SHwdafXQOUFICmdmTb74R7vUQsN8I3EXHCQPtnU3NLaxd0umXLRr14/EMoc9NmArjQ2K0wcxOqcPQmHAqb2Kn61wk2eTTm2nAPbRhT9oE0huuUNAyC7hD5KNqvegM8D8C4rw3SP3ShyC8Lrfc33rlzizZy6LwUZ42eNN2LDa0tcLL1rn5JDTRHaWspvYCzdcuNrDJNdWd6w3vHuLS/gzcY7hucfpQxmd04cC74l7DOmXW1iDPwTt9WINpV6sQYvRagkK/X/Ikm1p9gfIFrAeNiDkHGWPyj87zuAuP2igKvKWL+RNFo1zjjJB9+1ogglk8Ex/Vkyv4ZhxvUdOq2e6cZyd9rSQ5ncJj/f6F95WJKcR58WLPbD7zCexM/BNWqrCtssZfycxzfhtjizc9DLE6Q94CJRmgp7wpJloCHMGaaA9dPcdcLfR1l14vce+C4/nKPsuvJZhLXTvHNZE+8zwL/EevfjlACiL3iM6jBqP95fu3vN7s5QG8VrQhRy/Zu3w1hlfL/JiGazFLkONQBl1+A7fYB6bz3623wHQe4zhC4AyDjkoPWEYPCW5GSgnu49nwcyyAJ4VfxcjKNhZol7k12oxXq/EYVuB0WyhrepT4u9uxxmct3+MWFNsQNwx1iYgrEK+EOdvVpyvLPuv/W5Fw3/q9yx817qfR+L/1d+3OHhaDOeRtKj50HMfcZfVfPMTVv+wmWYNsHx24GJkA+50xZzh/M+swUw/zOrNT1zpouS/RW66nDqiiIIcWS4hXJ5sr8647+d3UfN3rBhyOjiws3H+/xoJFr/cPNjaAMDBtdpkoF7n4MKyVx8rKP72V8okG7ZM1SvN9uICdoc6sTDopcQGC6NT26MrFxEndtHKaPtU4sSOuoXO4ecqXbnvNfpyMd/ZWen23quQ6k8cRHm958xc/NPuTGbdpPrhh3KT9Wm/BlfG0FPFPEh6kzXA6HdH1etE1QMw0nzAtRfNUdVrnQhB/Oaa915j7LX3am6OO5GCtdXqgsqRtxhTK9WJ96638IKhQ5loJfyLZg4NWZjB+nujFVVVFYqOe+68b3L+cZ5SgSezRiA6cQowc93qaBurlUogEsZV+8Tcb+7/EXviY/bEySH/nfJ+x0ivddni5rsMfdXJB/Pw8ixc/3dc89BiwAkwg48AVQAP3m8qmsR4/HDCr+V6l1+Iw9HAY2wtjg1MNw5crZD1F2ASF04rLJy2EChChrrzO9tWF73xRtHqbTjDSe3t+MJp86Pzpy2MsyXbVu+P7l+9Dfi3b0ft3w/y2mtpRpH8LOtAQcHfNBCig2sLDN9xIQYjY7UYSoYRxfUZVRy83lGAhdRx1hdhftCJMxGZ1RnE/RU6M97P/pKbu7y9DTm/Wgb1ahLJqGckLJutYeT8Ep8XrSrHM/GmGemK2mp+FgZaOXzD3jdqqBFYwlH859snOmTexnaZQfjcxj8nvNxs942iMrtH9SqJihP9shFtuJ9ud7DN7t/LBwrDgo0dLhy1w8nT3nk2cvYjwbZeyBYOhpwsbQ5hyPYWwg6nUZnM9Z5rERY7GBu4BGfCM3SkBlNBV5qcPVT3B/KAKJ7PKeSdM74ayOu+nPWWJyD8QN9d0KANl8IfVrbBvMnRQTXE2oKF2LRy9iK7vDsv0Dujsy9R/uUN0Iu7+i7dwMrgD5vp7CBCvO6xxrM2s+nfSqNDgNhZmfCNZ32rH3fWO3KvQ9zM5y8Nlc8V9nxueejSvILxzUihah5fwBJnfKU+RaXhCBx3TdTnk8eVz4UcSFefHAqeA+nnji8I5Yx14L4h4LIpjG9VmsDY8f8QeMb92wevmu8no0l0JuDWVo28+iqAlAPIJWcD9OsDVaxD/v5iI6Fb+D0ankRYhbUxg8KaUiPjdaVChn1w8ltMYT+0KUrhPBD8EIXzIbSLwniz9zoKBx3hQqjpTgqHlPHKUaiR6fnwdIHyOYWZMoEtpLCqhFiUwprSIeN1ZZoM+5ROdh2F/co49hyF85QWVkLhfIhPU7hAWcqsuoKOcKFypdpJ4ZAyT33w39u4iuQ4giCYxnfUyewBsXQ0g5iuioHe2Y4Yiq5e+os/oN/47sesc1sMjVlZ0Fkbsdc5l6Uk2ZSPvNIV+e6ytuz62kxl33XlqPC2azU6ylorx85OrRFilUNTjerMbUkarUXpqXHKuAuDpb6YwjS5cbL8IZRdpF9kE2l44/Mw63QzSZKh9/1WHFcLsrgio9KMbdb6zPmo6JrjoVUZdK2XSaZS28K0akoZuK6Ro5/bstebVr4t/Ns2d5mbUUkaXVbWwtnea6S2jjpXxXvfts8mJsc5BEtIODeJPl5aKVaIvsMhQ4sSHXrUMJiS3SfbkRuhgIclbqGIcBRiLSOO4XhPuQ3kkleiQ9oV82oyDltkUuatcac4hSGnl/VueS5VfaG/4G6Qh0jBMj7cUnv5+u23Lzm91cdnDIk6cpvM46TtOXuqiTmr68jiQWRE1mAMGyJ86MGTLRjV4JjxNnQ5oE0/0QRZYGp6qD1oMShDjAtZQo0/sc17D32IEHy7zt9mXh4UOcwufxPue5oVRei5J6f0KnHNuyNb0b/Hits4oxqDPPzvw5i/pJLHx5P5HE/Bmxt//7z+d/f7689O/gNZQgPX', false, 1, null);
-    var tmp_0 = Companion_getInstance_29();
+    var tmp_0 = Companion_getInstance_30();
     return uncompress$default(tmp, tmp_0, 0, 2, null);
   }
   function Font() {
@@ -35528,9 +38151,9 @@
     kind: 'interface',
     interfaces: [Resourceable]
   };
-  function FontMetrics_init_$Init$(size, top, ascent, baseline, descent, bottom, leading, maxWidth, $mask0, $marker, $this) {
+  function FontMetrics_init_$Init$(size_0, top, ascent, baseline, descent, bottom, leading, maxWidth, $mask0, $marker, $this) {
     if (!(($mask0 & 1) === 0))
-      size = 0.0;
+      size_0 = 0.0;
     if (!(($mask0 & 2) === 0))
       top = 0.0;
     if (!(($mask0 & 4) === 0))
@@ -35545,14 +38168,14 @@
       leading = 0.0;
     if (!(($mask0 & 128) === 0))
       maxWidth = 0.0;
-    FontMetrics.call($this, size, top, ascent, baseline, descent, bottom, leading, maxWidth);
+    FontMetrics.call($this, size_0, top, ascent, baseline, descent, bottom, leading, maxWidth);
     return $this;
   }
-  function FontMetrics_init_$Create$(size, top, ascent, baseline, descent, bottom, leading, maxWidth, $mask0, $marker) {
-    return FontMetrics_init_$Init$(size, top, ascent, baseline, descent, bottom, leading, maxWidth, $mask0, $marker, Object.create(FontMetrics.prototype));
+  function FontMetrics_init_$Create$(size_0, top, ascent, baseline, descent, bottom, leading, maxWidth, $mask0, $marker) {
+    return FontMetrics_init_$Init$(size_0, top, ascent, baseline, descent, bottom, leading, maxWidth, $mask0, $marker, Object.create(FontMetrics.prototype));
   }
-  function FontMetrics(size, top, ascent, baseline, descent, bottom, leading, maxWidth) {
-    this._size_4 = size;
+  function FontMetrics(size_0, top, ascent, baseline, descent, bottom, leading, maxWidth) {
+    this._size_3 = size_0;
     this._top = top;
     this._ascent = ascent;
     this._baseline = baseline;
@@ -35580,7 +38203,7 @@
         {
           tmp0_apply_0_1.append_uch40_k$('FontMetrics(');
           Unit_getInstance();
-          tmp0_apply_0_1.append_uch40_k$('' + 'size=' + toIntRound(this._size_4) + ', ');
+          tmp0_apply_0_1.append_uch40_k$('' + 'size=' + toIntRound(this._size_3) + ', ');
           Unit_getInstance();
           tmp0_apply_0_1.append_uch40_k$('' + 'top=' + toIntRound(this._top) + ', ');
           Unit_getInstance();
@@ -35610,7 +38233,7 @@
     return tmp$ret$1;
   };
   FontMetrics.prototype.hashCode = function () {
-    var result = getNumberHashCode(this._size_4);
+    var result = getNumberHashCode(this._size_3);
     result = imul(result, 31) + getNumberHashCode(this._top) | 0;
     result = imul(result, 31) + getNumberHashCode(this._ascent) | 0;
     result = imul(result, 31) + getNumberHashCode(this._baseline) | 0;
@@ -35628,7 +38251,7 @@
     else {
     }
     var tmp0_other_with_cast = other instanceof FontMetrics ? other : THROW_CCE();
-    if (!equals_1(this._size_4, tmp0_other_with_cast._size_4))
+    if (!equals_1(this._size_3, tmp0_other_with_cast._size_3))
       return false;
     if (!equals_1(this._top, tmp0_other_with_cast._top))
       return false;
@@ -35651,8 +38274,8 @@
     kind: 'class',
     interfaces: []
   };
-  function GlyphMetrics(size, existing, codePoint, bounds, xadvance) {
-    this._size_5 = size;
+  function GlyphMetrics(size_0, existing, codePoint, bounds, xadvance) {
+    this._size_4 = size_0;
     this._existing = existing;
     this._codePoint = codePoint;
     this._bounds_1 = bounds;
@@ -35691,7 +38314,7 @@
     return tmp$ret$1;
   };
   GlyphMetrics.prototype.hashCode = function () {
-    var result = getNumberHashCode(this._size_5);
+    var result = getNumberHashCode(this._size_4);
     result = imul(result, 31) + (this._existing | 0) | 0;
     result = imul(result, 31) + this._codePoint | 0;
     result = imul(result, 31) + this._bounds_1.hashCode() | 0;
@@ -35706,7 +38329,7 @@
     else {
     }
     var tmp0_other_with_cast = other instanceof GlyphMetrics ? other : THROW_CCE();
-    if (!equals_1(this._size_5, tmp0_other_with_cast._size_5))
+    if (!equals_1(this._size_4, tmp0_other_with_cast._size_4))
       return false;
     if (!(this._existing === tmp0_other_with_cast._existing))
       return false;
@@ -35742,27 +38365,27 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__159() {
+  function _no_name_provided__172() {
   }
-  _no_name_provided__159.prototype.invoke_0_k$ = function () {
+  _no_name_provided__172.prototype.invoke_0_k$ = function () {
     return LinkedHashMap_init_$Create$();
   };
-  _no_name_provided__159.$metadata$ = {
+  _no_name_provided__172.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function TtfNativeSystemFontProvider() {
     NativeSystemFontProvider.call(this);
     var tmp = this;
-    tmp._ttfCache$delegate = lazy(_no_name_provided_$factory_132());
+    tmp._ttfCache$delegate = lazy(_no_name_provided_$factory_144());
   }
   TtfNativeSystemFontProvider.$metadata$ = {
     simpleName: 'TtfNativeSystemFontProvider',
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_132() {
-    var i = new _no_name_provided__159();
+  function _no_name_provided_$factory_144() {
+    var i = new _no_name_provided__172();
     return function () {
       return i.invoke_0_k$();
     };
@@ -35863,8 +38486,8 @@
   function TtfFont_init_$Create$(d, freeze, extName) {
     return TtfFont_init_$Init$(d, freeze, extName, Object.create(TtfFont.prototype));
   }
-  function getTextScale($this, size) {
-    return size / $this._unitsPerEm;
+  function getTextScale($this, size_0) {
+    return size_0 / $this._unitsPerEm;
   }
   function Table(id, checksum, offset_0, length) {
     this._id_0 = id;
@@ -36079,7 +38702,7 @@
             } else {
               var tmp$ret$1;
               $l$block_0: {
-                var tmp0_contains_0_17 = $this._names;
+                var tmp0_contains_0_17 = $this._names_0;
                 var tmp$ret$0;
                 $l$block: {
                   tmp$ret$0 = (isInterface(tmp0_contains_0_17, Map_0) ? tmp0_contains_0_17 : THROW_CCE()).containsKey_2bw_k$(nameId_11);
@@ -36092,7 +38715,7 @@
             }
             if (tmp) {
               {
-                var tmp1_set_0_18 = $this._names;
+                var tmp1_set_0_18 = $this._names_0;
                 tmp1_set_0_18.put_1q9pf_k$(nameId_11, string_16);
                 Unit_getInstance();
               }
@@ -36615,7 +39238,7 @@
     interfaces: []
   };
   function Glyph($outer, index, xMin, yMin, xMax, yMax, advanceWidth) {
-    this._$this_8 = $outer;
+    this._$this_11 = $outer;
     this._index_3 = index;
     this._xMin = xMin;
     this._yMin = yMin;
@@ -36629,9 +39252,9 @@
       }
       var tmp$ret$0;
       $l$block: {
-        var size_2 = this._$this_8._unitsPerEm;
-        var scale_3 = getTextScale(this._$this_8, size_2);
-        tmp$ret$0 = new GlyphMetrics(size_2, true, -1, Companion_getInstance_44().fromBounds_i6u10_k$(this._xMin * scale_3, this._yMin * scale_3, this._xMax * scale_3, this._yMax * scale_3), this._advanceWidth_0 * scale_3);
+        var size_2 = this._$this_11._unitsPerEm;
+        var scale_3 = getTextScale(this._$this_11, size_2);
+        tmp$ret$0 = new GlyphMetrics(size_2, true, -1, Companion_getInstance_45().fromBounds_i6u10_k$(this._xMin * scale_3, this._yMin * scale_3, this._xMax * scale_3, this._yMax * scale_3), this._advanceWidth_0 * scale_3);
         break $l$block;
       }
       tmp$ret$1 = tmp$ret$0;
@@ -36651,7 +39274,7 @@
     interfaces: []
   };
   function CompositeGlyph($outer, index, xMin, yMin, xMax, yMax, refs, advanceWidth) {
-    this._$this_9 = $outer;
+    this._$this_12 = $outer;
     Glyph.call(this, $outer, index, xMin, yMin, xMax, yMax, advanceWidth);
     this._refs = refs;
     var tmp = this;
@@ -36726,7 +39349,7 @@
     interfaces: []
   };
   function SimpleGlyph($outer, index, xMin, yMin, xMax, yMax, contoursIndices, flags, xPos, yPos, advanceWidth) {
-    this._$this_10 = $outer;
+    this._$this_13 = $outer;
     Glyph.call(this, $outer, index, xMin, yMin, xMax, yMax, advanceWidth);
     this._contoursIndices = contoursIndices;
     this._flags = flags;
@@ -36777,8 +39400,8 @@
                   var cend_4_5_13 = this._contoursIndices[n_2_3_11 + 1 | 0];
                   var csize_5_6_14 = (cend_4_5_13 - cstart_3_4_12 | 0) + 1 | 0;
                   {
-                    var curr_7_7_15 = contour(this, cend_4_5_13, this._$this_10._tempContours[0]);
-                    var next_8_8_16 = contour(this, cstart_3_4_12, this._$this_10._tempContours[1]);
+                    var curr_7_7_15 = contour(this, cend_4_5_13, this._$this_13._tempContours[0]);
+                    var next_8_8_16 = contour(this, cstart_3_4_12, this._$this_13._tempContours[1]);
                     if (curr_7_7_15._onCurve)
                       moveTo(tmp0_also_0_9, curr_7_7_15._x_2, -curr_7_7_15._y_1 | 0);
                     else if (next_8_8_16._onCurve)
@@ -36792,7 +39415,7 @@
                         inductionVariable_1 = inductionVariable_1 + 1 | 0;
                         var prev_11_11_19 = curr_7_7_15;
                         curr_7_7_15 = next_8_8_16;
-                        next_8_8_16 = contour(this, cstart_3_4_12 + (cpos_10_10_18 + 1 | 0) % csize_5_6_14 | 0, this._$this_10._tempContours[(cpos_10_10_18 + 2 | 0) % 3]);
+                        next_8_8_16 = contour(this, cstart_3_4_12 + (cpos_10_10_18 + 1 | 0) % csize_5_6_14 | 0, this._$this_13._tempContours[(cpos_10_10_18 + 2 | 0) % 3]);
                         if (curr_7_7_15._onCurve) {
                           lineTo(tmp0_also_0_9, curr_7_7_15._x_2, -curr_7_7_15._y_1 | 0);
                         } else {
@@ -37034,7 +39657,7 @@
     this._s_1 = s;
     this._freeze = freeze;
     this._extName = extName;
-    this._names = LinkedHashMap_init_$Create$();
+    this._names_0 = LinkedHashMap_init_$Create$();
     var tmp = this;
     var tmp_0 = 0;
     var tmp_1 = 3;
@@ -37069,7 +39692,7 @@
     this._maxSizeOfInstructions = 0;
     this._maxComponentElements = 0;
     this._maxComponentDepth = 0;
-    this._hheaVersion = Companion_getInstance_58().invoke_27zxwg_k$(0, 0);
+    this._hheaVersion = Companion_getInstance_59().invoke_27zxwg_k$(0, 0);
     this._ascender = 0;
     this._descender = 0;
     this._lineGap = 0;
@@ -37083,7 +39706,7 @@
     this._metricDataFormat = 0;
     this._numberOfHMetrics = 0;
     this._locs = new Int32Array(0);
-    this._fontRev = Companion_getInstance_58().invoke_27zxwg_k$(0, 0);
+    this._fontRev = Companion_getInstance_59().invoke_27zxwg_k$(0, 0);
     this._unitsPerEm = 128;
     this._xMin_0 = 0;
     this._yMin_0 = 0;
@@ -37139,7 +39762,7 @@
       }
       {
         var scale_2 = getTextScale(this, 1.0);
-        tmp0_also_0._size_4 = 1.0;
+        tmp0_also_0._size_3 = 1.0;
         tmp0_also_0._top = this._yMax_0 * scale_2;
         tmp0_also_0._ascent = this._ascender * scale_2;
         tmp0_also_0._baseline = 0.0 * scale_2;
@@ -37152,7 +39775,7 @@
       break $l$block_2;
     }
     tmp_6._fontMetrics1px = tmp$ret$3;
-    this._nonExistantGlyphMetrics1px = new GlyphMetrics(1.0, false, 0, Companion_getInstance_44().invoke_0_k$(), 0.0);
+    this._nonExistantGlyphMetrics1px = new GlyphMetrics(1.0, false, 0, Companion_getInstance_45().invoke_0_k$(), 0.0);
   }
   TtfFont.prototype._get_ttfName__0_k$ = function () {
     var tmp0_elvis_lhs = this.getName_dde93m_k$(NameId_NAME_getInstance());
@@ -37167,14 +39790,14 @@
     return '' + 'TtfFont(name=' + this._get_name__0_k$() + ')';
   };
   TtfFont.prototype.readFixed_v83o64_k$ = function (_this__0) {
-    return Companion_getInstance_58().invoke_27zxwg_k$(_this__0.readS16LE_0_k$(), _this__0.readS16LE_0_k$());
+    return Companion_getInstance_59().invoke_27zxwg_k$(_this__0.readS16LE_0_k$(), _this__0.readS16LE_0_k$());
   };
   TtfFont.prototype.openTable_6wfw3l_k$ = function (name) {
     var tmp0_safe_receiver = this._tablesByName.get_2bw_k$(name);
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver.open_0_k$();
   };
   TtfFont.prototype.getName_ha5a7z_k$ = function (nameId) {
-    return this._names.get_2bw_k$(nameId);
+    return this._names_0.get_2bw_k$(nameId);
   };
   TtfFont.prototype.getName_dde93m_k$ = function (nameId) {
     return this.getName_ha5a7z_k$(nameId._id_1);
@@ -37184,9 +39807,9 @@
     var start = tmp0_elvis_lhs == null ? 0 : tmp0_elvis_lhs;
     var tmp1_elvis_lhs = getOrNull(this._locs, index + 1 | 0);
     var end = tmp1_elvis_lhs == null ? start : tmp1_elvis_lhs;
-    var size = end - start | 0;
+    var size_0 = end - start | 0;
     var tmp;
-    if (!(size === 0)) {
+    if (!(size_0 === 0)) {
       var tmp2_elvis_lhs = this._glyphCache.get_ha5a7z_k$(index);
       var tmp_0;
       if (tmp2_elvis_lhs == null) {
@@ -37314,22 +39937,22 @@
     kind: 'class',
     interfaces: [VectorFont]
   };
-  function Companion_59() {
-    Companion_instance_58 = this;
+  function Companion_60() {
+    Companion_instance_59 = this;
   }
-  Companion_59.prototype.invoke_27zxwg_k$ = function (num, den) {
+  Companion_60.prototype.invoke_27zxwg_k$ = function (num, den) {
     return insert(insert(0, num, 0, 16), den, 16, 16);
   };
-  Companion_59.$metadata$ = {
+  Companion_60.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_58;
-  function Companion_getInstance_58() {
-    if (Companion_instance_58 == null)
-      new Companion_59();
-    return Companion_instance_58;
+  var Companion_instance_59;
+  function Companion_getInstance_59() {
+    if (Companion_instance_59 == null)
+      new Companion_60();
+    return Companion_instance_59;
   }
   function VectorFont() {
   }
@@ -37357,7 +39980,7 @@
       return null;
     else {
     }
-    var size = readS32LE_0(s);
+    var size_0 = readS32LE_0(s);
     var reserved1 = readS16LE_0(s);
     var reserved2 = readS16LE_0(s);
     var offBits = readS32LE_0(s);
@@ -37410,7 +40033,7 @@
           do {
             var n = inductionVariable;
             inductionVariable = inductionVariable + 1 | 0;
-            RgbaArray__set_impl(out._get_palette__wd8tzq_k$(), n, Companion_getInstance_57().invoke_aewswh_k$(readS32LE_0(s), 255));
+            RgbaArray__set_impl(out._get_palette__wd8tzq_k$(), n, Companion_getInstance_58().invoke_aewswh_k$(readS32LE_0(s), 255));
           }
            while (inductionVariable < 256);
         var inductionVariable_0 = 0;
@@ -37500,17 +40123,17 @@
     return BMP_instance;
   }
   var fourcc$delegate;
-  function _no_name_provided__160() {
+  function _no_name_provided__173() {
   }
-  _no_name_provided__160.prototype.invoke_0_k$ = function () {
+  _no_name_provided__173.prototype.invoke_0_k$ = function () {
     return '    ';
   };
-  _no_name_provided__160.$metadata$ = {
+  _no_name_provided__173.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_133() {
-    var i = new _no_name_provided__160();
+  function _no_name_provided_$factory_145() {
+    var i = new _no_name_provided__173();
     return function () {
       return i.invoke_0_k$();
     };
@@ -37563,7 +40186,7 @@
       var tmp$ret$1;
       $l$block_0: {
         var tmp0__get_milliseconds__0 = imul(gif._gce._delay + 1 | 0, 10);
-        tmp$ret$1 = Companion_getInstance_20().fromMilliseconds_ttklb2_k$(tmp0__get_milliseconds__0);
+        tmp$ret$1 = Companion_getInstance_21().fromMilliseconds_ttklb2_k$(tmp0__get_milliseconds__0);
         break $l$block_0;
       }
       var time = tmp$ret$1;
@@ -37601,16 +40224,16 @@
       new GIF();
     return GIF_instance;
   }
-  function gd_Palette_init_$Init$(size, colors, $mask0, $marker, $this) {
+  function gd_Palette_init_$Init$(size_0, colors, $mask0, $marker, $this) {
     if (!(($mask0 & 1) === 0))
-      size = 0;
+      size_0 = 0;
     if (!(($mask0 & 2) === 0))
-      colors = Companion_getInstance_56().invoke_spsmd3_k$(256);
-    gd_Palette.call($this, size, colors);
+      colors = Companion_getInstance_57().invoke_spsmd3_k$(256);
+    gd_Palette.call($this, size_0, colors);
     return $this;
   }
-  function gd_Palette_init_$Create$(size, colors, $mask0, $marker) {
-    return gd_Palette_init_$Init$(size, colors, $mask0, $marker, Object.create(gd_Palette.prototype));
+  function gd_Palette_init_$Create$(size_0, colors, $mask0, $marker) {
+    return gd_Palette_init_$Init$(size_0, colors, $mask0, $marker, Object.create(gd_Palette.prototype));
   }
   function gd_GCE_init_$Init$(delay, tindex, disposal, input, transparency, $mask0, $marker, $this) {
     if (!(($mask0 & 1) === 0))
@@ -37665,7 +40288,7 @@
     if (!(($mask0 & 131072) === 0))
       bgindex = 0;
     if (!(($mask0 & 262144) === 0))
-      canvas = Companion_getInstance_56().invoke_spsmd3_k$(0);
+      canvas = Companion_getInstance_57().invoke_spsmd3_k$(0);
     if (!(($mask0 & 524288) === 0))
       frame = _UByteArray___init__impl__0(0);
     gd_GIF.call($this, fd, anim_start, width, height, depth, loop_count, gce, palette, lct, gct, plain_text, comment, application, fx, fy, fw, fh, bgindex, canvas, frame);
@@ -37700,8 +40323,8 @@
   function KeyState_init_$Create$(sub_len, shift, byte, $mask0, $marker) {
     return KeyState_init_$Init$(sub_len, shift, byte, $mask0, $marker, Object.create(KeyState.prototype));
   }
-  function gd_Palette(size, colors) {
-    this._size_6 = size;
+  function gd_Palette(size_0, colors) {
+    this._size_5 = size_0;
     this._colors = colors;
   }
   gd_Palette.$metadata$ = {
@@ -37878,14 +40501,14 @@
     var bgidx = readU8_1(fd);
     var aspect = readU8_1(fd);
     var tmp = new Long(0, 0);
-    var gif = gd_GIF_init_$Create$(fd, tmp, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, Companion_getInstance_56().invoke_spsmd3_k$(imul(width, height)), _UByteArray___init__impl__0(imul(width, height)), 262142, null);
+    var gif = gd_GIF_init_$Create$(fd, tmp, 0, 0, 0, 0, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, Companion_getInstance_57().invoke_spsmd3_k$(imul(width, height)), _UByteArray___init__impl__0(imul(width, height)), 262142, null);
     gif._fd = fd;
     gif._width_1 = width;
     gif._height_1 = height;
     gif._depth = depth;
-    gif._gct._size_6 = gct_sz;
+    gif._gct._size_5 = gct_sz;
     var inductionVariable = 0;
-    var last_0 = gif._gct._size_6;
+    var last_0 = gif._gct._size_5;
     if (inductionVariable < last_0)
       do {
         var n = inductionVariable;
@@ -37893,7 +40516,7 @@
         var r = readU8_1(fd);
         var g = readU8_1(fd);
         var b = readU8_1(fd);
-        RgbaArray__set_impl(gif._gct._colors, n, Companion_getInstance_57().invoke_6v5qfk_k$(r, g, b));
+        RgbaArray__set_impl(gif._gct._colors, n, Companion_getInstance_58().invoke_6v5qfk_k$(r, g, b));
       }
        while (inductionVariable < last_0);
     gif._palette_0 = gif._gct;
@@ -37912,11 +40535,11 @@
   };
   GifDec.prototype.discard_sub_blocks_t81dvv_k$ = function (gif) {
     do {
-      var size = readU8_1(gif._fd);
-      this.lseek_2drq3l_k$(gif._fd, toLong(size), this._SEEK_CUR);
+      var size_0 = readU8_1(gif._fd);
+      this.lseek_2drq3l_k$(gif._fd, toLong(size_0), this._SEEK_CUR);
       Unit_getInstance();
     }
-     while (!(size === 0));
+     while (!(size_0 === 0));
   };
   GifDec.prototype.read_plain_text_ext_t81dvv_k$ = function (gif) {
     var plain_text = gif._plain_text;
@@ -38224,9 +40847,9 @@
     var fisrz = readU8_1(gif._fd);
     var interlace = !((fisrz & 64) === 0);
     if (!((fisrz & 128) === 0)) {
-      gif._lct._size_6 = 1 << ((fisrz & 7) + 1 | 0);
+      gif._lct._size_5 = 1 << ((fisrz & 7) + 1 | 0);
       var inductionVariable = 0;
-      var last_0 = gif._lct._size_6;
+      var last_0 = gif._lct._size_5;
       if (inductionVariable < last_0)
         do {
           var n = inductionVariable;
@@ -38234,7 +40857,7 @@
           var r = readU8_1(gif._fd);
           var g = readU8_1(gif._fd);
           var b = readU8_1(gif._fd);
-          RgbaArray__set_impl(gif._lct._colors, n, Companion_getInstance_57().invoke_6v5qfk_k$(r, g, b));
+          RgbaArray__set_impl(gif._lct._colors, n, Companion_getInstance_58().invoke_6v5qfk_k$(r, g, b));
         }
          while (inductionVariable < last_0);
       gif._palette_0 = gif._lct;
@@ -38388,9 +41011,9 @@
     kind: 'class',
     interfaces: [Comparator]
   };
-  function _no_name_provided__161() {
+  function _no_name_provided__174() {
   }
-  _no_name_provided__161.prototype.invoke_7j2v4_k$ = function (a, b) {
+  _no_name_provided__174.prototype.invoke_7j2v4_k$ = function (a, b) {
     var tmp$ret$2;
     $l$block_1: {
       var tmp$ret$0;
@@ -38421,11 +41044,11 @@
     }
     return tmp$ret$2;
   };
-  _no_name_provided__161.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__174.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = p1 instanceof ImageFrame ? p1 : THROW_CCE();
     return this.invoke_7j2v4_k$(tmp, p2 instanceof ImageFrame ? p2 : THROW_CCE());
   };
-  _no_name_provided__161.$metadata$ = {
+  _no_name_provided__174.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -38443,7 +41066,7 @@
       var tmp0_sortedBy_0 = this._frames;
       var tmp$ret$0;
       $l$block: {
-        var tmp = _no_name_provided_$factory_134();
+        var tmp = _no_name_provided_$factory_146();
         tmp$ret$0 = new sam$kotlin_Comparator$0_0(tmp);
         break $l$block;
       }
@@ -38468,8 +41091,8 @@
     kind: 'class',
     interfaces: [Extra]
   };
-  function _no_name_provided_$factory_134() {
-    var i = new _no_name_provided__161();
+  function _no_name_provided_$factory_146() {
+    var i = new _no_name_provided__174();
     return function (p1, p2) {
       return i.invoke_7j2v4_k$(p1, p2);
     };
@@ -38892,7 +41515,7 @@
       var tmp$ret$0;
       var tmp$ret$0_0;
       $l$block: {
-        tmp$ret$0 = Companion_getInstance_20().fromSeconds_ttklb2_k$(0.0);
+        tmp$ret$0 = Companion_getInstance_21().fromSeconds_ttklb2_k$(0.0);
         tmp$ret$0_0 = Unit_getInstance();
         break $l$block;
       }
@@ -39012,8 +41635,8 @@
   var Colorspace_INDEXED_instance;
   var Colorspace_GRAYSCALE_ALPHA_instance;
   var Colorspace_RGBA_instance;
-  function Companion_60() {
-    Companion_instance_59 = this;
+  function Companion_61() {
+    Companion_instance_60 = this;
     var tmp = this;
     var tmp$ret$2;
     $l$block_1: {
@@ -39044,16 +41667,16 @@
     }
     tmp._BY_ID_0 = tmp$ret$2;
   }
-  Companion_60.$metadata$ = {
+  Companion_61.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_59;
-  function Companion_getInstance_59() {
-    if (Companion_instance_59 == null)
-      new Companion_60();
-    return Companion_instance_59;
+  var Companion_instance_60;
+  function Companion_getInstance_60() {
+    if (Companion_instance_60 == null)
+      new Companion_61();
+    return Companion_instance_60;
   }
   function values_1() {
     return [Colorspace_GRAYSCALE_getInstance(), Colorspace_RGB_getInstance(), Colorspace_INDEXED_getInstance(), Colorspace_GRAYSCALE_ALPHA_getInstance(), Colorspace_RGBA_getInstance()];
@@ -39068,7 +41691,7 @@
     Colorspace_INDEXED_instance = new Colorspace('INDEXED', 2, 3);
     Colorspace_GRAYSCALE_ALPHA_instance = new Colorspace('GRAYSCALE_ALPHA', 3, 4);
     Colorspace_RGBA_instance = new Colorspace('RGBA', 4, 6);
-    Companion_getInstance_59();
+    Companion_getInstance_60();
   }
   function InterlacedPass(startingRow, startingCol, rowIncrement, colIncrement, blockHeight, blockWidth) {
     this._startingRow = startingRow;
@@ -39206,7 +41829,7 @@
     var height = header._height_5;
     var outputSizeHint = imul(imul(1 + width | 0, height), header._components);
     var tmp_4 = pngdata.toByteArray_0_k$();
-    var tmp_5 = Companion_getInstance_29();
+    var tmp_5 = Companion_getInstance_30();
     var databb = uncompress$default(tmp_4, tmp_5, 0, 2, null);
     var databbp = 0;
     var context = new DecodingContext(header);
@@ -39228,7 +41851,7 @@
               inductionVariable = inductionVariable + 1 | 0;
               var tmp$ret$1;
               $l$block_0: {
-                tmp$ret$1 = _RGBA___get_value__impl_(Companion_getInstance_57().invoke_fnl2i9_k$(UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 0 | 0), UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 1 | 0), UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 2 | 0), UByteArrayInt__get_impl(aPalette, item_2_3)));
+                tmp$ret$1 = _RGBA___get_value__impl_(Companion_getInstance_58().invoke_fnl2i9_k$(UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 0 | 0), UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 1 | 0), UByteArrayInt__get_impl(rgbPalette, imul(item_2_3, 3) + 2 | 0), UByteArrayInt__get_impl(aPalette, item_2_3)));
                 break $l$block_0;
               }
               tmp0_mapTo_0_1.add_2bq_k$(tmp$ret$1);
@@ -39340,12 +41963,12 @@
               var tmp10_subject = bpp;
               switch (tmp10_subject) {
                 case 3:
-                  var tmp_7 = Companion_getInstance_55();
+                  var tmp_7 = Companion_getInstance_56();
                   var tmp_8 = asByteArray(currentRow);
                   decode$default(tmp_7, tmp_8, 0, row32, 0, pixelsInThisRow, false, 32, null);
                   break;
                 case 4:
-                  var tmp_9 = Companion_getInstance_57();
+                  var tmp_9 = Companion_getInstance_58();
                   var tmp_10 = asByteArray(currentRow);
                   decode$default(tmp_9, tmp_10, 0, row32, 0, pixelsInThisRow, false, 32, null);
                   break;
@@ -39367,7 +41990,7 @@
     this._header = header;
     this._lastRow = UByteArrayInt(this._header._stride);
     this._currentRow = UByteArrayInt(this._header._stride);
-    this._row32 = Companion_getInstance_56().invoke_spsmd3_k$(this._header._width_5);
+    this._row32 = Companion_getInstance_57().invoke_spsmd3_k$(this._header._width_5);
   }
   DecodingContext.prototype.swapRows_sv8swh_k$ = function () {
     var temp = this._currentRow;
@@ -39394,7 +42017,7 @@
     write32BE_1($s, crc);
   }
   function writeImage$compress(level, data) {
-    var tmp = Companion_getInstance_29();
+    var tmp = Companion_getInstance_30();
     var tmp_0 = new CompressionContext(level);
     return compress$default(data, tmp, tmp_0, 0, 4, null);
   }
@@ -39412,7 +42035,7 @@
     return writeImage$writeChunk($s, name, tmp$ret$0);
   }
   function writeImage$writeHeader(width, height, $s, colorspace) {
-    writeImage$writeChunk_0($s, 'IHDR', 13, _no_name_provided_$factory_138(width, height, colorspace));
+    writeImage$writeChunk_0($s, 'IHDR', 13, _no_name_provided_$factory_150(width, height, colorspace));
   }
   function readCommon$readChunk(_this_, pheader, paletteCount, rgbPalette, aPalette, pngdata) {
     var length = readS32BE_0(_this_);
@@ -39431,7 +42054,7 @@
             var tmp = readS32BE_0(data);
             var tmp_0 = readS32BE_0(data);
             var tmp_1 = readU8_1(data);
-            var tmp0_elvis_lhs_2 = Companion_getInstance_59()._BY_ID_0.get_2bw_k$(readU8_1(data));
+            var tmp0_elvis_lhs_2 = Companion_getInstance_60()._BY_ID_0.get_2bw_k$(readU8_1(data));
             tmp$ret$0 = new Header(tmp, tmp_0, tmp_1, tmp0_elvis_lhs_2 == null ? Colorspace_RGBA_getInstance() : tmp0_elvis_lhs_2, readU8_1(data), readU8_1(data), readU8_1(data));
             break $l$block;
           }
@@ -39476,63 +42099,63 @@
     }
     return true;
   }
-  function _no_name_provided__162($bitmap) {
+  function _no_name_provided__175($bitmap) {
     this._$bitmap = $bitmap;
   }
-  _no_name_provided__162.prototype.invoke_tk82hz_k$ = function ($this$writeChunk) {
+  _no_name_provided__175.prototype.invoke_tk82hz_k$ = function ($this$writeChunk) {
     var tmp0_iterator = RgbaArray__iterator_impl(this._$bitmap._get_palette__wd8tzq_k$());
     while (tmp0_iterator.hasNext_0_k$()) {
-      var c = tmp0_iterator.next_0_k$()._value_11;
+      var c = tmp0_iterator.next_0_k$()._value_12;
       write8_1($this$writeChunk, _RGBA___get_r__impl_(c));
       write8_1($this$writeChunk, _RGBA___get_g__impl_(c));
       write8_1($this$writeChunk, _RGBA___get_b__impl_(c));
     }
   };
-  _no_name_provided__162.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__175.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_tk82hz_k$(p1 instanceof SyncStream ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__162.$metadata$ = {
+  _no_name_provided__175.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__163($bitmap) {
+  function _no_name_provided__176($bitmap) {
     this._$bitmap_0 = $bitmap;
   }
-  _no_name_provided__163.prototype.invoke_tk82hz_k$ = function ($this$writeChunk) {
+  _no_name_provided__176.prototype.invoke_tk82hz_k$ = function ($this$writeChunk) {
     var tmp0_iterator = RgbaArray__iterator_impl(this._$bitmap_0._get_palette__wd8tzq_k$());
     while (tmp0_iterator.hasNext_0_k$()) {
-      var c = tmp0_iterator.next_0_k$()._value_11;
+      var c = tmp0_iterator.next_0_k$()._value_12;
       write8_1($this$writeChunk, _RGBA___get_a__impl_(c));
     }
   };
-  _no_name_provided__163.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__176.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_tk82hz_k$(p1 instanceof SyncStream ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__163.$metadata$ = {
+  _no_name_provided__176.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__164() {
+  function _no_name_provided__177() {
   }
-  _no_name_provided__164.prototype.invoke_tk82hz_k$ = function ($this$writeChunk) {
+  _no_name_provided__177.prototype.invoke_tk82hz_k$ = function ($this$writeChunk) {
     return Unit_getInstance();
   };
-  _no_name_provided__164.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__177.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_tk82hz_k$(p1 instanceof SyncStream ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__164.$metadata$ = {
+  _no_name_provided__177.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__165($width, $height, $colorspace) {
+  function _no_name_provided__178($width, $height, $colorspace) {
     this._$width = $width;
     this._$height = $height;
     this._$colorspace = $colorspace;
   }
-  _no_name_provided__165.prototype.invoke_tk82hz_k$ = function ($this$writeChunk) {
+  _no_name_provided__178.prototype.invoke_tk82hz_k$ = function ($this$writeChunk) {
     write32BE_1($this$writeChunk, this._$width);
     write32BE_1($this$writeChunk, this._$height);
     write8_1($this$writeChunk, 8);
@@ -39541,11 +42164,11 @@
     write8_1($this$writeChunk, 0);
     write8_1($this$writeChunk, 0);
   };
-  _no_name_provided__165.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__178.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_tk82hz_k$(p1 instanceof SyncStream ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__165.$metadata$ = {
+  _no_name_provided__178.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -39620,9 +42243,9 @@
     if (tmp0_subject instanceof Bitmap8) {
       writeImage$writeHeader(width, height, s, Colorspace_INDEXED_getInstance());
       var tmp = imul(_RgbaArray___get_size__impl_(bitmap._get_palette__wd8tzq_k$()), 3);
-      writeImage$writeChunk_0(s, 'PLTE', tmp, _no_name_provided_$factory_135(bitmap));
+      writeImage$writeChunk_0(s, 'PLTE', tmp, _no_name_provided_$factory_147(bitmap));
       var tmp_0 = imul(_RgbaArray___get_size__impl_(bitmap._get_palette__wd8tzq_k$()), 1);
-      writeImage$writeChunk_0(s, 'tRNS', tmp_0, _no_name_provided_$factory_136(bitmap));
+      writeImage$writeChunk_0(s, 'tRNS', tmp_0, _no_name_provided_$factory_148(bitmap));
       var out = new Int8Array(height + imul(width, height) | 0);
       var pos = 0;
       var inductionVariable = 0;
@@ -39679,7 +42302,7 @@
         writeImage$writeChunk(s, 'IDAT', writeImage$compress(level, out_0));
       }
     }
-    writeImage$writeChunk_0(s, 'IEND', 0, _no_name_provided_$factory_137());
+    writeImage$writeChunk_0(s, 'IEND', 0, _no_name_provided_$factory_149());
   };
   PNG.prototype.readImage_55aaqy_k$ = function (s, props) {
     var tmp = readCommon(this, s, false);
@@ -39694,7 +42317,7 @@
     var pc = abs(p - c | 0);
     return (pa <= pb ? pa <= pc : false) ? a : pb <= pc ? b : c;
   };
-  PNG.prototype.applyFilter_1n193w_k$ = function (filter, p, c, bpp, size) {
+  PNG.prototype.applyFilter_1n193w_k$ = function (filter, p, c, bpp, size_0) {
     var tmp0_subject = filter;
     switch (tmp0_subject) {
       case 0:
@@ -39702,7 +42325,7 @@
         break;
       case 1:
         var inductionVariable = bpp;
-        if (inductionVariable < size)
+        if (inductionVariable < size_0)
           do {
             var n = inductionVariable;
             inductionVariable = inductionVariable + 1 | 0;
@@ -39710,11 +42333,11 @@
             var tmp3_index0 = n;
             UByteArrayInt__set_impl(tmp2_array, tmp3_index0, UByteArrayInt__get_impl(tmp2_array, tmp3_index0) + UByteArrayInt__get_impl(c, n - bpp | 0) | 0);
           }
-           while (inductionVariable < size);
+           while (inductionVariable < size_0);
         break;
       case 2:
         var inductionVariable_0 = 0;
-        if (inductionVariable_0 < size)
+        if (inductionVariable_0 < size_0)
           do {
             var n_0 = inductionVariable_0;
             inductionVariable_0 = inductionVariable_0 + 1 | 0;
@@ -39722,7 +42345,7 @@
             var tmp6_index0 = n_0;
             UByteArrayInt__set_impl(tmp5_array, tmp6_index0, UByteArrayInt__get_impl(tmp5_array, tmp6_index0) + UByteArrayInt__get_impl(p, n_0) | 0);
           }
-           while (inductionVariable_0 < size);
+           while (inductionVariable_0 < size_0);
         break;
       case 3:
         var inductionVariable_1 = 0;
@@ -39736,7 +42359,7 @@
           }
            while (inductionVariable_1 < bpp);
         var inductionVariable_2 = bpp;
-        if (inductionVariable_2 < size)
+        if (inductionVariable_2 < size_0)
           do {
             var n_2 = inductionVariable_2;
             inductionVariable_2 = inductionVariable_2 + 1 | 0;
@@ -39744,7 +42367,7 @@
             var tmp12_index0 = n_2;
             UByteArrayInt__set_impl(tmp11_array, tmp12_index0, UByteArrayInt__get_impl(tmp11_array, tmp12_index0) + ((UByteArrayInt__get_impl(c, n_2 - bpp | 0) + UByteArrayInt__get_impl(p, n_2) | 0) / 2 | 0) | 0);
           }
-           while (inductionVariable_2 < size);
+           while (inductionVariable_2 < size_0);
         break;
       case 4:
         var inductionVariable_3 = 0;
@@ -39758,7 +42381,7 @@
           }
            while (inductionVariable_3 < bpp);
         var inductionVariable_4 = bpp;
-        if (inductionVariable_4 < size)
+        if (inductionVariable_4 < size_0)
           do {
             var n_4 = inductionVariable_4;
             inductionVariable_4 = inductionVariable_4 + 1 | 0;
@@ -39766,16 +42389,16 @@
             var tmp18_index0 = n_4;
             UByteArrayInt__set_impl(tmp17_array, tmp18_index0, UByteArrayInt__get_impl(tmp17_array, tmp18_index0) + this.paethPredictor_fcwjfj_k$(UByteArrayInt__get_impl(c, n_4 - bpp | 0), UByteArrayInt__get_impl(p, n_4), UByteArrayInt__get_impl(p, n_4 - bpp | 0)) | 0);
           }
-           while (inductionVariable_4 < size);
+           while (inductionVariable_4 < size_0);
         break;
       default:var tmp0_TODO_0 = '' + 'Filter: ' + filter;
         throw new NotImplementedError('' + 'An operation is not implemented: ' + tmp0_TODO_0);
     }
   };
-  PNG.prototype.applyFilter$default_gs58v0_k$ = function (filter, p, c, bpp, size, $mask0, $handler) {
+  PNG.prototype.applyFilter$default_gs58v0_k$ = function (filter, p, c, bpp, size_0, $mask0, $handler) {
     if (!(($mask0 & 16) === 0))
-      size = _UByteArrayInt___get_size__impl_(c);
-    return this.applyFilter_1n193w_k$(filter, p, c, bpp, size);
+      size_0 = _UByteArrayInt___get_size__impl_(c);
+    return this.applyFilter_1n193w_k$(filter, p, c, bpp, size_0);
   };
   PNG.$metadata$ = {
     simpleName: 'PNG',
@@ -39788,29 +42411,29 @@
       new PNG();
     return PNG_instance;
   }
-  function _no_name_provided_$factory_135($bitmap) {
-    var i = new _no_name_provided__162($bitmap);
+  function _no_name_provided_$factory_147($bitmap) {
+    var i = new _no_name_provided__175($bitmap);
     return function (p1) {
       i.invoke_tk82hz_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_136($bitmap) {
-    var i = new _no_name_provided__163($bitmap);
+  function _no_name_provided_$factory_148($bitmap) {
+    var i = new _no_name_provided__176($bitmap);
     return function (p1) {
       i.invoke_tk82hz_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_137() {
-    var i = new _no_name_provided__164();
+  function _no_name_provided_$factory_149() {
+    var i = new _no_name_provided__177();
     return function (p1) {
       i.invoke_tk82hz_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_138($width, $height, $colorspace) {
-    var i = new _no_name_provided__165($width, $height, $colorspace);
+  function _no_name_provided_$factory_150($width, $height, $colorspace) {
+    var i = new _no_name_provided__178($width, $height, $colorspace);
     return function (p1) {
       i.invoke_tk82hz_k$(p1);
       return Unit_getInstance();
@@ -39879,7 +42502,7 @@
               break $l$block_3;
             }
             var a = tmp$ret$4;
-            RgbaArray__set_impl(out._data_8, pos, Companion_getInstance_57().invoke_fnl2i9_k$(r, g, b, a));
+            RgbaArray__set_impl(out._data_8, pos, Companion_getInstance_58().invoke_fnl2i9_k$(r, g, b, a));
             var tmp6 = pos;
             pos = tmp6 + 1 | 0;
             Unit_getInstance();
@@ -39966,9 +42589,9 @@
             var inductionVariable_2 = 0;
             var last_1 = indexedObject.length;
             while (inductionVariable_2 < last_1) {
-              var size = indexedObject[inductionVariable_2];
+              var size_0 = indexedObject[inductionVariable_2];
               inductionVariable_2 = inductionVariable_2 + 1 | 0;
-              var end = _this_._get_position__0_k$() + size | 0;
+              var end = _this_._get_position__0_k$() + size_0 | 0;
               while (_this_._get_position__0_k$() < end) {
                 var len = _this_.readU8_0_k$();
                 if (len >= 128) {
@@ -40291,10 +42914,10 @@
     var tmp;
     switch (tmp0_subject) {
       case 24:
-        tmp = Companion_getInstance_55();
+        tmp = Companion_getInstance_56();
         break;
       case 32:
-        tmp = Companion_getInstance_57();
+        tmp = Companion_getInstance_58();
         break;
       default:throw new NotImplementedError('An operation is not implemented: Not a RGBA tga');
     }
@@ -40322,7 +42945,7 @@
         var m = 0;
         var tmp1_iterator = RgbaArray__iterator_impl(bmp._data_8);
         while (tmp1_iterator.hasNext_0_k$()) {
-          var c = tmp1_iterator.next_0_k$()._value_11;
+          var c = tmp1_iterator.next_0_k$()._value_12;
           var tmp2 = m;
           m = tmp2 + 1 | 0;
           data[tmp2] = toByte(_RGBA___get_b__impl_(c));
@@ -40389,50 +43012,50 @@
     interfaces: []
   };
   function CreateStringTextRenderer(getVersion, handler) {
-    return new _no_name_provided__168(getVersion, handler);
+    return new _no_name_provided__181(getVersion, handler);
   }
   function CreateStringTextRenderer$default(getVersion, handler, $mask0, $handler) {
     if (!(($mask0 & 1) === 0)) {
-      getVersion = _no_name_provided_$factory_140();
+      getVersion = _no_name_provided_$factory_152();
     }return CreateStringTextRenderer(getVersion, handler);
   }
-  function _no_name_provided__166() {
+  function _no_name_provided__179() {
   }
-  _no_name_provided__166.prototype.invoke_vzf3w2_k$ = function ($this$CreateStringTextRenderer, text, n, c, c1, g, advance) {
+  _no_name_provided__179.prototype.invoke_vzf3w2_k$ = function ($this$CreateStringTextRenderer, text, n, c, c1, g, advance) {
     $this$CreateStringTextRenderer.put_ha5a7z_k$(c);
     Unit_getInstance();
     $this$CreateStringTextRenderer.advance_okcceq_k$(advance);
   };
-  _no_name_provided__166.$metadata$ = {
+  _no_name_provided__179.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__167() {
+  function _no_name_provided__180() {
   }
-  _no_name_provided__167.prototype.invoke_0_k$ = function () {
+  _no_name_provided__180.prototype.invoke_0_k$ = function () {
     return 0;
   };
-  _no_name_provided__167.$metadata$ = {
+  _no_name_provided__180.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__168($getVersion, $handler) {
+  function _no_name_provided__181($getVersion, $handler) {
     this._$getVersion = $getVersion;
     this._$handler = $handler;
   }
-  _no_name_provided__168.$metadata$ = {
+  _no_name_provided__181.$metadata$ = {
     kind: 'class',
     interfaces: [TextRenderer]
   };
-  function _no_name_provided_$factory_139() {
-    var i = new _no_name_provided__166();
+  function _no_name_provided_$factory_151() {
+    var i = new _no_name_provided__179();
     return function (p1, p2, p3, p4, p5, p6, p7) {
       i.invoke_vzf3w2_k$(p1, p2, p3, p4, p5, p6, p7);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_140() {
-    var i = new _no_name_provided__167();
+  function _no_name_provided_$factory_152() {
+    var i = new _no_name_provided__180();
     return function () {
       return i.invoke_0_k$();
     };
@@ -40604,9 +43227,9 @@
   var tempI;
   var temp8;
   var isLittleEndian$delegate;
-  function _no_name_provided__169() {
+  function _no_name_provided__182() {
   }
-  _no_name_provided__169.prototype.invoke_0_k$ = function () {
+  _no_name_provided__182.prototype.invoke_0_k$ = function () {
     var tmp$ret$0;
     $l$block: {
       var tmp0_also_0 = RegisteredImageFormats_getInstance();
@@ -40620,7 +43243,7 @@
     }
     return tmp$ret$0;
   };
-  _no_name_provided__169.$metadata$ = {
+  _no_name_provided__182.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -40628,7 +43251,7 @@
     NodeJsNativeImageFormatProvider_instance = this;
     BaseNativeImageFormatProvider.call(this);
     var tmp = this;
-    tmp._formats$delegate = lazy(_no_name_provided_$factory_142());
+    tmp._formats$delegate = lazy(_no_name_provided_$factory_154());
   }
   NodeJsNativeImageFormatProvider.$metadata$ = {
     simpleName: 'NodeJsNativeImageFormatProvider',
@@ -40656,9 +43279,9 @@
       new HtmlNativeImageFormatProvider();
     return HtmlNativeImageFormatProvider_instance;
   }
-  function _no_name_provided__170() {
+  function _no_name_provided__183() {
   }
-  _no_name_provided__170.prototype.invoke_0_k$ = function () {
+  _no_name_provided__183.prototype.invoke_0_k$ = function () {
     {
       var tmp0_set_0 = tempI;
       var tmp$ret$0;
@@ -40681,18 +43304,18 @@
     }
     return tmp$ret$2 === 1;
   };
-  _no_name_provided__170.$metadata$ = {
+  _no_name_provided__183.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_141() {
-    var i = new _no_name_provided__170();
+  function _no_name_provided_$factory_153() {
+    var i = new _no_name_provided__183();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_142() {
-    var i = new _no_name_provided__169();
+  function _no_name_provided_$factory_154() {
+    var i = new _no_name_provided__182();
     return function () {
       return i.invoke_0_k$();
     };
@@ -40702,7 +43325,7 @@
   }
   function compileSprite($this, image, keepBlack, colorEncoding, callback) {
     var tmp0_elvis_lhs = colorEncoding;
-    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_69()._ENCODING_DEFAULT : tmp0_elvis_lhs;
+    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_70()._ENCODING_DEFAULT : tmp0_elvis_lhs;
     var imagesBytes = imul(imul(image._get_width__0_k$(), image._get_height__0_k$()), 2);
     var trueWidth = image._get_width__0_k$();
     var trueHeight = image._get_height__0_k$();
@@ -40768,7 +43391,7 @@
         }
         var tmp$ret$2;
         $l$block_1: {
-          tmp$ret$2 = _no_name_provided_$factory_145(tmp1_safe_receiver);
+          tmp$ret$2 = _no_name_provided_$factory_157(tmp1_safe_receiver);
           break $l$block_1;
         }
         tmp$ret$3 = tmp$ret$2;
@@ -40801,7 +43424,7 @@
                   var index_2_5 = inductionVariable_1;
                   inductionVariable_1 = inductionVariable_1 + 1 | 0;
                   {
-                    writeCompiledSprite(BLKCompiler_getInstance(), image, trueWidth, trueHeight, index_2_0, index_2_5, buffer, Companion_getInstance_60().getBlack_vcj5fe_k$(keepBlack), encoding._get_toInt__0_k$());
+                    writeCompiledSprite(BLKCompiler_getInstance(), image, trueWidth, trueHeight, index_2_0, index_2_5, buffer, Companion_getInstance_61().getBlack_vcj5fe_k$(keepBlack), encoding._get_toInt__0_k$());
                     Unit_getInstance();
                     var tmp0_safe_receiver_4_6 = actualCallback;
                     if (tmp0_safe_receiver_4_6 == null)
@@ -40891,25 +43514,25 @@
       }}
     return written;
   }
-  function _no_name_provided__171($callback) {
+  function _no_name_provided__184($callback) {
     this._$callback = $callback;
   }
-  _no_name_provided__171.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__184.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback;
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, current, total);
   };
-  _no_name_provided__171.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__184.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__171.$metadata$ = {
+  _no_name_provided__184.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__172($callback) {
+  function _no_name_provided__185($callback) {
     this._$callback_0 = $callback;
   }
-  _no_name_provided__172.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__185.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_0;
     if ((tmp0_safe_receiver == null ? null : tmp0_safe_receiver(current, total)) === false) {
       throw SpriteCompilerCancelledException_init_$Create$('Cancelled BLK compiler during compile phase', null, 2, null);
@@ -40917,27 +43540,27 @@
     }
     return true;
   };
-  _no_name_provided__172.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__185.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__172.$metadata$ = {
+  _no_name_provided__185.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__173($tmp1_safe_receiver) {
+  function _no_name_provided__186($tmp1_safe_receiver) {
     this._$tmp1_safe_receiver = $tmp1_safe_receiver;
   }
-  _no_name_provided__173.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__186.prototype.invoke_27zxwg_k$ = function (current, total) {
     if (this._$tmp1_safe_receiver(current, total) === false) {
       throw SpriteCompilerCancelledException_init_$Create$('BLK compilation cancelled during compiler phase', null, 2, null);
     }return true;
   };
-  _no_name_provided__173.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__186.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__173.$metadata$ = {
+  _no_name_provided__186.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -40972,13 +43595,13 @@
     else
       tmp2_safe_receiver(1, 1, 1);
     Unit_getInstance();
-    return compileSprite(this, bitmap, keepBlack, colorEncoding, _no_name_provided_$factory_143(callback));
+    return compileSprite(this, bitmap, keepBlack, colorEncoding, _no_name_provided_$factory_155(callback));
   };
   BLKCompiler.prototype.compileSpriteFromLoadedImages_kx4ton_k$ = function (images, keepBlack, colorEncoding, callback) {
     if (images._get_size__0_k$() > 1) {
       throw Exception_init_$Create$('BLK compiler can only compile one image at a time');
     }var tmp = first(images);
-    return compileSprite(this, tmp, keepBlack, colorEncoding, _no_name_provided_$factory_144(callback));
+    return compileSprite(this, tmp, keepBlack, colorEncoding, _no_name_provided_$factory_156(callback));
   };
   BLKCompiler.$metadata$ = {
     simpleName: 'BLKCompiler',
@@ -40991,20 +43614,20 @@
       new BLKCompiler();
     return BLKCompiler_instance;
   }
-  function _no_name_provided_$factory_143($callback) {
-    var i = new _no_name_provided__171($callback);
+  function _no_name_provided_$factory_155($callback) {
+    var i = new _no_name_provided__184($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_144($callback) {
-    var i = new _no_name_provided__172($callback);
+  function _no_name_provided_$factory_156($callback) {
+    var i = new _no_name_provided__185($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_145($tmp1_safe_receiver) {
-    var i = new _no_name_provided__173($tmp1_safe_receiver);
+  function _no_name_provided_$factory_157($tmp1_safe_receiver) {
+    var i = new _no_name_provided__186($tmp1_safe_receiver);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
@@ -41128,10 +43751,10 @@
     Unit_getInstance();
     return new Pair(thisBuffer._get_bytes__0_k$(), lineOffsets);
   }
-  function _no_name_provided__174($callback) {
+  function _no_name_provided__187($callback) {
     this._$callback_1 = $callback;
   }
-  _no_name_provided__174.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__187.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_1;
     if ((tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, current, total)) === false) {
       throw SpriteCompilerCancelledException_init_$Create$('Cancelled compilation of C16 during image read', null, 2, null);
@@ -41139,42 +43762,42 @@
     }
     return true;
   };
-  _no_name_provided__174.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__187.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__174.$metadata$ = {
+  _no_name_provided__187.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__175($callback) {
+  function _no_name_provided__188($callback) {
     this._$callback_2 = $callback;
   }
-  _no_name_provided__175.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__188.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_2;
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, current, total);
   };
-  _no_name_provided__175.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__188.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__175.$metadata$ = {
+  _no_name_provided__188.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__176($tmp2_safe_receiver) {
+  function _no_name_provided__189($tmp2_safe_receiver) {
     this._$tmp2_safe_receiver = $tmp2_safe_receiver;
   }
-  _no_name_provided__176.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__189.prototype.invoke_27zxwg_k$ = function (current, total) {
     if (this._$tmp2_safe_receiver(current, total) === false) {
       throw SpriteCompilerCancelledException_init_$Create$('S16 compilation cancelled during compiler phase', null, 2, null);
     }return true;
   };
-  _no_name_provided__176.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__189.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__176.$metadata$ = {
+  _no_name_provided__189.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -41185,12 +43808,12 @@
   }
   C16Compiler.prototype.compileSpriteFromImageBytes_6zxs78_k$ = function (images, keepBlack, colorEncoding, callback) {
     var tmp = ImageLoader_getInstance();
-    var bitmaps = tmp.loadMany_1zh2rf_k$(images, _no_name_provided_$factory_146(callback));
-    return this.compileSpriteFromLoadedImages_kx4ton_k$(bitmaps, keepBlack, colorEncoding, _no_name_provided_$factory_147(callback));
+    var bitmaps = tmp.loadMany_1zh2rf_k$(images, _no_name_provided_$factory_158(callback));
+    return this.compileSpriteFromLoadedImages_kx4ton_k$(bitmaps, keepBlack, colorEncoding, _no_name_provided_$factory_159(callback));
   };
   C16Compiler.prototype.compileSpriteFromLoadedImages_kx4ton_k$ = function (images, keepBlack, colorEncoding, callback) {
     var tmp0_elvis_lhs = colorEncoding;
-    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_69()._ENCODING_DEFAULT : tmp0_elvis_lhs;
+    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_70()._ENCODING_DEFAULT : tmp0_elvis_lhs;
     var tmp$ret$1;
     $l$block_0: {
       var sum_1 = 0;
@@ -41238,7 +43861,7 @@
         }
         var tmp$ret$2;
         $l$block_1: {
-          tmp$ret$2 = _no_name_provided_$factory_148(tmp2_safe_receiver);
+          tmp$ret$2 = _no_name_provided_$factory_160(tmp2_safe_receiver);
           break $l$block_1;
         }
         tmp$ret$3 = tmp$ret$2;
@@ -41253,7 +43876,7 @@
     else
       tmp3_safe_receiver(frame, total);
     Unit_getInstance();
-    var black = Companion_getInstance_60().getBlack_vcj5fe_k$(keepBlack);
+    var black = Companion_getInstance_61().getBlack_vcj5fe_k$(keepBlack);
     var tmp4_iterator = images.iterator_0_k$();
     while (tmp4_iterator.hasNext_0_k$()) {
       var image_0 = tmp4_iterator.next_0_k$();
@@ -41317,20 +43940,20 @@
       new C16Compiler();
     return C16Compiler_instance;
   }
-  function _no_name_provided_$factory_146($callback) {
-    var i = new _no_name_provided__174($callback);
+  function _no_name_provided_$factory_158($callback) {
+    var i = new _no_name_provided__187($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_147($callback) {
-    var i = new _no_name_provided__175($callback);
+  function _no_name_provided_$factory_159($callback) {
+    var i = new _no_name_provided__188($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_148($tmp2_safe_receiver) {
-    var i = new _no_name_provided__176($tmp2_safe_receiver);
+  function _no_name_provided_$factory_160($tmp2_safe_receiver) {
+    var i = new _no_name_provided__189($tmp2_safe_receiver);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
@@ -41350,30 +43973,30 @@
     var tmp0_elvis_lhs = $this._get_supportedFormats__0_k$().get_2bw_k$(extensionUpper);
     return tmp0_elvis_lhs == null ? extensionUpper === 'PSD' ? PSD_getInstance() : null : tmp0_elvis_lhs;
   }
-  function _no_name_provided__177() {
+  function _no_name_provided__190() {
   }
-  _no_name_provided__177.prototype.invoke_0_k$ = function () {
+  _no_name_provided__190.prototype.invoke_0_k$ = function () {
     return mapOf([to('PNG', PNG_getInstance()), to('BMP', MyBMP_getInstance()), to('GIF', GIF_getInstance())]);
   };
-  _no_name_provided__177.$metadata$ = {
+  _no_name_provided__190.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__178() {
+  function _no_name_provided__191() {
   }
-  _no_name_provided__178.prototype.invoke_0_k$ = function () {
+  _no_name_provided__191.prototype.invoke_0_k$ = function () {
     return ImageLoader_getInstance()._get_supportedFormats__0_k$()._get_keys__0_k$();
   };
-  _no_name_provided__178.$metadata$ = {
+  _no_name_provided__191.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function ImageLoader() {
     ImageLoader_instance = this;
     var tmp = this;
-    tmp._supportedFormats$delegate = lazy(_no_name_provided_$factory_149());
+    tmp._supportedFormats$delegate = lazy(_no_name_provided_$factory_161());
     var tmp_0 = this;
-    tmp_0._supportedExtensions$delegate = lazy(_no_name_provided_$factory_150());
+    tmp_0._supportedExtensions$delegate = lazy(_no_name_provided_$factory_162());
   }
   ImageLoader.prototype._get_supportedFormats__0_k$ = function () {
     var tmp$ret$0;
@@ -41588,14 +44211,14 @@
       return receiver._get_supportedFormats__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_149() {
-    var i = new _no_name_provided__177();
+  function _no_name_provided_$factory_161() {
+    var i = new _no_name_provided__190();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_150() {
-    var i = new _no_name_provided__178();
+  function _no_name_provided_$factory_162() {
+    var i = new _no_name_provided__191();
     return function () {
       return i.invoke_0_k$();
     };
@@ -41644,10 +44267,10 @@
       throw SpriteCompileException_init_$Create$(tmp, null, 2, null);
     }return written;
   }
-  function _no_name_provided__179($callback) {
+  function _no_name_provided__192($callback) {
     this._$callback_3 = $callback;
   }
-  _no_name_provided__179.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__192.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_3;
     if ((tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, current, total)) === false) {
       throw SpriteCompilerCancelledException_init_$Create$('Cancelled SPR compilation during image loading phase', null, 2, null);
@@ -41655,42 +44278,42 @@
     }
     return true;
   };
-  _no_name_provided__179.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__192.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__179.$metadata$ = {
+  _no_name_provided__192.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__180($callback) {
+  function _no_name_provided__193($callback) {
     this._$callback_4 = $callback;
   }
-  _no_name_provided__180.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__193.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_4;
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, current, total);
   };
-  _no_name_provided__180.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__193.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__180.$metadata$ = {
+  _no_name_provided__193.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__181($tmp2_safe_receiver) {
+  function _no_name_provided__194($tmp2_safe_receiver) {
     this._$tmp2_safe_receiver_0 = $tmp2_safe_receiver;
   }
-  _no_name_provided__181.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__194.prototype.invoke_27zxwg_k$ = function (current, total) {
     if (this._$tmp2_safe_receiver_0(current, total) === false) {
       throw SpriteCompilerCancelledException_init_$Create$('S16 compilation cancelled during compiler phase', null, 2, null);
     }return true;
   };
-  _no_name_provided__181.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__194.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__181.$metadata$ = {
+  _no_name_provided__194.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -41701,12 +44324,12 @@
   }
   S16Compiler.prototype.compileSpriteFromImageBytes_6zxs78_k$ = function (images, keepBlack, colorEncoding, callback) {
     var tmp = ImageLoader_getInstance();
-    var bitmaps = tmp.loadMany_1zh2rf_k$(images, _no_name_provided_$factory_151(callback));
-    return this.compileSpriteFromLoadedImages_kx4ton_k$(bitmaps, keepBlack, colorEncoding, _no_name_provided_$factory_152(callback));
+    var bitmaps = tmp.loadMany_1zh2rf_k$(images, _no_name_provided_$factory_163(callback));
+    return this.compileSpriteFromLoadedImages_kx4ton_k$(bitmaps, keepBlack, colorEncoding, _no_name_provided_$factory_164(callback));
   };
   S16Compiler.prototype.compileSpriteFromLoadedImages_kx4ton_k$ = function (images, keepBlack, colorEncoding, callback) {
     var tmp0_elvis_lhs = colorEncoding;
-    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_69()._ENCODING_DEFAULT : tmp0_elvis_lhs;
+    var encoding = tmp0_elvis_lhs == null ? Companion_getInstance_70()._ENCODING_DEFAULT : tmp0_elvis_lhs;
     var tmp$ret$1;
     $l$block_0: {
       var sum_1 = 0;
@@ -41733,7 +44356,7 @@
     Unit_getInstance();
     buffer.writeUInt16(images._get_size__0_k$());
     Unit_getInstance();
-    var black = Companion_getInstance_60().getBlack_vcj5fe_k$(keepBlack);
+    var black = Companion_getInstance_61().getBlack_vcj5fe_k$(keepBlack);
     var tmp1_iterator = images.iterator_0_k$();
     while (tmp1_iterator.hasNext_0_k$()) {
       var image = tmp1_iterator.next_0_k$();
@@ -41759,7 +44382,7 @@
         }
         var tmp$ret$2;
         $l$block_1: {
-          tmp$ret$2 = _no_name_provided_$factory_153(tmp2_safe_receiver);
+          tmp$ret$2 = _no_name_provided_$factory_165(tmp2_safe_receiver);
           break $l$block_1;
         }
         tmp$ret$3 = tmp$ret$2;
@@ -41808,20 +44431,20 @@
       new S16Compiler();
     return S16Compiler_instance;
   }
-  function _no_name_provided_$factory_151($callback) {
-    var i = new _no_name_provided__179($callback);
+  function _no_name_provided_$factory_163($callback) {
+    var i = new _no_name_provided__192($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_152($callback) {
-    var i = new _no_name_provided__180($callback);
+  function _no_name_provided_$factory_164($callback) {
+    var i = new _no_name_provided__193($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_153($tmp2_safe_receiver) {
-    var i = new _no_name_provided__181($tmp2_safe_receiver);
+  function _no_name_provided_$factory_165($tmp2_safe_receiver) {
+    var i = new _no_name_provided__194($tmp2_safe_receiver);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
@@ -41934,9 +44557,9 @@
       }
        while (inductionVariable < height);
   }
-  function _no_name_provided__182() {
+  function _no_name_provided__195() {
   }
-  _no_name_provided__182.prototype.invoke_0_k$ = function () {
+  _no_name_provided__195.prototype.invoke_0_k$ = function () {
     var tmp$ret$4;
     $l$block_3: {
       var tmp0_filter_0 = numberRangeToNumber(1, 255);
@@ -41982,23 +44605,23 @@
     }
     return tmp$ret$4;
   };
-  _no_name_provided__182.$metadata$ = {
+  _no_name_provided__195.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__183() {
+  function _no_name_provided__196() {
   }
-  _no_name_provided__183.prototype.invoke_0_k$ = function () {
+  _no_name_provided__196.prototype.invoke_0_k$ = function () {
     return first(_get_otherBlacks_(SprCompiler_getInstance()));
   };
-  _no_name_provided__183.$metadata$ = {
+  _no_name_provided__196.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__184($callback) {
+  function _no_name_provided__197($callback) {
     this._$callback_5 = $callback;
   }
-  _no_name_provided__184.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__197.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_5;
     if ((tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, current, total)) === false) {
       throw SpriteCompilerCancelledException_init_$Create$('Cancelled SPR compilation during image loading phase', null, 2, null);
@@ -42006,42 +44629,42 @@
     }
     return true;
   };
-  _no_name_provided__184.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__197.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__184.$metadata$ = {
+  _no_name_provided__197.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__185($callback) {
+  function _no_name_provided__198($callback) {
     this._$callback_6 = $callback;
   }
-  _no_name_provided__185.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__198.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_6;
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, current, total);
   };
-  _no_name_provided__185.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__198.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__185.$metadata$ = {
+  _no_name_provided__198.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__186($tmp0_safe_receiver) {
+  function _no_name_provided__199($tmp0_safe_receiver) {
     this._$tmp0_safe_receiver = $tmp0_safe_receiver;
   }
-  _no_name_provided__186.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__199.prototype.invoke_27zxwg_k$ = function (current, total) {
     if (this._$tmp0_safe_receiver(current, total) === false) {
       throw SpriteCompilerCancelledException_init_$Create$('SPR compilation cancelled during compiler phase', null, 2, null);
     }return true;
   };
-  _no_name_provided__186.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__199.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__186.$metadata$ = {
+  _no_name_provided__199.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -42052,14 +44675,14 @@
     this._PERFECT_WHITE = 10;
     this._black = 0;
     var tmp = this;
-    tmp._otherBlacks$delegate = lazy(_no_name_provided_$factory_154());
+    tmp._otherBlacks$delegate = lazy(_no_name_provided_$factory_166());
     var tmp_0 = this;
-    tmp_0._solidBlack$delegate = lazy(_no_name_provided_$factory_155());
+    tmp_0._solidBlack$delegate = lazy(_no_name_provided_$factory_167());
   }
   SprCompiler.prototype.compileSpriteFromImageBytes_6zxs78_k$ = function (images, keepBlack, colorEncoding, callback) {
     var tmp = ImageLoader_getInstance();
-    var bitmaps = tmp.loadMany_1zh2rf_k$(images, _no_name_provided_$factory_156(callback));
-    return this.compileSpriteFromLoadedImages_kx4ton_k$(bitmaps, keepBlack, colorEncoding, _no_name_provided_$factory_157(callback));
+    var bitmaps = tmp.loadMany_1zh2rf_k$(images, _no_name_provided_$factory_168(callback));
+    return this.compileSpriteFromLoadedImages_kx4ton_k$(bitmaps, keepBlack, colorEncoding, _no_name_provided_$factory_169(callback));
   };
   SprCompiler.prototype.compileSpriteFromLoadedImages_kx4ton_k$ = function (images, keepBlack, colorEncoding, callback) {
     var tmp0_safe_receiver = callback;
@@ -42073,7 +44696,7 @@
         }
         var tmp$ret$0;
         $l$block: {
-          tmp$ret$0 = _no_name_provided_$factory_158(tmp0_safe_receiver);
+          tmp$ret$0 = _no_name_provided_$factory_170(tmp0_safe_receiver);
           break $l$block;
         }
         tmp$ret$1 = tmp$ret$0;
@@ -42164,32 +44787,32 @@
       return _get_solidBlack_(receiver);
     }, null);
   }
-  function _no_name_provided_$factory_154() {
-    var i = new _no_name_provided__182();
+  function _no_name_provided_$factory_166() {
+    var i = new _no_name_provided__195();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_155() {
-    var i = new _no_name_provided__183();
+  function _no_name_provided_$factory_167() {
+    var i = new _no_name_provided__196();
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_156($callback) {
-    var i = new _no_name_provided__184($callback);
+  function _no_name_provided_$factory_168($callback) {
+    var i = new _no_name_provided__197($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_157($callback) {
-    var i = new _no_name_provided__185($callback);
+  function _no_name_provided_$factory_169($callback) {
+    var i = new _no_name_provided__198($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_158($tmp0_safe_receiver) {
-    var i = new _no_name_provided__186($tmp0_safe_receiver);
+  function _no_name_provided_$factory_170($tmp0_safe_receiver) {
+    var i = new _no_name_provided__199($tmp0_safe_receiver);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
@@ -42203,9 +44826,9 @@
     }
     return tmp$ret$0;
   }
-  function _no_name_provided__187() {
+  function _no_name_provided__200() {
   }
-  _no_name_provided__187.prototype.invoke_0_k$ = function () {
+  _no_name_provided__200.prototype.invoke_0_k$ = function () {
     var black = 0;
     var i = 0;
     while (black === 0) {
@@ -42216,17 +44839,17 @@
     }
     return black;
   };
-  _no_name_provided__187.$metadata$ = {
+  _no_name_provided__200.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function Companion_61() {
-    Companion_instance_60 = this;
+  function Companion_62() {
+    Companion_instance_61 = this;
     this._transparentBlack = 0;
     var tmp = this;
-    tmp._solidBlack$delegate_0 = lazy(_no_name_provided_$factory_159());
+    tmp._solidBlack$delegate_0 = lazy(_no_name_provided_$factory_171());
   }
-  Companion_61.prototype.getBlack_vcj5fe_k$ = function (keepBlack) {
+  Companion_62.prototype.getBlack_vcj5fe_k$ = function (keepBlack) {
     var tmp;
     if (keepBlack) {
       tmp = _get_solidBlack__0(this);
@@ -42235,7 +44858,7 @@
     }
     return tmp;
   };
-  Companion_61.prototype.getCompiler_v3krwk_k$ = function (type) {
+  Companion_62.prototype.getCompiler_v3krwk_k$ = function (type) {
     var tmp0_subject = type;
     var tmp;
     if (tmp0_subject.equals(SpriteType_SPR_getInstance())) {
@@ -42251,16 +44874,16 @@
     }
     return tmp;
   };
-  Companion_61.$metadata$ = {
+  Companion_62.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_60;
-  function Companion_getInstance_60() {
-    if (Companion_instance_60 == null)
-      new Companion_61();
-    return Companion_instance_60;
+  var Companion_instance_61;
+  function Companion_getInstance_61() {
+    if (Companion_instance_61 == null)
+      new Companion_62();
+    return Companion_instance_61;
   }
   function SpriteCompiler() {
   }
@@ -42268,7 +44891,7 @@
     if (!(($mask0 & 2) === 0))
       keepBlack = false;
     if (!(($mask0 & 4) === 0))
-      colorEncoding = Companion_getInstance_69()._ENCODING_DEFAULT;
+      colorEncoding = Companion_getInstance_70()._ENCODING_DEFAULT;
     if (!(($mask0 & 8) === 0))
       callback = null;
     return $handler == null ? this.compileSpriteFromImageBytes_6zxs78_k$(images, keepBlack, colorEncoding, callback) : $handler(images, keepBlack, colorEncoding, callback);
@@ -42323,11 +44946,18 @@
       return _get_solidBlack__0(receiver);
     }, null);
   }
-  function _no_name_provided_$factory_159() {
-    var i = new _no_name_provided__187();
+  function _no_name_provided_$factory_171() {
+    var i = new _no_name_provided__200();
     return function () {
       return i.invoke_0_k$();
     };
+  }
+  function BlkSpriteFile_init_$Init$(bytesBuffer, progressChunkSize, progressCallback, $this) {
+    BlkSpriteFile.call($this, bytesBuffer, false, progressChunkSize, progressCallback);
+    return $this;
+  }
+  function BlkSpriteFile_init_$Create$(bytesBuffer, progressChunkSize, progressCallback) {
+    return BlkSpriteFile_init_$Init$(bytesBuffer, progressChunkSize, progressCallback, Object.create(BlkSpriteFile.prototype));
   }
   function initFrames(_this_, $this) {
     var totalBytes = _this_.size;
@@ -42367,32 +44997,38 @@
               var offsetForData_5 = tmp$ret$0;
               var tmp$ret$1;
               $l$block_0: {
-                Companion_getInstance_61();
+                Companion_getInstance_62();
                 var tmp1_plus_0_7 = 32768;
                 tmp$ret$1 = offsetForData_5.plus_wiekkq_k$(toLong(tmp1_plus_0_7));
                 break $l$block_0;
               }
               if (tmp$ret$1.compareTo_wiekkq_k$(toLong(totalBytes)) > 0) {
-                Companion_getInstance_61();
+                Companion_getInstance_62();
                 var tmp_1 = '' + 'Invalid byte offset[' + item_2_3 + ']. Expected < ' + (totalBytes - 32768 | 0) + '. Found: ' + offsetForData_5;
                 throw SpriteParserException_init_$Create$(tmp_1, null, 2, null);
               } else {
               }
               var width_8 = _get_uInt16_(_this_);
-              Companion_getInstance_61();
+              Companion_getInstance_62();
               if (!(width_8 === 128)) {
                 var tmp_2 = '' + 'BLK cell width invalid. Expected 128; Actual: ' + width_8;
                 throw SpriteParserException_init_$Create$(tmp_2, null, 2, null);
               } else {
               }
               var height_9 = _get_uInt16_(_this_);
-              Companion_getInstance_61();
+              Companion_getInstance_62();
               if (!(height_9 === 128)) {
                 var tmp_3 = '' + 'BLK cell height invalid. Expected 128; Actual: ' + height_9;
                 throw SpriteParserException_init_$Create$(tmp_3, null, 2, null);
               } else {
               }
-              tmp$ret$2 = new BlkSpriteFrame(_this_, offsetForData_5, width_8, height_9, $this._encoding);
+              var tmp_4;
+              if ($this._async) {
+                tmp_4 = new BlkSpriteFrame($this._async, _this_.copyOfRange(offsetForData_5.toInt_0_k$(), offsetForData_5.toInt_0_k$() + imul(imul(width_8, height_9), 2) | 0), new Long(0, 0), width_8, height_9, $this._encoding);
+              } else {
+                tmp_4 = new BlkSpriteFrame(false, _this_, offsetForData_5, width_8, height_9, $this._encoding);
+              }
+              tmp$ret$2 = tmp_4;
               break $l$block_1;
             }
             tmp0_mapTo_0_1.add_2bq_k$(tmp$ret$2);
@@ -42407,12 +45043,12 @@
     }
     $this._set_mFrames__7r1kda_k$(tmp$ret$4);
   }
-  function Companion_62() {
-    Companion_instance_61 = this;
+  function Companion_63() {
+    Companion_instance_62 = this;
     this._BLOCK_SIZE_0 = 128;
     this._CELL_BYTES_SIZE = 32768;
   }
-  Companion_62.prototype.getStitched_wb6cju_k$ = function (cellsWide, cellsHigh, frames, progressCallback) {
+  Companion_63.prototype.getStitched_wb6cju_k$ = function (cellsWide, cellsHigh, frames, progressCallback) {
     var trueWidth = imul(cellsWide, 128);
     var trueHeight = imul(cellsHigh, 128);
     var totalCells = imul(cellsWide, cellsHigh);
@@ -42426,7 +45062,7 @@
           var index_2 = inductionVariable;
           inductionVariable = inductionVariable + 1 | 0;
           {
-            Companion_getInstance_61();
+            Companion_getInstance_62();
             var x_4 = imul(index_2, 128);
             {
               {
@@ -42444,7 +45080,7 @@
                     else
                       tmp0_safe_receiver_5_8(frame_4_7, totalCells);
                     Unit_getInstance();
-                    Companion_getInstance_61();
+                    Companion_getInstance_62();
                     var y_6_9 = imul(index_2_6, 128);
                     var cell_7_10 = frames.get_ha5a7z_k$(frame_4_7);
                     temp.draw_bvdyk7_k$(cell_7_10, x_4, y_6_9);
@@ -42458,46 +45094,50 @@
     }
     return temp;
   };
-  Companion_62.$metadata$ = {
+  Companion_63.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_61;
-  function Companion_getInstance_61() {
-    if (Companion_instance_61 == null)
-      new Companion_62();
-    return Companion_instance_61;
+  var Companion_instance_62;
+  function Companion_getInstance_62() {
+    if (Companion_instance_62 == null)
+      new Companion_63();
+    return Companion_instance_62;
   }
-  function _no_name_provided__188(this$0) {
-    this._this$0_19 = this$0;
+  function _no_name_provided__201(this$0) {
+    this._this$0_29 = this$0;
   }
-  _no_name_provided__188.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
-    initFrames($this$readAt, this._this$0_19);
+  _no_name_provided__201.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
+    initFrames($this$readAt, this._this$0_29);
   };
-  _no_name_provided__188.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__201.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_3p24ox_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__188.$metadata$ = {
+  _no_name_provided__201.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function BlkSpriteFile(bytesBuffer, progressChunkSize, progressCallback) {
-    Companion_getInstance_61();
+  function BlkSpriteFile(bytesBuffer, async_0, progressChunkSize, progressCallback) {
+    Companion_getInstance_62();
     SpriteFile.call(this, SpriteType_BLK_getInstance(), progressChunkSize, progressCallback);
+    this._async = async_0;
     this._mCellsWide = 0;
     this._mCellsHigh = 0;
     this._encoding = ColorEncoding_X_565_getInstance();
     this._mBytesBuffer = null;
     this._mBytesBuffer = bytesBuffer;
-    readAt(bytesBuffer, 0, _no_name_provided_$factory_160(this));
+    readAt(bytesBuffer, 0, _no_name_provided_$factory_172(this));
   }
   BlkSpriteFile.prototype._get_cellsWide__0_k$ = function () {
     return this._mCellsWide;
   };
   BlkSpriteFile.prototype._get_cellsHigh__0_k$ = function () {
     return this._mCellsHigh;
+  };
+  BlkSpriteFile.prototype._get_allowAsync__0_k$ = function () {
+    return this._async;
   };
   BlkSpriteFile.prototype.close_0_k$ = function () {
     var tmp0_safe_receiver = this._mBytesBuffer;
@@ -42536,12 +45176,12 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__189($width, $height, $encoding) {
+  function _no_name_provided__202($width, $height, $encoding) {
     this._$width_0 = $width;
     this._$height_0 = $height;
     this._$encoding = $encoding;
   }
-  _no_name_provided__189.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
+  _no_name_provided__202.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
     var image = Bitmap32_init_$Create$(this._$width_0, this._$height_0, null, false, 12, null);
     var toRgb = this._$encoding._get_toRgb__0_k$();
     var inductionVariable = 0;
@@ -42557,7 +45197,7 @@
             var x = inductionVariable_0;
             inductionVariable_0 = inductionVariable_0 + 1 | 0;
             var pixel = _get_uInt16_($this$readAt);
-            var color = toRgb(pixel)._value_11;
+            var color = toRgb(pixel)._value_12;
             image.set_5mmwyp_k$(x, y, color);
           }
            while (inductionVariable_0 < last_1);
@@ -42565,38 +45205,55 @@
        while (inductionVariable < last_0);
     return image;
   };
-  _no_name_provided__189.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__202.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_r02v3k_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__189.$metadata$ = {
+  _no_name_provided__202.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function Companion_63() {
-    Companion_instance_62 = this;
+  function Companion_64() {
+    Companion_instance_63 = this;
   }
-  Companion_63.prototype.parseFrame_mftphl_k$ = function (bytesBuffer, offset_0, width, height, encoding) {
-    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_161(width, height, encoding));
+  Companion_64.prototype.parseFrame_mftphl_k$ = function (bytesBuffer, offset_0, width, height, encoding) {
+    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_173(width, height, encoding));
   };
-  Companion_63.$metadata$ = {
+  Companion_64.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_62;
-  function Companion_getInstance_62() {
-    if (Companion_instance_62 == null)
-      new Companion_63();
-    return Companion_instance_62;
+  var Companion_instance_63;
+  function Companion_getInstance_63() {
+    if (Companion_instance_63 == null)
+      new Companion_64();
+    return Companion_instance_63;
   }
-  function BlkSpriteFrame(bytesBuffer, offset_0, width, height, encoding) {
-    Companion_getInstance_62();
+  function BlkSpriteFrame(async_0, bytesBuffer, offset_0, width, height, encoding) {
+    Companion_getInstance_63();
     SpriteFrame.call(this, width, height);
+    this._async_0 = async_0;
     this._offset_8 = offset_0;
     this._encoding_0 = encoding;
     this._mBytesBuffer_0 = bytesBuffer;
   }
   BlkSpriteFrame.prototype.close_0_k$ = function () {
+    var tmp;
+    if (this._async_0) {
+      var tmp0_safe_receiver = this._mBytesBuffer_0;
+      tmp = !((tmp0_safe_receiver == null ? null : tmp0_safe_receiver.closed) === true);
+    } else {
+      tmp = false;
+    }
+    if (tmp) {
+      var tmp1_safe_receiver = this._mBytesBuffer_0;
+      if (tmp1_safe_receiver == null)
+        null;
+      else
+        tmp1_safe_receiver.close();
+      Unit_getInstance();
+    } else {
+    }
     this._mBytesBuffer_0 = null;
     return true;
   };
@@ -42628,22 +45285,22 @@
       tmp_0 = tmp1_elvis_lhs;
     }
     var bytesBuffer = tmp_0;
-    return Companion_getInstance_62().parseFrame_mftphl_k$(bytesBuffer, this._offset_8, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_0);
+    return Companion_getInstance_63().parseFrame_mftphl_k$(bytesBuffer, this._offset_8, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_0);
   };
   BlkSpriteFrame.$metadata$ = {
     simpleName: 'BlkSpriteFrame',
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_160(this$0) {
-    var i = new _no_name_provided__188(this$0);
+  function _no_name_provided_$factory_172(this$0) {
+    var i = new _no_name_provided__201(this$0);
     return function (p1) {
       i.invoke_3p24ox_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_161($width, $height, $encoding) {
-    var i = new _no_name_provided__189($width, $height, $encoding);
+  function _no_name_provided_$factory_173($width, $height, $encoding) {
+    var i = new _no_name_provided__202($width, $height, $encoding);
     return function (p1) {
       return i.invoke_r02v3k_k$(p1);
     };
@@ -42657,7 +45314,7 @@
     } else if (buffer.compareTo_wiekkq_k$(new Long(3, 0)) > 0) {
       throw Exception_init_$Create$('' + "C16 file encoding not recognised. ('" + buffer + "')");
     }var imagesCount = _get_uInt16_(_this_);
-    var black = keepBlack ? Companion_getInstance_57().invoke_6v5qfk_k$(0, 0, 0) : Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 0);
+    var black = keepBlack ? Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 0) : Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
     var tmp$ret$7;
     $l$block_6: {
       var tmp$ret$2;
@@ -42714,7 +45371,7 @@
       $l$block_5: {
         var tmp$ret$5;
         $l$block_4: {
-          var tmp0_map_0_2 = _get_indices_(tmp1_let_0);
+          var tmp0_map_0_2 = _get_indices__0(tmp1_let_0);
           var tmp$ret$4;
           $l$block_3: {
             var tmp0_mapTo_0_1_3 = ArrayList_init_$Create$_0(collectionSizeOrDefault(tmp0_map_0_2, 10));
@@ -42751,42 +45408,45 @@
     }
     $this._set_mFrames__7r1kda_k$(tmp$ret$7);
   }
-  function Companion_64() {
-    Companion_instance_63 = this;
+  function Companion_65() {
+    Companion_instance_64 = this;
   }
-  Companion_64.$metadata$ = {
+  Companion_65.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_63;
-  function Companion_getInstance_63() {
-    if (Companion_instance_63 == null)
-      new Companion_64();
-    return Companion_instance_63;
+  var Companion_instance_64;
+  function Companion_getInstance_64() {
+    if (Companion_instance_64 == null)
+      new Companion_65();
+    return Companion_instance_64;
   }
-  function _no_name_provided__190(this$0, $keepBlack) {
-    this._this$0_20 = this$0;
+  function _no_name_provided__203(this$0, $keepBlack) {
+    this._this$0_30 = this$0;
     this._$keepBlack = $keepBlack;
   }
-  _no_name_provided__190.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
-    initFrames_0($this$readAt, this._this$0_20, this._$keepBlack);
+  _no_name_provided__203.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
+    initFrames_0($this$readAt, this._this$0_30, this._$keepBlack);
   };
-  _no_name_provided__190.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__203.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_3p24ox_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__190.$metadata$ = {
+  _no_name_provided__203.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function C16SpriteFile(bytesBuffer, keepBlack, progressChunkSize, progressCallback) {
-    Companion_getInstance_63();
+    Companion_getInstance_64();
     SpriteFile.call(this, SpriteType_C16_getInstance(), progressChunkSize, progressCallback);
     this._mBytesBuffer_1 = null;
     this._mBytesBuffer_1 = bytesBuffer;
-    readAt(bytesBuffer, 0, _no_name_provided_$factory_162(this, keepBlack));
+    readAt(bytesBuffer, 0, _no_name_provided_$factory_174(this, keepBlack));
   }
+  C16SpriteFile.prototype._get_allowAsync__0_k$ = function () {
+    return false;
+  };
   C16SpriteFile.prototype.close_0_k$ = function () {
     var tmp0_safe_receiver = this._mBytesBuffer_1;
     var tmp1_safe_receiver = tmp0_safe_receiver == null ? null : tmp0_safe_receiver.close();
@@ -42814,7 +45474,7 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__191($endOffset, $width, $height, $encoding, $index, $black) {
+  function _no_name_provided__204($endOffset, $width, $height, $encoding, $index, $black) {
     this._$endOffset = $endOffset;
     this._$width_1 = $width;
     this._$height_1 = $height;
@@ -42822,7 +45482,7 @@
     this._$index = $index;
     this._$black = $black;
   }
-  _no_name_provided__191.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
+  _no_name_provided__204.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
     if (toLong(_get_lastIndex__4($this$readAt)).compareTo_wiekkq_k$(this._$endOffset) < 0) {
       throw Exception_init_$Create$('' + 'Not enough bytes for next C16 image. Position ' + this._$endOffset + ' > limit ' + _get_lastIndex__4($this$readAt));
     }var image = Bitmap32_init_$Create$(this._$width_1, this._$height_1, null, false, 12, null);
@@ -42850,7 +45510,7 @@
             }
           } else {
             while (x < z) {
-              var color = toRgb(_get_uInt16_($this$readAt))._value_11;
+              var color = toRgb(_get_uInt16_($this$readAt))._value_12;
               image.set_5mmwyp_k$(x, y, color);
               var tmp2 = x;
               x = tmp2 + 1 | 0;
@@ -42865,32 +45525,32 @@
        while (inductionVariable < last_0);
     return image;
   };
-  _no_name_provided__191.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__204.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_r02v3k_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__191.$metadata$ = {
+  _no_name_provided__204.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function Companion_65() {
-    Companion_instance_64 = this;
+  function Companion_66() {
+    Companion_instance_65 = this;
   }
-  Companion_65.prototype.parseFrame_u6syim_k$ = function (index, bytesBuffer, offset_0, endOffset, width, height, encoding, black) {
-    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_163(endOffset, width, height, encoding, index, black));
+  Companion_66.prototype.parseFrame_u6syim_k$ = function (index, bytesBuffer, offset_0, endOffset, width, height, encoding, black) {
+    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_175(endOffset, width, height, encoding, index, black));
   };
-  Companion_65.$metadata$ = {
+  Companion_66.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_64;
-  function Companion_getInstance_64() {
-    if (Companion_instance_64 == null)
-      new Companion_65();
-    return Companion_instance_64;
+  var Companion_instance_65;
+  function Companion_getInstance_65() {
+    if (Companion_instance_65 == null)
+      new Companion_66();
+    return Companion_instance_65;
   }
   function C16SpriteFrame(index, bytesBuffer, offset_0, endOffset, width, height, encoding, black) {
-    Companion_getInstance_64();
+    Companion_getInstance_65();
     SpriteFrame.call(this, width, height);
     this._index_4 = index;
     this._offset_9 = offset_0;
@@ -42931,22 +45591,22 @@
       tmp_0 = tmp1_elvis_lhs;
     }
     var bytesBuffer = tmp_0;
-    return Companion_getInstance_64().parseFrame_u6syim_k$(this._index_4, bytesBuffer, this._offset_9, this._endOffset, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_1, this._black_0);
+    return Companion_getInstance_65().parseFrame_u6syim_k$(this._index_4, bytesBuffer, this._offset_9, this._endOffset, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_1, this._black_0);
   };
   C16SpriteFrame.$metadata$ = {
     simpleName: 'C16SpriteFrame',
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_162(this$0, $keepBlack) {
-    var i = new _no_name_provided__190(this$0, $keepBlack);
+  function _no_name_provided_$factory_174(this$0, $keepBlack) {
+    var i = new _no_name_provided__203(this$0, $keepBlack);
     return function (p1) {
       i.invoke_3p24ox_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_163($endOffset, $width, $height, $encoding, $index, $black) {
-    var i = new _no_name_provided__191($endOffset, $width, $height, $encoding, $index, $black);
+  function _no_name_provided_$factory_175($endOffset, $width, $height, $encoding, $index, $black) {
+    var i = new _no_name_provided__204($endOffset, $width, $height, $encoding, $index, $black);
     return function (p1) {
       return i.invoke_r02v3k_k$(p1);
     };
@@ -42970,7 +45630,7 @@
       return null;
     else {
     }
-    var size = readS32LE_0(s);
+    var size_0 = readS32LE_0(s);
     var reserved1 = readS16LE_0(s);
     var reserved2 = readS16LE_0(s);
     var offBits = readS32LE_0(s);
@@ -43023,7 +45683,7 @@
           do {
             var n = inductionVariable;
             inductionVariable = inductionVariable + 1 | 0;
-            RgbaArray__set_impl(out._get_palette__wd8tzq_k$(), n, Companion_getInstance_57().invoke_aewswh_k$(readS32LE_0(s), 255));
+            RgbaArray__set_impl(out._get_palette__wd8tzq_k$(), n, Companion_getInstance_58().invoke_aewswh_k$(readS32LE_0(s), 255));
           }
            while (inductionVariable < 256);
         var inductionVariable_0 = 0;
@@ -43133,7 +45793,7 @@
       throw Exception_init_$Create$('' + "S16 file encoding not recognized. ('" + buffer + "')");
     }
     var encoding = tmp;
-    var black = keepBlack ? Companion_getInstance_57().invoke_6v5qfk_k$(0, 0, 0) : Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 0);
+    var black = keepBlack ? Companion_getInstance_58().invoke_6v5qfk_k$(0, 0, 0) : Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
     var imagesCount = _get_uInt16_(_this_);
     var tmp$ret$2;
     $l$block_1: {
@@ -43167,42 +45827,45 @@
     }
     $this._set_mFrames__7r1kda_k$(tmp$ret$2);
   }
-  function Companion_66() {
-    Companion_instance_65 = this;
+  function Companion_67() {
+    Companion_instance_66 = this;
   }
-  Companion_66.$metadata$ = {
+  Companion_67.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_65;
-  function Companion_getInstance_65() {
-    if (Companion_instance_65 == null)
-      new Companion_66();
-    return Companion_instance_65;
+  var Companion_instance_66;
+  function Companion_getInstance_66() {
+    if (Companion_instance_66 == null)
+      new Companion_67();
+    return Companion_instance_66;
   }
-  function _no_name_provided__192(this$0, $keepBlack) {
-    this._this$0_21 = this$0;
+  function _no_name_provided__205(this$0, $keepBlack) {
+    this._this$0_31 = this$0;
     this._$keepBlack_0 = $keepBlack;
   }
-  _no_name_provided__192.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
-    initFrames_1($this$readAt, this._this$0_21, this._$keepBlack_0);
+  _no_name_provided__205.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
+    initFrames_1($this$readAt, this._this$0_31, this._$keepBlack_0);
   };
-  _no_name_provided__192.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__205.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_3p24ox_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__192.$metadata$ = {
+  _no_name_provided__205.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function S16SpriteFile(bytesBuffer, keepBlack, progressChunkSize, progressCallback) {
-    Companion_getInstance_65();
+    Companion_getInstance_66();
     SpriteFile.call(this, SpriteType_S16_getInstance(), progressChunkSize, progressCallback);
     this._mBytesBuffer_3 = null;
     this._mBytesBuffer_3 = bytesBuffer;
-    readAt(bytesBuffer, 0, _no_name_provided_$factory_164(this, keepBlack));
+    readAt(bytesBuffer, 0, _no_name_provided_$factory_176(this, keepBlack));
   }
+  S16SpriteFile.prototype._get_allowAsync__0_k$ = function () {
+    return false;
+  };
   S16SpriteFile.prototype.close_0_k$ = function () {
     var tmp0_safe_receiver = this._mBytesBuffer_3;
     var tmp1_safe_receiver = tmp0_safe_receiver == null ? null : tmp0_safe_receiver.close();
@@ -43230,13 +45893,13 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__193($width, $height, $encoding, $black) {
+  function _no_name_provided__206($width, $height, $encoding, $black) {
     this._$width_2 = $width;
     this._$height_2 = $height;
     this._$encoding_1 = $encoding;
     this._$black_0 = $black;
   }
-  _no_name_provided__193.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
+  _no_name_provided__206.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
     var image = Bitmap32_init_$Create$(this._$width_2, this._$height_2, null, false, 12, null);
     var toRgb = this._$encoding_1._get_toRgb__0_k$();
     var inductionVariable = 0;
@@ -43252,7 +45915,7 @@
             var x = inductionVariable_0;
             inductionVariable_0 = inductionVariable_0 + 1 | 0;
             var pixel = _get_uInt16_($this$readAt);
-            var color = toRgb(pixel)._value_11;
+            var color = toRgb(pixel)._value_12;
             if ((_RGBA___get_r__impl_(color) === 0 ? _RGBA___get_g__impl_(color) === 0 : false) ? _RGBA___get_b__impl_(color) === 0 : false) {
               image.set_5mmwyp_k$(x, y, this._$black_0);
             } else {
@@ -43264,32 +45927,32 @@
        while (inductionVariable < last_0);
     return image;
   };
-  _no_name_provided__193.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__206.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_r02v3k_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__193.$metadata$ = {
+  _no_name_provided__206.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function Companion_67() {
-    Companion_instance_66 = this;
+  function Companion_68() {
+    Companion_instance_67 = this;
   }
-  Companion_67.prototype.parseFrame_w0q4jb_k$ = function (bytesBuffer, offset_0, width, height, encoding, black) {
-    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_165(width, height, encoding, black));
+  Companion_68.prototype.parseFrame_w0q4jb_k$ = function (bytesBuffer, offset_0, width, height, encoding, black) {
+    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_177(width, height, encoding, black));
   };
-  Companion_67.$metadata$ = {
+  Companion_68.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_66;
-  function Companion_getInstance_66() {
-    if (Companion_instance_66 == null)
-      new Companion_67();
-    return Companion_instance_66;
+  var Companion_instance_67;
+  function Companion_getInstance_67() {
+    if (Companion_instance_67 == null)
+      new Companion_68();
+    return Companion_instance_67;
   }
   function S16SpriteFrame(bytesBuffer, offset_0, width, height, encoding, black) {
-    Companion_getInstance_66();
+    Companion_getInstance_67();
     SpriteFrame.call(this, width, height);
     this._offset_10 = offset_0;
     this._encoding_2 = encoding;
@@ -43328,22 +45991,22 @@
       tmp_0 = tmp1_elvis_lhs;
     }
     var bytesBuffer = tmp_0;
-    return Companion_getInstance_66().parseFrame_w0q4jb_k$(bytesBuffer, this._offset_10, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_2, this._black_1);
+    return Companion_getInstance_67().parseFrame_w0q4jb_k$(bytesBuffer, this._offset_10, this._get_width__0_k$(), this._get_height__0_k$(), this._encoding_2, this._black_1);
   };
   S16SpriteFrame.$metadata$ = {
     simpleName: 'S16SpriteFrame',
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_164(this$0, $keepBlack) {
-    var i = new _no_name_provided__192(this$0, $keepBlack);
+  function _no_name_provided_$factory_176(this$0, $keepBlack) {
+    var i = new _no_name_provided__205(this$0, $keepBlack);
     return function (p1) {
       i.invoke_3p24ox_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_165($width, $height, $encoding, $black) {
-    var i = new _no_name_provided__193($width, $height, $encoding, $black);
+  function _no_name_provided_$factory_177($width, $height, $encoding, $black) {
+    var i = new _no_name_provided__206($width, $height, $encoding, $black);
     return function (p1) {
       return i.invoke_r02v3k_k$(p1);
     };
@@ -43396,49 +46059,52 @@
     }
     $this._set_mFrames__7r1kda_k$(tmp$ret$3);
   }
-  function Companion_68() {
-    Companion_instance_67 = this;
+  function Companion_69() {
+    Companion_instance_68 = this;
   }
-  Companion_68.$metadata$ = {
+  Companion_69.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_67;
-  function Companion_getInstance_67() {
-    if (Companion_instance_67 == null)
-      new Companion_68();
-    return Companion_instance_67;
+  var Companion_instance_68;
+  function Companion_getInstance_68() {
+    if (Companion_instance_68 == null)
+      new Companion_69();
+    return Companion_instance_68;
   }
-  function _no_name_provided__194(this$0, $black) {
-    this._this$0_22 = this$0;
+  function _no_name_provided__207(this$0, $black) {
+    this._this$0_32 = this$0;
     this._$black_1 = $black;
   }
-  _no_name_provided__194.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
-    initFrames_2($this$readAt, this._this$0_22, this._$black_1);
+  _no_name_provided__207.prototype.invoke_3p24ox_k$ = function ($this$readAt) {
+    initFrames_2($this$readAt, this._this$0_32, this._$black_1);
   };
-  _no_name_provided__194.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__207.prototype.invoke_20e8_k$ = function (p1) {
     this.invoke_3p24ox_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__194.$metadata$ = {
+  _no_name_provided__207.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   function SprSpriteFile(bytesBuffer, keepBlack, progressChunkSize, progressCallback) {
-    Companion_getInstance_67();
+    Companion_getInstance_68();
     SpriteFile.call(this, SpriteType_SPR_getInstance(), progressChunkSize, progressCallback);
     this._mBytesBuffer_5 = null;
     this._mBytesBuffer_5 = bytesBuffer;
     var tmp;
     if (keepBlack) {
-      tmp = Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 255);
+      tmp = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255);
     } else {
-      tmp = Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 0);
+      tmp = Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
     }
     var black = tmp;
-    readAt(bytesBuffer, 0, _no_name_provided_$factory_166(this, black));
+    readAt(bytesBuffer, 0, _no_name_provided_$factory_178(this, black));
   }
+  SprSpriteFile.prototype._get_allowAsync__0_k$ = function () {
+    return false;
+  };
   SprSpriteFile.prototype.close_0_k$ = function () {
     var tmp0_safe_receiver = this._mBytesBuffer_5;
     var tmp1_safe_receiver = tmp0_safe_receiver == null ? null : tmp0_safe_receiver.close();
@@ -43518,40 +46184,40 @@
     }
     return out;
   }
-  function _no_name_provided__195($width, $height, $black) {
+  function _no_name_provided__208($width, $height, $black) {
     this._$width_3 = $width;
     this._$height_3 = $height;
     this._$black_2 = $black;
   }
-  _no_name_provided__195.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
-    return readFrame($this$readAt, Companion_getInstance_68(), this._$width_3, this._$height_3, this._$black_2);
+  _no_name_provided__208.prototype.invoke_r02v3k_k$ = function ($this$readAt) {
+    return readFrame($this$readAt, Companion_getInstance_69(), this._$width_3, this._$height_3, this._$black_2);
   };
-  _no_name_provided__195.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__208.prototype.invoke_20e8_k$ = function (p1) {
     return this.invoke_r02v3k_k$((!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE());
   };
-  _no_name_provided__195.$metadata$ = {
+  _no_name_provided__208.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function Companion_69() {
-    Companion_instance_68 = this;
+  function Companion_70() {
+    Companion_instance_69 = this;
   }
-  Companion_69.prototype.readSpriteFrame_a03w2c_k$ = function (bytesBuffer, offset_0, width, height, black) {
-    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_167(width, height, black));
+  Companion_70.prototype.readSpriteFrame_a03w2c_k$ = function (bytesBuffer, offset_0, width, height, black) {
+    return readAt_0(bytesBuffer, offset_0, _no_name_provided_$factory_179(width, height, black));
   };
-  Companion_69.$metadata$ = {
+  Companion_70.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_68;
-  function Companion_getInstance_68() {
-    if (Companion_instance_68 == null)
-      new Companion_69();
-    return Companion_instance_68;
+  var Companion_instance_69;
+  function Companion_getInstance_69() {
+    if (Companion_instance_69 == null)
+      new Companion_70();
+    return Companion_instance_69;
   }
   function SprSpriteFrame(bytesBuffer, offset_0, width, height, black) {
-    Companion_getInstance_68();
+    Companion_getInstance_69();
     SpriteFrame.call(this, width, height);
     this._offset_11 = offset_0;
     this._black_2 = black;
@@ -43589,22 +46255,22 @@
       tmp_0 = tmp1_elvis_lhs;
     }
     var bytesBuffer = tmp_0;
-    return Companion_getInstance_68().readSpriteFrame_a03w2c_k$(bytesBuffer, this._offset_11, this._get_width__0_k$(), this._get_height__0_k$(), this._black_2);
+    return Companion_getInstance_69().readSpriteFrame_a03w2c_k$(bytesBuffer, this._offset_11, this._get_width__0_k$(), this._get_height__0_k$(), this._black_2);
   };
   SprSpriteFrame.$metadata$ = {
     simpleName: 'SprSpriteFrame',
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_166(this$0, $black) {
-    var i = new _no_name_provided__194(this$0, $black);
+  function _no_name_provided_$factory_178(this$0, $black) {
+    var i = new _no_name_provided__207(this$0, $black);
     return function (p1) {
       i.invoke_3p24ox_k$(p1);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided_$factory_167($width, $height, $black) {
-    var i = new _no_name_provided__195($width, $height, $black);
+  function _no_name_provided_$factory_179($width, $height, $black) {
+    var i = new _no_name_provided__208($width, $height, $black);
     return function (p1) {
       return i.invoke_r02v3k_k$(p1);
     };
@@ -43617,7 +46283,7 @@
       var tmp1_iIf_0 = 'debug.sprite';
       if (tmp0_iIf_0.hasMode_6wfw3l_k$(tmp1_iIf_0)) {
         {
-          if (tmp0_iIf_0._logLevel._value_7 >= LogLevel_LOG_1_getInstance()._value_7) {
+          if (tmp0_iIf_0._logLevel._value_8 >= LogLevel_LOG_1_getInstance()._value_8) {
             var tmp = tmp0_iIf_0._loggerObject;
             var tmp$ret$2;
             $l$block_1: {
@@ -43675,24 +46341,42 @@
     }if (!$this._closed_0) {
       throw Exception_init_$Create$('Failed to close byte stream');
     }}
-  function _no_name_provided__196(this$0) {
-    this._this$0_23 = this$0;
+  function _no_name_provided__209(this$0) {
+    this._this$0_33 = this$0;
   }
-  _no_name_provided__196.prototype.invoke_0_k$ = function () {
-    var tmp0_safe_receiver = this._this$0_23._progressCallback;
+  _no_name_provided__209.prototype.invoke_0_k$ = function () {
+    var tmp0_safe_receiver = this._this$0_33._decodedFrames;
     if (tmp0_safe_receiver == null)
       null;
+    else {
+      var tmp$ret$0;
+      {
+        {
+        }
+        var tmp0_safe_receiver_2 = this._this$0_33._progressCallback;
+        if (tmp0_safe_receiver_2 == null)
+          null;
+        else
+          tmp0_safe_receiver_2(this._this$0_33._get_size__0_k$(), this._this$0_33._get_size__0_k$());
+        Unit_getInstance();
+        return tmp0_safe_receiver;
+      }
+    }
+    Unit_getInstance();
+    var tmp1_safe_receiver = this._this$0_33._progressCallback;
+    if (tmp1_safe_receiver == null)
+      null;
     else
-      tmp0_safe_receiver(0, this._this$0_23._get_size__0_k$());
+      tmp1_safe_receiver(0, this._this$0_33._get_size__0_k$());
     Unit_getInstance();
     {
       var tmp0_iIf_0 = Log_getInstance();
       var tmp1_iIf_0 = 'debug.sprite';
       if (tmp0_iIf_0.hasMode_6wfw3l_k$(tmp1_iIf_0)) {
         {
-          if (tmp0_iIf_0._logLevel._value_7 >= LogLevel_LOG_1_getInstance()._value_7) {
+          if (tmp0_iIf_0._logLevel._value_8 >= LogLevel_LOG_1_getInstance()._value_8) {
             var tmp = tmp0_iIf_0._loggerObject;
-            var tmp$ret$2;
+            var tmp$ret$3;
             $l$block_1: {
               var tmp_0;
               var tmp0_elvis_lhs_1_1_1 = tmp0_iIf_0._loggerObject.prependLogType;
@@ -43705,14 +46389,14 @@
               }
               var tmp_1 = tmp_0;
               var tmp_2;
-              var tmp$ret$0;
+              var tmp$ret$1;
               $l$block: {
                 {
                 }
-                tmp$ret$0 = null == null ? true : isBlank(null);
+                tmp$ret$1 = null == null ? true : isBlank(null);
                 break $l$block;
               }
-              if (!tmp$ret$0) {
+              if (!tmp$ret$1) {
                 tmp_2 = 'null::';
               } else {
                 {
@@ -43720,64 +46404,167 @@
                 }
               }
               var tmp_3 = tmp_2;
-              var tmp$ret$1;
+              var tmp$ret$2;
               $l$block_0: {
-                tmp$ret$1 = '' + 'Getting frames in ' + className$factory_0(this._this$0_23);
+                tmp$ret$2 = '' + 'Getting frames in ' + className$factory_0(this._this$0_33);
                 break $l$block_0;
               }
-              tmp$ret$2 = '' + tmp_1 + tmp_3 + tmp$ret$1;
+              tmp$ret$3 = '' + tmp_1 + tmp_3 + tmp$ret$2;
               break $l$block_1;
             }
-            tmp.info(false, tmp$ret$2, null);
+            tmp.info(false, tmp$ret$3, null);
           }}
       }}
-    var tmp$ret$6;
+    var tmp$ret$7;
     $l$block_5: {
-      var tmp$ret$5;
+      var tmp$ret$6;
       $l$block_4: {
-        var tmp2_mapIndexed_0 = this._this$0_23._get_mFrames__0_k$();
-        var tmp$ret$4;
+        var tmp2_mapIndexed_0 = this._this$0_33._get_mFrames__0_k$();
+        var tmp$ret$5;
         $l$block_3: {
           var tmp0_mapIndexedTo_0_1 = ArrayList_init_$Create$_0(collectionSizeOrDefault(tmp2_mapIndexed_0, 10));
           var index_1_2 = 0;
           var tmp0_iterator_2_3 = tmp2_mapIndexed_0.iterator_0_k$();
           while (tmp0_iterator_2_3.hasNext_0_k$()) {
             var item_3_4 = tmp0_iterator_2_3.next_0_k$();
-            var tmp$ret$3;
+            var tmp$ret$4;
             $l$block_2: {
               var tmp1_4_5 = index_1_2;
               index_1_2 = tmp1_4_5 + 1 | 0;
               var tmp3__anonymous__6 = checkIndexOverflow(tmp1_4_5);
-              if (tmp3__anonymous__6 % this._this$0_23._progressChunkSize === 0) {
-                var tmp0_safe_receiver_7 = this._this$0_23._progressCallback;
-                if ((tmp0_safe_receiver_7 == null ? null : tmp0_safe_receiver_7(tmp3__anonymous__6, this._this$0_23._get_size__0_k$())) === false) {
+              if (tmp3__anonymous__6 % this._this$0_33._progressChunkSize === 0) {
+                var tmp0_safe_receiver_7 = this._this$0_33._progressCallback;
+                if ((tmp0_safe_receiver_7 == null ? null : tmp0_safe_receiver_7(tmp3__anonymous__6, this._this$0_33._get_size__0_k$())) === false) {
                   throw SpriteParserCancelledException_init_$Create$('Parse sprite was cancelled during compile', null, 2, null);
                 } else {
                 }
-              }tmp$ret$3 = item_3_4._get_decoded__0_k$();
+              }tmp$ret$4 = item_3_4._get_decoded__0_k$();
               break $l$block_2;
             }
-            tmp0_mapIndexedTo_0_1.add_2bq_k$(tmp$ret$3);
+            tmp0_mapIndexedTo_0_1.add_2bq_k$(tmp$ret$4);
             Unit_getInstance();
           }
-          tmp$ret$4 = tmp0_mapIndexedTo_0_1;
+          tmp$ret$5 = tmp0_mapIndexedTo_0_1;
           break $l$block_3;
         }
-        tmp$ret$5 = tmp$ret$4;
+        tmp$ret$6 = tmp$ret$5;
         break $l$block_4;
       }
-      var tmp4_apply_0 = tmp$ret$5;
+      var tmp4_apply_0 = tmp$ret$6;
       {
       }
       {
-        closeFully(this._this$0_23);
+        this._this$0_33._decodedFrames = tmp4_apply_0;
+        closeFully(this._this$0_33);
       }
-      tmp$ret$6 = tmp4_apply_0;
+      tmp$ret$7 = tmp4_apply_0;
       break $l$block_5;
     }
-    return tmp$ret$6;
+    return tmp$ret$7;
   };
-  _no_name_provided__196.$metadata$ = {
+  _no_name_provided__209.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__210($done, this$0, resultContinuation) {
+    this._$done = $done;
+    this._this$0_34 = this$0;
+    CoroutineImpl_0.call(this, resultContinuation);
+  }
+  _no_name_provided__210.prototype.invoke_3q6o9z_k$ = function (frame, $cont) {
+    var tmp = this.create_e3qt6t_k$(frame, $cont);
+    tmp._result = Unit_getInstance();
+    tmp._exception_0 = null;
+    return tmp.doResume_0_k$();
+  };
+  _no_name_provided__210.prototype.invoke_20e8_k$ = function (p1, $cont) {
+    return this.invoke_3q6o9z_k$(p1 instanceof SpriteFrame ? p1 : THROW_CCE(), $cont);
+  };
+  _no_name_provided__210.prototype.doResume_0_k$ = function () {
+    var suspendResult = this._result;
+    $sm: do
+      try {
+        var tmp = this._state_0;
+        if (tmp === 0) {
+          this._exceptionState = 1;
+          var decoded = this._frame_0._get_decoded__0_k$();
+          var tmp0_this = this._$done;
+          var tmp1 = tmp0_this._value_7;
+          tmp0_this._value_7 = tmp1 + 1 | 0;
+          var i = tmp1;
+          if (i % this._this$0_34._progressChunkSize === 0) {
+            var tmp2_safe_receiver = this._this$0_34._progressCallback;
+            if ((tmp2_safe_receiver == null ? null : tmp2_safe_receiver(i, this._this$0_34._get_size__0_k$())) === false) {
+              throw SpriteParserCancelledException_init_$Create$('Parse sprite was cancelled during compile', null, 2, null);
+            } else {
+            }
+          }this._frame_0.close_0_k$();
+          Unit_getInstance();
+          return decoded;
+        } else if (tmp === 1) {
+          throw this._exception_0;
+        }} catch ($p) {
+        throw $p;
+      }
+     while (true);
+  };
+  _no_name_provided__210.prototype.create_e3qt6t_k$ = function (frame, completion) {
+    var i = new _no_name_provided__210(this._$done, this._this$0_34, completion);
+    i._frame_0 = frame;
+    return i;
+  };
+  _no_name_provided__210.$metadata$ = {
+    kind: 'class',
+    interfaces: [],
+    suspendArity: 1
+  };
+  function $framesAsyncCOROUTINE$0(_this_, resultContinuation) {
+    CoroutineImpl_0.call(this, resultContinuation);
+    this.__this__20 = _this_;
+  }
+  $framesAsyncCOROUTINE$0.prototype.doResume_0_k$ = function () {
+    var suspendResult = this._result;
+    $sm: do
+      try {
+        var tmp = this._state_0;
+        switch (tmp) {
+          case 0:
+            this._exceptionState = 2;
+            if (!this.__this__20._get_allowAsync__0_k$()) {
+              return this.__this__20._get_frames__0_k$();
+            }
+            this._done0 = new Pointer(0);
+            this._state_0 = 1;
+            var tmp_0 = this.__this__20._get_mFrames__0_k$();
+            suspendResult = mapAsync(tmp_0, _no_name_provided_$factory_181(this._done0, this.__this__20, null), this);
+            if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
+              return suspendResult;
+            }
+            continue $sm;
+          case 1:
+            var tmp0_apply_0 = suspendResult;
+            var tmp0_safe_receiver_2 = this.__this__20._progressCallback;
+            if (tmp0_safe_receiver_2 == null)
+              null;
+            else
+              tmp0_safe_receiver_2(tmp0_apply_0._get_size__0_k$(), tmp0_apply_0._get_size__0_k$());
+            Unit_getInstance();
+            return tmp0_apply_0;
+          case 2:
+            throw this._exception_0;
+        }
+      } catch ($p) {
+        if (this._exceptionState === 2) {
+          throw $p;
+        } else {
+          this._state_0 = this._exceptionState;
+          this._exception_0 = $p;
+        }
+      }
+     while (true);
+  };
+  $framesAsyncCOROUTINE$0.$metadata$ = {
+    simpleName: '$framesAsyncCOROUTINE$0',
     kind: 'class',
     interfaces: []
   };
@@ -43787,8 +46574,9 @@
     this._progressCallback = progressCallback;
     this._closed_0 = false;
     this._closedAllChildren = false;
+    this._decodedFrames = null;
     var tmp = this;
-    tmp._frames$delegate = lazy(_no_name_provided_$factory_168(this));
+    tmp._frames$delegate = lazy(_no_name_provided_$factory_180(this));
   }
   SpriteFile.prototype._set_mFrames__7r1kda_k$ = function (_set___) {
     this._mFrames = _set___;
@@ -43813,18 +46601,24 @@
     }
     return tmp$ret$0;
   };
+  SpriteFile.prototype.framesAsync_0_k$ = function ($cont) {
+    var tmp = new $framesAsyncCOROUTINE$0(this, $cont);
+    tmp._result = Unit_getInstance();
+    tmp._exception_0 = null;
+    return tmp.doResume_0_k$();
+  };
   SpriteFile.$metadata$ = {
     simpleName: 'SpriteFile',
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__197(this$0) {
-    this._this$0_24 = this$0;
+  function _no_name_provided__211(this$0) {
+    this._this$0_35 = this$0;
   }
-  _no_name_provided__197.prototype.invoke_0_k$ = function () {
-    return this._this$0_24.decodeActual_0_k$();
+  _no_name_provided__211.prototype.invoke_0_k$ = function () {
+    return this._this$0_35.decodeActual_0_k$();
   };
-  _no_name_provided__197.$metadata$ = {
+  _no_name_provided__211.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -43832,7 +46626,7 @@
     this._width_7 = width;
     this._height_7 = height;
     var tmp = this;
-    tmp._decoded$delegate = lazy(_no_name_provided_$factory_169(this));
+    tmp._decoded$delegate = lazy(_no_name_provided_$factory_182(this));
   }
   SpriteFrame.prototype._get_width__0_k$ = function () {
     return this._width_7;
@@ -43874,49 +46668,176 @@
       return receiver._get_decoded__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_168(this$0) {
-    var i = new _no_name_provided__196(this$0);
+  function _no_name_provided_$factory_180(this$0) {
+    var i = new _no_name_provided__209(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_169(this$0) {
-    var i = new _no_name_provided__197(this$0);
+  function _no_name_provided_$factory_181($done, this$0, resultContinuation) {
+    var i = new _no_name_provided__210($done, this$0, resultContinuation);
+    var l = function (p1, $cont) {
+      return i.invoke_3q6o9z_k$(p1, $cont);
+    };
+    l.$arity = 1;
+    return l;
+  }
+  function _no_name_provided_$factory_182(this$0) {
+    var i = new _no_name_provided__211(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided__198($progressCallback) {
+  function _no_name_provided__212($progressCallback) {
     this._$progressCallback = $progressCallback;
   }
-  _no_name_provided__198.prototype.invoke_27zxwg_k$ = function (i, count) {
+  _no_name_provided__212.prototype.invoke_27zxwg_k$ = function (i, count) {
     var tmp0_safe_receiver = this._$progressCallback;
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, i, count);
   };
-  _no_name_provided__198.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__212.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__198.$metadata$ = {
+  _no_name_provided__212.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__199($progressCallback) {
+  function _no_name_provided__213($progressCallback) {
     this._$progressCallback_0 = $progressCallback;
   }
-  _no_name_provided__199.prototype.invoke_rvwcgf_k$ = function (i, count) {
+  _no_name_provided__213.prototype.invoke_rvwcgf_k$ = function (i, count) {
     var tmp0_safe_receiver = this._$progressCallback_0;
     if ((tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, i, count)) === false) {
       throw SpriteParserCancelledException_init_$Create$('Stitch BLK was cancelled during compile', null, 2, null);
     } else {
     }
   };
-  _no_name_provided__199.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__213.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     this.invoke_rvwcgf_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__199.$metadata$ = {
+  _no_name_provided__213.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__214($progressCallback) {
+    this._$progressCallback_1 = $progressCallback;
+  }
+  _no_name_provided__214.prototype.invoke_27zxwg_k$ = function (i, count) {
+    var tmp0_safe_receiver = this._$progressCallback_1;
+    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, i, count);
+  };
+  _no_name_provided__214.prototype.invoke_osx4an_k$ = function (p1, p2) {
+    var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
+    return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
+  };
+  _no_name_provided__214.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided__215($progressCallback) {
+    this._$progressCallback_2 = $progressCallback;
+  }
+  _no_name_provided__215.prototype.invoke_rvwcgf_k$ = function (i, count) {
+    var tmp0_safe_receiver = this._$progressCallback_2;
+    if ((tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, i, count)) === false) {
+      throw SpriteParserCancelledException_init_$Create$('Stitch BLK was cancelled during compile', null, 2, null);
+    } else {
+    }
+  };
+  _no_name_provided__215.prototype.invoke_osx4an_k$ = function (p1, p2) {
+    var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
+    this.invoke_rvwcgf_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
+    return Unit_getInstance();
+  };
+  _no_name_provided__215.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function $parseBLKAsyncCOROUTINE$1(_this_, bytes_0, progressChunkSize, progressCallback, resultContinuation) {
+    CoroutineImpl_0.call(this, resultContinuation);
+    this.__this__21 = _this_;
+    this._bytes_1 = bytes_0;
+    this._progressChunkSize_0 = progressChunkSize;
+    this._progressCallback_0 = progressCallback;
+  }
+  $parseBLKAsyncCOROUTINE$1.prototype.doResume_0_k$ = function () {
+    var suspendResult = this._result;
+    $sm: do
+      try {
+        var tmp = this._state_0;
+        switch (tmp) {
+          case 0:
+            this._exceptionState = 2;
+            this._sprite0 = new BlkSpriteFile(this._bytes_1, true, this._progressChunkSize_0, this._progressCallback_0);
+            this._state_0 = 1;
+            suspendResult = this._sprite0.framesAsync_0_k$(this);
+            if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
+              return suspendResult;
+            }
+            continue $sm;
+          case 1:
+            var frames = suspendResult;
+            return new BlkParseResult(frames, this._sprite0._get_cellsWide__0_k$(), this._sprite0._get_cellsHigh__0_k$());
+          case 2:
+            throw this._exception_0;
+        }
+      } catch ($p) {
+        if (this._exceptionState === 2) {
+          throw $p;
+        } else {
+          this._state_0 = this._exceptionState;
+          this._exception_0 = $p;
+        }
+      }
+     while (true);
+  };
+  $parseBLKAsyncCOROUTINE$1.$metadata$ = {
+    simpleName: '$parseBLKAsyncCOROUTINE$1',
+    kind: 'class',
+    interfaces: []
+  };
+  function $getStitchedAsyncCOROUTINE$2(_this_, bytesBuffer, progressChunkSize, progressCallback, resultContinuation) {
+    CoroutineImpl_0.call(this, resultContinuation);
+    this.__this__22 = _this_;
+    this._bytesBuffer = bytesBuffer;
+    this._progressChunkSize_1 = progressChunkSize;
+    this._progressCallback_1 = progressCallback;
+  }
+  $getStitchedAsyncCOROUTINE$2.prototype.doResume_0_k$ = function () {
+    var suspendResult = this._result;
+    $sm: do
+      try {
+        var tmp = this._state_0;
+        switch (tmp) {
+          case 0:
+            this._exceptionState = 2;
+            this._state_0 = 1;
+            suspendResult = this.__this__22.parseBLKAsync_8vehpu_k$(this._bytesBuffer, this._progressChunkSize_1, _no_name_provided_$factory_185(this._progressCallback_1), this);
+            if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
+              return suspendResult;
+            }
+            continue $sm;
+          case 1:
+            var result = suspendResult;
+            return this.__this__22.getStitched_wb6cju_k$(result._cellsWide, result._cellsHigh, result._imageData, _no_name_provided_$factory_186(this._progressCallback_1));
+          case 2:
+            throw this._exception_0;
+        }
+      } catch ($p) {
+        if (this._exceptionState === 2) {
+          throw $p;
+        } else {
+          this._state_0 = this._exceptionState;
+          this._exception_0 = $p;
+        }
+      }
+     while (true);
+  };
+  $getStitchedAsyncCOROUTINE$2.$metadata$ = {
+    simpleName: '$getStitchedAsyncCOROUTINE$2',
     kind: 'class',
     interfaces: []
   };
@@ -43965,14 +46886,14 @@
         break;
       case 'back':
       case 'blk':
-        tmp_1 = new BlkSpriteFile(bytesBuffer, progressChunkSize, progressCallback);
+        tmp_1 = new BlkSpriteFile(bytesBuffer, false, progressChunkSize, progressCallback);
         break;
       default:throw SpriteParserException_init_$Create$('Invalid image file extension found', null, 2, null);
     }
     return tmp_1._get_frames__0_k$();
   };
   SpriteParser.prototype.parseBLK_8vehpu_k$ = function (bytes_0, progressChunkSize, progressCallback) {
-    var sprite = new BlkSpriteFile(bytes_0, progressChunkSize, progressCallback);
+    var sprite = new BlkSpriteFile(bytes_0, false, progressChunkSize, progressCallback);
     return new BlkParseResult(sprite._get_frames__0_k$(), sprite._get_cellsWide__0_k$(), sprite._get_cellsHigh__0_k$());
   };
   SpriteParser.prototype.parseBLK$default_r2t3ao_k$ = function (bytes_0, progressChunkSize, progressCallback, $mask0, $handler) {
@@ -43982,12 +46903,24 @@
       progressCallback = null;
     return this.parseBLK_8vehpu_k$(bytes_0, progressChunkSize, progressCallback);
   };
+  SpriteParser.prototype.parseBLKAsync_8vehpu_k$ = function (bytes_0, progressChunkSize, progressCallback, $cont) {
+    var tmp = new $parseBLKAsyncCOROUTINE$1(this, bytes_0, progressChunkSize, progressCallback, $cont);
+    tmp._result = Unit_getInstance();
+    tmp._exception_0 = null;
+    return tmp.doResume_0_k$();
+  };
   SpriteParser.prototype.getStitched_wb6cju_k$ = function (cellsWide, cellsHigh, frames, progressCallback) {
-    return Companion_getInstance_61().getStitched_wb6cju_k$(cellsWide, cellsHigh, frames, progressCallback);
+    return Companion_getInstance_62().getStitched_wb6cju_k$(cellsWide, cellsHigh, frames, progressCallback);
   };
   SpriteParser.prototype.getStitched_fu8muu_k$ = function (bytesBuffer, progressCallback) {
-    var result = this.parseBLK$default_r2t3ao_k$(bytesBuffer, 0, _no_name_provided_$factory_170(progressCallback), 2, null);
-    return this.getStitched_wb6cju_k$(result._cellsWide, result._cellsHigh, result._imageData, _no_name_provided_$factory_171(progressCallback));
+    var result = this.parseBLK$default_r2t3ao_k$(bytesBuffer, 0, _no_name_provided_$factory_183(progressCallback), 2, null);
+    return this.getStitched_wb6cju_k$(result._cellsWide, result._cellsHigh, result._imageData, _no_name_provided_$factory_184(progressCallback));
+  };
+  SpriteParser.prototype.getStitchedAsync_m97t7v_k$ = function (bytesBuffer, progressChunkSize, progressCallback, $cont) {
+    var tmp = new $getStitchedAsyncCOROUTINE$2(this, bytesBuffer, progressChunkSize, progressCallback, $cont);
+    tmp._result = Unit_getInstance();
+    tmp._exception_0 = null;
+    return tmp.doResume_0_k$();
   };
   SpriteParser.$metadata$ = {
     simpleName: 'SpriteParser',
@@ -44040,59 +46973,72 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_170($progressCallback) {
-    var i = new _no_name_provided__198($progressCallback);
+  function _no_name_provided_$factory_183($progressCallback) {
+    var i = new _no_name_provided__212($progressCallback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_171($progressCallback) {
-    var i = new _no_name_provided__199($progressCallback);
+  function _no_name_provided_$factory_184($progressCallback) {
+    var i = new _no_name_provided__213($progressCallback);
     return function (p1, p2) {
       i.invoke_rvwcgf_k$(p1, p2);
       return Unit_getInstance();
     };
   }
-  function _no_name_provided__200(this$0) {
-    this._this$0_25 = this$0;
+  function _no_name_provided_$factory_185($progressCallback) {
+    var i = new _no_name_provided__214($progressCallback);
+    return function (p1, p2) {
+      return i.invoke_27zxwg_k$(p1, p2);
+    };
   }
-  _no_name_provided__200.prototype.invoke_fcwjfj_k$ = function (red, green, blue) {
-    return (red & this._this$0_25._encodeBitMasks._first_0) << this._this$0_25._bitShifts._first_0 | (green & this._this$0_25._encodeBitMasks._second_0) << this._this$0_25._bitShifts._second_0 | (blue & this._this$0_25._encodeBitMasks._third) >> this._this$0_25._bitShifts._third;
+  function _no_name_provided_$factory_186($progressCallback) {
+    var i = new _no_name_provided__215($progressCallback);
+    return function (p1, p2) {
+      i.invoke_rvwcgf_k$(p1, p2);
+      return Unit_getInstance();
+    };
+  }
+  function _no_name_provided__216(this$0) {
+    this._this$0_36 = this$0;
+  }
+  _no_name_provided__216.prototype.invoke_fcwjfj_k$ = function (red, green, blue) {
+    return (red & this._this$0_36._encodeBitMasks._first_0) << this._this$0_36._bitShifts._first_0 | (green & this._this$0_36._encodeBitMasks._second_0) << this._this$0_36._bitShifts._second_0 | (blue & this._this$0_36._encodeBitMasks._third) >> this._this$0_36._bitShifts._third;
   };
-  _no_name_provided__200.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
+  _no_name_provided__216.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     var tmp_0 = (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE();
     return this.invoke_fcwjfj_k$(tmp, tmp_0, (!(p3 == null) ? typeof p3 === 'number' : false) ? p3 : THROW_CCE());
   };
-  _no_name_provided__200.$metadata$ = {
+  _no_name_provided__216.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__201(this$0) {
-    this._this$0_26 = this$0;
+  function _no_name_provided__217(this$0) {
+    this._this$0_37 = this$0;
   }
-  _no_name_provided__201.prototype.invoke_kxqjbk_k$ = function (pixel) {
-    var red = (pixel & this._this$0_26._decodeBitMask._first_0) >> this._this$0_26._bitShifts._first_0;
-    var green = (pixel & this._this$0_26._decodeBitMask._second_0) >> this._this$0_26._bitShifts._second_0;
-    var blue = (pixel & this._this$0_26._decodeBitMask._third) << this._this$0_26._bitShifts._third;
-    return Companion_getInstance_57().invoke_fnl2i9_k$(red, green, blue, 255);
+  _no_name_provided__217.prototype.invoke_kxqjbk_k$ = function (pixel) {
+    var red = (pixel & this._this$0_37._decodeBitMask._first_0) >> this._this$0_37._bitShifts._first_0;
+    var green = (pixel & this._this$0_37._decodeBitMask._second_0) >> this._this$0_37._bitShifts._second_0;
+    var blue = (pixel & this._this$0_37._decodeBitMask._third) << this._this$0_37._bitShifts._third;
+    return Companion_getInstance_58().invoke_fnl2i9_k$(red, green, blue, 255);
   };
-  _no_name_provided__201.prototype.invoke_20e8_k$ = function (p1) {
+  _no_name_provided__217.prototype.invoke_20e8_k$ = function (p1) {
     return new RGBA(this.invoke_kxqjbk_k$((!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE()));
   };
-  _no_name_provided__201.$metadata$ = {
+  _no_name_provided__217.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
   var ColorEncoding_X_555_instance;
   var ColorEncoding_X_565_instance;
-  function Companion_70() {
-    Companion_instance_69 = this;
+  function Companion_71() {
+    Companion_instance_70 = this;
     this._x555 = '555';
     this._x565 = '565';
     this._ENCODING_DEFAULT = ColorEncoding_X_565_getInstance();
   }
-  Companion_70.prototype.fromString_6wfw3l_k$ = function (value) {
+  Companion_71.prototype.fromString_6wfw3l_k$ = function (value) {
     var tmp;
     var tmp_0;
     if (value === '555') {
@@ -44119,34 +47065,34 @@
     }
     return tmp;
   };
-  Companion_70.$metadata$ = {
+  Companion_71.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_69;
-  function Companion_getInstance_69() {
-    if (Companion_instance_69 == null)
-      new Companion_70();
-    return Companion_instance_69;
+  var Companion_instance_70;
+  function Companion_getInstance_70() {
+    if (Companion_instance_70 == null)
+      new Companion_71();
+    return Companion_instance_70;
   }
-  function _no_name_provided__202(this$0) {
-    this._this$0_27 = this$0;
+  function _no_name_provided__218(this$0) {
+    this._this$0_38 = this$0;
   }
-  _no_name_provided__202.prototype.invoke_0_k$ = function () {
-    return _no_name_provided_$factory_174(this._this$0_27);
+  _no_name_provided__218.prototype.invoke_0_k$ = function () {
+    return _no_name_provided_$factory_189(this._this$0_38);
   };
-  _no_name_provided__202.$metadata$ = {
+  _no_name_provided__218.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__203(this$0) {
-    this._this$0_28 = this$0;
+  function _no_name_provided__219(this$0) {
+    this._this$0_39 = this$0;
   }
-  _no_name_provided__203.prototype.invoke_0_k$ = function () {
-    return _no_name_provided_$factory_175(this._this$0_28);
+  _no_name_provided__219.prototype.invoke_0_k$ = function () {
+    return _no_name_provided_$factory_190(this._this$0_39);
   };
-  _no_name_provided__203.$metadata$ = {
+  _no_name_provided__219.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -44157,7 +47103,7 @@
     ColorEncoding_entriesInitialized = true;
     ColorEncoding_X_555_instance = new ColorEncoding('X_555', 0, '555', 0, new Triple(248, 248, 248), new Triple(31744, 992, 31), new Triple(7, 2, 3));
     ColorEncoding_X_565_instance = new ColorEncoding('X_565', 1, '565', 1, new Triple(248, 252, 248), new Triple(63488, 2016, 31), new Triple(8, 3, 3));
-    Companion_getInstance_69();
+    Companion_getInstance_70();
   }
   function ColorEncoding(name, ordinal, simpleName, marker, encodeBitMasks, decodeBitMask, bitShifts) {
     Enum.call(this, name, ordinal);
@@ -44167,9 +47113,9 @@
     this._decodeBitMask = decodeBitMask;
     this._bitShifts = bitShifts;
     var tmp = this;
-    tmp._toInt$delegate = lazy(_no_name_provided_$factory_172(this));
+    tmp._toInt$delegate = lazy(_no_name_provided_$factory_187(this));
     var tmp_0 = this;
-    tmp_0._toRgb$delegate = lazy(_no_name_provided_$factory_173(this));
+    tmp_0._toRgb$delegate = lazy(_no_name_provided_$factory_188(this));
   }
   ColorEncoding.prototype._get_toInt__0_k$ = function () {
     var tmp$ret$0;
@@ -44197,8 +47143,8 @@
   function InvalidSpriteEncodingString_init_$Init$(code, message, throwable, $mask0, $marker, $this) {
     if (!(($mask0 & 2) === 0)) {
       var tmp = '' + "Invalid sprite encoding value '" + code + "'. ";
-      Companion_getInstance_69();
-      Companion_getInstance_69();
+      Companion_getInstance_70();
+      Companion_getInstance_70();
       message = tmp + ('' + "Expected value of '" + '555' + "' or '" + '565' + "'");
     }if (!(($mask0 & 4) === 0))
       throwable = null;
@@ -44238,26 +47184,26 @@
       return receiver._get_toRgb__0_k$();
     }, null);
   }
-  function _no_name_provided_$factory_172(this$0) {
-    var i = new _no_name_provided__202(this$0);
+  function _no_name_provided_$factory_187(this$0) {
+    var i = new _no_name_provided__218(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_173(this$0) {
-    var i = new _no_name_provided__203(this$0);
+  function _no_name_provided_$factory_188(this$0) {
+    var i = new _no_name_provided__219(this$0);
     return function () {
       return i.invoke_0_k$();
     };
   }
-  function _no_name_provided_$factory_174(this$0) {
-    var i = new _no_name_provided__200(this$0);
+  function _no_name_provided_$factory_189(this$0) {
+    var i = new _no_name_provided__216(this$0);
     return function (p1, p2, p3) {
       return i.invoke_fcwjfj_k$(p1, p2, p3);
     };
   }
-  function _no_name_provided_$factory_175(this$0) {
-    var i = new _no_name_provided__201(this$0);
+  function _no_name_provided_$factory_190(this$0) {
+    var i = new _no_name_provided__217(this$0);
     return function (p1) {
       return new RGBA(i.invoke_kxqjbk_k$(p1));
     };
@@ -44266,10 +47212,10 @@
   var SpriteType_S16_instance;
   var SpriteType_C16_instance;
   var SpriteType_BLK_instance;
-  function Companion_71() {
-    Companion_instance_70 = this;
+  function Companion_72() {
+    Companion_instance_71 = this;
   }
-  Companion_71.prototype.fromString_6wfw3l_k$ = function (value) {
+  Companion_72.prototype.fromString_6wfw3l_k$ = function (value) {
     var tmp$ret$1;
     $l$block_0: {
       var tmp$ret$0;
@@ -44299,16 +47245,16 @@
     }
     return tmp;
   };
-  Companion_71.$metadata$ = {
+  Companion_72.$metadata$ = {
     simpleName: 'Companion',
     kind: 'object',
     interfaces: []
   };
-  var Companion_instance_70;
-  function Companion_getInstance_70() {
-    if (Companion_instance_70 == null)
-      new Companion_71();
-    return Companion_instance_70;
+  var Companion_instance_71;
+  function Companion_getInstance_71() {
+    if (Companion_instance_71 == null)
+      new Companion_72();
+    return Companion_instance_71;
   }
   var SpriteType_entriesInitialized;
   function SpriteType_initEntries() {
@@ -44319,7 +47265,7 @@
     SpriteType_S16_instance = new SpriteType('S16', 1);
     SpriteType_C16_instance = new SpriteType('C16', 2);
     SpriteType_BLK_instance = new SpriteType('BLK', 3);
-    Companion_getInstance_70();
+    Companion_getInstance_71();
   }
   function SpriteType(name, ordinal) {
     Enum.call(this, name, ordinal);
@@ -44333,13 +47279,13 @@
     var tmp0_subject = _this_;
     var tmp;
     if (tmp0_subject.equals(SpriteType_SPR_getInstance())) {
-      tmp = _no_name_provided_$factory_176();
+      tmp = _no_name_provided_$factory_191();
     } else if (tmp0_subject.equals(SpriteType_S16_getInstance())) {
-      tmp = _no_name_provided_$factory_177();
+      tmp = _no_name_provided_$factory_192();
     } else if (tmp0_subject.equals(SpriteType_C16_getInstance())) {
-      tmp = _no_name_provided_$factory_178();
+      tmp = _no_name_provided_$factory_193();
     } else if (tmp0_subject.equals(SpriteType_BLK_getInstance())) {
-      tmp = _no_name_provided_$factory_179();
+      tmp = _no_name_provided_$factory_194();
     } else {
       noWhenBranchMatchedException();
     }
@@ -44360,7 +47306,7 @@
   }
   function InvalidSpriteTypeException(value, message, throwable) {
     Exception_init_$Init$_1(message, throwable, this);
-    this._value_12 = value;
+    this._value_13 = value;
     captureStack(this, InvalidSpriteTypeException);
   }
   InvalidSpriteTypeException.$metadata$ = {
@@ -44368,59 +47314,59 @@
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__204() {
+  function _no_name_provided__220() {
   }
-  _no_name_provided__204.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
+  _no_name_provided__220.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
     return (new SprSpriteFile(bytes_0, keepBlack, 1, progressCallback))._get_frames__0_k$();
   };
-  _no_name_provided__204.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
+  _no_name_provided__220.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
     var tmp = (!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE();
     var tmp_0 = (!(p2 == null) ? typeof p2 === 'boolean' : false) ? p2 : THROW_CCE();
     return this.invoke_fqcrmv_k$(tmp, tmp_0, (p3 == null ? true : typeof p3 === 'function') ? p3 : THROW_CCE());
   };
-  _no_name_provided__204.$metadata$ = {
+  _no_name_provided__220.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__205() {
+  function _no_name_provided__221() {
   }
-  _no_name_provided__205.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
+  _no_name_provided__221.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
     return (new S16SpriteFile(bytes_0, keepBlack, 1, progressCallback))._get_frames__0_k$();
   };
-  _no_name_provided__205.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
+  _no_name_provided__221.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
     var tmp = (!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE();
     var tmp_0 = (!(p2 == null) ? typeof p2 === 'boolean' : false) ? p2 : THROW_CCE();
     return this.invoke_fqcrmv_k$(tmp, tmp_0, (p3 == null ? true : typeof p3 === 'function') ? p3 : THROW_CCE());
   };
-  _no_name_provided__205.$metadata$ = {
+  _no_name_provided__221.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__206() {
+  function _no_name_provided__222() {
   }
-  _no_name_provided__206.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
+  _no_name_provided__222.prototype.invoke_fqcrmv_k$ = function (bytes_0, keepBlack, progressCallback) {
     return (new C16SpriteFile(bytes_0, keepBlack, 1, progressCallback))._get_frames__0_k$();
   };
-  _no_name_provided__206.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
+  _no_name_provided__222.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
     var tmp = (!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE();
     var tmp_0 = (!(p2 == null) ? typeof p2 === 'boolean' : false) ? p2 : THROW_CCE();
     return this.invoke_fqcrmv_k$(tmp, tmp_0, (p3 == null ? true : typeof p3 === 'function') ? p3 : THROW_CCE());
   };
-  _no_name_provided__206.$metadata$ = {
+  _no_name_provided__222.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__207() {
+  function _no_name_provided__223() {
   }
-  _no_name_provided__207.prototype.invoke_fqcrmv_k$ = function (bytes_0, _anonymous_parameter_1_, progressCallback) {
-    return (new BlkSpriteFile(bytes_0, 1, progressCallback))._get_frames__0_k$();
+  _no_name_provided__223.prototype.invoke_fqcrmv_k$ = function (bytes_0, _anonymous_parameter_1_, progressCallback) {
+    return BlkSpriteFile_init_$Create$(bytes_0, 1, progressCallback)._get_frames__0_k$();
   };
-  _no_name_provided__207.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
+  _no_name_provided__223.prototype.invoke_ifn5k1_k$ = function (p1, p2, p3) {
     var tmp = (!(p1 == null) ? isObject(p1) : false) ? p1 : THROW_CCE();
     var tmp_0 = (!(p2 == null) ? typeof p2 === 'boolean' : false) ? p2 : THROW_CCE();
     return this.invoke_fqcrmv_k$(tmp, tmp_0, (p3 == null ? true : typeof p3 === 'function') ? p3 : THROW_CCE());
   };
-  _no_name_provided__207.$metadata$ = {
+  _no_name_provided__223.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
@@ -44440,71 +47386,71 @@
     SpriteType_initEntries();
     return SpriteType_BLK_instance;
   }
-  function _no_name_provided_$factory_176() {
-    var i = new _no_name_provided__204();
+  function _no_name_provided_$factory_191() {
+    var i = new _no_name_provided__220();
     return function (p1, p2, p3) {
       return i.invoke_fqcrmv_k$(p1, p2, p3);
     };
   }
-  function _no_name_provided_$factory_177() {
-    var i = new _no_name_provided__205();
+  function _no_name_provided_$factory_192() {
+    var i = new _no_name_provided__221();
     return function (p1, p2, p3) {
       return i.invoke_fqcrmv_k$(p1, p2, p3);
     };
   }
-  function _no_name_provided_$factory_178() {
-    var i = new _no_name_provided__206();
+  function _no_name_provided_$factory_193() {
+    var i = new _no_name_provided__222();
     return function (p1, p2, p3) {
       return i.invoke_fqcrmv_k$(p1, p2, p3);
     };
   }
-  function _no_name_provided_$factory_179() {
-    var i = new _no_name_provided__207();
+  function _no_name_provided_$factory_194() {
+    var i = new _no_name_provided__223();
     return function (p1, p2, p3) {
       return i.invoke_fqcrmv_k$(p1, p2, p3);
     };
   }
-  function _no_name_provided__208() {
+  function _no_name_provided__224() {
   }
-  _no_name_provided__208.prototype.invoke_12t64v_k$ = function () {
-    return Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 0);
+  _no_name_provided__224.prototype.invoke_12t64v_k$ = function () {
+    return Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0);
   };
-  _no_name_provided__208.prototype.invoke_0_k$ = function () {
+  _no_name_provided__224.prototype.invoke_0_k$ = function () {
     return new RGBA(this.invoke_12t64v_k$());
   };
-  _no_name_provided__208.$metadata$ = {
+  _no_name_provided__224.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__209() {
+  function _no_name_provided__225() {
     this._i_1 = 0;
     this._max_0 = _get_lastIndex_(ColorPalette_getInstance()._paletteColors);
   }
-  _no_name_provided__209.prototype.hasNext_0_k$ = function () {
+  _no_name_provided__225.prototype.hasNext_0_k$ = function () {
     return this._i_1 < this._max_0;
   };
-  _no_name_provided__209.prototype.next_12t64v_k$ = function () {
+  _no_name_provided__225.prototype.next_12t64v_k$ = function () {
     var tmp = ColorPalette_getInstance()._paletteColors;
     var tmp0_this = this;
     var tmp1 = tmp0_this._i_1;
     tmp0_this._i_1 = tmp1 + 1 | 0;
-    return tmp[tmp1]._value_11;
+    return tmp[tmp1]._value_12;
   };
-  _no_name_provided__209.prototype.next_0_k$ = function () {
+  _no_name_provided__225.prototype.next_0_k$ = function () {
     return new RGBA(this.next_12t64v_k$());
   };
-  _no_name_provided__209.$metadata$ = {
+  _no_name_provided__225.$metadata$ = {
     kind: 'class',
     interfaces: [Iterator_0]
   };
   function ColorPalette() {
     ColorPalette_instance = this;
     var tmp = this;
-    tmp._TRANSPARENT_BLACK$delegate = lazy(_no_name_provided_$factory_180());
+    tmp._TRANSPARENT_BLACK$delegate = lazy(_no_name_provided_$factory_195());
     var tmp_0 = this;
     var tmp$ret$2;
     $l$block_1: {
-      var tmp0_arrayOf_0 = [new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 0)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(126, 3, 8, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(15, 127, 18, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(128, 127, 23, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(2, 12, 126, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(127, 15, 126, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(17, 128, 127, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(192, 192, 192, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(193, 219, 193, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(167, 203, 238, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(252, 252, 252, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(16, 8, 8, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(20, 24, 39, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(24, 40, 17, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(24, 36, 48, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(44, 16, 9, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(40, 24, 36, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(52, 40, 18, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(48, 44, 48, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(24, 29, 67, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(22, 53, 83, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(26, 61, 95, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(36, 29, 67, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(44, 52, 71, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(45, 57, 103, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(30, 63, 30, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(30, 64, 41, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(52, 71, 27, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(53, 72, 45, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(61, 95, 29, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(61, 95, 43, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(26, 64, 91, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(30, 65, 99, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(53, 68, 79, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(45, 77, 103, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(57, 96, 77, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(61, 96, 111, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(71, 24, 11, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(71, 29, 36, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(79, 44, 19, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(72, 52, 45, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(103, 25, 16, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(107, 29, 37, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(107, 48, 21, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(103, 52, 38, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(72, 56, 72, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(72, 57, 103, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(103, 53, 72, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(115, 54, 103, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(80, 71, 25, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(80, 72, 49, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(80, 99, 30, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(77, 103, 47, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(111, 72, 26, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(107, 76, 46, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(112, 99, 29, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(116, 99, 52, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(76, 76, 76, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(76, 84, 107, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(84, 100, 81, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(85, 100, 112, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(104, 84, 77, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(104, 88, 104, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(112, 104, 81, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(108, 108, 108, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(49, 62, 130, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(58, 93, 142, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(64, 62, 130, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(77, 89, 138, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(73, 90, 174, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(81, 105, 139, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(74, 109, 170, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(100, 89, 135, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(100, 94, 170, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(108, 113, 139, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(108, 117, 166, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(77, 95, 193, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(82, 118, 197, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(93, 116, 233, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(105, 122, 201, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(101, 124, 241, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(105, 139, 58, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(93, 131, 79, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(93, 128, 105, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(109, 139, 79, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(116, 136, 113, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(121, 163, 81, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(121, 163, 106, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(89, 128, 139, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(93, 129, 182, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(113, 132, 147, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(117, 137, 171, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(125, 163, 141, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(121, 164, 175, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(90, 134, 202, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(91, 146, 225, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(92, 166, 237, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(113, 137, 202, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(117, 139, 249, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(122, 161, 214, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(114, 165, 233, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(138, 25, 22, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(142, 30, 39, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(135, 52, 23, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(139, 53, 43, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(170, 26, 25, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(170, 31, 37, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(166, 49, 25, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(170, 49, 45, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(150, 53, 73, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(139, 76, 28, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(139, 80, 44, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(143, 103, 31, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(143, 103, 53, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(170, 80, 31, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(166, 84, 46, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(175, 104, 34, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(171, 108, 51, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(135, 84, 73, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(135, 89, 108, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(139, 108, 78, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(135, 116, 109, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(170, 80, 74, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(174, 85, 101, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(167, 116, 76, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(171, 116, 105, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(206, 46, 38, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(210, 54, 75, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(198, 84, 34, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(198, 84, 48, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(202, 104, 36, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(202, 112, 53, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(230, 81, 36, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(230, 81, 53, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(230, 116, 39, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(230, 116, 52, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(202, 81, 76, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(202, 85, 102, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(202, 116, 77, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(198, 116, 106, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(230, 81, 84, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(234, 90, 99, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(238, 112, 78, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(234, 113, 114, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(143, 63, 131, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(139, 82, 131, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(132, 120, 143, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(132, 121, 167, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(167, 120, 136, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(163, 125, 163, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(128, 126, 194, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(206, 53, 128, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(214, 113, 137, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(234, 119, 203, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(163, 135, 53, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(147, 131, 83, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(144, 136, 113, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(137, 171, 85, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(141, 171, 111, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(175, 135, 84, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(171, 140, 110, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(179, 163, 86, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(180, 167, 115, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(157, 194, 71, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(165, 207, 99, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(206, 135, 42, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(206, 135, 58, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(211, 167, 44, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(207, 167, 58, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(238, 140, 43, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(234, 140, 57, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(242, 171, 47, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(242, 171, 63, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(203, 140, 82, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(199, 148, 107, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(207, 167, 87, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(207, 167, 116, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(234, 144, 80, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(234, 144, 104, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(238, 171, 85, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(235, 175, 113, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(207, 195, 70, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(243, 203, 49, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(247, 203, 67, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(251, 238, 55, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(251, 234, 68, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(211, 195, 89, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(211, 195, 117, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(201, 242, 93, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(205, 242, 116, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(247, 199, 87, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(243, 203, 115, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(247, 234, 90, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(251, 231, 120, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(140, 136, 144, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(140, 144, 171, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(145, 168, 145, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(149, 168, 179, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(167, 144, 140, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(164, 152, 175, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(176, 168, 145, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(172, 168, 180, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(137, 149, 202, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(133, 154, 245, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(149, 165, 206, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(145, 170, 249, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(160, 157, 195, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(172, 173, 203, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(165, 185, 242, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(169, 199, 169, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(153, 196, 196, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(176, 192, 207, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(169, 197, 250, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(178, 231, 197, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(185, 228, 231, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(203, 144, 145, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(199, 152, 164, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(203, 176, 142, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(199, 176, 176, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(234, 144, 142, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(234, 145, 165, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(231, 180, 139, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(231, 180, 169, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(196, 184, 200, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(196, 189, 223, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(243, 173, 204, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(212, 199, 147, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(208, 200, 177, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(205, 239, 141, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(205, 227, 178, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(239, 203, 148, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(235, 208, 174, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(247, 231, 149, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(248, 235, 179, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(212, 200, 204, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(200, 201, 231, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(212, 228, 205, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(216, 232, 228, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(228, 212, 208, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(224, 208, 224, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(240, 232, 209, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(244, 244, 236, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(252, 252, 252, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(255, 251, 241, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(160, 160, 164, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(128, 128, 128, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(252, 13, 27, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(41, 253, 46, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(255, 253, 56, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(11, 36, 251, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(253, 40, 252, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(45, 255, 254, 255)), new RGBA(Companion_getInstance_57().invoke_fnl2i9_k$(255, 255, 255, 255))];
+      var tmp0_arrayOf_0 = [new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 0)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(126, 3, 8, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(15, 127, 18, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(128, 127, 23, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(2, 12, 126, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(127, 15, 126, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(17, 128, 127, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(192, 192, 192, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(193, 219, 193, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(167, 203, 238, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(252, 252, 252, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(16, 8, 8, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(20, 24, 39, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(24, 40, 17, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(24, 36, 48, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(44, 16, 9, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(40, 24, 36, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(52, 40, 18, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(48, 44, 48, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(24, 29, 67, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(22, 53, 83, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(26, 61, 95, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(36, 29, 67, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(44, 52, 71, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(45, 57, 103, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(30, 63, 30, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(30, 64, 41, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(52, 71, 27, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(53, 72, 45, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(61, 95, 29, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(61, 95, 43, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(26, 64, 91, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(30, 65, 99, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(53, 68, 79, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(45, 77, 103, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(57, 96, 77, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(61, 96, 111, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(71, 24, 11, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(71, 29, 36, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(79, 44, 19, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(72, 52, 45, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(103, 25, 16, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(107, 29, 37, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(107, 48, 21, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(103, 52, 38, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(72, 56, 72, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(72, 57, 103, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(103, 53, 72, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(115, 54, 103, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(80, 71, 25, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(80, 72, 49, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(80, 99, 30, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(77, 103, 47, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(111, 72, 26, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(107, 76, 46, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(112, 99, 29, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(116, 99, 52, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(76, 76, 76, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(76, 84, 107, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(84, 100, 81, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(85, 100, 112, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(104, 84, 77, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(104, 88, 104, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(112, 104, 81, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(108, 108, 108, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(49, 62, 130, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(58, 93, 142, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(64, 62, 130, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(77, 89, 138, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(73, 90, 174, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(81, 105, 139, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(74, 109, 170, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(100, 89, 135, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(100, 94, 170, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(108, 113, 139, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(108, 117, 166, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(77, 95, 193, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(82, 118, 197, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(93, 116, 233, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(105, 122, 201, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(101, 124, 241, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(105, 139, 58, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(93, 131, 79, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(93, 128, 105, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(109, 139, 79, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(116, 136, 113, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(121, 163, 81, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(121, 163, 106, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(89, 128, 139, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(93, 129, 182, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(113, 132, 147, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(117, 137, 171, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(125, 163, 141, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(121, 164, 175, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(90, 134, 202, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(91, 146, 225, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(92, 166, 237, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(113, 137, 202, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(117, 139, 249, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(122, 161, 214, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(114, 165, 233, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(138, 25, 22, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(142, 30, 39, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(135, 52, 23, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 53, 43, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 26, 25, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 31, 37, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(166, 49, 25, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 49, 45, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(150, 53, 73, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 76, 28, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 80, 44, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(143, 103, 31, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(143, 103, 53, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 80, 31, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(166, 84, 46, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(175, 104, 34, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(171, 108, 51, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(135, 84, 73, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(135, 89, 108, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 108, 78, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(135, 116, 109, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(170, 80, 74, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(174, 85, 101, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(167, 116, 76, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(171, 116, 105, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(206, 46, 38, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(210, 54, 75, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(198, 84, 34, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(198, 84, 48, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 104, 36, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 112, 53, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 81, 36, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 81, 53, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 116, 39, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 116, 52, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 81, 76, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 85, 102, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(202, 116, 77, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(198, 116, 106, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(230, 81, 84, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 90, 99, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(238, 112, 78, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 113, 114, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(143, 63, 131, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(139, 82, 131, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(132, 120, 143, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(132, 121, 167, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(167, 120, 136, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(163, 125, 163, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(128, 126, 194, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(206, 53, 128, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(214, 113, 137, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 119, 203, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(163, 135, 53, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(147, 131, 83, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(144, 136, 113, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(137, 171, 85, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(141, 171, 111, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(175, 135, 84, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(171, 140, 110, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(179, 163, 86, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(180, 167, 115, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(157, 194, 71, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(165, 207, 99, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(206, 135, 42, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(206, 135, 58, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(211, 167, 44, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(207, 167, 58, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(238, 140, 43, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 140, 57, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(242, 171, 47, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(242, 171, 63, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(203, 140, 82, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(199, 148, 107, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(207, 167, 87, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(207, 167, 116, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 144, 80, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 144, 104, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(238, 171, 85, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(235, 175, 113, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(207, 195, 70, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(243, 203, 49, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(247, 203, 67, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(251, 238, 55, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(251, 234, 68, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(211, 195, 89, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(211, 195, 117, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(201, 242, 93, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(205, 242, 116, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(247, 199, 87, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(243, 203, 115, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(247, 234, 90, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(251, 231, 120, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(140, 136, 144, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(140, 144, 171, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(145, 168, 145, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(149, 168, 179, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(167, 144, 140, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(164, 152, 175, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(176, 168, 145, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(172, 168, 180, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(137, 149, 202, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(133, 154, 245, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(149, 165, 206, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(145, 170, 249, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(160, 157, 195, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(172, 173, 203, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(165, 185, 242, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(169, 199, 169, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(153, 196, 196, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(176, 192, 207, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(169, 197, 250, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(178, 231, 197, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(185, 228, 231, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(203, 144, 145, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(199, 152, 164, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(203, 176, 142, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(199, 176, 176, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 144, 142, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(234, 145, 165, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(231, 180, 139, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(231, 180, 169, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(196, 184, 200, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(196, 189, 223, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(243, 173, 204, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(212, 199, 147, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(208, 200, 177, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(205, 239, 141, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(205, 227, 178, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(239, 203, 148, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(235, 208, 174, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(247, 231, 149, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(248, 235, 179, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(212, 200, 204, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(200, 201, 231, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(212, 228, 205, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(216, 232, 228, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(228, 212, 208, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(224, 208, 224, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(240, 232, 209, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(244, 244, 236, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(252, 252, 252, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(0, 0, 0, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(255, 251, 241, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(160, 160, 164, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(128, 128, 128, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(252, 13, 27, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(41, 253, 46, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(255, 253, 56, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(11, 36, 251, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(253, 40, 252, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(45, 255, 254, 255)), new RGBA(Companion_getInstance_58().invoke_fnl2i9_k$(255, 255, 255, 255))];
       var tmp$ret$1;
       $l$block_0: {
         var tmp$ret$0;
@@ -44521,13 +47467,13 @@
     tmp_0._paletteColors = tmp$ret$2;
   }
   ColorPalette.prototype.get_kxqjbk_k$ = function (index) {
-    return this._paletteColors[index]._value_11;
+    return this._paletteColors[index]._value_12;
   };
   ColorPalette.prototype._get_lastIndex__0_k$ = function () {
     return _get_lastIndex_(this._paletteColors);
   };
   ColorPalette.prototype.iterator_0_k$ = function () {
-    return new _no_name_provided__209();
+    return new _no_name_provided__225();
   };
   ColorPalette.$metadata$ = {
     simpleName: 'ColorPalette',
@@ -44540,20 +47486,154 @@
       new ColorPalette();
     return ColorPalette_instance;
   }
-  function _no_name_provided_$factory_180() {
-    var i = new _no_name_provided__208();
+  function _no_name_provided_$factory_195() {
+    var i = new _no_name_provided__224();
     return function () {
       return new RGBA(i.invoke_12t64v_k$());
     };
+  }
+  function mapAsync(_this_, f, $cont) {
+    return coroutineScope(_no_name_provided_$factory_196(_this_, f, null), $cont);
+  }
+  function _no_name_provided__226($f, $item_2_3, resultContinuation) {
+    this._$f = $f;
+    this._$item_2_3 = $item_2_3;
+    CoroutineImpl_0.call(this, resultContinuation);
+  }
+  _no_name_provided__226.prototype.invoke_mzru1z_k$ = function ($this$async, $cont) {
+    var tmp = this.create_y6imfn_k$($this$async, $cont);
+    tmp._result = Unit_getInstance();
+    tmp._exception_0 = null;
+    return tmp.doResume_0_k$();
+  };
+  _no_name_provided__226.prototype.invoke_20e8_k$ = function (p1, $cont) {
+    return this.invoke_mzru1z_k$((!(p1 == null) ? isInterface(p1, CoroutineScope) : false) ? p1 : THROW_CCE(), $cont);
+  };
+  _no_name_provided__226.prototype.doResume_0_k$ = function () {
+    var suspendResult = this._result;
+    $sm: do
+      try {
+        var tmp = this._state_0;
+        switch (tmp) {
+          case 0:
+            this._exceptionState = 2;
+            this._state_0 = 1;
+            suspendResult = this._$f(this._$item_2_3, this);
+            if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
+              return suspendResult;
+            }
+            continue $sm;
+          case 1:
+            return suspendResult;
+          case 2:
+            throw this._exception_0;
+        }
+      } catch ($p) {
+        if (this._exceptionState === 2) {
+          throw $p;
+        } else {
+          this._state_0 = this._exceptionState;
+          this._exception_0 = $p;
+        }
+      }
+     while (true);
+  };
+  _no_name_provided__226.prototype.create_y6imfn_k$ = function ($this$async, completion) {
+    var i = new _no_name_provided__226(this._$f, this._$item_2_3, completion);
+    i._$this$async = $this$async;
+    return i;
+  };
+  _no_name_provided__226.$metadata$ = {
+    kind: 'class',
+    interfaces: [],
+    suspendArity: 1
+  };
+  function _no_name_provided__227($this_mapAsync, $f, resultContinuation) {
+    this._$this_mapAsync = $this_mapAsync;
+    this._$f_0 = $f;
+    CoroutineImpl_0.call(this, resultContinuation);
+  }
+  _no_name_provided__227.prototype.invoke_mzru1z_k$ = function ($this$coroutineScope, $cont) {
+    var tmp = this.create_y6imfn_k$($this$coroutineScope, $cont);
+    tmp._result = Unit_getInstance();
+    tmp._exception_0 = null;
+    return tmp.doResume_0_k$();
+  };
+  _no_name_provided__227.prototype.invoke_20e8_k$ = function (p1, $cont) {
+    return this.invoke_mzru1z_k$((!(p1 == null) ? isInterface(p1, CoroutineScope) : false) ? p1 : THROW_CCE(), $cont);
+  };
+  _no_name_provided__227.prototype.doResume_0_k$ = function () {
+    var suspendResult = this._result;
+    $sm: do
+      try {
+        var tmp = this._state_0;
+        switch (tmp) {
+          case 0:
+            this._exceptionState = 2;
+            this._state_0 = 1;
+            var tmp_0 = this;
+            tmp_0._tmp0_mapTo_0_10 = ArrayList_init_$Create$_0(collectionSizeOrDefault(this._$this_mapAsync, 10));
+            var tmp0_iterator_1_2 = this._$this_mapAsync.iterator_0_k$();
+            while (tmp0_iterator_1_2.hasNext_0_k$()) {
+              var item_2_3 = tmp0_iterator_1_2.next_0_k$();
+              this._tmp0_mapTo_0_10.add_2bq_k$(async$default(this._$this$coroutineScope, null, null, _no_name_provided_$factory_197(this._$f_0, item_2_3, null), 3, null));
+              Unit_getInstance();
+            }
+
+            suspendResult = awaitAll(this._tmp0_mapTo_0_10, this);
+            if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
+              return suspendResult;
+            }
+            continue $sm;
+          case 1:
+            return suspendResult;
+          case 2:
+            throw this._exception_0;
+        }
+      } catch ($p) {
+        if (this._exceptionState === 2) {
+          throw $p;
+        } else {
+          this._state_0 = this._exceptionState;
+          this._exception_0 = $p;
+        }
+      }
+     while (true);
+  };
+  _no_name_provided__227.prototype.create_y6imfn_k$ = function ($this$coroutineScope, completion) {
+    var i = new _no_name_provided__227(this._$this_mapAsync, this._$f_0, completion);
+    i._$this$coroutineScope = $this$coroutineScope;
+    return i;
+  };
+  _no_name_provided__227.$metadata$ = {
+    kind: 'class',
+    interfaces: [],
+    suspendArity: 1
+  };
+  function _no_name_provided_$factory_196($this_mapAsync, $f, resultContinuation) {
+    var i = new _no_name_provided__227($this_mapAsync, $f, resultContinuation);
+    var l = function (p1, $cont) {
+      return i.invoke_mzru1z_k$(p1, $cont);
+    };
+    l.$arity = 1;
+    return l;
+  }
+  function _no_name_provided_$factory_197($f, $item_2_3, resultContinuation) {
+    var i = new _no_name_provided__226($f, $item_2_3, resultContinuation);
+    var l = function (p1, $cont) {
+      return i.invoke_mzru1z_k$(p1, $cont);
+    };
+    l.$arity = 1;
+    return l;
   }
   function createSpriteCompiler(format_0, encoding) {
     return createSpriteCompiler_0(format_0, encoding === void 1 ? null : encoding);
   }
   function createSpriteCompiler_0(format_0, encoding) {
-    var type = Companion_getInstance_70().fromString_6wfw3l_k$(format_0);
+    var type = Companion_getInstance_71().fromString_6wfw3l_k$(format_0);
     var tmp;
     if (!(encoding == null)) {
-      tmp = Companion_getInstance_69().fromString_6wfw3l_k$(encoding);
+      tmp = Companion_getInstance_70().fromString_6wfw3l_k$(encoding);
     } else {
       tmp = null;
     }
@@ -44591,7 +47671,7 @@
         }
         var tmp$ret$0;
         $l$block: {
-          tmp$ret$0 = Companion_getInstance_70().fromString_6wfw3l_k$(tmp0_safe_receiver);
+          tmp$ret$0 = Companion_getInstance_71().fromString_6wfw3l_k$(tmp0_safe_receiver);
           break $l$block;
         }
         tmp$ret$1 = tmp$ret$0;
@@ -44601,7 +47681,7 @@
     }
     var tmp1_elvis_lhs = tmp;
     var type = tmp1_elvis_lhs == null ? this._format_0 : tmp1_elvis_lhs;
-    var compiler = Companion_getInstance_60().getCompiler_v3krwk_k$(type);
+    var compiler = Companion_getInstance_61().getCompiler_v3krwk_k$(type);
     return compiler.compileSpriteFromImageBytes$default_ouf8qm_k$(this._images, keepBlack, this._encoding_3, null, 8, null);
   };
   Compiler.prototype.compile$default_2d58d4_k$ = function (formatIn, keepBlack, $mask0, $handler) {
@@ -44660,11 +47740,11 @@
     return convertSprite_0(byteArray, fromSpriteTypeString, toSpriteTypeString, colorEncodingString === void 1 ? null : colorEncodingString, callback);
   }
   function convertSprite_0(byteArray, fromSpriteTypeString, toSpriteTypeString, colorEncodingString, callback) {
-    var fromSpriteType = Companion_getInstance_70().fromString_6wfw3l_k$(fromSpriteTypeString);
-    var toSpriteType = Companion_getInstance_70().fromString_6wfw3l_k$(toSpriteTypeString);
+    var fromSpriteType = Companion_getInstance_71().fromString_6wfw3l_k$(fromSpriteTypeString);
+    var toSpriteType = Companion_getInstance_71().fromString_6wfw3l_k$(toSpriteTypeString);
     var tmp = _get_parser_(fromSpriteType);
     var tmp_0 = new MemoryByteStreamReader(byteArray);
-    var images = tmp(tmp_0, false, _no_name_provided_$factory_181(callback));
+    var images = tmp(tmp_0, false, _no_name_provided_$factory_198(callback));
     var tmp0_safe_receiver = colorEncodingString;
     var tmp_1;
     if (tmp0_safe_receiver == null) {
@@ -44676,7 +47756,7 @@
         }
         var tmp$ret$0;
         $l$block: {
-          tmp$ret$0 = Companion_getInstance_69().fromString_6wfw3l_k$(tmp0_safe_receiver);
+          tmp$ret$0 = Companion_getInstance_70().fromString_6wfw3l_k$(tmp0_safe_receiver);
           break $l$block;
         }
         tmp$ret$1 = tmp$ret$0;
@@ -44685,47 +47765,47 @@
       tmp_1 = tmp$ret$1;
     }
     var colorEncoding = tmp_1;
-    var tmp_2 = Companion_getInstance_60().getCompiler_v3krwk_k$(toSpriteType);
-    return tmp_2.compileSpriteFromLoadedImages_kx4ton_k$(images, true, colorEncoding, _no_name_provided_$factory_182(callback));
+    var tmp_2 = Companion_getInstance_61().getCompiler_v3krwk_k$(toSpriteType);
+    return tmp_2.compileSpriteFromLoadedImages_kx4ton_k$(images, true, colorEncoding, _no_name_provided_$factory_199(callback));
   }
-  function _no_name_provided__210($callback) {
+  function _no_name_provided__228($callback) {
     this._$callback_7 = $callback;
   }
-  _no_name_provided__210.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__228.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_7;
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(1, current, total);
   };
-  _no_name_provided__210.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__228.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__210.$metadata$ = {
+  _no_name_provided__228.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided__211($callback) {
+  function _no_name_provided__229($callback) {
     this._$callback_8 = $callback;
   }
-  _no_name_provided__211.prototype.invoke_27zxwg_k$ = function (current, total) {
+  _no_name_provided__229.prototype.invoke_27zxwg_k$ = function (current, total) {
     var tmp0_safe_receiver = this._$callback_8;
     return tmp0_safe_receiver == null ? null : tmp0_safe_receiver(2, current, total);
   };
-  _no_name_provided__211.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__229.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'number' : false) ? p1 : THROW_CCE();
     return this.invoke_27zxwg_k$(tmp, (!(p2 == null) ? typeof p2 === 'number' : false) ? p2 : THROW_CCE());
   };
-  _no_name_provided__211.$metadata$ = {
+  _no_name_provided__229.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_181($callback) {
-    var i = new _no_name_provided__210($callback);
+  function _no_name_provided_$factory_198($callback) {
+    var i = new _no_name_provided__228($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
   }
-  function _no_name_provided_$factory_182($callback) {
-    var i = new _no_name_provided__211($callback);
+  function _no_name_provided_$factory_199($callback) {
+    var i = new _no_name_provided__229($callback);
     return function (p1, p2) {
       return i.invoke_27zxwg_k$(p1, p2);
     };
@@ -44749,6 +47829,12 @@
     var stitched = SpriteParser_getInstance().getStitched_fu8muu_k$(new MemoryByteStreamReader(blkBytes), progressCallback);
     var tmp = PNG_getInstance();
     return tmp.encode$default_tm5rke_k$(stitched, null, 2, null);
+  }
+  function stitchBlkToPngAsync(blkBytes, progressChunkSize, progressCallback) {
+    return stitchBlkToPngAsync_0(blkBytes, progressChunkSize, progressCallback === void 1 ? null : progressCallback);
+  }
+  function stitchBlkToPngAsync_0(blkBytes, progressChunkSize, progressCallback) {
+    return new Promise(_no_name_provided_$factory_200(blkBytes, progressChunkSize, progressCallback));
   }
   function parseSprite(fileName, bytes_0, keepBlack, progressChunkSize, progressCallback) {
     var tmp$ret$3;
@@ -44783,47 +47869,145 @@
     }
     return tmp$ret$3;
   }
+  function _no_name_provided__230($blkBytes, $progressChunkSize, $progressCallback, $resolve, resultContinuation) {
+    this._$blkBytes = $blkBytes;
+    this._$progressChunkSize = $progressChunkSize;
+    this._$progressCallback_3 = $progressCallback;
+    this._$resolve_0 = $resolve;
+    CoroutineImpl_0.call(this, resultContinuation);
+  }
+  _no_name_provided__230.prototype.invoke_2i3g7c_k$ = function ($this$launch, $cont) {
+    var tmp = this.create_y6imfn_k$($this$launch, $cont);
+    tmp._result = Unit_getInstance();
+    tmp._exception_0 = null;
+    return tmp.doResume_0_k$();
+  };
+  _no_name_provided__230.prototype.invoke_20e8_k$ = function (p1, $cont) {
+    this.invoke_2i3g7c_k$((!(p1 == null) ? isInterface(p1, CoroutineScope) : false) ? p1 : THROW_CCE(), $cont);
+    return Unit_getInstance();
+  };
+  _no_name_provided__230.prototype.doResume_0_k$ = function () {
+    var suspendResult = this._result;
+    $sm: do
+      try {
+        var tmp = this._state_0;
+        switch (tmp) {
+          case 0:
+            this._exceptionState = 2;
+            this._state_0 = 1;
+            suspendResult = SpriteParser_getInstance().getStitchedAsync_m97t7v_k$(new MemoryByteStreamReader(this._$blkBytes), this._$progressChunkSize, this._$progressCallback_3, this);
+            if (suspendResult === _get_COROUTINE_SUSPENDED_()) {
+              return suspendResult;
+            }
+            continue $sm;
+          case 1:
+            var stitched = suspendResult;
+            var tmp_0 = PNG_getInstance();
+            var output = tmp_0.encode$default_tm5rke_k$(stitched, null, 2, null);
+            this._$resolve_0(output);
+            return Unit_getInstance();
+          case 2:
+            throw this._exception_0;
+        }
+      } catch ($p) {
+        if (this._exceptionState === 2) {
+          throw $p;
+        } else {
+          this._state_0 = this._exceptionState;
+          this._exception_0 = $p;
+        }
+      }
+     while (true);
+  };
+  _no_name_provided__230.prototype.create_y6imfn_k$ = function ($this$launch, completion) {
+    var i = new _no_name_provided__230(this._$blkBytes, this._$progressChunkSize, this._$progressCallback_3, this._$resolve_0, completion);
+    i._$this$launch = $this$launch;
+    return i;
+  };
+  _no_name_provided__230.$metadata$ = {
+    kind: 'class',
+    interfaces: [],
+    suspendArity: 1
+  };
+  function _no_name_provided__231($blkBytes, $progressChunkSize, $progressCallback) {
+    this._$blkBytes_0 = $blkBytes;
+    this._$progressChunkSize_0 = $progressChunkSize;
+    this._$progressCallback_4 = $progressCallback;
+  }
+  _no_name_provided__231.prototype.invoke_lnwnsw_k$ = function (resolve, _anonymous_parameter_1_) {
+    var tmp = GlobalScope_getInstance();
+    launch$default(tmp, null, null, _no_name_provided_$factory_201(this._$blkBytes_0, this._$progressChunkSize_0, this._$progressCallback_4, resolve, null), 3, null);
+    Unit_getInstance();
+  };
+  _no_name_provided__231.prototype.invoke_osx4an_k$ = function (p1, p2) {
+    var tmp = (!(p1 == null) ? typeof p1 === 'function' : false) ? p1 : THROW_CCE();
+    this.invoke_lnwnsw_k$(tmp, (!(p2 == null) ? typeof p2 === 'function' : false) ? p2 : THROW_CCE());
+    return Unit_getInstance();
+  };
+  _no_name_provided__231.$metadata$ = {
+    kind: 'class',
+    interfaces: []
+  };
+  function _no_name_provided_$factory_200($blkBytes, $progressChunkSize, $progressCallback) {
+    var i = new _no_name_provided__231($blkBytes, $progressChunkSize, $progressCallback);
+    return function (p1, p2) {
+      i.invoke_lnwnsw_k$(p1, p2);
+      return Unit_getInstance();
+    };
+  }
+  function _no_name_provided_$factory_201($blkBytes, $progressChunkSize, $progressCallback, $resolve, resultContinuation) {
+    var i = new _no_name_provided__230($blkBytes, $progressChunkSize, $progressCallback, $resolve, resultContinuation);
+    var l = function (p1, $cont) {
+      return i.invoke_2i3g7c_k$(p1, $cont);
+    };
+    l.$arity = 1;
+    return l;
+  }
   function loadBackground(absolutePath, progressCallback) {
     return loadBackground_0(absolutePath, progressCallback === void 1 ? null : progressCallback);
   }
   function loadBackground_0(absolutePath, progressCallback) {
-    return new Promise(_no_name_provided_$factory_183(absolutePath, progressCallback));
+    return new Promise(_no_name_provided_$factory_202(absolutePath, progressCallback));
   }
-  function _no_name_provided__212($absolutePath, $progressCallback) {
+  function _no_name_provided__232($absolutePath, $progressCallback) {
     this._$absolutePath = $absolutePath;
-    this._$progressCallback_1 = $progressCallback;
+    this._$progressCallback_5 = $progressCallback;
   }
-  _no_name_provided__212.prototype.invoke_lnwnsw_k$ = function (resolve, reject) {
+  _no_name_provided__232.prototype.invoke_lnwnsw_k$ = function (resolve, reject) {
     if (!fileExists(this._$absolutePath)) {
       reject(IOException_init_$Create$('BLK path does not exist', null, 2, null));
       return Unit_getInstance();
-    }var reader = JsFileStreamReader_init_$Create$(this._$absolutePath, 0, 2, null);
+    }var reader = JsFileStreamReader_init_$Create$(this._$absolutePath, 0, 0, 0, 14, null);
     if (reader.size < 16390) {
       reject(IOException_init_$Create$('BLK does not have minimum length', null, 2, null));
-    }var stitched = SpriteParser_getInstance().getStitched_fu8muu_k$(reader, this._$progressCallback_1);
+    }var stitched = SpriteParser_getInstance().getStitched_fu8muu_k$(reader, this._$progressCallback_5);
     reader.close();
     Unit_getInstance();
     var tmp = PNG_getInstance();
     resolve(tmp.encode$default_tm5rke_k$(stitched, null, 2, null));
   };
-  _no_name_provided__212.prototype.invoke_osx4an_k$ = function (p1, p2) {
+  _no_name_provided__232.prototype.invoke_osx4an_k$ = function (p1, p2) {
     var tmp = (!(p1 == null) ? typeof p1 === 'function' : false) ? p1 : THROW_CCE();
     this.invoke_lnwnsw_k$(tmp, (!(p2 == null) ? typeof p2 === 'function' : false) ? p2 : THROW_CCE());
     return Unit_getInstance();
   };
-  _no_name_provided__212.$metadata$ = {
+  _no_name_provided__232.$metadata$ = {
     kind: 'class',
     interfaces: []
   };
-  function _no_name_provided_$factory_183($absolutePath, $progressCallback) {
-    var i = new _no_name_provided__212($absolutePath, $progressCallback);
+  function _no_name_provided_$factory_202($absolutePath, $progressCallback) {
+    var i = new _no_name_provided__232($absolutePath, $progressCallback);
     return function (p1, p2) {
       i.invoke_lnwnsw_k$(p1, p2);
       return Unit_getInstance();
     };
   }
   AbstractMap.prototype._get_entries__0_k$ = Map_0.prototype._get_entries__0_k$;
+  CombinedContext.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
   AbstractCoroutineContextElement.prototype.get_9uvjra_k$ = Element_0.prototype.get_9uvjra_k$;
+  AbstractCoroutineContextElement.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  AbstractCoroutineContextElement.prototype.minusKey_djuxjq_k$ = Element_0.prototype.minusKey_djuxjq_k$;
+  AbstractCoroutineContextElement.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
   IntIterator.prototype.hasNext_0_k$ = Iterator_0.prototype.hasNext_0_k$;
   LongIterator.prototype.hasNext_0_k$ = Iterator_0.prototype.hasNext_0_k$;
   AbstractMutableList.prototype.get_ha5a7z_k$ = List.prototype.get_ha5a7z_k$;
@@ -44831,16 +48015,93 @@
   InternalHashCodeMap.prototype.createJsMap_0_k$ = InternalMap.prototype.createJsMap_0_k$;
   KClassImpl.prototype._get_simpleName__0_k$ = KClass.prototype._get_simpleName__0_k$;
   JobSupport.prototype.invokeOnCompletion$default_n4h7x8_k$ = Job.prototype.invokeOnCompletion$default_n4h7x8_k$;
+  JobSupport.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
   JobSupport.prototype.get_9uvjra_k$ = Element_0.prototype.get_9uvjra_k$;
+  JobSupport.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  JobSupport.prototype.minusKey_djuxjq_k$ = Element_0.prototype.minusKey_djuxjq_k$;
+  AbstractCoroutine.prototype.invokeOnCompletion$default_n4h7x8_k$ = Job.prototype.invokeOnCompletion$default_n4h7x8_k$;
+  AbstractCoroutine.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  AbstractCoroutine.prototype.get_9uvjra_k$ = Element_0.prototype.get_9uvjra_k$;
+  AbstractCoroutine.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  AbstractCoroutine.prototype.minusKey_djuxjq_k$ = Element_0.prototype.minusKey_djuxjq_k$;
+  StandaloneCoroutine.prototype.invokeOnCompletion$default_n4h7x8_k$ = Job.prototype.invokeOnCompletion$default_n4h7x8_k$;
+  StandaloneCoroutine.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  StandaloneCoroutine.prototype.get_9uvjra_k$ = Element_0.prototype.get_9uvjra_k$;
+  StandaloneCoroutine.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  StandaloneCoroutine.prototype.minusKey_djuxjq_k$ = Element_0.prototype.minusKey_djuxjq_k$;
+  LazyStandaloneCoroutine.prototype.invokeOnCompletion$default_n4h7x8_k$ = Job.prototype.invokeOnCompletion$default_n4h7x8_k$;
+  LazyStandaloneCoroutine.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  LazyStandaloneCoroutine.prototype.get_9uvjra_k$ = Element_0.prototype.get_9uvjra_k$;
+  LazyStandaloneCoroutine.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  LazyStandaloneCoroutine.prototype.minusKey_djuxjq_k$ = Element_0.prototype.minusKey_djuxjq_k$;
+  DeferredCoroutine.prototype.invokeOnCompletion$default_n4h7x8_k$ = Job.prototype.invokeOnCompletion$default_n4h7x8_k$;
+  DeferredCoroutine.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  DeferredCoroutine.prototype.get_9uvjra_k$ = Element_0.prototype.get_9uvjra_k$;
+  DeferredCoroutine.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  DeferredCoroutine.prototype.minusKey_djuxjq_k$ = Element_0.prototype.minusKey_djuxjq_k$;
+  LazyDeferredCoroutine.prototype.invokeOnCompletion$default_n4h7x8_k$ = Job.prototype.invokeOnCompletion$default_n4h7x8_k$;
+  LazyDeferredCoroutine.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  LazyDeferredCoroutine.prototype.get_9uvjra_k$ = Element_0.prototype.get_9uvjra_k$;
+  LazyDeferredCoroutine.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  LazyDeferredCoroutine.prototype.minusKey_djuxjq_k$ = Element_0.prototype.minusKey_djuxjq_k$;
+  SchedulerTask.prototype.run_sv8swh_k$ = Runnable.prototype.run_sv8swh_k$;
   CompletableDeferredImpl.prototype.invokeOnCompletion$default_n4h7x8_k$ = Job.prototype.invokeOnCompletion$default_n4h7x8_k$;
+  CompletableDeferredImpl.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
   CompletableDeferredImpl.prototype.get_9uvjra_k$ = Element_0.prototype.get_9uvjra_k$;
+  CompletableDeferredImpl.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  CompletableDeferredImpl.prototype.minusKey_djuxjq_k$ = Element_0.prototype.minusKey_djuxjq_k$;
   CoroutineDispatcher.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  CoroutineDispatcher.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  CoroutineDispatcher.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  CoroutineDispatcher.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  EventLoop.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
   EventLoop.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  EventLoop.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  EventLoop.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  MainCoroutineDispatcher.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  MainCoroutineDispatcher.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  MainCoroutineDispatcher.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  MainCoroutineDispatcher.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  Unconfined.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  Unconfined.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  Unconfined.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  Unconfined.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  ScopeCoroutine.prototype.invokeOnCompletion$default_n4h7x8_k$ = Job.prototype.invokeOnCompletion$default_n4h7x8_k$;
+  ScopeCoroutine.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  ScopeCoroutine.prototype.get_9uvjra_k$ = Element_0.prototype.get_9uvjra_k$;
+  ScopeCoroutine.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  ScopeCoroutine.prototype.minusKey_djuxjq_k$ = Element_0.prototype.minusKey_djuxjq_k$;
+  JsMainDispatcher.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  JsMainDispatcher.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  JsMainDispatcher.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  JsMainDispatcher.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  UnconfinedEventLoop.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
   UnconfinedEventLoop.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
-  _no_name_provided__73.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
-  _no_name_provided__73.prototype.releaseInterceptedContinuation_h7c6yl_k$ = ContinuationInterceptor.prototype.releaseInterceptedContinuation_h7c6yl_k$;
-  _no_name_provided__79.prototype.write_majfzk_k$ = AsyncOutputStream.prototype.write_majfzk_k$;
-  _no_name_provided__110.prototype.write_majfzk_k$ = AsyncOutputStream.prototype.write_majfzk_k$;
+  UnconfinedEventLoop.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  UnconfinedEventLoop.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  SetTimeoutBasedDispatcher.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  SetTimeoutBasedDispatcher.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  SetTimeoutBasedDispatcher.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  SetTimeoutBasedDispatcher.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  NodeDispatcher.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  NodeDispatcher.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  NodeDispatcher.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  NodeDispatcher.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  SetTimeoutDispatcher.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  SetTimeoutDispatcher.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  SetTimeoutDispatcher.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  SetTimeoutDispatcher.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  WindowDispatcher.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  WindowDispatcher.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  WindowDispatcher.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  WindowDispatcher.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  _no_name_provided__86.prototype.get_9uvjra_k$ = ContinuationInterceptor.prototype.get_9uvjra_k$;
+  _no_name_provided__86.prototype.fold_cq605b_k$ = Element_0.prototype.fold_cq605b_k$;
+  _no_name_provided__86.prototype.minusKey_djuxjq_k$ = ContinuationInterceptor.prototype.minusKey_djuxjq_k$;
+  _no_name_provided__86.prototype.plus_d7pszg_k$ = CoroutineContext.prototype.plus_d7pszg_k$;
+  _no_name_provided__86.prototype.releaseInterceptedContinuation_h7c6yl_k$ = ContinuationInterceptor.prototype.releaseInterceptedContinuation_h7c6yl_k$;
+  _no_name_provided__92.prototype.write_majfzk_k$ = AsyncOutputStream.prototype.write_majfzk_k$;
+  _no_name_provided__123.prototype.write_majfzk_k$ = AsyncOutputStream.prototype.write_majfzk_k$;
   SyncStream.prototype.read$default_82dsjl_k$ = SyncInputStream.prototype.read$default_82dsjl_k$;
   Adler32.prototype.update$default_esd280_k$ = SimpleChecksum.prototype.update$default_esd280_k$;
   CRC32.prototype.update$default_esd280_k$ = SimpleChecksum.prototype.update$default_esd280_k$;
@@ -44873,6 +48134,7 @@
   MIN_VALUE = new Long(0, -2147483648);
   TWO_PWR_24_ = fromInt(16777216);
   propertyRefClassMetadataCache = propertyRefClassMetadataCache$init$();
+  RESUME_TOKEN = new Symbol('RESUME_TOKEN');
   COMPLETING_ALREADY = new Symbol('COMPLETING_ALREADY');
   COMPLETING_WAITING_CHILDREN = new Symbol('COMPLETING_WAITING_CHILDREN');
   COMPLETING_RETRY = new Symbol('COMPLETING_RETRY');
@@ -44884,7 +48146,9 @@
   REUSABLE_CLAIMED = new Symbol('REUSABLE_CLAIMED');
   counter = 0;
   DEBUG = false;
-  encoding$delegate = lazy(_no_name_provided_$factory_32());
+  EMPTY_DESCRIPTOR_ARRAY = EMPTY_DESCRIPTOR_ARRAY$init$();
+  EMPTY_SERIALIZER_ARRAY = EMPTY_SERIALIZER_ARRAY$init$();
+  encoding$delegate = lazy(_no_name_provided_$factory_41());
   BASE64_ALPHABET = toCharArray('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/');
   NON_BASE_64_REGEX = NON_BASE_64_REGEX$init$();
   NEWLINE_REGEX = NEWLINE_REGEX$init$();
@@ -44893,23 +48157,23 @@
   readBuffer = new DataView(new ArrayBuffer(8));
   floatsBuffer = new Float32Array(1);
   doubleBuffer = new Float64Array(1);
-  pathSeparatorChar$delegate = lazy(_no_name_provided_$factory_39());
+  pathSeparatorChar$delegate = lazy(_no_name_provided_$factory_48());
   pathSeparator_0 = '' + _get_pathSeparatorChar_();
   applicationSupportPath = null;
   GameArgType = GameArgType$init$();
   shouldOverwriteOverride = null;
-  defaultOverwrite$delegate = lazy(_no_name_provided_$factory_44());
+  defaultOverwrite$delegate = lazy(_no_name_provided_$factory_53());
   WINDOWS_ABSOLUTE_PATH_PREFIX = WINDOWS_ABSOLUTE_PATH_PREFIX$init$();
   mIsCLI = true;
   imageExtensions = imageExtensions$init$();
   leadingNumberRegex = leadingNumberRegex$init$();
   trailingNumberRegex = trailingNumberRegex$init$();
   sortedFilesNice = sortedFilesNice$init$();
-  KlockLocale_default = Companion_getInstance_15();
+  KlockLocale_default = Companion_getInstance_16();
   ExtendedTimezoneNames = ExtendedTimezoneNames$init$();
   klockIsKotlinNative = false;
   isNode = typeof window === 'undefined';
-  initialHrTime$delegate = klockAtomicLazy(_no_name_provided_$factory_53());
+  initialHrTime$delegate = klockAtomicLazy(_no_name_provided_$factory_65());
   CONCURRENCY_COUNT = 1;
   KmemGC = KmemGC$init$();
   EmptyByteArray = new Int8Array(1);
@@ -44917,54 +48181,54 @@
   EmptyIntArray = new Int32Array(1);
   EmptyFloatArray = new Float32Array(1);
   randomUnittesting = false;
-  isNodeJs$delegate = lazy(_no_name_provided_$factory_56());
+  isNodeJs$delegate = lazy(_no_name_provided_$factory_68());
   _global = typeof global !== 'undefined' ? global : this;
   isNative = false;
   DEFAULT_SUSPEND_TEST_TIMEOUT = DEFAULT_SUSPEND_TEST_TIMEOUT$init$();
-  Deflate$delegate = lazy(_no_name_provided_$factory_60());
+  Deflate$delegate = lazy(_no_name_provided_$factory_72());
   defaultDynApi = DynamicInternal_getInstance();
   dynApi = DynamicInternal_getInstance();
   Mapper = new ObjectMapper();
   resourcesVfsDebug = false;
   defaultUniSchema = defaultUniSchema$init$();
-  bytesTempPool$delegate = new threadLocal(_no_name_provided_$factory_78());
-  smallBytesPool$delegate = new threadLocal(_no_name_provided_$factory_79());
+  bytesTempPool$delegate = new threadLocal(_no_name_provided_$factory_90());
+  smallBytesPool$delegate = new threadLocal(_no_name_provided_$factory_91());
   LATIN1 = ISO_8859_1_getInstance();
   UTF16_LE = new UTF16Charset(true);
   UTF16_BE = new UTF16Charset(false);
   customEnvironments = null;
   formatRegex = Regex_init_$Create$_0('%([-]?\\d+)?(\\w)');
-  replaceNonPrintableCharactersRegex$delegate = lazy(_no_name_provided_$factory_82());
-  MimeType_byExtensions$delegate = lazy(_no_name_provided_$factory_83());
-  _defaultHttpFactory$delegate = lazy(_no_name_provided_$factory_87());
+  replaceNonPrintableCharactersRegex$delegate = lazy(_no_name_provided_$factory_94());
+  MimeType_byExtensions$delegate = lazy(_no_name_provided_$factory_95());
+  _defaultHttpFactory$delegate = lazy(_no_name_provided_$factory_99());
   EMPTY_BYTE_ARRAY = new Int8Array(0);
-  traceTimes$delegate = lazy(_no_name_provided_$factory_88());
+  traceTimes$delegate = lazy(_no_name_provided_$factory_100());
   LONG_ZERO_TO_MAX_RANGE = LONG_ZERO_TO_MAX_RANGE$init$();
-  Language_CURRENT$delegate = lazy(_no_name_provided_$factory_98());
-  jsLocalStorageVfs$delegate = lazy(_no_name_provided_$factory_101());
-  jsbaseUrl$delegate = lazy(_no_name_provided_$factory_102());
+  Language_CURRENT$delegate = lazy(_no_name_provided_$factory_110());
+  jsLocalStorageVfs$delegate = lazy(_no_name_provided_$factory_113());
+  jsbaseUrl$delegate = lazy(_no_name_provided_$factory_114());
   globalDynamic = typeof global !== 'undefined' ? global : this;
   global = globalDynamic;
-  isWeb$delegate = lazy(_no_name_provided_$factory_103());
-  isWorker$delegate = lazy(_no_name_provided_$factory_104());
-  isNodeJs$delegate_0 = lazy(_no_name_provided_$factory_105());
+  isWeb$delegate = lazy(_no_name_provided_$factory_115());
+  isWorker$delegate = lazy(_no_name_provided_$factory_116());
+  isNodeJs$delegate_0 = lazy(_no_name_provided_$factory_117());
   File_separatorChar = new Char(47);
-  tmpdir$delegate = lazy(_no_name_provided_$factory_106());
-  absoluteCwd$delegate = lazy(_no_name_provided_$factory_107());
-  resourcesVfs$delegate = lazy(_no_name_provided_$factory_108());
-  rootLocalVfs$delegate = lazy(_no_name_provided_$factory_109());
-  applicationVfs$delegate = lazy(_no_name_provided_$factory_110());
-  applicationDataVfs$delegate = lazy(_no_name_provided_$factory_111());
-  cacheVfs$delegate = lazy(_no_name_provided_$factory_112());
-  externalStorageVfs$delegate = lazy(_no_name_provided_$factory_113());
-  userHomeVfs$delegate = lazy(_no_name_provided_$factory_114());
-  tempVfs$delegate = lazy(_no_name_provided_$factory_115());
+  tmpdir$delegate = lazy(_no_name_provided_$factory_118());
+  absoluteCwd$delegate = lazy(_no_name_provided_$factory_119());
+  resourcesVfs$delegate = lazy(_no_name_provided_$factory_120());
+  rootLocalVfs$delegate = lazy(_no_name_provided_$factory_121());
+  applicationVfs$delegate = lazy(_no_name_provided_$factory_122());
+  applicationDataVfs$delegate = lazy(_no_name_provided_$factory_123());
+  cacheVfs$delegate = lazy(_no_name_provided_$factory_124());
+  externalStorageVfs$delegate = lazy(_no_name_provided_$factory_125());
+  userHomeVfs$delegate = lazy(_no_name_provided_$factory_126());
+  tempVfs$delegate = lazy(_no_name_provided_$factory_127());
   UTF8 = UTF8$init$();
-  asyncSocketFactory$delegate = lazy(_no_name_provided_$factory_116());
-  httpFactory$delegate = lazy(_no_name_provided_$factory_117());
-  rawOsName$delegate = lazy(_no_name_provided_$factory_118());
+  asyncSocketFactory$delegate = lazy(_no_name_provided_$factory_128());
+  httpFactory$delegate = lazy(_no_name_provided_$factory_129());
+  rawOsName$delegate = lazy(_no_name_provided_$factory_130());
   rawPlatformName = rawPlatformName$init$();
-  systemLanguageStrings$delegate = lazy(_no_name_provided_$factory_119());
+  systemLanguageStrings$delegate = lazy(_no_name_provided_$factory_131());
   tempMat3D = new Matrix3D();
   tempVec1 = new Vector3D();
   tempVec2 = new Vector3D();
@@ -44976,20 +48240,20 @@
   Bitmaps_white = Bitmaps_white$init$();
   ColorAdd_NEUTRAL = _ColorAdd___init__impl_(2139062143);
   DefaultTtfFontBytes = DefaultTtfFontBytes$init$();
-  DefaultTtfFont$delegate = lazy(_no_name_provided_$factory_131());
+  DefaultTtfFont$delegate = lazy(_no_name_provided_$factory_143());
   linuxFolders = listOf(['/usr/share/fonts', '/usr/local/share/fonts', '~/.fonts']);
   windowsFolders = listOf_0('%WINDIR%\\Fonts');
   macosFolders = listOf(['/System/Library/Fonts/', '/Library/Fonts/', '~/Library/Fonts/', '/Network/Library/Fonts/']);
-  fourcc$delegate = Property_init_$Create$(null, _no_name_provided_$factory_133(), 1, null);
+  fourcc$delegate = Property_init_$Create$(null, _no_name_provided_$factory_145(), 1, null);
   nativeImageLoadingEnabled = true;
   RegisteredImageFormats_formats = ImageFormats_init_$Create$([BMP_getInstance(), TGA_getInstance()]);
-  DefaultStringTextRenderer = CreateStringTextRenderer$default(null, _no_name_provided_$factory_139(), 1, null);
+  DefaultStringTextRenderer = CreateStringTextRenderer$default(null, _no_name_provided_$factory_151(), 1, null);
   nativeSystemFontProvider = new FallbackNativeSystemFontProvider(_get_DefaultTtfFont_());
   nativeImageFormatProvider = nativeImageFormatProvider$init$();
   tempB = new ArrayBuffer(4);
   tempI = new Int32Array(tempB);
   temp8 = new Uint8Array(tempB);
-  isLittleEndian$delegate = lazy(_no_name_provided_$factory_141());
+  isLittleEndian$delegate = lazy(_no_name_provided_$factory_153());
   var $bedalton = _.bedalton || (_.bedalton = {});
   var $bedalton$creatures = $bedalton.creatures || ($bedalton.creatures = {});
   var $bedalton$creatures$bytes = $bedalton$creatures.bytes || ($bedalton$creatures.bytes = {});
@@ -45034,6 +48298,7 @@
   _.parseSpriteWithTransparency = parseSpriteWithTransparency;
   _.parseSpriteKeepingBlack = parseSpriteKeepingBlack;
   _.stitchBlkToPng = stitchBlkToPng;
+  _.stitchBlkToPngAsync = stitchBlkToPngAsync;
   _.loadBackground = loadBackground;
   return _;
 }));
