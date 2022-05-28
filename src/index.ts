@@ -507,7 +507,8 @@ function createCartographersTableWindow() {
     backgroundColor: '#503642',
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      nodeIntegrationInWorker: true,
     }
   })
 
