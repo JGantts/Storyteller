@@ -19,9 +19,10 @@ type FileRef = {
 const {FileHelper} = require('../render-helpers/file-helper.js');
 const {flashError} = require('./flashError.js');
 const ipcRenderer = require('electron').ipcRenderer;
+const {getDoorPermeabilityColor} = require('./commonFunctions.js');
 
 let closing = false;
-ipcRenderer.on('request-close', async (event, store)  => {
+ipcRenderer.on('request-close', async (event, store) => {
     if (closing) {
         return;
     }
@@ -317,7 +318,7 @@ async function newFile() {
     let width: number;
     let height: number;
     if (isBlk) {
-        const {width:blkWidth, height: blkHeight} = getBLKDimensions(backgroundFile);
+        const {width: blkWidth, height: blkHeight} = getBLKDimensions(backgroundFile);
         width = blkWidth;
         height = blkHeight;
         reloadBackgroundFile(backgroundFile, false);
@@ -891,7 +892,7 @@ function handleMouseDown(event: any) {
     if (isViewingRoomType) {
         selectionChecker.checkSelectionRoomtypeClick(startX, startY, dataStructures);
         if (isViewingRoomType.isEditingRoomtype) {
-            let clicked = selectionChecker.getSelectionRoomtypeClick().selectedId;
+            let clicked: string = selectionChecker.getSelectionRoomtypeClick().selectedId;
             retypeRoom(clicked, isViewingRoomType.isEditingRoomtype.pickedRoomtype);
         }
     } else {
@@ -1154,7 +1155,6 @@ function addRoomAbsolute({id, room}: { id: string, room: Room }) {
         return;
     }
     let newPerms = dataStructureFactory.getPermsFromRoomPotential(room, dataStructures);
-    
     dataStructures.metaroomDisk!.rooms[id] = room;
     
     for (const permKey in newPerms) {
@@ -1202,7 +1202,7 @@ function retypeRoomAbsolute({id, type}: { id: string, type: number }) {
     dataStructures.metaroomDisk!.rooms[id].roomType = type;
 }
 
-function makeRepermDoorsCommand(id: string, type: number) {
+function makeRepermDoorsCommand(id: string, permeability: number) {
     let roomOriginal = dataStructures.metaroomDisk!.rooms[id];
     // assert(roomOriginal, "");
     if (!roomOriginal) {
@@ -1212,9 +1212,9 @@ function makeRepermDoorsCommand(id: string, type: number) {
     }
     return new Command(
         repermDoorsAbsolute,
-        {id, type: roomOriginal.roomType},
+        {id, perm: dataStructures.doorsDict[id].permeability},
         repermDoorsAbsolute,
-        {id, type: type},
+        {id, prem: permeability},
     );
 }
 
@@ -1395,8 +1395,8 @@ async function reloadBackgroundFile(backgroundFileAbsoluteWorking?: string, sync
             img = null;
             if (synchronous) {
                 await loadBackgroundAsPromise(imgPathAbsolute, displayBLKStatus, (image: BlkData) => {
-                        img = image;
-                        masterUiState.camera.redraw = true;
+                    img = image;
+                    masterUiState.camera.redraw = true;
                 });
             } else {
                 // Loads image in background thread if possible
@@ -1462,15 +1462,7 @@ async function redrawRooms(
     roomCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
     lines
         .forEach((line, i) => {
-            if (line.permeability < 0) {
-                roomCtx.strokeStyle = 'rgb(005, 170, 255)';
-            } else if (line.permeability === 0) {
-                roomCtx.strokeStyle = 'rgb(228, 000, 107)';
-            } else if (line.permeability < 100) {
-                roomCtx.strokeStyle = 'rgb(207, 140, 003)';
-            } else if (line.permeability === 100) {
-                roomCtx.strokeStyle = 'rgb(172, 255, 083)';
-            }
+            roomCtx.strokeStyle = getDoorPermeabilityColor(line.permeability);
             roomCtx.beginPath();
             roomCtx.moveTo(line.start.x * roomSizeBlurFix, line.start.y * roomSizeBlurFix);
             roomCtx.lineTo(line.end.x * roomSizeBlurFix, line.end.y * roomSizeBlurFix);
@@ -1491,7 +1483,7 @@ async function redrawPasties(
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
         pastiesCtx.beginPath();
-        pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() /*getRoomLineThickness() * 1.5 * roomSizeBlurFix*/, 0, 2 * Math.PI, true);
+        pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() * 1.5 * roomSizeBlurFix, 0, 2 * Math.PI, true);
         pastiesCtx.fill();
     }
 }
@@ -1510,15 +1502,7 @@ async function redrawPotentialRooms(
     const zoomMod = 1 / zoom;
     lines
         .forEach((line, i) => {
-            if (line.permeability < 0) {
-                roomCtx.strokeStyle = 'rgb(005, 170, 255)';
-            } else if (line.permeability === 0) {
-                roomCtx.strokeStyle = 'rgb(228, 000, 107)';
-            } else if (line.permeability < 100) {
-                roomCtx.strokeStyle = 'rgb(207, 140, 003)';
-            } else if (line.permeability === 100) {
-                roomCtx.strokeStyle = 'rgb(172, 255, 083)';
-            }
+            roomCtx.strokeStyle = getDoorPermeabilityColor(line.permeability);
             roomCtx.beginPath();
             roomCtx.moveTo((line.start.x - posX) * zoomMod, (line.start.y - posY) * zoomMod);
             roomCtx.lineTo((line.end.x - posX) * zoomMod, (line.end.y - posY) * zoomMod);
