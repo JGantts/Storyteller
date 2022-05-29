@@ -173,9 +173,11 @@ class FileHelper {
   }
 
   async _saveFile(options, encoding) {
+      if (path.extname(this._currentFileRef.path).toLowerCase() !== '.json') {
+          this._currentFileRef.path = "";
+      }
       if (!this._currentFileRef.path) {
-          let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
-          this._currentFileRef.path = newPath;
+          this._currentFileRef.path = (await this.getNewSaveFilePromise(options)).fileRef.path;
       }
       if (!(await this.saveFilePromise(
           this._currentFileRef,
