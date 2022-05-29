@@ -1,6 +1,7 @@
 const assert = require('assert');
 const { ipcRenderer } = require('electron');
 const crypto = require('crypto');
+const path = require("path");
 
 const cartSaveOptions = {
     title: "Save Cartographer file",
