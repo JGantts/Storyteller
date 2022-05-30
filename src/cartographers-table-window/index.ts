@@ -27,12 +27,10 @@ ipcRenderer.on('request-close', async (event, store) => {
         return;
     }
     const result = await fileHelper.saveFileIfNeeded()
-    console.log('SaveIfNeeded: ', result);
     if (!result.continue) {
         return;
     }
     closing = true;
-    console.log('Should close');
     ipcRenderer.send('should-close', true);
 });
 globalThis.fileHelper = new FileHelper(
@@ -765,7 +763,7 @@ function spacebarDown(event: any) {
 
 
 function controlKeyComboDown(event: any) {
-    if (event.key === 'z') {
+    if (event.key === 'z' && !event.shiftKey) {
         undo();
     } else if (
         event.key === 'y'
