@@ -7,6 +7,7 @@ type ViewingRoomTypeState = {
   isEditingRoomtype: false | { pickedRoomtype: number };
 }
 
+type Nullable<T> = T | undefined | null;
 
 type MasterUiState = {
   keys: {
@@ -53,7 +54,7 @@ type Room = {
   rightCeilingY: number;
   leftFloorY: number;
   rightFloorY: number;
-  roomType: number;
+  roomType?: number;
   music?: string;
 }
 
@@ -104,3 +105,32 @@ type Wall = {
   start: SimplePoint;
   end: SimplePoint;
 };
+
+type MapSelection = {
+    selectedType: string,
+    selectedId: string|number|any,
+    selectedRoomsIdsPartsIds: SelectedPart[],
+    selectionInstancedId: null,
+}
+
+type SelectedPart = {
+    roomId: string,
+    partId: number
+}
+
+type PossiblyChangedDoors = {
+    segments: Door[];
+    changed: boolean;
+}
+
+declare let zooomSettle: number;
+declare let zoom: number;
+declare let posX: number;
+declare let posY: number;
+
+declare function getRoomLineThickness(): number;
+
+
+type BlkData = HTMLImageElement|ImageData;
+
+type BlkCallback = (image: ImageData | HTMLImageElement) => void;

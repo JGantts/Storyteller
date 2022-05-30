@@ -1,6 +1,7 @@
 const assert = require('assert');
 const { ipcRenderer } = require('electron');
 const crypto = require('crypto');
+const path = require("path");
 
 const cartSaveOptions = {
     title: "Save Cartographer file",
@@ -101,19 +102,19 @@ class FileHelper {
   }
 
   async saveCaosFile() {
-      await this._saveFile(caosSaveOptions, "Latin1");
+      return await this._saveFile(caosSaveOptions, "Latin1");
   }
 
   async saveCaosFileAs() {
-      await this._saveFileAs(caosSaveOptions, "Latin1");
+      return await this._saveFileAs(caosSaveOptions, "Latin1");
   }
 
   async saveCartFile() {
-      await this._saveFile(cartSaveOptions, "utf-8");
+      return await this._saveFile(cartSaveOptions, "utf-8");
   }
 
   async saveCartFileAs() {
-      await this._saveFileAs(cartSaveOptions, "json", "utf-8");
+      return await this._saveFileAs(cartSaveOptions, "json", "utf-8");
   }
 
   async exportToCaos() {
@@ -173,9 +174,11 @@ class FileHelper {
   }
 
   async _saveFile(options, encoding) {
+      if (path.extname(this._currentFileRef.path).toLowerCase() !== '.json') {
+          this._currentFileRef.path = "";
+      }
       if (!this._currentFileRef.path) {
-          let newPath = (await this.getNewSaveFilePromise(options)).fileRef.path;
-          this._currentFileRef.path = newPath;
+          this._currentFileRef.path = (await this.getNewSaveFilePromise(options)).fileRef.path;
       }
       if (!(await this.saveFilePromise(
           this._currentFileRef,

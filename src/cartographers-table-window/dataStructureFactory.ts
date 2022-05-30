@@ -7,6 +7,7 @@ export {};
 
 const { common } = require('./commonFunctions.js');
 const { geometry } = require('./geometryHelper.js');
+const { flashError } = require('./flashError.js');
 const crypto = require('crypto');
 
 /*
@@ -101,13 +102,19 @@ function getDoorsWallsPotentialFromRoomPotential(
 function slicePotentialRoomIntoPotentialLinesFromActualWalls(
   sidesPotential: Door[],
   wallsActual: Wall[]
-){
+): SimpleLine[] {
     let linesPotential: SimpleLine[] = [];
     for (let i=0; i<sidesPotential.length; i++ ){
         let sidePotential = sidesPotential[i];
         let lineSegmentsNew = slicePotentialSideIntoPotentialLinesFromActualWalls(sidePotential, wallsActual);
-        assert(!lineSegmentsNew.changed);
+        // assert(!lineSegmentsNew.changed);
+        if (lineSegmentsNew.changed) {
+            console.error("Line segments should not have changed when slicing room into potentail lines");
+            flashError();
+            return [];
+        }
         //console.log(wallSegments);
+        
         linesPotential = linesPotential.concat(lineSegmentsNew.segments.filter(function(val) {return val !== null}));
     }
     return linesPotential;
@@ -116,13 +123,26 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(
 function slicePotentialSideIntoPotentialLinesFromActualWalls(
   defendingSegment: Door,
   attackingSegmentsIn: Wall[]
-){
-    assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
-    assert(
-      defendingSegment.start.x !== defendingSegment.end.x ||
-      defendingSegment.start.y !== defendingSegment.end.y,
-      `DefendingSegment has 0 length\n${JSON.stringify(defendingSegment)}`
-    );
+): PossiblyChangedDoors {
+    // assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
+    if (!defendingSegment) {
+        console.error(`defendingSegment is invalid. ${JSON.stringify(defendingSegment)}`);
+        flashError()
+        return {segments: [], changed: false}
+    }
+    // assert(
+    //   defendingSegment.start.x !== defendingSegment.end.x ||
+    //   defendingSegment.start.y !== defendingSegment.end.y,
+    //   `DefendingSegment has 0 length\n${JSON.stringify(defendingSegment)}`
+    // );
+    if (
+        defendingSegment.start.x == defendingSegment.end.x &&
+        defendingSegment.start.y == defendingSegment.end.y
+    ) {
+        console.error(`DefendingSegment has 0 length\n${JSON.stringify(defendingSegment)}`);
+        flashError();
+        return {segments: [], changed: false}
+    }
     let attackingSegments = [...attackingSegmentsIn];
 
     let newDefendingSegments1: Door[] = [defendingSegment];
@@ -132,35 +152,45 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(
         return {segments: [defendingSegment], changed: false};
     }
     do {
-        assert(
-          attackingSegment.start.x !== attackingSegment.end.x ||
-          attackingSegment.start.y !== attackingSegment.end.y,
-          `AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`
-        );
-
+        // assert(
+        //   attackingSegment.start.x !== attackingSegment.end.x ||
+        //   attackingSegment.start.y !== attackingSegment.end.y,
+        //   `AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`
+        // );
+        if (
+            attackingSegment.start.x === attackingSegment.end.x &&
+            attackingSegment.start.y === attackingSegment.end.y
+        ) {
+            flashError();
+            console.error(`AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`)
+            continue
+        }
         let newDefendingSegments2: Door[] = [];
-        let thisDefendingSegmement = newDefendingSegments1.pop()
-        while (thisDefendingSegmement) {
+        let thisDefendingSegment = newDefendingSegments1.pop()
+        const lineASlice: LineSlice = (start, end) => {
+            let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, thisDefendingSegment!.permeability, thisDefendingSegment!.roomKeys);
+            newDefendingSegments2 = [...newDefendingSegments2, newSegment];
+        }
+        const lineABSlice: LineSlice = (start, end) => {
+            let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, 1.0, [...thisDefendingSegment!.roomKeys, ...attackingSegment!.roomKeys]);
+            newDefendingSegments2 = [...newDefendingSegments2, newSegment];
+            defendingSegmentChanged = true;
+        }
+        const lineBSlice: LineSlice = () => {}
+        while (thisDefendingSegment) {
             lineSegmentComparison(
-                thisDefendingSegmement,
+                thisDefendingSegment,
                 attackingSegment,
-                (start, end) => {
-                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, thisDefendingSegmement!.permeability, thisDefendingSegmement!.roomKeys);
-                    newDefendingSegments2 = [...newDefendingSegments2, newSegment];
-                },
-                (start, end) => {
-                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, 1.0, [...thisDefendingSegmement!.roomKeys, ...attackingSegment!.roomKeys]);
-                    newDefendingSegments2 = [...newDefendingSegments2, newSegment];
-                    defendingSegmentChanged = true;
-                },
-                () => {}
+                lineASlice,
+                lineABSlice,
+                lineBSlice
             );
-            thisDefendingSegmement = newDefendingSegments1.pop();
+            thisDefendingSegment = newDefendingSegments1.pop();
         }
         newDefendingSegments1 = [...newDefendingSegments2];
         attackingSegment = attackingSegments.pop();
     } while (attackingSegment);
-    return {segments: newDefendingSegments1, changed: defendingSegmentChanged};
+    return {segments: newDefendingSegments1, changed: false};//defendingSegmentChanged};
 }
 
 
@@ -293,13 +323,23 @@ function getPointFour(room: Room){
     return {x: room.rightX, y: room.rightCeilingY};
 }
 
-function subtractSegmentsFromSegments(defendingSegments: Door[], attackingSegments: SimpleLine[]){
-    assert(defendingSegments, `Instead of UUID, found ${defendingSegments}`);
+function subtractSegmentsFromSegments(defendingSegments: Door[], attackingSegments: SimpleLine[]): Door[] {
+    // assert(defendingSegments, `Instead of UUID, found ${defendingSegments}`);
+    if (!defendingSegments) {
+        console.error(`Instead of UUID, found ${defendingSegments}`);
+        flashError();
+        return [];
+    }
     let newDefendingSegments1: Door[] = [];
     for (let i=0; i<defendingSegments.length; i++ ){
         let defendingSegment = defendingSegments[i];
         let newDefendingSegments2 = subtractSegmentsFromSegmentUntilNoChange(defendingSegment, attackingSegments);
-        assert(!newDefendingSegments2.changed, JSON.stringify(newDefendingSegments2));
+        // assert(!newDefendingSegments2.changed, JSON.stringify(newDefendingSegments2));
+        if (newDefendingSegments2.changed) {
+            console.error(`New defending segments has changed. ${JSON.stringify(newDefendingSegments2)}`)
+            flashError();
+            continue;
+        }
         newDefendingSegments1 = newDefendingSegments1.concat(newDefendingSegments2.segments.filter(function(val) {return val !== null}));
     }
     return newDefendingSegments1;
@@ -322,13 +362,25 @@ function subtractSegmentsFromSegmentUntilNoChange(defendingSegment: Door, attack
     return newDefendingSegments;
 }
 
-function subtractSegmentsFromSegment(defendingSegment: Door, attackingSegmentsIn: SimpleLine[]){
-    assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
-    assert(
-      defendingSegment.start.x !== defendingSegment.end.x ||
-      defendingSegment.start.y !== defendingSegment.end.y,
-      `DefendingSegment has 0 length\n${JSON.stringify(defendingSegment)}`
-    );
+function subtractSegmentsFromSegment(defendingSegment: Door, attackingSegmentsIn: SimpleLine[]): PossiblyChangedDoors {
+    // assert(defendingSegment, `${JSON.stringify(defendingSegment)}`);
+    if (!defendingSegment) {
+        console.error(`Defending segments are null or empty: ${JSON.stringify(defendingSegment)}`);
+        flashError();
+        return {segments: [], changed: false};
+    }
+    // assert(
+    //   defendingSegment.start.x !== defendingSegment.end.x ||
+    //   defendingSegment.start.y !== defendingSegment.end.y,
+    //   `DefendingSegment has 0 length\n${JSON.stringify(defendingSegment)}`
+    // );
+    if (
+        defendingSegment.start.x === defendingSegment.end.x &&
+        defendingSegment.start.y === defendingSegment.end.y
+    ) {
+        console.error(`DefendingSegment has 0 length\n${JSON.stringify(defendingSegment)}`);
+        flashError()
+    }
     let attackingSegments = [...attackingSegmentsIn];
 
     let newDefendingSegments1 = [defendingSegment];
@@ -338,12 +390,20 @@ function subtractSegmentsFromSegment(defendingSegment: Door, attackingSegmentsIn
         return {segments: [defendingSegment], changed: false};
     }
     do {
-        assert(
-          attackingSegment.start.x !== attackingSegment.end.x ||
-          attackingSegment.start.y !== attackingSegment.end.y,
-          `AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`
-        );
-
+        // assert(
+        //   attackingSegment.start.x !== attackingSegment.end.x ||
+        //   attackingSegment.start.y !== attackingSegment.end.y,
+        //   `AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`
+        // );
+        if (
+            attackingSegment.start.x === attackingSegment.end.x &&
+            attackingSegment.start.y === attackingSegment.end.y
+        ) {
+            console.error(`AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`);
+            flashError();
+            return { segments: [], changed: false }
+        }
+        
         let newDefendingSegments2: Door[] = [];
         let thisDefendingSegmement = newDefendingSegments1.pop()
         while (thisDefendingSegmement) {

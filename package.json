@@ -1,14 +1,14 @@
 {
   "name": "Storyteller",
   "version": "2.0.6-beta",
-  "description": "Launcher for the game Creaetures. Includes a suite of mod develepment tools.",
+  "description": "Launcher for the game Creatures. Includes a suite of mod development tools.",
   "main": "./dist/index.js",
   "scripts": {
     "test": "mocha",
     "start": "npm run compile && electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "compile": "npm run clean ; tsc ; copyfiles -u 1 -e *.ts src/**/**/**/**/**/* dist/",
+    "compile": "npm run clean ; tsc ; copyfiles -u 1 -e *.ts src/**/**/**/**/**/* dist/; copyfiles -u 1  hard-dependencies/*.js dist/hard-dependencies/;",
     "clean": "node -e \"require('fs').rmdirSync('./dist', { recursive: true, force: true });\""
   },
   "author": "Jacob Gantt",
@@ -24,6 +24,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "cache-directory": "^2.0.0",
     "copyfiles": "^2.4.1",
     "electron-squirrel-startup": "^1.0.0",
     "jimp": "^0.10.3"
