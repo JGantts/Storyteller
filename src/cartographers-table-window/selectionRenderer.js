@@ -394,14 +394,17 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
     //console.log(selected);
     if (selected.selectedType === "point") {
         let selectedPoint = dataStructures.points[selected.selectedId];
+        if (selectedPoint == null) {
+            return;
+        }
         drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint);
     } else if (selected.selectedType === "corner") {
         // assert(selected.selectedRoomsIdsPartsIds.length === 1,
         //     `Size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`)
         if (selected.selectedRoomsIdsPartsIds.length !== 1) {
-            console.error(`Cannot redraw corner, selected rooms size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`);
-            // flashError();
-            selectionChecker.resetSelection();
+            // console.error(`Cannot redraw corner, selected rooms size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`);
+            // // flashError();
+            // selectionChecker.resetSelection();
             return;
         }
         let id = selected.selectedRoomsIdsPartsIds[0].roomId;
@@ -418,7 +421,7 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         drawSelectionLine(selectionRainbowCtx, selectedSide, 0);
     } else if (selected.selectedType === "side") {
         if (selected.selectedRoomsIdsPartsIds.length !== 1) {
-            console.error(`Side selection is invalid, selected rooms size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`);
+            // console.error(`Side selection is invalid, selected rooms size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`);
             // flashError();
             return;
         }
