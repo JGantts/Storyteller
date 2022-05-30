@@ -1,5 +1,3 @@
-type Nullable<T> = T | undefined | null;
-
 type SimplePoint = {x: number; y: number}
 
 type SimpleLine = {start: SimplePoint; end: SimplePoint}
@@ -9,7 +7,7 @@ type ViewingRoomTypeState = {
   isEditingRoomtype: false | { pickedRoomtype: number };
 }
 
-
+type Nullable<T> = T | undefined | null;
 
 type MasterUiState = {
   keys: {
@@ -93,16 +91,13 @@ type DataStructures = {
     pointsSortedY: Point[];
 };
 
-
-type DoorData = {
-    permeability: number;
-    start: SimplePoint;
-    end: SimplePoint;
-    roomKeys: string[]
-}
 type Door = {
   id: string;
-} & DoorData;
+  roomKeys: string[];
+  permeability: number;
+  start: SimplePoint;
+  end: SimplePoint;
+};
 
 type Wall = {
   id: string;
@@ -124,21 +119,22 @@ type SelectedPart = {
 }
 
 type PossiblyChangedDoors = {
-    segments: DoorData[];
+    segments: Door[];
     changed: boolean;
 }
 
-// Global variables defined in StoryTellers index.ts
 declare let zooomSettle: number;
 declare let zoom: number;
 declare let posX: number;
 declare let posY: number;
+
 declare function getRoomLineThickness(): number;
 
 
-// BLK worker/parser types
 type BlkData = HTMLImageElement|ImageData;
+
 type BlkCallback = (image: ImageData | HTMLImageElement) => void;
+
 
 /**
  * Support variables used by main process associated with a specific browser window.
