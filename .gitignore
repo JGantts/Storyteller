@@ -115,3 +115,4 @@ Thumbs.db
 package-lock.json
 
 out/*
+/.idea
