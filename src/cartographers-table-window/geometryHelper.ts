@@ -1,7 +1,7 @@
 /// <reference path="./commonTypes.ts" />
 /// <reference path="./commonFunctions.ts" />
 
-const {common} = require('./commonFunctions.js');
+const {common, pointsEqual} = require('./commonFunctions.js');
 
 function getCorner(room: Room, point: SimplePoint) {
     //0: top-left
@@ -44,7 +44,7 @@ function getSortedLine(
   aX: number, aY: number, bX: number, bY: number,
   permeability: number,
   roomKeys: string[]
-) {
+): Nullable<DoorData> {
     let line = _getSortedLine(aX, aY, bX, bY);
     if (line) {
         return {
@@ -61,7 +61,7 @@ function getSortedDoor(
   aX: number, aY: number, bX: number, bY: number,
   permeability: number,
   roomKeys: string[]
-) {
+): Nullable<Door> {
     // assert(roomKeys.length === 2, JSON.stringify(roomKeys));
     if (roomKeys.length !== 2) {
         console.error(`Room keys length is invalid. Expected 2; Actual: ${roomKeys.length}; Data: ${JSON.stringify(roomKeys)}`);
@@ -81,7 +81,7 @@ function getSortedDoor(
     return null;
 }
 
-function _getSortedLine(aX: number, aY: number, bX: number, bY: number) {
+function _getSortedLine(aX: number, aY: number, bX: number, bY: number): {start: SimplePoint, end: SimplePoint} {
     if (aX < bX) {
         return {
             start: {
@@ -189,17 +189,17 @@ function lineSegmentsIntersectAndCross(segmentA: SimpleLine, segmentB: SimpleLin
 
         //check if xInterrsection is in range of line segments
         if (
-            xIntersection >= segmentA.start.x
-            && xIntersection <= segmentA.end.x
-            && xIntersection >= segmentB.start.x
-            && xIntersection <= segmentB.end.x
+            xIntersection > segmentA.start.x
+            && xIntersection < segmentA.end.x
+            && xIntersection > segmentB.start.x
+            && xIntersection < segmentB.end.x
         ) {
             //check if yInterrsection is in range of line segments
             if (
-                yIntersection >= Math.min(segmentA.start.y, segmentA.end.y)
-                && yIntersection <= Math.max(segmentA.start.y, segmentA.end.y)
-                && yIntersection >= Math.min(segmentB.start.y, segmentB.end.y)
-                && yIntersection <= Math.max(segmentB.start.y, segmentB.end.y)
+                yIntersection > Math.min(segmentA.start.y, segmentA.end.y)
+                && yIntersection < Math.max(segmentA.start.y, segmentA.end.y)
+                && yIntersection > Math.min(segmentB.start.y, segmentB.end.y)
+                && yIntersection < Math.max(segmentB.start.y, segmentB.end.y)
             ) {
                 //check if intersection is not endpoint of line
                 if (
@@ -214,10 +214,6 @@ function lineSegmentsIntersectAndCross(segmentA: SimpleLine, segmentB: SimpleLin
         }
     }
     return false;
-}
-
-function pointsEqual(a: SimplePoint, b: SimplePoint) {
-    return a.x === b.x && a.y === b.y;
 }
 
 function getCornerAngle(point: SimplePoint, room: Room) {
@@ -483,6 +479,6 @@ module.exports = {
         getCornerAngle,
         getIntersection,
         isIntersectingLines,
-        getYIntersect,
+        getYIntersect
     },
 }

@@ -453,6 +453,7 @@ function buildInsertPoint(points: { [key: string]: Point }, roomKey: string, x: 
     points[id].roomKeys.push(roomKey);
 }
 
+
 function getPointsFromRoom(room: Room): { [key: string]: Point }  {
     let points: { [key: string]: Point } = Object();
     buildInsertPoint(points, room.id, room.leftX, room.leftCeilingY);

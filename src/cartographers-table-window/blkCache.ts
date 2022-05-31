@@ -7,7 +7,7 @@ const {setStatusRight, clearStatusRight} = require('./statusFooter.js');
 
 const baseCachePath = cacheDir('Storyteller');
 if (baseCachePath == null) {
-    console.log("Failed to get cache directory");
+    console.error("Failed to get cache directory");
 }
 const blkCachePath = baseCachePath != null ?  (path.join(baseCachePath, 'CartographersTable') + '/') : null;
 
@@ -118,7 +118,6 @@ function getCacheLoadingPromise(absolutePath: string, hash: string, withStatus: 
 
 function loadNew(absolutePath: string, withStatus: boolean, write:(bytes: Int8Array)=>void, resolve: BlkCallback) {
     if (window.Worker) {
-        console.log("Loading BLK with worker");
         workerPromise(absolutePath, withStatus, write, resolve);
         return;
     }
@@ -127,7 +126,6 @@ function loadNew(absolutePath: string, withStatus: boolean, write:(bytes: Int8Ar
     
     // Load BLK
     const start = Date.now();
-    console.log("Loading BLK in window");
     mLoad(absolutePath, logger)
         .then((bytes: Int8Array) => {
             finish(bytes, write, resolve, start);

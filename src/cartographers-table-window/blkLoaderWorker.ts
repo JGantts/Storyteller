@@ -18,6 +18,5 @@ onmessage = async (e) => {
         };
     }
     const bytes = await mLoad(absolutePath, logger);
-    console.log("STITCHED BLK!!");
     postMessage({ result: bytes });
 }
