@@ -24,12 +24,12 @@ rightFloorY: 300,
 */
 
 function getSortedRoomFromDimensions(
-    leftX: number,
-    rightX: number,
-    leftYA: number,
-    rightYA: number,
-    leftYB: number,
-    rightYB: number
+  leftX: number,
+  rightX: number,
+  leftYA: number,
+  rightYA: number,
+  leftYB: number,
+  rightYB: number
 ) {
     return {
         id: null,
@@ -44,8 +44,8 @@ function getSortedRoomFromDimensions(
 }
 
 function getPermsFromRoomPotential(
-    roomPotential: Room,
-    dataStructures: DataStructures
+  roomPotential: Room,
+  dataStructures: DataStructures
 ): {[id:string]: Perm} {
     let perms: { [key: string]: Perm } = {};
     let sides = getWallsFromRoom(roomPotential);
@@ -53,40 +53,40 @@ function getPermsFromRoomPotential(
         //console.log("\n\n\n\n");
         //console.log(`side: ${i}`);
         let side = sides[i];
-        
+
         for (const key in dataStructures.metaroomDisk!.rooms) {
-            
+
             let wallsWithId = getWallsFromRoom(dataStructures.metaroomDisk!.rooms[key])
                 .map(
-                    (possibleWall, ii) => {
-                        return {
-                            id: key,
-                            wall: possibleWall
-                        };
-                    }
+                  (possibleWall, ii) => {
+                      return {
+                        id: key,
+                        wall: possibleWall
+                      };
+                  }
                 );
-            
+
             for (let k=0; k < wallsWithId.length; k++) {
                 let wallWithId = wallsWithId[k];
-                
+
                 lineSegmentComparison(
-                    side,
-                    wallWithId.wall,
-                    () => {},
-                    () => {
-                        let newId = common.getSortedId(wallWithId.id, roomPotential.id);
-                        perms[newId] =
-                            {
-                                id: newId,
-                                rooms:
-                                    {
-                                        a: wallWithId.id,
-                                        b: roomPotential.id,
-                                    },
-                                permeability: 100
-                            };
-                    },
-                    () => {}
+                  side,
+                  wallWithId.wall,
+                  () => {},
+                  () => {
+                      let newId = common.getSortedId(wallWithId.id, roomPotential.id);
+                      perms[newId] =
+                      {
+                          id: newId,
+                          rooms:
+                          {
+                              a: wallWithId.id,
+                              b: roomPotential.id,
+                          },
+                          permeability: 100
+                      };
+                  },
+                  () => {}
                 )
             }
         }
@@ -95,8 +95,8 @@ function getPermsFromRoomPotential(
 }
 
 function getDoorsWallsPotentialFromRoomPotential(
-    roomPotential: Room,
-    dataStructuresActual: DataStructures
+  roomPotential: Room,
+  dataStructuresActual: DataStructures
 ) {
     let wallsSimple = getWallsFromRooms([roomPotential]).filter(function(val) {return val});
     let doorsWalls = slicePotentialRoomIntoPotentialLinesFromActualWalls(wallsSimple, dataStructuresActual.walls);
@@ -104,8 +104,8 @@ function getDoorsWallsPotentialFromRoomPotential(
 }
 
 function slicePotentialRoomIntoPotentialLinesFromActualWalls(
-    sidesPotential: DoorData[],
-    wallsActual: Wall[]
+  sidesPotential: DoorData[],
+  wallsActual: Wall[]
 ): SimpleLine[] {
     let linesPotential: SimpleLine[] = [];
     for (let i=0; i<sidesPotential.length; i++ ){
@@ -125,8 +125,8 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(
 }
 
 function slicePotentialSideIntoPotentialLinesFromActualWalls(
-    defendingSegment: DoorData,
-    attackingSegmentsIn: Wall[]
+  defendingSegment: DoorData,
+  attackingSegmentsIn: Wall[]
 ): PossiblyChangedDoors {
     // assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
     if (!defendingSegment) {
@@ -148,7 +148,7 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(
         return {segments: [], changed: false}
     }
     let attackingSegments = [...attackingSegmentsIn];
-    
+
     let newDefendingSegments1: DoorData[] = [defendingSegment];
     let defendingSegmentChanged = false;
     let attackingSegment = attackingSegments.pop();
@@ -205,114 +205,114 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(
 
 
 function getDoorsFromRooms(
-    rooms: { [key: string]: Room },
-    perms: { [key: string]: Perm }
+  rooms: { [key: string]: Room },
+  perms: { [key: string]: Perm }
 ) {
-    let doors: Door[] = [];
-    for (const permKey in perms) {
-        let perm = perms[permKey];
-        //console.log(perm);
-        //perms.forEach((perm, i) => {
-        let roomA = rooms[perm.rooms.a];
-        let roomB = rooms[perm.rooms.b];
-        
-        //console.log(rooms);
-        //console.log(perms);
-        
-        //First check the more performant operation: vertical doors
-        
-        let sidesA = getWallsFromRoom(roomA);
-        let sidesB = getWallsFromRoom(roomB);
-        
-        let permHandled = false;
-        
-        if (!permHandled) {
-            lineSegmentComparison(
-                sidesA[3], sidesB[1],
-                () => {},
-                (start, end) => {
-                    doors.push(
-                        {
-                            id: common.getSortedId(roomA.id, roomB.id),
-                            permeability: perm.permeability,
-                            start,
-                            end,
-                            roomKeys: [roomA.id, roomB.id]
-                        }
-                    );
-                    permHandled = true;
-                },
-                () => {}
-            );
-        }
-        
-        if (!permHandled) {
-            lineSegmentComparison(
-                sidesA[1], sidesB[3],
-                () => {},
-                (start, end) => {
-                    doors.push(
-                        {
-                            id: common.getSortedId(roomA.id, roomB.id),
-                            permeability: perm.permeability,
-                            start,
-                            end,
-                            roomKeys: [roomA.id, roomB.id]
-                        }
-                    );
-                    permHandled = true;
-                },
-                () => {}
-            );
-        }
-        
-        if (!permHandled) {
-            lineSegmentComparison(
-                sidesA[0], sidesB[2],
-                () => {},
-                (start, end) => {
-                    doors.push(
-                        {
-                            id: common.getSortedId(roomA.id, roomB.id),
-                            permeability: perm.permeability,
-                            start,
-                            end,
-                            roomKeys: [roomA.id, roomB.id]
-                        }
-                    );
-                    permHandled = true;
-                },
-                () => {}
-            );
-        }
-        
-        if (!permHandled) {
-            lineSegmentComparison(
-                sidesA[2], sidesB[0],
-                () => {},
-                (start, end) => {
-                    doors.push(
-                        {
-                            id: common.getSortedId(roomA.id, roomB.id),
-                            permeability: perm.permeability,
-                            start,
-                            end,
-                            roomKeys: [roomA.id, roomB.id]
-                        }
-                    );
-                    permHandled = true;
-                },
-                () => {}
-            );
-        }
-        
-        if (!permHandled) {
-            // console.log(`Rooms don't actually touch...:\n${JSON.stringify(perm)}\nA: ${JSON.stringify(roomA)}\nB: ${JSON.stringify(roomB)}\n\n`);
-            // console.log(new Error().stack);
-        }
-    }
-    //console.log(doors);
-    return doors;
+  let doors: Door[] = [];
+  for (const permKey in perms) {
+      let perm = perms[permKey];
+      //console.log(perm);
+  //perms.forEach((perm, i) => {
+      let roomA = rooms[perm.rooms.a];
+      let roomB = rooms[perm.rooms.b];
+
+      //console.log(rooms);
+      //console.log(perms);
+
+      //First check the more performant operation: vertical doors
+
+      let sidesA = getWallsFromRoom(roomA);
+      let sidesB = getWallsFromRoom(roomB);
+
+      let permHandled = false;
+
+      if (!permHandled) {
+          lineSegmentComparison(
+              sidesA[3], sidesB[1],
+              () => {},
+              (start, end) => {
+                  doors.push(
+                      {
+                          id: common.getSortedId(roomA.id, roomB.id),
+                          permeability: perm.permeability,
+                          start,
+                          end,
+                          roomKeys: [roomA.id, roomB.id]
+                      }
+                  );
+                  permHandled = true;
+              },
+              () => {}
+          );
+      }
+
+      if (!permHandled) {
+          lineSegmentComparison(
+              sidesA[1], sidesB[3],
+              () => {},
+              (start, end) => {
+                  doors.push(
+                      {
+                          id: common.getSortedId(roomA.id, roomB.id),
+                          permeability: perm.permeability,
+                          start,
+                          end,
+                          roomKeys: [roomA.id, roomB.id]
+                      }
+                  );
+                  permHandled = true;
+              },
+              () => {}
+          );
+      }
+
+      if (!permHandled) {
+          lineSegmentComparison(
+              sidesA[0], sidesB[2],
+              () => {},
+              (start, end) => {
+                  doors.push(
+                      {
+                          id: common.getSortedId(roomA.id, roomB.id),
+                          permeability: perm.permeability,
+                          start,
+                          end,
+                          roomKeys: [roomA.id, roomB.id]
+                      }
+                  );
+                  permHandled = true;
+              },
+              () => {}
+          );
+      }
+
+      if (!permHandled) {
+          lineSegmentComparison(
+              sidesA[2], sidesB[0],
+              () => {},
+              (start, end) => {
+                  doors.push(
+                      {
+                          id: common.getSortedId(roomA.id, roomB.id),
+                          permeability: perm.permeability,
+                          start,
+                          end,
+                          roomKeys: [roomA.id, roomB.id]
+                      }
+                  );
+                  permHandled = true;
+              },
+              () => {}
+          );
+      }
+
+      if (!permHandled) {
+        // console.log(`Rooms don't actually touch...:\n${JSON.stringify(perm)}\nA: ${JSON.stringify(roomA)}\nB: ${JSON.stringify(roomB)}\n\n`);
+        // console.log(new Error().stack);
+      }
+  }
+  //console.log(doors);
+  return doors;
 }
 
 function getPointOne(room: Room){
@@ -390,7 +390,7 @@ function subtractSegmentsFromSegment(defendingSegment: DoorData, attackingSegmen
         flashError()
     }
     let attackingSegments = [...attackingSegmentsIn];
-    
+
     let newDefendingSegments1 = [defendingSegment];
     let defendingSegmentChanged = false;
     let attackingSegment = attackingSegments.pop();
@@ -453,7 +453,25 @@ function buildInsertPoint(points: { [key: string]: Point }, roomKey: string, x: 
     points[id].roomKeys.push(roomKey);
 }
 
-function getPointsFromRooms(rooms: { [key: string]: Room }):  { [key: string]: Point } {
+function getPointsFromRoom(room: Room): { [key: string]: Point }  {
+    let points: { [key: string]: Point } = Object();
+    buildInsertPoint(points, room.id, room.leftX, room.leftCeilingY);
+    buildInsertPoint(points, room.id, room.rightX, room.rightCeilingY);
+    buildInsertPoint(points, room.id, room.rightX, room.rightFloorY);
+    buildInsertPoint(points, room.id, room.leftX, room.leftFloorY);
+    return points;
+}
+
+function getPointsFromRoomFlat(room: Room): { [key: string]: Point }  {
+    let points: { [key: string]: Point } = Object();
+    buildInsertPoint(points, room.id, room.leftX, room.leftCeilingY);
+    buildInsertPoint(points, room.id, room.rightX, room.rightCeilingY);
+    buildInsertPoint(points, room.id, room.rightX, room.rightFloorY);
+    buildInsertPoint(points, room.id, room.leftX, room.leftFloorY);
+    return points;
+}
+
+function getPointsFromRooms(rooms: { [key: string]: Room }): { [key: string]: Point }  {
     let points: { [key: string]: Point } = Object();
     for (const key in rooms) {
         buildInsertPoint(points, key, rooms[key].leftX, rooms[key].leftCeilingY);
@@ -465,16 +483,16 @@ function getPointsFromRooms(rooms: { [key: string]: Room }):  { [key: string]: P
 }
 
 function getWallsFromRooms(rooms: Room[]): DoorData[] {
-    let doors: DoorData[] = [];
-    for (const key in rooms) {
-        doors = doors.concat(getWallsFromRoom(rooms[key]));
-    }
-    return doors;
+  let doors: DoorData[] = [];
+  for (const key in rooms) {
+      doors = doors.concat(getWallsFromRoom(rooms[key]));
+  }
+  return doors;
 }
 
 function getWallsFromRoom(room: Room): DoorData[] {
     let doors: DoorData[] = [];
-    
+
     doors.push(
         geometry.getSortedLine(
             room.leftX, room.leftCeilingY,
@@ -484,7 +502,7 @@ function getWallsFromRoom(room: Room): DoorData[] {
         )
     );
     doors.push(
-        geometry.getSortedLine(
+      geometry.getSortedLine(
             room.rightX, room.rightCeilingY,
             room.rightX, room.rightFloorY,
             -1,
@@ -507,9 +525,33 @@ function getWallsFromRoom(room: Room): DoorData[] {
             [room.id]
         )
     );
-    
+
     return doors;
 }
+
+function getRoomBoundsFromPoints(room: SimplePoint[]): { min: SimplePoint; max: SimplePoint } {
+    let minX = Math.min(room[0].x, room[1].x, room[2].x, room[3].x);
+    let maxX = Math.max(room[0].x, room[1].x, room[2].x, room[3].x);
+    let minY = Math.min(room[0].y, room[1].y, room[2].y, room[3].y);
+    let maxY = Math.max(room[0].y, room[1].y, room[2].y, room[3].y);
+    return {
+        min: {x: minX, y:minY},
+        max: {x: maxX, y: maxY}
+    };
+}
+
+function getRoomBounds(room: Room): { min: SimplePoint, max: SimplePoint } {
+    let minX = Math.min(room.leftX, room.rightX);
+    let maxX = Math.max(room.leftX, room.rightX);
+    let minY = Math.min(room.leftCeilingY, room.rightCeilingY, room.leftFloorY, room.rightFloorY);
+    let maxY = Math.max(room.leftCeilingY, room.rightCeilingY, room.leftFloorY, room.rightFloorY);
+    
+    return {
+        min: {x: minX, y:minY},
+        max: {x: maxX, y: maxY}
+    }
+}
+
 
 module.exports = {
     dataStructureFactory: {
@@ -517,9 +559,12 @@ module.exports = {
         getWallsFromRoom,
         getDoorsFromRooms,
         getPointsFromRooms,
+        getPointsFromRoom,
         subtractSegmentsFromSegments,
         getDoorsWallsPotentialFromRoomPotential,
         getPermsFromRoomPotential,
-        getSortedRoomFromDimensions
+        getSortedRoomFromDimensions,
+        getRoomBounds,
+        getRoomBoundsFromPoints
     }
 }
