@@ -2,6 +2,7 @@ const assert = require('assert');
 const {flashError} = require("./flashError");
 const { selectionChecker } = require("./selectionChecker");
 const { dataStructureFactory } = require("./dataStructureFactory");
+const { geometry } = require("./geometryHelper");
 //gay pride! That's right fuckers
 //red     RGB 228 003 003
 //orange  RGB 255 140 000
@@ -60,8 +61,9 @@ function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, 
     //console.log(x);
     //console.log(y);
     const zoomMod = 1 / zoom;
-    let myWidth = getSelectionSquareWidth();//getSelectionSquareWidth() * getSelectionMultiplier();
-    selectionHighlightCtx.lineWidth = getRoomLineThickness() * getSelectionMultiplier();
+    const defaultLineThickness = getRoomLineThickness();
+    let myWidth = (defaultLineThickness * 2) * zoomMod;
+    selectionHighlightCtx.lineWidth = (defaultLineThickness / 2) * zoomMod;
     selectionHighlightCtx.strokeStyle = "white";
     selectionHighlightCtx.fillStyle = "black";
     selectionHighlightCtx.beginPath();
@@ -70,7 +72,7 @@ function drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, point, 
         ((point.y - posY) * zoomMod) - (myWidth / 2),
         myWidth,
         myWidth,
-        myWidth * 1 / 3);
+        myWidth * (1 / 3));
     selectionHighlightCtx.fill();
     selectionHighlightCtx.stroke();
 
@@ -118,7 +120,6 @@ function drawSelectionCircle(selectionRainbowCtx, x, y, thetaIn0, thetaIn1) {
 
 function drawSelectionCircleHalf(selectionRainbowCtx, x, y, thetaFull0, thetaFull1) {
     let time = new Date();
-    selectionRainbowCtx.lineWidth = 2.5 * getSelectionMultiplier();
 
     let resolution = 6 * 5;
 
@@ -180,12 +181,15 @@ function colorPercentage(percentage, colorA, colorB) {
 }
 
 function drawSelectionCirclePortion(selectionRainbowCtx, x, y, theta0, theta1, color) {
-    selectionRainbowCtx.lineWidth = getRoomLineThickness();
+
+    const lineWidth = getRoomLineThickness() / zoom;
+    const selectionCircleRadius = lineWidth * 2;
+    selectionRainbowCtx.lineWidth = lineWidth;
     selectionRainbowCtx.strokeStyle = color;
     selectionRainbowCtx.beginPath();
 
     const zoomMod = 1 / zoom;
-    selectionRainbowCtx.arc((x - posX) * zoomMod, (y - posY) * zoomMod, (getSelectionCheckMargin() * 2 * getSelectionMultiplier()) / zoom, theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
+    selectionRainbowCtx.arc((x - posX) * zoomMod, (y - posY) * zoomMod, selectionCircleRadius, theta0 * 2 * Math.PI, theta1 * 2 * Math.PI);
     selectionRainbowCtx.stroke();
 }
 
@@ -264,12 +268,11 @@ function drawSelectionLine(selectionRainbowCtx, selectedLine, leftRight) {
 
 function drawSelectionLineSegment(selectionRainbowCtx, lineStart, lineRise, lineRun, lineLength, startPercent, stopPercent, lineColor, leftRight) {
 
-    let lineWidthToUse = getSelectionCheckMargin() * getSelectionMultiplier() * getSelectionMultiplier();
+    let lineWidthToUse = getRoomLineThickness() * (1 / zoom);
 
     let percentageAverage = (startPercent + stopPercent) / 2;
     let distancePercentFromEnd = 0.5 - Math.abs(0.5 - percentageAverage);
     let distanceActualFromEnd = distancePercentFromEnd * lineLength;
-
     let lineWidth = 0;
     if (distanceActualFromEnd >= lineWidthToUse) {
         lineWidth = lineWidthToUse;
@@ -277,6 +280,7 @@ function drawSelectionLineSegment(selectionRainbowCtx, lineStart, lineRise, line
         let dist = 1 - distanceActualFromEnd / lineWidthToUse;
         lineWidth = Math.sqrt(1 - dist * dist) * lineWidthToUse;
     }
+    // let lineWidth = lineWidthToUse * (1 / zoom);
     drawSelectionLineSegmentAtWidth(
         selectionRainbowCtx,
         lineStart,
@@ -292,13 +296,13 @@ function drawSelectionLineSegment(selectionRainbowCtx, lineStart, lineRise, line
 
 function drawSelectionLineSegmentAtWidth(selectionRainbowCtx, lineStart, lineRise, lineRun, startPercent, stopPercent, lineWidthIn, lineColor, leftRight) {
     const zoomMod = 1 / zoom;
-    let lineWidth = lineWidthIn / (Math.abs(leftRight) + 1)
-    selectionRainbowCtx.lineWidth = lineWidth;
+    selectionRainbowCtx.lineWidth = lineWidthIn;
     selectionRainbowCtx.strokeStyle = lineColor;
 
-    let hypotenuse = Math.sqrt(lineRise * lineRise + lineRun * lineRun);
-    let xDiff = lineWidth * leftRight * lineRise / hypotenuse;
-    let yDiff = lineWidth * leftRight * lineRun / hypotenuse;
+    const vertical = Math.abs(lineRun) < 0.001;
+    const roomLineThickness = getRoomLineThickness();
+    let xDiff = (vertical ? (leftRight * roomLineThickness / 2) : 0);
+    let yDiff = (vertical ? 0 : (leftRight * roomLineThickness / 2));
 
     selectionRainbowCtx.beginPath();
     selectionRainbowCtx.moveTo(
@@ -353,7 +357,7 @@ function drawSelectionRoom(selectionRainbowCtx, selectedRoom) {
         }
 
         pctx.strokeStyle = `rgba(${color.red}, ${color.green}, ${color.blue}, ${alpha})`;
-        pctx.lineWidth = getRoomLineThickness() * getSelectionMultiplier() * getSelectionMultiplier() / 1.5;
+        pctx.lineWidth = getRoomLineThickness();
 
         let millisecondsAfterFrame = ((time.getSeconds() * 1000 + time.getMilliseconds()) % (1000 / selectionCircleRotationsPerSecond));
         let percentageAfterFrameStart = millisecondsAfterFrame / (1000 / selectionCircleRotationsPerSecond);
@@ -394,14 +398,17 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
     //console.log(selected);
     if (selected.selectedType === "point") {
         let selectedPoint = dataStructures.points[selected.selectedId];
+        if (selectedPoint == null) {
+            return;
+        }
         drawSelectionSquare(selectionRainbowCtx, selectionHighlightCtx, selectedPoint);
     } else if (selected.selectedType === "corner") {
         // assert(selected.selectedRoomsIdsPartsIds.length === 1,
         //     `Size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`)
         if (selected.selectedRoomsIdsPartsIds.length !== 1) {
-            console.error(`Cannot redraw corner, selected rooms size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`);
-            // flashError();
-            selectionChecker.resetSelection();
+            // console.error(`Cannot redraw corner, selected rooms size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`);
+            // // flashError();
+            // selectionChecker.resetSelection();
             return;
         }
         let id = selected.selectedRoomsIdsPartsIds[0].roomId;
@@ -418,7 +425,7 @@ async function redrawSelection(selectionRainbowCtx, selectionHighlightCtx, dataS
         drawSelectionLine(selectionRainbowCtx, selectedSide, 0);
     } else if (selected.selectedType === "side") {
         if (selected.selectedRoomsIdsPartsIds.length !== 1) {
-            console.error(`Side selection is invalid, selected rooms size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`);
+            // console.error(`Side selection is invalid, selected rooms size was not 1: ${JSON.stringify(selected.selectedRoomsIdsPartsIds)}`);
             // flashError();
             return;
         }

@@ -211,40 +211,41 @@ function checkLineSelection(x, y, dataStructures){
             break;
         }
     }
+    const isSamePoint = (pointA, pointB) => {
+        return pointA.x === pointB.x && pointA.y === pointB.y;
+    }
+
+    const isSameLine = (lineA, lineB) => {
+        if (isSamePoint(lineA.start, lineB.start)) {
+            return (isSamePoint(lineA.end, lineB.end));
+        } else if (isSamePoint(lineA.end, lineB.start)) {
+            return isSamePoint(lineA.start, lineB.end);
+        } else {
+            return false;
+        }
+    }
     if (selected.selectedType !== "") {
         for (const roomKey in dataStructures.metaroomDisk.rooms) {
             let room = dataStructures.metaroomDisk.rooms[roomKey];
             let roomSides = dataStructureFactory.getWallsFromRoom(room);
             if (selectedLine.start.x === selectedLine.end.x) {
-                lineSegmentComparison(
-                    selectedLine, roomSides[1],
-                    () => {},
-                    () => {
-                        selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 1});
-                    },
-                    () => {});
-                lineSegmentComparison(
-                    selectedLine, roomSides[3],
-                    () => {},
-                    () => {
-                        selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 3});
-                    },
-                    () => {});
+                if (isSameLine(selectedLine, roomSides[1])) {
+                    selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 1});
+                    break;
+                }
+                if (isSameLine(selectedLine, roomSides[3])) {
+                    selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 3});
+                    break;
+                }
             } else {
-              lineSegmentComparison(
-                  selectedLine, roomSides[0],
-                  () => {},
-                  () => {
-                      selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 0});
-                  },
-                  () => {});
-              lineSegmentComparison(
-                  selectedLine, roomSides[2],
-                  () => {},
-                  () => {
-                      selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 2});
-                  },
-                  () => {});
+                if (isSameLine(selectedLine, roomSides[0])) {
+                    selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 0});
+                    break;
+                }
+                if (isSameLine(selectedLine, roomSides[2])) {
+                    selected.selectedRoomsIdsPartsIds.push({roomId: roomKey, partId: 2});
+                    break;
+                }
             }
         }
     }
@@ -288,7 +289,14 @@ function checkSideSelection(x, y, dataStructures){
             }
         }
         let selectedRoom = dataStructures.metaroomDisk.rooms[roomSelection.selectedId];
-
+        if (selectedRoom == null) {
+            console.error("Room came back null after selection. Selection: ", roomSelection, "RoomKeys: ", Object.keys(dataStructures.metaroomDisk.rooms));
+            return {
+                selectedType : "",
+                selectedId: "",
+                selectedRoomsIdsPartsIds: [],
+            }
+        }
         let sides = dataStructureFactory.getWallsFromRoom(selectedRoom);
         let intersectionSideIndex = -1;
         for (let i=0; i<4; i++) {
@@ -370,9 +378,9 @@ function isClickOnLine(mx, my, line, selectionCheckMargin){
     if (my >= Math.max(line.start.y, line.end.y) + selectionCheckMargin) {
         return false;
     }
-    if (line.start.x == line.end.x) {
+    if (line.start.x === line.end.x) {
         return true;
-    } else if (line.start.y == line.end.y) {
+    } else if (line.start.y === line.end.y) {
         return true;
     } else {
         let slope = geometry.getSlope(line.start, line.end);

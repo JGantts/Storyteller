@@ -238,7 +238,8 @@ function getSelectionSquareWidth() {
 }
 
 function getRoomLineThickness() {
-    return 2 * zoom;
+    const base = 5;
+    return (base * zoom + (base / 2))
 }
 
 function getSelectionMultiplier() {
@@ -1061,11 +1062,19 @@ function handleWheel(event: any) {
 }
 
 function constrainPositionZoom() {
+    if (dataStructures.metaroomDisk == null) {
+        posX = 0;
+        posY = 0;
+        return;
+    }
     zoom = Math.min(zoom, 2);
     zoom = Math.max(zoom, 1 / roomSizeBlurFix);
-    posX = Math.min(posX, dataStructures.metaroomDisk!.width / zoom - canvasHolder.clientWidth);
+    
+    const maxX = dataStructures.metaroomDisk.width - (canvasHolder.clientWidth * zoom);
+    posX = Math.min(posX, maxX);
     posX = Math.max(posX, 0);
-    posY = Math.min(posY, dataStructures.metaroomDisk!.height / zoom - canvasHolder.clientHeight);
+    const maxY = dataStructures.metaroomDisk.height- (canvasHolder.clientHeight * zoom);
+    posY = Math.min(posY, maxY);
     posY = Math.max(posY, 0);
 }
 
@@ -1447,6 +1456,15 @@ async function redrawMetaroom() {
     }
 }
 
+async function redrawRoomsDefault() {
+    redrawRooms(
+        offscreenCanvasContexts.room,
+        offscreenCanvasContexts.pasties,
+        [...dataStructures.doorsArray, ...dataStructures.walls],
+        dataStructures.points,
+        dataStructures.metaroomDisk!);
+}
+
 async function redrawRooms(
     roomCtx: CanvasRenderingContext2D,
     pastiesCtx: CanvasRenderingContext2D,
@@ -1457,7 +1475,7 @@ async function redrawRooms(
     
     roomCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
     pastiesCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
-    roomCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
+    roomCtx.lineWidth = getRoomLineThickness();
     lines
         .forEach((line, i) => {
             roomCtx.strokeStyle = getDoorPermeabilityColor(line.permeability);
@@ -1477,11 +1495,11 @@ async function redrawPasties(
 ) {
     //console.log(points);
     //console.log(new Error().stack);
-    pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
+    pastiesCtx.lineWidth = getRoomLineThickness();
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
         pastiesCtx.beginPath();
-        pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() * 1.5 * roomSizeBlurFix, 0, 2 * Math.PI, true);
+        pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() * 1.2, 0, 2 * Math.PI, true);
         pastiesCtx.fill();
     }
 }
@@ -1496,8 +1514,9 @@ async function redrawPotentialRooms(
     
     roomCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
     pastiesCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
-    roomCtx.lineWidth = getRoomLineThickness();
     const zoomMod = 1 / zoom;
+    // Not sure why these lines render so much thicker than everywhere else
+    roomCtx.lineWidth = (getRoomLineThickness() * 0.75) * zoomMod;
     lines
         .forEach((line, i) => {
             roomCtx.strokeStyle = getDoorPermeabilityColor(line.permeability);
@@ -1518,11 +1537,11 @@ async function redrawPotentialPasties(
     const zoomMod = 1 / zoom;
     //console.log(points);
     //console.log(new Error().stack);
-    pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
+    pastiesCtx.lineWidth = getRoomLineThickness() / zoomMod;
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
         pastiesCtx.beginPath();
-        pastiesCtx.arc((points[key].x - posX) * zoomMod, (points[key].y - posY) * zoomMod, getRoomLineThickness() * 0.75, 0, 2 * Math.PI, true);
+        pastiesCtx.arc((points[key].x - posX) * zoomMod, (points[key].y - posY) * zoomMod, getRoomLineThickness() * 0.8 * zoomMod, 0, 2 * Math.PI, true);
         pastiesCtx.fill();
     }
 }
@@ -1597,6 +1616,9 @@ async function redrawSelection(timestamp: number) {
                     selection,
                     dataStructures
                 );
+                if (masterUiState.camera.rezoom) {
+                    redrawRoomsDefault();
+                }
                 redrawPotential(potentialRooms, dataStructures);
                 onscreenCanvasContexts.selectionUnder.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
                 onscreenCanvasContexts.selectionOver.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
