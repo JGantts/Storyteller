@@ -1,264 +1,305 @@
 import {flashError} from "./flashError";
+import {pointsEqual} from "./commonFunctions";
 
-const { dataStructureFactory } = require('./dataStructureFactory.js');
-const { geometry } = require('./geometryHelper.js');
-const { selectionChecker } = require("./selectionChecker")
+const {dataStructureFactory} = require('./dataStructureFactory.js');
+const {geometry} = require('./geometryHelper.js');
+const {selectionChecker} = require("./selectionChecker");
+const { getPotentialYSnaps } = require('./potentialFactoryPotentialYSnaps.js');
 
-function getPotentialRoomFromLine(startPoint:SimplePoint, endPoint:SimplePoint, dataStructures: DataStructures, line: Door) {
-  // Vertical
-  if (line.start.x === line.end.x) {
-      let deltaX = endPoint.x - startPoint.x;
-
-      if (Math.abs(deltaX) < 5) {
-          return null;
-      }
-
-      let xToConsider = line.start.x + deltaX;
-
-      let closestPointsX = -1;
-      for (let i=0; i<dataStructures.pointsSortedX.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
-            < Math.abs(closestPointsX - xToConsider)
-          ) {
-              closestPointsX = dataStructures.pointsSortedX[i].x;
-          }
-      }
-
-      let xToUse = -1;
-      if (Math.abs(xToConsider - closestPointsX) < 5) {
-          xToUse = closestPointsX;
-      } else {
-          xToUse =
-          xToConsider;
-      }
-      xToUse = Math.round(xToUse);
-
-      if (deltaX > 0) {
-          return {
-              id: null,
-              leftX: line.start.x,
-              rightX: xToUse,
-              leftCeilingY: line.start.y,
-              rightCeilingY: line.start.y,
-              leftFloorY: line.end.y,
-              rightFloorY: line.end.y,
-              roomType: 0,
-          };
-      } else {
-          return {
-              id: null,
-              leftX: xToUse,
-              rightX: line.start.x,
-              leftCeilingY: line.start.y,
-              rightCeilingY: line.start.y,
-              leftFloorY: line.end.y,
-              rightFloorY: line.end.y,
-              roomType: 0,
-          };
-      }
-  // Horizontal
-  } else {
-      let deltaY = endPoint.y - startPoint.y;
-
-      if (Math.abs(deltaY) < 5) {
-          return null;
-      }
-
-      let yToConsiderA = line.start.y + deltaY;
-      let yToConsiderB = line.end.y + deltaY;
-
-      let closestPointAsY = -1;
-      for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderA)
-            < Math.abs(closestPointAsY - yToConsiderA)
-          ) {
-              closestPointAsY = dataStructures.pointsSortedY[i].y;
-          }
-      }
-
-      let closestPointBsY = -1;
-      for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderB)
-            < Math.abs(closestPointBsY - yToConsiderB)
-          ) {
-              closestPointBsY = dataStructures.pointsSortedY[i].y;
-          }
-      }
-
-      let deltaYToUse = -1;
-      if (Math.abs(yToConsiderA - closestPointAsY) < 5) {
-          deltaYToUse = closestPointAsY - line.start.y;
-      } else if (Math.abs(yToConsiderB - closestPointBsY) < 5) {
-          deltaYToUse = closestPointBsY - line.end.y;
-      } else {
-          deltaYToUse = deltaY;
-      }
-      deltaYToUse = Math.round(deltaYToUse);
-
-      return (dataStructureFactory.getSortedRoomFromDimensions(
-          line.start.x, line.end.x,
-          line.start.y, line.end.y,
-          line.start.y + deltaYToUse, line.end.y + deltaYToUse
-      ));
-  }
-}
-
-function getPotentialRoomFromPoints(startPoint: SimplePoint, endPoint: SimplePoint, dataStructures: DataStructures): Nullable<Room> {
-
-      let deltaX = endPoint.x - startPoint.x;
-
-      if (Math.abs(deltaX) < 5) {
-          return null;
-      }
-
-      let deltaY = endPoint.y - startPoint.y;
-
-      if (Math.abs(deltaY) < 5) {
-          return null;
-      }
-
-
-
-      let xToConsider = endPoint.x;
-
-      let closestPointsX = -1;
-      for (let i=0; i<dataStructures.pointsSortedX.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
-            < Math.abs(closestPointsX - xToConsider)
-          ) {
-              closestPointsX = dataStructures.pointsSortedX[i].x;
-          }
-      }
-
-      let xToUse = -1;
-      if (Math.abs(xToConsider - closestPointsX) < 5) {
-          xToUse = closestPointsX;
-      } else {
-          xToUse = xToConsider;
-      }
-      xToUse = Math.round(xToUse);
-
-
-      let yToConsider = endPoint.y;
-
-      let closestPointsY = -1;
-      for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
-          if (
-            Math.abs(dataStructures.pointsSortedY[i].y - yToConsider)
-            < Math.abs(closestPointsY - yToConsider)
-          ) {
-              closestPointsY = dataStructures.pointsSortedY[i].y;
-          }
-      }
-
-      let yToUse = -1;
-      if (Math.abs(yToConsider - closestPointsY) < 5) {
-          yToUse = closestPointsY;
-      } else {
-          yToUse = yToConsider;
-      }
-      yToUse = Math.round(yToUse);
-
-
-      if (deltaX > 0) {
-          return (dataStructureFactory.getSortedRoomFromDimensions(
-              startPoint.x, xToUse,
-              startPoint.y, startPoint.y,
-              yToUse, yToUse
-          ));
-      } else {
+function getPotentialRoomFromLine(startPoint: SimplePoint, endPoint: SimplePoint, dataStructures: DataStructures, line: Door) {
+    // Vertical
+    if (line.start.x === line.end.x) {
+        let deltaX = endPoint.x - startPoint.x;
+        
+        if (Math.abs(deltaX) < 5) {
+            return null;
+        }
+        
+        let xToConsider = line.start.x + deltaX;
+        
+        let closestPointsX = -1;
+        for (let i = 0; i < dataStructures.pointsSortedX.length; i++) {
+            if (
+                Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
+                < Math.abs(closestPointsX - xToConsider)
+            ) {
+                closestPointsX = dataStructures.pointsSortedX[i].x;
+            }
+        }
+        
+        let xToUse = -1;
+        if (Math.abs(xToConsider - closestPointsX) < 5) {
+            xToUse = closestPointsX;
+        } else {
+            xToUse =
+                xToConsider;
+        }
+        xToUse = Math.round(xToUse);
+        
+        if (deltaX > 0) {
+            return {
+                id: null,
+                leftX: line.start.x,
+                rightX: xToUse,
+                leftCeilingY: line.start.y,
+                rightCeilingY: line.start.y,
+                leftFloorY: line.end.y,
+                rightFloorY: line.end.y,
+                roomType: 0,
+            };
+        } else {
+            return {
+                id: null,
+                leftX: xToUse,
+                rightX: line.start.x,
+                leftCeilingY: line.start.y,
+                rightCeilingY: line.start.y,
+                leftFloorY: line.end.y,
+                rightFloorY: line.end.y,
+                roomType: 0,
+            };
+        }
+        // Horizontal
+    } else {
+        let deltaY = endPoint.y - startPoint.y;
+        
+        if (Math.abs(deltaY) < 5) {
+            return null;
+        }
+        
+        let yToConsiderA = line.start.y + deltaY;
+        let yToConsiderB = line.end.y + deltaY;
+        
+        let closestPointAsY = -1;
+        for (let i = 0; i < dataStructures.pointsSortedY.length; i++) {
+            if (
+                Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderA)
+                < Math.abs(closestPointAsY - yToConsiderA)
+            ) {
+                closestPointAsY = dataStructures.pointsSortedY[i].y;
+            }
+        }
+        
+        let closestPointBsY = -1;
+        for (let i = 0; i < dataStructures.pointsSortedY.length; i++) {
+            if (
+                Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderB)
+                < Math.abs(closestPointBsY - yToConsiderB)
+            ) {
+                closestPointBsY = dataStructures.pointsSortedY[i].y;
+            }
+        }
+        
+        let deltaYToUse = -1;
+        if (Math.abs(yToConsiderA - closestPointAsY) < 5) {
+            deltaYToUse = closestPointAsY - line.start.y;
+        } else if (Math.abs(yToConsiderB - closestPointBsY) < 5) {
+            deltaYToUse = closestPointBsY - line.end.y;
+        } else {
+            deltaYToUse = deltaY;
+        }
+        deltaYToUse = Math.round(deltaYToUse);
+        
         return (dataStructureFactory.getSortedRoomFromDimensions(
-            xToUse, startPoint.x,
-            startPoint.y, startPoint.y,
-            yToUse, yToUse
+            line.start.x, line.end.x,
+            line.start.y, line.end.y,
+            line.start.y + deltaYToUse, line.end.y + deltaYToUse
         ));
-      }
-
+    }
 }
 
-function getPotentialRoomFromYChange(startPoint: SimplePoint, endPoint: SimplePoint, dataStructures: DataStructures, room: Room) {
+function getPotentialRoomFromPoints(
+    startPoint: SimplePoint,
+    endPoint: SimplePoint,
+    dataStructures: DataStructures,
+    snapToYToLine: boolean = false
+): Nullable<Room> {
+    
+    let deltaX = endPoint.x - startPoint.x;
     let deltaY = endPoint.y - startPoint.y;
-
-    if (Math.abs(deltaY) < 5) {
+    
+    if (Math.abs(deltaY) < 5 && Math.abs(deltaX) < 5) {
         return null;
     }
-
-    let yToConsider = endPoint.y;
-
-    let closestPointsY = -1;
-    for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
+    
+    let xToConsider = endPoint.x;
+    
+    let closestPointsX = -1;
+    
+    for (let i = 0; i < dataStructures.pointsSortedX.length; i++) {
         if (
-          Math.abs(dataStructures.pointsSortedY[i].y - yToConsider)
-          < Math.abs(closestPointsY - yToConsider)
+            Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
+            < Math.abs(closestPointsX - xToConsider)
+        ) {
+            closestPointsX = dataStructures.pointsSortedX[i].x;
+        }
+    }
+    
+    let xToUse;
+    if (Math.abs(xToConsider - closestPointsX) < 5) {
+        xToUse = closestPointsX;
+    } else {
+        xToUse = xToConsider;
+    }
+    
+    
+    let yToConsider = endPoint.y;
+    
+    let closestPointsY = -1;
+    for (let i = 0; i < dataStructures.pointsSortedY.length; i++) {
+        if (
+            Math.abs(dataStructures.pointsSortedY[i].y - yToConsider)
+            < Math.abs(closestPointsY - yToConsider)
         ) {
             closestPointsY = dataStructures.pointsSortedY[i].y;
         }
     }
-
+    
     let yToUse = -1;
     if (Math.abs(yToConsider - closestPointsY) < 5) {
         yToUse = closestPointsY;
     } else {
         yToUse = yToConsider;
     }
+    
+    xToUse = Math.round(xToUse);
     yToUse = Math.round(yToUse);
-
-    let cornerIndex = geometry.getCorner(room, startPoint);
-
-    switch (cornerIndex) {
-      case 0:
-        return {
-            id: room.id,
-            leftX: room.leftX,
-            rightX: room.rightX,
-            leftCeilingY: yToUse,
-            rightCeilingY: room.rightCeilingY,
-            leftFloorY: room.leftFloorY,
-            rightFloorY: room.rightFloorY,
-            roomType: room.roomType,
-        };
-
-      case 1:
-        return {
-            id: room.id,
-            leftX: room.leftX,
-            rightX: room.rightX,
-            leftCeilingY: room.leftCeilingY,
-            rightCeilingY: yToUse,
-            leftFloorY: room.leftFloorY,
-            rightFloorY: room.rightFloorY,
-            roomType: room.roomType,
-        };
-
-      case 2:
-        return {
-            id: room.id,
-            leftX: room.leftX,
-            rightX: room.rightX,
-            leftCeilingY: room.leftCeilingY,
-            rightCeilingY: room.rightCeilingY,
-            leftFloorY: room.leftFloorY,
-            rightFloorY: yToUse,
-            roomType: room.roomType,
-        };
-
-      case 3:
-        return {
-            id: room.id,
-            leftX: room.leftX,
-            rightX: room.rightX,
-            leftCeilingY: room.leftCeilingY,
-            rightCeilingY: room.rightCeilingY,
-            leftFloorY: yToUse,
-            rightFloorY: room.rightFloorY,
-            roomType: room.roomType,
-      };
-
+    
+    if (deltaX > 0) {
+        return (dataStructureFactory.getSortedRoomFromDimensions(
+            startPoint.x, xToUse,
+            startPoint.y, startPoint.y,
+            yToUse, yToUse
+        ));
+    } else {
+        return (dataStructureFactory.getSortedRoomFromDimensions(
+            xToUse, startPoint.x,
+            startPoint.y, startPoint.y,
+            yToUse, yToUse
+        ));
     }
+    
+}
+
+function getPotentialRoomFromYChange(
+    startPoint: SimplePoint,
+    endPoint: SimplePoint,
+    dataStructures: DataStructures,
+    room: Room,
+    yTolerance: number = 6
+): Nullable<Room> {
+    let deltaY = endPoint.y - startPoint.y;
+    
+    if (Math.abs(deltaY) < 5) {
+        return null;
+    }
+    
+    const yToConsider = endPoint.y;
+    
+    let closestPointsY = Number.MAX_VALUE;
+    
+    // Calculate tolerance with regard to zoom
+    let tolerance = zoom > 1 ? yTolerance * zoom : yTolerance;
+    
+    // Find best match for vertical snap to point
+    for (let i = 0; i < dataStructures.pointsSortedY.length; i++) {
+        const potentialPoint = dataStructures.pointsSortedY[i];
+        const isPointNearbyX = Math.abs(potentialPoint.x - endPoint.x) < 3 ||
+            room.leftX == potentialPoint.x ||
+            room.rightX == potentialPoint.x;
+        if (isPointNearbyX && Math.abs(potentialPoint.y - yToConsider) < Math.abs(closestPointsY - yToConsider)) {
+            closestPointsY = dataStructures.pointsSortedY[i].y;
+        }
+    }
+    
+    // Add all potential points to diagonal ySnap targets
+    const potentialYs = getPotentialYSnaps(startPoint, endPoint, dataStructures, tolerance);
+    
+    // Add ySnap to point option if near enough
+    if (Math.abs(yToConsider - closestPointsY) < tolerance) {
+        potentialYs.push(closestPointsY);
+    }
+    
+    let yToUse: number;
+    
+    // If only one potential y use it
+    if (potentialYs.length === 1) {
+        closestPointsY = potentialYs[0];
+    } else  if (potentialYs.length > 1) {
+        // Find best match amongst all potential yS
+        closestPointsY = Number.MAX_VALUE;
+        for (const potentialY of potentialYs) {
+            if (
+                Math.abs(potentialY - yToConsider) < Math.abs(closestPointsY - yToConsider)
+            ) {
+                closestPointsY = potentialY
+            }
+        }
+    }
+    
+    // Use closest Y if close enough or cursor Y if not
+    if (Math.abs(yToConsider - closestPointsY) < tolerance) {
+        yToUse = closestPointsY;
+    } else {
+        yToUse = yToConsider;
+    }
+    
+    // Round point for use in map
+    yToUse = Math.round(yToUse);
+    
+    // Replace y for corner
+    let cornerIndex = geometry.getCorner(room, startPoint);
+    switch (cornerIndex) {
+        case 0:
+            return {
+                id: room.id,
+                leftX: room.leftX,
+                rightX: room.rightX,
+                leftCeilingY: yToUse,
+                rightCeilingY: room.rightCeilingY,
+                leftFloorY: room.leftFloorY,
+                rightFloorY: room.rightFloorY,
+                roomType: room.roomType,
+            };
+        
+        case 1:
+                return {
+                    id: room.id,
+                    leftX: room.leftX,
+                    rightX: room.rightX,
+                    leftCeilingY: room.leftCeilingY,
+                    rightCeilingY: yToUse,
+                    leftFloorY: room.leftFloorY,
+                    rightFloorY: room.rightFloorY,
+                    roomType: room.roomType,
+                };
+        
+        case 2:
+            return {
+                    id: room.id,
+                    leftX: room.leftX,
+                    rightX: room.rightX,
+                    leftCeilingY: room.leftCeilingY,
+                    rightCeilingY: room.rightCeilingY,
+                    leftFloorY: room.leftFloorY,
+                    rightFloorY: yToUse,
+                    roomType: room.roomType,
+                };
+        
+        case 3:
+            return {
+                id: room.id,
+                leftX: room.leftX,
+                rightX: room.rightX,
+                leftCeilingY: room.leftCeilingY,
+                rightCeilingY: room.rightCeilingY,
+                leftFloorY: yToUse,
+                rightFloorY: room.rightFloorY,
+                roomType: room.roomType,
+            }
+        
+    }
+    return null;
 }
 
 function getPotentialRoomFromSide(startPoint: SimplePoint, endPoint: SimplePoint, dataStructures: DataStructures, selectedRoom: Room, selectedSide: number): Nullable<Room> {
@@ -272,34 +313,36 @@ function getPotentialRoomFromSide(startPoint: SimplePoint, endPoint: SimplePoint
     }
     if (selectedSide === 0 || selectedSide == 2) {
         let deltaY = endPoint.y - startPoint.y;
-
+        
         if (Math.abs(deltaY) < 5) {
             return null;
         }
-
+        
         let yToConsiderA = side.start.y + deltaY;
         let yToConsiderB = side.end.y + deltaY;
-
+        const horizontal = yToConsiderA == yToConsiderB;
         let closestPointAsY = -1;
-        for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
+        for (let i = 0; i < dataStructures.pointsSortedY.length; i++) {
+            const potentialPoint = dataStructures.pointsSortedY[i];
             if (
-              Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderA)
-              < Math.abs(closestPointAsY - yToConsiderA)
+                Math.abs(potentialPoint.y - yToConsiderA)
+                < Math.abs(closestPointAsY - yToConsiderA)
             ) {
-                closestPointAsY = dataStructures.pointsSortedY[i].y;
+                closestPointAsY = potentialPoint.y;
             }
         }
-
+        
         let closestPointBsY = -1;
-        for (let i=0; i<dataStructures.pointsSortedY.length; i++) {
+        for (let i = 0; i < dataStructures.pointsSortedY.length; i++) {
+            const potentialPoint = dataStructures.pointsSortedY[i];
             if (
-              Math.abs(dataStructures.pointsSortedY[i].y - yToConsiderB)
-              < Math.abs(closestPointBsY - yToConsiderB)
+                Math.abs(potentialPoint.y - yToConsiderB)
+                < Math.abs(closestPointBsY - yToConsiderB)
             ) {
-                closestPointBsY = dataStructures.pointsSortedY[i].y;
+                closestPointBsY = potentialPoint.y;
             }
         }
-
+        
         let deltaYToUse = -1;
         if (Math.abs(yToConsiderA - closestPointAsY) < 5) {
             deltaYToUse = closestPointAsY - side.start.y;
@@ -309,33 +352,33 @@ function getPotentialRoomFromSide(startPoint: SimplePoint, endPoint: SimplePoint
             deltaYToUse = deltaY;
         }
         deltaYToUse = Math.round(deltaYToUse);
-
+        
         switch (selectedSide) {
-          case 0:
-            return {
-                id: room.id,
-                leftX: room.leftX,
-                rightX: room.rightX,
-                leftCeilingY: room.leftCeilingY + deltaYToUse,
-                rightCeilingY: room.rightCeilingY + deltaYToUse,
-                leftFloorY: room.leftFloorY,
-                rightFloorY: room.rightFloorY,
-                roomType: room.roomType,
-            };
-
-          case 2:
-            return {
-                id: room.id,
-                leftX: room.leftX,
-                rightX: room.rightX,
-                leftCeilingY: room.leftCeilingY,
-                rightCeilingY: room.rightCeilingY,
-                leftFloorY: room.leftFloorY + deltaYToUse,
-                rightFloorY: room.rightFloorY + deltaYToUse,
-                roomType: room.roomType,
-            };
+            case 0:
+                return {
+                    id: room.id,
+                    leftX: room.leftX,
+                    rightX: room.rightX,
+                    leftCeilingY: room.leftCeilingY + deltaYToUse,
+                    rightCeilingY: room.rightCeilingY + deltaYToUse,
+                    leftFloorY: room.leftFloorY,
+                    rightFloorY: room.rightFloorY,
+                    roomType: room.roomType,
+                };
+            
+            case 2:
+                return {
+                    id: room.id,
+                    leftX: room.leftX,
+                    rightX: room.rightX,
+                    leftCeilingY: room.leftCeilingY,
+                    rightCeilingY: room.rightCeilingY,
+                    leftFloorY: room.leftFloorY + deltaYToUse,
+                    rightFloorY: room.rightFloorY + deltaYToUse,
+                    roomType: room.roomType,
+                };
         }
-
+        
     } else {
         let deltaX = endPoint.x - startPoint.x;
         if (Math.abs(deltaX) < 5) {
@@ -343,10 +386,10 @@ function getPotentialRoomFromSide(startPoint: SimplePoint, endPoint: SimplePoint
         }
         let xToConsider = endPoint.x;
         let closestPointsX = -1;
-        for (let i=0; i<dataStructures.pointsSortedX.length; i++) {
+        for (let i = 0; i < dataStructures.pointsSortedX.length; i++) {
             if (
-              Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
-              < Math.abs(closestPointsX - xToConsider)
+                Math.abs(dataStructures.pointsSortedX[i].x - xToConsider)
+                < Math.abs(closestPointsX - xToConsider)
             ) {
                 closestPointsX = dataStructures.pointsSortedX[i].x;
             }
@@ -358,47 +401,51 @@ function getPotentialRoomFromSide(startPoint: SimplePoint, endPoint: SimplePoint
             xToUse = xToConsider;
         }
         xToUse = Math.round(xToUse);
-
+        
         switch (selectedSide) {
-          case 1:
-            return {
-                id: room.id,
-                leftX: room.leftX,
-                rightX: xToUse,
-                leftCeilingY: room.leftCeilingY,
-                rightCeilingY: room.rightCeilingY,
-                leftFloorY: room.leftFloorY,
-                rightFloorY: room.rightFloorY
-            };
-
-          case 3:
-            let toReturn:Room = {
-                id: room.id,
-                leftX: xToUse,
-                rightX: room.rightX,
-                leftCeilingY: room.leftCeilingY,
-                rightCeilingY: room.rightCeilingY,
-                leftFloorY: room.leftFloorY,
-                rightFloorY: room.rightFloorY
-            };
-            return toReturn;
+            case 1:
+                return {
+                    id: room.id,
+                    leftX: room.leftX,
+                    rightX: xToUse,
+                    leftCeilingY: room.leftCeilingY,
+                    rightCeilingY: room.rightCeilingY,
+                    leftFloorY: room.leftFloorY,
+                    rightFloorY: room.rightFloorY
+                };
+            
+            case 3:
+                return  {
+                    id: room.id,
+                    leftX: xToUse,
+                    rightX: room.rightX,
+                    leftCeilingY: room.leftCeilingY,
+                    rightCeilingY: room.rightCeilingY,
+                    leftFloorY: room.leftFloorY,
+                    rightFloorY: room.rightFloorY
+                };
         }
-
+        
     }
 }
 
-function roomOverlapsOrCausesTooSmallDoor(room: Nullable<Room>, dataStructures: DataStructures, idsToDelete?: Room[]) {
+function roomOverlapsOrCausesTooSmallDoor(
+    room: Nullable<Room>,
+    dataStructures: DataStructures,
+    idsToDelete?: Room[],
+    overlapTolerance: number = 1,
+) {
     if (!room) {
         return false;
     }
     if (room.leftX >= room.rightX
-    || room.leftCeilingY >= room. leftFloorY
-    || room.rightCeilingY >= room.rightFloorY) {
-      return true;
+        || room.leftCeilingY >= room.leftFloorY
+        || room.rightCeilingY >= room.rightFloorY) {
+        return true;
     }
-
+    
     let lines = dataStructureFactory.getWallsFromRoom(room);
-
+    
     //check if this potentialRoom contains any existing points.
     //    exclude all points which exist only on rooms which we're modifying.
     for (const pointKey in dataStructures.points) {
@@ -413,18 +460,18 @@ function roomOverlapsOrCausesTooSmallDoor(room: Nullable<Room>, dataStructures: 
             continue;
         }
         let ceiling = lines[0];
-        ceiling.slope = (ceiling.end.y - ceiling.start.y)/(ceiling.end.x - ceiling.start.x);
-        if (((point.x - ceiling.start.x) * (ceiling.slope) + ceiling.start.y) >= point.y) {
+        ceiling.slope = (ceiling.end.y - ceiling.start.y) / (ceiling.end.x - ceiling.start.x);
+        if (((point.x - ceiling.start.x) * (ceiling.slope) + ceiling.start.y) >= (point.y + overlapTolerance)) {
             continue;
         }
         let floor = lines[2];
-        floor.slope = (floor.end.y - floor.start.y)/(floor.end.x - floor.start.x);
-        if (((point.x - floor.start.x) * (floor.slope) + floor.start.y) <= point.y) {
+        floor.slope = (floor.end.y - floor.start.y) / (floor.end.x - floor.start.x);
+        if (((point.x - floor.start.x) * (floor.slope) + floor.start.y) <= (point.y + overlapTolerance)) {
             continue;
         }
-        return true;
+        // return true;
     }
-
+    
     //check if potentialRoom overlaps exactly any existing room sides
     //    such that rooms are overlapping, not adjacent.
     //    exclude all rooms which we're modifying.
@@ -433,21 +480,21 @@ function roomOverlapsOrCausesTooSmallDoor(room: Nullable<Room>, dataStructures: 
             continue;
         }
         let linesExisting = dataStructureFactory.getWallsFromRoom(dataStructures.metaroomDisk!!.rooms[roomKey]);
-        for (let i=0; i<4; i++) {
+        for (let i = 0; i < 4; i++) {
             let shouldReturnTrue = false;
             lineSegmentComparison(
-              lines[i],
-              linesExisting[i],
-              () => {},
-              () => {shouldReturnTrue = true;},
-              () => {}
+                lines[i],
+                linesExisting[i],
+                () => {},
+                () => { shouldReturnTrue = shouldReturnTrue || true; },
+                () => {}
             );//(lineA, lineB, lineASlice, lineABSlice, lineBSlice, modificationWasMade, handled)
             if (shouldReturnTrue) {
                 return true;
             }
         }
     }
-
+    
     //check if any potentialLine crosses any existing line
     //    exclude all lines which exist only on rooms we're modifying
     for (const potentialLine of lines) {
@@ -455,12 +502,12 @@ function roomOverlapsOrCausesTooSmallDoor(room: Nullable<Room>, dataStructures: 
             if (existingLine.roomKeys.every(roomKey => idsToDelete?.some(idToDelete => idToDelete.id === roomKey))) {
                 continue;
             }
-            if (geometry.lineSegmentsIntersectAndCross(potentialLine, existingLine)) {
+            if (geometry.isIntersectingLines(potentialLine, existingLine, overlapTolerance, true)) {
                 return true;
             }
         }
     }
-
+    
     //check all doors/walls to for ones 5 units or smaller
     for (const potentialLine of lines) {
         if (Math.abs(potentialLine.start.x - potentialLine.end.x) >= 5) {
@@ -471,7 +518,7 @@ function roomOverlapsOrCausesTooSmallDoor(room: Nullable<Room>, dataStructures: 
         }
         return true;
     }
-
+    
     return false;
 }
 
@@ -481,117 +528,117 @@ function getPotentialRooms(masterUiState: MasterUiState, selection: MapSelection
         if (masterUiState.keys.shiftKeyIsDown) {
             if (masterUiState.dragging.whatDragging === "point") {
                 let room = getPotentialRoomFromPoints(
-                  masterUiState.dragging.startDragging!!,
-                  masterUiState.dragging.stopDragging!!,
-                  dataStructures,
+                    masterUiState.dragging.startDragging!!,
+                    masterUiState.dragging.stopDragging!!,
+                    dataStructures,
                 );
                 if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
                     rooms = [room];
                 }
-
+                
             } else if (masterUiState.dragging.whatDragging === "corner") {
                 Function.prototype();
-
+                
             } else if (masterUiState.dragging.whatDragging === "door") {
                 Function.prototype();
-
+                
             } else if (masterUiState.dragging.whatDragging === "wall") {
                 Function.prototype();
-
+                
             } else if (masterUiState.dragging.whatDragging === "room") {
                 Function.prototype();
-
+                
             } else if (masterUiState.dragging.whatDragging === "side") {
                 Function.prototype();
-
+                
             } else {
                 let room = getPotentialRoomFromPoints(
-                  masterUiState.dragging.startDragging!!,
-                  masterUiState.dragging.stopDragging!!,
-                  dataStructures,
+                    masterUiState.dragging.startDragging!!,
+                    masterUiState.dragging.stopDragging!!,
+                    dataStructures,
                 );
                 if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
                     rooms = [room];
                 }
             }
-
+            
         } else if (masterUiState.keys.ctrlKeyIsDown) {
-          if (masterUiState.dragging.whatDragging === "point"
-            || masterUiState.dragging.whatDragging === "corner") {
-              let room = getPotentialRoomFromPoints(
-                masterUiState.dragging.startDragging!!,
-                masterUiState.dragging.stopDragging!!,
-                dataStructures,
-              );
-              if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
-                  rooms = [room];
-              }
-
-          } else if (masterUiState.dragging.whatDragging === "door") {
-              Function.prototype();
-
-          } else if (masterUiState.dragging.whatDragging === "wall") {
-              let selectedLine = dataStructures.walls[selection.selectedId];
-              let room = getPotentialRoomFromLine(masterUiState.dragging.startDragging!!, masterUiState.dragging.stopDragging!!, dataStructures, selectedLine);
-              if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
-                  rooms = [room];
-              }
-
-          } else if (masterUiState.dragging.whatDragging === "room") {
-              Function.prototype();
-
-
-          } else if (masterUiState.dragging.whatDragging === "side") {
-              Function.prototype();
-
-          } else {
-              Function.prototype();
-          }
-        } else {
-            if (masterUiState.dragging.whatDragging === "point") {
-              let newRooms: Room[] = [];
-              for (const index in selection.selectedRoomsIdsPartsIds) {
-                  let roomIdPartId = selection.selectedRoomsIdsPartsIds[index];
-                  let id = roomIdPartId.roomId;
-                  let selectedRoom = dataStructures.metaroomDisk!!.rooms[id];
-                  let room = getPotentialRoomFromYChange(
+            if (masterUiState.dragging.whatDragging === "point"
+                || masterUiState.dragging.whatDragging === "corner") {
+                let room = getPotentialRoomFromPoints(
                     masterUiState.dragging.startDragging!!,
                     masterUiState.dragging.stopDragging!!,
                     dataStructures,
-                    selectedRoom
-                  );
-                  if (room) {
-                      newRooms.push(room);
-                  }
-              }
-              for (const newRoom of newRooms) {
-                  if (newRoom && !roomOverlapsOrCausesTooSmallDoor(newRoom, dataStructures, newRooms)) {
-                      rooms.push(newRoom);
-                  }
-              }
-
+                );
+                if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
+                    rooms = [room];
+                }
+                
+            } else if (masterUiState.dragging.whatDragging === "door") {
+                Function.prototype();
+                
+            } else if (masterUiState.dragging.whatDragging === "wall") {
+                let selectedLine = dataStructures.walls[selection.selectedId];
+                let room = getPotentialRoomFromLine(masterUiState.dragging.startDragging!!, masterUiState.dragging.stopDragging!!, dataStructures, selectedLine);
+                if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures)) {
+                    rooms = [room];
+                }
+                
+            } else if (masterUiState.dragging.whatDragging === "room") {
+                Function.prototype();
+                
+                
+            } else if (masterUiState.dragging.whatDragging === "side") {
+                Function.prototype();
+                
+            } else {
+                Function.prototype();
+            }
+        } else {
+            if (masterUiState.dragging.whatDragging === "point") {
+                let newRooms: Room[] = [];
+                for (const index in selection.selectedRoomsIdsPartsIds) {
+                    let roomIdPartId = selection.selectedRoomsIdsPartsIds[index];
+                    let id = roomIdPartId.roomId;
+                    let selectedRoom = dataStructures.metaroomDisk!!.rooms[id];
+                    let room = getPotentialRoomFromYChange(
+                        masterUiState.dragging.startDragging!!,
+                        masterUiState.dragging.stopDragging!!,
+                        dataStructures,
+                        selectedRoom
+                    );
+                    if (room) {
+                        newRooms.push(room);
+                    }
+                }
+                for (const newRoom of newRooms) {
+                    if (newRoom && !roomOverlapsOrCausesTooSmallDoor(newRoom, dataStructures, newRooms)) {
+                        rooms.push(newRoom);
+                    }
+                }
+                
             } else if (masterUiState.dragging.whatDragging === "corner") {
-              // assert(selection.selectedRoomsIdsPartsIds.length === 1,
-              //     `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`);
-               if (selection.selectedRoomsIdsPartsIds.length !== 1) {
+                // assert(selection.selectedRoomsIdsPartsIds.length === 1,
+                //     `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`);
+                if (selection.selectedRoomsIdsPartsIds.length !== 1) {
                     console.error(`Selected room id size was not 1 when dragging corner; ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`);
                     selectionChecker.resetSelection();
                     flashError();
                     return [];
-               }
-              let roomIdPartId = selection.selectedRoomsIdsPartsIds[0];
-              let id = roomIdPartId.roomId;
-              let selectedRoom = dataStructures.metaroomDisk!!.rooms[id];
-              let room = getPotentialRoomFromYChange(
-                masterUiState.dragging.startDragging!!,
-                masterUiState.dragging.stopDragging!!,
-                dataStructures,
-                selectedRoom
-              );
-              if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures, [selectedRoom])) {
-                  rooms = [room];
-              }
-
+                }
+                let roomIdPartId = selection.selectedRoomsIdsPartsIds[0];
+                let id = roomIdPartId.roomId;
+                let selectedRoom = dataStructures.metaroomDisk!!.rooms[id];
+                let room = getPotentialRoomFromYChange(
+                    masterUiState.dragging.startDragging!!,
+                    masterUiState.dragging.stopDragging!!,
+                    dataStructures,
+                    selectedRoom
+                );
+                if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures, [selectedRoom])) {
+                    rooms = [room];
+                }
+                
             } else if (masterUiState.dragging.whatDragging === "door"
                 || masterUiState.dragging.whatDragging === "wall"
             ) {
@@ -611,11 +658,11 @@ function getPotentialRooms(masterUiState: MasterUiState, selection: MapSelection
                         rooms.push(newRoom);
                     }
                 }
-
+                
             } else if (masterUiState.dragging.whatDragging === "room") {
                 Function.prototype();
-
-
+                
+                
             } else if (masterUiState.dragging.whatDragging === "side") {
                 // assert(selection.selectedRoomsIdsPartsIds.length === 1,
                 //     `Size was not 1: ${JSON.stringify(selection.selectedRoomsIdsPartsIds)}`)
@@ -633,7 +680,7 @@ function getPotentialRooms(masterUiState: MasterUiState, selection: MapSelection
                 if (room && !roomOverlapsOrCausesTooSmallDoor(room, dataStructures, [selectedRoom])) {
                     rooms = [room];
                 }
-
+                
             } else {
                 Function.prototype();
             }

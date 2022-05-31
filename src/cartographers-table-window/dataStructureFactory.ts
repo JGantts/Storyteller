@@ -2,11 +2,15 @@
 /// <reference path="./commonFunctions.ts" />
 /// <reference path="./lineSegmentComparison.ts" />
 
+import {getIntersection} from "./geometryHelper";
+import {start} from "repl";
+
 export {};
 
 
 const { common } = require('./commonFunctions.js');
 const { geometry } = require('./geometryHelper.js');
+const { getOverlappingLineSegment } = require('./lineSegmentComparison.js');
 const { flashError } = require('./flashError.js');
 const crypto = require('crypto');
 
@@ -42,7 +46,7 @@ function getSortedRoomFromDimensions(
 function getPermsFromRoomPotential(
   roomPotential: Room,
   dataStructures: DataStructures
-) {
+): {[id:string]: Perm} {
     let perms: { [key: string]: Perm } = {};
     let sides = getWallsFromRoom(roomPotential);
     for (let i = 0; i < sides.length; i++) {
@@ -100,7 +104,7 @@ function getDoorsWallsPotentialFromRoomPotential(
 }
 
 function slicePotentialRoomIntoPotentialLinesFromActualWalls(
-  sidesPotential: Door[],
+  sidesPotential: DoorData[],
   wallsActual: Wall[]
 ): SimpleLine[] {
     let linesPotential: SimpleLine[] = [];
@@ -108,11 +112,11 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(
         let sidePotential = sidesPotential[i];
         let lineSegmentsNew = slicePotentialSideIntoPotentialLinesFromActualWalls(sidePotential, wallsActual);
         // assert(!lineSegmentsNew.changed);
-        if (lineSegmentsNew.changed) {
-            console.error("Line segments should not have changed when slicing room into potentail lines");
-            flashError();
-            return [];
-        }
+        // if (!lineSegmentsNew.changed) {
+        //     console.error("Line segments should not have changed when slicing room into potential lines");
+        //     flashError();
+        //     return [];
+        // }
         //console.log(wallSegments);
         
         linesPotential = linesPotential.concat(lineSegmentsNew.segments.filter(function(val) {return val !== null}));
@@ -121,7 +125,7 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(
 }
 
 function slicePotentialSideIntoPotentialLinesFromActualWalls(
-  defendingSegment: Door,
+  defendingSegment: DoorData,
   attackingSegmentsIn: Wall[]
 ): PossiblyChangedDoors {
     // assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
@@ -145,7 +149,7 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(
     }
     let attackingSegments = [...attackingSegmentsIn];
 
-    let newDefendingSegments1: Door[] = [defendingSegment];
+    let newDefendingSegments1: DoorData[] = [defendingSegment];
     let defendingSegmentChanged = false;
     let attackingSegment = attackingSegments.pop();
     if (!attackingSegment) {
@@ -165,16 +169,20 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(
             console.error(`AttackingSegment has 0 length\n${JSON.stringify(attackingSegment)}`)
             continue
         }
-        let newDefendingSegments2: Door[] = [];
+        let newDefendingSegments2: DoorData[] = [];
         let thisDefendingSegment = newDefendingSegments1.pop()
         const lineASlice: LineSlice = (start, end) => {
-            let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, thisDefendingSegment!.permeability, thisDefendingSegment!.roomKeys);
-            newDefendingSegments2 = [...newDefendingSegments2, newSegment];
+            let newSegment: Nullable<DoorData> = geometry.getSortedLine(start.x, start.y, end.x, end.y, thisDefendingSegment!.permeability, thisDefendingSegment!.roomKeys);
+            if (newSegment) {
+                newDefendingSegments2 = [...newDefendingSegments2, newSegment];
+            }
         }
         const lineABSlice: LineSlice = (start, end) => {
-            let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, 1.0, [...thisDefendingSegment!.roomKeys, ...attackingSegment!.roomKeys]);
-            newDefendingSegments2 = [...newDefendingSegments2, newSegment];
-            defendingSegmentChanged = true;
+            let newSegment: Nullable<DoorData> = geometry.getSortedLine(start.x, start.y, end.x, end.y, 1.0, [...thisDefendingSegment!.roomKeys, ...attackingSegment!.roomKeys]);
+            if (newSegment) {
+                newDefendingSegments2 = [...newDefendingSegments2, newSegment];
+                defendingSegmentChanged = true;
+            }
         }
         const lineBSlice: LineSlice = () => {}
         while (thisDefendingSegment) {
@@ -190,7 +198,7 @@ function slicePotentialSideIntoPotentialLinesFromActualWalls(
         newDefendingSegments1 = [...newDefendingSegments2];
         attackingSegment = attackingSegments.pop();
     } while (attackingSegment);
-    return {segments: newDefendingSegments1, changed: false};//defendingSegmentChanged};
+    return {segments: newDefendingSegments1, changed: defendingSegmentChanged};
 }
 
 
@@ -211,7 +219,7 @@ function getDoorsFromRooms(
       //console.log(rooms);
       //console.log(perms);
 
-      //First check the more performant opeeration: vertical doors
+      //First check the more performant operation: vertical doors
 
       let sidesA = getWallsFromRoom(roomA);
       let sidesB = getWallsFromRoom(roomB);
@@ -299,8 +307,8 @@ function getDoorsFromRooms(
       }
 
       if (!permHandled) {
-        console.log(`Rooms don't actually touch...:\n${JSON.stringify(perm)}\nA: ${JSON.stringify(roomA)}\nB: ${JSON.stringify(roomB)}\n\n`);
-        console.log(new Error().stack);
+        // console.log(`Rooms don't actually touch...:\n${JSON.stringify(perm)}\nA: ${JSON.stringify(roomA)}\nB: ${JSON.stringify(roomB)}\n\n`);
+        // console.log(new Error().stack);
       }
   }
   //console.log(doors);
@@ -323,14 +331,14 @@ function getPointFour(room: Room){
     return {x: room.rightX, y: room.rightCeilingY};
 }
 
-function subtractSegmentsFromSegments(defendingSegments: Door[], attackingSegments: SimpleLine[]): Door[] {
+function subtractSegmentsFromSegments(defendingSegments: DoorData[], attackingSegments: SimpleLine[]): DoorData[] {
     // assert(defendingSegments, `Instead of UUID, found ${defendingSegments}`);
     if (!defendingSegments) {
         console.error(`Instead of UUID, found ${defendingSegments}`);
         flashError();
         return [];
     }
-    let newDefendingSegments1: Door[] = [];
+    let newDefendingSegments1: DoorData[] = [];
     for (let i=0; i<defendingSegments.length; i++ ){
         let defendingSegment = defendingSegments[i];
         let newDefendingSegments2 = subtractSegmentsFromSegmentUntilNoChange(defendingSegment, attackingSegments);
@@ -340,21 +348,21 @@ function subtractSegmentsFromSegments(defendingSegments: Door[], attackingSegmen
             flashError();
             continue;
         }
-        newDefendingSegments1 = newDefendingSegments1.concat(newDefendingSegments2.segments.filter(function(val) {return val !== null}));
+        newDefendingSegments1 = newDefendingSegments1.concat(newDefendingSegments2.segments.filter(function(val) {return val != null}));
     }
     return newDefendingSegments1;
 }
 
 
 
-function subtractSegmentsFromSegmentUntilNoChange(defendingSegment: Door, attackingSegmentsIn: SimpleLine[]){
+function subtractSegmentsFromSegmentUntilNoChange(defendingSegment: DoorData, attackingSegmentsIn: SimpleLine[]){
     let newDefendingSegments = subtractSegmentsFromSegment(defendingSegment, attackingSegmentsIn);
     while (newDefendingSegments.changed) {
-        let newDefendingSegments2: Door[] = [];
+        let newDefendingSegments2: DoorData[] = [];
         let changed = false;
         for (let newDefendingSegment of newDefendingSegments.segments) {
             let newDefendingSegments3 = subtractSegmentsFromSegment(newDefendingSegment, attackingSegmentsIn);
-            newDefendingSegments2.concat(...newDefendingSegments3.segments);
+            newDefendingSegments2 = newDefendingSegments2.concat(...newDefendingSegments3.segments);
             changed = changed || newDefendingSegments3.changed;
         }
         newDefendingSegments = { segments: newDefendingSegments2, changed };
@@ -362,7 +370,7 @@ function subtractSegmentsFromSegmentUntilNoChange(defendingSegment: Door, attack
     return newDefendingSegments;
 }
 
-function subtractSegmentsFromSegment(defendingSegment: Door, attackingSegmentsIn: SimpleLine[]): PossiblyChangedDoors {
+function subtractSegmentsFromSegment(defendingSegment: DoorData, attackingSegmentsIn: SimpleLine[]): PossiblyChangedDoors {
     // assert(defendingSegment, `${JSON.stringify(defendingSegment)}`);
     if (!defendingSegment) {
         console.error(`Defending segments are null or empty: ${JSON.stringify(defendingSegment)}`);
@@ -405,13 +413,13 @@ function subtractSegmentsFromSegment(defendingSegment: Door, attackingSegmentsIn
         }
         
         let newDefendingSegments2: Door[] = [];
-        let thisDefendingSegmement = newDefendingSegments1.pop()
-        while (thisDefendingSegmement) {
+        let thisDefendingSegment = newDefendingSegments1.pop()
+        while (thisDefendingSegment) {
             lineSegmentComparison(
-                thisDefendingSegmement,
+                thisDefendingSegment,
                 attackingSegment,
                 (start, end) => {
-                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, -1, thisDefendingSegmement!.roomKeys);
+                    let newSegment = geometry.getSortedLine(start.x, start.y, end.x, end.y, -1, thisDefendingSegment!.roomKeys);
                     newDefendingSegments2 = [...newDefendingSegments2, newSegment];
                 },
                 () => {
@@ -419,7 +427,7 @@ function subtractSegmentsFromSegment(defendingSegment: Door, attackingSegmentsIn
                 },
                 () => {}
             );
-            thisDefendingSegmement = newDefendingSegments1.pop();
+            thisDefendingSegment = newDefendingSegments1.pop();
         }
         newDefendingSegments1 = [...newDefendingSegments2];
         attackingSegment = attackingSegments.pop();
@@ -445,8 +453,8 @@ function buildInsertPoint(points: { [key: string]: Point }, roomKey: string, x: 
     points[id].roomKeys.push(roomKey);
 }
 
-function getPointsFromRooms(rooms: { [key: string]: Room }) {
-    let points = Object();
+function getPointsFromRooms(rooms: { [key: string]: Room }):  { [key: string]: Point } {
+    let points: { [key: string]: Point } = Object();
     for (const key in rooms) {
         buildInsertPoint(points, key, rooms[key].leftX, rooms[key].leftCeilingY);
         buildInsertPoint(points, key, rooms[key].rightX, rooms[key].rightCeilingY);
@@ -456,16 +464,16 @@ function getPointsFromRooms(rooms: { [key: string]: Room }) {
     return points;
 }
 
-function getWallsFromRooms(rooms: Room[]) {
-  let doors: Door[] = [];
+function getWallsFromRooms(rooms: Room[]): DoorData[] {
+  let doors: DoorData[] = [];
   for (const key in rooms) {
       doors = doors.concat(getWallsFromRoom(rooms[key]));
   }
   return doors;
 }
 
-function getWallsFromRoom(room: Room) {
-    let doors = [];
+function getWallsFromRoom(room: Room): DoorData[] {
+    let doors: DoorData[] = [];
 
     doors.push(
         geometry.getSortedLine(

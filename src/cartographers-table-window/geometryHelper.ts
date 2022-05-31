@@ -1,7 +1,7 @@
 /// <reference path="./commonTypes.ts" />
 /// <reference path="./commonFunctions.ts" />
 
-const {common} = require('./commonFunctions.js');
+const {common, pointsEqual} = require('./commonFunctions.js');
 
 function getCorner(room: Room, point: SimplePoint) {
     //0: top-left
@@ -44,7 +44,7 @@ function getSortedLine(
   aX: number, aY: number, bX: number, bY: number,
   permeability: number,
   roomKeys: string[]
-) {
+): Nullable<DoorData> {
     let line = _getSortedLine(aX, aY, bX, bY);
     if (line) {
         return {
@@ -61,7 +61,7 @@ function getSortedDoor(
   aX: number, aY: number, bX: number, bY: number,
   permeability: number,
   roomKeys: string[]
-) {
+): Nullable<Door> {
     // assert(roomKeys.length === 2, JSON.stringify(roomKeys));
     if (roomKeys.length !== 2) {
         console.error(`Room keys length is invalid. Expected 2; Actual: ${roomKeys.length}; Data: ${JSON.stringify(roomKeys)}`);
@@ -81,7 +81,7 @@ function getSortedDoor(
     return null;
 }
 
-function _getSortedLine(aX: number, aY: number, bX: number, bY: number) {
+function _getSortedLine(aX: number, aY: number, bX: number, bY: number): {start: SimplePoint, end: SimplePoint} {
     if (aX < bX) {
         return {
             start: {
@@ -189,17 +189,17 @@ function lineSegmentsIntersectAndCross(segmentA: SimpleLine, segmentB: SimpleLin
 
         //check if xInterrsection is in range of line segments
         if (
-            xIntersection >= segmentA.start.x
-            && xIntersection <= segmentA.end.x
-            && xIntersection >= segmentB.start.x
-            && xIntersection <= segmentB.end.x
+            xIntersection > segmentA.start.x
+            && xIntersection < segmentA.end.x
+            && xIntersection > segmentB.start.x
+            && xIntersection < segmentB.end.x
         ) {
             //check if yInterrsection is in range of line segments
             if (
-                yIntersection >= Math.min(segmentA.start.y, segmentA.end.y)
-                && yIntersection <= Math.max(segmentA.start.y, segmentA.end.y)
-                && yIntersection >= Math.min(segmentB.start.y, segmentB.end.y)
-                && yIntersection <= Math.max(segmentB.start.y, segmentB.end.y)
+                yIntersection > Math.min(segmentA.start.y, segmentA.end.y)
+                && yIntersection < Math.max(segmentA.start.y, segmentA.end.y)
+                && yIntersection > Math.min(segmentB.start.y, segmentB.end.y)
+                && yIntersection < Math.max(segmentB.start.y, segmentB.end.y)
             ) {
                 //check if intersection is not endpoint of line
                 if (
@@ -214,10 +214,6 @@ function lineSegmentsIntersectAndCross(segmentA: SimpleLine, segmentB: SimpleLin
         }
     }
     return false;
-}
-
-function pointsEqual(a: SimplePoint, b: SimplePoint) {
-    return a.x === b.x && a.y === b.y;
 }
 
 function getCornerAngle(point: SimplePoint, room: Room) {
@@ -283,6 +279,193 @@ function getCornerAngle(point: SimplePoint, room: Room) {
     }
 }
 
+
+/**
+ * Gets the intersection at x on a line.
+ * If y is vertical, or x is on line start-x or end-x returns null
+ * @param x
+ * @param lineA
+ */
+function getYIntersect(x: number, lineA: SimpleLine): Nullable<SimplePoint> {
+    const {start:aStart, end:aEnd} = lineA;
+    
+    
+    const aMinX = Math.min(aStart.x, aEnd.x);
+    const aMaxX = Math.max(aStart.x, aEnd.x);
+    // Ensure x can actually intersect line
+    if (x <= aMinX || x >= aMaxX) {
+        return null;
+    }
+    // Get min/max X
+    const aMinY = Math.min(aStart.y, aEnd.y);
+    const aMaxY = Math.max(aStart.y, aEnd.y);
+    
+    // Line is vertical, so no intersection is possible
+    if (aMinY == aMaxY) {
+        return null;
+    }
+    
+    // Line pad simply tries to make sure it will calculate if point is on the line
+    const linePad = 1;
+    
+    // Create points for line B
+    const bStart: SimplePoint = {
+        x, y: aMinY - linePad
+    }
+    const bEnd: SimplePoint = {
+        x,
+        y: aMaxY + linePad
+    }
+    
+    // Create line b for calculation
+    // this line is a vertical line at x that is sure to
+    const lineB = {
+        start: bStart,
+        end: bEnd,
+    };
+    return getIntersection(lineA, lineB);
+}
+
+function lineBoundsIntersect(lineA: SimpleLine, lineB: SimpleLine): boolean {
+    
+    const {start:aStart, end:aEnd} = lineA;
+    const {start:bStart, end:bEnd} = lineB;
+    
+    // Ensure can intersect X
+    const aMinX = Math.min(aStart.x, aEnd.x);
+    const aMaxX = Math.max(aStart.x, aEnd.x);
+    const bMinX = Math.min(bStart.x, bEnd.x);
+    const bMaxX = Math.max(bStart.x, bEnd.x);
+    if (aMaxX < bMinX || bMaxX < aMinX) {
+        return false;
+    }
+    
+    // Ensure can intersect Y
+    const aMinY = Math.min(aStart.y, aEnd.y);
+    const aMaxY = Math.max(aStart.y, aEnd.y);
+    const bMinY = Math.min(bStart.y, bEnd.y);
+    const bMaxY = Math.max(bStart.y, bEnd.y);
+    
+    return !(aMaxY < bMinY || bMaxY < aMinY);
+}
+
+
+/**
+ * Checks if two lines are intersecting with error tolerance
+ * @param lineA
+ * @param lineB
+ * @param errorTolerance the amount of overlap allowed by a point across the line
+ */
+function isIntersectingLines(
+    lineA: SimpleLine,
+    lineB: SimpleLine,
+    errorTolerance?: number
+) {
+    
+    if (errorTolerance == null) {
+        errorTolerance = 0.1;
+    }
+    
+    let {start:aStart, end:aEnd} = lineA;
+    let {start:bStart, end:bEnd} = lineB;
+    
+    
+    // Calculate if the bounds of the lines intersects
+    // Bounds are rectangle made from min and max values without regards to where they are originally
+    // Upper left = minX,minY; LowerRight = maxX,maxY
+    if (!lineBoundsIntersect(lineA, lineB)) {
+        return false;
+    }
+    
+    const intersection = getIntersection(lineA, lineB);
+    if (intersection == null) {
+        return false;
+    }
+    
+    const {slope:slopeA} = getSlope(aStart, aEnd);
+    const {slope:slopeB} = getSlope(bStart, bEnd);
+    
+    const isEqual = (point: SimplePoint): boolean => {
+        return pointsEqual(point, intersection);
+    }
+    
+    // If point end is intersection, then points cannot be crossing
+    if (isEqual(aStart) || isEqual(bStart) || isEqual(aEnd) || isEqual(bEnd)) {
+        return false;
+    }
+    
+    if (!isFinite(slopeA) && !isFinite(slopeB)) {
+        return false;
+    }
+    
+    const intersectionY = intersection.y;
+    const ifInfinite = (infinite: SimpleLine, otherLine: SimpleLine) => {
+        const infiniteStartX = infinite.start.x;
+        const infiniteEndX = infinite.end.x;
+        return (infiniteStartX !== otherLine.start.x) &&
+            (infiniteStartX !== otherLine.end.x) &&
+            (infiniteEndX !== otherLine.start.x) &&
+            (infiniteEndX !== otherLine.end.x) &&
+            Math.abs(infinite.start.y - intersectionY) > errorTolerance!! &&
+            Math.abs(infinite.end.y - intersectionY) > errorTolerance!!;
+        
+    }
+    
+    if (!isFinite(slopeA)) {
+        return isFinite(slopeB) && ifInfinite(lineA, lineB);
+    } else if (!isFinite(slopeB)) {
+        return isFinite(slopeA) && ifInfinite(lineB, lineA);
+    } else {
+        return Math.abs(slopeA - slopeB) > errorTolerance;
+    }
+}
+
+/**
+ * Gets
+ * @param lineA
+ * @param lineB
+ */
+export function getIntersection(
+    lineA: SimpleLine,
+    lineB: SimpleLine,
+): Nullable<SimplePoint> {
+    const {start:aStart, end:aEnd} = lineA;
+    const {start:bStart, end:bEnd} = lineB;
+    
+    // Make sure lines can cross.
+    if (!lineBoundsIntersect(lineA, lineB)) {
+        return null;
+    }
+    
+    // Check if none of the lines are of length 0
+    if ((aStart.x === aEnd.x && aStart.y === aEnd.y) || (bStart.x === bEnd.x && bStart.y === bEnd.y)) {
+        return null;
+    }
+    
+    const denominator = ((bEnd.y - bStart.y) * (aEnd.x - aStart.x) - (bEnd.x - bStart.x) * (aEnd.y - aStart.y))
+    
+    // Lines are parallel
+    if (denominator === 0) {
+        return null;
+    }
+    
+    let ua = ((bEnd.x - bStart.x) * (aStart.y - bStart.y) - (bEnd.y - bStart.y) * (aStart.x - bStart.x)) / denominator;
+    let ub = ((aEnd.x - aStart.x) * (aStart.y - bStart.y) - (aEnd.y - aStart.y) * (aStart.x - bStart.x)) / denominator;
+    
+    
+    if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {
+        return null;
+    }
+    
+    // Return an object with the x and y coordinates of the intersection
+    let x = aStart.x + ua * (aEnd.x - aStart.x)
+    let y = aStart.y + ua * (aEnd.y - aStart.y)
+    if (isNaN(x) || isNaN(y) || !isFinite(x) || !isFinite(y)) {
+        return null;
+    }
+    return {x, y}
+}
+
 module.exports = {
     geometry: {
         getCorner,
@@ -294,6 +477,9 @@ module.exports = {
         getSlope,
         pointsEqual,
         lineSegmentsIntersectAndCross,
-        getCornerAngle
+        getCornerAngle,
+        getIntersection,
+        isIntersectingLines,
+        getYIntersect
     },
 }
