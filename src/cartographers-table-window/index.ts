@@ -1499,7 +1499,7 @@ async function redrawPasties(
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
         pastiesCtx.beginPath();
-        pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() * 1.5, 0, 2 * Math.PI, true);
+        pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() * 1.2, 0, 2 * Math.PI, true);
         pastiesCtx.fill();
     }
 }
@@ -1537,11 +1537,11 @@ async function redrawPotentialPasties(
     const zoomMod = 1 / zoom;
     //console.log(points);
     //console.log(new Error().stack);
-    pastiesCtx.lineWidth = getRoomLineThickness();
+    pastiesCtx.lineWidth = getRoomLineThickness() / zoomMod;
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
         pastiesCtx.beginPath();
-        pastiesCtx.arc((points[key].x - posX) * zoomMod, (points[key].y - posY) * zoomMod, getRoomLineThickness() * 0.75, 0, 2 * Math.PI, true);
+        pastiesCtx.arc((points[key].x - posX) * zoomMod, (points[key].y - posY) * zoomMod, getRoomLineThickness() * 0.8 * zoomMod, 0, 2 * Math.PI, true);
         pastiesCtx.fill();
     }
 }
