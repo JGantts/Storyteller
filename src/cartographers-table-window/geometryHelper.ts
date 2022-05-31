@@ -279,7 +279,6 @@ function getCornerAngle(point: SimplePoint, room: Room) {
     }
 }
 
-
 /**
  * Gets the intersection at x on a line.
  * If y is vertical, or x is on line start-x or end-x returns null

@@ -89,11 +89,40 @@ function getDoorPermeabilityColor(permeability: number, maxHue = 120, minHue = 0
     return `hsl(${hue}, 100%, 50%)`;
 }
 
+export function getMinMax(a: number, b: number) {
+    return {
+        min: Math.min(a, b),
+        max: Math.max(a, b)
+    };
+}
+
+export function getMinMaxOf(...values: number[]): Nullable<{ min:number; max: number; }> {
+    if (values.length < 1) {
+        return null;
+    }
+    let min: number = values[0];
+    let max: number = values[0];
+    for(const value of values) {
+        if (value < min) {
+            min = value;
+        }
+        // not elseif because value may be both min and max
+        if (value < max) {
+            max = value;
+        }
+    }
+    return {
+        min,
+        max
+    };
+}
+
 module.exports = {
     common: {
         getSortedId,
     },
     getDoorPermeabilityColor,
     isBetween,
-    pointsEqual
+    pointsEqual,
+    getMinMax
 }

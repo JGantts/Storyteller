@@ -1,5 +1,5 @@
 import {flashError} from "./flashError";
-import {pointsEqual} from "./commonFunctions";
+import {getMinMax, pointsEqual} from "./commonFunctions";
 
 const {dataStructureFactory} = require('./dataStructureFactory.js');
 const {geometry} = require('./geometryHelper.js');
@@ -429,6 +429,131 @@ function getPotentialRoomFromSide(startPoint: SimplePoint, endPoint: SimplePoint
     }
 }
 
+
+/**
+ * Check if a single point lays within room
+ * @param roomPoint
+ * @param room
+ * @param checkBounds
+ */
+function pointInRoom(roomPoint: SimplePoint, room: Room|SimplePoint[], checkBounds: boolean): boolean {
+    const roomPoints:SimplePoint[] = Array.isArray(room) ? room : Object.values(dataStructureFactory.getPointsFromRoom(room));
+    if (checkBounds) {
+        const {min, max} = dataStructureFactory.getRoomBounds(room);
+        if ( roomPoint.x <= min.x || roomPoint.x >= max.x || roomPoint.y < min.y || roomPoint.y > max.y ) {
+            return false;
+        }
+    }
+    
+    // https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html
+    if (roomPoints.length < 4) {
+        return true;
+    }
+    let inside: boolean = false;
+    for ( let i = 0, j = 3; i < 4 ; j = i++ ) {
+        const otherI = roomPoints[i];
+        if (otherI == null) {
+            console.error(`Room point is null at ${i}; Points: `, roomPoints);
+            return false;
+        }
+        const otherJ = roomPoints[j];
+        if (
+            (otherI.y > roomPoint.y) != (otherJ.y > roomPoint.y) &&
+            roomPoint.x < ((otherJ.x - otherI.x) * (roomPoint.y - otherI.y) / (otherJ.y - otherI.y) + otherI.x)
+        ) {
+            inside = !inside;
+        }
+    }
+    return inside;
+}
+
+/**
+ * Checks all room points against all other room polygons
+ * @param { Room } room
+ * @param { Point[] }points
+ */
+function pointsInRoom(room: Room, points: {[id:string]: Point}) {
+    const {min:boundsMin, max: boundsMax} = dataStructureFactory.getRoomBounds(room);
+    const roomPoints: Point[] = Object.values(dataStructureFactory.getPointsFromRoom(room));
+    if (roomPoints?.length !== 4) {
+        console.error("Failed to get room points as array. Object.values() returned: ", roomPoints);
+        return false;
+    }
+    for (const point of Object.values(points)) {
+        if (point.roomKeys.indexOf(room.id) >= 0) {
+            continue;
+        }
+        if (point.x <= boundsMin.x || point.x >= boundsMax.x || point.y <= boundsMin.y || point.y >= boundsMax.y) {
+            return false;
+        }
+        if (pointInRoom(point, roomPoints, false)) {
+            return true;
+        }
+    }
+}
+
+/**
+ * Checks all room points against all other room polygons
+ * @param room
+ * @param rooms
+ */
+function roomPointsInRooms(room: Room, rooms: Room[]) {
+    const otherRooms = rooms.filter((otherRoom) => room.id != otherRoom.id);
+    const points = dataStructureFactory.getPointsFromRoom(room);
+    for (const otherRoom of otherRooms) {
+        const {min:boundsMin, max: boundsMax} = dataStructureFactory.getRoomBounds(otherRoom);
+        for (const pointKey in points) {
+            const point = points[pointKey];
+            if (point.x <= boundsMin.x || point.x >= boundsMax.x || point.y <= boundsMin.y || point.y >= boundsMax.y) {
+                return false;
+            }
+            if (pointInRoom(point, otherRoom, false)) {
+                return true;
+            }
+        }
+    }
+}
+
+/**
+ * Checks potential room
+ * @param potentialRooms
+ * @param tolerance
+ */
+function potentialRoomLinesOverlap(potentialRooms: Room[], tolerance: number): boolean {
+    const lines: Door[] = dataStructureFactory.getWallsFromRooms(potentialRooms);
+    
+    // Check all potential rooms for overlap with each other
+    for (const room of potentialRooms) {
+        const roomLines: Door[] = lines.filter(line => line.roomKeys.indexOf(room.id) >= 0);
+        const otherRoomLines: Door[] = lines.filter(line => line.roomKeys.indexOf(room.id) < 0);
+        
+        // Check this rooms lines with all the other lines
+        for (const roomLine of roomLines) {
+            for (const otherLine of otherRoomLines) {
+                if (geometry.isIntersectingLines(otherLine, roomLine, tolerance)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function potentialRoomsOverlap(room: Room, potentialRooms: Room[], overlapTolerance: number = 1.0): boolean {
+    if (potentialRoomLinesOverlap(potentialRooms, overlapTolerance)) {
+        return true;
+    }
+    for (const potentialRoom of potentialRooms) {
+        if (room.id == potentialRoom.id) {
+            continue;
+        }
+        if (roomPointsInRooms(room, potentialRooms)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function roomOverlapsOrCausesTooSmallDoor(
     room: Nullable<Room>,
     dataStructures: DataStructures,
@@ -439,38 +564,18 @@ function roomOverlapsOrCausesTooSmallDoor(
         return false;
     }
     if (room.leftX >= room.rightX
-        || room.leftCeilingY >= room.leftFloorY
-        || room.rightCeilingY >= room.rightFloorY) {
+    || room.leftCeilingY >= room. leftFloorY
+    || room.rightCeilingY >= room.rightFloorY) {
+      return true;
+    }
+    
+    
+    //check if this potentialRoom contains any existing points.
+    if (pointsInRoom(room, dataStructures.points)) {
         return true;
     }
     
     let lines = dataStructureFactory.getWallsFromRoom(room);
-    
-    //check if this potentialRoom contains any existing points.
-    //    exclude all points which exist only on rooms which we're modifying.
-    for (const pointKey in dataStructures.points) {
-        let point = dataStructures.points[pointKey];
-        if (point.roomKeys.every(key => idsToDelete?.some(idToDelete => idToDelete.id === key))) {
-            continue;
-        }
-        if (point.x <= room.leftX) {
-            continue;
-        }
-        if (point.x >= room.rightX) {
-            continue;
-        }
-        let ceiling = lines[0];
-        ceiling.slope = (ceiling.end.y - ceiling.start.y) / (ceiling.end.x - ceiling.start.x);
-        if (((point.x - ceiling.start.x) * (ceiling.slope) + ceiling.start.y) >= (point.y + overlapTolerance)) {
-            continue;
-        }
-        let floor = lines[2];
-        floor.slope = (floor.end.y - floor.start.y) / (floor.end.x - floor.start.x);
-        if (((point.x - floor.start.x) * (floor.slope) + floor.start.y) <= (point.y + overlapTolerance)) {
-            continue;
-        }
-        // return true;
-    }
     
     //check if potentialRoom overlaps exactly any existing room sides
     //    such that rooms are overlapping, not adjacent.
@@ -683,6 +788,15 @@ function getPotentialRooms(masterUiState: MasterUiState, selection: MapSelection
                 
             } else {
                 Function.prototype();
+            }
+        }
+    }
+    
+    // Ensure rooms are not self intersecting
+    if (rooms.length > 1) {
+        for (const room of rooms) {
+            if (potentialRoomsOverlap(room, rooms)) {
+                return [];
             }
         }
     }

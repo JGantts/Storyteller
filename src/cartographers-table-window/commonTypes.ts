@@ -20,6 +20,7 @@ type MasterUiState = {
 
   dragging: {
       isMouseButtonDown: boolean;
+      isMiddleMouseButtonDown?: Nullable<boolean>,
 
       isDragging: boolean;
       whatDragging: string;
@@ -103,6 +104,7 @@ type DoorData = {
 type Door = {
   id: string;
 } & DoorData;
+
 
 type Wall = {
   id: string;
