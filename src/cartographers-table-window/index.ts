@@ -1,4 +1,4 @@
-/// <reference path="./commonTypes.d.ts" />
+/// <reference path="./commonTypes.ts" />
 /// <reference path="./commonFunctions.ts" />
 // noinspection JSUnusedLocalSymbols,JSIgnoredPromiseFromCall
 
@@ -1062,11 +1062,19 @@ function handleWheel(event: any) {
 }
 
 function constrainPositionZoom() {
+    if (dataStructures.metaroomDisk == null) {
+        posX = 0;
+        posY = 0;
+        return;
+    }
     zoom = Math.min(zoom, 2);
     zoom = Math.max(zoom, 1 / roomSizeBlurFix);
-    posX = Math.min(posX, dataStructures.metaroomDisk!.width / zoom - canvasHolder.clientWidth);
+    
+    const maxX = dataStructures.metaroomDisk.width - (canvasHolder.clientWidth * zoom);
+    posX = Math.min(posX, maxX);
     posX = Math.max(posX, 0);
-    posY = Math.min(posY, dataStructures.metaroomDisk!.height / zoom - canvasHolder.clientHeight);
+    const maxY = dataStructures.metaroomDisk.height- (canvasHolder.clientHeight * zoom);
+    posY = Math.min(posY, maxY);
     posY = Math.max(posY, 0);
 }
 
