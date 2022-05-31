@@ -8,6 +8,23 @@ function getSortedId(idA: string, idB: string) {
     }
 }
 
+/**
+ * Checks if two points are equal, allowing for floating-point error
+ * @param a
+ * @param b
+ * @param error floating point error tolerance
+ */
+export function pointsEqual(a: SimplePoint, b: SimplePoint, error: number = 0.001): boolean {
+    return Math.abs(a.x - b.x) < error && Math.abs(a.y - b.y) < error;
+}
+
+/**
+ * Checks that one number is between two other numbers. Check can be inclusive if boolean is set
+ * @param a
+ * @param min
+ * @param max
+ * @param inclusive
+ */
 export function isBetween(a:number, min: number, max: number, inclusive: boolean = false) {
     if (inclusive) {
         return a >= min && a <= max;
@@ -16,6 +33,12 @@ export function isBetween(a:number, min: number, max: number, inclusive: boolean
     }
 }
 
+/**
+ * Convert HSL color values to RGB
+ * @param hue
+ * @param saturation
+ * @param luminosity
+ */
 function hslToRgb(hue: number, saturation: number, luminosity: number){
     let red, green, blue;
     
@@ -41,6 +64,12 @@ function hslToRgb(hue: number, saturation: number, luminosity: number){
     return [Math.round(red * 255), Math.round(green * 255), Math.round(blue * 255)];
 }
 
+/**
+ * Get door color based on permeability
+ * @param permeability
+ * @param maxHue
+ * @param minHue
+ */
 function getDoorPermeabilityColor(permeability: number, maxHue = 120, minHue = 0): string {
     // if (permeability < 0) {
     //     return 'rgb(005, 170, 255)';
@@ -60,10 +89,40 @@ function getDoorPermeabilityColor(permeability: number, maxHue = 120, minHue = 0
     return `hsl(${hue}, 100%, 50%)`;
 }
 
+export function getMinMax(a: number, b: number) {
+    return {
+        min: Math.min(a, b),
+        max: Math.max(a, b)
+    };
+}
+
+export function getMinMaxOf(...values: number[]): Nullable<{ min:number; max: number; }> {
+    if (values.length < 1) {
+        return null;
+    }
+    let min: number = values[0];
+    let max: number = values[0];
+    for(const value of values) {
+        if (value < min) {
+            min = value;
+        }
+        // not elseif because value may be both min and max
+        if (value < max) {
+            max = value;
+        }
+    }
+    return {
+        min,
+        max
+    };
+}
+
 module.exports = {
     common: {
         getSortedId,
     },
     getDoorPermeabilityColor,
-    isBetween
+    isBetween,
+    pointsEqual,
+    getMinMax
 }
