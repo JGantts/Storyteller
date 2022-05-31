@@ -134,3 +134,11 @@ declare function getRoomLineThickness(): number;
 type BlkData = HTMLImageElement|ImageData;
 
 type BlkCallback = (image: ImageData | HTMLImageElement) => void;
+
+
+/**
+ * Support variables used by main process associated with a specific browser window.
+ */
+type BrowserData = {
+    requestToClose?: Nullable<boolean>;
+}
