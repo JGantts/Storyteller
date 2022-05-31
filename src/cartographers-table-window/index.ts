@@ -1,4 +1,4 @@
-/// <reference path="./commonTypes.ts" />
+/// <reference path="./commonTypes.d.ts" />
 /// <reference path="./commonFunctions.ts" />
 // noinspection JSUnusedLocalSymbols,JSIgnoredPromiseFromCall
 
@@ -238,7 +238,8 @@ function getSelectionSquareWidth() {
 }
 
 function getRoomLineThickness() {
-    return 2 * zoom;
+    const base = 5;
+    return (base * zoom + (base / 2))
 }
 
 function getSelectionMultiplier() {
@@ -1447,6 +1448,15 @@ async function redrawMetaroom() {
     }
 }
 
+async function redrawRoomsDefault() {
+    redrawRooms(
+        offscreenCanvasContexts.room,
+        offscreenCanvasContexts.pasties,
+        [...dataStructures.doorsArray, ...dataStructures.walls],
+        dataStructures.points,
+        dataStructures.metaroomDisk!);
+}
+
 async function redrawRooms(
     roomCtx: CanvasRenderingContext2D,
     pastiesCtx: CanvasRenderingContext2D,
@@ -1457,7 +1467,7 @@ async function redrawRooms(
     
     roomCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
     pastiesCtx.clearRect(0, 0, metaroom.width * roomSizeBlurFix, metaroom.height * roomSizeBlurFix);
-    roomCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
+    roomCtx.lineWidth = getRoomLineThickness();
     lines
         .forEach((line, i) => {
             roomCtx.strokeStyle = getDoorPermeabilityColor(line.permeability);
@@ -1477,11 +1487,11 @@ async function redrawPasties(
 ) {
     //console.log(points);
     //console.log(new Error().stack);
-    pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
+    pastiesCtx.lineWidth = getRoomLineThickness();
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
         pastiesCtx.beginPath();
-        pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() * 1.5 * roomSizeBlurFix, 0, 2 * Math.PI, true);
+        pastiesCtx.arc(points[key].x * roomSizeBlurFix, points[key].y * roomSizeBlurFix, getRoomLineThickness() * 1.5, 0, 2 * Math.PI, true);
         pastiesCtx.fill();
     }
 }
@@ -1496,8 +1506,9 @@ async function redrawPotentialRooms(
     
     roomCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
     pastiesCtx.clearRect(0, 0, canvasHolder.clientWidth, canvasHolder.clientHeight);
-    roomCtx.lineWidth = getRoomLineThickness();
     const zoomMod = 1 / zoom;
+    // Not sure why these lines render so much thicker than everywhere else
+    roomCtx.lineWidth = (getRoomLineThickness() * 0.75) * zoomMod;
     lines
         .forEach((line, i) => {
             roomCtx.strokeStyle = getDoorPermeabilityColor(line.permeability);
@@ -1518,7 +1529,7 @@ async function redrawPotentialPasties(
     const zoomMod = 1 / zoom;
     //console.log(points);
     //console.log(new Error().stack);
-    pastiesCtx.lineWidth = getRoomLineThickness() * roomSizeBlurFix;
+    pastiesCtx.lineWidth = getRoomLineThickness();
     pastiesCtx.fillStyle = 'rgb(255, 255, 255)';
     for (const key in points) {
         pastiesCtx.beginPath();
@@ -1597,6 +1608,9 @@ async function redrawSelection(timestamp: number) {
                     selection,
                     dataStructures
                 );
+                if (masterUiState.camera.rezoom) {
+                    redrawRoomsDefault();
+                }
                 redrawPotential(potentialRooms, dataStructures);
                 onscreenCanvasContexts.selectionUnder.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
                 onscreenCanvasContexts.selectionOver.clearRect(0, 0, dataStructures.metaroomDisk!.width * roomSizeBlurFix, dataStructures.metaroomDisk!.height * roomSizeBlurFix);
