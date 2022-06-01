@@ -313,7 +313,7 @@ function redoMultiCommand({subcommands}: { subcommands: Command[] }) {
 async function newFile() {
     await fileHelper.newFile();
     let backgroundFile = await fileHelper.selectBackgroundFile();
-    const isBlk = path.extname(backgroundFile).toLowerCase();
+    const isBlk = path.extname(backgroundFile).toLowerCase() === '.blk';
     let width: number;
     let height: number;
     if (isBlk) {
