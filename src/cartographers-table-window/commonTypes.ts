@@ -147,4 +147,5 @@ type BlkCallback = (image: ImageData | HTMLImageElement) => void;
  */
 type BrowserData = {
     requestToClose?: Nullable<boolean>;
+    menu?: Nullable<Electron.Menu>
 }
