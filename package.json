@@ -9,7 +9,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "compile": "npm run clean ; tsc ; copyfiles -u 1 -e *.ts src/**/**/**/**/**/* dist/; copyfiles -u 1  hard-dependencies/*.js dist/hard-dependencies/;",
-    "clean": "node -e \"require('fs').rmdirSync('./dist', { recursive: true, force: true });\""
+    "clean": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true });\""
   },
   "author": "Jacob Gantt",
   "license": "ISC",
