@@ -22,13 +22,14 @@ const caosSaveOptions = {
 };
 
 class FileHelper {
-  constructor(updateTitle, displayFiles, getText) {
+  constructor(updateTitle, displayFiles, getText, extension) {
       this._currentFileRef = null;
       this._currentFileNeedsSaving = false;
       this._promiseDictionary = new Object();
       this._updateTitle = updateTitle;
       this._displayFiles = displayFiles;
       this._getText = getText;
+      this._extension = extension.charAt(0) !== '.' ? '.' + extension.toLowerCase() : extension;
 
       let dict = this._promiseDictionary;
 
@@ -174,7 +175,10 @@ class FileHelper {
   }
 
   async _saveFile(options, encoding) {
-      if (path.extname(this._currentFileRef.path).toLowerCase() !== '.json') {
+      if (
+          path.extname(this._currentFileRef.path).toLowerCase() !== '.json' &&
+          path.extname(this._currentFileRef.path).toLowerCase() !== this._extension
+      ) {
           this._currentFileRef.path = "";
       }
       if (!this._currentFileRef.path) {

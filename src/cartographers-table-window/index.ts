@@ -71,7 +71,8 @@ globalThis.fileHelper = new FileHelper(
                 let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk!);
                 return toReturn;
         }
-    }
+    },
+    'cart'
 );
 globalThis.fileHelper.saveFile = saveFile;
 const assert = require('assert');
