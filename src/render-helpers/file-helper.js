@@ -51,6 +51,17 @@ class FileHelper {
       });
   }
 
+  hasFile() {
+      return this.getCurrentFileRef() != null;
+  }
+
+  getCurrentFileName() {
+      if (this._currentFileRef) {
+          return this.tileNameFromFileRef(this._currentFileRef);
+      }
+      return "";
+  }
+
   getCurrentFileRef() {
       return this._currentFileRef;
   }
@@ -86,7 +97,12 @@ class FileHelper {
               {name: 'CAOS', extensions: ['cos']}
           ]
       };
-      this._openFile(options, "Latin1");
+      let newFile = await this._openFile(options, "Latin1");
+      if (newFile) {
+          this._currentFileRef = newFile.fileRef;
+          this._currentFileNeedsSaving = false;
+          this._displayFiles([newFile]);
+      }
   }
 
   async openCartFile() {
@@ -98,19 +114,43 @@ class FileHelper {
               {name: 'Cartographer', extensions: ['cart']}
           ]
       };
-      this._openFile(options, "utf-8");
+      let newFile = await this._openFile(options, "utf-8");
+      if (newFile) {
+          this._currentFileRef = newFile.fileRef;
+          this._currentFileNeedsSaving = false;
+          this._displayFiles([newFile]);
+      }
+  }
+
+  async importCaosFile() {
+      let options = {
+          title: "Import CAOS file",
+          defaultPath : '%HOMEPATH%/Documents/',
+          buttonLabel : "Import",
+          filters :[
+              {name: 'CAOS', extensions: ['cos']}
+          ]
+      };
+      let newFile = await this._openFile(options, "Latin1");
+      if (newFile) {
+          newFile.fileRef.path = "";
+          newFile.fileRef.fileExistsOnDisk = false;
+          this._currentFileRef = newFile.fileRef;
+          this._currentFileNeedsSaving = true;
+          this._displayFiles([newFile]);
+      }
   }
 
   async saveCaosFile() {
-      return await this._saveFile(caosSaveOptions, "Latin1");
+      return await this._saveFile(caosSaveOptions, "caos", "Latin1");
   }
 
   async saveCaosFileAs() {
-      return await this._saveFileAs(caosSaveOptions, "Latin1");
+      return await this._saveFileAs(caosSaveOptions, "caos", "Latin1");
   }
 
   async saveCartFile() {
-      return await this._saveFile(cartSaveOptions, "utf-8");
+      return await this._saveFile(cartSaveOptions, "json", "utf-8");
   }
 
   async saveCartFileAs() {
@@ -147,6 +187,24 @@ class FileHelper {
       return await this.getResourcePathPromise(resource);
   }
 
+  tileNameFromFileRef(fileRef) {
+      // assert(
+      //   typeof path === 'string'
+      //   || typeof path === 'object',
+      //   `Expected string or NULL, instead found \{${JSON.stringify(path)}\}.`)
+      if (!fileRef.dir || ! fileRef.name) {
+          return "Unsaved";
+      }
+
+      let lastIndexOfSlash = fileRef.dir.lastIndexOf(path.sep);
+      let secondToLastIndex = fileRef.dir.lastIndexOf(path.sep, lastIndexOfSlash - 1);
+      let titleName = "..." + fileRef.dir.slice(secondToLastIndex);
+      titleName += path.sep;
+      titleName += fileRef.name;
+      titleName += fileRef.type;
+      return titleName;
+  }
+
   async _selectFile(options) {
       let newSelectedFile = await this.selectFilePromise(options);
       if (!newSelectedFile.continue) {
@@ -168,26 +226,26 @@ class FileHelper {
           return;
       }
       let newFile = newOpenFile.files[0];
-      this._currentFileRef = newFile.fileRef;
-      this._currentFileNeedsSaving = false;
-      this._displayFiles([newFile]);
+      return newFile;
   }
 
-  async _saveFile(options, encoding) {
-      if (path.extname(this._currentFileRef.path).toLowerCase() !== '.json') {
-          this._currentFileRef.path = "";
-      }
-      if (!this._currentFileRef.path) {
-          this._currentFileRef.path = (await this.getNewSaveFilePromise(options)).fileRef.path;
+  async _saveFile(options, format, encoding) {
+      if (!this._currentFileRef.fileExistsOnDisk) {
+          let newSaveeFile = (await this.getNewSaveFilePromise(options));
+          if (!newSaveeFile.continue) {
+              return;
+          }
+          this._currentFileRef.path = newSaveeFile.fileRef.path;
       }
       if (!(await this.saveFilePromise(
           this._currentFileRef,
-          this._getText("json"),
+          this._getText(format),
           encoding
         )).continue) {
           return {continue: false};
       }
       this._currentFileNeedsSaving = false;
+      this._currentFileRef.fileExistsOnDisk = true;
       this._updateTitle();
       return {continue: true};
   }

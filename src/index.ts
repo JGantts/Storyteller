@@ -13,8 +13,23 @@ const pathModule = require('path');
 
 type FileRef = {
     id: string;
-    path: string;
+    dir: string;
+    name: string;
     type: string;
+    fileExistsOnDisk: boolean;
+}
+
+function fileRefFromPath(fileId: string, path: string, fileExistsOnDisk: boolean): FileRef {
+    let fileType = pathModule.extname(path)
+    let fileRef =
+    {
+        id: fileId,
+        dir: pathModule.dirname(path),
+        name: pathModule.basename(path, fileType),
+        type: fileType,
+        fileExistsOnDisk: fileExistsOnDisk
+    };
+    return fileRef;
 }
 
 let files: {
@@ -104,11 +119,15 @@ function fileManager_newFile(event: Electron.IpcMainEvent, id: string, args: any
     let windowsFiles = getWindowsFiles(browserWindow);
     let newFileId = crypto.randomUUID();
     let newFilePath = "";
+    let newFileName = "";
+    let newFileType = "";
     let fileContents = "";
     windowsFiles[newFileId] = {
         id: newFileId,
-        path: newFilePath,
-        type: newFilePath ? pathModule.extname(newFilePath) : ".cart"
+        dir: newFilePath,
+        name: newFileName,
+        type: newFileType,
+        fileExistsOnDisk: false
     };
     let newFile =
     {
@@ -195,13 +214,7 @@ async function fileManager_openFiles(event: Electron.IpcMainEvent, id: string, a
         } else {
             let openedFiles = [];
             for (let path of result.filePaths) {
-                let fileId = crypto.randomUUID();
-                let fileRef =
-                {
-                    id: fileId,
-                    path: path,
-                    type: pathModule.extname(path)
-                };
+                let fileRef = fileRefFromPath(crypto.randomUUID(), path, true);
                 let fileContents
                 try {
                     fileContents = fs.readFileSync(path, args.encoding);
@@ -218,9 +231,9 @@ async function fileManager_openFiles(event: Electron.IpcMainEvent, id: string, a
                         }
                     );
                 }
-                windowsFiles[fileId] = fileRef;
+                windowsFiles[fileRef.id] = fileRef;
                 let openedFile = {
-                    fileRef: windowsFiles[fileId],
+                    fileRef: windowsFiles[fileRef.id],
                     contents: fileContents
                 }
                 openedFiles.push(openedFile);
@@ -272,8 +285,7 @@ async function fileManager_getNewSaveFile(event: Electron.IpcMainEvent, id: stri
         return;
     }
 
-    windowsFiles[args.fileRef.id].path = result.filePath ?? "";
-    windowsFiles[args.fileRef.id].type = pathModule.extname(result.filePath);
+    windowsFiles[args.fileRef.id] = fileRefFromPath(args.fileRef.id, result.filePath as string, true);
 
     event.reply(
         'executed-promise',
@@ -346,7 +358,7 @@ async function fileManager_saveFile(event: Electron.IpcMainEvent, id: string, ar
 
 
     let fileRef = windowsFiles[args.fileRef.id];
-    if (!fileRef.path){
+    if (!fileRef.dir){
         event.reply(
             'executed-promise',
             {
@@ -360,7 +372,7 @@ async function fileManager_saveFile(event: Electron.IpcMainEvent, id: string, ar
         return;
     }
     try {
-      fs.writeFileSync(fileRef.path, args.content.replace(/\n/g, "\r\n"), args.encoding);
+      fs.writeFileSync(pathModule.join(fileRef.dir, fileRef.name) + fileRef.type, args.content.replace(/\n/g, "\r\n"), args.encoding);
       event.reply(
           'executed-promise',
           {
@@ -473,7 +485,7 @@ function createStorytellerWindow () {
             contextIsolation: false
         }
     })
-    
+
     win.setMenu(null)
     win.on('closed', function () {
         // Dereference the main window object
@@ -481,7 +493,7 @@ function createStorytellerWindow () {
             mainWindow = null;
         }
     });
-    
+
     loadWindow(win, './dist/storyteller-window/index.html');
     mainWindow = win;
 }
@@ -667,7 +679,7 @@ function removeWindowFromWindowArray(theWindow: Electron.BrowserWindow): boolean
         return false;
     }
     browserWindows.splice(index, 1);
-    
+
     return true;
 }
 
@@ -678,7 +690,7 @@ function removeWindowFromWindowArray(theWindow: Electron.BrowserWindow): boolean
 function closeWindow(browserWindow: Electron.BrowserWindow) {
     removeWindowFromWindowArray(browserWindow);
     const id = browserWindow.id;
-    
+
     // Clear the browser window data object
     if (browserWindows.hasOwnProperty(id)) {
         delete browserWindows[id]
@@ -695,10 +707,10 @@ function closeWindow(browserWindow: Electron.BrowserWindow) {
 function requestWindowClose(this: Electron.BrowserWindow, e: Nullable<Electron.Event>): boolean {
     const browserWindow = this as Electron.BrowserWindow;
     const data = windowData.hasOwnProperty(browserWindow.id) ? windowData[browserWindow.id] : null;
-    
+
     // Get whether the window should request a close, or simply close
     const requestToClose: boolean = data?.requestToClose ?? false;
-    
+
     // Handle event, including preventing close if needed
     if (e != null) {
         e.returnValue = !requestToClose;
@@ -706,7 +718,7 @@ function requestWindowClose(this: Electron.BrowserWindow, e: Nullable<Electron.E
             e.preventDefault();
         }
     }
-    
+
     // Request that a window save its work before closing
     if (requestToClose) {
         browserWindow.webContents.send('request-close');
@@ -729,10 +741,10 @@ function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any, reques
     }
     // Stash browser instance
     browserWindows.push(browserWindow);
-    
+
     // Add close listener to request close to handle saving if needed
     browserWindow.on('close', requestWindowClose.bind(browserWindow));
-    
+
     // Load dev tools if in dev environment
     if (isDev()) {
         browserWindow.loadFile(loadFile);
@@ -747,15 +759,15 @@ function loadWindowWithDevTools(browserWindow: Electron.BrowserWindow, loadFile:
         height: 600,
     });
     devtools.setBounds({x: 0, y: 0,})
-    
+
     browserWindow.on('close', () => {
         if (!devtools.isDestroyed()) {
             devtools.close()
         }
     })
-    
+
     browserWindow.loadFile(loadFile);
-    
+
     browserWindow.webContents.setDevToolsWebContents(devtools.webContents)
     browserWindow.webContents.openDevTools();
 }
@@ -798,7 +810,7 @@ function requestQuit() {
  * Add listeners for possible ways to close the app.
  */
 function initQuitListeners() {
-    
+
     // Add quit shortcut if on Mac
     if (process.platform === 'darwin') {
         quitIfAllWindowsClose = false;
@@ -807,7 +819,7 @@ function initQuitListeners() {
 // Listen to quit events, and try quiting when received.
     app.on('window-all-closed', requestQuit);
     app.on('quit', requestQuit);
-    
+
 }
 
 app.on('activate', function () {
