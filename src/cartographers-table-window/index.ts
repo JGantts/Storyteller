@@ -371,7 +371,7 @@ async function newFile() {
             rooms: {},
             perms: {}
         };
-    
+
     loadMetaroom(
         fileContents,
         backgroundFile
@@ -555,6 +555,9 @@ function displayFiles(files: { fileRef: FileRef; contents: string }[]) {
     //for(file in files) {
     let fileContents = null;
     switch (file.fileRef?.type) {
+        case "":
+            fileContents = "";
+            break;
         case ".cart":
             fileContents = file.contents;
             break;
@@ -562,7 +565,7 @@ function displayFiles(files: { fileRef: FileRef; contents: string }[]) {
             fileContents = parseCaosForMetaroom(file.contents);
             break;
         default:
-            throw new Error(`Unknown file type: ${file.fileRef}`);
+            throw new Error(`Unknown file type: ${JSON.stringify(file.fileRef)}`);
     }
 
     loadMetaroom(fileContents);
@@ -709,7 +712,7 @@ function userTextKeyDown(event: any) {
     if (event.defaultPrevented) {
         return; // Do nothing if the event was already processed
     }
-    
+
     let handled: boolean = false;
 
     if (event.key === "Shift") {
@@ -1102,7 +1105,7 @@ function zoomBy(zoomAmount: number, offsetX: number, offsetY: number) {
     constrainPositionZoom();
     let zoomFinal = zoom;
     masterUiState.camera.rezoom = true;
-    
+
     posX += offsetX * (zoomInitial / zoomFinal - 1);
     posY += offsetY * (zoomInitial / zoomFinal - 1);
 }
@@ -1442,7 +1445,7 @@ async function reloadBackgroundFile(backgroundFileAbsoluteWorking?: string, sync
             fileHelper.getCurrentFileRef().dir,
             dataStructures.metaroomDisk!.background
         );
-    
+
     switch (path.extname(imgPathAbsolute)
         .toLowerCase()) {
 
