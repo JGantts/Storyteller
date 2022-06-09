@@ -34,6 +34,31 @@ ipcRenderer.on('request-close', async (event, store) => {
     closing = true;
     ipcRenderer.send('should-close', true);
 });
+
+ipcRenderer.on('request-action', async (event, action: string, data: any) => {
+    console.log('action: ' + action);
+    switch (action) {
+        case 'file-new':
+            return (await newFile());
+        case 'file-save':
+            return (await saveFile());
+        case 'file-save-as':
+            return (await saveAs());
+        case 'file-open':
+            return (await openFile());
+        case 'zoom-in':
+            return zoomByKeyboard(true);
+        case 'zoom-out':
+            return zoomByKeyboard(false);
+        case 'zoom-reset':
+            return oneToOneZoom();
+        case 'undo':
+            return undo();
+        case 'redo':
+            return redo();
+    }
+});
+
 globalThis.fileHelper = new FileHelper(
     updateTitle,
     displayFiles,
@@ -46,7 +71,8 @@ globalThis.fileHelper = new FileHelper(
                 let toReturn = parseMetaroomToCaos(dataStructures.metaroomDisk!);
                 return toReturn;
         }
-    }
+    },
+    'cart'
 );
 globalThis.fileHelper.saveFile = saveFile;
 const assert = require('assert');
@@ -73,6 +99,7 @@ const {common} = require('./commonFunctions.js');
 const displayBLKStatus = true;
 
 let zoom = 1;
+let keyboardZoomAmount = 0.3;
 let posX = 0;
 let posY = 0;
 
@@ -313,7 +340,11 @@ function redoMultiCommand({subcommands}: { subcommands: Command[] }) {
 async function newFile() {
     await fileHelper.newFile();
     let backgroundFile = await fileHelper.selectBackgroundFile();
-    const isBlk = path.extname(backgroundFile).toLowerCase() === '.blk';
+    if (backgroundFile == null) {
+        return;
+    }
+    const isBlk = path.extname(backgroundFile)
+        .toLowerCase() === '.blk';
     let width: number;
     let height: number;
     if (isBlk) {
@@ -340,6 +371,7 @@ async function newFile() {
             rooms: {},
             perms: {}
         };
+    
     loadMetaroom(
         fileContents,
         backgroundFile
@@ -677,13 +709,15 @@ function userTextKeyDown(event: any) {
     if (event.defaultPrevented) {
         return; // Do nothing if the event was already processed
     }
+    
+    let handled: boolean = false;
 
     if (event.key === "Shift") {
         shiftKeyDown(event);
     } else if (event.key === "Control") {
         controlKeyDown(event);
     } else if (event.altKey || event.ctrlKey || event.metaKey) {
-        controlKeyComboDown(event);
+        handled = controlKeyComboDown(event);
     } else if (event.shiftKey) {
         shiftKeyComboDown(event);
     } else {
@@ -699,13 +733,18 @@ function userTextKeyDown(event: any) {
 
             case ' ':
                 spacebarDown(event);
+                handled = true;
                 break;
 
             default:
                 return;
         }
     }
+    if (!handled) {
+        return event;
+    }
     event.preventDefault();
+    return false;
 }
 
 function userTextKeyUp(event: any) {
@@ -747,15 +786,18 @@ function spacebarDown(event: any) {
 }
 
 
-function controlKeyComboDown(event: any) {
+function controlKeyComboDown(event: any): boolean {
     if (event.key === 'z' && !event.shiftKey) {
         undo();
+        return true;
     } else if (
         event.key === 'y'
         || (event.key === 'z' && event.shiftKey)
     ) {
         redo();
+        return true;
     }
+    return false;
 }
 
 function tryDelete() {
@@ -862,6 +904,9 @@ function windowHandleMouseDown(event: any) {
 }
 
 function handleMouseDown(event: any) {
+    if (dataStructures?.metaroomDisk == null) {
+        return;
+    }
     // tell the browser we're handling this event
     event.preventDefault();
     event.stopPropagation();
@@ -884,6 +929,10 @@ function handleMouseDown(event: any) {
 }
 
 function handleMouseUp(event: any) {
+    window.focus();
+    if (dataStructures?.metaroomDisk == null) {
+        return;
+    }
     event.preventDefault();
     event.stopPropagation();
     masterUiState.dragging.isMouseButtonDown = false;
@@ -1020,19 +1069,14 @@ function handleMouseMove(event: any) {
     //checkSelection(startX, startY);
 }
 
-
 function handleWheel(event: any) {
     event.preventDefault();
 
     if (event.ctrlKey) {
-        let zoomInitial = zoom;
-        zoom += event.deltaY * 0.0025;
-        constrainPositionZoom();
-        let zoomFinal = zoom;
-        masterUiState.camera.rezoom = true;
-
-        posX += (event.offsetX) * (zoomInitial / zoomFinal - 1);
-        posY += (event.offsetY) * (zoomInitial / zoomFinal - 1);
+        const zoomAmount = event.deltaY * 0.0025;
+        const offsetX = event.offsetX;
+        const offsetY = event.offsetY;
+        zoomBy(zoomAmount, offsetX, offsetY);
     } else {
         if (event.altKey) {
             posX += event.deltaY * 2;
@@ -1043,6 +1087,24 @@ function handleWheel(event: any) {
         masterUiState.camera.reposition = true;
     }
     constrainPositionZoom();
+}
+
+function zoomByKeyboard(zoomIn: boolean) {
+    const zoomAmount = keyboardZoomAmount * (zoomIn ? -1 : 1);
+    const offsetX = (canvasHolder.clientWidth / 2);
+    const offsetY = (canvasHolder.clientHeight / 2);
+    zoomBy(zoomAmount, offsetX, offsetY);
+}
+
+function zoomBy(zoomAmount: number, offsetX: number, offsetY: number) {
+    let zoomInitial = zoom;
+    zoom += zoomAmount;
+    constrainPositionZoom();
+    let zoomFinal = zoom;
+    masterUiState.camera.rezoom = true;
+    
+    posX += offsetX * (zoomInitial / zoomFinal - 1);
+    posY += offsetY * (zoomInitial / zoomFinal - 1);
 }
 
 function constrainPositionZoom() {
@@ -1057,7 +1119,7 @@ function constrainPositionZoom() {
     const maxX = dataStructures.metaroomDisk.width - (canvasHolder.clientWidth * zoom);
     posX = Math.min(posX, maxX);
     posX = Math.max(posX, 0);
-    const maxY = dataStructures.metaroomDisk.height- (canvasHolder.clientHeight * zoom);
+    const maxY = dataStructures.metaroomDisk.height - (canvasHolder.clientHeight * zoom);
     posY = Math.min(posY, maxY);
     posY = Math.max(posY, 0);
 }
@@ -1361,7 +1423,7 @@ function loadMetaroom(metaroomIn: string | Metaroom, additionalBackground?: stri
     if (additionalBackground) {
         dataStructures.backgroundFileAbsoluteWorking = additionalBackground;
     } else {
-        //set img to null to retrigger its loading
+        //set img to null to re-trigger its loading
         img = null;
     }
 
@@ -1380,8 +1442,10 @@ async function reloadBackgroundFile(backgroundFileAbsoluteWorking?: string, sync
             fileHelper.getCurrentFileRef().dir,
             dataStructures.metaroomDisk!.background
         );
+    
+    switch (path.extname(imgPathAbsolute)
+        .toLowerCase()) {
 
-    switch (path.extname(imgPathAbsolute)) {
         case ".blk":
             img = null;
             if (synchronous) {

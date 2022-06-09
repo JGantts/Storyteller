@@ -7,6 +7,8 @@ const assert = require('assert');
 const crypto = require('crypto');
 const fs = require('fs');
 const pathModule = require('path');
+const {makeDefaultMenu, getMenuPrimary} = require("./menu-templates");
+
 //var iconv = require('iconv-lite');
 
 //let settings;
@@ -42,6 +44,15 @@ let files: {
     }
   };
 } = {};
+
+let menuPrimary: Nullable<Electron.Menu> = null;
+
+function getDefaultMenu() {
+    if (menuPrimary == null) {
+        return menuPrimary = Menu.buildFromTemplate(makeDefaultMenu(app));
+    }
+    return menuPrimary;
+}
 
 // Window/Quit handling support variables
 let mainWindow: Nullable<Electron.BrowserWindow> = null;
@@ -438,9 +449,9 @@ function getWindowType(browserWindow: Electron.BrowserWindow) {
     );
     let path = browserWindow.webContents.getURL();
     let lastIndex = path.lastIndexOf("/");
-    let secondTolastIndex = path.lastIndexOf("/", lastIndex-1);
-    assert(lastIndex != secondTolastIndex, "Couldn't find two '/'s");
-    let windowName = path.slice(secondTolastIndex+1, lastIndex);
+    let secondToLastIndex = path.lastIndexOf("/", lastIndex-1);
+    assert(lastIndex != secondToLastIndex, "Couldn't find two '/'s");
+    let windowName = path.slice(secondToLastIndex+1, lastIndex);
     return windowName;
 }
 
@@ -485,8 +496,13 @@ function createStorytellerWindow () {
             contextIsolation: false
         }
     })
+    
+    const onShow = () => {
+        Menu.setApplicationMenu(getDefaultMenu());
+    };
+    win.on('show', onShow );
+    win.on('focus', onShow );
 
-    win.setMenu(null)
     win.on('closed', function () {
         // Dereference the main window object
         if (mainWindow == win) {
@@ -509,10 +525,14 @@ function createSorcerersTableWindow() {
       contextIsolation: false
     }
   })
+    
+    const onShow = () => {
+        Menu.setApplicationMenu(null);
+    };
+    win.on('show', onShow )
 
-  win.setMenu(null)
-
-  loadWindow(win, './dist/sorcerers-table-window/index.html')
+  loadWindow(win, './dist/sorcerers-table-window/index.html');
+    onShow();
 }
 
 function createDesignersTableWindow() {
@@ -527,10 +547,14 @@ function createDesignersTableWindow() {
       webviewTag: true,
     }
   })
-
-  win.setMenu(null)
+  
+    const onShow = () => {
+        Menu.setApplicationMenu(null);
+    };
+    win.on('show', onShow )
 
   loadWindow(win, './dist/designers-table-window/index.html')
+    onShow();
 }
 
 function createCartographersTableWindow() {
@@ -548,30 +572,37 @@ function createCartographersTableWindow() {
 
   const template: any =
    [
-     {
+       ...getMenuPrimary(app),
+       {
         label: 'File',
         submenu: [
            {
-              label: 'New',
-              click() {
-                 console.log('item 1 clicked')
-              }
+              label: 'New File',
+               accelerator: "CommandOrControl+N",
+               click: windowRequest('file-new')
            },
-           {
-              role: 'redo'
-           },
+            {
+                label: 'Open...',
+                accelerator: 'CmdOrCtrl+O',
+                click: windowRequest('file-open')
+            },
+            {
+                label: 'Save',
+                accelerator: 'CmdOrCtrl+S',
+                click: windowRequest('file-save')
+            },
+            {
+                label: 'Save as...',
+                accelerator: 'CmdOrCtrl+Shift+S',
+                click: windowRequest('file-save-as')
+            },
            {
               type: 'separator'
            },
-           {
-              role: 'cut'
-           },
-           {
-              role: 'copy'
-           },
-           {
-              role: 'paste'
-           }
+            {
+                role: 'close',
+                click: () => windowRequest('close')
+            }
         ]
      },
 
@@ -579,23 +610,34 @@ function createCartographersTableWindow() {
         label: 'Edit',
         submenu: [
            {
-              role: 'undo'
+               role: 'undo',
+               click: windowRequest('undo')
            },
-           {
-              role: 'redo'
-           },
+            {
+                role: 'redo',
+                click: windowRequest('redo')
+            },
            {
               type: 'separator'
            },
-           {
-              role: 'cut'
-           },
-           {
-              role: 'copy'
-           },
-           {
-              role: 'paste'
-           }
+            {
+                label: 'Cut',
+                accelerator: 'CommandOrControl+X',
+                click: windowRequest('cut'),
+                enabled: false,
+            },
+            {
+                label: 'Copy',
+                accelerator: 'CommandOrControl+C',
+                click: windowRequest('copy'),
+                enabled: false,
+            },
+            {
+                label: 'Paste',
+                accelerator: 'CommandOrControl+V',
+                click: windowRequest('paste'),
+                enabled: false,
+            }
         ]
      },
 
@@ -612,19 +654,25 @@ function createCartographersTableWindow() {
               type: 'separator'
            },
            {
-              role: 'resetzoom'
+              label: 'Zoom In',
+               accelerator: 'CmdOrCtrl+Plus',
+               click: windowRequest('zoom-in')
            },
            {
-              role: 'zoomin'
+              label: 'Zoom Out',
+               accelerator: 'CmdOrCtrl+-',
+               click: windowRequest('zoom-out')
            },
-           {
-              role: 'zoomout'
-           },
+            {
+                label: 'Actual Size',
+                accelerator: 'CmdOrCtrl+0',
+                click: windowRequest('zoom-reset')
+            },
            {
               type: 'separator'
            },
            {
-              role: 'togglefullscreen'
+              role: isMac() ? 'togglefullscreen' : 'zoom',
            }
         ]
      },
@@ -633,11 +681,8 @@ function createCartographersTableWindow() {
         role: 'window',
         submenu: [
            {
-              role: 'minimize'
+              role: 'minimize',
            },
-           {
-              role: 'close'
-           }
         ]
      },
 
@@ -645,16 +690,15 @@ function createCartographersTableWindow() {
         role: 'help',
         submenu: [
            {
-              label: 'Learn More'
+              label: 'Learn More',
+               click: () => windowRequest('open-help')
            }
         ]
      }
-  ]
-
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
-
-  loadWindow(win, './dist/cartographers-table-window/index.html', true);
+  ];
+    
+    const menu = Menu.buildFromTemplate(template);
+  loadWindow(win, './dist/cartographers-table-window/index.html', menu, true);
 }
 
 function isDev() {
@@ -732,25 +776,42 @@ function requestWindowClose(this: Electron.BrowserWindow, e: Nullable<Electron.E
  * Initialize browser window and event listeners/handlers
  * @param browserWindow
  * @param loadFile
+ * @param menu
  * @param requestToClose
  */
-function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any, requestToClose: boolean = false) {
+function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any, menu: Nullable<Electron.Menu> = null, requestToClose: boolean = false) {
     // Create window data for use by the other methods including #requestWindowClose
     windowData[browserWindow.id] = {
-        requestToClose: requestToClose
-    }
+        requestToClose: requestToClose,
+        menu: menu
+    };
     // Stash browser instance
     browserWindows.push(browserWindow);
-
+    if (menu == null) {
+        menu = getDefaultMenu();
+    }
+    const onShow = () => {
+        Menu.setApplicationMenu(menu);
+    };
+    
+    browserWindow.on('show', onShow );
+    browserWindow.on('focus', onShow );
+    
     // Add close listener to request close to handle saving if needed
     browserWindow.on('close', requestWindowClose.bind(browserWindow));
-
+    
+    let loadPromise: Promise<void>;
+  
     // Load dev tools if in dev environment
     if (isDev()) {
-        browserWindow.loadFile(loadFile);
+        loadPromise = browserWindow.loadFile(loadFile);
     } else {
-        loadWindowWithDevTools(browserWindow, loadFile);
+        loadPromise = loadWindowWithDevTools(browserWindow, loadFile);
     }
+    loadPromise.then(() => {
+        browserWindow.focus()
+        onShow();
+    });
 }
 
 function loadWindowWithDevTools(browserWindow: Electron.BrowserWindow, loadFile: any) {
@@ -765,11 +826,12 @@ function loadWindowWithDevTools(browserWindow: Electron.BrowserWindow, loadFile:
             devtools.close()
         }
     })
-
-    browserWindow.loadFile(loadFile);
-
+    
+    const promise = browserWindow.loadFile(loadFile);
+    
     browserWindow.webContents.setDevToolsWebContents(devtools.webContents)
     browserWindow.webContents.openDevTools();
+    return promise;
 }
 
 /**
@@ -822,6 +884,10 @@ function initQuitListeners() {
 
 }
 
+function isMac() {
+    return process.platform === 'darwin';
+}
+
 app.on('activate', function () {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -830,7 +896,15 @@ app.on('activate', function () {
     }
 });
 
-
+function windowRequest(action: string, data: any = {}) {
+    return (
+        event: KeyboardEvent,
+        browserWindow: Electron.BrowserWindow,
+        webContents: Electron.WebContents
+    ) => {
+        browserWindow.webContents.send('request-action', action, data);
+    }
+}
 
 app.whenReady()
     .then(launchApp)
