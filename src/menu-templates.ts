@@ -1,6 +1,8 @@
 const isMac = process.platform === 'darwin'
 
-function getMenuPrimary(app: { name: string; }): Electron.MenuItemConstructorOptions[] {
+type MenuTemplate = (Electron.MenuItemConstructorOptions | Electron.MenuItem)[]
+
+function getMenuPrimary(app: { name: string; }): MenuTemplate {
     return isMac ? [{
         label: app.name,
         submenu: [
@@ -20,10 +22,10 @@ function getMenuPrimary(app: { name: string; }): Electron.MenuItemConstructorOpt
     }] : [];
 }
 
-const makeDefaultMenu = (app: { name: string; }): Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> => {
-    return [
+const makeDefaultMenu = (app: { name: string; }): MenuTemplate => {
+    return <MenuTemplate>[
         // { role: 'appMenu' }
-        ...(getMenuPrimary(app)),
+        ...getMenuPrimary(app),
         // { role: 'fileMenu' }
         {
             label: 'File',
