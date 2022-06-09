@@ -22,14 +22,13 @@ const caosSaveOptions = {
 };
 
 class FileHelper {
-  constructor(updateTitle, displayFiles, getText, extension) {
+  constructor(updateTitle, displayFiles, getText) {
       this._currentFileRef = null;
       this._currentFileNeedsSaving = false;
       this._promiseDictionary = new Object();
       this._updateTitle = updateTitle;
       this._displayFiles = displayFiles;
       this._getText = getText;
-      this._extension = extension.charAt(0) !== '.' ? '.' + extension.toLowerCase() : extension;
 
       let dict = this._promiseDictionary;
 
@@ -50,6 +49,17 @@ class FileHelper {
              console.log("You're killin me Smalls!");
           }
       });
+  }
+
+  hasFile() {
+      return this.getCurrentFileRef() != null;
+  }
+
+  getCurrentFileName() {
+      if (this._currentFileRef) {
+          return this.tileNameFromFileRef(this._currentFileRef);
+      }
+      return "";
   }
 
   getCurrentFileRef() {
@@ -87,7 +97,12 @@ class FileHelper {
               {name: 'CAOS', extensions: ['cos']}
           ]
       };
-      this._openFile(options, "Latin1");
+      let newFile = await this._openFile(options, "Latin1");
+      if (newFile) {
+          this._currentFileRef = newFile.fileRef;
+          this._currentFileNeedsSaving = false;
+          this._displayFiles([newFile]);
+      }
   }
 
   async openCartFile() {
@@ -99,23 +114,51 @@ class FileHelper {
               {name: 'Cartographer', extensions: ['cart']}
           ]
       };
-      this._openFile(options, "utf-8");
+      let newFile = await this._openFile(options, "utf-8");
+      if (newFile) {
+          this._currentFileRef = newFile.fileRef;
+          this._currentFileNeedsSaving = false;
+          this._displayFiles([newFile]);
+      }
+  }
+
+  async importCaosFile() {
+      let options = {
+          title: "Import CAOS file",
+          defaultPath : '%HOMEPATH%/Documents/',
+          buttonLabel : "Import",
+          filters :[
+              {name: 'CAOS', extensions: ['cos']}
+          ]
+      };
+      let newFile = await this._openFile(options, "Latin1");
+      if (newFile) {
+          newFile.fileRef.path = "";
+          newFile.fileRef.fileExistsOnDisk = false;
+          this._currentFileRef = newFile.fileRef;
+          this._currentFileNeedsSaving = true;
+          this._displayFiles([newFile]);
+      }
   }
 
   async saveCaosFile() {
-      return await this._saveFile(caosSaveOptions, "Latin1");
+      return await this._saveFile(caosSaveOptions, "caos", "Latin1");
   }
 
   async saveCaosFileAs() {
-      return await this._saveFileAs(caosSaveOptions, "Latin1");
+      return await this._saveFileAs(caosSaveOptions, "caos", "Latin1");
   }
 
   async saveCartFile() {
-      return await this._saveFile(cartSaveOptions, "utf-8");
+      return await this._saveFile(cartSaveOptions, "json", "utf-8");
   }
 
   async saveCartFileAs() {
       return await this._saveFileAs(cartSaveOptions, "json", "utf-8");
+  }
+
+  async saveCartFileCopy() {
+      return await this._saveFileCopy(cartSaveOptions, "json", "utf-8");
   }
 
   async exportToCaos() {
@@ -148,6 +191,24 @@ class FileHelper {
       return await this.getResourcePathPromise(resource);
   }
 
+  tileNameFromFileRef(fileRef) {
+      // assert(
+      //   typeof path === 'string'
+      //   || typeof path === 'object',
+      //   `Expected string or NULL, instead found \{${JSON.stringify(path)}\}.`)
+      if (!fileRef.dir || ! fileRef.name) {
+          return "Unsaved";
+      }
+
+      let lastIndexOfSlash = fileRef.dir.lastIndexOf(path.sep);
+      let secondToLastIndex = fileRef.dir.lastIndexOf(path.sep, lastIndexOfSlash - 1);
+      let titleName = "..." + fileRef.dir.slice(secondToLastIndex);
+      titleName += path.sep;
+      titleName += fileRef.name;
+      titleName += fileRef.type;
+      return titleName;
+  }
+
   async _selectFile(options) {
       let newSelectedFile = await this.selectFilePromise(options);
       if (!newSelectedFile.continue) {
@@ -169,35 +230,47 @@ class FileHelper {
           return;
       }
       let newFile = newOpenFile.files[0];
-      this._currentFileRef = newFile.fileRef;
-      this._currentFileNeedsSaving = false;
-      this._displayFiles([newFile]);
+      return newFile;
   }
 
-  async _saveFile(options, encoding) {
-      if (
-          path.extname(this._currentFileRef.path).toLowerCase() !== '.json' &&
-          path.extname(this._currentFileRef.path).toLowerCase() !== this._extension
-      ) {
-          this._currentFileRef.path = "";
+  async _saveFile(options, format, encoding) {
+      if (!this._currentFileRef.fileExistsOnDisk) {
+          options.defaultPath = path.join(this._currentFileRef.dir, this._currentFileRef.name);
+          let newSaveeFile = (await this.getNewSaveFilePromise(options));
+          if (!newSaveeFile.continue) {
+              return {continue: false};
+          }
+          let newPath = newSaveeFile.fileRef;
+          this._currentFileRef.dir = newSaveeFile.fileRef.dir;
+          this._currentFileRef.name = newSaveeFile.fileRef.name;
+          this._currentFileRef.type = newSaveeFile.fileRef.type;
       }
-      if (!this._currentFileRef.path) {
-          this._currentFileRef.path = (await this.getNewSaveFilePromise(options)).fileRef.path;
-      }
-      if (!(await this.saveFilePromise(
-          this._currentFileRef,
-          this._getText("json"),
-          encoding
-        )).continue) {
-          return {continue: false};
-      }
-      this._currentFileNeedsSaving = false;
-      this._updateTitle();
-      return {continue: true};
+      return this._reallySaveFile(this._currentFileRef, format, encoding);
   }
 
   async _saveFileAs(options, format, encoding) {
-      let fileRef = (await this.getNewSaveFilePromise(options)).fileRef;
+      options.defaultPath = path.join(this._currentFileRef.dir, this._currentFileRef.name) + "_copy" + this._currentFileRef.type;
+      let newSaveFile = await this.getNewSaveFilePromise(options);
+      if (newSaveFile.continue) {
+          let reallySaveFile = this._reallySaveFile(newSaveFile.fileRef, format, encoding);
+          if (reallySaveFile.continue) {
+              this._currentFileRef = newSaveFile.fileRef;
+          }
+          return reallySaveFile;
+      }
+      return newSaveFile;
+  }
+
+  async _saveFileCopy(options, format, encoding) {
+      options.defaultPath = path.join(this._currentFileRef.dir, this._currentFileRef.name) + "_copy" + this._currentFileRef.type;
+      let newSaveFile = await this.getNewSaveFilePromise(options);
+      if (newSaveFile.continue) {
+          return this._reallySaveFile(newSaveFile.fileRef, format, encoding);
+      }
+      return newSaveFile;
+  }
+
+  async _reallySaveFile(fileRef, format, encoding) {
       if (!(await this.saveFilePromise(
         fileRef,
         this._getText(format),
@@ -205,6 +278,9 @@ class FileHelper {
       )).continue) {
           return {continue: false};
       }
+      this._currentFileNeedsSaving = false;
+      this._currentFileRef.fileExistsOnDisk = true;
+      this._updateTitle();
       return {continue: true};
   }
 
