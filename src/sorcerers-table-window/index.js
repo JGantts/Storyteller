@@ -1,6 +1,12 @@
 $.getScript('../engine-api/CAOS.js');
 const { FileHelper } = require('../render-helpers/file-helper.js');
-Window.fileHelper = new FileHelper(updateTitle, displayFiles, () => {return GetVisibleTextInElement(codeElement);});
+globalThis.fileHelper = new FileHelper(
+    updateTitle,
+    displayFiles,
+    (type) => {
+        return GetVisibleTextInElement(codeElement);
+    }
+);
 const assert = require('assert');
 const { Caos } = require('./parser/parser.js');
 const { clipboard, ipcRenderer } = require('electron')
@@ -24,7 +30,6 @@ const{
   GetCaretPositionOneLineUp,
 } = require('./text-editing-helper.js');
 //const path = require("path");
-
 
 let codeElement = document.getElementById('caos-user-code');
 
@@ -84,28 +89,28 @@ function redoMultiCommand(subcommands){
 }
 
 async function newFile() {
-    Window.fileHelper.newFile();
+    globalThis.fileHelper.newFile();
 }
 
 async function openFile() {
-    Window.fileHelper.openCaosFile();
+    globalThis.fileHelper.openCaosFile();
 }
 
 async function saveFile() {
-    Window.fileHelper.saveCaosFile();
+    globalThis.fileHelper.saveCaosFile();
 }
 
 async function saveAs() {
-    await Window.fileHelper.saveCaosFileAs();
+    await globalThis.fileHelper.saveCaosFileAs();
     updateBarButtons()
 }
 
 async function closeFile() {
-    Window.fileHelper.closeFile();
+    globalThis.fileHelper.closeFile();
 }
 
 function saveAllFiles(){
-    Window.fileHelper.saveAllFiles();
+    globalThis.fileHelper.saveAllFiles();
 }
 
 function displayFiles(files) {
@@ -124,23 +129,24 @@ function displayFiles(files) {
     //}
 }
 
-function updateTitle(){
-  let title = '';
-  let currentFileRef = Window.fileHelper.getCurrentFileRef();
-  if (currentFileRef){
-    title += tileNameFromPath(currentFileRef.path) + ' ';
-  }
-  if (currentFileRef){
-    title += '- ';
-  }
-  title += 'Sorcerer\'s Table';
-  document.title = title;
-  updateBarButtons();
+
+function updateTitle() {
+    let title = '';
+    if ( fileHelper.hasFile() ) {
+        title += fileHelper.getCurrentFileName();
+        if (fileHelper.getCurrentFileNeedsSaving()) {
+            title += '* ';
+        }
+        title += '- ';
+    }
+    title += 'Sorcerer\'s Table';
+    document.title = title;
+    updateBarButtons();
 }
 
 function updateBarButtons(){
-  let currentFile = Window.fileHelper.getCurrentFileRef();
-  if (!currentFile || !Window.fileHelper.getCurrentFileNeedsSaving()) {
+  let currentFile = globalThis.fileHelper.getCurrentFileRef();
+  if (!currentFile || !globalThis.fileHelper.getCurrentFileNeedsSaving()) {
     $('#save-file-img').css('opacity','0.4')
   }else{
     $('#save-file-img').css('opacity','1')
@@ -518,7 +524,7 @@ async function insertTextAbsolute({startIndex, text}){
     codeText.substring(0, startIndex)
       + text
       + codeText.substring(startIndex, codeText.length);
-  Window.fileHelper.fileModified();
+  globalThis.fileHelper.fileModified();
   await CheckCode(codeElement, newCodeText, startIndex+text.length);
 }
 
@@ -542,7 +548,7 @@ function deleteTextAbsolute({startIndex, text}){
   let newCodeText =
     codeText.substring(0, startIndex)
       + codeText.substring(startIndex + text.length, codeText.length);
-  Window.fileHelper.fileModified();
+  globalThis.fileHelper.fileModified();
   CheckCode(codeElement, newCodeText, startIndex);
 }
 
