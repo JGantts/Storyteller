@@ -376,6 +376,11 @@ async function saveAs() {
     updateBarButtons();
 }
 
+async function saveCopy() {
+    await fileHelper.saveCartFileCopy();
+    updateBarButtons();
+}
+
 async function closeFile() {
     await fileHelper.closeFile();
     updateBarButtons();
@@ -565,6 +570,13 @@ function updateBarButtons() {
             .css('opacity', '0.4')
     } else {
         $('#save-as-img')
+            .css('opacity', '1')
+    }
+    if (!currentFile) {
+        $('#save-copy-img')
+            .css('opacity', '0.4')
+    } else {
+        $('#save-copy-img')
             .css('opacity', '1')
     }
     if (!currentFile) {

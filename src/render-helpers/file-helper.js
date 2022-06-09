@@ -157,6 +157,10 @@ class FileHelper {
       return await this._saveFileAs(cartSaveOptions, "json", "utf-8");
   }
 
+  async saveCartFileCopy() {
+      return await this._saveFileCopy(cartSaveOptions, "json", "utf-8");
+  }
+
   async exportToCaos() {
       await this._saveFileAs({
           title: "Export CAOS file",
@@ -231,27 +235,42 @@ class FileHelper {
 
   async _saveFile(options, format, encoding) {
       if (!this._currentFileRef.fileExistsOnDisk) {
+          options.defaultPath = path.join(this._currentFileRef.dir, this._currentFileRef.name);
           let newSaveeFile = (await this.getNewSaveFilePromise(options));
           if (!newSaveeFile.continue) {
-              return;
+              return {continue: false};
           }
-          this._currentFileRef.path = newSaveeFile.fileRef.path;
+          let newPath = newSaveeFile.fileRef;
+          this._currentFileRef.dir = newSaveeFile.fileRef.dir;
+          this._currentFileRef.name = newSaveeFile.fileRef.name;
+          this._currentFileRef.type = newSaveeFile.fileRef.type;
       }
-      if (!(await this.saveFilePromise(
-          this._currentFileRef,
-          this._getText(format),
-          encoding
-        )).continue) {
-          return {continue: false};
-      }
-      this._currentFileNeedsSaving = false;
-      this._currentFileRef.fileExistsOnDisk = true;
-      this._updateTitle();
-      return {continue: true};
+      return this._reallySaveFile(this._currentFileRef, format, encoding);
   }
 
   async _saveFileAs(options, format, encoding) {
-      let fileRef = (await this.getNewSaveFilePromise(options)).fileRef;
+      options.defaultPath = path.join(this._currentFileRef.dir, this._currentFileRef.name) + "_copy" + this._currentFileRef.type;
+      let newSaveFile = await this.getNewSaveFilePromise(options);
+      if (newSaveFile.continue) {
+          let reallySaveFile = this._reallySaveFile(newSaveFile.fileRef, format, encoding);
+          if (reallySaveFile.continue) {
+              this._currentFileRef = newSaveFile.fileRef;
+          }
+          return reallySaveFile;
+      }
+      return newSaveFile;
+  }
+
+  async _saveFileCopy(options, format, encoding) {
+      options.defaultPath = path.join(this._currentFileRef.dir, this._currentFileRef.name) + "_copy" + this._currentFileRef.type;
+      let newSaveFile = await this.getNewSaveFilePromise(options);
+      if (newSaveFile.continue) {
+          return this._reallySaveFile(newSaveFile.fileRef, format, encoding);
+      }
+      return newSaveFile;
+  }
+
+  async _reallySaveFile(fileRef, format, encoding) {
       if (!(await this.saveFilePromise(
         fileRef,
         this._getText(format),
@@ -259,6 +278,9 @@ class FileHelper {
       )).continue) {
           return {continue: false};
       }
+      this._currentFileNeedsSaving = false;
+      this._currentFileRef.fileExistsOnDisk = true;
+      this._updateTitle();
       return {continue: true};
   }
 
