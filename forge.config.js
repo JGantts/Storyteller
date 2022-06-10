@@ -53,10 +53,6 @@ module.exports = {
 
       let entries = await fs.readdir(dist, { withFileTypes: true });
 
-      for (let entry of entries) {
-        console.log(entry);
-      }
-
       //await fs.rm(dist, { recursive: true, force: true });
       await copyDir(src, dist, '.ts');
       await copyDir(hardDependencies, path.join(dist, hardDependencies), null);
