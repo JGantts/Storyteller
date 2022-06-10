@@ -1,0 +1,784 @@
+* Script 4 extracted from CoC_CAT.agents by Mirality REVELATION
+
+********************
+***EMPATHIC VENDOR**
+********************
+**
+**** NOTE: The Empathic Vendor communicates with the food pods. 
+**
+*** Create the Vendor
+*new: comp 2 23 24401 "CoCCATvendor" 5 0 0
+*attr 0
+*bhvr 3
+*** Define the Parts:
+*** 1 = (Button) Switch to turn "Ear" on or off (SCRIPT 1000)
+*pat: butt 1 "CoCCATvendor" 17 7 -108 -45 0 [] 1000 0
+** 2 = (Dull) Snout from which the food emerges.
+*pat: dull 2 "coccatvendormouth" 0 -111 -12 1
+**** 3 = (Button) Star Seed Button (SCRIPT 1001)
+*pat: butt 3 "CoCCATvendor" 5 2 -60 5 0 [] 1001 1
+**** 4 = (Button) Yarn Fruit Button (SCRIPT 1002)
+*pat: butt 4 "CoCCATvendor" 7 2 -60 31 0 [] 1002 1
+**** 5 = (Button) Peaking Pie Button (SCRIPT 1003)
+*pat: butt 5 "CoCCATvendor" 9 2 -60 56 0 [] 1003 1
+*
+**** 6 = (button) Bramboo Button (SCRIPT 1004)
+*pat: butt 6 "CoCCATvendor" 11 2 -193 7 0 [] 1004 1
+*
+**** 7 = (button) Carrot Button (SCRIPT 1005)
+*pat: butt 7 "CoCCATvendor" 13 2 -193 33 0 [] 1005 1
+*
+**** 8 = (button) Tuba Button (SCRIPT 1006)
+*pat: butt 8 "CoCCATvendor" 15 2 -193 58 0 [] 1006 1
+*
+*setv ov00 1
+*** Save Meta Room for Checking for Hungry Creatures
+*setv ov70 meta
+*part 1
+*frat 5
+*anim [1 2 3 2 255]
+*** Move it to the CAT
+*mvto 40081 29671
+
+*injection moved to injection.cos
+
+* Push Script
+scrp 2 23 24401 1
+	lock
+	inst
+	snde "empb"
+	stim writ from 90 rand 1 3
+	setv va00 rand 1 12
+	doif va00 >= 1 and va00 <= 5
+		doif rand 0 1 = 1
+			call 1001 0 0
+		else
+			call 1004 0 0
+		endi
+	elif va00 >= 6 and va00 <= 9
+		doif rand 0 1 = 1
+			call 1002 0 0
+		else
+			call 1005 0 0
+		endi
+	elif va00 >= 10 and va00 <= 12
+		doif rand 0 1 = 1
+			call 1003 0 0
+		else
+			call 1006 0 0
+		endi
+	endi
+endm
+
+* Pull Script
+scrp 2 23 24401 2
+	lock
+	inst
+	snde "empb"
+	stim writ from 90 rand 1 3
+	setv va00 rand 1 12
+	doif va00 >= 1 and va00 <= 5
+		doif rand 0 1 = 1
+			call 1001 0 0
+		else
+			call 1004 0 0
+		endi
+	elif va00 >= 6 and va00 <= 9
+		doif rand 0 1 = 1
+			call 1002 0 0
+		else
+			call 1005 0 0
+		endi
+	elif va00 >= 10 and va00 <= 12
+		doif rand 0 1 = 1
+			call 1003 0 0
+		else
+			call 1006 0 0
+		endi
+	endi
+endm
+
+
+
+
+
+
+** Ear Button Script
+scrp 2 23 24401 1000
+	lock
+** OV01 Records whether the EAR is active or not.
+	snde "4bep"
+	doif ov00 = 0
+		setv ov00 1
+		part 1
+		frat 5
+		anim [1 2 3 2 255]
+	elif ov00 = 1
+		setv ov00 0
+		part 1
+		pose 0
+	endi
+endm
+** Star Seed Button Script (PART 3)
+scrp 2 23 24401 1001
+	lock
+** Make a Sound
+	snde "empb"
+** Animate the Button
+	part 3
+	pose 1
+** Animate the "BioEnergy" Readout
+	part 0
+	anim [1 2 3 4]
+** Animate the Snout
+	snde "empd"
+	part 2
+	anim [1 2 3 4 5 6 7 8 9 10 11]
+	over
+	setv va00 posx
+	setv va01 posy
+	subv va00 100
+	subv va01 25
+	inst
+	reps rand 2 4
+*	dbg: outs "Star Seed Made"
+		new: simp 2 3 15 "ds empathic vendor" 1 41 427
+		attr 195
+		bhvr 48
+		perm 64
+		elas 40
+		accg 4
+		fric 100
+		mvto va00 va01
+		velo rand -5 10 rand 1 20
+		emit 7 .5
+		tick 120
+	repe
+	slow
+	targ ownr
+	part 2
+	anim [12 13 14 15 16 17]
+	part 0
+	anim [4 3 2 1 0]
+	over
+	part 3
+	pose 0
+	doif ov00 = 1
+		part 1
+		frat 5
+		anim [1 2 3 2 255]
+	else
+		part 1
+		pose 0
+	endi
+endm
+** Yarn Fruit Button Script (PART 4)
+scrp 2 23 24401 1002
+	lock
+** Make a Sound
+	snde "empb"
+** Animate the Button
+	part 4
+	pose 1
+** Animate the "BioEnergy" Readout
+	part 0
+	anim [1 2 3 4]
+** Animate the Snout
+	snde "empd"
+	part 2
+	anim [1 2 3 4 5 6 7 8 9 10 11]
+	over
+	setv va00 posx
+	setv va01 posy
+	subv va00 100
+	subv va01 25
+	inst
+	reps rand 1 3
+*	dbg: outs "Yarn Fruit"
+		new: simp 2 8 6 "ds empathic vendor" 4 37 426
+		attr 195
+		bhvr 48
+		perm 64
+		elas 30
+		accg 5
+		fric 100
+		mvto va00 va01
+		velo rand -5 10 rand 1 20
+		emit 6 .5
+		tick 120
+	repe
+	slow
+	targ ownr
+	part 2
+	anim [12 13 14 15 16 17]
+	part 0
+	anim [4 3 2 1 0]
+	over
+	part 4
+	pose 0
+	doif ov00 = 1
+
+		part 1
+		frat 5
+		anim [1 2 3 2 255]
+	else
+		part 1
+		pose 0
+	endi
+endm
+** Peaking Pie Button Script (PART 5)
+scrp 2 23 24401 1003
+	lock
+** Make a Sound
+	snde "empb"
+** Animate the Button
+	part 5
+	pose 1
+** Animate the "BioEnergy" Readout
+	part 0
+	anim [1 2 3 4]
+** Animate the Snout
+	snde "empd"
+	part 2
+	anim [1 2 3 4 5 6 7 8 9 10 11]
+	over
+	setv va00 posx
+	setv va01 posy
+	subv va00 100
+	subv va01 25
+	inst
+	reps rand 1 3
+*	dbg: outs "Peaking Pie Made"
+		new: simp 2 11 7 "ds empathic vendor" 3 42 425
+		attr 195
+		bhvr 48
+		perm 64
+		elas 30
+		accg 5
+		fric 100
+		mvto va00 va01
+		velo rand -5 10 rand 1 20
+		emit 8 .5
+		tick 120
+	repe
+	slow
+	targ ownr
+	part 2
+	anim [12 13 14 15 16 17]
+	part 0
+	anim [4 3 2 1 0]
+	over
+	part 5
+	pose 0
+	doif ov00 = 1
+
+		part 1
+		frat 5
+		anim [1 2 3 2 255]
+	else
+		part 1
+		pose 0
+	endi
+endm
+
+** bramboo Button Script (PART 6)
+scrp 2 23 24401 1004
+	lock
+** Make a Sound
+	snde "empb"
+** Animate the Button
+	part 6
+	pose 1
+** Animate the "BioEnergy" Readout
+	part 0
+	anim [1 2 3 4]
+** Animate the Snout
+	snde "empd"
+	part 2
+	anim [1 2 3 4 5 6 7 8 9 10 11]
+	over
+	setv va00 posx
+	setv va01 posy
+	subv va00 100
+	subv va01 25
+	inst
+	reps rand 2 4
+
+		new: simp 2 8 8 "bramboo" 10 97 306
+		seta ov16 null
+
+		attr 195
+		setv va83 rand 1.0 3.5
+		accg va83
+		elas 50
+		fric 100
+		aero 1
+
+		perm 50
+		bhvr 48
+** GENETIC VARIABLES
+** ov40 = GENETIC Cane Height
+		setv ov40 rand 6 8
+** ov41 = GENETIC Petal Red
+		setv ov41 rand 170 255
+** ov42 = GENETIC Petal Green
+		setv ov42 rand 170 255
+** ov43 = GENETIC Petal Blue
+		setv ov43 rand 170 255
+** ov44 = GENETIC Petal Rotation
+		setv ov44 rand 0 255
+** ov45 = GENETIC Petal Swap
+		setv ov45 rand 0 255
+** ov46 = GENETIC Fruit Red
+		setv ov46 rand 70 255
+** ov47 = GENETIC Fruit Green
+		setv ov47 rand 70 255
+** ov48 = GENETIC Fruit Blue
+		setv ov48 rand 70 255
+** ov49 = GENETIC Fruit Rotation
+		setv ov49 rand 0 255
+** ov50 = GENETIC Fruit Swap 
+		setv ov50 rand 0 255
+** Store the genetical height of the parent Bramboo cane
+		setv ov40 rand 6 8
+** Tint the Fruit
+		doif game "Bramboo_Genetic_RotnSwap" = 1
+			tint ov46 ov47 ov48 ov49 ov50
+		else
+			tint ov46 ov47 ov48 128 128
+		endi
+** Use the first fruit pose as the base
+		base va99
+** Store the Bramboo
+		seta ov16 ownr
+*				dbg: asrt type ov16 <> 0
+** Store original flower
+		setv va29 va00
+** Minus since it was added to in a loop
+		subv va29 1
+** Addition of base flower 60
+		setv ov17 va28
+** Give it a random Rot time (not genetic... yet!)
+		setv name "TimeToRot" rand 10 30
+** Make it emit the smell of protein
+		emit 6 .5
+** Start the fruit ripening
+		frat 50
+		anim [0 1 2 3 4]
+** tick
+		tick rand 400 600
+
+		mvto va00 va01
+		velo rand -5 10 rand 1 20
+
+
+		inst
+		base 20
+		pose 0
+
+	repe
+	slow
+	targ ownr
+	part 2
+	anim [12 13 14 15 16 17]
+	part 0
+	anim [4 3 2 1 0]
+	over
+	part 3
+	pose 0
+	doif ov00 = 1
+		part 1
+		frat 5
+		anim [1 2 3 2 255]
+	else
+		part 1
+		pose 0
+	endi
+endm
+** Carrot Button Script (PART 7)
+scrp 2 23 24401 1005
+	lock
+** Make a Sound
+	snde "empb"
+** Animate the Button
+	part 7
+	pose 1
+** Animate the "BioEnergy" Readout
+	part 0
+	anim [1 2 3 4]
+** Animate the Snout
+	snde "empd"
+	part 2
+	anim [1 2 3 4 5 6 7 8 9 10 11]
+	over
+	setv va00 posx
+	setv va01 posy
+	subv va00 100
+	subv va01 25
+	inst
+
+	reps rand 2 4
+		new: simp 2 11 9 "carr" 0 0 563
+		attr 210
+		bhvr 0
+		perm 64
+		accg 4
+		aero 3
+		elas 20
+		fric 100
+		pose 18
+		mvto va00 va01
+		velo rand -5 10 rand 1 20
+		emit 8 0
+		tick 1000
+** Which way does it face?
+		setv va03 rand 0 1
+		doif va03 = 0
+			sets name "direction" "left"
+			pose 2
+		elif va03 = 1
+			sets name "direction" "right"
+			pose 6
+		endi
+	repe
+
+	slow
+	targ ownr
+	part 2
+	anim [12 13 14 15 16 17]
+	part 0
+	anim [4 3 2 1 0]
+	over
+	part 4
+	pose 0
+	doif ov00 = 1
+
+		part 1
+		frat 5
+		anim [1 2 3 2 255]
+	else
+		part 1
+		pose 0
+	endi
+endm
+** Tuba Button Script (PART 8)
+scrp 2 23 24401 1006
+	lock
+** Make a Sound
+	snde "empb"
+** Animate the Button
+	part 8
+	pose 1
+** Animate the "BioEnergy" Readout
+	part 0
+	anim [1 2 3 4]
+** Animate the Snout
+	snde "empd"
+	part 2
+	anim [1 2 3 4 5 6 7 8 9 10 11]
+	over
+	setv va00 posx
+	setv va01 posy
+	subv va00 100
+	subv va01 25
+	inst
+	reps rand 1 3
+		new: simp 2 11 8 "tuba" 33 va90 4000
+		attr 194
+		bhvr 48
+		elas 0
+		accg 3
+		perm 52
+		emit 8 0.5
+		mvto va00 va01
+		velo rand -5 10 rand 1 20
+		pose 28
+		puhl -1 20 30
+		setv ov00 4
+		tick 100
+	repe
+	addv va00 1
+	slow
+	targ ownr
+	part 2
+	anim [12 13 14 15 16 17]
+	part 0
+	anim [4 3 2 1 0]
+	over
+	part 5
+	pose 0
+	doif ov00 = 1
+
+		part 1
+		frat 5
+		anim [1 2 3 2 255]
+	else
+		part 1
+		pose 0
+	endi
+endm
+
+** The Vendor's Ear
+scrp 2 23 24401 126
+	doif ov00 = 1
+		lock
+		sets va00 _p1_
+		seta va01 _p2_
+		inst
+		doif va01 <> null
+			targ ownr
+			rnge 1000
+** Check to see if you can actually see the speaker, if not.. get one of the pods to make some food!
+			doif seee ownr va01 = 1
+				setv va99 1
+			endi
+** Get the hunger sentances from the catalogues.
+** Protein
+			sets va10 read "Creature Drives" 1
+** Starch
+			sets va11 read "Creature Drives" 2
+** Fat
+			sets va12 read "Creature Drives" 3
+** Check Sentance to see if it wants Fat (Food)
+			doif sins lowa va00 1 lowa va12 <> -1
+				part 1
+				frat 2
+				anim [4 5 6 5 255]
+				snde "empv"
+				doif va99 = 0
+** Tell the Carrot Pod to make a Carrot
+					inst
+					enum 2 23 4
+						doif targ <> null
+							mesg writ targ 0
+						endi
+					next
+					wait 15
+					targ ownr
+					part 1
+					frat 5
+					anim [1 2 3 2 255]
+					stop
+				elif va99 = 1
+** Tell yourself to vend Peaking Pie
+					mesg writ ownr 1003
+					stop
+				endi
+			endi
+** Check Sentance to see if it wants Protein (Fruit)
+			doif sins lowa va00 1 lowa va10 <> -1
+				part 1
+				frat 2
+				anim [4 5 6 5 255]
+				doif va99 = 0
+** Tell the Lemon Pod to make a Lemon
+					inst
+					enum 2 23 6
+						doif targ <> null
+							mesg writ targ 0
+						endi
+					next
+					wait 15
+					targ ownr
+					part 1
+					frat 5
+					anim [1 2 3 2 255]
+					stop
+				elif va99 = 1
+** Tell yourself to vend Yarn Fruit
+
+					mesg writ ownr 1002
+					stop
+				endi
+			endi
+** Check Sentance to see if it wants Starch (Seeds)
+			doif sins lowa va00 1 lowa va11 <> -1
+				part 1
+				frat 2
+				anim [4 5 6 5 255]
+				doif va99 = 0
+** Tell the Nut Pod to make a Nut
+					inst
+					enum 2 23 5
+						doif targ <> null
+							mesg writ targ 0
+						endi
+					next
+					wait 15
+					targ ownr
+					part 1
+					frat 5
+					anim [1 2 3 2 255]
+					stop
+				elif va99 = 1
+** Tell yourself to vend Star Seeds
+					mesg writ ownr 1001
+					stop
+				endi
+			endi
+
+		endi
+	endi
+endm
+** Star Seed Eat Script
+scrp 2 3 15 12
+	lock
+	snde "reat"
+	stim writ from 77 1
+	inst
+	doif from <> null
+		targ from
+		chem 93 .25
+	endi
+	slow
+	kill ownr
+endm
+
+** Yarn Fruit Eat Script
+scrp 2 8 6 12
+	lock
+	snde "chwp"
+	stim writ from 78 1
+	addv ov01 1
+	doif ov01 <= 3
+		pose ov01
+	else
+		kill ownr
+	endi
+	inst
+	doif from <> null
+		targ from
+		chem 92 .15
+	endi
+	slow
+endm
+** Peaking Pie Eat Script
+scrp 2 11 7 12
+	lock
+	snde "reat"
+	stim writ from 79 1
+	addv ov01 1
+	doif ov01 <= 2
+		pose ov01
+	else
+		kill ownr
+	endi
+	inst
+	doif from <> null
+		targ from
+		chem 97 .175
+	endi
+	slow
+endm
+
+** Star Seed Timer
+scrp 2 3 15 9
+	addv ov01 1
+	doif ov01 >= 10 and carr = null and fall = 0
+		lock
+		inst
+		attr 16
+		bhvr 0
+		setv va00 0
+		slow
+		loop
+			alph va00 1
+			addv va00 4
+		untl va00 >= 256
+		setv va01 1
+	endi
+	doif va01 = 1
+		kill ownr
+	endi
+endm
+** Yarn Fruit Timer
+scrp 2 8 6 9
+	addv ov01 1
+	doif ov01 >= 10 and carr = null and fall = 0
+		lock
+		inst
+		attr 16
+		bhvr 0
+		setv va00 0
+		slow
+		loop
+			alph va00 1
+			addv va00 4
+		untl va00 >= 256
+		setv va01 1
+	endi
+	doif va01 = 1
+		kill ownr
+	endi
+endm
+** Peaking Pie Timer
+scrp 2 11 7 9
+	addv ov01 1
+	doif ov01 >= 10 and carr = null and fall = 0
+		lock
+		inst
+		attr 16
+		bhvr 0
+		setv va00 0
+		slow
+		loop
+			alph va00 1
+			addv va00 4
+		untl va00 >= 256
+		setv va01 1
+	endi
+	doif va01 = 1
+		kill ownr
+	endi
+endm
+
+
+
+
+
+
+
+
+
+** Star Seed Collision
+scrp 2 3 15 6
+	snde "dr10"
+endm
+** Yarn Fruit Collision
+scrp 2 8 6 6
+	snde "dr10"
+endm
+** Peaking Pie Collision
+scrp 2 11 7 6
+	snde "dr10"
+endm
+** Remove Script 
+rscr
+** Remove the Vendor
+enum 2 23 24401
+	kill targ
+next
+** Remove Star Seed
+enum 2 3 15
+	kill targ
+next
+** Remove Yarn Fruit
+enum 2 8 6
+	kill targ
+next
+** Remove Peaking Pie
+enum 2 11 7
+	kill targ
+next
+* kill bramboo not in meso
+enum 2 8 8
+	doif gmap posx posy <> 11
+		kill targ
+	endi
+next
+* kill carrots not in meso
+enum 2 11 9
+	doif gmap posx posy <> 11
+		kill targ
+	endi
+next
