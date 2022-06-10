@@ -4,12 +4,10 @@
   "description": "Launcher for the game Creatures. Includes a suite of mod development tools.",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "mocha",
-    "start": "npm run compile && electron-forge start",
-    "package": "npm run compile && electron-forge package",
-    "make": "npm run compile && electron-forge make",
-    "compile": "npm run clean ; tsc ; copyfiles -u 1 -e *.ts src/**/**/**/**/**/* dist/; copyfiles -u 1  hard-dependencies/*.js dist/hard-dependencies/;",
-    "clean": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true });\""
+    "start": "tsc && electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
   },
   "author": "Jacob Gantt",
   "license": "ISC",
@@ -21,41 +19,13 @@
     "@electron-forge/maker-zip": "^6.0.0-beta.61",
     "@types/node": "^17.0.5",
     "electron": "^15.3.4",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "node": ">=16.15.1"
   },
   "dependencies": {
     "cache-directory": "^2.0.0",
     "copyfiles": "^2.4.1",
     "electron-squirrel-startup": "^1.0.0",
     "jimp": "^0.10.3"
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "storyteller"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "StoryTeller"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
   }
 }
