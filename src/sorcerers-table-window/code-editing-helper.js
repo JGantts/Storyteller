@@ -9,6 +9,8 @@ const{
   GetNodesInRange,
 } = require('./html-editing-helper.js');
 
+const { AddHints } = require('./parser/hints.js');
+
 function checkCode(codeElement, codeText, caretPosition){
   $('#inprocessParse').text('');
   $('#highlighted').text('');
@@ -40,9 +42,11 @@ function checkCode(codeElement, codeText, caretPosition){
 
   var codeTree = Caos(codeText);
 
+  let codeTreeWithHints = AddHints(codeTree);
+
   //$('#inprocessParse').text(JSON.stringify(codeTree));
 
-  var highlighted = highlighter.highlightSyntax(codeTree, whiteSpaceList, commentList, codeText, 0);
+  var highlighted = highlighter.highlightSyntax(codeTreeWithHints, whiteSpaceList, commentList, codeText, 0);
 
   //$('#highlighted').text(highlighted);
 
