@@ -13,15 +13,12 @@
 }
 
 .credits-header {
-  display: flex;
-  align-items: center;
 	padding-top: 10px;
 	padding-bottom: 10px;
+  font-size: 32px;
 }
 
 .credits-entity {
-  display: flex;
-  align-items: center;
   width: 90%;
   margin: 10px;
   max-width: 33em;
@@ -48,17 +45,28 @@
   background: linear-gradient(to right, rgb(71,59,99), transparent);
 }
 
-.credits-name {
+.credits-entity-name-primary {
+  font-size: 32px;
+}
 
+.credits-entity-names-nonprimary {
+  display: flex;
+  align-items: center;
+}
+
+.credits-entity-name-nonprimary {
+  font-size: 12px;
+  font-style: italic;
+  padding-right: 8px;
 }
 
 
-.credits-contributions {
-
+.credits-entity-contributions {
+  font-size: 16px;
 }
 
-.credits-ad {
-
+.credits-entity-ad {
+  font-size: 12px;
 }
 
 
