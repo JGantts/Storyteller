@@ -35,7 +35,7 @@ function getCaretPositionWithin(element) {
 
       caretEndPosition = (
         getNodesInRange(prePlusInCaretRange)
-        .filter(node => && node.nodeType === Node.TEXT_NODE)
+        .filter(node => node.nodeType === Node.TEXT_NODE)
         .reduce(
           (total, node) => total + node.textContent.length,
           0
