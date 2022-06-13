@@ -63,25 +63,25 @@ function _highlightSyntax(codeTree){
     highlighted += _highlightSyntax(codeTree.end);
   }else if ('end-of-file' === codeTree.type){
     assert('error' === codeTree.variant);
-    highlighted += ` <span class='code-decorator tooltip-holder' contenteditable='false'>${codeTree.name}<span class='tooltip'>${
+    highlighted += ` <span class='code-decorator' contenteditable='false' title="${
       codeTree.message
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-    }</span></span>`;
+    }>"${codeTree.name}</span>`;
     highlighted += checkForWhiteSpaceAndComments();
   }else if ('error' === codeTree.variant){
-    highlighted += `<span class='syntax-error tooltip-holder' contenteditable='false'>${
+    highlighted += `<span class='syntax-error' contenteditable='false' title="${
+      codeTree.message
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+    }">${
       codeTree.name
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-    }<span class='tooltip'>${
-      codeTree.message
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-    }</span></span>`;
+    }</span>`;
     assert(
       codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
       codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
@@ -108,7 +108,7 @@ function _highlightSyntax(codeTree){
       highlighted += checkForWhiteSpaceAndComments();
       highlighted += _highlightSyntax(codeTree.varname);
     }else {
-      highlighted += `<span class='syntax-error tooltip-holder'>${codeTree.name}<span class='tooltip'>${codeTree.message}</span></span>`;
+      highlighted += `<span class='syntax-error' title='${codeTree.message}'>${codeTree.name}</span>`;
       assert(
         codeTree.name === codeText.substr(codeIndex, codeTree.name.length),
         codeTree.name +'|'+ codeText.substr(codeIndex, codeTree.name.length)
@@ -184,7 +184,7 @@ function _highlightSyntax(codeTree){
     highlighted += checkForWhiteSpaceAndComments();
   }else if ('number-string-variable' === codeTree.type){
     assert('error' === codeTree.variant);
-    highlighted += `\n<span class='code-decorator tooltip-holder' contenteditable='false'>EOF<span class='tooltip'>${codeTree.message}</span></span>`;
+    highlighted += `\n<span class='code-decorator' contenteditable='false' title='${codeTree.message}'>EOF</span>`;
   }else if (['label'].includes(codeTree.type)) {
     highlighted += `<span class='syntax-${codeTree.type}'>${codeTree.name}</span>`;
     codeIndex += codeTree.name.length;

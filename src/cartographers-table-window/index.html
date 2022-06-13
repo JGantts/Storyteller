@@ -11,81 +11,70 @@
   <div style='height: 100%; background-color: rgba(0,0,0,0); width: 100%;'>
     <div style='height: 25px; width: 100%; border: 0; margin: 0; padding: 0; background-color: #3F2933;'>
 
-      <div class='banner-button tooltip-holder' class='tooltip-holder'>
-        <button id='new-file' onclick='newFile()'>
+      <div class='banner-button'>
+        <button id='new-file' onclick='newFile()' title='New File'>
           <img src='icons/CAOS Icons_File.png' width='25rem' height='25rem'/>
         </button>
-        <span class='tooltip'>New File</span>
       </div>
-      <div class='banner-button tooltip-holder'>
-        <button id='open-file' onclick='openFile()'>
+      <div class='banner-button'>
+        <button id='open-file' onclick='openFile()' title='Open File'>
           <img src='icons/CAOS Icons_Open File.png' width='25rem' height='25rem' />
         </button>
-        <span class='tooltip'>Open File</span>
       </div>
-      <div class='banner-button tooltip-holder'>
-        <button id='import-caos' onclick='importFromCaos()'>
+      <div class='banner-button'>
+        <button id='import-caos' onclick='importFromCaos()' title='Import from CAOS'>
           <img src='icons/import-caos.svg' width='25rem' height='25rem' style='opacity: 1.0;' />
         </button>
-        <span class='tooltip'>Import from CAOS</span>
       </div>
 
 
       <div class='banner-divider'></div>
 
-      <div class='banner-button tooltip-holder'>
-        <button id='save-file' onclick='saveFile()'>
+      <div class='banner-button'>
+        <button id='save-file' onclick='saveFile()' title='Save File'>
           <img id='save-file-img' src='icons/CAOS Icons_Save-03.png' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
-        <span class='tooltip'>Save File</span>
       </div>
-      <div class='banner-button tooltip-holder'>
-        <button id='save-as' onclick='saveAs()'>
+      <div class='banner-button'>
+        <button id='save-as' onclick='saveAs()' title='Save as'>
           <img id='save-as-img' src='icons/save-as.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
-        <span class='tooltip'>Save as</span>
       </div>
-      <div class='banner-button tooltip-holder'>
-        <button id='save-copy' onclick='saveCopy()'>
+      <div class='banner-button'>
+        <button id='save-copy' onclick='saveCopy()' title='Save copy'>
           <img id='save-copy-img' src='icons/save-as.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
-        <span class='tooltip'>Save copy</span>
       </div>
-      <div class='banner-button tooltip-holder'>
-        <button id='export-caos' onclick='exportToCaos()'>
+      <div class='banner-button'>
+        <button id='export-caos' onclick='exportToCaos()' title='Export to CAOS'>
           <img id='export-caos-img' src='icons/export-caos.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
-        <span class='tooltip'>Export to CAOS</span>
       </div>
 
       <div class='banner-divider'></div>
 
-      <div class='banner-button tooltip-holder'>
-        <button id='undo' onclick='undo()'>
+      <div class='banner-button'>
+        <button id='undo' onclick='undo()' title='Undo'>
           <img id='undo-button-img' src='icons/CAOS Icons_Undo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
-        <span class='tooltip'>Undo</span>
       </div>
-      <div class='banner-button tooltip-holder'>
-        <button id='redo' onclick='redo()'>
+      <div class='banner-button'>
+        <button id='redo' onclick='redo()' title='Redo'>
           <img id='redo-button-img' src='icons/CAOS Icons_Redo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
-        <span class='tooltip'>Redo</span>
       </div>
 
       <div class='banner-divider'></div>
 
-      <div class='banner-button tooltip-holder'>
-        <button id='view-edit-room-type' onclick='viewEditRoomType()'>
+      <div class='banner-button'>
+        <button id='view-edit-room-type' onclick='viewEditRoomType()' title='View/edit Room Types'>
           <img id='view-edit-room-type-img' src='icons/edit-room-types.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
-        <span class='tooltip'>View/edit Room Types</span>
       </div>
-      <div class='banner-button tooltip-holder'>
-        <button id='one-to-one-zoom' onclick='oneToOneZoom()'>
+      <div class='banner-button'>
+        <button id='one-to-one-zoom' onclick='oneToOneZoom()' title='1:1 Zoom'>
           <img id='one-to-one-zoom-img' src='icons/1xview.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
         </button>
-        <span class='tooltip'>1:1 Zoom</span>
       </div>
     </div>
     <div
@@ -149,9 +138,8 @@
 <div>
 <template id="properties-panel-metaroom">
   <div style="font-size:12;">
-    <div class="tooltip-holder" style="padding: 3px; text-align: center; font-size 12;">
-      <img src="./icons/key.svg" width='20rem' height='20rem'/>
-      <span class='tooltip'>Key</span>
+    <div class="" style="padding: 3px; text-align: center; font-size 12;">
+      <img src="./icons/key.svg" width='20rem' height='20rem' title='Key'/>
       <div id="property-id" style="font-family: Courier;">
       </div>
     </div>
@@ -162,10 +150,10 @@
     <hr />
 
     <div style="padding: 3px;">
-      <div class=" tooltip-holder">
+      <div class="">
         <img src="./icons/x.svg" width='20rem' height='20rem'
-        style="vertical-align: middle; float: left; padding-right: 5px"/>
-        <span class='tooltip'>x Position (Horizontal)</span>
+        style="vertical-align: middle; float: left; padding-right: 5px"\
+        title='x Position (Horizontal)'/>
       </div>
       <input
         id="property-x"
@@ -177,10 +165,10 @@
         oninput="xChange(this.value)">
     </div>
     <div style="padding: 3px;">
-      <div class=" tooltip-holder">
+      <div class="">
         <img src="./icons/y.svg" width='20rem' height='20rem'
-        style="vertical-align: middle; float: left; padding-right: 5px"/>
-        <span class='tooltip'>y Position (Vertical)</span>
+        style="vertical-align: middle; float: left; padding-right: 5px"
+        title='y Position (Vertical)'/>
       </div>
       <input
         id="property-y"
@@ -192,20 +180,20 @@
         oninput="yChange(this.value)">
     </div>
     <div style="padding: 3px;">
-      <div class=" tooltip-holder">
+      <div class="">
         <img src="./icons/width.svg" width='20rem' height='20rem'
-        style="vertical-align: middle; float: left; padding-right: 5px"/>
-        <span class='tooltip'>Width</span>
+        style="vertical-align: middle; float: left; padding-right: 5px"
+        title='Width'/>
       </div>
       <div id="property-width" style="font-size: 12;">
 
       </div>
     </div>
     <div style="padding: 3px;">
-      <div class=" tooltip-holder">
+      <div class="">
         <img src="./icons/height.svg" width='20rem' height='20rem'
-        style="vertical-align: middle; float: left; padding-right: 5px"/>
-        <span class='tooltip'>Height</span>
+        style="vertical-align: middle; float: left; padding-right: 5px"
+        title='Height'/>
       </div>
       <div id="property-height" style="font-size: 12;">
 
@@ -215,10 +203,10 @@
     <hr />
 
     <div style="padding: 3px;">
-      <div class=" tooltip-holder">
+      <div class="">
         <img src="./icons/background.svg" width='18rem' height='18rem'
-        style="float: left; padding-right: 5px"/>
-        <span class='tooltip'>Background</span>
+        style="float: left; padding-right: 5px"
+        title='Background'/>
       </div>
       <div id="property-background" style="font-size: 12; word-wrap: break-word">
 
@@ -227,10 +215,10 @@
 
     <div style="padding: 3px;">
       <div class="row">
-        <div class=" tooltip-holder">
+        <div class="">
           <img src="./icons/music.svg" width='20rem' height='20rem'
-          style="vertical-align: middle; float: left; padding-right: 5px"/>
-          <span class='tooltip'>Music</span>
+          style="vertical-align: middle; float: left; padding-right: 5px"
+          title='Music'/>
         </div>
         <!--<button class="standard-button columnn" onclick="permDown()">
           <img src="./icons/downsolid.svg" width='20rem' height='20rem'
@@ -258,9 +246,8 @@
 <template id="properties-panel-room">
   <div style="font-size:12;">
     <div style="padding: 3px; text-align: center;">
-      <div class=" tooltip-holder">
-        <img src="./icons/key.svg" width='20rem' height='20rem'/>
-        <span class='tooltip'>Key</span>
+      <div class="">
+        <img src="./icons/key.svg" width='20rem' height='20rem' title='Key'/>
       </div>
       <div id="property-id" style="font-family: Courier;">
       </div>
@@ -320,12 +307,12 @@
 
     <div class="row">
       <div class="column-static">
-        <div class=" tooltip-holder">
+        <div class="">
           <img src="./icons/room-type.svg" width='20rem' height='20rem'
             style='
               padding: 0 6px;
-            '>
-          <span class='tooltip'>Room Type</span>
+            '
+            title='Room Type'>
         </div>
       </div>
       <div id="property-room-type" class="column-fill"
@@ -336,10 +323,10 @@
 
     <div style="padding: 3px;">
       <div class="row">
-        <div class=" tooltip-holder">
+        <div class="">
           <img src="./icons/roommusic.svg" width='20rem' height='20rem'
-          style="vertical-align: middle; float: left; padding-right: 5px"/>
-          <span class='tooltip'>Room Music</span>
+          style="vertical-align: middle; float: left; padding-right: 5px"
+          title='Room Music'/>
         </div>
         <!--<button class="standard-button columnn" onclick="permDown()">
           <img src="./icons/downsolid.svg" width='20rem' height='20rem'
@@ -366,28 +353,28 @@
 
 <template id="properties-panel-door">
   <div style="font-size:12;">
-    <div class=" tooltip-holder" style="padding: 3px;">
+    <div class="" style="padding: 3px;">
       <img src="./icons/line-start.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>Start</span>
+      style="vertical-align: middle; float: left; padding-right: 5px"
+      title='Start'/>
       <div id="property-start" style="font-size: 12;">
 
       </div>
     </div>
-    <div class=" tooltip-holder" style="padding: 3px;">
+    <div class="" style="padding: 3px;">
       <img src="./icons/line-end.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>End</span>
+      style="vertical-align: middle; float: left; padding-right: 5px"
+      title='End'/>
       <div id="property-end" style="font-size: 12;">
 
       </div>
     </div>
     <div style="padding: 3px;">
       <div class="row">
-        <div class=" tooltip-holder">
+        <div class="">
         <img src="./icons/ca.svg" width='20rem' height='20rem'
-        style="vertical-align: middle; float: left; padding-right: 5px"/>
-        <span class='tooltip'>Permeability</span>
+        style="vertical-align: middle; float: left; padding-right: 5px"
+        title='Permeability'/>
         </div>
         <!--<button class="standard-button columnn" onclick="permDown()">
           <img src="./icons/downsolid.svg" width='20rem' height='20rem'
@@ -412,18 +399,18 @@
 
 <template id="properties-panel-wall">
   <div style="font-size:12;">
-    <div class=" tooltip-holder" style="padding: 3px;">
+    <div class="" style="padding: 3px;">
       <img src="./icons/line-start.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>Start</span>
+      style="vertical-align: middle; float: left; padding-right: 5px"
+      title='Start'/>
       <div id="property-start" style="font-size: 12;">
 
       </div>
     </div>
-    <div class=" tooltip-holder" style="padding: 3px;">
+    <div class="" style="padding: 3px;">
       <img src="./icons/line-end.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>End</span>
+      style="vertical-align: middle; float: left; padding-right: 5px"
+      title='End'/>
       <div id="property-end" style="font-size: 12;">
 
       </div>
@@ -438,10 +425,10 @@
 
 <template id="properties-panel-point">
   <div style="font-size:12;">
-    <div class=" tooltip-holder" style="padding: 3px;">
+    <div class="" style="padding: 3px;">
       <img src="./icons/location.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>Location</span>
+      style="vertical-align: middle; float: left; padding-right: 5px"
+      title='Location'/>
       <div id="property-location" style="font-size: 12;">
 
       </div>
@@ -451,10 +438,10 @@
 
 <template id="properties-panel-corner">
   <div style="font-size:12;">
-    <div class=" tooltip-holder" style="padding: 3px;">
+    <div class="" style="padding: 3px;">
       <img src="./icons/location.svg" width='20rem' height='20rem'
-      style="vertical-align: middle; float: left; padding-right: 5px"/>
-      <span class='tooltip'>Location</span>
+      style="vertical-align: middle; float: left; padding-right: 5px"
+      title='Location'/>
       <div id="property-location" style="font-size: 12;">
 
       </div>
@@ -467,11 +454,10 @@
     <div class="row">
       <div class="column-padding"></div>
       <div class="column">
-        <div class='tooltip-holder'>
-          <button class="standard-button" onclick="editRoomtypes()">
+        <div class=''>
+          <button class="standard-button" onclick="editRoomtypes()" title='Edit room type'>
             <img src='icons/bucket.svg' width='50rem' height='50rem'/>
           </button>
-          <span class='tooltip'>Edit room type</span>
         </div>
       </div>
       <div class="column"></div>
@@ -657,9 +643,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/sound.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Sound</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/sound.svg' width='32.5rem' height='32.5rem' title='Sound'/>
       </div>
       <div id="ca-0-gain" class="ca-table-cell">0.00</div>
       <div id="ca-0-loss" class="ca-table-cell">1.00</div>
@@ -667,9 +652,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/light.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Light</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/light.svg' width='32.5rem' height='32.5rem' title='Light'/>
       </div>
       <div id="ca-1-gain" class="ca-table-cell">0.00</div>
       <div id="ca-1-loss" class="ca-table-cell">1.00</div>
@@ -677,9 +661,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/flame.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Heat</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/flame.svg' width='32.5rem' height='32.5rem' title='Heat'/>
       </div>
       <div id="ca-2-gain" class="ca-table-cell">0.00</div>
       <div id="ca-2-loss" class="ca-table-cell">1.00</div>
@@ -687,9 +670,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/rain.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Water</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/rain.svg' width='32.5rem' height='32.5rem' title='Water'/>
       </div>
       <div id="ca-3-gain" class="ca-table-cell">0.00</div>
       <div id="ca-3-loss" class="ca-table-cell">1.00</div>
@@ -697,9 +679,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/leaf.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Nutrient</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/leaf.svg' width='32.5rem' height='32.5rem' title='Nutrient'/>
       </div>
       <div id="ca-4-gain" class="ca-table-cell">0.00</div>
       <div id="ca-4-loss" class="ca-table-cell">1.00</div>
@@ -707,9 +688,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/water_pool.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Moisture</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/water_pool.svg' width='32.5rem' height='32.5rem' title='Moisture'/>
       </div>
       <div id="ca-5-gain" class="ca-table-cell">0.00</div>
       <div id="ca-5-loss" class="ca-table-cell">1.00</div>
@@ -717,9 +697,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/protien.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Protein</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/protien.svg' width='32.5rem' height='32.5rem' title='Protein'/>
       </div>
       <div id="ca-6-gain" class="ca-table-cell">0.00</div>
       <div id="ca-6-loss" class="ca-table-cell">1.00</div>
@@ -727,9 +706,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/starch.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Carbs</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/starch.svg' width='32.5rem' height='32.5rem' title='Carbs'/>
       </div>
       <div id="ca-7-gain" class="ca-table-cell">0.00</div>
       <div id="ca-7-loss" class="ca-table-cell">1.00</div>
@@ -737,9 +715,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/fat.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Fat</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/fat.svg' width='32.5rem' height='32.5rem' title='Fat'/>
       </div>
       <div id="ca-8-gain" class="ca-table-cell">0.00</div>
       <div id="ca-8-loss" class="ca-table-cell">1.00</div>
@@ -747,9 +724,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/MACHINERY.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Machinery</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/MACHINERY.svg' width='32.5rem' height='32.5rem' title='Machinery'/>
       </div>
       <div id="ca-10-gain" class="ca-table-cell">0.00</div>
       <div id="ca-10-loss" class="ca-table-cell">1.00</div>
@@ -757,9 +733,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/egg.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Eggs</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/egg.svg' width='32.5rem' height='32.5rem' title='Eggs'/>
       </div>
       <div id="ca-11-gain" class="ca-table-cell">0.00</div>
       <div id="ca-11-loss" class="ca-table-cell">1.00</div>
@@ -767,9 +742,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/Norn.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Norn</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/Norn.svg' width='32.5rem' height='32.5rem' title='Norn'/>
       </div>
       <div id="ca-12-gain" class="ca-table-cell">0.00</div>
       <div id="ca-12-loss" class="ca-table-cell">1.00</div>
@@ -777,9 +751,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/grendel.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Grendel</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/grendel.svg' width='32.5rem' height='32.5rem' title='Grendel'/>
       </div>
       <div id="ca-13-gain" class="ca-table-cell">0.00</div>
       <div id="ca-13-loss" class="ca-table-cell">1.00</div>
@@ -787,9 +760,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/ettin.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Ettin</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/ettin.svg' width='32.5rem' height='32.5rem' title='Ettin'/>
       </div>
       <div id="ca-14-gain" class="ca-table-cell">0.00</div>
       <div id="ca-14-loss" class="ca-table-cell">1.00</div>
@@ -797,9 +769,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/nornhome.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Norn home</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/nornhome.svg' width='32.5rem' height='32.5rem' title='Norn home'/>
       </div>
       <div id="ca-15-gain" class="ca-table-cell">0.00</div>
       <div id="ca-15-loss" class="ca-table-cell">1.00</div>
@@ -807,9 +778,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/GrendelHome.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Grendle Home</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/GrendelHome.svg' width='32.5rem' height='32.5rem' title='Grendle Home'/>
       </div>
       <div id="ca-16-gain" class="ca-table-cell">0.00</div>
       <div id="ca-16-loss" class="ca-table-cell">1.00</div>
@@ -817,9 +787,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/EttinHome.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Ettin Home</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/EttinHome.svg' width='32.5rem' height='32.5rem' title='Ettin Home'/>
       </div>
       <div id="ca-17-gain" class="ca-table-cell">0.00</div>
       <div id="ca-17-loss" class="ca-table-cell">1.00</div>
@@ -827,9 +796,8 @@
     </div>
 
     <div class="ca-table-row">
-      <div class='ca-table-cell tooltip-holder'>
-        <img class='filter-white' src='./icons/CAs/gadget.svg' width='32.5rem' height='32.5rem'/>
-        <span class='tooltip'>Gadgets</span>
+      <div class='ca-table-cell'>
+        <img class='filter-white' src='./icons/CAs/gadget.svg' width='32.5rem' height='32.5rem' title='Gadgets'/>
       </div>
       <div id="ca-18-gain" class="ca-table-cell">0.00</div>
       <div id="ca-18-loss" class="ca-table-cell">1.00</div>

@@ -1,4 +1,5 @@
 <script>window.$ = window.jQuery = require('../../hard-dependencies/jquery-3.6.0.min.js');</script>
+<script src='../../node_modules/jquery-ui-dist/jquery-ui.min.js'></script>
 <link rel='stylesheet' type='text/css' href='index.css'>
 <link rel="stylesheet" type="text/css" href='syntax-highlighting/syntax-highlighting-furjan1.css'/>
 
@@ -9,95 +10,82 @@
 <div style='height: 100%; background-color: rgba(0,0,0,0);' width: 100%;>
   <div style='height: 25px; width: 100%; border: 0; margin: 0; padding: 0; background-color: #292F42;'>
 
-    <div class='banner-button tooltip-holder' class='tooltip-holder'>
-      <button id='execute' onclick='newFile()'>
+    <div class='banner-button'>
+      <button id='execute' onclick='newFile()' title='New File'>
         <img id='new-file-img' src='icons/CAOS Icons_File.png' width='25rem' height='25rem'/>
       </button>
-      <span class='tooltip'>New File</span>
     </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='openFile()'>
+    <div class='banner-button'>
+      <button id='execute' onclick='openFile()' title='Open File'>
         <img id='open-file-img' src='icons/CAOS Icons_Open File.png' width='25rem' height='25rem' />
       </button>
-      <span class='tooltip'>Open File</span>
     </div>
 
     <div class='banner-divider'></div>
 
-    <div class='banner-button tooltip-holder'>
-      <button id='saveFile' onclick='saveFile()'>
+    <div class='banner-button'>
+      <button id='saveFile' onclick='saveFile()' title='Save File'>
         <img id='save-file-img' src='icons/CAOS Icons_Save-03.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
-      <span class='tooltip'>Save File</span>
     </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='save-as' onclick='saveAs()'>
+    <div class='banner-button'>
+      <button id='save-as' onclick='saveAs()' title='Save as'>
         <img id='save-as-img' src='icons/save-as.svg' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
-      <span class='tooltip'>Save as</span>
     </div>
 
     <div class='banner-divider'></div>
 
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='cut()'>
+    <div class='banner-button'>
+      <button id='execute' onclick='cut()' title='Cut'>
         <img id='cut-img' src='icons/CAOS Icons_Cut.png' width='25rem' height='25rem' />
       </button>
-      <span class='tooltip'>Cut</span>
     </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='copy()'>
+    <div class='banner-button'>
+      <button id='execute' onclick='copy()' title='Copy'>
         <img id='copy-img' src='icons/CAOS Icons_Paste-06.png' width='25rem' height='25rem' />
       </button>
-      <span class='tooltip'>Copy</span>
     </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='paste()'>
+    <div class='banner-button'>
+      <button id='execute' onclick='paste()' title='Paste'>
         <img id='paste-img' src='icons/CAOS Icons_Paste-07.png' width='25rem' height='25rem' />
       </button>
-      <span class='tooltip'>Paste</span>
     </div>
 
     <div class='banner-divider'></div>
 
-    <div class='banner-button tooltip-holder'>
-      <button onclick='undo()'>
+    <div class='banner-button'>
+      <button onclick='undo()' title='Undo'>
         <img id='undo-button-img' src='icons/CAOS Icons_Undo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
-      <span class='tooltip'>Undo</span>
     </div>
-    <div class='banner-button tooltip-holder'>
-      <button onclick='redo()'>
+    <div class='banner-button'>
+      <button onclick='redo()' title='Redo'>
         <img id='redo-button-img' src='icons/CAOS Icons_Redo.png' width='25rem' height='25rem' style='opacity: 0.4;' />
       </button>
-      <span class='tooltip'>Redo</span>
     </div>
 
     <div class='banner-divider'></div>
 
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='injectInstall()'>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectInstall()' title='Install Script'>
         <img id='install-script-img' src='icons/CAOS Icons_Code-16.png' width='25rem' height='25rem' />
       </button>
-      <span class='tooltip'>Install Script</span>
     </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='injectEvents()'>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectEvents()' title='Events Scripts'>
         <img id='events-scripts-img' src='icons/CAOS Icons_Code-17.png' width='25rem' height='25rem' />
       </button>
-      <span class='tooltip'>Events Scripts</span>
     </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='injectAll()'>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectAll()' title='Remove, Events, Install'>
         <img id='all-scripts-img' src='icons/CAOS Icons_Code-18.png' width='25rem' height='25rem' />
       </button>
-      <span class='tooltip'>Remove, Events, Install</span>
     </div>
-    <div class='banner-button tooltip-holder'>
-      <button id='execute' onclick='injectRemove()'>
+    <div class='banner-button'>
+      <button id='execute' onclick='injectRemove()' title='Remove Script'>
         <img id='remove-script-img' src='icons/CAOS Icons_Code-19.png' width='25rem' height='25rem' />
       </button>
-      <span class='tooltip'>Remove Script</span>
     </div>
 
   </div>

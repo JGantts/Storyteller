@@ -42,7 +42,7 @@ function checkCode(codeElement, codeText, caretPosition){
 
   var codeTree = Caos(codeText);
 
-  let codeTreeWithHints = AddHints(codeTree);
+  let codeTreeWithHints = codeTree;//AddHints(codeTree);
 
   //$('#inprocessParse').text(JSON.stringify(codeTree));
 

@@ -22,10 +22,7 @@ function getCaretPositionWithin(element) {
 
       caretStartPosition = (
         getNodesInRange(preCaretRange)
-        .filter(node =>
-          node.parentNode.className !== 'tooltip'
-          && node.nodeType === Node.TEXT_NODE
-        )
+        .filter(node => node.nodeType === Node.TEXT_NODE)
         .reduce(
           (total, node) => total + node.textContent.length,
           0
@@ -38,10 +35,7 @@ function getCaretPositionWithin(element) {
 
       caretEndPosition = (
         getNodesInRange(prePlusInCaretRange)
-        .filter(node =>
-          node.parentNode.className !== 'tooltip'
-          && node.nodeType === Node.TEXT_NODE
-        )
+        .filter(node => && node.nodeType === Node.TEXT_NODE)
         .reduce(
           (total, node) => total + node.textContent.length,
           0
@@ -64,9 +58,6 @@ function setCaretPositionWithin(element, caretPosition) {
     getNodesInRange(range)
     .filter(node =>
       node.parentNode.tagName !== 'DIV'
-    )
-    .filter(node =>
-      node.parentNode.className !== 'tooltip'
     )
     .filter(node =>
       node.nodeType === Node.TEXT_NODE
@@ -110,8 +101,7 @@ function getVisibleTextInElement(element){
   return (getNodesInRange(range)
     .filter(node =>
       {
-        return node.parentNode.className !== 'tooltip'
-          && node.parentNode.className.includes('syntax-')
+        return node.parentNode.className.includes('syntax-')
           && node.nodeType === Node.TEXT_NODE;
       }
     )
