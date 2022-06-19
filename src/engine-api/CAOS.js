@@ -1,9 +1,13 @@
+
+
 var net = require('net');
 
 var caosAssumedWindowsEncoding = 'latin1';
 // TODO: Configuration method for these - this should be a persistent application-global.
-var caosAssumedHost = '192.168.1.28';
+var caosAssumedHost = '172.16.137.128';
 var caosAssumedPort = 19960;
+
+class CPXError extends Error {}
 
 // Buffer -> Promise<Buffer>
 var rawCaosRequest = (requestBuffer) => {
@@ -37,13 +41,13 @@ var rawCaosRequest = (requestBuffer) => {
 // Buffer -> string
 var decodeCaosResponse = async (input) => {
   if (input.length < 24)
-    return "Error connecting to CPX Server (used to connect to the game). Is caosprox.exe running?";
+    throw new CPXError("Error connecting to CPX Server (used to connect to the game). Is caosprox.exe running?");
   if (input.length < 48)
-    return "CPX Server (used to connect to the game) did not respond to the request properly. Was the connection interrupted?";
+    throw new CPXError("CPX Server (used to connect to the game) did not respond to the request properly. Was the connection interrupted?");
   var responseType = input.readInt32LE(32);
   var expectedResponseLength = input.readInt32LE(36);
   if (expectedResponseLength != (input.length - 48))
-    return "CPX Server response length did not match.";
+    throw new CPXError("CPX Server response length did not match.");
   return input.slice(48, 48 + expectedResponseLength - 1).toString(caosAssumedWindowsEncoding);
 };
 

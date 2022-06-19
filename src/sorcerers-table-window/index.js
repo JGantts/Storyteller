@@ -300,6 +300,10 @@ async function injectRemove(){
 async function injectUserCode(doInstall, doEvents, doRemove){
   let resultElement = document.getElementById('caos-result');
   resultElement.innerHTML = '';
+
+  resultElement.innerHTML += `[ ${doRemove ? "remove " : "" }${doEvents ? "events " : ""}${doInstall ? "install " : ""}]<br />`;
+
+
   let codeText = GetVisibleTextInElement(codeElement);
   let codeTree = Caos(codeText);
 
@@ -311,12 +315,21 @@ async function injectUserCode(doInstall, doEvents, doRemove){
 
   if (doRemove && codeTree.remove){
     let remove = TreeToText(codeTree.remove).slice(5);
-    executeCaos(remove, function (error, result) {
-        if (error) console.log(error);
+    try {
+      let result = await executeCaos(remove);
+      resultElement.innerHTML += 'Injected remove script:<br />';
+      resultElement.innerHTML += result;
+    } catch (err)  {
+      console.log(err)
+      if (err instanceof CPXError) {
         resultElement.innerHTML += 'Injected remove script:<br />';
-        resultElement.innerHTML += result + '<br />';
-    });
+        resultElement.innerHTML += err;
+      } else {
+        throw err;
+      }
+    }
   }
+
 
   if(doEvents && codeTree.eventScripts.length >= 1){
     let events = codeTree.eventScripts
@@ -328,26 +341,37 @@ async function injectUserCode(doInstall, doEvents, doRemove){
         script: TreeToText(script.commands)
       };});
 
-    events.forEach((script, i) => {
-      injectScript(script, function (error, result) {
-          if (error) console.log(error);
+    for (let script of events) {
+      try {
+        let result = await injectScript(script);
+        resultElement.innerHTML += `Injected ${script.family} ${script.genus} ${script.species} ${script.eventNum} event script:<br />`;
+        resultElement.innerHTML += result + '<br />';
+      } catch (err) {
+        if (err instanceof CPXError) {
           resultElement.innerHTML += `Injected ${script.family} ${script.genus} ${script.species} ${script.eventNum} event script:<br />`;
-          resultElement.innerHTML += result + '<br />';
-      });
-    });
+          resultElement.innerHTML += err;
+        } else {
+          throw err;
+        }
+      }
+    }
   }
-
-
-    console.log(doInstall);
 
   if (doInstall && codeTree.inject){
     let inject = TreeToText(codeTree.inject);
-    console.log(inject);
-    let result = await executeCaos(inject);
-    resultElement.innerHTML += 'Injected install script:<br />';
-    resultElement.innerHTML += result;
+    try {
+      let result = await executeCaos(inject);
+      resultElement.innerHTML += 'Injected install script:<br />';
+      resultElement.innerHTML += result;
+    } catch (err)  {
+      if (err instanceof CPXError) {
+        resultElement.innerHTML += 'Injected install script:<br />';
+        resultElement.innerHTML += err;
+      } else {
+        throw err;
+      }
+    }
   }
-
 }
 
 function userTextKeyDown(event){
