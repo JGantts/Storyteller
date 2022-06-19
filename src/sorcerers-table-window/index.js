@@ -281,23 +281,23 @@ function autoFormat(){
 
 }
 
-function injectInstall(){
-  injectUserCode(true, false, false);
+async function injectInstall(){
+  await injectUserCode(true, false, false);
 }
 
-function injectEvents(){
-  injectUserCode(false, true, false);
+async function injectEvents(){
+  await injectUserCode(false, true, false);
 }
 
-function injectAll(){
-  injectUserCode(true, true, true);
+async function injectAll(){
+  await injectUserCode(true, true, true);
 }
 
-function injectRemove(){
-  injectUserCode(false, false, true);
+async function injectRemove(){
+  await injectUserCode(false, false, true);
 }
 
-function injectUserCode(doInstall, doEvents, doRemove){
+async function injectUserCode(doInstall, doEvents, doRemove){
   let resultElement = document.getElementById('caos-result');
   resultElement.innerHTML = '';
   let codeText = GetVisibleTextInElement(codeElement);
@@ -338,14 +338,16 @@ function injectUserCode(doInstall, doEvents, doRemove){
   }
 
 
+    console.log(doInstall);
+
   if (doInstall && codeTree.inject){
     let inject = TreeToText(codeTree.inject);
-    executeCaos(inject, function (error, result) {
-        if (error) console.log(error);
-        resultElement.innerHTML += 'Injected install script:<br />';
-        resultElement.innerHTML += result;
-    });
+    console.log(inject);
+    let result = await executeCaos(inject);
+    resultElement.innerHTML += 'Injected install script:<br />';
+    resultElement.innerHTML += result;
   }
+
 }
 
 function userTextKeyDown(event){
