@@ -1,4 +1,5 @@
 $.getScript('../engine-api/CAOS.js');
+const ipcRenderer = require('electron').ipcRenderer;
 
 function executeUserCode(){
   let caosUserCode = document.getElementById('caos-user-code').value;
