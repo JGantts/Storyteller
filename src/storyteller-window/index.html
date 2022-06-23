@@ -5,11 +5,15 @@
 <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
 <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 <script>window.$ = window.jQuery = require('../../hard-dependencies/jquery-3.6.0.min.js');</script>
+<script>
+    var exports = {};
+</script>
 <link rel="stylesheet" type="text/css" href="index.css">
 <link rel="stylesheet" type="text/css" href="title-bar.css">
 <link rel="stylesheet" type="text/css" href="menu-bar.css">
 <link rel="stylesheet" type="text/css" href="scrollbar.css">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="./index.js"></script>
 </head>
 
 <body>
@@ -23,7 +27,7 @@
 </header>
 
 <template id="settings-button" >
-  <button id='nav-btn-settings' href='#' class='nav-btn icon' onclick='loadSettingsPage(this.id);' draggable='false'>
+  <button id='nav-btn-settings' href='#' class='nav-btn icon' draggable='false'>
     <span class='icon'>
       <img class='icon' src="icons/settings.svg" height='10px' draggable="false"/>
     </span>
@@ -31,7 +35,7 @@
 </template>
 
 <template id="rest-of-buttons" >
-    <button id='nav-btn-local' href='#' class='nav-btn active' onclick='loadLocalPage(this.id);' draggable='false'>
+    <button id='nav-btn-local' href='#' class='nav-btn active' draggable='false'>
       <span class='icon'>
         <img class='icon' src="icons/folder.svg" height='10px' draggable="false"/>
       </span>
@@ -39,7 +43,7 @@
         Home
       </span>
     </button>
-    <button id='nav-btn-server' href='#' class='nav-btn' onclick='loadServerPage(this.id);' draggable='false'>
+    <button id='nav-btn-server' href='#' class='nav-btn' draggable='false'>
       <span class='icon'>
         <img class='icon' src="icons/cloud.svg" height='10px' draggable="false"/>
       </span>
@@ -55,7 +59,7 @@
         Eem Foo
       </span>
     </button>-->
-    <button id='nav-btn-dev' href='#' class='nav-btn' onclick='loadDevToolsPage(this.id);' draggable='false'>
+    <button id='nav-btn-dev' href='#' class='nav-btn' draggable='false'>
       <span class='icon'>
         <img class='icon' src="icons/wrench.svg" height='10px' draggable="false"/>
       </span>
@@ -92,9 +96,6 @@
     </div>
   </div>
 </template>
-
-<script src="menu-bar.js" type="text/javascript"></script>
-<script src="window-controls.js" type="text/javascript"></script>
 
 </body>
 </html>

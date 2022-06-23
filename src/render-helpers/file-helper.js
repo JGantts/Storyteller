@@ -41,12 +41,14 @@ class FileHelper {
                   if (promise.reject) {
                       promise.reject(args.args);
                   } else {
-                      console.log(args.args);
+                      console.log("You're killin me Smalls!");
+                      console.log(args);
                   }
               }
               delete dict[args.id];
           } else {
              console.log("You're killin me Smalls!");
+             console.log(args);
           }
       });
   }

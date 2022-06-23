@@ -1,6 +1,7 @@
 export {};
 
 import electron = require('electron');
+import settings from 'electron-settings';
 const { app, BrowserWindow, ipcMain, Menu, dialog, globalShortcut } = electron;
 
 const assert = require('assert');
@@ -84,7 +85,72 @@ function getWindowsFiles(browserWindow: Electron.BrowserWindow) {
     return files[windowType][browserWindow.id];
 }
 
-
+ipcMain.on('settingsmanager-promise', async (
+  event: Electron.IpcMainEvent,
+  arg: {
+    id: string,
+    type: string,
+    args: any
+  }
+) => {
+  switch (arg.type) {
+  case "set":
+    await settings.set(arg.args.type, arg.args.value);
+    console.log(`set ${arg.args.type} to ${arg.args.value}`);
+    event.reply(
+        'executed-promise-settingsmanager',
+        {
+            id: arg.id,
+            success: true,
+            args: {
+                continue: true
+            }
+        }
+    );
+    return;
+    break;
+  case "get":
+    let value = await settings.get(arg.args.type);
+    if (!value) {
+      event.reply(
+          'executed-promise-settingsmanager',
+          {
+              id: arg.id,
+              success: true,
+              args: {
+                  continue: false,
+                  value: null
+              }
+          }
+      );
+      return;
+    }
+    event.reply(
+        'executed-promise-settingsmanager',
+        {
+            id: arg.id,
+            success: true,
+            args: {
+                continue: true,
+                value: value
+            }
+        }
+    );
+    return;
+    break;
+  default:
+  event.reply(
+      'executed-promise-settingsmanager',
+      {
+          id: arg.id,
+          success: false,
+          args: {}
+      }
+  );
+    throw new Error(`Internal Error. Reference data: ${JSON.stringify(arg)}`);
+    break;
+  }
+});
 
 ipcMain.on('filemanager-execute-promise', async (
   event: Electron.IpcMainEvent,
@@ -468,19 +534,11 @@ ipcMain.on('createCartographersTableWindow', (event, args) => {
 });
 
 function launchApp(){
-  loadSettings(createStorytellerWindow);
+  createStorytellerWindow();
   initQuitListeners();
 }
 
-function loadSettings(then: any){
-  let settingLoaderWin = new BrowserWindow({show: false})
-  then();
-  settingLoaderWin.once('ready-to-show', () => {
-    settingLoaderWin.show();
-  })
-}
-
-function createStorytellerWindow () {
+function createStorytellerWindow() {
     if (mainWindow != null) {
         return;
     }
@@ -496,7 +554,7 @@ function createStorytellerWindow () {
             contextIsolation: false
         }
     })
-    
+
     const onShow = () => {
         Menu.setApplicationMenu(getDefaultMenu());
     };
@@ -525,7 +583,7 @@ function createSorcerersTableWindow() {
       contextIsolation: false
     }
   })
-    
+
     const onShow = () => {
         Menu.setApplicationMenu(null);
     };
@@ -547,7 +605,7 @@ function createDesignersTableWindow() {
       webviewTag: true,
     }
   })
-  
+
     const onShow = () => {
         Menu.setApplicationMenu(null);
     };
@@ -696,7 +754,7 @@ function createCartographersTableWindow() {
         ]
      }
   ];
-    
+
     const menu = Menu.buildFromTemplate(template);
   loadWindow(win, './dist/cartographers-table-window/index.html', menu, true);
 }
@@ -779,7 +837,7 @@ function requestWindowClose(this: Electron.BrowserWindow, e: Nullable<Electron.E
  * @param menu
  * @param requestToClose
  */
-function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any, menu: Nullable<Electron.Menu> = null, requestToClose: boolean = false) {
+async function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any, menu: Nullable<Electron.Menu> = null, requestToClose: boolean = false) {
     // Create window data for use by the other methods including #requestWindowClose
     windowData[browserWindow.id] = {
         requestToClose: requestToClose,
@@ -793,17 +851,17 @@ function loadWindow(browserWindow: Electron.BrowserWindow, loadFile: any, menu: 
     const onShow = () => {
         Menu.setApplicationMenu(menu);
     };
-    
+
     browserWindow.on('show', onShow );
     browserWindow.on('focus', onShow );
-    
+
     // Add close listener to request close to handle saving if needed
     browserWindow.on('close', requestWindowClose.bind(browserWindow));
-    
+
     let loadPromise: Promise<void>;
-  
+
     // Load dev tools if in dev environment
-    if (isDev()) {
+    if (!(await settings.get("development.javascript"))) {
         loadPromise = browserWindow.loadFile(loadFile);
     } else {
         loadPromise = loadWindowWithDevTools(browserWindow, loadFile);
@@ -826,9 +884,9 @@ function loadWindowWithDevTools(browserWindow: Electron.BrowserWindow, loadFile:
             devtools.close()
         }
     })
-    
+
     const promise = browserWindow.loadFile(loadFile);
-    
+
     browserWindow.webContents.setDevToolsWebContents(devtools.webContents)
     browserWindow.webContents.openDevTools();
     return promise;
