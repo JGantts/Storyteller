@@ -6,7 +6,6 @@ const { MenuBar } = require('./menu-bar.js');
 export function initPage () {
   globalThis.settings = new SettingsHelper();
 
-  WindowControls.initializWindowControls();
   MenuBar.initializeMenuBar();
 
   let settingsTab = document.getElementById("nav-btn-settings") as EventTarget&Element;
@@ -19,6 +18,8 @@ export function initPage () {
   eemfooTab?.addEventListener("click", (e: Event) => MenuBar.loadEemFooPage(eemfooTab?.id));
   let devTab = document.getElementById("nav-btn-dev") as EventTarget&Element;
   devTab?.addEventListener("click", (e: Event) => MenuBar.loadDevToolsPage(devTab?.id));
+
+  WindowControls.initializWindowControls();
 }
 
 window.onload = function(){

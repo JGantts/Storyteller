@@ -3,18 +3,9 @@ import { SettingsHelper } from "../render-helpers/settings-helper";
 
 const os = require("os");
 
-class WindowControls {
-
+export class WindowControls {
   static initializWindowControls() {
-    // When document has loaded, initialise
-    document.onreadystatechange = (event) => {
-        if (document.readyState == "complete") {
-            WindowControls.handleWindowControls();
-        }
-    };
-  }
-
-  static handleWindowControls() {
+        console.log("here1")
         let templateContainer: HTMLElement|null;
         let cssFile = "";
         switch (os.type()) {
@@ -34,6 +25,7 @@ class WindowControls {
                 cssFile = './win-close-minimize.css';
                 break;
         }
+        console.log("here2")
 
         let template = templateContainer as Element;
         if (!(template instanceof Element)) { return; }
@@ -46,6 +38,7 @@ class WindowControls {
         let head = $("head");
         if (head !instanceof HTMLHeadElement) {return;}
         head[0].appendChild(link);
+        console.log("here3")
 
         let templateClone = document.createElement("div") as Element;
         if (!(templateClone instanceof Element)) { return; }
@@ -59,9 +52,6 @@ class WindowControls {
       document.getElementById('close-button')!.addEventListener("click", event => {
           ipcRenderer.send('close');
       });
+      console.log("here4")
   }
 }
-
-module.exports = {
-  WindowControls
-};
