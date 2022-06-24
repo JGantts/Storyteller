@@ -1,12 +1,26 @@
 const assert = require('assert');
+// @ts-ignore
 const crypto = require('crypto');
 const path = require("path");
 
 const { common } = require('./commonFunctions.js');
 const { Caos } = require('../sorcerers-table-window/parser/parser.js');
 const { TreeToText } = require('../sorcerers-table-window/tree-to-text.js');
+const { getDoorPotentialBetweenRooms } = require("./dataStructureFactory").dataStructureFactory;
 
-function parseCaosForMetaroom(codeIn) {
+type ParsedData = {
+    id: Nullable<string>;
+    name: Nullable<string>;
+    background: Nullable<string>;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    rooms: { [id:string]: Room };
+    perms: { [id: string]: Perm };
+}
+
+function parseCaosForMetaroom(codeIn: string) {
     let tree = Caos(codeIn);
     let allCommands = [
       ...breakOutLoops(tree.inject.commands),
@@ -14,23 +28,13 @@ function parseCaosForMetaroom(codeIn) {
     ];
 
     let metaroomVar = null;
-    let va00Var = null;
+    let va00Var: Nullable<string> = null;
 
-    let importedJson = {
-      id: null,
-      name: null,
-      background: null,
-      x: null,
-      y: null,
-      width: null,
-      height: null,
-      rooms: {},
-      perms: new Object()
-    };
+    let importedJson: Nullable<ParsedData> = null;
 
-    let keyMap = new Object();
+    let keyMap: {[varId: number]: string} = {};
 
-    for (command of allCommands) {
+    for (const command of allCommands) {
         switch (command.type) {
           case "namespaced-command":
             break;
@@ -44,47 +48,57 @@ function parseCaosForMetaroom(codeIn) {
                     let gameVariable = setvArgs[0];
                     let addmCommand = setvArgs[1];
                     assert(gameVariable.variant === "game");
-                    assert(gameVariable.arguments.length === 1);
-                    assert(gameVariable.arguments[0].variant === "string");
+                    assert(gameVariable.arguments!!.length === 1);
+                    assert(gameVariable.arguments!![0].variant === "string");
                     assert(metaroomVar === null, `${JSON.stringify(metaroomVar)}`);
-                    metaroomVar = gameVariable.arguments[0].value;
-                    assert(addmCommand.arguments.length === 5);
-                    importedJson.id = crypto.randomUUID();
-                    importedJson.name = "";
-                    importedJson.x = addmCommand.arguments[0].value;
-                    importedJson.y = addmCommand.arguments[1].value;
-                    importedJson.width = addmCommand.arguments[2].value;
-                    importedJson.height = addmCommand.arguments[3].value;
-                    importedJson.background = addmCommand.arguments[4].value + ".blk";
+                    metaroomVar = gameVariable.arguments!![0].value;
+                    assert(addmCommand.arguments!!.length === 5);
+                    importedJson = {
+                      id: crypto.randomUUID(),
+                      name: "",
+                      x: addmCommand.arguments!![0].value,
+                      y: addmCommand.arguments!![1].value,
+                      width: addmCommand.arguments!![2].value,
+                      height: addmCommand.arguments!![3].value,
+                      background: addmCommand.arguments!![4].value + ".blk",
+                      rooms: {},
+                      perms: {}
+                    }
                     break;
                   }
 
                   case "addr": {
+                    if (importedJson == null) {
+                      throw new Error("Invalid json format. Metaroom not defined before reading room.");
+                    }
                     let va00Variable = setvArgs[0];
                     let addrCommand = setvArgs[1];
                     assert(va00Variable.variant === "va", `${JSON.stringify(va00Variable)}`);
                     assert(va00Variable.name === "va00", `${JSON.stringify(va00Variable)}`);
-                    assert(addrCommand.arguments.length === 7);
-                    assert(addrCommand.arguments[0].variant === "game");
-                    assert(addrCommand.arguments[0].arguments[0].value === metaroomVar, JSON.stringify({addrCommand, metaroomVar}));
+                    assert(addrCommand.arguments!!.length === 7);
+                    assert(addrCommand.arguments!![0].variant === "game");
+                    assert(addrCommand.arguments!![0].arguments!![0].value === metaroomVar, JSON.stringify({addrCommand, metaroomVar}));
                     va00Var = crypto.randomUUID();
                     importedJson.rooms[va00Var] = {
                         id: va00Var,
-                        leftX: addrCommand.arguments[1].value - importedJson.x,
-                        rightX: addrCommand.arguments[2].value - importedJson.x,
-                        leftCeilingY: addrCommand.arguments[3].value - importedJson.y,
-                        rightCeilingY: addrCommand.arguments[4].value - importedJson.y,
-                        leftFloorY: addrCommand.arguments[5].value - importedJson.y,
-                        rightFloorY: addrCommand.arguments[6].value - importedJson.y
+                        leftX: addrCommand.arguments!![1].value - importedJson.x,
+                        rightX: addrCommand.arguments!![2].value - importedJson.x,
+                        leftCeilingY: addrCommand.arguments!![3].value - importedJson.y,
+                        rightCeilingY: addrCommand.arguments!![4].value - importedJson.y,
+                        leftFloorY: addrCommand.arguments!![5].value - importedJson.y,
+                        rightFloorY: addrCommand.arguments!![6].value - importedJson.y
                     };
                     break;
                   }
 
                   case "va":{
+                    if (importedJson == null) {
+                      throw new Error("Invalid json format. Metaroom not defined before reading room variable");
+                    }
                     assert(setvArgs[1].name === "va00", `${JSON.stringify(setvArgs[1])}`);
                     assert(setvArgs[0].variant === "game", `${JSON.stringify(setvArgs[0])}`);
                     let gameVariable = setvArgs[0];
-                    keyMap[gameVariable.arguments[0].value] = va00Var;
+                    keyMap[gameVariable.arguments!![0].value] = va00Var!!;
                     break;
                   }
 
@@ -93,18 +107,24 @@ function parseCaosForMetaroom(codeIn) {
                 break;
 
               case "rtyp":
+                if (importedJson == null) {
+                  throw new Error("Invalid json format. Metaroom not defined before reading room type");
+                }
                 let rtypArgs = command.arguments;
                 assert(rtypArgs[0].name === "va00", `${JSON.stringify(rtypArgs[0])}`);
-                importedJson.rooms[va00Var].roomType = rtypArgs[1].value;
+                importedJson.rooms[va00Var!!].roomType = rtypArgs[1].value;
                 break;
 
               case "door":
+                if (importedJson == null) {
+                  throw new Error("Invalid json format. Metaroom not defined before reading door");
+                }
                 let doorArgs = command.arguments;
                 assert(doorArgs.length === 3, `${JSON.stringify(command)}`);
                 let gameVariableA = doorArgs[0];
                 let gameVariableB = doorArgs[1];
-                let idA = keyMap[gameVariableA.arguments[0].value];
-                let idB = keyMap[gameVariableB.arguments[0].value];
+                let idA = keyMap[gameVariableA.arguments!![0].value];
+                let idB = keyMap[gameVariableB.arguments!![0].value];
                 let id = common.getSortedId(idA, idB);
                 importedJson.perms[id] = {
                     id,
@@ -163,18 +183,23 @@ function parseCaosForMetaroom(codeIn) {
       );*/
 }
 
-function breakOutLoops(commands) {
+function breakOutLoops(commands: CaosItem[]): CaosItem[] {
     return commands
-        .flatMap(val =>
+        .flatMap((val: CaosItem) =>
             ((val.type === "command-list")
-                ? breakOutLoops(val.commands)
+                ? breakOutLoops((<CommandList>val).commands)
                 : [val]
             )
         );
 }
 
-function parseMetaroomToCaos(metaroom) {
-    let newTree = [];
+/**
+ *
+ * @param {Metaroom} metaroom
+ * @returns {string}
+ */
+function parseMetaroomToCaos(metaroom: Metaroom) {
+    let newTree: CaosItem[] = [];
     newTree.push({
         type: "command",
         variant: "mapd",
@@ -286,7 +311,7 @@ function parseMetaroomToCaos(metaroom) {
           }
         ]
       });
-    for (roomKey in metaroom.rooms) {
+    for (const roomKey in metaroom.rooms) {
         let room = metaroom.rooms[roomKey];
         let roomCenterX =
             (room.leftX + room.rightX)/2;
@@ -443,10 +468,13 @@ function parseMetaroomToCaos(metaroom) {
           }
         ]
     }
-    for (permKey in metaroom.perms) {
+    const rooms = metaroom.rooms
+    for (const permKey in metaroom.perms) {
       let perm = metaroom.perms[permKey];
-      newTree.push([
-          {
+      if (!permIsValid(rooms, perm)) {
+        continue;
+      }
+      newTree.push({
             "type": "command",
             "variant": "door",
             "name": "door",
@@ -484,10 +512,9 @@ function parseMetaroomToCaos(metaroom) {
                 value: perm.permeability
               }
             ]
-          }
-        ]);
+          });
     }
-    for (roomKey in metaroom.rooms) {
+    for (const roomKey in metaroom.rooms) {
         let room = metaroom.rooms[roomKey];
         newTree.push({
           "type": "command",
@@ -507,6 +534,34 @@ function parseMetaroomToCaos(metaroom) {
     return TreeToText(newTree, true);
 }
 
+
+/**
+ * Checks if a Perm object's rooms are still touching.
+ * @param { {[id:string]: Room } } rooms
+ * @param {Perm} perm
+ * @returns {boolean}
+ */
+function permIsValid(rooms: { [id: string]: Room; }, perm: Perm) {
+  const {a: roomId, b: otherRoomId} = perm.rooms;
+  if (!rooms.hasOwnProperty(roomId) || !rooms.hasOwnProperty(otherRoomId)) {
+    return false;
+  }
+  const room = rooms[roomId];
+  const otherRoom = rooms[otherRoomId];
+  const doorPotential = getDoorPotentialBetweenRooms(room, otherRoom);
+  for (const potential of doorPotential) {
+    if (potential.roomKeys.length !== 2) {
+      continue;
+    }
+    const x = potential.end.x - potential.start.x;
+    const y = potential.end.y - potential.start.y;
+    const distance = Math.sqrt((x * x) + (y * y));
+    if (distance > 8) {
+      return true;
+    }
+  }
+  return false;
+}
 
 
 module.exports = {

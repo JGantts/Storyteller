@@ -1,6 +1,3 @@
-/// <reference path="./commonTypes.ts" />
-
-const assert = require('assert');
 const { flashError } = require('./flashError');
 const { getIntersection } = require('./geometryHelper.js').geometry;
 type LineSlice = (
@@ -62,7 +59,10 @@ function lineSegmentComparison(
         if (lineBMinX === lineBMaxX) {
 
             //on same axis
-            if (lineB.start.x === lineA.start.x) {
+            if (
+                lineBMinX === lineAMaxX ||
+                lineAMinX === lineBMaxX
+            ) {
 
                 //lines don't touch, lineA on top
                 if (

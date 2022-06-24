@@ -149,3 +149,30 @@ type BrowserData = {
     requestToClose?: Nullable<boolean>;
     menu?: Nullable<Electron.Menu>
 }
+
+type CaosItem = CommandList | Command;
+type CommandList = {
+    commands: CaosItem[];
+    type: "command-list"
+}
+
+type Command = {
+    type: ArgumentType;
+    variant: string;
+    name: string;
+    arguments: Argument[];
+};
+
+type Argument = {
+    type: ArgumentType;
+    variant: string;
+    name: string;
+    arguments?: Argument[];
+    value?: any
+};
+
+type ArgumentType = 'literal' | 'namespaced-command' |
+    'condition' | 'operator' |
+    'boolean' | 'bool-op' |
+    'variable' | 'end-of-file' |
+    'command' | 'returning-command';
