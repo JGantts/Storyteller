@@ -1,125 +1,162 @@
 <link rel="stylesheet" type="text/css" href="settings-page/settings-page.css">
 
 <div class = "setting-block" style='background-color: rgb(71,59,99);'>
-  <form>
-    <input class='setting-checkbox' type='checkbox' id='dev-js-checkbox' data-backend-name='development.javascript' data-default=false>
-    <span>JavaScript Developer Tools</span>
-    <div class='setting-checkbox-statehint' id='dev-js-checkbox-statehint'
-      data-checked-statehint='Chrome Developer Tools will open with each window.'
-      data-unchecked-statehint='Chrome Developer Tools will not open.'>
+    <form>
+        <input class='setting-checkbox' type='checkbox' id='dev-js-checkbox' data-backend-name='development.javascript' data-default=false>
+        <span>JavaScript Developer Tools</span>
+        <div class='setting-checkbox-statehint' id='dev-js-checkbox-statehint'
+        data-checked-statehint='Chrome Developer Tools will open with each window.'
+        data-unchecked-statehint='Chrome Developer Tools will not open.'>
     </div>
-  </form>
+</form>
 </div>
 
 <div class = "setting-block" style='background-color: rgb(71,59,99);'>
-	<div id='set-path-button'>
-		<button onclick='selectDSPath()'>Set Docking Station Game Path </button>
-	</div>
-	<div id='info' class='setting-checkbox-statehint'></div>
+    <div id='set-path-button'>
+        <button onclick='selectDSPath()'>Set Docking Station Game Path </button>
+    </div>
+    <div id='info' class='setting-checkbox-statehint'></div>
 </div>
 
 <div class = "credits-block" style='transparent'>
-	<div class='credits-header'>Credits</div>
-	<div class='credits-entity'>
-    <div class='credits-entity-name-primary'>
-      Jacob Gantt
+    <div class='credits-header'>Credits</div>
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            Jacob Gantt
+        </div>
+        <div class='credits-entity-names-nonprimary'>
+            <div class='credits-entity-name-nonprimary'>
+                JGantts
+            </div>
+            <div class='credits-entity-name-nonprimary'>
+                Zoot
+            </div>
+            <div class='credits-entity-name-nonprimary'>
+                Zzzzoot
+            </div>
+        </div>
+        <div class='credits-entity-contributions'>
+            Project Coordinator, Lead Programmer
+        </div>
+        <div class='credits-entity-ad'>
+            https://jgantts.com
+        </div>
     </div>
-    <div class='credits-entity-names-nonprimary'>
-      <div class='credits-entity-name-nonprimary'>
-        JGantts
-      </div>
-      <div class='credits-entity-name-nonprimary'>
-        Zoot
-      </div>
-      <div class='credits-entity-name-nonprimary'>
-        Zzzzoot
-      </div>
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            Bedalton
+        </div>
+        <div class='credits-entity-contributions'>
+            Contributing Programmer
+        </div>
+        <div class='credits-entity-ad'>
+            https://github.com/bedalton
+        </div>
     </div>
-    <div class='credits-entity-contributions'>
-      Project Coordinator, Lead Programmer
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            Szymon Furjan
+        </div>
+        <div class='credits-entity-names-nonprimary'>
+            <div class='credits-entity-name-nonprimary'>
+                SiMonk0
+            </div>
+        </div>
+        <div class='credits-entity-contributions'>
+            Art and Design
+        </div>
+        <div class='credits-entity-ad'>
+            https://www.furjandesign.com
+        </div>
     </div>
-    <div class='credits-entity-ad'>
-      https://github.com/jgantts
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            haxd
+        </div>
+        <div class='credits-entity-contributions'>
+            Contributing Programmer
+        </div>
     </div>
-  </div>
-	<div class='credits-entity'>
-    <div class='credits-entity-name-primary'>
-      Chris Montgomery
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            Malkin
+        </div>
+        <div class='credits-entity-contributions'>
+            Bug Catching
+        </div>
     </div>
-    <div class='credits-entity-names-nonprimary'>
-      <div class='credits-entity-name-nonprimary'>
-        EemFoo
-      </div>
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            Chris Montgomery
+        </div>
+        <div class='credits-entity-names-nonprimary'>
+            <div class='credits-entity-name-nonprimary'>
+                EemFoo
+            </div>
+        </div>
+        <div class='credits-entity-contributions'>
+            UI/UX/Icons
+        </div>
+        <div class='credits-entity-ad'>
+            https://eemfoo.org
+        </div>
     </div>
-    <div class='credits-entity-contributions'>
-      UI/UX/Icons
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            Linda Roethlin
+        </div>
+        <div class='credits-entity-names-nonprimary'>
+            <div class='credits-entity-name-nonprimary'>
+                LadyIcepaw
+            </div>
+        </div>
+        <div class='credits-entity-contributions'>
+            Icons
+        </div>
+        <div class='credits-entity-ad'>
+            https://ladyicepaw.itch.io/
+        </div>
     </div>
-    <div class='credits-entity-ad'>
-      https://eemfoo.org
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            Creatures Labs
+        </div>
+        <div class='credits-entity-names-nonprimary'>
+            <div class='credits-entity-name-nonprimary'>
+                Original <i>Creatures</i> Developer
+            </div>
+        </div>
+        <div class='credits-entity-contributions'>
+            Framework, Language, Target
+        </div>
     </div>
-  </div>
-	<div class='credits-entity'>
-    <div class='credits-entity-name-primary'>
-      Linda Roethlin
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            The Creatures Community
+        </div>
+        <div class='credits-entity-contributions'>
+            Truly Invaluable
+        </div>
+        <div class='credits-entity-ad'>
+            https://creatures.wiki/Creatures_Community
+        </div>
     </div>
-    <div class='credits-entity-names-nonprimary'>
-      <div class='credits-entity-name-nonprimary'>
-        LadyIcepaw
-      </div>
+    <div class='credits-entity'>
+        <div class='credits-entity-name-primary'>
+            Steve Grand
+        </div>
+        <div class='credits-entity-contributions'>
+            Creator and Lead Programmer of <i>Creatures</i> game.
+        </div>
     </div>
-    <div class='credits-entity-contributions'>
-      Icons
-    </div>
-    <div class='credits-entity-ad'>
-      https://ladyicepaw.itch.io/
-    </div>
-  </div>
-	<div class='credits-entity'>
-    <div class='credits-entity-name-primary'>
-      PRIMARY NAME
-    </div>
-    <div class='credits-entity-names-nonprimary'>
-      <div class='credits-entity-name-nonprimary'>
-        NONPRIMARY NAME
-      </div>
-      <div class='credits-entity-name-nonprimary'>
-        NONPRIMARY NAME
-      </div>
-    </div>
-    <div class='credits-entity-contributions'>
-      CONTRIBUTIONS
-    </div>
-    <div class='credits-entity-ad'>
-      AD
-    </div>
-  </div>
-	<div class='credits-entity'>
-    <div class='credits-entity-name-primary'>
-      PRIMARY NAME
-    </div>
-    <div class='credits-entity-names-nonprimary'>
-      <div class='credits-entity-name-nonprimary'>
-        NONPRIMARY NAME
-      </div>
-      <div class='credits-entity-name-nonprimary'>
-        NONPRIMARY NAME
-      </div>
-    </div>
-    <div class='credits-entity-contributions'>
-      CONTRIBUTIONS
-    </div>
-    <div class='credits-entity-ad'>
-      AD
-    </div>
-  </div>
 </div>
 
 <div class="footer">
-  <div class="version">
-    <p>Storyteller</p>
-    <p style="font-style: italic;">Epic of Gilgamesh</p>
-    <p>2.0.7-beta</p>
-  </div>
+    <div class="version">
+        <p>Storyteller</p>
+        <p style="font-style: italic;">Epic of Gilgamesh</p>
+        <p>2.0.7-beta</p>
+    </div>
 </div>
 
 
