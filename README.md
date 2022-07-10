@@ -49,3 +49,40 @@ Intended to be a one-stop-shop for Creatures players and developers.
   - [X] Family links
   - [ ] Family trees
   - [ ] Uploading
+---
+### Features:
+Jacob Gantt -
+Project Coordinator, Lead Programmer -
+https://jgantts.com
+
+Bedalton -
+Contributing Programmer -
+https://github.com/bedalton
+
+Szymon Furjan -
+Art and Design -
+https://www.furjandesign.com
+
+haxd -
+Contributing Programmer
+
+Malkin -
+Bug Catching
+
+Chris Montgomery -
+UI/UX/Icons -
+https://eemfoo.org
+
+Linda Roethlin -
+Icons -
+https://ladyicepaw.itch.io/
+
+Creatures Labs -
+Framework, Language, Target
+
+The Creatures Community -
+Truly Invaluable -
+https://creatures.wiki/Creatures_Community
+
+Steve Grand -
+Creator and Lead Programmer of Creatures game.
