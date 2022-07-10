@@ -28,28 +28,25 @@ function setStatehint(checkbox){
  * @return {string|boolean} Game path if it finds it, false if it doesn't.
  */
 function findDSPath() {
-  return "Hey";
-
-
-  // // checking settings first
-  // if (settings.get('gamePath')) {
-  //   return settings.get('gamePath');
-  // }
-  // // then try to guess based on common paths
-  // // (should maybe externalized these at some point?)
-  // const possiblePaths = [
-  // 'C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station',
-  // 'C:/Program Files (x86)/Docking Station',
-  // 'C:/Program Files/Docking Station',
-  // `C:${(process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE).split('\\').join('/')}/Documents/Creatures/Docking Station`
-  // ]
-  // for (const path of possiblePaths) {
-  //   if (fs.existsSync(`${path}/engine.exe`)) {
-  //     settings.set('gamePath', path);
-  //     return path;
-  //   }
-  // }
-  // return false;
+  // checking settings first
+  if (settings.get('gamePath')) {
+    return settings.get('gamePath');
+  }
+  // then try to guess based on common paths
+  // (should maybe externalized these at some point?)
+  const possiblePaths = [
+  'C:/Program Files (x86)/GOG Galaxy/Games/Creatures Exodus/Docking Station',
+  'C:/Program Files (x86)/Docking Station',
+  'C:/Program Files/Docking Station',
+  `C:${(process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE).split('\\').join('/')}/Documents/Creatures/Docking Station`
+  ]
+  for (const path of possiblePaths) {
+    if (fs.existsSync(`${path}/engine.exe`)) {
+      settings.set('gamePath', path);
+      return path;
+    }
+  }
+  return false;
 }
 
 /**
