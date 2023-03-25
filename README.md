@@ -24,7 +24,7 @@ Intended to be a one-stop-shop for Creatures players and developers.
   - [ ] C1 Injection
   - [ ] DS CAOS Tutorial
 - [ ] Painters's Table, a Sprite Builder
-- [ ] Cartographer's Table (Map Editor)
+- [ ] Cartographer's Table, a Map Editor
   - [X] Load from existing CAOS file
   - [X] Make new metaroom from background file
   - [X] Modify metaroom
@@ -32,7 +32,7 @@ Intended to be a one-stop-shop for Creatures players and developers.
   - [ ] View CA levels
   - [ ] Inject into game
 - [ ] Architects Table, an Agent Builder
-- [ ] Designer's Table (Breed Tool) 
+- [ ] Designer's Table, a Breed Tool
   - [ ] Blender Script
   - [ ] PNG Crop Tool
   - [ ] PNG to c16 Tool
