@@ -23,8 +23,8 @@ Intended to be a one-stop-shop for Creatures players and developers.
   - [ ] C1 Syntax
   - [ ] C1 Injection
   - [ ] DS CAOS Tutorial
-- [ ] Painters's Table (Sprite Tool)
-- [ ] Cartographer's Table (Map Tool)
+- [ ] Painters's Table (Sprite Builder)
+- [ ] Cartographer's Table (Map Editor)
   - [X] Load from existing CAOS file
   - [X] Make new metaroom from background file
   - [X] Modify metaroom
