@@ -2,17 +2,12 @@
 /// <reference path="./commonFunctions.ts" />
 /// <reference path="./lineSegmentComparison.ts" />
 
-import {getIntersection} from "./geometryHelper";
-import {start} from "repl";
-
 export {};
 
 
 const { common } = require('./commonFunctions.js');
 const { geometry } = require('./geometryHelper.js');
-const { getOverlappingLineSegment } = require('./lineSegmentComparison.js');
 const { flashError } = require('./flashError.js');
-const crypto = require('crypto');
 
 /*
 leftX: 100,
@@ -58,7 +53,7 @@ function getPermsFromRoomPotential(
 
             let wallsWithId = getWallsFromRoom(dataStructures.metaroomDisk!.rooms[key])
                 .map(
-                  (possibleWall, ii) => {
+                  (possibleWall) => {
                       return {
                         id: key,
                         wall: possibleWall
@@ -99,15 +94,28 @@ function getDoorsWallsPotentialFromRoomPotential(
   dataStructuresActual: DataStructures
 ) {
     let wallsSimple = getWallsFromRooms([roomPotential]).filter(function(val) {return val});
-    let doorsWalls = slicePotentialRoomIntoPotentialLinesFromActualWalls(wallsSimple, dataStructuresActual.walls);
-    return doorsWalls;
+    return slicePotentialRoomIntoPotentialLinesFromActualWalls(wallsSimple, dataStructuresActual.walls);
+}
+
+function getDoorPotentialBetweenRooms(
+    room: Room,
+    otherRoom: Room
+): SimpleLine[] {
+    const roomWalls = getWallsFromRoom(room);
+    const otherRoomWalls = getWallsFromRoom(otherRoom);
+    return slicePotentialRoomIntoPotentialLinesFromActualWalls(roomWalls, otherRoomWalls)
+        .filter((door: DoorData) => {
+            return door.roomKeys.length == 2 &&
+                ((room.id === door.roomKeys[0] && otherRoom.id === door.roomKeys[1]) ||
+                (otherRoom.id === door.roomKeys[0] &&  room.id == door.roomKeys[1]));
+        });
 }
 
 function slicePotentialRoomIntoPotentialLinesFromActualWalls(
   sidesPotential: DoorData[],
-  wallsActual: Wall[]
-): SimpleLine[] {
-    let linesPotential: SimpleLine[] = [];
+  wallsActual: DoorData[]
+): DoorData[] {
+    let linesPotential: DoorData[] = [];
     for (let i=0; i<sidesPotential.length; i++ ){
         let sidePotential = sidesPotential[i];
         let lineSegmentsNew = slicePotentialSideIntoPotentialLinesFromActualWalls(sidePotential, wallsActual);
@@ -126,7 +134,7 @@ function slicePotentialRoomIntoPotentialLinesFromActualWalls(
 
 function slicePotentialSideIntoPotentialLinesFromActualWalls(
   defendingSegment: DoorData,
-  attackingSegmentsIn: Wall[]
+  attackingSegmentsIn: DoorData[]
 ): PossiblyChangedDoors {
     // assert(defendingSegment, `${JSON.stringify(defendingSegment)}`)
     if (!defendingSegment) {
@@ -566,6 +574,7 @@ module.exports = {
         getPermsFromRoomPotential,
         getSortedRoomFromDimensions,
         getRoomBounds,
+        getDoorPotentialBetweenRooms,
         getRoomBoundsFromPoints
     }
 }
