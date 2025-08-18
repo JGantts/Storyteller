@@ -50,7 +50,7 @@ Intended to be a one-stop-shop for Creatures players and developers.
   - [ ] Family trees
   - [ ] Uploading
 ---
-### Features:
+### Possible with contributions from:
 Jacob Gantt -
 Project Coordinator, Lead Programmer -
 https://jgantts.com
